@@ -259,7 +259,29 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 <script>
 var DATA = JSON.parse(document.getElementById('app-data').textContent);
 var atomizers = DATA.atomizers || [];
-var profiles = DATA.profiles || [];
+var NET_PROFILE_EXTENSIONS = [
+  {group:'NET simplu',name:'Virginia Bright / Lemon',tags:['Virginia','bright','citric','hay','sec'],top:['Dvarw MTL FL','Spica Pro','Kayfun Mini V3 / KV3 Mini'],wire:'K1 30 GA / SS316L 30 GA / SS316L Clapton fin',avoid:'Clapton gros sau Ni80 cald daca ridica dulceata.',note:'Profil luminos, citric si uscat; cere camera compacta si separare clara.'},
+  {group:'NET simplu',name:'Virginia Gold / Hay',tags:['Virginia','hay','dulce natural','luminos'],top:['Kayfun X','Taifun GTR','Dvarw MTL FL'],wire:'NiFe30 30 GA / K1 29 GA / SS316L Clapton fin',avoid:'K1 27 si Clapton dens daca acopera nota de fan.',note:'Dulce natural si fan; trebuie pastrata lumina, nu facut desert.'},
+  {group:'NET simplu',name:'Virginia Mature / Red',tags:['Virginia','matur','paine','fruct uscat'],top:['Taifun GTR','Kayfun X','By-Ka V.11'],wire:'NiFe30 29-30 GA / K1 28 GA / K1 Clapton fin',avoid:'Ni80 Clapton daca devine prea dulce.',note:'Mai rotund decat Virginia Bright; cere finete si corp moderat.'},
+  {group:'NET simplu',name:'Burley cacao/nucos',tags:['Burley','cacao','nucos','earthy'],top:['By-Ka V.11','Taifun GTR','Dvarw MTL CL 22'],wire:'K1 28 GA / SS32 twisted / K1 Clapton fin',avoid:'SS prea subtire daca scoate corpul din Burley.',note:'Pamantiu si nucos; are nevoie de corp curat si textura moderata.'},
+  {group:'NET simplu',name:'Kentucky fire-cured sec',tags:['Kentucky','fire-cured','fum','sec','hit'],top:['Dvarw MTL CL 22','Prime Minister Freehand','Flash-e-Vapor VS / V4.5S+'],wire:'K1 28 GA / K1 27 GA prudent / K1 Clapton fin',avoid:'Ni80 Clapton daca face fumul lipicios.',note:'Fum, lemn ars si hit; cere atomizor cu corp si airflow controlat.'},
+  {group:'NET simplu',name:'Latakia dry smoky',tags:['Latakia','fum','piele','lemn ars','sec'],top:['Dvarw MTL CL 22','Taifun GTR','Prime Minister Freehand'],wire:'K1 28 GA / SS32 twisted / K1 Clapton fin',avoid:'Clapton gros; poate lipi fumul de restul notelor.',note:'Fum uscat si piele; textura da profunzime doar daca ramane controlata.'},
+  {group:'NET simplu',name:'Oriental floral / Izmir',tags:['Oriental','Izmir','floral','condimentat','luminos'],top:['Dvarw MTL FL','Spica Pro','By-Ka V.11'],wire:'K1 29 GA / SS316L 30 GA / SS316L Clapton fin',avoid:'K1 27 si Ni80 cald daca ingroapa floralul.',note:'Condiment si floral; cere claritate, coil mic si caldura moderata.'},
+  {group:'NET simplu',name:'Basmas / Samsun aromatic',tags:['Oriental','Basmas','Samsun','aromatic','spice'],top:['Dvarw MTL FL','By-Ka V.11','FOUR ONE FIVE 415RTA V2'],wire:'SS316L 30 GA / K1 29 GA / SS316L Clapton fin',avoid:'Clapton dens si airflow prea deschis.',note:'Aromatic fin; merge pe camere care pastreaza straturile si condimentul.'},
+  {group:'NET simplu',name:'Perique piperat/fermentat',tags:['Perique','piper','fermentat','prune','aciditate'],top:['Dvarw MTL FL','By-Ka V.11','Taifun GTR'],wire:'K1 29 GA / SS32 twisted / SS316L Clapton fin',avoid:'Ni80 Clapton daca indulceste fermentatia.',note:'Piper si fermentatie; trebuie contur, nu rotunjire excesiva.'},
+  {group:'NET simplu',name:'Cigar seco / lemnos',tags:['cigar','seco','lemn','uscat','trabuc'],top:['Dvarw MTL CL 22','Asylum V3','Prime Minister Freehand'],wire:'K1 28 GA / K1 Clapton fin / SS32 twisted',avoid:'SS30 simplu daca subtiaza trabucul.',note:'Trabuc uscat si lemnos; cere corp si o textura fina, fara dulceata grea.'},
+  {group:'NET simplu',name:'Cigar maduro / dark',tags:['cigar','maduro','dark','cacao','corp'],top:['Asylum V3','Prime Minister Freehand','Taifun GTR'],wire:'K1 28 GA / K1 27 GA prudent / K1 Clapton fin',avoid:'Ni80 Clapton daca devine siropos.',note:'Cigar inchis, cacao si corp; merge pe camere cu presiune aromatica.'},
+  {group:'NET complex',name:'Virginia + Burley + Oriental',tags:['Virginia','Burley','Oriental','American','echilibrat'],top:['Kayfun X','Taifun GTR','By-Ka V.11'],wire:'K1 28 GA / K1 29 GA / SS316L Clapton fin',avoid:'Clapton gros daca uniformizeaza blendul.',note:'Blend echilibrat; cere corp mediu si separare intre dulce, sec si condiment.'},
+  {group:'NET complex',name:'Virginia + Latakia light',tags:['Virginia','Latakia','fum light','luminos'],top:['Dvarw MTL FL','Taifun GTR','Dvarw MTL CL 22'],wire:'K1 29 GA / SS32 twisted / K1 Clapton fin',avoid:'K1 27 daca acopera Virginia.',note:'Fum discret peste baza luminoasa; claritatea ramane prioritara.'},
+  {group:'NET complex',name:'Kentucky + Latakia',tags:['Kentucky','Latakia','fumos','dark','hit'],top:['Dvarw MTL CL 22','Prime Minister Freehand','Flash-e-Vapor VS / V4.5S+'],wire:'K1 28 GA / SS32 twisted / K1 Clapton fin',avoid:'Clapton 2-core daca devine greu si opac.',note:'Fum si hit puternic; cere corp, dar si aer suficient intre straturi.'},
+  {group:'NET complex',name:'Burley + Perique',tags:['Burley','Perique','piper','earthy','fermentat'],top:['By-Ka V.11','Dvarw MTL FL','Taifun GTR'],wire:'K1 29 GA / SS32 twisted / SS316L Clapton fin',avoid:'Ni80 cald daca piperul devine dulce.',note:'Pamantiu plus piper; are nevoie de separare si textura fina.'},
+  {group:'NET complex',name:'Pipe English sec',tags:['pipe','English','Latakia','Oriental','sec'],top:['Dvarw MTL CL 22','Prime Minister Freehand','Taifun GTR'],wire:'K1 28 GA / SS32 twisted / K1 Clapton fin',avoid:'Ni80 Clapton daca rotunjeste fumul prea mult.',note:'Pipe sec cu fum si condiment; textura poate ajuta, dar fara masa mare.'},
+  {group:'NET complex',name:'Pipe Cavendish natural',tags:['pipe','Cavendish','moale','dulce natural','rotund'],top:['Muted+','Asylum V3','Kayfun X'],wire:'K1 28 GA / Ni80 30 GA / Clapton fin 1-core',avoid:'Fused Clapton daca devine desert.',note:'Rotund si natural; Clapton fin poate da textura cand lichidul e prea subtire.'},
+  {group:'NET complex',name:'NET organic foarte murdar',tags:['organic','dark','greu','sediment','coil gunk'],top:['Dvarw MTL CL 22','Muted+','Flash-e-Vapor VS / V4.5S+'],wire:'K1 28 GA / K1 27 GA prudent / K1 Clapton fin',avoid:'SS prea subtire si Clapton gros daca incarca repede coilul.',note:'Extract greu si dens; cere build simplu, corp si curatare mai frecventa.'},
+  {group:'NET complex',name:'NET floral condimentat',tags:['floral','Oriental','condiment','complex','luminos'],top:['Dvarw MTL FL','FOUR ONE FIVE 415RTA V2','By-Ka V.11'],wire:'SS316L 30 GA / K1 29 GA / SS316L Clapton fin',avoid:'Ni80 si K1 27 daca ingroapa floralele.',note:'Floral si condimentat; are nevoie de airflow fin si sarma clara.'},
+  {group:'NET complex',name:'NET dulce-amar natural',tags:['dulce natural','amar','cacao','dark','complex'],top:['Taifun GTR','Asylum V3','By-Ka V.11'],wire:'K1 28 GA / NiFe30 29-30 GA / K1 Clapton fin',avoid:'Ni80 Clapton daca muta lichidul spre desert.',note:'Dulce-amar de frunza, cacao sau lemn; cere corp fara zahar artificial.'}
+];
+var profiles = (DATA.profiles || []).concat(NET_PROFILE_EXTENSIONS);
 var wires = DATA.wires || [];
 var selectedProblem = 'balance';
 var selectedTags = [];
@@ -414,6 +436,57 @@ function liquidContext(profile, problemId, activeTags){var p=PROBLEMS.find(funct
 function tripodBuild(profile, problemId, atom){var ctx=liquidContext(profile||{},problemId,selectedTags);var roles=atom?inferRoles(atom):[];var build={wire:ctx.build.wire,setup:ctx.build.setup,alt:ctx.build.alt,reason:ctx.reason,avoid:ctx.avoid.slice()};if(atom){if(roles.indexOf('clarity')>=0&&ctx.roles.indexOf('body')>=0){build.wire='K1 28 GA';build.setup='2.5 mm / 5-6 spire';build.alt='SS32 twisted pentru textura suplimentara';build.reason='atomizorul clar primeste corp curat pentru dark, cigar sau Kentucky'}if(roles.indexOf('body')>=0&&ctx.roles.indexOf('clarity')>=0){build.wire='K1 29 GA';build.setup='2.0-2.5 mm / 6-7 spire';build.alt='SS316L 30 GA';build.reason='atomizorul adauga corp, iar sarma pastreaza conturul lichidului luminos'}if(problemId==='tooDry'){build.wire=roles.indexOf('smooth')>=0?'Ni80 30 GA':'K1 28 GA';build.setup='2.5 mm / 5-6 spire';build.alt='K1 28 GA sau Clapton fin 1-core, dupa cat corp cere lichidul';build.reason='se adauga rotunjime si densitate controlata fara acoperirea bazei de tutun'}if(roles.indexOf('smooth')>=0&&problemId==='tooSweet'){build.wire='SS316L 30 GA';build.setup='2.0 mm / 6-7 spire';build.alt='K1 30 GA';build.reason='airflow-ul smooth ramane placut, iar sarma reduce dulceata'}if(roles.indexOf('sideair')>=0&&problemId==='harsh'){build.wire='NiFe30 30 GA';build.setup='2.5 mm / 6-7 spire';build.alt='Ni80 30 GA la putere joasa';build.reason='airflow-ul lateral si temperatura controlata reduc asprimea'}if(roles.indexOf('modular')>=0){build.reason+='; pinul sau clopotul mai strans favorizeaza claritatea, iar deschiderea adauga corp'}if(roles.indexOf('daily')>=0&&ctx.roles.indexOf('modular')>=0){build.reason+='; buildul simplu pastreaza diferentele dintre straturi'}}return {label:build.wire+' - '+build.setup,wire:build.wire,setup:build.setup,alt:build.alt,reason:build.reason,avoid:build.avoid.join(', ')}}
 
 function wireChoices(profile, problemId, atom){var ctx=liquidContext(profile||{},problemId,selectedTags);var roles=atom?inferRoles(atom):[];var tagText=norm((ctx.selectedTags||[]).join(' '));var set=[];function add(name,setup,why){if(set.length>=3)return;if(set.some(function(x){return x.name===name&&x.setup===setup}))return;set.push({name:name,setup:setup,why:why})}if(problemId==='tooDry'){add('K1 28 GA','2.5 mm / 6 spire','corp curat si rotunjire naturala');add('Ni80 30 GA','2.5 mm / 6-7 spire','raspuns rapid si rotunjime');add('Clapton fin 1-core','2.5 mm / 5-6 spire','textura pentru lichide foarte seci')}else if(problemId==='flat'){add('K1 28 GA','2.5 mm / 5-6 spire','prezenta si corp controlat');add('SS32 twisted','2.5 mm / 6-7 spire','textura fara masa mare');add('Ni80 30 GA','2.5 mm / 6-7 spire','densitate pe atomizoare reci')}else if(problemId==='tooSweet'||problemId==='muddy'||problemId==='clarity'){add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si separare');add('K1 29 GA','2.0-2.5 mm / 6-7 spire','tutun sec si contur curat');add('NiFe30 30 GA','2.0-2.5 mm / 6-8 spire','control fin si temperatura stabila')}else if(problemId==='harsh'){add('NiFe30 30 GA','2.0-2.5 mm / 6-7 spire','temperatura mai stabila si varfuri domolite');add('SS316L 31 GA','2.0 mm / 7-8 spire','claritate fina fara caldura mare');add('Ni80 30 GA','2.5 mm / 6-7 spire','rotunjire la putere moderata')}else if(problemId==='hit'){add('K1 28 GA','2.0-2.5 mm / 5 spire','hit si prezenta');add('K1 29 GA','2.0 mm / 5-6 spire','hit mai sec si contur');add('SS32 twisted','2.5 mm / 6 spire','textura cu lovitura controlata')}else if(/cavendish|pipe|vanilie|crema|dulce|moale/.test(tagText)){add('K1 28 GA','2.5 mm / 6 spire','corp curat fara indulcire excesiva');add('Ni80 30 GA','2.5 mm / 6-7 spire','rotunjime si raspuns rapid');add('Clapton fin 1-core','2.5 mm / 5-6 spire','textura pentru lichide foarte seci')}else if(/bright|oriental|perique|luminos|sec/.test(tagText)){add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si separare');add('K1 29 GA','2.0-2.5 mm / 6-7 spire','tutun sec si contur curat');add('NiFe30 30 GA','2.0-2.5 mm / 6-8 spire','control fin si temperatura stabila')}else if(roles.indexOf('body')>=0||/dark|kentucky|latakia|cigar|robust|amar|greu|fum/.test(tagText)){add('K1 28 GA','2.5 mm / 5-6 spire','corp, hit si substrat');add('SS32 twisted','2.5 mm / 6-7 spire','textura cu separare');add('K1 29 GA','2.5 mm / 7 spire','corp mai sec si mai precis')}else{add('K1 28 GA','2.5 mm / 6 spire','baseline tobacco/NET');add('K1 29 GA','2.0-2.5 mm / 6-7 spire','contur mai sec');add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si viteza')}return set}
+
+wireChoices = function(profile, problemId, atom){
+  var ctx=liquidContext(profile||{},problemId,selectedTags);
+  var roles=atom?inferRoles(atom):[];
+  var text=norm([ctx.text,(ctx.selectedTags||[]).join(' '),profileName(profile),profileNote(profile)].join(' '));
+  var set=[];
+  function add(name,setup,why){if(set.length>=3)return;if(set.some(function(x){return x.name===name&&x.setup===setup}))return;set.push({name:name,setup:setup,why:why})}
+  function has(rx){return rx.test(text)}
+  if(problemId==='tooSweet'){
+    add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si dulceata mai controlata');
+    add('K1 29 GA','2.0-2.5 mm / 6-7 spire','tutun sec si contur curat');
+    add('SS316L Clapton fin','2.0 mm / 5-6 spire','doar pentru textura usoara, fara indulcire grea');
+  }else if(problemId==='muddy'||problemId==='clarity'){
+    add('SS316L 30 GA','2.0 mm / 6-7 spire','separare si raspuns rapid');
+    add('NiFe30 30 GA','2.0-2.5 mm / 6-8 spire','control fin al temperaturii');
+    add('SS316L Clapton fin','2.0 mm / 5-6 spire','textura minima cand lichidul ramane prea subtire');
+  }else if(problemId==='tooDry'){
+    add('K1 28 GA','2.5 mm / 6 spire','corp curat si rotunjire naturala');
+    add('Clapton fin 1-core','2.5 mm / 5-6 spire','textura pentru lichide foarte seci');
+    add('Ni80 30 GA','2.5 mm / 6-7 spire','raspuns rapid si rotunjime la putere moderata');
+  }else if(problemId==='flat'){
+    add('K1 28 GA','2.5 mm / 5-6 spire','prezenta si corp controlat');
+    add('SS32 twisted','2.5 mm / 6-7 spire','textura fara masa mare');
+    add('SS316L Clapton fin','2.0-2.5 mm / 5-6 spire','deschidere si stratificare cand lichidul e plat');
+  }else if(problemId==='harsh'){
+    add('NiFe30 30 GA','2.0-2.5 mm / 6-7 spire','temperatura mai stabila si varfuri domolite');
+    add('SS316L 31 GA','2.0 mm / 7-8 spire','claritate fina fara caldura mare');
+    add('Clapton fin 1-core','2.5 mm / 5-6 spire','rotunjire prudenta daca asprimea ramane prezenta');
+  }else if(problemId==='hit'){
+    add('K1 28 GA','2.0-2.5 mm / 5 spire','hit si prezenta');
+    add('K1 29 GA','2.0 mm / 5-6 spire','hit mai sec si contur');
+    add('K1 Clapton fin','2.5 mm / 5 spire','textura si impact cand lichidul nu este deja dulce');
+  }else if(has(/bright|oriental|izmir|basmas|samsun|perique|luminos|floral|citric|sec/)){
+    add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si separare');
+    add('K1 29 GA','2.0-2.5 mm / 6-7 spire','tutun sec si contur curat');
+    add('SS316L Clapton fin','2.0 mm / 5-6 spire','textura usoara cand profilul cere volum fara pierdere de claritate');
+  }else if(has(/cavendish|pipe|vanilie|crema|dulce natural|moale|rotund/)){
+    add('K1 28 GA','2.5 mm / 6 spire','corp curat fara indulcire excesiva');
+    add('Clapton fin 1-core','2.5 mm / 5-6 spire','textura si rotunjire pentru pipe sau Cavendish');
+    add('Ni80 30 GA','2.5 mm / 6-7 spire','raspuns rapid si mouthfeel mai moale');
+  }else if(has(/cigar|trabuc|maduro|kentucky|latakia|dark|fire|fum|piele|lemn|earthy|burley|organic|greu/)||roles.indexOf('body')>=0){
+    add('K1 28 GA','2.5 mm / 5-6 spire','corp, hit si substrat');
+    add('K1 Clapton fin','2.5 mm / 5 spire','textura pentru frunza uscata, cigar sau dark NET');
+    add('SS32 twisted','2.5 mm / 6-7 spire','separare cu corp, mai curat decat Clapton gros');
+  }else{
+    add('K1 28 GA','2.5 mm / 6 spire','baseline tobacco/NET');
+    add('K1 29 GA','2.0-2.5 mm / 6-7 spire','contur mai sec');
+    add('Clapton fin 1-core','2.5 mm / 5-6 spire','textura controlata cand lichidul cere corp suplimentar');
+  }
+  return set;
+}
 
 function goTab(id){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.navbtn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===id)});window.scrollTo({top:0,behavior:'smooth'})}
 function initNav(){document.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.tab)})});document.querySelectorAll('[data-jump]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.jump)})})}
