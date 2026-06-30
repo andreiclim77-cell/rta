@@ -299,15 +299,26 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .calc-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:14px;align-items:start}
 .calc-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .calc-fields .field{margin-bottom:0}
+.calc-help{border:1px solid #ead5e7;background:#fff;border-radius:var(--radius);padding:10px 12px;color:#5b3b57;font-size:13px;margin:10px 0}
+.calc-help b{color:#111}
 .calc-presets{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
 .calc-preset{border:1px solid #d8b6d2;background:#fff;color:#6a1248;border-radius:999px;padding:7px 10px;font-weight:900;font-size:12px}
-.calc-preset:hover{background:#fff0fb;border-color:#ff8bd5}
+.calc-preset:hover,.calc-preset.active{background:#fff0fb;border-color:#ff8bd5;color:#111;box-shadow:0 5px 14px rgba(217,15,153,.12)}
+.calc-advanced{border:1px solid #e5d8e8;background:#fff;border-radius:var(--radius);padding:10px;margin-top:10px}
+.calc-advanced summary{cursor:pointer;font-weight:900;color:#6a1248}
+.calc-advanced .calc-fields{margin-top:10px}
 .calc-output{border:1px solid #dedede;background:#fff;border-radius:var(--radius);padding:12px}
 .calc-output h3{margin-bottom:10px}
 .calc-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
 .calc-result{border:1px solid #e5e5e5;background:#fbfbfb;border-radius:var(--radius);padding:10px;min-width:0}
 .calc-result b{display:block;color:#111;font-size:18px;line-height:1.1}
 .calc-result span{display:block;color:#555;font-size:12px;margin-top:4px}
+.calc-simple-list{display:grid;gap:8px}
+.calc-step-line{display:grid;grid-template-columns:auto 1fr;gap:10px;border:1px solid #e5e5e5;background:#fbfbfb;border-radius:var(--radius);padding:10px;align-items:start}
+.calc-step-line b{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:#ff8bd5;color:#111;font-size:13px}
+.calc-step-line strong{display:block;color:#111}
+.calc-step-line span{display:block;color:#555;font-size:13px;line-height:1.35;margin-top:2px}
+.calc-summary-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
 .calc-verdict{margin-top:10px;border-left:4px solid #37bfe8;background:#f1fbff;border-radius:0 var(--radius) var(--radius) 0;padding:10px 12px;color:#17313a;font-size:13px}
 .calc-verdict.bad{border-left-color:#ff5548;background:#fff0ee;color:#7b2018}
 .mix-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e1e1e1;border-radius:var(--radius);overflow:hidden}
@@ -656,25 +667,34 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
     <article class="card calc-card" style="margin-top:14px">
       <span class="chip cold">Calculator</span>
       <h3>Calculator simplu pentru lichid final</h3>
-      <p class="muted">Completeaza volumul final, taria dorita, nic-shotul, aroma si raportul VG/PG final. Calculatorul scade automat nicotina si aroma din tinta VG/PG.</p>
-      <div class="calc-presets" aria-label="Preseturi raport VG/PG">
-        <button class="calc-preset" type="button" data-mix-ratio="50">50/50</button>
-        <button class="calc-preset" type="button" data-mix-ratio="60">60/40</button>
-        <button class="calc-preset" type="button" data-mix-ratio="70">70/30</button>
-      </div>
+      <p class="muted">Alegi ce vrei sa iasa in sticla. Rezultatul iti spune direct ce torni: nic-shot, aroma, VG si PG.</p>
       <div class="calc-layout">
-        <div class="calc-fields">
-          <div class="field"><label for="mixTotal">Volum final ml</label><input id="mixTotal" type="number" min="1" step="1" value="100"></div>
-          <div class="field"><label for="mixTargetNic">Nicotina dorita mg/ml</label><input id="mixTargetNic" type="number" min="0" step="0.1" value="6"></div>
-          <div class="field"><label for="mixShotNic">Nicotina shot mg/ml</label><input id="mixShotNic" type="number" min="0" step="0.1" value="20"></div>
-          <div class="field"><label for="mixShotVg">VG in nic-shot %</label><input id="mixShotVg" type="number" min="0" max="100" step="1" value="50"></div>
-          <div class="field"><label for="mixTargetVg">VG final %</label><input id="mixTargetVg" type="number" min="0" max="100" step="1" value="50"></div>
-          <div class="field"><label for="mixAroma">Aroma %</label><input id="mixAroma" type="number" min="0" max="40" step="0.1" value="10"></div>
-          <div class="field"><label for="mixAromaPg">PG in aroma %</label><input id="mixAromaPg" type="number" min="0" max="100" step="1" value="100"></div>
-          <div class="field"><label for="mixBottle">Flacon nic-shot ml</label><input id="mixBottle" type="number" min="1" step="1" value="10"></div>
+        <div>
+          <div class="calc-help"><b>Mod rapid:</b> se presupune nic-shot 20 mg/ml 50/50, aroma in PG si flacon nic-shot de 10 ml. Pentru majoritatea retetelor MTL asta este suficient.</div>
+          <div class="calc-fields">
+            <div class="field"><label for="mixTotal">1. Cat lichid vrei? ml</label><input id="mixTotal" type="number" min="1" step="1" value="100"></div>
+            <div class="field"><label for="mixTargetNic">2. Taria finala mg/ml</label><input id="mixTargetNic" type="number" min="0" step="0.1" value="6"></div>
+            <div class="field"><label for="mixAroma">3. Aroma %</label><input id="mixAroma" type="number" min="0" max="40" step="0.1" value="10"></div>
+            <div class="field"><label for="mixShotNic">4. Nic-shot mg/ml</label><input id="mixShotNic" type="number" min="0" step="0.1" value="20"></div>
+          </div>
+          <div class="calc-help"><b>Alege raportul final VG/PG:</b></div>
+          <div class="calc-presets" aria-label="Preseturi raport VG/PG">
+            <button class="calc-preset active" type="button" data-mix-ratio="50">50/50 clar</button>
+            <button class="calc-preset" type="button" data-mix-ratio="60">60/40 rotund</button>
+            <button class="calc-preset" type="button" data-mix-ratio="70">70/30 gros</button>
+          </div>
+          <details class="calc-advanced">
+            <summary>Setari avansate, doar daca ingredientele sunt diferite</summary>
+            <div class="calc-fields">
+              <div class="field"><label for="mixShotVg">VG in nic-shot %</label><input id="mixShotVg" type="number" min="0" max="100" step="1" value="50"></div>
+              <div class="field"><label for="mixTargetVg">VG final %</label><input id="mixTargetVg" type="number" min="0" max="100" step="1" value="50"></div>
+              <div class="field"><label for="mixAromaPg">PG in aroma %</label><input id="mixAromaPg" type="number" min="0" max="100" step="1" value="100"></div>
+              <div class="field"><label for="mixBottle">Flacon nic-shot ml</label><input id="mixBottle" type="number" min="1" step="1" value="10"></div>
+            </div>
+          </details>
         </div>
         <div class="calc-output">
-          <h3>Rezultat</h3>
+          <h3>Ce pui in sticla</h3>
           <div class="calc-result-grid" id="mixCalcResults"></div>
           <div class="calc-verdict" id="mixCalcVerdict">Completeaza valorile pentru calcul.</div>
         </div>
@@ -1469,6 +1489,9 @@ function initGlobalSearch(){var box=$('globalSearch');if(!box)return;$('searchMo
 function mixNum(id,fallback){var el=$(id);var n=el?parseFloat(el.value):NaN;return isFinite(n)?n:fallback}
 function clampNum(n,min,max){return Math.max(min,Math.min(max,n))}
 function fmtMl(n){if(!isFinite(n))return 'imposibil';var v=Math.round(n*100)/100;return (Math.abs(v)<0.005?0:v).toLocaleString('ro-RO',{maximumFractionDigits:2})+' ml'}
+function fmtQty(n){if(!isFinite(n))return 'imposibil';return (Math.round(n*100)/100).toLocaleString('ro-RO',{maximumFractionDigits:2})}
+function calcLine(n,title,text){return '<div class="calc-step-line"><b>'+esc(n)+'</b><div><strong>'+esc(title)+'</strong><span>'+esc(text)+'</span></div></div>'}
+function updateMixPresetButtons(targetVg){document.querySelectorAll('[data-mix-ratio]').forEach(function(btn){btn.classList.toggle('active',String(Math.round(targetVg))===String(btn.dataset.mixRatio))})}
 function calcLiquidRecipe(){
   var out=$('mixCalcResults');
   var verdict=$('mixCalcVerdict');
@@ -1498,20 +1521,26 @@ function calcLiquidRecipe(){
   if(isFinite(nicMl)&&nicMl+aromaMl>total)bad.push('Nicotina si aroma ocupa deja mai mult decat volumul final.');
   if(isFinite(addVg)&&addVg<-0.01)bad.push('Exista prea mult VG din nic-shot/aroma pentru tinta aleasa.');
   if(isFinite(addPg)&&addPg<-0.01)bad.push('Exista prea mult PG din nic-shot/aroma pentru tinta aleasa.');
-  out.innerHTML=[
-    {label:'Nic-shot',value:fmtMl(nicMl),note:'aprox. '+(isFinite(nicMl)?(Math.round((nicMl/bottle)*100)/100).toLocaleString('ro-RO',{maximumFractionDigits:2}):'0')+' flacoane de '+fmtMl(bottle)},
-    {label:'Aroma',value:fmtMl(aromaMl),note:aromaPct.toLocaleString('ro-RO',{maximumFractionDigits:1})+'% din volumul final'},
-    {label:'VG simplu',value:fmtMl(Math.max(0,addVg)),note:'pentru tinta '+targetVg+'/'+targetPg+' VG/PG'},
-    {label:'PG simplu',value:fmtMl(Math.max(0,addPg)),note:'completeaza raportul final'},
-    {label:'Tarie finala',value:targetNic.toLocaleString('ro-RO',{maximumFractionDigits:1})+' mg/ml',note:'calculata pe '+fmtMl(total)},
-    {label:'Raport final',value:targetVg+'/'+targetPg, note:'VG/PG dupa aroma si nic-shot'}
-  ].map(function(x){return '<div class="calc-result"><b>'+esc(x.value)+'</b><span>'+esc(x.label+' - '+x.note)+'</span></div>'}).join('');
+  updateMixPresetButtons(targetVg);
+  out.className='calc-simple-list';
+  var bottleText=isFinite(nicMl)?'aprox. '+fmtQty(nicMl/bottle)+' flacoane de '+fmtMl(bottle):'imposibil';
+  var lines=[];
+  if(bad.length){
+    lines.push(calcLine('!', 'Nu se poate turna corect asa', 'Schimba valorile pana dispare avertismentul de mai jos.'));
+  }else{
+    lines.push(calcLine(1,'Nic-shot',targetNic>0?'Pune '+fmtMl(nicMl)+' ('+bottleText+').':'Nu se adauga nic-shot.'));
+    lines.push(calcLine(2,'Aroma','Pune '+fmtMl(aromaMl)+' aroma concentrata.'));
+    lines.push(calcLine(3,'VG simplu','Pune '+fmtMl(Math.max(0,addVg))+' VG simplu.'));
+    lines.push(calcLine(4,'PG simplu','Pune '+fmtMl(Math.max(0,addPg))+' PG simplu.'));
+    lines.push('<div class="calc-summary-row"><span class="chip cold">Final: '+esc(fmtMl(total))+'</span><span class="chip warn">'+esc(targetNic.toLocaleString('ro-RO',{maximumFractionDigits:1})+' mg/ml')+'</span><span class="chip good">'+esc(targetVg+'/'+targetPg+' VG/PG')+'</span></div>');
+  }
+  out.innerHTML=lines.join('');
   if(bad.length){
     verdict.className='calc-verdict bad';
-    verdict.textContent='Reteta nu iese matematic in conditiile alese: '+bad.join(' ')+' Ajusteaza raportul VG/PG, procentul de aroma, taria finala sau tipul de nic-shot.';
+    verdict.textContent='Nu merge asa: '+bad.join(' ')+' Solutie simpla: scade taria finala, scade aroma sau alege un raport mai fluid, de obicei 50/50 ori 60/40.';
   }else{
     verdict.className='calc-verdict';
-    verdict.textContent='Reteta este posibila. Se obtin '+fmtMl(total)+' la '+targetNic.toLocaleString('ro-RO',{maximumFractionDigits:1})+' mg/ml si raport final '+targetVg+'/'+targetPg+' VG/PG.';
+    verdict.textContent='Reteta este ok. Dupa ce torni valorile de mai sus, agita bine, eticheteaza sticla si lasa la maturat dupa tipul aromei.';
   }
 }
 function initLiquidCalculator(){
