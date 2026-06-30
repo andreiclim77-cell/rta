@@ -318,6 +318,8 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .calc-step-line b{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:#ff8bd5;color:#111;font-size:13px}
 .calc-step-line strong{display:block;color:#111}
 .calc-step-line span{display:block;color:#555;font-size:13px;line-height:1.35;margin-top:2px}
+.calc-explain{border:1px solid #e5d8e8;background:#fff;border-radius:var(--radius);padding:9px 10px;color:#4a3a49;font-size:13px;line-height:1.4}
+.calc-explain.warn{border-color:rgba(255,122,26,.45);background:#fff8ef;color:#6b3300}
 .calc-summary-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
 .calc-verdict{margin-top:10px;border-left:4px solid #37bfe8;background:#f1fbff;border-radius:0 var(--radius) var(--radius) 0;padding:10px 12px;color:#17313a;font-size:13px}
 .calc-verdict.bad{border-left-color:#ff5548;background:#fff0ee;color:#7b2018}
@@ -670,10 +672,10 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <p class="muted">Alegi ce vrei sa iasa in sticla. Rezultatul iti spune direct ce torni: nic-shot, aroma, VG si PG.</p>
       <div class="calc-layout">
         <div>
-          <div class="calc-help"><b>Mod rapid:</b> se presupune nic-shot 20 mg/ml 50/50, aroma in PG si flacon nic-shot de 10 ml. Pentru majoritatea retetelor MTL asta este suficient.</div>
+          <div class="calc-help"><b>Mod rapid:</b> se presupune nic-shot 20 mg/ml 50/50, aroma in PG si flacon nic-shot de 10 ml. Exemplu: 100 ml la 6 mg/ml cere 30 ml nic-shot; 100 ml la 12 mg/ml cere 60 ml nic-shot.</div>
           <div class="calc-fields">
             <div class="field"><label for="mixTotal">1. Cat lichid vrei? ml</label><input id="mixTotal" type="number" min="1" step="1" value="100"></div>
-            <div class="field"><label for="mixTargetNic">2. Taria finala mg/ml</label><input id="mixTargetNic" type="number" min="0" step="0.1" value="6"></div>
+            <div class="field"><label for="mixTargetNic">2. Taria finala dorita mg/ml</label><input id="mixTargetNic" type="number" min="0" step="0.1" value="6"></div>
             <div class="field"><label for="mixAroma">3. Aroma %</label><input id="mixAroma" type="number" min="0" max="40" step="0.1" value="10"></div>
             <div class="field"><label for="mixShotNic">4. Nic-shot mg/ml</label><input id="mixShotNic" type="number" min="0" step="0.1" value="20"></div>
           </div>
@@ -1525,11 +1527,14 @@ function calcLiquidRecipe(){
   updateMixPresetButtons(targetVg);
   out.className='calc-simple-list';
   var bottleText=isFinite(nicMl)?'aprox. '+fmtQty(nicMl/bottle)+' flacoane de '+fmtMl(bottle):'imposibil';
+  var formulaText=targetNic>0&&shotNic>0?fmtQty(targetNic)+' x '+fmtQty(total)+' / '+fmtQty(shotNic)+' = '+fmtMl(nicMl):'fara nicotina';
   var lines=[];
   if(bad.length){
     lines.push(calcLine('!', 'Nu se poate turna corect asa', 'Schimba valorile pana dispare avertismentul de mai jos.'));
   }else{
     lines.push(calcLine(1,'Nic-shot',targetNic>0?'Pune '+fmtMl(nicMl)+' ('+bottleText+').':'Nu se adauga nic-shot.'));
+    if(targetNic>0)lines.push('<div class="calc-explain">Formula nic-shot: taria finala dorita x volumul final / taria nic-shotului = '+esc(formulaText)+'.</div>');
+    if(isFinite(nicMl)&&nicMl/total>=0.4)lines.push('<div class="calc-explain warn">Atentie: nic-shotul ocupa '+esc(Math.round((nicMl/total)*100))+'% din sticla. Asta se intampla cand taria finala dorita este mare pentru un nic-shot de '+esc(fmtQty(shotNic))+' mg/ml. Daca voiai 6 mg/ml, scrie 6 la pasul 2.</div>');
     lines.push(calcLine(2,'Aroma','Pune '+fmtMl(aromaMl)+' aroma concentrata.'));
     lines.push(calcLine(3,'VG simplu','Pune '+fmtMl(Math.max(0,addVg))+' VG simplu.'));
     lines.push(calcLine(4,'PG simplu','Pune '+fmtMl(Math.max(0,addPg))+' PG simplu.'));
