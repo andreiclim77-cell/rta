@@ -43,7 +43,7 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .site-search input:focus{box-shadow:none}
 .search-panel{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:30;display:none;background:#fff;border:1px solid #d4d4d4;border-top:3px solid #ff7a1a;border-radius:var(--radius);box-shadow:0 16px 38px rgba(0,0,0,.24);padding:10px;color:#1d1d1d}
 .search-panel.active{display:block}
-.search-modes{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px}
+.search-modes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
 .search-mode{border:1px solid #ddd;background:#fafafa;color:#222;border-radius:6px;padding:7px 8px;font-size:12px;font-weight:900;text-align:center}
 .search-mode.active,.search-mode:hover{border-color:#ff7a1a;background:#fff2e4;color:#9d4100}
 .search-results{display:grid;gap:6px;max-height:310px;overflow:auto}
@@ -70,6 +70,8 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn.tc-nav:hover,.navbtn.tc-nav.active{color:#071014;border-color:#37bfe8;background:#37bfe8;box-shadow:0 8px 22px rgba(55,191,232,.22)}
 .navbtn.law-nav{color:#fff8df;border-color:rgba(255,190,84,.72);background:linear-gradient(135deg,#261709,#3b260f);font-weight:900}
 .navbtn.law-nav:hover,.navbtn.law-nav.active{color:#100902;border-color:#ffd27b;background:linear-gradient(135deg,#ffb347,#ffdd8a);box-shadow:0 8px 24px rgba(255,190,84,.26)}
+.navbtn.mix-nav{color:#fff;border-color:rgba(217,15,153,.56);background:linear-gradient(135deg,#27101f,#112a32);font-weight:900}
+.navbtn.mix-nav:hover,.navbtn.mix-nav.active{color:#111;border-color:#ff8bd5;background:linear-gradient(135deg,#ff8bd5,#37bfe8);box-shadow:0 8px 24px rgba(217,15,153,.22)}
 main{padding:28px 0 54px;background:repeating-linear-gradient(90deg,#fff 0,#fff 196px,#f2f2f2 197px,#fff 198px)}
 .section{display:none;animation:fade .18s ease}
 .section.active{display:block}
@@ -273,11 +275,56 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .law-time b{display:block;color:#9d4100;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
 .law-source-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
 .law-note{border-left:4px solid #ffd27b;background:#19130d;color:#f7ead7;border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin-top:14px}
+.mix-hero{position:relative;overflow:hidden;border:1px solid #121212;background:linear-gradient(120deg,rgba(5,5,5,.92),rgba(37,14,30,.80) 43%,rgba(5,38,46,.78)),url("assets/rta-hero-background.png") center/cover no-repeat;color:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:30px;margin-bottom:14px}
+.mix-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 20%,rgba(255,139,213,.30),transparent 34%),radial-gradient(circle at 78% 24%,rgba(55,191,232,.26),transparent 34%),radial-gradient(circle at 70% 82%,rgba(85,209,122,.20),transparent 31%);pointer-events:none}
+.mix-hero>*{position:relative}
+.mix-hero h2{color:#fff;margin-bottom:8px}
+.mix-hero .lead{color:#f7eef7}
+.mix-hero .kicker{color:#ffb8e4}
+.mix-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.mix-stat{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:var(--radius);padding:12px;backdrop-filter:blur(8px)}
+.mix-stat b{display:block;color:#ffb8e4;font-size:21px;line-height:1}
+.mix-stat span{display:block;color:#f3f3f3;font-size:12px;margin-top:5px}
+.mix-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mix-card{position:relative;overflow:hidden;border-color:#d9c8da;background:linear-gradient(180deg,#fff,#fff8fd)}
+.mix-card:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff8bd5,#37bfe8,#55d17a)}
+.mix-card ul{padding-left:18px;margin:8px 0 0}
+.mix-card li{margin:5px 0;color:#444}
+.mix-pill{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#111;color:#ffb8e4;font-weight:900;margin-bottom:10px}
+.ratio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.ratio-card{border:1px solid #e2d8e3;background:#fff;border-radius:var(--radius);padding:12px}
+.ratio-card b{display:block;color:#9b176a;font-size:18px}
+.ratio-card span{display:block;color:#555;font-size:13px;margin-top:4px}
+.calc-card{border-color:#d5bdd8;background:linear-gradient(180deg,#fff,#fff8fd)}
+.calc-layout{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:14px;align-items:start}
+.calc-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.calc-fields .field{margin-bottom:0}
+.calc-presets{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}
+.calc-preset{border:1px solid #d8b6d2;background:#fff;color:#6a1248;border-radius:999px;padding:7px 10px;font-weight:900;font-size:12px}
+.calc-preset:hover{background:#fff0fb;border-color:#ff8bd5}
+.calc-output{border:1px solid #dedede;background:#fff;border-radius:var(--radius);padding:12px}
+.calc-output h3{margin-bottom:10px}
+.calc-result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.calc-result{border:1px solid #e5e5e5;background:#fbfbfb;border-radius:var(--radius);padding:10px;min-width:0}
+.calc-result b{display:block;color:#111;font-size:18px;line-height:1.1}
+.calc-result span{display:block;color:#555;font-size:12px;margin-top:4px}
+.calc-verdict{margin-top:10px;border-left:4px solid #37bfe8;background:#f1fbff;border-radius:0 var(--radius) var(--radius) 0;padding:10px 12px;color:#17313a;font-size:13px}
+.calc-verdict.bad{border-left-color:#ff5548;background:#fff0ee;color:#7b2018}
+.mix-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e1e1e1;border-radius:var(--radius);overflow:hidden}
+.mix-table th,.mix-table td{border-bottom:1px solid #e8e8e8;padding:10px;text-align:left;vertical-align:top}
+.mix-table th{background:#111;color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.mix-table tr:last-child td{border-bottom:0}
+.mix-workflow{display:grid;grid-template-columns:repeat(6,1fr);gap:9px;margin-top:14px}
+.mix-step{border:1px solid #e2d8e3;background:#fff;border-radius:var(--radius);padding:10px;min-width:0}
+.mix-step b{display:inline-flex;align-items:center;justify-content:center;width:25px;height:25px;border-radius:50%;background:#ff8bd5;color:#111;margin-bottom:6px}
+.mix-step span{display:block;font-weight:900;color:#111}
+.mix-step small{display:block;color:#555;margin-top:3px;line-height:1.35}
+.mix-warning{border-left:4px solid #ff5548;background:#fff1f0;color:#6e1c16;border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin-top:14px}
 .small{font-size:13px}
 .footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:13px}
-@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid,.mix-grid,.calc-layout,.mix-workflow{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid,.mix-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ratio-grid{grid-template-columns:1fr}}
 @media(max-width:900px){.guide-card{position:static}.guided-flow,.fit-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){header{position:static}main{padding:14px 0 34px}.wrap{padding:0 12px}.wrap.nav{padding:9px 12px}.nav{gap:8px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:8px;min-width:0}.smokee-logo{width:98px;flex:0 0 auto}.brand b{font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 164px)}.brand span{display:none}.head-tools{display:none}.site-search{height:40px}.site-search input{height:38px;font-size:14px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding-top:8px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:38px;padding:8px 11px;font-size:13px;line-height:1.12}.shop-layout{gap:12px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:13px 10px;font-size:16px}.shop-hero{min-height:344px;background-position:66% center}.shop-hero-content{padding:19px}.shop-hero h1{font-size:30px;line-height:1.05}.lead{font-size:16px;line-height:1.42}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.hero-actions .btn{width:auto;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shop-metrics .metric{min-height:78px;padding:12px}.card{padding:13px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:24px}.atom-media{aspect-ratio:4/3}.fit-strip{grid-template-columns:1fr}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:50px;padding:9px 10px;font-size:14px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.footer{padding-bottom:22px}}
+@media(max-width:640px){header{position:static}main{padding:14px 0 34px}.wrap{padding:0 12px}.wrap.nav{padding:9px 12px}.nav{gap:8px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:8px;min-width:0}.smokee-logo{width:98px;flex:0 0 auto}.brand b{font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 164px)}.brand span{display:none}.head-tools{display:none}.site-search{height:40px}.site-search input{height:38px;font-size:14px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding-top:8px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:38px;padding:8px 11px;font-size:13px;line-height:1.12}.shop-layout{gap:12px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:13px 10px;font-size:16px}.shop-hero{min-height:344px;background-position:66% center}.shop-hero-content{padding:19px}.shop-hero h1{font-size:30px;line-height:1.05}.lead{font-size:16px;line-height:1.42}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.hero-actions .btn{width:auto;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shop-metrics .metric{min-height:78px;padding:12px}.card{padding:13px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:24px}.atom-media{aspect-ratio:4/3}.fit-strip,.calc-fields,.calc-result-grid{grid-template-columns:1fr}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:50px;padding:9px 10px;font-size:14px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.footer{padding-bottom:22px}}
 @media(max-width:380px){.wrap{padding:0 10px}.wrap.nav{padding:9px 10px}.smokee-logo{width:90px}.brand b{font-size:12px;max-width:calc(100vw - 142px)}.navbtn{font-size:12px;padding:8px 10px}.hero-actions,.problem-grid,.role-tabs,.category-list{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:27px}.shop-hero-content{padding:17px}.btn{padding:9px 10px}.card{padding:11px}.cat-mark{width:25px;height:25px}.category-link{font-size:15px}}
 </style>
 </head>
@@ -288,7 +335,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <div class="brand-top"><img class="smokee-logo" src="https://www.smokee.ro/wp-content/uploads/2024/11/smokee_logo.png" alt="Smokee"><b>Ghid RTA MTL - Smokee</b></div>
       <span>lichid - atomizor - sarma</span>
     </div>
-    <div class="site-search"><span class="search-icon" aria-hidden="true"></span><input id="globalSearch" type="search" placeholder="Cautare: atomizor, lichid, sarma, review" autocomplete="off" aria-label="Cautare in aplicatie" />
+    <div class="site-search"><span class="search-icon" aria-hidden="true"></span><input id="globalSearch" type="search" placeholder="Cautare: atomizor, lichid, calculator, sarma, review" autocomplete="off" aria-label="Cautare in aplicatie" />
       <div class="search-panel" id="searchPanel" aria-label="Rezultate cautare">
         <div class="search-modes" id="searchModes"></div>
         <div class="search-results" id="searchResults"></div>
@@ -306,6 +353,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <button class="navbtn" data-tab="atomizers">Atomizoare</button>
       <button class="navbtn wire-nav" data-tab="wires">Sarme RTA</button>
       <button class="navbtn tc-nav" data-tab="tcGuide">Ghid TC</button>
+      <button class="navbtn mix-nav" data-tab="liquidGuide">Cum facem lichidele vape</button>
       <button class="navbtn law-nav" data-tab="legislativ">Legislativ</button>
       <button class="navbtn review-nav" data-tab="sources">Recenzii RTA</button>
     </nav>
@@ -321,6 +369,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
           <button class="category-link" data-jump="atomizers"><span class="cat-mark">A</span><span>Atomizoare</span></button>
           <button class="category-link" data-jump="wires"><span class="cat-mark">S</span><span>Sarme RTA</span></button>
           <button class="category-link" data-jump="tcGuide"><span class="cat-mark">TC</span><span>Control temperatura</span></button>
+          <button class="category-link" data-jump="liquidGuide"><span class="cat-mark">DIY</span><span>Cum facem lichidele vape</span></button>
           <button class="category-link" data-jump="legislativ"><span class="cat-mark">LG</span><span>Legislativ</span></button>
           <button class="category-link" data-jump="sources"><span class="cat-mark">YT</span><span>Recenzii RTA</span></button>
           <button class="category-link" data-jump="profiles"><span class="cat-mark">L</span><span>Clase lichide</span></button>
@@ -337,6 +386,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
               <button class="btn secondary" data-jump="atomizers">Atomizoare</button>
               <button class="btn review-cta" data-jump="sources">Recenzii RTA</button>
               <button class="btn tc-cta" data-jump="tcGuide">Ghid TC</button>
+              <button class="btn secondary" data-jump="liquidGuide">Cum facem lichidele vape</button>
               <button class="btn ghost" data-jump="legislativ">Legislativ</button>
             </div>
           </div>
@@ -548,6 +598,142 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
         <a class="source-line" target="_blank" rel="noreferrer" href="https://dicodes.de/en/home.html"><span class="chip cold">Dicodes</span><b>Dicodes</b><small>Moduri si electronica orientata spre TC.</small></a>
         <a class="source-line" target="_blank" rel="noreferrer" href="https://www.yihisxmini.com/"><span class="chip cold">SXmini</span><b>YiHi SXmini</b><small>Chipseturi cu control de temperatura.</small></a>
       </div>
+    </div>
+  </section>
+
+  <section id="liquidGuide" class="section">
+    <div class="mix-hero">
+      <p class="kicker">DIY MTL pentru adulti</p>
+      <h2>Cum facem lichidele vape</h2>
+      <p class="lead">Indrumar practic pentru aroma, baza VG/PG, nicotina, maturare si calcul corect al retetei finale. Ideea centrala: lichidul bun nu inseamna mai multa aroma, ci echilibru intre vascozitate, tarie, atomizor, airflow, coil si timp.</p>
+      <div class="mix-stat-grid">
+        <div class="mix-stat"><b>50/50</b><span>punct de plecare MTL: fluid, clar, stabil</span></div>
+        <div class="mix-stat"><b>60/40</b><span>mai rotund si inca usor de alimentat</span></div>
+        <div class="mix-stat"><b>70/30</b><span>gros; cere atomizor cu alimentare buna</span></div>
+        <div class="mix-stat"><b>20 mg/ml</b><span>limita UE pentru lichid cu nicotina pus pe piata</span></div>
+      </div>
+    </div>
+
+    <div class="mix-grid">
+      <article class="card mix-card">
+        <span class="mix-pill">PG</span>
+        <h3>PG: claritate si hit</h3>
+        <ul>
+          <li>Subtiaza lichidul si ajuta alimentarea fitilului.</li>
+          <li>Transporta aroma mai direct si da throat hit mai prezent.</li>
+          <li>Prea mult PG poate deveni aspru sau poate favoriza scurgeri.</li>
+          <li>Aroma este de obicei in PG, deci intra in calculul final.</li>
+        </ul>
+      </article>
+      <article class="card mix-card">
+        <span class="mix-pill">VG</span>
+        <h3>VG: corp si rotunjime</h3>
+        <ul>
+          <li>Ingrosaza lichidul, rotunjeste gustul si creste densitatea vaporilor.</li>
+          <li>Poate estompa detaliile fine si poate incarca rezistenta mai repede.</li>
+          <li>In MTL, VG mare poate da dry hit daca atomizorul alimenteaza greu.</li>
+          <li>70/30 are sens doar cand deck-ul si canalele de lichid permit.</li>
+        </ul>
+      </article>
+      <article class="card mix-card">
+        <span class="mix-pill">NIC</span>
+        <h3>Nicotina si aroma</h3>
+        <ul>
+          <li>Freebase: hit mai direct; potrivita pentru MTL clasic.</li>
+          <li>Nic salt: mai moale; poate masca usor consumul excesiv.</li>
+          <li>Fructe simple: 4-8%; deserturi: 8-12%; tutun sintetic: 6-12%; NET: 5-10%.</li>
+          <li>La tutun si NET, maturarea ajuta mai mult decat supradozarea.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="ratio-grid">
+      <div class="ratio-card"><b>50/50 VG/PG</b><span>Universal MTL. Clar, fluid, bun pentru atomizoare stranse, poduri si tutun/NET care cer precizie.</span></div>
+      <div class="ratio-card"><b>60/40 VG/PG</b><span>Echilibru modern. Mai moale, mai dens, potrivit pentru tutunoase aromate, pipe si deserturi discrete.</span></div>
+      <div class="ratio-card"><b>70/30 VG/PG</b><span>Mai pretentios. Merge doar daca atomizorul alimenteaza bine si puterea ramane moderata.</span></div>
+    </div>
+
+    <article class="card calc-card" style="margin-top:14px">
+      <span class="chip cold">Calculator</span>
+      <h3>Calculator simplu pentru lichid final</h3>
+      <p class="muted">Completeaza volumul final, taria dorita, nic-shotul, aroma si raportul VG/PG final. Calculatorul scade automat nicotina si aroma din tinta VG/PG.</p>
+      <div class="calc-presets" aria-label="Preseturi raport VG/PG">
+        <button class="calc-preset" type="button" data-mix-ratio="50">50/50</button>
+        <button class="calc-preset" type="button" data-mix-ratio="60">60/40</button>
+        <button class="calc-preset" type="button" data-mix-ratio="70">70/30</button>
+      </div>
+      <div class="calc-layout">
+        <div class="calc-fields">
+          <div class="field"><label for="mixTotal">Volum final ml</label><input id="mixTotal" type="number" min="1" step="1" value="100"></div>
+          <div class="field"><label for="mixTargetNic">Nicotina dorita mg/ml</label><input id="mixTargetNic" type="number" min="0" step="0.1" value="6"></div>
+          <div class="field"><label for="mixShotNic">Nicotina shot mg/ml</label><input id="mixShotNic" type="number" min="0" step="0.1" value="20"></div>
+          <div class="field"><label for="mixShotVg">VG in nic-shot %</label><input id="mixShotVg" type="number" min="0" max="100" step="1" value="50"></div>
+          <div class="field"><label for="mixTargetVg">VG final %</label><input id="mixTargetVg" type="number" min="0" max="100" step="1" value="50"></div>
+          <div class="field"><label for="mixAroma">Aroma %</label><input id="mixAroma" type="number" min="0" max="40" step="0.1" value="10"></div>
+          <div class="field"><label for="mixAromaPg">PG in aroma %</label><input id="mixAromaPg" type="number" min="0" max="100" step="1" value="100"></div>
+          <div class="field"><label for="mixBottle">Flacon nic-shot ml</label><input id="mixBottle" type="number" min="1" step="1" value="10"></div>
+        </div>
+        <div class="calc-output">
+          <h3>Rezultat</h3>
+          <div class="calc-result-grid" id="mixCalcResults"></div>
+          <div class="calc-verdict" id="mixCalcVerdict">Completeaza valorile pentru calcul.</div>
+        </div>
+      </div>
+      <div class="mix-warning">Nicotina concentrata este toxica prin ingerare si contact cu pielea. Se lucreaza cu manusi, ochelari, etichete clare, flacoane inchise si fara acces pentru copii sau persoane neautorizate.</div>
+    </article>
+
+    <div class="grid" style="margin-top:14px">
+      <article class="card span-6 mix-card">
+        <span class="chip warn">Flux corect</span>
+        <h3>Ordinea unui batch MTL</h3>
+        <div class="mix-workflow">
+          <div class="mix-step"><b>1</b><span>Tinta</span><small>VG/PG, mg/ml si volum final.</small></div>
+          <div class="mix-step"><b>2</b><span>Calcul</span><small>nic-shot, aroma, VG si PG.</small></div>
+          <div class="mix-step"><b>3</b><span>Masurare</span><small>ml precis sau cantar cu densitati.</small></div>
+          <div class="mix-step"><b>4</b><span>Amestec</span><small>agitare 1-2 minute si eticheta.</small></div>
+          <div class="mix-step"><b>5</b><span>Maturare</span><small>intuneric, timp, teste etapizate.</small></div>
+          <div class="mix-step"><b>6</b><span>Note</span><small>atomizor, coil, airflow si wattaj.</small></div>
+        </div>
+        <p class="why" style="margin-top:12px">Pentru retete noi, un test de 10-20 ml este mai sigur decat un flacon mare. In MTL, diferentele mici se simt mult.</p>
+      </article>
+      <article class="card span-6 mix-card">
+        <span class="chip alert">Nu se folosesc</span>
+        <h3>Ingrediente de evitat</h3>
+        <ul>
+          <li>Uleiuri, MCT, vitamina E acetate sau baze uleioase.</li>
+          <li>Esente alimentare obisnuite fara destinatie pentru e-liquid.</li>
+          <li>Zahar, sirop, miere, coloranti sau ingrediente care caramelizeaza.</li>
+          <li>Tincturi si extracte alcoolice brute, fara compozitie clara.</li>
+          <li>Arome fara fisa tehnica, dozaj recomandat sau informatie pentru inhalare.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="card mix-card" style="margin-top:14px">
+      <span class="chip good">Diagnostic rapid</span>
+      <h3>Cand lichidul nu merge in MTL</h3>
+      <table class="mix-table">
+        <thead><tr><th>Simptom</th><th>Cauza probabila</th><th>Corectie prudenta</th></tr></thead>
+        <tbody>
+          <tr><td>Dry hit / ars</td><td>VG prea mare, wattaj prea sus sau vata prea stransa.</td><td>50/50 sau 60/40, wattaj mai jos, refacere vata.</td></tr>
+          <tr><td>Curge / bolboroseste</td><td>PG mult, vata prea putina sau etansare slaba.</td><td>Creste usor VG, verifica vata si garniturile.</td></tr>
+          <tr><td>Prea aspru</td><td>Nicotina prea mare, PG mult sau freebase dur.</td><td>Scade mg/ml, 60/40, airflow putin mai deschis.</td></tr>
+          <tr><td>Aroma plata</td><td>VG mare, dozaj gresit sau maturare insuficienta.</td><td>Scade VG, ajusteaza aroma cu pasi mici, lasa la maturat.</td></tr>
+          <tr><td>Coil negru rapid</td><td>NET, sweetener, desert greu sau putere prea mare.</td><td>Mai putina aroma, 50/50 sau 60/40, schimbare coton mai des.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <span class="chip neutral">Surse utile</span>
+      <h3>Verificare si aprofundare</h3>
+      <div class="law-source-grid">
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32014L0040"><span class="chip cold">EUR-Lex</span><b>Directiva 2014/40/UE</b><small>Limite si reguli pentru tigari electronice si recipiente de reumplere.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://health.ec.europa.eu/tobacco/product-regulation/electronic-cigarettes_en"><span class="chip cold">Comisia Europeana</span><b>Electronic cigarettes</b><small>Reguli UE pentru produse de consum.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://www.cdc.gov/tobacco/e-cigarettes/health-effects.html"><span class="chip warn">CDC</span><b>Health effects of e-cigarettes</b><small>Informatii de siguranta si context pentru nicotina.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://www.steam-engine.org/juice"><span class="chip good">Steam Engine</span><b>Calculator e-liquid</b><small>Calculator extern avansat pentru retete si concentratii.</small></a>
+      </div>
+      <div class="law-note">Material informativ pentru adulti. Pentru punere pe piata, vanzare, import sau etichetare se verifica legislatia actualizata si documentele furnizorilor.</div>
     </div>
   </section>
 
@@ -1225,9 +1411,9 @@ wireChoices = function(profile, problemId, atom){
   return set;
 }
 
-var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','tcGuide','legislativ','sources'];
+var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','tcGuide','liquidGuide','legislativ','sources'];
 function activeSection(id, navId){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.navbtn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===(navId||id))})}
-function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
+function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',liquidGuide:'Cum facem lichidele vape - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
 function routeHash(route){return '#'+String(route||'home').replace(/^#/,'')}
 function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash)}applyRoute(true)}
 function goTab(id){setRoute(id)}
@@ -1240,6 +1426,7 @@ var SEARCH_MODES=[
   {id:'atomizers',label:'Atomizoare'},
   {id:'profiles',label:'Lichide'},
   {id:'wires',label:'Sarme'},
+  {id:'liquidGuide',label:'Calculator'},
   {id:'legislativ',label:'Legislativ'},
   {id:'sources',label:'Recenzii'}
 ];
@@ -1263,20 +1450,77 @@ function sourceSearchText(a){return norm([getName(a),getDna(a),getSources(a).map
 function tcGuideSearchResult(q){return {tab:'tcGuide',route:'tcGuide',title:'Ghid control temperatura',meta:'TC - sarme, chipseturi, coil si reglaje',query:q,score:999}}
 var LEGISLATIVE_SEARCH_TEXT='legislativ lege reglementari vape romania uniunea europeana tpd tpd3 accize taxe minori 18 vanzare online publicitate marketing disposable arome baterii weee lichide nicotina 20 mg 10 ml 2 ml portal legislativ eur-lex ministerul finantelor cumparatori checklist rosu galben verde semafor risc mare de urmarit mai stabil shortfill longfill synthetic nicotine pod systems marketplace social media influencer claims medicale eticheta avertisment trasabilitate garantie';
 function legislativeSearchResult(q){return {tab:'legislativ',route:'legislativ',title:'Legislativ vape 2026',meta:'Reguli, taxe, TPD3, checklist cumparatori',query:q,score:fieldScore(q,[[LEGISLATIVE_SEARCH_TEXT,35],['Lege 201 2016 Lege 64 2024 Directiva 2014 40 UE accize 2026',25]])}}
+var LIQUID_GUIDE_SEARCH_TEXT='cum facem lichidele vape calculator diy lichid mtl vg pg 50 50 60 40 70 30 aroma arome nicotina freebase salt nic shot shortfill longfill maturare steep dozaj reteta ml calcul pg vg dry hit curge bolboroseste aspru coil negru siguranta manusi ochelari';
+function liquidGuideSearchResult(q){return {tab:'liquidGuide',route:'liquidGuide',title:'Cum facem lichidele vape',meta:'Calculator VG/PG, aroma, nicotina si reteta MTL',query:q,score:fieldScore(q,[[LIQUID_GUIDE_SEARCH_TEXT,36],['calculator lichid vape diy vg pg aroma nicotina ml reteta',28]])}}
 function searchBuckets(q){var nq=norm(q);return {
   atomizers:atomizers.map(function(a){return {a:a,score:scoreAtom(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'atomizers',route:'atomizor/'+atomSlug(x.a),title:getName(x.a),meta:'Atomizor - '+(airflowInfo(x.a).label||'MTL'),query:q,score:x.score}}),
   profiles:profiles.map(function(p,i){return {p:p,i:i,score:scoreProfile(p,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||profileDisplayName(x.p).localeCompare(profileDisplayName(y.p))}).slice(0,8).map(function(x){return {tab:'profiles',title:profileDisplayName(x.p),meta:'Lichid - '+liquidClassLabel(x.p),query:q,index:x.i,score:x.score}}),
   wires:WIRE_GUIDE.map(function(w){return {w:w,score:scoreWire(w,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||x.w.name.localeCompare(y.w.name)}).slice(0,8).map(function(x){return {tab:'wires',title:x.w.name,meta:'Sarma - '+x.w.role,query:q,score:x.score}}),
+  liquidGuide:[liquidGuideSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   legislativ:[legislativeSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   sources:atomizers.map(function(a){return {a:a,score:scoreSource(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'sources',title:getName(x.a),meta:'Recenzii si builduri',query:q,score:x.score}})
 }}
-function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,legislativ:3,tcGuide:4,sources:5};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
+function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,liquidGuide:3,legislativ:4,tcGuide:5,sources:6};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
 function bestSearchMode(q,b){if(searchMode!=='auto')return searchMode;var first=autoSearchList(q,b)[0];return first?first.tab:'atomizers'}
 function applySearch(item){var q=item.query||$('globalSearch').value.trim();if(item.route){hideSearchPanel();setRoute(item.route);return}if(item.tab==='wires'){if($('wireSearch')){$('wireSearch').value=q;renderWires()}}else if(item.tab==='profiles'){if($('profileSearch')){$('profileSearch').value=q;renderProfiles()}}else if(item.tab==='sources'){if($('sourceSearch')){$('sourceSearch').value=q;renderSources()}}else{if($('atomSearch')){$('atomSearch').value=q;selectedRole='all';renderAtomizers()}}goTab(item.tab);hideSearchPanel()}
 function hideSearchPanel(){var p=$('searchPanel');if(p)p.classList.remove('active')}
-function renderSearchPanel(){var box=$('globalSearch');var panel=$('searchPanel');if(!box||!panel)return;var q=box.value.trim();var modes=$('searchModes');modes.innerHTML=SEARCH_MODES.map(function(m){return '<button class="search-mode'+(searchMode===m.id?' active':'')+'" type="button" data-search-mode="'+esc(m.id)+'">'+esc(m.label)+'</button>'}).join('');if(!q){$('searchResults').innerHTML='<div class="search-empty">Scrie un model, un lichid, o sarma sau o recenzie.</div>';panel.classList.add('active');return}var b=searchBuckets(q);var list=searchMode==='auto'?autoSearchList(q,b):(b[searchMode]||[]);if(!list.length){$('searchResults').innerHTML='<div class="search-empty">Nu exista rezultate clare. Incearca un termen mai specific.</div>';panel.classList.add('active');return}$('searchResults').innerHTML=list.map(function(item,i){return '<button class="search-result" type="button" data-search-result="'+i+'"><b>'+esc(item.title)+'</b><small>'+esc(item.meta)+'</small></button>'}).join('');$('searchResults').querySelectorAll('[data-search-result]').forEach(function(btn){btn.onclick=function(){applySearch(list[parseInt(btn.dataset.searchResult,10)])}});panel.classList.add('active')}
+function renderSearchPanel(){var box=$('globalSearch');var panel=$('searchPanel');if(!box||!panel)return;var q=box.value.trim();var modes=$('searchModes');modes.innerHTML=SEARCH_MODES.map(function(m){return '<button class="search-mode'+(searchMode===m.id?' active':'')+'" type="button" data-search-mode="'+esc(m.id)+'">'+esc(m.label)+'</button>'}).join('');if(!q){$('searchResults').innerHTML='<div class="search-empty">Scrie un model, un lichid, calculatorul, o sarma sau o recenzie.</div>';panel.classList.add('active');return}var b=searchBuckets(q);var list=searchMode==='auto'?autoSearchList(q,b):(b[searchMode]||[]);if(!list.length){$('searchResults').innerHTML='<div class="search-empty">Nu exista rezultate clare. Incearca un termen mai specific.</div>';panel.classList.add('active');return}$('searchResults').innerHTML=list.map(function(item,i){return '<button class="search-result" type="button" data-search-result="'+i+'"><b>'+esc(item.title)+'</b><small>'+esc(item.meta)+'</small></button>'}).join('');$('searchResults').querySelectorAll('[data-search-result]').forEach(function(btn){btn.onclick=function(){applySearch(list[parseInt(btn.dataset.searchResult,10)])}});panel.classList.add('active')}
 function initGlobalSearch(){var box=$('globalSearch');if(!box)return;$('searchModes').addEventListener('click',function(e){var b=e.target.closest('[data-search-mode]');if(!b)return;searchMode=b.dataset.searchMode;renderSearchPanel()});box.addEventListener('input',renderSearchPanel);box.addEventListener('focus',renderSearchPanel);box.addEventListener('keydown',function(e){if(e.key==='Escape'){hideSearchPanel();return}if(e.key!=='Enter')return;var q=box.value.trim();if(!q){goTab('recommender');hideSearchPanel();return}var buckets=searchBuckets(q);var mode=bestSearchMode(q,buckets);var list=searchMode==='auto'?autoSearchList(q,buckets):(buckets[mode]||[]);var first=list[0]||{tab:mode,query:q};applySearch(first)});document.addEventListener('click',function(e){if(!e.target.closest('.site-search'))hideSearchPanel()})}
-function init(){initVisitCounter();initNav();initGlobalSearch();initDetail();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();renderSources();applyRoute(false)}
+function mixNum(id,fallback){var el=$(id);var n=el?parseFloat(el.value):NaN;return isFinite(n)?n:fallback}
+function clampNum(n,min,max){return Math.max(min,Math.min(max,n))}
+function fmtMl(n){if(!isFinite(n))return 'imposibil';var v=Math.round(n*100)/100;return (Math.abs(v)<0.005?0:v).toLocaleString('ro-RO',{maximumFractionDigits:2})+' ml'}
+function calcLiquidRecipe(){
+  var out=$('mixCalcResults');
+  var verdict=$('mixCalcVerdict');
+  if(!out||!verdict)return;
+  var total=Math.max(1,mixNum('mixTotal',100));
+  var targetNic=Math.max(0,mixNum('mixTargetNic',0));
+  var shotNic=Math.max(0,mixNum('mixShotNic',20));
+  var shotVg=clampNum(mixNum('mixShotVg',50),0,100);
+  var targetVg=clampNum(mixNum('mixTargetVg',50),0,100);
+  var aromaPct=clampNum(mixNum('mixAroma',10),0,40);
+  var aromaPg=clampNum(mixNum('mixAromaPg',100),0,100);
+  var bottle=Math.max(1,mixNum('mixBottle',10));
+  var targetPg=100-targetVg;
+  var aromaMl=total*aromaPct/100;
+  var nicMl=targetNic>0?(shotNic>0?(targetNic*total/shotNic):Infinity):0;
+  var targetVgMl=total*targetVg/100;
+  var targetPgMl=total*targetPg/100;
+  var nicVg=nicMl*shotVg/100;
+  var nicPg=nicMl*(100-shotVg)/100;
+  var aromaVg=aromaMl*(100-aromaPg)/100;
+  var aromaPgMl=aromaMl*aromaPg/100;
+  var addVg=targetVgMl-nicVg-aromaVg;
+  var addPg=targetPgMl-nicPg-aromaPgMl;
+  var bad=[];
+  if(!isFinite(nicMl))bad.push('Nicotina dorita cere nic-shot, dar concentratia nic-shotului este 0 mg/ml.');
+  if(isFinite(nicMl)&&nicMl>total)bad.push('Nicotina dorita cere mai mult nic-shot decat volumul final.');
+  if(isFinite(nicMl)&&nicMl+aromaMl>total)bad.push('Nicotina si aroma ocupa deja mai mult decat volumul final.');
+  if(isFinite(addVg)&&addVg<-0.01)bad.push('Exista prea mult VG din nic-shot/aroma pentru tinta aleasa.');
+  if(isFinite(addPg)&&addPg<-0.01)bad.push('Exista prea mult PG din nic-shot/aroma pentru tinta aleasa.');
+  out.innerHTML=[
+    {label:'Nic-shot',value:fmtMl(nicMl),note:'aprox. '+(isFinite(nicMl)?(Math.round((nicMl/bottle)*100)/100).toLocaleString('ro-RO',{maximumFractionDigits:2}):'0')+' flacoane de '+fmtMl(bottle)},
+    {label:'Aroma',value:fmtMl(aromaMl),note:aromaPct.toLocaleString('ro-RO',{maximumFractionDigits:1})+'% din volumul final'},
+    {label:'VG simplu',value:fmtMl(Math.max(0,addVg)),note:'pentru tinta '+targetVg+'/'+targetPg+' VG/PG'},
+    {label:'PG simplu',value:fmtMl(Math.max(0,addPg)),note:'completeaza raportul final'},
+    {label:'Tarie finala',value:targetNic.toLocaleString('ro-RO',{maximumFractionDigits:1})+' mg/ml',note:'calculata pe '+fmtMl(total)},
+    {label:'Raport final',value:targetVg+'/'+targetPg, note:'VG/PG dupa aroma si nic-shot'}
+  ].map(function(x){return '<div class="calc-result"><b>'+esc(x.value)+'</b><span>'+esc(x.label+' - '+x.note)+'</span></div>'}).join('');
+  if(bad.length){
+    verdict.className='calc-verdict bad';
+    verdict.textContent='Reteta nu iese matematic in conditiile alese: '+bad.join(' ')+' Ajusteaza raportul VG/PG, procentul de aroma, taria finala sau tipul de nic-shot.';
+  }else{
+    verdict.className='calc-verdict';
+    verdict.textContent='Reteta este posibila. Se obtin '+fmtMl(total)+' la '+targetNic.toLocaleString('ro-RO',{maximumFractionDigits:1})+' mg/ml si raport final '+targetVg+'/'+targetPg+' VG/PG.';
+  }
+}
+function initLiquidCalculator(){
+  if(!$('mixCalcResults'))return;
+  ['mixTotal','mixTargetNic','mixShotNic','mixShotVg','mixTargetVg','mixAroma','mixAromaPg','mixBottle'].forEach(function(id){var el=$(id);if(el)el.addEventListener('input',calcLiquidRecipe)});
+  document.querySelectorAll('[data-mix-ratio]').forEach(function(btn){btn.addEventListener('click',function(){if($('mixTargetVg'))$('mixTargetVg').value=btn.dataset.mixRatio;calcLiquidRecipe()})});
+  calcLiquidRecipe();
+}
+function init(){initVisitCounter();initNav();initGlobalSearch();initDetail();initLiquidCalculator();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();renderSources();applyRoute(false)}
 
 function renderMetrics(){var src=atomizers.reduce(function(n,a){return n+getSources(a).length},0);$('metricsBox').innerHTML = [
   ['Atomizoare', atomizers.length, 'modele analizate', 'atomizers'],
