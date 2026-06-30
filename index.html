@@ -43,7 +43,7 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .site-search input:focus{box-shadow:none}
 .search-panel{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:30;display:none;background:#fff;border:1px solid #d4d4d4;border-top:3px solid #ff7a1a;border-radius:var(--radius);box-shadow:0 16px 38px rgba(0,0,0,.24);padding:10px;color:#1d1d1d}
 .search-panel.active{display:block}
-.search-modes{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:8px}
+.search-modes{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-bottom:8px}
 .search-mode{border:1px solid #ddd;background:#fafafa;color:#222;border-radius:6px;padding:7px 8px;font-size:12px;font-weight:900;text-align:center}
 .search-mode.active,.search-mode:hover{border-color:#ff7a1a;background:#fff2e4;color:#9d4100}
 .search-results{display:grid;gap:6px;max-height:310px;overflow:auto}
@@ -68,6 +68,8 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn.wire-nav:hover,.navbtn.wire-nav.active{color:#061008;border-color:#55d17a;background:#55d17a;box-shadow:0 8px 20px rgba(85,209,122,.18)}
 .navbtn.tc-nav{color:#eafcff;border-color:rgba(55,191,232,.65);background:#0b1b22;font-weight:900}
 .navbtn.tc-nav:hover,.navbtn.tc-nav.active{color:#071014;border-color:#37bfe8;background:#37bfe8;box-shadow:0 8px 22px rgba(55,191,232,.22)}
+.navbtn.law-nav{color:#fff8df;border-color:rgba(255,190,84,.72);background:linear-gradient(135deg,#261709,#3b260f);font-weight:900}
+.navbtn.law-nav:hover,.navbtn.law-nav.active{color:#100902;border-color:#ffd27b;background:linear-gradient(135deg,#ffb347,#ffdd8a);box-shadow:0 8px 24px rgba(255,190,84,.26)}
 main{padding:28px 0 54px;background:repeating-linear-gradient(90deg,#fff 0,#fff 196px,#f2f2f2 197px,#fff 198px)}
 .section{display:none;animation:fade .18s ease}
 .section.active{display:block}
@@ -237,9 +239,36 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .tc-step{border:1px solid #e1e1e1;background:#fbfbfb;border-radius:var(--radius);padding:10px;display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start}
 .tc-step:before{counter-increment:tcstep;content:counter(tcstep);display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#37bfe8;color:#061014;font-weight:900}
 .tc-source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.law-hero{position:relative;overflow:hidden;border:1px solid #2c2112;background:linear-gradient(125deg,rgba(10,8,7,.96),rgba(33,24,15,.88) 42%,rgba(8,28,36,.82)),url("assets/rta-hero-background.png") center/cover no-repeat;color:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:30px;margin-bottom:14px}
+.law-hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 18% 18%,rgba(255,190,84,.28),transparent 32%),radial-gradient(circle at 78% 26%,rgba(55,191,232,.24),transparent 34%);pointer-events:none}
+.law-hero>*{position:relative}
+.law-hero h2{color:#fff;margin-bottom:8px}
+.law-hero .lead{color:#f5efe5}
+.law-hero .kicker{color:#ffd27b}
+.law-stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:18px}
+.law-stat{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:var(--radius);padding:12px;backdrop-filter:blur(8px)}
+.law-stat b{display:block;color:#ffd27b;font-size:22px;line-height:1}
+.law-stat span{display:block;color:#f2f2f2;font-size:12px;margin-top:5px}
+.law-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.law-card{position:relative;overflow:hidden;border-color:#d7c4a5;background:linear-gradient(180deg,#fff,#fffaf1)}
+.law-card:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ffb347,#37bfe8,#55d17a)}
+.law-card .law-icon{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#111;color:#ffd27b;font-weight:900;margin-bottom:10px}
+.law-card ul{padding-left:18px;margin:8px 0 0}
+.law-card li{margin:5px 0;color:#444}
+.law-signal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
+.signal-card{border-radius:var(--radius);padding:14px;color:#111;min-height:150px}
+.signal-card.red{background:linear-gradient(180deg,#ffe9e7,#fff7f6);border:1px solid rgba(255,85,72,.35)}
+.signal-card.yellow{background:linear-gradient(180deg,#fff3d3,#fffaf0);border:1px solid rgba(255,190,84,.42)}
+.signal-card.green{background:linear-gradient(180deg,#eaffef,#f7fff9);border:1px solid rgba(85,209,122,.38)}
+.signal-card b{display:block;margin-bottom:8px}
+.law-timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}
+.law-time{border:1px solid #e0d5c6;background:#fff;border-radius:var(--radius);padding:10px;min-width:0}
+.law-time b{display:block;color:#9d4100;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.law-source-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.law-note{border-left:4px solid #ffd27b;background:#19130d;color:#f7ead7;border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin-top:14px}
 .small{font-size:13px}
 .footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:13px}
-@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}}
+@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:900px){.guide-card{position:static}.guided-flow,.fit-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){header{position:static}main{padding:14px 0 34px}.wrap{padding:0 12px}.wrap.nav{padding:9px 12px}.nav{gap:8px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:8px;min-width:0}.smokee-logo{width:98px;flex:0 0 auto}.brand b{font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 164px)}.brand span{display:none}.head-tools{display:none}.site-search{height:40px}.site-search input{height:38px;font-size:14px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding-top:8px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:38px;padding:8px 11px;font-size:13px;line-height:1.12}.shop-layout{gap:12px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:13px 10px;font-size:16px}.shop-hero{min-height:344px;background-position:66% center}.shop-hero-content{padding:19px}.shop-hero h1{font-size:30px;line-height:1.05}.lead{font-size:16px;line-height:1.42}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.hero-actions .btn{width:auto;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shop-metrics .metric{min-height:78px;padding:12px}.card{padding:13px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:24px}.atom-media{aspect-ratio:4/3}.fit-strip{grid-template-columns:1fr}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:50px;padding:9px 10px;font-size:14px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.footer{padding-bottom:22px}}
 @media(max-width:380px){.wrap{padding:0 10px}.wrap.nav{padding:9px 10px}.smokee-logo{width:90px}.brand b{font-size:12px;max-width:calc(100vw - 142px)}.navbtn{font-size:12px;padding:8px 10px}.hero-actions,.problem-grid,.role-tabs,.category-list{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:27px}.shop-hero-content{padding:17px}.btn{padding:9px 10px}.card{padding:11px}.cat-mark{width:25px;height:25px}.category-link{font-size:15px}}
@@ -270,6 +299,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <button class="navbtn" data-tab="atomizers">Atomizoare</button>
       <button class="navbtn wire-nav" data-tab="wires">Sarme RTA</button>
       <button class="navbtn tc-nav" data-tab="tcGuide">Ghid TC</button>
+      <button class="navbtn law-nav" data-tab="legislativ">Legislativ</button>
       <button class="navbtn review-nav" data-tab="sources">Recenzii RTA</button>
     </nav>
   </div>
@@ -284,6 +314,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
           <button class="category-link" data-jump="atomizers"><span class="cat-mark">A</span><span>Atomizoare</span></button>
           <button class="category-link" data-jump="wires"><span class="cat-mark">S</span><span>Sarme RTA</span></button>
           <button class="category-link" data-jump="tcGuide"><span class="cat-mark">TC</span><span>Control temperatura</span></button>
+          <button class="category-link" data-jump="legislativ"><span class="cat-mark">LG</span><span>Legislativ</span></button>
           <button class="category-link" data-jump="sources"><span class="cat-mark">YT</span><span>Recenzii RTA</span></button>
           <button class="category-link" data-jump="profiles"><span class="cat-mark">L</span><span>Clase lichide</span></button>
         </div>
@@ -299,6 +330,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
               <button class="btn secondary" data-jump="atomizers">Atomizoare</button>
               <button class="btn review-cta" data-jump="sources">Recenzii RTA</button>
               <button class="btn tc-cta" data-jump="tcGuide">Ghid TC</button>
+              <button class="btn ghost" data-jump="legislativ">Legislativ</button>
             </div>
           </div>
         </div>
@@ -324,7 +356,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <div class="guide-step"><b>1</b><div><span>Tip lichid</span><small>NET sau TUTUN</small></div></div>
       <div class="guide-step"><b>2</b><div><span>Profil</span><small>Subcategoria aromatica</small></div></div>
       <div class="guide-step"><b>3</b><div><span>Intentie</span><small>Directia dorita a gustului</small></div></div>
-      <div class="guide-step"><b>4</b><div><span>Tripod</span><small>Atomizor, sarma si build</small></div></div>
+      <div class="guide-step"><b>4</b><div><span>Triangulare</span><small>Lichid, atomizor si sarma</small></div></div>
     </div>
     <div class="grid">
       <aside class="card span-4 guide-card">
@@ -509,6 +541,111 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
         <a class="source-line" target="_blank" rel="noreferrer" href="https://dicodes.de/en/home.html"><span class="chip cold">Dicodes</span><b>Dicodes</b><small>Moduri si electronica orientata spre TC.</small></a>
         <a class="source-line" target="_blank" rel="noreferrer" href="https://www.yihisxmini.com/"><span class="chip cold">SXmini</span><b>YiHi SXmini</b><small>Chipseturi cu control de temperatura.</small></a>
       </div>
+    </div>
+  </section>
+
+  <section id="legislativ" class="section">
+    <div class="law-hero">
+      <p class="kicker">Reglementari vape 2026</p>
+      <h2>Legislativ pentru cumparatori</h2>
+      <p class="lead">O sinteza eleganta si practica pentru lichide, dispozitive, vanzare, publicitate, taxe si directia TPD3. Informatiile sunt orientative si trebuie verificate pe sursele oficiale inainte de decizii comerciale sau fiscale.</p>
+      <div class="law-stat-grid">
+        <div class="law-stat"><b>18+</b><span>vanzare doar catre adulti, cu verificare de varsta</span></div>
+        <div class="law-stat"><b>20 mg/ml</b><span>limita UE pentru lichidele cu nicotina ca produse de consum</span></div>
+        <div class="law-stat"><b>10 ml</b><span>recipient de reumplere in cadrul TPD</span></div>
+        <div class="law-stat"><b>2 ml</b><span>cartus sau rezervor in regimul TPD</span></div>
+      </div>
+    </div>
+
+    <div class="law-grid">
+      <article class="card law-card">
+        <span class="law-icon">1</span>
+        <h3>Ce verifica un cumparator</h3>
+        <ul>
+          <li>Eticheta clara: nicotina, volum, avertisment, producator sau importator.</li>
+          <li>Sursa legala: magazin sau site care verifica varsta.</li>
+          <li>Ambalare sigura: capac child-resistant, sigiliu si protectie impotriva scurgerilor.</li>
+          <li>Device separat: baterie, garantie, instructiuni si responsabilitate de mediu.</li>
+        </ul>
+      </article>
+      <article class="card law-card">
+        <span class="law-icon">2</span>
+        <h3>Taxe si pret</h3>
+        <ul>
+          <li>In Romania, lichidul pentru inhalare poate avea acciza pe ml, inclusiv fara nicotina.</li>
+          <li>Prezentarea atasata indica reperul MF 2026: 1,31 lei/ml de la 1 aprilie 2026.</li>
+          <li>Un flacon de 10 ml inseamna 13,10 lei acciza inainte de efectul TVA si al marjei comerciale.</li>
+          <li>Un pret neobisnuit de mic poate indica risc fiscal, stoc neconform sau canal gri.</li>
+        </ul>
+      </article>
+      <article class="card law-card">
+        <span class="law-icon">3</span>
+        <h3>Vanzare si marketing</h3>
+        <ul>
+          <li>Minorii, automatele, livrarea fara verificare si vanzarea online sunt zone sensibile.</li>
+          <li>Reclamele, influencerii si promisiunile de sanatate trebuie tratate prudent.</li>
+          <li>Produsele prezentate ca solutii medicale intra in alta zona de reglementare.</li>
+          <li>Comertul transfrontalier cere verificarea tarii de destinatie si a regulilor locale.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="law-signal">
+      <article class="signal-card red">
+        <span class="chip alert">Risc mare</span>
+        <h3>Rosu</h3>
+        <p>Disposable ieftine, arome cu marketing orientat spre tineri, vanzare fara verificare de varsta, claims agresive si campanii cu audienta minora.</p>
+      </article>
+      <article class="signal-card yellow">
+        <span class="chip warn">De urmarit</span>
+        <h3>Galben</h3>
+        <p>Arome, pod systems, nicotine-free, synthetic nicotine, comenzi transfrontaliere, marketplace-uri si fiscalitatea armonizata la nivel UE.</p>
+      </article>
+      <article class="signal-card green">
+        <span class="chip good">Mai stabil</span>
+        <h3>Verde</h3>
+        <p>Lichide conforme TPD, magazine care verifica varsta, device-uri reutilizabile cu garantie, ambalare corecta si informare clara.</p>
+      </article>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <article class="card span-6 law-card">
+        <span class="chip cold">TPD3</span>
+        <h3>Ce poate urma</h3>
+        <p class="why">Nu exista text final TPD3. Directia discutata in prezentare indica mai mult control pe produse noi, arome, disposable, nicotine-free, publicitate online si verificarea varstei.</p>
+        <div class="law-timeline">
+          <div class="law-time"><b>02.04.2026</b><span>evaluare cadru UE TPD/TAD</span></div>
+          <div class="law-time"><b>18-22.05</b><span>call for evidence si consultare</span></div>
+          <div class="law-time"><b>14.08.2026</b><span>termen consultare publica</span></div>
+          <div class="law-time"><b>2026/2027</b><span>posibila propunere si negociere</span></div>
+          <div class="law-time"><b>Dupa adoptare</b><span>transpunere si reguli nationale</span></div>
+        </div>
+      </article>
+      <article class="card span-6 law-card">
+        <span class="chip good">Checklist</span>
+        <h3>Formula de verificare</h3>
+        <ul>
+          <li>Clasificare produs: lichid, recipient, dispozitiv, baterie, ambalaj, claim si tara.</li>
+          <li>Verificare produs: notificare, limite, avertismente, prospect si siguranta.</li>
+          <li>Verificare vanzare: varsta, online, curier, platforma si client.</li>
+          <li>Verificare fiscala: accize, TVA, operator, import sau achizitie intra-UE.</li>
+          <li>Monitorizare: TPD3, accize UE, WEEE, baterii si modificari nationale.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <span class="chip neutral">Surse oficiale</span>
+      <h3>Linkuri utile</h3>
+      <div class="law-source-grid">
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://health.ec.europa.eu/tobacco/product-regulation/electronic-cigarettes_en"><span class="chip cold">Comisia Europeana</span><b>Electronic cigarettes</b><small>Articolul 20 TPD si regulile UE pentru e-cigarette.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32014L0040"><span class="chip cold">EUR-Lex</span><b>Directiva 2014/40/UE</b><small>Textul oficial TPD, inclusiv cadrul pentru tigari electronice.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://legislatie.just.ro/Public/DetaliiDocument/183442"><span class="chip warn">Portal Legislativ</span><b>Legea 201/2016</b><small>Baza nationala pentru produse din tutun si produse conexe.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://legislatie.just.ro/Public/RezultateCautare?titlu=Legea%2064%2F2024"><span class="chip warn">Portal Legislativ</span><b>Legea 64/2024</b><small>Verificare forma actualizata si definitii aplicabile.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://mfinante.gov.ro/ro/web/site/acasa/domenii/fiscalitate/impozite-si-taxe/accize"><span class="chip good">Ministerul Finantelor</span><b>Accize</b><small>Niveluri, tabele si actualizari fiscale.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://eur-lex.europa.eu/legal-content/RO/TXT/?uri=CELEX:32023R1542"><span class="chip good">EUR-Lex</span><b>Regulamentul bateriilor</b><small>Reper pentru dispozitive, baterii si responsabilitate de mediu.</small></a>
+      </div>
+      <div class="law-note">Material informativ pentru adulti. Pentru import, stocuri, preturi, campanii sau vanzare online se verifica forma oficiala la zi si, unde este cazul, consultanta juridica si fiscala.</div>
     </div>
   </section>
 
@@ -703,7 +840,73 @@ var NET_PROFILE_EXTENSIONS = [
   {group:'NET complex',name:'English medium balanced',tags:['English','Latakia','Oriental','Virginia','echilibrat'],top:['Taifun GTR','Dvarw MTL CL 22','By-Ka V.11'],wire:'K1 28 GA / SS32 twisted / SS316L Clapton fin',avoid:'Clapton 2-core daca uniformizeaza fumul si condimentul.',note:'English mediu; trebuie sa ramana echilibrat intre fum, dulce natural si spice.'},
   {group:'NET complex',name:'Cigar Connecticut shade',tags:['cigar','Connecticut','shade','creamy','lemn'],top:['BKS Blade RTA','Asylum V3','Taifun GTR'],wire:'K1 28 GA / NiFe30 29-30 GA / K1 Clapton fin',avoid:'Ni80 Clapton daca il face prea cremos.',note:'Trabuc mai deschis, lemnos si catifelat; cere corp fin, nu masa grea.'}
 ];
-var profiles = (DATA.profiles || []).concat(NET_PROFILE_EXTENSIONS);
+function tp(group,name,tags,top,wire,avoid,note){return {group:group,name:name,tags:tags.split('|'),top:top,wire:wire,avoid:avoid,note:note}}
+var TUTUN_PROFILE_EXTENSIONS = [
+  tp('Tutun simplu','Tigareta blond dry','tigara|blond|dry|TH', ['Kayfun Lite Plus 2021 / KLP','Taifun GT One','Kayfun X'], 'K1 29 GA / SS316L 30 GA / SS316L Clapton fin', 'Clapton dens si Ni80 cald daca rotunjesc profilul.', 'Tigareta uscata si directa; camera compacta si sarma clara.'),
+  tp('Tutun simplu','Tigareta blond soft','tigara|blond|soft|daily', ['Kayfun X','Taifun GTR','Precisio MTL RTA'], 'K1 29 GA / NiFe30 30 GA / SS316L Clapton fin', 'K1 27 daca face profilul prea greu.', 'Blond mai moale, bun pentru utilizare zilnica si hit controlat.'),
+  tp('Tutun simplu','Tigareta light / air','light|aerat|curat|blond', ['Dvarw MTL FL','Kayfun Mini V3 / KV3 Mini','Taifun GT One'], 'SS316L 30 GA / K1 30 GA / SS316L Clapton fin', 'Camere foarte mari daca subtiaza excesiv aroma.', 'Profil lejer si aerat; cere claritate, nu masa termica.'),
+  tp('Tutun simplu','Tigareta strong','strong|TH|aspru|direct', ['Kayfun Lite Plus 2021 / KLP','Dvarw MTL CL 22','Taifun GT One'], 'K1 29 GA / K1 28 GA / SS32 twisted', 'Ni80 cald daca il face prea rotund.', 'Tigareta cu lovitura mai ferma; necesita contur si corp moderat.'),
+  tp('Tutun simplu','Tigareta slim','slim|usor|curat|sec', ['Kayfun Mini V3 / KV3 Mini','Dvarw MTL FL','Kayfun Lite Plus 2021 / KLP'], 'K1 30 GA / SS316L 31 GA / SS316L Clapton fin', 'K1 27 si Clapton gros.', 'Profil fin si subtire; merge pe coil mic si camera precisa.'),
+  tp('Tutun simplu','Rolling blond sec','rolling|blond|sec|realist', ['Kayfun Lite Plus 2021 / KLP','Taifun GT One','Dvarw MTL CL 22'], 'K1 29 GA / SS316L 30 GA / SS32 twisted', 'Sarme dulci sau mase mari.', 'Tutun de rulat blond; tinta este uscaciune si realism.'),
+  tp('Tutun simplu','Rolling brun earthy','rolling|brun|earthy|corp', ['Dvarw MTL CL 22','Taifun GTR','By-Ka V.11'], 'K1 28 GA / SS32 twisted / K1 Clapton fin', 'SS31 singur daca rupe corpul.', 'Brun pamantiu, cu nevoie de substrat si hit curat.'),
+  tp('Tutun simplu','Rolling ashy','rolling|ashy|cenusa|fum', ['Dvarw MTL CL 22','Taifun GT One','Kayfun Lite Plus 2021 / KLP'], 'K1 29 GA / K1 28 GA / SS316L Clapton fin', 'Clapton dulce daca ascunde nota ashy.', 'Nota de scrum fin; cere airflow precis si caldura moderata.'),
+  tp('Tutun simplu','Rolling honey leaf','rolling|miere|leaf|dulce natural', ['Kayfun X','Taifun GTR','By-Ka V.11'], 'NiFe30 30 GA / K1 29 GA / SS316L Clapton fin', 'Ni80 Clapton daca devine desert.', 'Dulceata naturala de frunza, nu caramel.'),
+  tp('Tutun simplu','Rolling spicy leaf','rolling|spice|piper|sec', ['Dvarw MTL FL','By-Ka V.11','FOUR ONE FIVE 415RTA V2'], 'SS316L 30 GA / K1 29 GA / SS32 twisted', 'K1 27 daca ingroapa condimentul.', 'Condiment uscat si contur clar; are nevoie de separare.'),
+  tp('Tutun simplu','Cigarillo sec','cigarillo|sec|lemn|trabuc', ['Asylum V3','Dvarw MTL CL 22','Prime Minister Freehand'], 'K1 28 GA / K1 29 GA / K1 Clapton fin', 'SS31 daca subtiaza lemnul.', 'Cigarillo uscat si lemnos; corp fin fara dulceata.'),
+  tp('Tutun simplu','Cigarillo dulce lemnos','cigarillo|dulce lemnos|soft|corp', ['Asylum V3','Taifun GTR','BKS Blade RTA'], 'K1 28 GA / NiFe30 29-30 GA / K1 Clapton fin', 'Clapton gros daca devine siropos.', 'Lemnos cu dulceata controlata; cere camera cu presiune aromatica.'),
+  tp('Tutun simplu','Cigar mild claro','cigar|claro|mild|lemn', ['BKS Blade RTA','Taifun GTR','Asylum V3'], 'K1 28 GA / NiFe30 30 GA / SS316L Clapton fin', 'K1 27 daca il face prea greu.', 'Trabuc deschis, fin si lemnos; se potriveste cu finete si corp mediu.'),
+  tp('Tutun simplu','Cigar robusto dark','cigar|robusto|dark|cacao', ['Asylum V3','Prime Minister Freehand','Dvarw MTL CL 22'], 'K1 28 GA / K1 Clapton fin / SS32 twisted', 'SS30 simplu daca taie corpul.', 'Trabuc inchis si dens; cere corp, dar separare suficienta.'),
+  tp('Tutun simplu','Pipe classic plain','pipe|classic|plain|rotund', ['Muted+','Kayfun X','Taifun GTR'], 'K1 28 GA / NiFe30 30 GA / Clapton fin 1-core', 'Fused Clapton daca devine crema.', 'Pipe simplu, rotund, tobacco-first.'),
+  tp('Tutun simplu','Pipe black note','pipe|black|dark sweet|rotund', ['Muted+','Asylum V3','Kayfun X'], 'K1 28 GA / Ni80 30 GA / Clapton fin 1-core', 'Ni80 Clapton daca il indulceste prea mult.', 'Pipe inchis si moale; textura fina poate ajuta.'),
+  tp('Tutun simplu','Pipe dry burley','pipe|Burley|dry|nucos', ['By-Ka V.11','Muted+','Dvarw MTL CL 22'], 'K1 28 GA / SS32 twisted / SS316L Clapton fin', 'SS31 singur daca il lasa scheletic.', 'Pipe sec si nucos; necesita corp curat.'),
+  tp('Tutun simplu','Pipe soft cavendish','pipe|Cavendish|soft|dulce natural', ['Muted+','Kayfun X','Asylum V3'], 'K1 28 GA / Ni80 30 GA / Clapton fin 1-core', 'Fused Clapton daca devine desert.', 'Cavendish moale, dar baza de tutun trebuie sa ramana prezenta.'),
+  tp('Tutun simplu','Tutun toast','toast|prajit|leaf|sec', ['Taifun GTR','By-Ka V.11','Kayfun X'], 'K1 28 GA / K1 29 GA / SS316L Clapton fin', 'Ni80 cald daca arde nota prajita.', 'Toast uscat si curat; necesita caldura controlata.'),
+  tp('Tutun simplu','Tutun roasted','roasted|prajit|dark|corp', ['Taifun GTR','Muted+','Dvarw MTL CL 22'], 'K1 28 GA / SS32 twisted / K1 Clapton fin', 'SS30 prea subtire daca pierde partea prajita.', 'Prajit mai dens; are nevoie de textura si corp.'),
+  tp('Tutun simplu','Tutun leather light','piele|light|lemn|sec', ['Prime Minister Freehand','Taifun GTR','Dvarw MTL FL'], 'K1 29 GA / SS32 twisted / SS316L Clapton fin', 'Clapton greu daca lipeste pielea de lemn.', 'Piele usoara si uscata; claritatea ramane importanta.'),
+  tp('Tutun simplu','Tutun leather dark','piele|dark|lemn|matur', ['Prime Minister Freehand','Dvarw MTL CL 22','Taifun GTR'], 'K1 28 GA / K1 Clapton fin / SS32 twisted', 'Ni80 Clapton daca devine dulce.', 'Piele inchisa si maturare; cere substrat si airflow smooth.'),
+  tp('Tutun simplu','Tutun mineral sec','mineral|sec|curat|aspru', ['Dvarw MTL FL','Kayfun Lite Plus 2021 / KLP','Spica Pro'], 'SS316L 30 GA / K1 30 GA / NiFe30 30 GA', 'K1 27 si Clapton dens.', 'Profil mineral si sec; se citeste bine pe camere precise.'),
+  tp('Tutun simplu','Tutun herbal dry','herbal|sec|verde|leaf', ['Dvarw MTL FL','Spica Pro','FOUR ONE FIVE 415RTA MTL'], 'SS316L 30 GA / K1 30 GA / SS316L Clapton fin', 'Ni80 cald daca inmoaie nota verde.', 'Verde uscat si aromatic; cere coil mic si claritate.'),
+  tp('Tutun simplu','Tutun hay soft','hay|fan|soft|luminos', ['Kayfun X','Dvarw MTL FL','Taifun GT One'], 'NiFe30 30 GA / K1 29 GA / SS316L Clapton fin', 'Clapton greu si camere mari.', 'Fan moale si luminos; nu trebuie ingreunat.'),
+  tp('Tutun simplu','Tutun nutty dry','nuci|dry|Burley-like|earthy', ['By-Ka V.11','Dvarw MTL CL 22','Taifun GTR'], 'K1 28 GA / SS32 twisted / K1 29 GA', 'Ni80 Clapton daca face nuca uleioasa.', 'Nucos sec; corp curat si textura fina.'),
+  tp('Tutun simplu','Tutun nutty sweet','nuci|dulce natural|rotund|soft', ['Muted+','Taifun GTR','By-Ka V.11'], 'K1 28 GA / NiFe30 30 GA / Clapton fin 1-core', 'Fused Clapton daca devine pasta.', 'Nucos si rotund; trebuie pastrata baza tobacco.'),
+  tp('Tutun simplu','Tutun smoky light','fum|light|lemn|sec', ['Dvarw MTL FL','Taifun GTR','Dvarw MTL CL 22'], 'K1 29 GA / SS32 twisted / SS316L Clapton fin', 'K1 27 daca fumul acopera restul.', 'Fum discret si lemnos; separare inainte de masa.'),
+  tp('Tutun simplu','Tutun smoky dark','fum|dark|robust|piele', ['Dvarw MTL CL 22','Prime Minister Freehand','Taifun GTR'], 'K1 28 GA / K1 Clapton fin / SS32 twisted', 'Clapton gros daca devine opac.', 'Fum inchis si robust; cere corp, dar nu exces.'),
+  tp('Tutun simplu','Tutun floral leaf','floral|leaf|luminos|sec', ['Dvarw MTL FL','FOUR ONE FIVE 415RTA V2','By-Ka V.11'], 'SS316L 30 GA / K1 29 GA / SS316L Clapton fin', 'Ni80 si K1 27 daca ingroapa floralul.', 'Floral de frunza; cere claritate si airflow fin.'),
+  tp('Tutun simplu','Tutun bitter leaf','amar|leaf|dark|sec', ['Taifun GTR','Dvarw MTL CL 22','Kayfun Lite Plus 2021 / KLP'], 'K1 29 GA / K1 28 GA / SS32 twisted', 'SS prea subtire daca amarul devine aspru.', 'Amar natural de frunza; are nevoie de control si corp moderat.'),
+  tp('Tutun complex','Tutun + biscuit sec','biscuit|sec|copt|tobacco', ['Kayfun X','Taifun GTR','Muted+'], 'K1 28 GA / K1 29 GA / SS316L Clapton fin', 'Fused Clapton daca il duce spre desert.', 'Biscuit discret, baza de tutun ramane in fata.'),
+  tp('Tutun complex','Tutun + nuca pecan','pecan|nuci|dulce natural|rotund', ['Muted+','By-Ka V.11','Taifun GTR'], 'K1 28 GA / Clapton fin 1-core / SS32 twisted', 'Ni80 Clapton daca devine uleios.', 'Pecan cere textura, dar fara crema grea.'),
+  tp('Tutun complex','Tutun + alune prajite','alune|prajit|nucos|corp', ['By-Ka V.11','Muted+','Prime Minister Freehand'], 'K1 28 GA / SS32 twisted / K1 Clapton fin', 'SS31 singur daca subtiaza prajeala.', 'Alune prajite si tobacco; corp curat, nu pasta.'),
+  tp('Tutun complex','Tutun + migdale amare','migdale|amar|nucos|sec', ['Taifun GTR','By-Ka V.11','Dvarw MTL FL'], 'K1 29 GA / SS316L 30 GA / SS32 twisted', 'Clapton dens daca indulceste amarul.', 'Migdala amara cere contur si uscaciune.'),
+  tp('Tutun complex','Tutun + castane','castane|copt|rotund|corp', ['Muted+','Taifun GTR','Kayfun X'], 'K1 28 GA / NiFe30 30 GA / Clapton fin 1-core', 'Fused Clapton daca devine piure.', 'Castana coapta trebuie tinuta langa tutun, nu peste el.'),
+  tp('Tutun complex','Tutun + cafea lapte discret','cafea|lapte|soft|rotund', ['Muted+','Asylum V3','Taifun GTR'], 'K1 28 GA / Ni80 30 GA / Clapton fin 1-core', 'Clapton greu daca face crema dominanta.', 'Cafea cu rotunjire discreta; mouthfeel controlat.'),
+  tp('Tutun complex','Tutun + espresso dark','espresso|amar|dark|prajit', ['Taifun GTR','Asylum V3','Dvarw MTL CL 22'], 'K1 28 GA / SS32 twisted / K1 Clapton fin', 'SS30 7 spire daca amarul devine aspru.', 'Espresso inchis; are nevoie de corp si airflow smooth.'),
+  tp('Tutun complex','Tutun + ciocolata amara','ciocolata|amar|dark|cacao', ['Taifun GTR','Asylum V3','Prime Minister Freehand'], 'K1 28 GA / K1 Clapton fin / SS32 twisted', 'Ni80 Clapton daca devine desert.', 'Ciocolata amara trebuie sa ramana uscata si tobacco-first.'),
+  tp('Tutun complex','Tutun + cacao uscata','cacao|sec|amar|leaf', ['Taifun GTR','By-Ka V.11','Dvarw MTL CL 22'], 'K1 28 GA / SS32 twisted / SS316L Clapton fin', 'Fused Clapton daca rotunjeste excesiv.', 'Cacao uscata si frunza; textura fina ajuta.'),
+  tp('Tutun complex','Tutun + caramel sarat','caramel|sarat|dulce fin|lemn', ['Kayfun X','Muted+','Asylum V3'], 'K1 28 GA / NiFe30 30 GA / Clapton fin 1-core', 'K1 27 daca devine greu; fused daca lipeste.', 'Caramelul trebuie dozat, cu tutunul in fata.'),
+  tp('Tutun complex','Tutun + vanilie uscata','vanilie|dry|pipe|aromatizat', ['Muted+','Prime Minister Freehand','Kayfun X'], 'K1 28 GA / NiFe30 30 GA / SS316L Clapton fin', 'Clapton ca default daca face crema.', 'Vanilie uscata integrata in frunza.'),
+  tp('Tutun complex','Tutun + custard light','custard|light|crema|soft', ['Asylum V3','Muted+','BKS Blade RTA'], 'K1 28 GA / Ni80 30 GA / Clapton fin 1-core', 'Fused Clapton daca transforma profilul in desert greu.', 'Custard discret; baza de tutun trebuie sa ramana citibila.'),
+  tp('Tutun complex','Tutun + crema de whisky','whisky|crema|lemn|cald', ['Prime Minister Freehand','Muted+','Asylum V3'], 'K1 28 GA / K1 Clapton fin / NiFe30 29-30 GA', 'SS30 simplu daca rupe corpul cremos.', 'Whisky cremos controlat, fara sirop.'),
+  tp('Tutun complex','Tutun + rom stafide','rom|stafide|dark sweet|cald', ['Asylum V3','Prime Minister Freehand','Taifun GTR'], 'K1 28 GA / K1 Clapton fin / SS32 twisted', 'Ni80 Clapton daca devine prea dulce.', 'Rom si stafide trebuie tinute in structura tutunului.'),
+  tp('Tutun complex','Tutun + prune dark','prune|dark|fermentat|dulce natural', ['Taifun GTR','By-Ka V.11','Asylum V3'], 'K1 28 GA / NiFe30 29-30 GA / SS32 twisted', 'Fused Clapton daca face prunele sirop.', 'Pruna inchisa, cu corp si aciditate moderata.'),
+  tp('Tutun complex','Tutun + cirese dark','cirese|dark|fruct|tobacco', ['Asylum V3','Taifun GTR','BKS Blade RTA'], 'K1 28 GA / SS32 twisted / K1 Clapton fin', 'Ni80 cald daca fructul devine bomboana.', 'Cireasa trebuie sa ramana dark, nu candy.'),
+  tp('Tutun complex','Tutun + mar copt','mar copt|copt|dulce natural|light', ['Kayfun X','Muted+','Taifun GTR'], 'K1 28 GA / NiFe30 30 GA / SS316L Clapton fin', 'Fused Clapton daca il face placinta.', 'Mar copt discret, cu tutun usor si caldura moderata.'),
+  tp('Tutun complex','Tutun + pere coapte','pere|copt|soft|dulce natural', ['Kayfun X','Muted+','Precisio MTL RTA'], 'NiFe30 30 GA / K1 28 GA / SS316L Clapton fin', 'Ni80 Clapton daca devine nectar.', 'Para coapta fina; necesita atomizor smooth.'),
+  tp('Tutun complex','Tutun + citrice uscate','citrice|dry|aciditate|leaf', ['Dvarw MTL FL','By-Ka V.11','Dvarw MTL CL 22'], 'SS316L 30 GA / K1 29 GA / SS32 twisted', 'SS31 prea rece daca ridica aciditatea.', 'Citrice uscate integrate in frunza.'),
+  tp('Tutun complex','Tutun + bergamota','bergamota|tea|citrice|floral', ['Dvarw MTL FL','FOUR ONE FIVE 415RTA V2','By-Ka V.11'], 'SS316L 30 GA / K1 29 GA / SS316L Clapton fin', 'K1 27 daca ingroapa parfumul.', 'Bergamota cere claritate si airflow fin.'),
+  tp('Tutun complex','Tutun + menta rece discreta','menta|rece|fresh|tobacco', ['Dvarw MTL FL','Kayfun X','Precisio MTL RTA'], 'SS316L 30 GA / K1 29 GA / NiFe30 30 GA', 'Clapton daca reduce prospetimea.', 'Rece discret, fara sa acopere tutunul.'),
+  tp('Tutun complex','Tutun + ceai negru','ceai negru|tanic|dry|leaf', ['Dvarw MTL FL','Taifun GTR','By-Ka V.11'], 'K1 29 GA / SS316L 30 GA / SS32 twisted', 'Ni80 cald daca face ceaiul plat.', 'Tanic si uscat; cere separare.'),
+  tp('Tutun complex','Tutun + ceai verde','ceai verde|herbal|luminos|sec', ['Dvarw MTL FL','Spica Pro','FOUR ONE FIVE 415RTA MTL'], 'SS316L 30 GA / K1 30 GA / SS316L Clapton fin', 'K1 27 si Clapton dens.', 'Ceai verde si tobacco luminos; coil mic, temperatura moderata.'),
+  tp('Tutun complex','Tutun + condimente orientale','spice|oriental|cald|floral', ['Dvarw MTL FL','By-Ka V.11','Prime Minister Freehand'], 'SS32 twisted / K1 29 GA / SS316L Clapton fin', 'K1 27 daca ingroapa condimentele.', 'Condimentele trebuie separate de baza de tutun.'),
+  tp('Tutun complex','Tutun + scortisoara light','scortisoara|light|cald|spice', ['Kayfun X','Muted+','Taifun GTR'], 'K1 28 GA / K1 29 GA / SS316L Clapton fin', 'Ni80 cald daca scortisoara devine intepatoare.', 'Scortisoara discreta, calda, fara desert greu.'),
+  tp('Tutun complex','Tutun + piper negru','piper|spice|dark|TH', ['Dvarw MTL CL 22','By-Ka V.11','Taifun GTR'], 'K1 29 GA / SS32 twisted / SS316L 30 GA', 'Clapton daca indulceste piperul.', 'Piper negru si hit; cere precizie si corp moderat.'),
+  tp('Tutun complex','Tutun + lemn cedru','cedru|lemn|sec|cigar', ['Asylum V3','Prime Minister Freehand','Dvarw MTL CL 22'], 'K1 28 GA / K1 29 GA / K1 Clapton fin', 'SS31 daca subtiaza lemnul.', 'Cedru si cigar light; presiune aromatica controlata.'),
+  tp('Tutun complex','Tutun + piele cacao','piele|cacao|dark|matur', ['Prime Minister Freehand','Taifun GTR','Asylum V3'], 'K1 28 GA / SS32 twisted / K1 Clapton fin', 'Ni80 Clapton daca devine prea dulce.', 'Piele si cacao; corp cu separare.'),
+  tp('Tutun complex','Tutun + miere uscata','miere|dry|leaf|dulce natural', ['Kayfun X','Taifun GTR','Dvarw MTL FL'], 'NiFe30 30 GA / K1 29 GA / SS316L Clapton fin', 'K1 27 daca ingroasa dulceata.', 'Miere uscata de frunza, nu topping lipicios.'),
+  tp('Tutun complex','Tutun + melasa dark','melasa|dark|dulce greu|corp', ['Asylum V3','Prime Minister Freehand','Muted+'], 'K1 28 GA / K1 Clapton fin / SS32 twisted', 'Fused Clapton daca devine opac.', 'Melasa intunecata; cere corp, dar airflow suficient.'),
+  tp('Tutun complex','Tutun + cola tobacco','cola|spice|sweet|tobacco', ['BKS Blade RTA','Kayfun X','Asylum V3'], 'K1 28 GA / SS316L Clapton fin / NiFe30 30 GA', 'Ni80 cald daca duce profilul spre candy.', 'Cola tobacco trebuie tinut sec si condimentat.'),
+  tp('Tutun complex','Tutun + absint herbal','absint|herbal|anason|dry', ['Dvarw MTL FL','FOUR ONE FIVE 415RTA V2','By-Ka V.11'], 'SS316L 30 GA / K1 29 GA / SS316L Clapton fin', 'Clapton gros daca acopera herbalul.', 'Herbal intens; cere claritate si dozaj atent al caldurii.')
+];
+var profiles = (DATA.profiles || []).concat(NET_PROFILE_EXTENSIONS,TUTUN_PROFILE_EXTENSIONS);
 var wires = DATA.wires || [];
 var selectedProblem = 'balance';
 var selectedTags = [];
@@ -977,9 +1180,9 @@ wireChoices = function(profile, problemId, atom){
   return set;
 }
 
-var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','tcGuide','sources'];
+var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','tcGuide','legislativ','sources'];
 function activeSection(id, navId){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.navbtn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===(navId||id))})}
-function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
+function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
 function routeHash(route){return '#'+String(route||'home').replace(/^#/,'')}
 function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash)}applyRoute(true)}
 function goTab(id){setRoute(id)}
@@ -992,6 +1195,7 @@ var SEARCH_MODES=[
   {id:'atomizers',label:'Atomizoare'},
   {id:'profiles',label:'Lichide'},
   {id:'wires',label:'Sarme'},
+  {id:'legislativ',label:'Legislativ'},
   {id:'sources',label:'Recenzii'}
 ];
 function wireSearchText(w){return norm([w.name,w.role,w.avoid,(w.practical||[]).join(' '),wireAliases(w.name)].join(' '))}
@@ -1012,13 +1216,16 @@ function scoreSource(a,q){return fieldScore(q,[[getName(a),25],[getDna(a),8],[ge
 function atomSearchText(a){return norm([getName(a),getDna(a),getWhy(a),getBuild(a),first(a,['classes']),getSources(a).map(function(s){return sourceTitle(s)+' '+sourceClaim(s)}).join(' ')].join(' '))}
 function sourceSearchText(a){return norm([getName(a),getDna(a),getSources(a).map(function(s){return sourceTitle(s)+' '+sourceLabel(s)+' '+sourceClaim(s)+' '+cleanHost(sourceUrl(s))}).join(' ')].join(' '))}
 function tcGuideSearchResult(q){return {tab:'tcGuide',route:'tcGuide',title:'Ghid control temperatura',meta:'TC - sarme, chipseturi, coil si reglaje',query:q,score:999}}
+var LEGISLATIVE_SEARCH_TEXT='legislativ lege reglementari vape romania uniunea europeana tpd tpd3 accize taxe minori 18 vanzare online publicitate marketing disposable arome baterii weee lichide nicotina 20 mg 10 ml 2 ml portal legislativ eur-lex ministerul finantelor cumparatori checklist';
+function legislativeSearchResult(q){return {tab:'legislativ',route:'legislativ',title:'Legislativ vape 2026',meta:'Reguli, taxe, TPD3, checklist cumparatori',query:q,score:fieldScore(q,[[LEGISLATIVE_SEARCH_TEXT,35],['Lege 201 2016 Lege 64 2024 Directiva 2014 40 UE accize 2026',25]])}}
 function searchBuckets(q){var nq=norm(q);return {
   atomizers:atomizers.map(function(a){return {a:a,score:scoreAtom(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'atomizers',route:'atomizor/'+atomSlug(x.a),title:getName(x.a),meta:'Atomizor - '+(airflowInfo(x.a).label||'MTL'),query:q,score:x.score}}),
   profiles:profiles.map(function(p,i){return {p:p,i:i,score:scoreProfile(p,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||profileDisplayName(x.p).localeCompare(profileDisplayName(y.p))}).slice(0,8).map(function(x){return {tab:'profiles',title:profileDisplayName(x.p),meta:'Lichid - '+liquidClassLabel(x.p),query:q,index:x.i,score:x.score}}),
   wires:WIRE_GUIDE.map(function(w){return {w:w,score:scoreWire(w,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||x.w.name.localeCompare(y.w.name)}).slice(0,8).map(function(x){return {tab:'wires',title:x.w.name,meta:'Sarma - '+x.w.role,query:q,score:x.score}}),
+  legislativ:[legislativeSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   sources:atomizers.map(function(a){return {a:a,score:scoreSource(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'sources',title:getName(x.a),meta:'Recenzii si builduri',query:q,score:x.score}})
 }}
-function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,tcGuide:3,sources:4};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
+function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,legislativ:3,tcGuide:4,sources:5};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
 function bestSearchMode(q,b){if(searchMode!=='auto')return searchMode;var first=autoSearchList(q,b)[0];return first?first.tab:'atomizers'}
 function applySearch(item){var q=item.query||$('globalSearch').value.trim();if(item.route){hideSearchPanel();setRoute(item.route);return}if(item.tab==='wires'){if($('wireSearch')){$('wireSearch').value=q;renderWires()}}else if(item.tab==='profiles'){if($('profileSearch')){$('profileSearch').value=q;renderProfiles()}}else if(item.tab==='sources'){if($('sourceSearch')){$('sourceSearch').value=q;renderSources()}}else{if($('atomSearch')){$('atomSearch').value=q;selectedRole='all';renderAtomizers()}}goTab(item.tab);hideSearchPanel()}
 function hideSearchPanel(){var p=$('searchPanel');if(p)p.classList.remove('active')}
