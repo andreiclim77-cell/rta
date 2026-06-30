@@ -255,12 +255,19 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .law-card .law-icon{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:#111;color:#ffd27b;font-weight:900;margin-bottom:10px}
 .law-card ul{padding-left:18px;margin:8px 0 0}
 .law-card li{margin:5px 0;color:#444}
-.law-signal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
-.signal-card{border-radius:var(--radius);padding:14px;color:#111;min-height:150px}
+.law-signal-intro{margin-top:14px;border:1px solid #e4d6bd;background:linear-gradient(120deg,#17110b,#263744);color:#fff;border-radius:var(--radius);padding:15px 16px}
+.law-signal-intro h3{color:#fff;margin:0 0 5px}
+.law-signal-intro p{color:#f3eadc;margin:0}
+.law-signal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}
+.signal-card{border-radius:var(--radius);padding:14px;color:#111;min-height:270px}
 .signal-card.red{background:linear-gradient(180deg,#ffe9e7,#fff7f6);border:1px solid rgba(255,85,72,.35)}
 .signal-card.yellow{background:linear-gradient(180deg,#fff3d3,#fffaf0);border:1px solid rgba(255,190,84,.42)}
 .signal-card.green{background:linear-gradient(180deg,#eaffef,#f7fff9);border:1px solid rgba(85,209,122,.38)}
 .signal-card b{display:block;margin-bottom:8px}
+.signal-card h3{margin:7px 0 6px}
+.signal-card p{color:#333;margin-bottom:9px}
+.signal-card ul{padding-left:18px;margin:0;display:grid;gap:5px}
+.signal-card li{color:#303030;font-size:13px;line-height:1.35}
 .law-timeline{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-top:14px}
 .law-time{border:1px solid #e0d5c6;background:#fff;border-radius:var(--radius);padding:10px;min-width:0}
 .law-time b{display:block;color:#9d4100;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
@@ -590,21 +597,59 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       </article>
     </div>
 
+    <div class="law-signal-intro">
+      <h3>Semafor legislativ orientativ</h3>
+      <p>Culorile indica nivelul de atentie pentru un cumparator sau operator comercial. Rosu inseamna risc ridicat, galben inseamna zona care trebuie monitorizata, verde inseamna zona mai stabila daca sunt respectate regulile aplicabile.</p>
+    </div>
+
     <div class="law-signal">
       <article class="signal-card red">
         <span class="chip alert">Risc mare</span>
         <h3>Rosu</h3>
-        <p>Disposable ieftine, arome cu marketing orientat spre tineri, vanzare fara verificare de varsta, claims agresive si campanii cu audienta minora.</p>
+        <p>Exemple unde riscul legal, fiscal sau reputational este ridicat.</p>
+        <ul>
+          <li>Vanzare catre minori sau fara verificare reala de varsta.</li>
+          <li>Livrare online fara control de varsta la comanda si la predare.</li>
+          <li>Disposable-uri ieftine, greu de trasat, cu ambalaj agresiv sau aspect infantil.</li>
+          <li>Arome promovate explicit catre tineri: candy, jucarii, desene, formulare de tip party.</li>
+          <li>Promisiuni medicale: tratament, vindecare, renuntare garantata la fumat.</li>
+          <li>Lichide fara eticheta completa, fara producator/importator sau fara avertismente.</li>
+          <li>Depasirea limitelor TPD pentru nicotina, volum recipient sau rezervor.</li>
+          <li>Influenceri, giveaway-uri sau reclame cu audienta minora.</li>
+          <li>Preturi suspect de mici, fara trasabilitate fiscala sau canal gri.</li>
+        </ul>
       </article>
       <article class="signal-card yellow">
         <span class="chip warn">De urmarit</span>
         <h3>Galben</h3>
-        <p>Arome, pod systems, nicotine-free, synthetic nicotine, comenzi transfrontaliere, marketplace-uri si fiscalitatea armonizata la nivel UE.</p>
+        <p>Exemple care pot fi conforme, dar necesita verificare si monitorizare constanta.</p>
+        <ul>
+          <li>Arome dulci, desert, fructe intense sau denumiri foarte jucause.</li>
+          <li>Lichide fara nicotina destinate inhalarii, inclusiv shortfill sau longfill.</li>
+          <li>Produse cu nicotina sintetica sau formule noi greu de incadrat.</li>
+          <li>Pod systems, cartuse preumplute si rezerve cu comunicare comerciala agresiva.</li>
+          <li>Comenzi transfrontaliere, marketplace-uri si vanzare din alta tara UE.</li>
+          <li>Campanii online, afiliere, coduri de reducere si continut pe social media.</li>
+          <li>Stocuri mai vechi, produse reetichetate sau schimbari de ambalaj.</li>
+          <li>Accize pe ml, TVA, import, achizitie intra-UE si raportari fiscale.</li>
+          <li>TPD3, accize UE, baterii, WEEE si reguli nationale in schimbare.</li>
+        </ul>
       </article>
       <article class="signal-card green">
         <span class="chip good">Mai stabil</span>
         <h3>Verde</h3>
-        <p>Lichide conforme TPD, magazine care verifica varsta, device-uri reutilizabile cu garantie, ambalare corecta si informare clara.</p>
+        <p>Exemple de zona mai stabila, cand documentele si procedurile sunt in ordine.</p>
+        <ul>
+          <li>Lichide conforme TPD, cu eticheta clara si informatii complete.</li>
+          <li>Nicotina in limita legala, recipient de reumplere de 10 ml si ambalare corecta.</li>
+          <li>Rezervor sau cartus in limita aplicabila si protectie impotriva scurgerilor.</li>
+          <li>Cap child-resistant, sigiliu, avertismente si prospect/instructiuni disponibile.</li>
+          <li>Magazin care verifica varsta si pastreaza o procedura consecventa.</li>
+          <li>Device-uri reutilizabile, cu garantie, instructiuni si informatie despre baterie.</li>
+          <li>Produse trasabile: factura, lot, producator/importator si canal legal.</li>
+          <li>Comunicare neutra, fara promisiuni medicale si fara adresare catre minori.</li>
+          <li>Verificare periodica pe surse oficiale pentru taxe si reguli noi.</li>
+        </ul>
       </article>
     </div>
 
@@ -1216,7 +1261,7 @@ function scoreSource(a,q){return fieldScore(q,[[getName(a),25],[getDna(a),8],[ge
 function atomSearchText(a){return norm([getName(a),getDna(a),getWhy(a),getBuild(a),first(a,['classes']),getSources(a).map(function(s){return sourceTitle(s)+' '+sourceClaim(s)}).join(' ')].join(' '))}
 function sourceSearchText(a){return norm([getName(a),getDna(a),getSources(a).map(function(s){return sourceTitle(s)+' '+sourceLabel(s)+' '+sourceClaim(s)+' '+cleanHost(sourceUrl(s))}).join(' ')].join(' '))}
 function tcGuideSearchResult(q){return {tab:'tcGuide',route:'tcGuide',title:'Ghid control temperatura',meta:'TC - sarme, chipseturi, coil si reglaje',query:q,score:999}}
-var LEGISLATIVE_SEARCH_TEXT='legislativ lege reglementari vape romania uniunea europeana tpd tpd3 accize taxe minori 18 vanzare online publicitate marketing disposable arome baterii weee lichide nicotina 20 mg 10 ml 2 ml portal legislativ eur-lex ministerul finantelor cumparatori checklist';
+var LEGISLATIVE_SEARCH_TEXT='legislativ lege reglementari vape romania uniunea europeana tpd tpd3 accize taxe minori 18 vanzare online publicitate marketing disposable arome baterii weee lichide nicotina 20 mg 10 ml 2 ml portal legislativ eur-lex ministerul finantelor cumparatori checklist rosu galben verde semafor risc mare de urmarit mai stabil shortfill longfill synthetic nicotine pod systems marketplace social media influencer claims medicale eticheta avertisment trasabilitate garantie';
 function legislativeSearchResult(q){return {tab:'legislativ',route:'legislativ',title:'Legislativ vape 2026',meta:'Reguli, taxe, TPD3, checklist cumparatori',query:q,score:fieldScore(q,[[LEGISLATIVE_SEARCH_TEXT,35],['Lege 201 2016 Lege 64 2024 Directiva 2014 40 UE accize 2026',25]])}}
 function searchBuckets(q){var nq=norm(q);return {
   atomizers:atomizers.map(function(a){return {a:a,score:scoreAtom(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'atomizers',route:'atomizor/'+atomSlug(x.a),title:getName(x.a),meta:'Atomizor - '+(airflowInfo(x.a).label||'MTL'),query:q,score:x.score}}),
