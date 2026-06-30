@@ -66,6 +66,8 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn.review-nav:hover,.navbtn.review-nav.active{color:#080808;border-color:#ffd16a;background:linear-gradient(135deg,#ff8a2a,#ffc23b);box-shadow:0 12px 30px rgba(255,122,26,.34)}
 .navbtn.wire-nav{color:#fff;border-color:rgba(85,209,122,.62);background:#102018}
 .navbtn.wire-nav:hover,.navbtn.wire-nav.active{color:#061008;border-color:#55d17a;background:#55d17a;box-shadow:0 8px 20px rgba(85,209,122,.18)}
+.navbtn.tc-nav{color:#eafcff;border-color:rgba(55,191,232,.65);background:#0b1b22;font-weight:900}
+.navbtn.tc-nav:hover,.navbtn.tc-nav.active{color:#071014;border-color:#37bfe8;background:#37bfe8;box-shadow:0 8px 22px rgba(55,191,232,.22)}
 main{padding:28px 0 54px;background:repeating-linear-gradient(90deg,#fff 0,#fff 196px,#f2f2f2 197px,#fff 198px)}
 .section{display:none;animation:fade .18s ease}
 .section.active{display:block}
@@ -98,6 +100,7 @@ h3{font-size:18px;margin-bottom:8px;letter-spacing:0}
 .btn.secondary{background:#101820;border-color:#37bfe8;color:#e8fbff;box-shadow:none}
 .btn.ghost{background:#111;border-color:#3a3a3a;color:#fff;box-shadow:none}
 .btn.review-cta{background:linear-gradient(135deg,#ff7a1a,#ffb000);border-color:#ffc23b;color:#0a0a0a;box-shadow:0 12px 28px rgba(255,122,26,.24)}
+.btn.tc-cta{background:#37bfe8;border-color:#37bfe8;color:#061014;box-shadow:0 12px 28px rgba(55,191,232,.18)}
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
 .card{background:#fff;border:1px solid #ddd;border-radius:var(--radius);padding:16px;box-shadow:0 8px 20px rgba(0,0,0,.08);min-width:0}
 .span-3{grid-column:span 3}.span-4{grid-column:span 4}.span-5{grid-column:span 5}.span-6{grid-column:span 6}.span-7{grid-column:span 7}.span-8{grid-column:span 8}.span-12{grid-column:span 12}
@@ -198,9 +201,25 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .liquid-match,.wire-match{border:1px solid #e3e3e3;background:#fff;border-radius:var(--radius);padding:10px;min-width:0;overflow-wrap:anywhere}
 .liquid-match b,.wire-match b{display:block;margin-bottom:4px;color:#111}
 .liquid-match small,.wire-match small{display:block;color:#555;line-height:1.4}
+.tc-hero{border:1px solid #111;background:linear-gradient(90deg,rgba(0,0,0,.88),rgba(9,34,42,.76)),url("assets/rta-hero-background.png") center/cover no-repeat;color:#fff;border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:14px}
+.tc-hero h2{color:#fff;margin-bottom:8px}
+.tc-hero .lead{color:#f1f1f1}
+.tc-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:14px}
+.tc-card{display:flex;flex-direction:column;gap:9px}
+.tc-card ul{padding-left:18px;margin:2px 0 0}
+.tc-card li{margin:5px 0;color:#444}
+.tc-settings{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.tc-table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e1e1e1;border-radius:var(--radius);overflow:hidden}
+.tc-table th,.tc-table td{border-bottom:1px solid #e8e8e8;padding:10px;text-align:left;vertical-align:top}
+.tc-table th{background:#111;color:#fff;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+.tc-table tr:last-child td{border-bottom:0}
+.tc-checklist{display:grid;gap:8px;counter-reset:tcstep}
+.tc-step{border:1px solid #e1e1e1;background:#fbfbfb;border-radius:var(--radius);padding:10px;display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:start}
+.tc-step:before{counter-increment:tcstep;content:counter(tcstep);display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#37bfe8;color:#061014;font-weight:900}
+.tc-source-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .small{font-size:13px}
 .footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:13px}
-@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}}
+@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}}
 @media(max-width:640px){header{position:static}.wrap{padding:0 12px}.wrap.nav{padding:9px 12px}.nav{gap:8px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:8px;min-width:0}.smokee-logo{width:98px;flex:0 0 auto}.brand b{font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 164px)}.brand span{display:none}.head-tools{display:none}.site-search{height:40px}.site-search input{height:38px;font-size:14px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding-top:8px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:38px;padding:8px 11px;font-size:13px;line-height:1.12}.shop-hero{min-height:360px;background-position:66% center}.shop-hero-content{padding:20px}.shop-hero h1{font-size:30px;line-height:1.05}.lead{font-size:16px;line-height:1.42}.hero-actions .btn,.page-actions .btn{width:100%;text-align:center}.card{padding:13px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:26px}.atom-media{aspect-ratio:4/3}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:50px;padding:9px 14px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.footer{padding-bottom:22px}}
 @media(max-width:380px){.wrap{padding:0 10px}.wrap.nav{padding:9px 10px}.smokee-logo{width:90px}.brand b{font-size:12px;max-width:calc(100vw - 142px)}.navbtn{font-size:12px;padding:8px 10px}.problem-grid,.role-tabs{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:27px}.shop-hero-content{padding:17px}.btn{padding:9px 10px}.card{padding:11px}.cat-mark{width:25px;height:25px}.category-link{font-size:15px}}
 </style>
@@ -221,6 +240,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
     <div class="head-tools">
       <button class="tool-pill" data-jump="sources">Recenzii</button>
       <button class="tool-pill" data-jump="wires">Sarme</button>
+      <button class="tool-pill" data-jump="tcGuide">TC</button>
       <span class="visit-counter" title="Contor public de vizite">
         <img id="visitCounter" data-src="https://visitor-badge.laobi.icu/badge?page_id=ghid-rta-mtl-smokee&left_text=Vizite&left_color=%23111111&right_color=%23ff7a1a" alt="Vizite" referrerpolicy="no-referrer" loading="lazy">
         <span class="counter-fallback">Vizite</span>
@@ -233,6 +253,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <button class="navbtn review-nav" data-tab="sources">Recenzii RTA</button>
       <button class="navbtn" data-tab="profiles">Clase tutun</button>
       <button class="navbtn wire-nav" data-tab="wires">Sarme RTA</button>
+      <button class="navbtn tc-nav" data-tab="tcGuide">Ghid TC</button>
       <button class="navbtn" data-tab="sources">Surse & YouTube</button>
     </nav>
   </div>
@@ -246,6 +267,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
           <button class="category-link" data-jump="recommender"><span class="cat-mark">R</span><span>Recomandare</span></button>
           <button class="category-link" data-jump="atomizers"><span class="cat-mark">A</span><span>Atomizoare</span></button>
           <button class="category-link" data-jump="wires"><span class="cat-mark">S</span><span>Sarme RTA</span></button>
+          <button class="category-link" data-jump="tcGuide"><span class="cat-mark">TC</span><span>Control temperatura</span></button>
           <button class="category-link" data-jump="sources"><span class="cat-mark">YT</span><span>Recenzii RTA</span></button>
           <button class="category-link" data-jump="profiles"><span class="cat-mark">L</span><span>Clase tutun</span></button>
           <button class="category-link" data-jump="sources"><span class="cat-mark">B</span><span>Builduri</span></button>
@@ -261,6 +283,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
               <button class="btn" data-jump="recommender">Recomandare</button>
               <button class="btn secondary" data-jump="atomizers">Atomizoare pe rol</button>
               <button class="btn review-cta" data-jump="sources">Recenzii RTA</button>
+              <button class="btn tc-cta" data-jump="tcGuide">Ghid TC</button>
               <button class="btn ghost" data-jump="sources">Surse</button>
             </div>
           </div>
@@ -285,6 +308,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
     </div>
     <div class="grid">
       <aside class="card span-4">
+        <div class="field"><label for="profileGroupSelect">Tip lichid</label><select id="profileGroupSelect"></select></div>
         <div class="field"><label for="profileSelect">Profil lichid tutunos</label><select id="profileSelect"></select></div>
         <div class="field"><label>Intentie</label><div class="problem-grid" id="problemBox"></div></div>
         <div class="field"><label>Nuante active</label><div id="tagBox" class="tagrow option-row"></div></div>
@@ -318,6 +342,142 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <article class="card span-4"><span class="chip warn">Atentie</span><h3>Build stabil</h3><p class="why">Rezistenta se citeste la rece. Contactele, picioarele coilului, hotspoturile si bumbacul trebuie sa fie stabile.</p></article>
     </div>
     <div class="wire-table" id="wireList"></div>
+  </section>
+
+  <section id="tcGuide" class="section">
+    <div class="tc-hero">
+      <p class="kicker">Control temperatura MTL</p>
+      <h2>Ghid TC pentru RTA de precizie</h2>
+      <p class="lead">Controlul de temperatura foloseste schimbarea rezistentei sarmei pentru a limita caldura coilului. Scopul este gust repetabil, protectie mai buna a bumbacului si o temperatura stabila intre pufuri.</p>
+      <div class="chips">
+        <span class="chip cold">NiFe30</span>
+        <span class="chip cold">SS316L</span>
+        <span class="chip warn">Spaced coil</span>
+        <span class="chip good">Cold ohms</span>
+      </div>
+    </div>
+
+    <div class="tc-layout">
+      <article class="card tc-card">
+        <span class="chip good">Principiu</span>
+        <h3>Ce face TC</h3>
+        <p class="why">Chipsetul porneste de la rezistenta masurata la rece si urmareste cresterea ei in timpul pufului. Cresterea este interpretata prin TCR/TFR, apoi puterea este redusa cand temperatura estimata se apropie de pragul setat.</p>
+        <ul>
+          <li>TC nu incalzeste mai mult; limiteaza caldura cand coilul ajunge la temperatura setata.</li>
+          <li>Protectia la dry-hit apare doar daca buildul, alimentarea si profilul sarmei sunt corecte.</li>
+          <li>Pe MTL, TC functioneaza cel mai bine cu putere de ramp-up moderata si airflow stabil.</li>
+        </ul>
+      </article>
+
+      <article class="card tc-card">
+        <span class="chip cold">Sarme</span>
+        <h3>Ce se pune in deck</h3>
+        <ul>
+          <li><b>NiFe30</b>: alegere principala pentru TC MTL. Are variatie de rezistenta mai mare decat inoxul, deci chipsetul citeste mai usor schimbarea temperaturii. TCR orientativ: aproximativ 320 ppm/K, in functie de aliaj si sursa.</li>
+          <li><b>SS316L</b>: clar, curat si versatil. Poate merge si in wattage, dar in TC cere chip stabil deoarece TCR-ul este mai mic. TCR orientativ: aproximativ 88-100 ppm/K.</li>
+          <li><b>De evitat pentru TC uzual</b>: K1/Kanthal si Ni80. Rezistenta lor se modifica prea putin pentru un TC corect. Ni200 si titanul raman materiale speciale, nu recomandari de baza pentru RTA MTL.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <article class="card span-4 tc-card">
+        <span class="chip warn">Chipset high-end</span>
+        <h3>DNA / Dicodes / YiHi</h3>
+        <ul>
+          <li><b>Evolv DNA</b>: potrivit pentru profiluri personalizate, curbe TFR/TCR prin EScribe si Replay pe placile care il suporta.</li>
+          <li><b>Dicodes</b>: foarte stabil pe TC si bine adaptat pentru aliaje NiFe, cu setari avansate direct din mod.</li>
+          <li><b>YiHi SXmini</b>: TC solid, de obicei cu logica pe Joules/putere, dar cu meniuri mai dense.</li>
+        </ul>
+      </article>
+      <article class="card span-4 tc-card">
+        <span class="chip cold">Chipset compact</span>
+        <h3>ARC1 / AM60 / DotChip</h3>
+        <ul>
+          <li><b>ARC1</b>: orientat spre moduri compacte si MTL, cu comportament liniar cand profilul sarmei este ales corect.</li>
+          <li><b>AM60</b>: alternativa compacta pentru format DNA60; poate functiona bine in TC cand buildul este stabil si citirea la rece este corecta.</li>
+          <li><b>DotChip</b>: simplu si eficient pentru profiluri uzuale, mai ales SS, dar cu mai putina calibrare fina decat DNA/Dicodes.</li>
+        </ul>
+      </article>
+      <article class="card span-4 tc-card">
+        <span class="chip alert">Limite</span>
+        <h3>Ce nu repara TC</h3>
+        <ul>
+          <li>Suruburi slabite, pin 510 instabil sau picioare de coil prea lungi.</li>
+          <li>Bumbac prea strans, lichidare slaba sau dry-hit produs de alimentare insuficienta.</li>
+          <li>Profil gresit de sarma, TCR nepotrivit sau rezistenta initializata cand atomizorul era cald.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="tc-settings" style="margin-top:14px">
+      <article class="card">
+        <span class="chip good">Benchmark</span>
+        <h3>Setari de pornire MTL</h3>
+        <table class="tc-table">
+          <thead><tr><th>Parametru</th><th>NiFe30</th><th>SS316L</th></tr></thead>
+          <tbody>
+            <tr><td>Profil</td><td>NiFe30 sau TCR ~320</td><td>SS316L/Inox sau TCR ~88-100</td></tr>
+            <tr><td>Build</td><td>29-30 GA, 2.0-2.5 mm, 6-8 spire distantate</td><td>30-31 GA, 2.0 mm, 6-8 spire distantate</td></tr>
+            <tr><td>Putere limita</td><td>13-17 W, dupa camera si lichid</td><td>13-17 W, mai prudent pe camere compacte</td></tr>
+            <tr><td>Temperatura</td><td>210-230 C, ajustare in pasi de 5 C</td><td>205-225 C, ajustare in pasi de 5 C</td></tr>
+            <tr><td>Utilizare</td><td>NET, tobacco premium, sesiuni lungi</td><td>claritate, Oriental, Virginia, lichide luminoase</td></tr>
+          </tbody>
+        </table>
+      </article>
+
+      <article class="card tc-card">
+        <span class="chip warn">Coil</span>
+        <h3>Reguli stricte pentru RTA</h3>
+        <ul>
+          <li><b>Spaced coil</b>: spirele distantate reduc contactele intre spire si fac citirea mai stabila.</li>
+          <li><b>Dry-burn minim</b>: daca este necesar, se face foarte usor, la putere joasa, doar pentru stabilizare. Incandescenta puternica nu este recomandata pe fire TC.</li>
+          <li><b>Contact ferm</b>: suruburile posturilor, pinul 510 si picioarele coilului trebuie sa fie stabile.</li>
+          <li><b>Rece inseamna rece</b>: atomizorul si modul se lasa la temperatura camerei inainte de citirea initiala.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="grid" style="margin-top:14px">
+      <article class="card span-6">
+        <span class="chip cold">Procedura</span>
+        <h3>Calibrare in 8 pasi</h3>
+        <div class="tc-checklist">
+          <div class="tc-step"><span>Se monteaza coil spaced, fara picioare lungi si fara joc in posturi.</span></div>
+          <div class="tc-step"><span>Se verifica rezistenta la rece; orice fluctuatie vizibila indica o problema mecanica.</span></div>
+          <div class="tc-step"><span>Se alege profilul corect: NiFe30, SS316L sau TCR manual potrivit sarmei.</span></div>
+          <div class="tc-step"><span>Se initializeaza rezistenta la rece; se blocheaza doar pe modurile care cer explicit acest lucru.</span></div>
+          <div class="tc-step"><span>Se seteaza temperatura la 210 C si puterea limita la 13-15 W pentru prima proba.</span></div>
+          <div class="tc-step"><span>Se urca temperatura in pasi de 5 C pana cand gustul este complet, fara asprime.</span></div>
+          <div class="tc-step"><span>Daca puterea taie prea repede, se verifica bumbacul, contactele si profilul sarmei.</span></div>
+          <div class="tc-step"><span>Daca gustul devine uscat, problema este alimentarea, temperatura prea mare sau citirea initiala gresita.</span></div>
+        </div>
+      </article>
+
+      <article class="card span-6 tc-card">
+        <span class="chip good">Potrivire RTA</span>
+        <h3>Interpretare pe atomizor</h3>
+        <ul>
+          <li><b>Camere compacte</b>: se prefera SS316L 30-31 GA sau NiFe30 30 GA, 2.0 mm, temperatura mai joasa.</li>
+          <li><b>Camere cu mai mult corp</b>: NiFe30 29-30 GA, 2.5 mm, 6-7 spire, cu putere limita putin mai sus.</li>
+          <li><b>NET luminos</b>: SS316L sau NiFe30 30 GA, temperatura joasa spre medie, airflow precis.</li>
+          <li><b>Dark, cigar, Kentucky</b>: NiFe30 29 GA poate pastra corpul fara sa lase coilul sa fuga in caldura excesiva.</li>
+          <li><b>Clapton in TC</b>: nu este baza ghidului; masa si contactele multiple pot face citirea mai imprevizibila.</li>
+        </ul>
+        <p class="risk">Setarile sunt puncte de pornire pentru adulti informati. Siguranta acumulatorilor, rezistenta finala si limitele modului raman obligatorii.</p>
+      </article>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <span class="chip neutral">Surse rapide</span>
+      <h3>Repere utile pentru verificare</h3>
+      <div class="tc-source-grid">
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://www.evolvapor.com/escribe"><span class="chip cold">EScribe</span><b>Evolv EScribe</b><small>Profiluri, materiale si configurare DNA.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://www.steam-engine.org/wirewiz"><span class="chip cold">Wire Wizard</span><b>Steam Engine</b><small>Calcul si curbe pentru materiale TC.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://dicodes.de/en/home.html"><span class="chip cold">Dicodes</span><b>Dicodes</b><small>Moduri si electronica orientata spre TC.</small></a>
+        <a class="source-line" target="_blank" rel="noreferrer" href="https://www.yihisxmini.com/"><span class="chip cold">SXmini</span><b>YiHi SXmini</b><small>Chipseturi cu control de temperatura.</small></a>
+      </div>
+    </div>
   </section>
 
   <section id="sources" class="section">
@@ -516,6 +676,7 @@ var wires = DATA.wires || [];
 var selectedProblem = 'balance';
 var selectedTags = [];
 var tagSelectionDirty = false;
+var selectedProfileGroup = 'all';
 var selectedRole = 'all';
 
 var ROLES = [
@@ -694,8 +855,8 @@ function sourceLineHtml(a,s){var url=sourceUrl(s);var claim=sourceClaim(s);retur
 function atomActionsHtml(a){var r=primaryReview(a);var b=primaryBuild(a);var rq=sourceQuality(a,r);var bq=sourceQuality(a,b);var rLabel=r?('Recenzie '+rq.label.toLowerCase()):'Recenzie YouTube';var bLabel=b?('Build '+bq.label.toLowerCase()):'Build YouTube';var note=(r&&rq.id!=='exact'?qualityChipHtml(a,r):'')+(b&&bq.id!=='exact'?qualityChipHtml(a,b):'');return '<div class="source-actions"><a class="mini-link" target="_blank" rel="noreferrer" href="'+esc(reviewUrl(a))+'">'+esc(rLabel)+'</a><a class="mini-link" target="_blank" rel="noreferrer" href="'+esc(buildUrl(a))+'">'+esc(bLabel)+'</a><a class="mini-link detail-btn" href="'+esc(atomPageHref(a))+'">Pagina modelului</a>'+note+'</div>'}
 function atomDetailHtml(a){var air=airflowInfo(a);var roles=inferRoles(a);var builds=Array.isArray(a&&a.builds)?a.builds:[];var sources=getSources(a);var status=first(a,['catalogStatus','confidence'])||'profil disponibil';return '<div class="detail-grid"><div class="detail-block">'+atomMediaHtml(a)+'<div class="chips"><span class="chip cold">Airflow: '+esc(air.label)+'</span><span class="chip neutral">'+esc(cleanVisibleText(status))+'</span>'+roles.map(function(id){var r=ROLES.find(function(x){return x.id===id});return '<span class="chip warn">'+esc(r?r.short:id)+'</span>'}).join('')+'</div><p class="dna">'+esc(cleanVisibleText(getDna(a)||'Camera, deck si airflow pentru profil MTL tutunos.'))+'</p><p class="why">'+esc(cleanVisibleText(getWhy(a)||'Potrivirea este calculata din profilul lichidului, arhitectura atomizorului si sarmele recomandate.'))+'</p></div><div class="detail-block"><h3>Builduri de pornire</h3><div class="detail-list">'+(builds.length?builds.map(function(b){return '<div class="detail-build"><b>'+esc(cleanVisibleText((b.type?b.type+' - ':'')+(b.wire||'')))+'</b><small>'+esc(cleanVisibleText(b.build||'Reglat dupa lichid, airflow si camera.'))+'</small></div>'}).join(''):'<p class="muted small">Buildurile se calibreaza dupa lichid, camera si airflow.</p>')+'</div></div><div class="detail-block detail-wide"><h3>Surse si verificare</h3><div class="review-list">'+(sources.length?sources.map(function(s){return sourceLineHtml(a,s)}).join(''):'<p class="muted small">Surse in curs de verificare.</p>')+'</div></div></div>'}
 function atomPageWireMatches(a){var roles=inferRoles(a);var out=[];function add(name,setup,why){if(out.length>=3)return;if(out.some(function(x){return x.name===name}))return;out.push({name:name,setup:setup,why:why})}if(roles.indexOf('clarity')>=0){add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si separare pentru Virginia, Oriental si profile luminoase');add('K1 29 GA','2.0-2.5 mm / 6-7 spire','contur sec si tutun mai direct');add('SS316L Clapton fin','2.0 mm / 5-6 spire','textura usoara cand lichidul cere volum fara dulceata grea')}if(roles.indexOf('body')>=0){add('K1 28 GA','2.5 mm / 5-6 spire','corp, hit si substrat pentru Kentucky, Latakia, cigar sau dark NET');add('K1 Clapton fin','2.5 mm / 5 spire','textura pentru lichide foarte seci, fara masa mare');add('SS32 twisted','2.5 mm / 6-7 spire','separare cu corp, mai curat decat Clapton gros')}if(roles.indexOf('smooth')>=0){add('K1 28 GA','2.5 mm / 6 spire','corp curat si rotunjire naturala');add('Ni80 30 GA','2.5 mm / 6-7 spire','raspuns rapid si mouthfeel mai moale');add('Clapton fin 1-core','2.5 mm / 5-6 spire','textura controlata pentru pipe, Cavendish sau aromatizat sec')}if(roles.indexOf('modular')>=0){add('K1 28 GA','2.5 mm / 6 spire','baza stabila pentru compararea pinilor sau camerelor');add('SS32 twisted','2.5 mm / 6-7 spire','straturi si textura fara incalzire grea');add('NiFe30 30 GA','2.0-2.5 mm / 6-8 spire','control fin cand reglajele modifica temperatura perceputa')}if(!out.length){add('K1 28 GA','2.5 mm / 6 spire','punct de pornire echilibrat pentru tobacco si NET');add('K1 29 GA','2.0-2.5 mm / 6-7 spire','contur mai sec');add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si viteza')}return out}
-function atomLiquidMatches(a){var roles=inferRoles(a);var t=atomRoleText(a);return profiles.map(function(p){var tags=profileTags(p).slice(0,5);var ctx=liquidContext(p,'balance',tags);var score=0;ctx.roles.forEach(function(id){if(roles.indexOf(id)>=0)score+=20});profileTop(p).forEach(function(name,idx){if(norm(name)===norm(getName(a)))score+=36-idx*5});tags.forEach(function(tag){if(t.indexOf(norm(tag))>=0)score+=5});return {profile:p,score:score,ctx:ctx}}).filter(function(x){return x.score>0}).sort(function(x,y){return y.score-x.score || profileName(x.profile).localeCompare(profileName(y.profile))}).slice(0,6)}
-function renderAtomizerPage(a){var air=airflowInfo(a);var roles=inferRoles(a);var builds=Array.isArray(a&&a.builds)?a.builds:[];var liquids=atomLiquidMatches(a);var wires=atomPageWireMatches(a);var sources=getSources(a);var status=first(a,['catalogStatus','confidence'])||'profil disponibil';$('atomPageTitle').textContent=getName(a);$('atomPageSubtitle').textContent='Pagina directa pentru review, builduri, potriviri si surse.';$('atomPageContent').innerHTML='<div class="page-summary"><article class="detail-block">'+atomMediaHtml(a)+'<div class="chips"><span class="chip cold">Airflow: '+esc(air.label)+'</span><span class="chip neutral">'+esc(cleanVisibleText(status))+'</span>'+roles.map(function(id){var r=ROLES.find(function(x){return x.id===id});return '<span class="chip warn">'+esc(r?r.short:id)+'</span>'}).join('')+'</div><p class="dna">'+esc(cleanVisibleText(getDna(a)||'Camera, deck si airflow pentru profil MTL tutunos.'))+'</p><p class="why">'+esc(cleanVisibleText(getWhy(a)||'Potrivire calculata din profilul lichidului, atomizor si sarma.'))+'</p>'+atomActionsHtml(a)+'</article><article class="detail-block"><h3>Potriviri lichide</h3><div class="page-section-grid">'+(liquids.length?liquids.map(function(item){var p=item.profile;return '<div class="liquid-match"><b>'+esc(profileName(p))+'</b><small>'+esc(profileGroup(p))+'</small><small>'+esc(profileNote(p)||'Profil tutunos potrivit pentru arhitectura atomizorului.')+'</small></div>'}).join(''):'<p class="muted small">Potrivirile se stabilesc din profilul lichidului si comportamentul atomizorului.</p>')+'</div></article></div><div class="page-section-grid" style="margin-top:14px"><article class="detail-block"><h3>Sarme potrivite</h3><div class="detail-list">'+wires.map(function(w){return '<div class="wire-match"><b>'+esc(w.name)+'</b><small>'+esc(w.setup+' - '+w.why)+'</small></div>'}).join('')+'</div></article><article class="detail-block"><h3>Builduri de pornire</h3><div class="detail-list">'+(builds.length?builds.slice(0,6).map(function(b){return '<div class="detail-build"><b>'+esc(cleanVisibleText((b.type?b.type+' - ':'')+(b.wire||'')))+'</b><small>'+esc(cleanVisibleText(b.build||'Reglat dupa lichid, airflow si camera.'))+'</small></div>'}).join(''):'<p class="muted small">Buildurile se calibreaza dupa lichid, camera si airflow.</p>')+'</div></article><article class="detail-block"><h3>Surse</h3><div class="review-list">'+(sources.length?sources.slice(0,8).map(function(s){return sourceLineHtml(a,s)}).join(''):'<p class="muted small">Surse in curs de verificare.</p>')+'</div></article></div>'}
+function atomLiquidMatches(a){var roles=inferRoles(a);var t=atomRoleText(a);return profiles.map(function(p){var tags=profileTags(p).slice(0,5);var ctx=liquidContext(p,'balance',tags);var score=0;ctx.roles.forEach(function(id){if(roles.indexOf(id)>=0)score+=20});profileTop(p).forEach(function(name,idx){if(norm(name)===norm(getName(a)))score+=36-idx*5});tags.forEach(function(tag){if(t.indexOf(norm(tag))>=0)score+=5});return {profile:p,score:score,ctx:ctx}}).filter(function(x){return x.score>0}).sort(function(x,y){return y.score-x.score || profileDisplayName(x.profile).localeCompare(profileDisplayName(y.profile))}).slice(0,6)}
+function renderAtomizerPage(a){var air=airflowInfo(a);var roles=inferRoles(a);var builds=Array.isArray(a&&a.builds)?a.builds:[];var liquids=atomLiquidMatches(a);var wires=atomPageWireMatches(a);var sources=getSources(a);var status=first(a,['catalogStatus','confidence'])||'profil disponibil';$('atomPageTitle').textContent=getName(a);$('atomPageSubtitle').textContent='Pagina directa pentru review, builduri, potriviri si surse.';$('atomPageContent').innerHTML='<div class="page-summary"><article class="detail-block">'+atomMediaHtml(a)+'<div class="chips"><span class="chip cold">Airflow: '+esc(air.label)+'</span><span class="chip neutral">'+esc(cleanVisibleText(status))+'</span>'+roles.map(function(id){var r=ROLES.find(function(x){return x.id===id});return '<span class="chip warn">'+esc(r?r.short:id)+'</span>'}).join('')+'</div><p class="dna">'+esc(cleanVisibleText(getDna(a)||'Camera, deck si airflow pentru profil MTL tutunos.'))+'</p><p class="why">'+esc(cleanVisibleText(getWhy(a)||'Potrivire calculata din profilul lichidului, atomizor si sarma.'))+'</p>'+atomActionsHtml(a)+'</article><article class="detail-block"><h3>Potriviri lichide</h3><div class="page-section-grid">'+(liquids.length?liquids.map(function(item){var p=item.profile;return '<div class="liquid-match"><b>'+esc(profileDisplayName(p))+'</b><small>'+esc(profileGroup(p))+'</small><small>'+esc(profileNote(p)||'Profil tutunos potrivit pentru arhitectura atomizorului.')+'</small></div>'}).join(''):'<p class="muted small">Potrivirile se stabilesc din profilul lichidului si comportamentul atomizorului.</p>')+'</div></article></div><div class="page-section-grid" style="margin-top:14px"><article class="detail-block"><h3>Sarme potrivite</h3><div class="detail-list">'+wires.map(function(w){return '<div class="wire-match"><b>'+esc(w.name)+'</b><small>'+esc(w.setup+' - '+w.why)+'</small></div>'}).join('')+'</div></article><article class="detail-block"><h3>Builduri de pornire</h3><div class="detail-list">'+(builds.length?builds.slice(0,6).map(function(b){return '<div class="detail-build"><b>'+esc(cleanVisibleText((b.type?b.type+' - ':'')+(b.wire||'')))+'</b><small>'+esc(cleanVisibleText(b.build||'Reglat dupa lichid, airflow si camera.'))+'</small></div>'}).join(''):'<p class="muted small">Buildurile se calibreaza dupa lichid, camera si airflow.</p>')+'</div></article><article class="detail-block"><h3>Surse</h3><div class="review-list">'+(sources.length?sources.slice(0,8).map(function(s){return sourceLineHtml(a,s)}).join(''):'<p class="muted small">Surse in curs de verificare.</p>')+'</div></article></div>'}
 function openAtomDetail(index){var a=atomizers[parseInt(index,10)];if(!a)return;var overlay=$('atomDetail');$('detailTitle').textContent=getName(a);$('detailBody').innerHTML=atomDetailHtml(a);overlay.classList.add('active');overlay.setAttribute('aria-hidden','false')}
 function closeAtomDetail(){var overlay=$('atomDetail');if(!overlay)return;overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
 function initDetail(){document.addEventListener('click',function(e){var b=e.target.closest('[data-detail-index]');if(b){openAtomDetail(b.dataset.detailIndex);return}if(e.target.matches('.close-detail')||e.target.id==='atomDetail')closeAtomDetail()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAtomDetail()})}
@@ -708,6 +869,7 @@ function matchLabel(index){return 'Potrivire ' + (index + 1)}
 function buildFor(profile, problem){return tripodBuild(profile, problem, null).label}
 function profileGroup(p){return first(p,['Categorie principala','Clasa','Grup','Group']) || fuzzy(p,['categorie']) || fuzzy(p,['clasa']) || 'Tutun'}
 function profileName(p){return first(p,['Profil','Subcategorie','Nume','name']) || fuzzy(p,['profil']) || fuzzy(p,['subcategorie']) || 'Profil'}
+function profileDisplayName(p){return profileGroup(p)+' - '+profileName(p)}
 function profileTags(p){var t=first(p,['Taguri','Tags','taguri']) || fuzzy(p,['tag']);if(Array.isArray(t)) return t;return String(t||'').split(/[,;|]/).map(function(x){return x.trim()}).filter(Boolean)}
 function profileTop(p){var raw=first(p,['Atomizoare recomandate','Top atomizoare','Atomizoare','top']) || fuzzy(p,['atomiz']);if(Array.isArray(raw)) return raw;return String(raw||'').split(/[,;|]/).map(function(x){return x.trim()}).filter(Boolean)}
 function profileNote(p){return first(p,['Nota','Note','Observatii','Descriere']) || fuzzy(p,['nota']) || fuzzy(p,['note']) || fuzzy(p,['observ']) || ''}
@@ -777,9 +939,9 @@ wireChoices = function(profile, problemId, atom){
   return set;
 }
 
-var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','sources'];
+var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','tcGuide','sources'];
 function activeSection(id, navId){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.navbtn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===(navId||id))})}
-function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase tutun - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
+function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase tutun - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
 function routeHash(route){return '#'+String(route||'home').replace(/^#/,'')}
 function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash)}applyRoute(true)}
 function goTab(id){setRoute(id)}
@@ -807,17 +969,18 @@ function wireAliasBoost(w,q){var c=compactText(q);var n=norm(w.name);var score=0
 function isTemperatureQuery(q){return /^(tc|tcr|temp|temperatura|temperature|controltemperatura)$/.test(compactText(q))}
 function scoreWire(w,q){if(isTemperatureQuery(q)&&!/control temperatura|nife30|ss316l/.test(norm(w.name)))return 0;return wireAliasBoost(w,q)+fieldScore(q,[[w.name,32],[wireAliases(w.name),28],[w.role,12],[(w.practical||[]).join(' '),8],[w.avoid,2]])}
 function scoreAtom(a,q){return fieldScore(q,[[getName(a),38],[getDna(a),12],[getWhy(a),10],[getBuild(a),9],[first(a,['classes']),7],[getSources(a).map(function(s){return sourceTitle(s)+' '+sourceClaim(s)}).join(' '),4]])}
-function scoreProfile(p,q){return fieldScore(q,[[profileName(p),30],[profileGroup(p),18],[profileTags(p).join(' '),18],[profileNote(p),10],[profileAvoid(p),6],[profileTop(p).join(' '),5]])}
+function scoreProfile(p,q){return fieldScore(q,[[profileDisplayName(p),34],[profileName(p),30],[profileGroup(p),18],[profileTags(p).join(' '),18],[profileNote(p),10],[profileAvoid(p),6],[profileTop(p).join(' '),5]])}
 function scoreSource(a,q){return fieldScore(q,[[getName(a),25],[getDna(a),8],[getSources(a).map(function(s){return sourceTitle(s)+' '+sourceLabel(s)+' '+sourceClaim(s)+' '+cleanHost(sourceUrl(s))}).join(' '),14]])}
 function atomSearchText(a){return norm([getName(a),getDna(a),getWhy(a),getBuild(a),first(a,['classes']),getSources(a).map(function(s){return sourceTitle(s)+' '+sourceClaim(s)}).join(' ')].join(' '))}
 function sourceSearchText(a){return norm([getName(a),getDna(a),getSources(a).map(function(s){return sourceTitle(s)+' '+sourceLabel(s)+' '+sourceClaim(s)+' '+cleanHost(sourceUrl(s))}).join(' ')].join(' '))}
+function tcGuideSearchResult(q){return {tab:'tcGuide',route:'tcGuide',title:'Ghid control temperatura',meta:'TC - sarme, chipseturi, coil si reglaje',query:q,score:999}}
 function searchBuckets(q){var nq=norm(q);return {
   atomizers:atomizers.map(function(a){return {a:a,score:scoreAtom(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'atomizers',route:'atomizor/'+atomSlug(x.a),title:getName(x.a),meta:'Atomizor - '+(airflowInfo(x.a).label||'MTL'),query:q,score:x.score}}),
-  profiles:profiles.map(function(p,i){return {p:p,i:i,score:scoreProfile(p,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||profileName(x.p).localeCompare(profileName(y.p))}).slice(0,8).map(function(x){return {tab:'profiles',title:profileName(x.p),meta:'Lichid - '+profileGroup(x.p),query:q,index:x.i,score:x.score}}),
+  profiles:profiles.map(function(p,i){return {p:p,i:i,score:scoreProfile(p,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||profileDisplayName(x.p).localeCompare(profileDisplayName(y.p))}).slice(0,8).map(function(x){return {tab:'profiles',title:profileDisplayName(x.p),meta:'Lichid - '+profileGroup(x.p),query:q,index:x.i,score:x.score}}),
   wires:WIRE_GUIDE.map(function(w){return {w:w,score:scoreWire(w,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||x.w.name.localeCompare(y.w.name)}).slice(0,8).map(function(x){return {tab:'wires',title:x.w.name,meta:'Sarma - '+x.w.role,query:q,score:x.score}}),
   sources:atomizers.map(function(a){return {a:a,score:scoreSource(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'sources',title:getName(x.a),meta:'Recenzii si builduri',query:q,score:x.score}})
 }}
-function autoSearchList(q,b){if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,sources:3};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
+function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,tcGuide:3,sources:4};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
 function bestSearchMode(q,b){if(searchMode!=='auto')return searchMode;var first=autoSearchList(q,b)[0];return first?first.tab:'atomizers'}
 function applySearch(item){var q=item.query||$('globalSearch').value.trim();if(item.route){hideSearchPanel();setRoute(item.route);return}if(item.tab==='wires'){if($('wireSearch')){$('wireSearch').value=q;renderWires()}}else if(item.tab==='profiles'){if($('profileSearch')){$('profileSearch').value=q;renderProfiles()}}else if(item.tab==='sources'){if($('sourceSearch')){$('sourceSearch').value=q;renderSources()}}else{if($('atomSearch')){$('atomSearch').value=q;selectedRole='all';renderAtomizers()}}goTab(item.tab);hideSearchPanel()}
 function hideSearchPanel(){var p=$('searchPanel');if(p)p.classList.remove('active')}
@@ -832,7 +995,13 @@ function renderMetrics(){var src=atomizers.reduce(function(n,a){return n+getSour
   ['Surse', src, 'recenzii, builduri si surse', 'sources']
 ].map(function(m){return '<button class="card span-6 metric metric-btn" data-jump="'+esc(m[3])+'"><div><h3>'+esc(m[0])+'</h3><span>'+esc(m[2])+'</span></div><strong>'+esc(m[1])+'</strong></button>'}).join('');document.querySelectorAll('#metricsBox [data-jump]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.jump)})})}
 function renderRoleMini(){var counts={};ROLES.forEach(function(r){counts[r.id]=0});atomizers.forEach(function(a){inferRoles(a).forEach(function(id){counts[id]=(counts[id]||0)+1})});$('roleMini').innerHTML = ROLES.map(function(r){return '<article class="card span-4"><h3>'+esc(r.label)+'</h3><p class="muted small">'+esc(r.good)+'</p><div class="chips"><span class="chip cold">'+(counts[r.id]||0)+' modele</span><span class="chip warn">'+esc(r.short)+'</span></div></article>'}).join('')}
-function initRecommender(){$('profileSelect').innerHTML=profiles.map(function(p,i){return '<option value="'+i+'">'+esc(profileGroup(p)+' - '+profileName(p))+'</option>'}).join('');$('profileSelect').addEventListener('change',function(){tagSelectionDirty=false;selectedTags=[];updateProfileSelect();makeRecommendation()});$('problemBox').innerHTML=PROBLEMS.map(function(p){return '<button class="problem-btn'+(p.id===selectedProblem?' active':'')+'" data-problem="'+p.id+'">'+esc(p.label)+'</button>'}).join('');$('problemBox').addEventListener('click',function(e){var b=e.target.closest('[data-problem]');if(!b)return;selectedProblem=b.dataset.problem;document.querySelectorAll('.problem-btn').forEach(function(x){x.classList.toggle('active',x.dataset.problem===selectedProblem)});makeRecommendation()});updateProfileSelect();makeRecommendation()}
+function profileGroupOrder(g){var order={'all':0,'NET simplu':1,'NET complex':2,'Tutun simplu':3,'Tutun complex':4};return order[g]==null?20:order[g]}
+function profileGroupOptions(){return Array.from(new Set(profiles.map(profileGroup))).sort(function(a,b){return profileGroupOrder(a)-profileGroupOrder(b)||a.localeCompare(b)})}
+function profileMatchesSelectedGroup(p){return selectedProfileGroup==='all'||profileGroup(p)===selectedProfileGroup}
+function profileSelectItems(){return profiles.map(function(p,i){return {p:p,i:i}}).filter(function(item){return profileMatchesSelectedGroup(item.p)})}
+function renderProfileGroupSelect(){var sel=$('profileGroupSelect');if(!sel)return;var groups=profileGroupOptions();sel.innerHTML='<option value="all">Toate profilurile NET si tutun</option>'+groups.map(function(g){return '<option value="'+esc(g)+'">'+esc(g)+'</option>'}).join('');sel.value=selectedProfileGroup}
+function renderProfileSelectOptions(){var sel=$('profileSelect');var items=profileSelectItems();if(!items.length){selectedProfileGroup='all';items=profileSelectItems()}var current=sel.value;sel.innerHTML=items.map(function(item){return '<option value="'+item.i+'">'+esc(profileDisplayName(item.p))+'</option>'}).join('');if(!items.some(function(item){return String(item.i)===current}))current=String(items[0]?items[0].i:0);sel.value=current}
+function initRecommender(){renderProfileGroupSelect();renderProfileSelectOptions();$('profileGroupSelect').addEventListener('change',function(){selectedProfileGroup=$('profileGroupSelect').value;tagSelectionDirty=false;selectedTags=[];renderProfileSelectOptions();updateProfileSelect();makeRecommendation()});$('profileSelect').addEventListener('change',function(){tagSelectionDirty=false;selectedTags=[];updateProfileSelect();makeRecommendation()});$('problemBox').innerHTML=PROBLEMS.map(function(p){return '<button class="problem-btn'+(p.id===selectedProblem?' active':'')+'" data-problem="'+p.id+'">'+esc(p.label)+'</button>'}).join('');$('problemBox').addEventListener('click',function(e){var b=e.target.closest('[data-problem]');if(!b)return;selectedProblem=b.dataset.problem;document.querySelectorAll('.problem-btn').forEach(function(x){x.classList.toggle('active',x.dataset.problem===selectedProblem)});makeRecommendation()});updateProfileSelect();makeRecommendation()}
 
 function updateProfileSelect(){var p=currentProfile();var tags=profileTags(p).slice(0,8);if(!tagSelectionDirty){selectedTags=tags.slice(0,Math.min(4,tags.length))}renderTags(p)}
 
@@ -855,7 +1024,7 @@ function makeRecommendation(){
   var nuance=selectedTags.length?selectedTags.join(', '):'profil general';
   var axes=ctx.axis.length?Array.from(new Set(ctx.axis)).join(', '):'echilibru';
   var riskNotes=Array.from(new Set([].concat(ctx.avoid||[],profileAvoid(prof)||[]).filter(Boolean)));
-  var intro='<article class="card span-12 result-card"><h3>'+esc(profileName(prof))+'</h3><p class="why">'+esc(ctx.problem.note)+'</p><div class="chips"><span class="chip good">Intentie: '+esc(ctx.problem.label)+'</span><span class="chip cold">Nuante: '+esc(nuance)+'</span><span class="chip">'+atomizers.length+' modele analizate</span></div><div class="calibration"><b>Calibrare</b><span>Lichid: '+esc(profileGroup(prof))+'</span><span>Directie: '+esc(axes)+'</span><span>Build de pornire: '+esc(ctx.label)+'</span></div>'+(riskNotes.length?'<p class="risk">Atentie: '+esc(riskNotes.join('; '))+'</p>':'')+'</article>';
+  var intro='<article class="card span-12 result-card"><h3>'+esc(profileDisplayName(prof))+'</h3><p class="why">'+esc(ctx.problem.note)+'</p><div class="chips"><span class="chip good">Intentie: '+esc(ctx.problem.label)+'</span><span class="chip cold">Nuante: '+esc(nuance)+'</span><span class="chip">'+atomizers.length+' modele analizate</span></div><div class="calibration"><b>Calibrare</b><span>Lichid: '+esc(profileDisplayName(prof))+'</span><span>Directie: '+esc(axes)+'</span><span>Build de pornire: '+esc(ctx.label)+'</span></div>'+(riskNotes.length?'<p class="risk">Atentie: '+esc(riskNotes.join('; '))+'</p>':'')+'</article>';
   var cards=picked.map(function(item,idx){
     var a=item.a;
     var roles=inferRoles(a);
@@ -870,7 +1039,7 @@ function makeRecommendation(){
 function roleCount(id){if(id==='all')return atomizers.length;return atomizers.filter(function(a){return inferRoles(a).indexOf(id)>=0}).length}
 function renderRoleFilters(){var items=[{id:'all',label:'Toate'}].concat(ROLES.map(function(r){return {id:r.id,label:r.short}}));$('roleFilters').innerHTML=items.map(function(r){return '<button class="rolebtn'+(selectedRole===r.id?' active':'')+'" data-role="'+r.id+'" aria-pressed="'+(selectedRole===r.id?'true':'false')+'">'+esc(r.label)+' <span>'+roleCount(r.id)+'</span></button>'}).join('')}
 function renderAtomizers(){renderRoleFilters();$('roleFilters').onclick=function(e){var b=e.target.closest('[data-role]');if(!b)return;selectedRole=b.dataset.role;renderAtomizers()};if($('atomSearch')&&!$('atomSearch').dataset.ready){$('atomSearch').dataset.ready='1';$('atomSearch').addEventListener('input',renderAtomizers);$('atomSort').addEventListener('change',renderAtomizers)}var q=norm($('atomSearch')?$('atomSearch').value:'');var sort=$('atomSort')?$('atomSort').value:'role';var list=atomizers.filter(function(a){var roles=inferRoles(a);return (selectedRole==='all'||roles.indexOf(selectedRole)>=0) && (!q || atomRoleText(a).indexOf(q)>=0)});list.sort(function(a,b){if(sort==='name')return getName(a).localeCompare(getName(b));if(sort==='sources')return getSources(b).length-getSources(a).length || getName(a).localeCompare(getName(b));return roleLabel(inferRoles(a)).localeCompare(roleLabel(inferRoles(b))) || getName(a).localeCompare(getName(b))});$('atomizerList').innerHTML=list.length?list.map(function(a){var air=airflowInfo(a);return '<article class="card atom-card">'+atomMediaHtml(a)+'<div class="atom-head"><h3>'+esc(getName(a))+'</h3></div><div class="meta-list"><span title="'+esc(air.detail)+'">Airflow: '+esc(air.label)+'</span>'+inferRoles(a).map(function(id){var r=ROLES.find(function(x){return x.id===id});return '<span>'+esc(r?r.short:id)+'</span>'}).join('')+'</div><p class="dna">'+esc(getDna(a)||'Camera, deck si airflow pentru profil MTL tutunos.')+'</p><p class="why">'+esc(getWhy(a)||'Potrivit pentru lichide tutunoase si builduri MTL fine.')+'</p><p class="build">'+esc(buildSummary(a))+'</p>'+atomActionsHtml(a)+'</article>'}).join(''):'<div class="empty">Nu am gasit atomizoare pentru filtrul ales.</div>'}
-function renderProfiles(){if($('profileSearch')&&!$('profileSearch').dataset.ready){$('profileSearch').dataset.ready='1';$('profileSearch').addEventListener('input',renderProfiles)}var q=norm($('profileSearch')?$('profileSearch').value:'');var list=profiles.map(function(p,i){return {p:p,i:i}}).filter(function(item){return !q || textOf(item.p).indexOf(q)>=0});$('profileList').innerHTML=list.map(function(item){var p=item.p;var tags=profileTags(p).slice(0,6);return '<article class="card profile-card"><div><span class="chip cold">'+esc(profileGroup(p))+'</span><h3 style="margin-top:10px">'+esc(profileName(p))+'</h3></div><p class="why">'+esc(profileNote(p)||'Profil aromatic tutunos.')+'</p><div class="chips">'+tags.map(function(t){return '<span class="chip">'+esc(t)+'</span>'}).join('')+'</div><p class="build">'+esc(buildFor(p,'balance'))+'</p><button class="btn secondary" data-profile-index="'+item.i+'">Recomandare</button></article>'}).join('');document.querySelectorAll('[data-profile-index]').forEach(function(b){b.onclick=function(){$('profileSelect').value=b.dataset.profileIndex;selectedProblem='balance';selectedTags=[];tagSelectionDirty=false;document.querySelectorAll('.problem-btn').forEach(function(x){x.classList.toggle('active',x.dataset.problem===selectedProblem)});updateProfileSelect();makeRecommendation();goTab('recommender')}})}
+function renderProfiles(){if($('profileSearch')&&!$('profileSearch').dataset.ready){$('profileSearch').dataset.ready='1';$('profileSearch').addEventListener('input',renderProfiles)}var q=norm($('profileSearch')?$('profileSearch').value:'');var list=profiles.map(function(p,i){return {p:p,i:i}}).filter(function(item){return !q || norm(profileDisplayName(item.p)+' '+textOf(item.p)).indexOf(q)>=0});$('profileList').innerHTML=list.map(function(item){var p=item.p;var tags=profileTags(p).slice(0,6);return '<article class="card profile-card"><div><span class="chip cold">'+esc(profileGroup(p))+'</span><h3 style="margin-top:10px">'+esc(profileDisplayName(p))+'</h3></div><p class="why">'+esc(profileNote(p)||'Profil aromatic tutunos.')+'</p><div class="chips">'+tags.map(function(t){return '<span class="chip">'+esc(t)+'</span>'}).join('')+'</div><p class="build">'+esc(buildFor(p,'balance'))+'</p><button class="btn secondary" data-profile-index="'+item.i+'">Recomandare</button></article>'}).join('');document.querySelectorAll('[data-profile-index]').forEach(function(b){b.onclick=function(){var p=profiles[parseInt(b.dataset.profileIndex,10)];selectedProfileGroup=profileGroup(p);if($('profileGroupSelect')){renderProfileGroupSelect();$('profileGroupSelect').value=selectedProfileGroup}renderProfileSelectOptions();$('profileSelect').value=b.dataset.profileIndex;selectedProblem='balance';selectedTags=[];tagSelectionDirty=false;document.querySelectorAll('.problem-btn').forEach(function(x){x.classList.toggle('active',x.dataset.problem===selectedProblem)});updateProfileSelect();makeRecommendation();goTab('recommender')}})}
 
 function renderWires(){if($('wireSearch')&&!$('wireSearch').dataset.ready){$('wireSearch').dataset.ready='1';$('wireSearch').addEventListener('input',renderWires)}var q=$('wireSearch')?$('wireSearch').value.trim():'';var list=WIRE_GUIDE.map(function(w){return {w:w,score:scoreWire(w,q)}}).filter(function(x){return !q||x.score>0}).sort(function(a,b){return q?(b.score-a.score||a.w.name.localeCompare(b.w.name)):a.w.name.localeCompare(b.w.name)}).map(function(x){return x.w});$('wireList').innerHTML=list.length?list.map(function(w){return '<article class="card wire-card"><span class="chip warn">'+esc(w.name)+'</span><h3 style="margin-top:10px">Rol practic</h3><p class="wire-purpose"><strong>'+esc(w.role)+'</strong></p><ul>'+w.practical.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul><p class="risk">Atentie: '+esc(w.avoid)+'</p><div class="source-actions"><a class="mini-link" target="_blank" rel="noreferrer" href="https://www.youtube.com/results?search_query='+encodeURIComponent(w.name+' MTL RTA coil build 2.5mm')+'">Video build</a><a class="mini-link" target="_blank" rel="noreferrer" href="https://www.google.com/search?q='+encodeURIComponent(w.name+' MTL RTA tobacco build')+'">Detalii</a></div></article>'}).join(''):'<div class="empty">Nu exista sarme pentru filtrul ales.</div>'}
 function renderSources(){if($('sourceSearch')&&!$('sourceSearch').dataset.ready){$('sourceSearch').dataset.ready='1';$('sourceSearch').addEventListener('input',renderSources);$('sourceAtom').addEventListener('change',renderSources);$('sourceAtom').innerHTML='<option value="">Toate atomizoarele</option>'+atomizers.map(function(a){return '<option value="'+esc(getName(a))+'">'+esc(getName(a))+'</option>'}).join('')}var q=norm($('sourceSearch')?$('sourceSearch').value:'');var atom=$('sourceAtom')?$('sourceAtom').value:'';var list=atomizers.filter(function(a){if(atom&&getName(a)!==atom)return false;var hay=norm(getName(a)+' '+getDna(a)+' '+getWhy(a)+' '+getBuild(a)+' '+getSources(a).map(function(s){return sourceTitle(s)+' '+sourceLabel(s)+' '+cleanHost(sourceUrl(s))}).join(' '));return !q||hay.indexOf(q)>=0});if(!list.length){$('sourceList').innerHTML='<div class="empty">Nu exista rezultate pentru filtrul ales.</div>';return}$('sourceList').innerHTML=list.map(function(a){var tech=technicalSources(a).slice(0,4);return '<article class="card source-card">'+atomMediaHtml(a)+'<span class="chip cold">'+esc(getName(a))+'</span><h3 style="margin-top:10px">Recenzie si build</h3><p class="why">'+esc(getDna(a)||getWhy(a)||'RTA MTL pentru lichide tutunoase.')+'</p>'+atomActionsHtml(a)+(tech.length?'<div class="review-list">'+tech.map(function(s){return sourceLineHtml(a,s)}).join('')+'</div>':'')+'</article>'}).join('')}
