@@ -320,6 +320,9 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .calc-step-line span{display:block;color:#555;font-size:13px;line-height:1.35;margin-top:2px}
 .calc-explain{border:1px solid #e5d8e8;background:#fff;border-radius:var(--radius);padding:9px 10px;color:#4a3a49;font-size:13px;line-height:1.4}
 .calc-explain.warn{border-color:rgba(255,122,26,.45);background:#fff8ef;color:#6b3300}
+.calc-examples{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;margin-top:8px}
+.calc-example{border:1px solid #e5d8e8;background:#fff;border-radius:var(--radius);padding:8px;color:#333;font-size:12px;line-height:1.25}
+.calc-example b{display:block;color:#111;font-size:14px;margin-bottom:2px}
 .calc-summary-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px}
 .calc-verdict{margin-top:10px;border-left:4px solid #37bfe8;background:#f1fbff;border-radius:0 var(--radius) var(--radius) 0;padding:10px 12px;color:#17313a;font-size:13px}
 .calc-verdict.bad{border-left-color:#ff5548;background:#fff0ee;color:#7b2018}
@@ -337,8 +340,8 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:13px}
 @media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid,.mix-grid,.calc-layout,.mix-workflow{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid,.mix-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ratio-grid{grid-template-columns:1fr}}
 @media(max-width:900px){.guide-card{position:static}.guided-flow,.fit-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){header{position:static}main{padding:14px 0 34px}.wrap{padding:0 12px}.wrap.nav{padding:9px 12px}.nav{gap:8px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:8px;min-width:0}.smokee-logo{width:98px;flex:0 0 auto}.brand b{font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 164px)}.brand span{display:none}.head-tools{display:none}.site-search{height:40px}.site-search input{height:38px;font-size:14px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding-top:8px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:38px;padding:8px 11px;font-size:13px;line-height:1.12}.shop-layout{gap:12px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:13px 10px;font-size:16px}.shop-hero{min-height:344px;background-position:66% center}.shop-hero-content{padding:19px}.shop-hero h1{font-size:30px;line-height:1.05}.lead{font-size:16px;line-height:1.42}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.hero-actions .btn{width:auto;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shop-metrics .metric{min-height:78px;padding:12px}.card{padding:13px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:24px}.atom-media{aspect-ratio:4/3}.fit-strip,.calc-fields,.calc-result-grid{grid-template-columns:1fr}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:50px;padding:9px 10px;font-size:14px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.footer{padding-bottom:22px}}
-@media(max-width:380px){.wrap{padding:0 10px}.wrap.nav{padding:9px 10px}.smokee-logo{width:90px}.brand b{font-size:12px;max-width:calc(100vw - 142px)}.navbtn{font-size:12px;padding:8px 10px}.hero-actions,.problem-grid,.role-tabs,.category-list{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:27px}.shop-hero-content{padding:17px}.btn{padding:9px 10px}.card{padding:11px}.cat-mark{width:25px;height:25px}.category-link{font-size:15px}}
+@media(max-width:640px){header{position:static}main{padding:14px 0 34px}.wrap{padding:0 12px}.wrap.nav{padding:9px 12px}.nav{gap:8px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:8px;min-width:0}.smokee-logo{width:98px;flex:0 0 auto}.brand b{font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 164px)}.brand span{display:none}.head-tools{display:none}.site-search{height:40px}.site-search input{height:38px;font-size:14px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;padding-top:8px;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:38px;padding:8px 11px;font-size:13px;line-height:1.12}.shop-layout{gap:12px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:13px 10px;font-size:16px}.shop-hero{min-height:344px;background-position:66% center}.shop-hero-content{padding:19px}.shop-hero h1{font-size:30px;line-height:1.05}.lead{font-size:16px;line-height:1.42}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.hero-actions .btn{width:auto;min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.shop-metrics .metric{min-height:78px;padding:12px}.card{padding:13px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:24px}.atom-media{aspect-ratio:4/3}.fit-strip,.calc-fields,.calc-result-grid{grid-template-columns:1fr}.calc-examples{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:50px;padding:9px 10px;font-size:14px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.footer{padding-bottom:22px}}
+@media(max-width:380px){.wrap{padding:0 10px}.wrap.nav{padding:9px 10px}.smokee-logo{width:90px}.brand b{font-size:12px;max-width:calc(100vw - 142px)}.navbtn{font-size:12px;padding:8px 10px}.hero-actions,.problem-grid,.role-tabs,.category-list,.calc-examples{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:27px}.shop-hero-content{padding:17px}.btn{padding:9px 10px}.card{padding:11px}.cat-mark{width:25px;height:25px}.category-link{font-size:15px}}
 </style>
 </head>
 <body>
@@ -669,15 +672,17 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
     <article class="card calc-card" style="margin-top:14px">
       <span class="chip cold">Calculator</span>
       <h3>Calculator simplu pentru lichid final</h3>
-      <p class="muted">Alegi ce vrei sa iasa in sticla. Rezultatul iti spune direct ce torni: nic-shot, aroma, VG si PG.</p>
+      <p class="muted">Alegi ce vrei sa iasa in sticla. Rezultatul iti spune direct cati ml torni si, separat, echivalentul in flacoane.</p>
       <div class="calc-layout">
         <div>
-          <div class="calc-help"><b>Mod rapid:</b> se presupune nic-shot 20 mg/ml 50/50, aroma in PG si flacon nic-shot de 10 ml. Exemplu: 100 ml la 6 mg/ml cere 30 ml nic-shot; 100 ml la 12 mg/ml cere 60 ml nic-shot.</div>
+          <div class="calc-help"><b>Regula nicotinei:</b> calculatorul nu conteaza flacoane, ci cati mg de nicotina introduci in reteta. Un nic-shot standard de 10 ml la 20 mg/ml are 200 mg nicotina. O nicotina concentrata poate avea aceeasi cantitate in mai putini ml, daca este mai tare.</div>
+          <div class="calc-help"><b>Formula:</b> ml baza nicotina = taria finala dorita x volumul final / taria bazei de nicotina. Exemplu: 100 ml la 6 mg/ml cere 600 mg nicotina; asta inseamna 30 ml cu baza de 20 mg/ml sau 6 ml cu baza de 100 mg/ml.</div>
+          <div class="calc-help"><b>Direct:</b> daca ai flacoane de 10 ml / 20 mg/ml, lasi pasul 4 pe 20 si flaconul pe 10 ml. Daca ai concentrata in fiole de 2 ml, treci taria reala la pasul 4 si marimea fiolei in setari avansate.</div>
           <div class="calc-fields">
             <div class="field"><label for="mixTotal">1. Cat lichid vrei? ml</label><input id="mixTotal" type="number" min="1" step="1" value="100"></div>
             <div class="field"><label for="mixTargetNic">2. Taria finala dorita mg/ml</label><input id="mixTargetNic" type="number" min="0" step="0.1" value="6"></div>
             <div class="field"><label for="mixAroma">3. Aroma %</label><input id="mixAroma" type="number" min="0" max="40" step="0.1" value="10"></div>
-            <div class="field"><label for="mixShotNic">4. Nic-shot mg/ml</label><input id="mixShotNic" type="number" min="0" step="0.1" value="20"></div>
+            <div class="field"><label for="mixShotNic">4. Taria bazei de nicotina mg/ml</label><input id="mixShotNic" type="number" min="0" step="0.1" value="20"></div>
           </div>
           <div class="calc-help"><b>Alege raportul final VG/PG:</b></div>
           <div class="calc-presets" aria-label="Preseturi raport VG/PG">
@@ -688,11 +693,12 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
           <details class="calc-advanced">
             <summary>Setari avansate, doar daca ingredientele sunt diferite</summary>
             <div class="calc-fields">
-              <div class="field"><label for="mixShotVg">VG in nic-shot %</label><input id="mixShotVg" type="number" min="0" max="100" step="1" value="50"></div>
+              <div class="field"><label for="mixShotVg">VG in baza de nicotina %</label><input id="mixShotVg" type="number" min="0" max="100" step="1" value="50"></div>
               <div class="field"><label for="mixTargetVg">VG final %</label><input id="mixTargetVg" type="number" min="0" max="100" step="1" value="50"></div>
               <div class="field"><label for="mixAromaPg">PG in aroma %</label><input id="mixAromaPg" type="number" min="0" max="100" step="1" value="100"></div>
-              <div class="field"><label for="mixBottle">Flacon nic-shot ml</label><input id="mixBottle" type="number" min="1" step="1" value="10"></div>
+              <div class="field"><label for="mixBottle">Marime flacon/fiola ml</label><input id="mixBottle" type="number" min="0.1" step="0.1" value="10"></div>
             </div>
+            <div class="calc-help"><b>Flaconul:</b> este doar un reper practic. Pentru nic-shot standard lasi 10 ml si 20 mg/ml. Pentru concentrata, scrii taria reala la pasul 4 si marimea flaconului sau fiolei aici.</div>
           </details>
         </div>
         <div class="calc-output">
@@ -710,7 +716,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
         <h3>Ordinea unui batch MTL</h3>
         <div class="mix-workflow">
           <div class="mix-step"><b>1</b><span>Tinta</span><small>VG/PG, mg/ml si volum final.</small></div>
-          <div class="mix-step"><b>2</b><span>Calcul</span><small>nic-shot, aroma, VG si PG.</small></div>
+          <div class="mix-step"><b>2</b><span>Calcul</span><small>baza nicotina, aroma, VG si PG.</small></div>
           <div class="mix-step"><b>3</b><span>Masurare</span><small>ml precis sau cantar cu densitati.</small></div>
           <div class="mix-step"><b>4</b><span>Amestec</span><small>agitare 1-2 minute si eticheta.</small></div>
           <div class="mix-step"><b>5</b><span>Maturare</span><small>intuneric, timp, teste etapizate.</small></div>
@@ -1506,7 +1512,7 @@ function calcLiquidRecipe(){
   var targetVg=clampNum(mixNum('mixTargetVg',50),0,100);
   var aromaPct=clampNum(mixNum('mixAroma',10),0,40);
   var aromaPg=clampNum(mixNum('mixAromaPg',100),0,100);
-  var bottle=Math.max(1,mixNum('mixBottle',10));
+  var bottle=Math.max(0.1,mixNum('mixBottle',10));
   var targetPg=100-targetVg;
   var aromaMl=total*aromaPct/100;
   var nicMl=targetNic>0?(shotNic>0?(targetNic*total/shotNic):Infinity):0;
@@ -1519,22 +1525,24 @@ function calcLiquidRecipe(){
   var addVg=targetVgMl-nicVg-aromaVg;
   var addPg=targetPgMl-nicPg-aromaPgMl;
   var bad=[];
-  if(!isFinite(nicMl))bad.push('Nicotina dorita cere nic-shot, dar concentratia nic-shotului este 0 mg/ml.');
-  if(isFinite(nicMl)&&nicMl>total)bad.push('Nicotina dorita cere mai mult nic-shot decat volumul final.');
+  if(!isFinite(nicMl))bad.push('Nicotina dorita cere baza de nicotina, dar concentratia bazei este 0 mg/ml.');
+  if(isFinite(nicMl)&&nicMl>total)bad.push('Nicotina dorita cere mai multa baza de nicotina decat volumul final.');
   if(isFinite(nicMl)&&nicMl+aromaMl>total)bad.push('Nicotina si aroma ocupa deja mai mult decat volumul final.');
-  if(isFinite(addVg)&&addVg<-0.01)bad.push('Exista prea mult VG din nic-shot/aroma pentru tinta aleasa.');
-  if(isFinite(addPg)&&addPg<-0.01)bad.push('Exista prea mult PG din nic-shot/aroma pentru tinta aleasa.');
+  if(isFinite(addVg)&&addVg<-0.01)bad.push('Exista prea mult VG din baza de nicotina/aroma pentru tinta aleasa.');
+  if(isFinite(addPg)&&addPg<-0.01)bad.push('Exista prea mult PG din baza de nicotina/aroma pentru tinta aleasa.');
   updateMixPresetButtons(targetVg);
   out.className='calc-simple-list';
-  var bottleText=isFinite(nicMl)?'aprox. '+fmtQty(nicMl/bottle)+' flacoane de '+fmtMl(bottle):'imposibil';
+  var bottleText=isFinite(nicMl)?'echivalent: '+fmtQty(nicMl/bottle)+' flacoane/fiole x '+fmtMl(bottle):'imposibil';
+  var nicotineMg=targetNic*total;
   var formulaText=targetNic>0&&shotNic>0?fmtQty(targetNic)+' x '+fmtQty(total)+' / '+fmtQty(shotNic)+' = '+fmtMl(nicMl):'fara nicotina';
   var lines=[];
   if(bad.length){
     lines.push(calcLine('!', 'Nu se poate turna corect asa', 'Schimba valorile pana dispare avertismentul de mai jos.'));
   }else{
-    lines.push(calcLine(1,'Nic-shot',targetNic>0?'Pune '+fmtMl(nicMl)+' ('+bottleText+').':'Nu se adauga nic-shot.'));
-    if(targetNic>0)lines.push('<div class="calc-explain">Formula nic-shot: taria finala dorita x volumul final / taria nic-shotului = '+esc(formulaText)+'.</div>');
-    if(isFinite(nicMl)&&nicMl/total>=0.4)lines.push('<div class="calc-explain warn">Atentie: nic-shotul ocupa '+esc(Math.round((nicMl/total)*100))+'% din sticla. Asta se intampla cand taria finala dorita este mare pentru un nic-shot de '+esc(fmtQty(shotNic))+' mg/ml. Daca voiai 6 mg/ml, scrie 6 la pasul 2.</div>');
+    lines.push(calcLine(1,'Baza de nicotina',targetNic>0?'Pune '+fmtMl(nicMl)+' baza de nicotina. Ca ambalaj: '+bottleText+'.':'Nu se adauga nicotina.'));
+    if(targetNic>0)lines.push('<div class="calc-explain">Ai nevoie de '+esc(fmtQty(nicotineMg))+' mg nicotina in total. Formula: taria finala dorita x volumul final / taria bazei de nicotina = '+esc(formulaText)+'.</div>');
+    if(targetNic>0)lines.push('<div class="calc-examples"><div class="calc-example"><b>Cu 20 mg/ml</b>'+esc(fmtMl(nicotineMg/20))+' baza nicotina</div><div class="calc-example"><b>Cu 100 mg/ml</b>'+esc(fmtMl(nicotineMg/100))+' baza nicotina</div><div class="calc-example"><b>Flacoane setate</b>'+esc(bottleText)+'</div><div class="calc-example"><b>Echivalenta</b>10 ml x 20 mg/ml = 2 ml x 100 mg/ml = 200 mg</div></div>');
+    if(isFinite(nicMl)&&nicMl/total>=0.4)lines.push('<div class="calc-explain warn">Atentie: baza de nicotina ocupa '+esc(Math.round((nicMl/total)*100))+'% din sticla. Asta se intampla cand taria finala dorita este mare sau cand baza de nicotina este slaba, de exemplu 20 mg/ml. Daca folosesti nicotina concentrata, trece taria ei reala la pasul 4 si marimea flaconului/fiolei in setari avansate.</div>');
     lines.push(calcLine(2,'Aroma','Pune '+fmtMl(aromaMl)+' aroma concentrata.'));
     lines.push(calcLine(3,'VG simplu','Pune '+fmtMl(Math.max(0,addVg))+' VG simplu.'));
     lines.push(calcLine(4,'PG simplu','Pune '+fmtMl(Math.max(0,addPg))+' PG simplu.'));
