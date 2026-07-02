@@ -28,7 +28,13 @@ const GROUPS = [
   {
     id: 'tutun',
     terms: [
-      'tobacco', 'tabac', 'tutun', 'RY4', 'Virginia', 'Burley', 'Kentucky', 'Latakia',
+      'tobacco', 'tabac', 'tutun', 'RY4', 'sweet tobacco', 'vanilla tobacco',
+      'caramel tobacco', 'honey tobacco', 'coffee tobacco', 'cacao tobacco',
+      'chocolate tobacco', 'cream tobacco', 'dessert tobacco', 'pipe tobacco',
+      'tabaco', 'tabaco dulce', 'tutun vanilie', 'tutun caramel', 'tutun miere',
+      'tutun cafea', 'tutun cacao', 'tutun crema', 'tobacco custard',
+      'toffee tobacco', 'butterscotch tobacco', 'aromatizat tutun',
+      'Virginia', 'Burley', 'Kentucky', 'Latakia',
       'Cigar', 'Cubano', 'Cavendish', 'Oriental', 'Classic Tobacco', 'Pipe tobacco',
       'Manabush', 'TNT Vape', 'Scandal Flavors', 'VnV Liquids', 'Ripe Vapes Tobacco',
       'Bombo Tobacco', 'Vampire Vape Tobacco'
@@ -92,17 +98,18 @@ function isNetText(text) {
 }
 
 function hasTobaccoProfile(text) {
-  return /\b(tutun|tutunuri|tobacco|tabac|tabaccoso|ry4|virginia|brightleaf|burley|kentucky|latakia|cigar|trabuc|cubano|havana|san andres|cavendish|oriental|turkish|izmir|basma|samsun|dokha|perique|pipe|american blend|english blend|english night|balkan|mixture|fire cured|fire-cured|dark fired|dark-fired|dry leaf|smooth tobacco|strong tobacco|brown classic|classic usa|classic ry4|classic kml|classic mlb|westblend|eastblend|mlb classic|kml)\b/.test(text);
+  return /\b(tutun|tutunuri|tobacco|tabac|tabaco|tabaccoso|ry4|virginia|brightleaf|burley|kentucky|latakia|cigar|trabuc|cubano|havana|san andres|cavendish|oriental|turkish|izmir|basma|samsun|dokha|perique|pipe|american blend|english blend|english night|balkan|mixture|fire cured|fire-cured|dark fired|dark-fired|dry leaf|smooth tobacco|strong tobacco|sweet tobacco|vanilla tobacco|caramel tobacco|honey tobacco|coffee tobacco|cacao tobacco|chocolate tobacco|cream tobacco|dessert tobacco|brown classic|classic usa|classic ry4|classic kml|classic mlb|westblend|eastblend|mlb classic|kml)\b/.test(text);
 }
 
 function isComplexTobacco(text) {
-  return /\b(blend|mixture|english|balkan|ry4|cavendish|pipe|cigar|trabuc|cubano|havana|san andres|vanilla|vanilie|caramel|cappuccino|coffee|cafea|latte|apple|mar|peanut|arahide|nuci|nut|honey|miere|rom|rum|bourbon|whisky|cream|crema|cacao|chocolate|ciocolata|sweet|dulce|fresh|menthol|mint|melasa|fructe uscate|condiment|spice|arabian|oriental|dokha)\b/.test(text);
+  return /\b(blend|mixture|english|balkan|ry4|cavendish|pipe|cigar|trabuc|cubano|havana|san andres|vanilla|vanilie|caramel|toffee|butterscotch|cappuccino|coffee|cafea|latte|apple|mar|peanut|arahide|nuci|nut|honey|miere|rom|rum|bourbon|whisky|cream|crema|cremos|cremoso|custard|cacao|chocolate|ciocolata|sweet|dulce|fresh|menthol|mint|melasa|fructe uscate|condiment|spice|arabian|oriental|dokha|aromatizat)\b/.test(text);
 }
 
 function inferTag(text, group) {
   const t = norm(text);
   const prefix = group === 'net' ? 'NET' : 'TUTUN';
-  const subtype = isComplexTobacco(t) ? 'complex' : 'simplu';
+  const sweet = /\b(ry4|dulce|sweet|vanilla|vanilie|caramel|toffee|butterscotch|honey|miere|cappuccino|coffee|cafea|latte|cream|crema|cremos|cremoso|cacao|chocolate|ciocolata|custard|dessert|vct)\b/.test(t);
+  const subtype = sweet ? 'dulce' : (isComplexTobacco(t) ? 'complex' : 'simplu');
   if (/latakia/.test(t)) return `${prefix} ${subtype} Latakia`;
   if (/kentucky|dark[-\s]?fired|fire cured|fire-cured/.test(t)) return `${prefix} ${subtype} Kentucky`;
   if (/virginia|bright|flue/.test(t)) return `${prefix} ${subtype} Virginia`;
@@ -119,13 +126,14 @@ function inferTag(text, group) {
 function normalizeProduct(product, group) {
   const title = decodeEntities(product.name || product.title || '');
   const text = sourceText(product);
+  const tagText = `${title} ${product.permalink || product.url || ''}`;
   const images = Array.isArray(product.images) ? product.images : [];
   const image = images.length ? (images[0].thumbnail || images[0].src || '') : '';
   return {
     title,
     url: cleanUrl(product.permalink || product.url || ''),
     image,
-    tag: inferTag(`${title} ${text}`, group),
+    tag: inferTag(tagText, group),
     stock: product.is_in_stock === true ? true : (product.is_in_stock === false ? false : null),
     sourceText: text,
     metaText: metaText(product)
@@ -139,7 +147,7 @@ function isLiquid(item, group) {
   if (!/smokee\.ro\/product\//.test(item.url)) return false;
   if (/\b(atomizor|rta|kit|cartus|cartridge|clearomizor|bumbac|cotton|coil|coils|rezistent|rezistenta|wire|sarma|unelte|tool|baterie|acumulator|drip tip|sticla gradata|flacon gol|box mod|mod full kit|tigara electronica|dispozitiv)\b/.test(visible)) return false;
   if (/\b(nic shot|nic-shot|nicotina|nicotine shot|baza|base|vg simplu|pg simplu|glicerina|propylene glycol|vegetable glycerin)\b/.test(visible)) return false;
-  const hasLiquidSignal = /\b(lichid|liquid|e[-\s]?liquid|eliquid|longfill|shortfill|aroma|arome|concentrat|flavour|flavor|tobacco|tutun|tabac|net|tabaccheria|azhad|vapor cave|distillati|estratto|organic)\b/.test(text);
+  const hasLiquidSignal = /\b(lichid|liquid|e[-\s]?liquid|eliquid|longfill|shortfill|aroma|arome|concentrat|flavour|flavor|tobacco|tutun|tabac|tabaco|net|tabaccheria|azhad|vapor cave|distillati|estratto|organic)\b/.test(text);
   if (!hasLiquidSignal) return false;
   if (group === 'net') return isNetText(classification) && hasTobaccoProfile(text);
   return !isNetText(classification) && hasTobaccoProfile(text);
