@@ -44,7 +44,7 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .site-search input:focus{box-shadow:none}
 .search-panel{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:30;display:none;background:#fff;border:1px solid #d4d4d4;border-top:3px solid #ff7a1a;border-radius:var(--radius);box-shadow:0 16px 38px rgba(0,0,0,.24);padding:10px;color:#1d1d1d}
 .search-panel.active{display:block}
-.search-modes{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
+.search-modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:6px;margin-bottom:8px}
 .search-mode{border:1px solid #ddd;background:#fafafa;color:#222;border-radius:6px;padding:7px 8px;font-size:12px;font-weight:900;text-align:center}
 .search-mode.active,.search-mode:hover{border-color:#ff7a1a;background:#fff2e4;color:#9d4100}
 .search-results{display:grid;gap:6px;max-height:310px;overflow:auto}
@@ -67,6 +67,8 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn.review-nav:hover,.navbtn.review-nav.active{color:#080808;border-color:#ffd16a;background:linear-gradient(135deg,#ff8a2a,#ffc23b);box-shadow:0 12px 30px rgba(255,122,26,.34)}
 .navbtn.wire-nav{color:#fff;border-color:rgba(85,209,122,.62);background:#102018}
 .navbtn.wire-nav:hover,.navbtn.wire-nav.active{color:#061008;border-color:#55d17a;background:#55d17a;box-shadow:0 8px 20px rgba(85,209,122,.18)}
+.navbtn.consumables-nav{color:#fff;border-color:rgba(255,122,26,.62);background:linear-gradient(135deg,#1d1712,#0d2f37);font-weight:900}
+.navbtn.consumables-nav:hover,.navbtn.consumables-nav.active{color:#090909;border-color:#ffb000;background:linear-gradient(135deg,#ff7a1a,#37bfe8);box-shadow:0 8px 22px rgba(255,122,26,.22)}
 .navbtn.tc-nav{color:#eafcff;border-color:rgba(55,191,232,.65);background:#0b1b22;font-weight:900}
 .navbtn.tc-nav:hover,.navbtn.tc-nav.active{color:#071014;border-color:#37bfe8;background:#37bfe8;box-shadow:0 8px 22px rgba(55,191,232,.22)}
 .navbtn.law-nav{color:#fff8df;border-color:rgba(255,190,84,.72);background:linear-gradient(135deg,#261709,#3b260f);font-weight:900}
@@ -205,6 +207,38 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .source-line span{width:fit-content;max-width:100%;margin-bottom:5px}
 .source-line small{color:var(--muted);margin-top:2px}
 .source-line em{color:#555;font-style:normal;font-size:12px;margin-top:5px}
+.consumables-hero{position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:14px;align-items:stretch;border:1px solid #111;background:linear-gradient(120deg,rgba(0,0,0,.92),rgba(28,19,12,.78) 46%,rgba(5,43,51,.76)),url("assets/rta-hero-background.png") center/cover no-repeat;color:#fff;border-radius:var(--radius);box-shadow:var(--shadow);padding:26px;margin-bottom:14px;overflow:hidden}
+.consumables-hero h2{color:#fff;margin-bottom:8px}
+.consumables-hero .lead{color:#f3f3f3}
+.consumables-hero .kicker{color:#ffb66f}
+.consumables-contact{display:flex;gap:13px;align-items:flex-start;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);border-radius:var(--radius);padding:14px;backdrop-filter:blur(8px)}
+.wa-mark{width:42px;height:42px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#25d366;color:#061008;box-shadow:0 8px 18px rgba(37,211,102,.24);flex:0 0 auto}
+.wa-mark svg{display:block;width:24px;height:24px;fill:currentColor}
+.consumables-contact b{display:block;color:#fff;margin-bottom:4px}
+.consumables-contact p{color:#f2efe9;margin:0 0 10px;font-size:14px;line-height:1.4}
+.consumables-contact .source-actions{margin-top:0}
+.consumable-actions{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
+.consumable-actions .mini-link{background:#111;color:#fff;border-color:#2d2d2d}
+.consumable-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.consumable-zone{position:relative;overflow:hidden;border:1px solid #dedede;background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:var(--radius);box-shadow:0 8px 20px rgba(0,0,0,.08);padding:14px;min-width:0}
+.consumable-zone:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff7a1a,#ffb000,#37bfe8)}
+.consumable-zone-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:2px 0 12px}
+.consumable-zone-head h3{margin:0}
+.consumable-zone-head span{color:#666;font-size:12px}
+.consumable-status{display:inline-flex;align-items:center;gap:6px;border:1px solid #d9d9d9;background:#fff;border-radius:999px;padding:5px 8px;color:#555;font-size:12px;font-weight:800;white-space:nowrap}
+.consumable-list{display:grid;gap:8px}
+.consumable-item{display:grid;grid-template-columns:58px minmax(0,1fr);gap:10px;align-items:center;border:1px solid #e2e2e2;background:#fff;border-radius:var(--radius);padding:8px;color:#222;min-width:0}
+.consumable-item:hover{border-color:#ff7a1a;background:#fff8f0;text-decoration:none}
+.consumable-thumb{display:flex;align-items:center;justify-content:center;width:58px;aspect-ratio:1;border:1px solid #e4e4e4;border-radius:6px;background:linear-gradient(135deg,#111,#25323a);overflow:hidden;color:#ffb66f;font-weight:900;font-size:12px}
+.consumable-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.consumable-copy{min-width:0}
+.consumable-copy b{display:block;color:#171717;font-size:13px;line-height:1.25;overflow-wrap:anywhere}
+.consumable-copy small{display:block;color:#666;margin-top:3px;line-height:1.3}
+.stock-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.stock-pill{display:inline-flex;align-items:center;border:1px solid #ddd;border-radius:999px;background:#f7f7f7;color:#555;padding:3px 7px;font-size:11px;font-weight:800}
+.stock-pill.in{border-color:rgba(85,209,122,.42);background:rgba(85,209,122,.12);color:#24733a}
+.stock-pill.out{border-color:rgba(255,85,72,.38);background:rgba(255,85,72,.10);color:#9b3027}
+.stock-pill.link{border-color:rgba(255,122,26,.42);background:#fff4e8;color:#a94700}
 .detail-overlay{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.58);padding:18px}
 .detail-overlay.active{display:flex}
 .detail-panel{width:min(980px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:var(--radius);box-shadow:0 22px 70px rgba(0,0,0,.32);border:1px solid #d8d8d8}
@@ -339,9 +373,9 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .mix-warning{border-left:4px solid #ff5548;background:#fff1f0;color:#6e1c16;border-radius:0 var(--radius) var(--radius) 0;padding:12px 14px;margin-top:14px}
 .small{font-size:13px}
 .footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--muted);font-size:13px}
-@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid,.mix-grid,.calc-layout,.mix-workflow{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid,.mix-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ratio-grid{grid-template-columns:1fr}}
+@media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid,.mix-grid,.calc-layout,.mix-workflow,.consumables-hero,.consumable-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid,.mix-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ratio-grid{grid-template-columns:1fr}.consumables-hero{padding:20px}}
 @media(max-width:900px){.guide-card{position:static}.guided-flow,.fit-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:640px){header{position:static}main{padding:10px 0 32px;background:#fff}.wrap{padding:0 10px}.wrap.nav{padding:8px 10px 9px}.nav{gap:7px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:7px;min-width:0}.smokee-logo{width:92px;flex:0 0 auto}.brand b{font-size:12px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 128px)}.brand span{display:none}.head-tools{display:none}.site-search{height:38px;padding:0 10px}.search-icon{width:16px;height:16px}.site-search input{height:36px;font-size:13px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;margin:0 -10px;padding:7px 10px 2px;border-top:1px solid #222;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:34px;padding:7px 9px;font-size:12px;line-height:1.12}.shop-layout{gap:10px;margin-bottom:14px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:12px 10px;font-size:15px}.shop-hero{min-height:0;background-position:64% center}.shop-hero-content{padding:16px}.shop-hero h1{font-size:27px;line-height:1.06;margin-bottom:10px}.kicker{font-size:11px;margin-bottom:6px}.lead{font-size:15px;line-height:1.38}.shop-hero .lead{margin-bottom:0}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:15px}.hero-actions .btn{width:auto;min-height:39px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.16;padding:8px 9px}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.shop-metrics .metric{display:grid;grid-template-columns:1fr;align-content:space-between;justify-content:stretch;align-items:start;gap:10px;min-height:118px;padding:12px;overflow:hidden}.shop-metrics .metric h3{font-size:20px;line-height:1.12;margin-bottom:6px;overflow-wrap:anywhere}.shop-metrics .metric strong{justify-self:end;max-width:100%;font-size:clamp(26px,8.4vw,34px);line-height:.95}.shop-metrics .metric span{display:block;font-size:12px;line-height:1.35;overflow-wrap:anywhere}.card{padding:12px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:23px}.metric span{font-size:12px}.atom-media{aspect-ratio:4/3}.fit-strip,.calc-fields,.calc-result-grid{grid-template-columns:1fr}.calc-examples{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:48px;padding:8px 9px;font-size:13px;gap:9px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.footer{padding-bottom:22px}}
+@media(max-width:640px){header{position:static}main{padding:10px 0 32px;background:#fff}.wrap{padding:0 10px}.wrap.nav{padding:8px 10px 9px}.nav{gap:7px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:7px;min-width:0}.smokee-logo{width:92px;flex:0 0 auto}.brand b{font-size:12px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 128px)}.brand span{display:none}.head-tools{display:none}.site-search{height:38px;padding:0 10px}.search-icon{width:16px;height:16px}.site-search input{height:36px;font-size:13px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;margin:0 -10px;padding:7px 10px 2px;border-top:1px solid #222;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:34px;padding:7px 9px;font-size:12px;line-height:1.12}.shop-layout{gap:10px;margin-bottom:14px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:12px 10px;font-size:15px}.shop-hero{min-height:0;background-position:64% center}.shop-hero-content{padding:16px}.shop-hero h1{font-size:27px;line-height:1.06;margin-bottom:10px}.kicker{font-size:11px;margin-bottom:6px}.lead{font-size:15px;line-height:1.38}.shop-hero .lead{margin-bottom:0}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:15px}.hero-actions .btn{width:auto;min-height:39px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.16;padding:8px 9px}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.shop-metrics .metric{display:grid;grid-template-columns:1fr;align-content:space-between;justify-content:stretch;align-items:start;gap:10px;min-height:118px;padding:12px;overflow:hidden}.shop-metrics .metric h3{font-size:20px;line-height:1.12;margin-bottom:6px;overflow-wrap:anywhere}.shop-metrics .metric strong{justify-self:end;max-width:100%;font-size:clamp(26px,8.4vw,34px);line-height:.95}.shop-metrics .metric span{display:block;font-size:12px;line-height:1.35;overflow-wrap:anywhere}.card{padding:12px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:23px}.metric span{font-size:12px}.atom-media{aspect-ratio:4/3}.fit-strip,.calc-fields,.calc-result-grid{grid-template-columns:1fr}.calc-examples{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:48px;padding:8px 9px;font-size:13px;gap:9px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.consumables-hero{padding:16px;background-position:center}.consumables-contact{display:grid;grid-template-columns:auto 1fr}.consumable-zone{padding:12px}.consumable-item{grid-template-columns:50px minmax(0,1fr);padding:7px}.consumable-thumb{width:50px}.footer{padding-bottom:22px}}
 @media(max-width:380px){.wrap{padding:0 9px}.wrap.nav{padding:7px 9px 8px}.smokee-logo{width:84px}.brand b{font-size:11px;max-width:calc(100vw - 116px)}.navlinks{margin:0 -9px;padding-left:9px;padding-right:9px}.navbtn{font-size:11px;padding:7px 8px}.problem-grid,.role-tabs,.category-list,.calc-examples{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:25px}.shop-hero-content{padding:14px}.btn{padding:8px}.card{padding:11px}.cat-mark{width:24px;height:24px}.category-link{font-size:14px}}
 @media(max-width:340px){.hero-actions{grid-template-columns:1fr}.shop-hero h1{font-size:23px}.lead{font-size:14px}}
 </style>
@@ -353,7 +387,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <div class="brand-top"><img class="smokee-logo" src="https://www.smokee.ro/wp-content/uploads/2024/11/smokee_logo.png" alt="Smokee"><b>Ghid RTA MTL - Smokee</b></div>
       <span>lichid - atomizor - sarma</span>
     </div>
-    <div class="site-search"><span class="search-icon" aria-hidden="true"></span><input id="globalSearch" type="search" placeholder="Cautare: atomizor, lichid, calculator, sarma, review" autocomplete="off" aria-label="Cautare in aplicatie" />
+    <div class="site-search"><span class="search-icon" aria-hidden="true"></span><input id="globalSearch" type="search" placeholder="Cautare: atomizor, lichid, consumabil, sarma, review" autocomplete="off" aria-label="Cautare in aplicatie" />
       <div class="search-panel" id="searchPanel" aria-label="Rezultate cautare">
         <div class="search-modes" id="searchModes"></div>
         <div class="search-results" id="searchResults"></div>
@@ -370,6 +404,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <button class="navbtn" data-tab="recommender">Recomandare</button>
       <button class="navbtn" data-tab="atomizers">Atomizoare</button>
       <button class="navbtn wire-nav" data-tab="wires">Sarme RTA</button>
+      <button class="navbtn consumables-nav" data-tab="consumables">Consumabile RTA</button>
       <button class="navbtn tc-nav" data-tab="tcGuide">Ghid TC</button>
       <button class="navbtn mix-nav" data-tab="liquidGuide">Cum facem lichidele vape</button>
       <button class="navbtn law-nav" data-tab="legislativ">Legislativ</button>
@@ -386,6 +421,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
           <button class="category-link" data-jump="recommender"><span class="cat-mark">R</span><span>Recomandare</span></button>
           <button class="category-link" data-jump="atomizers"><span class="cat-mark">A</span><span>Atomizoare</span></button>
           <button class="category-link" data-jump="wires"><span class="cat-mark">S</span><span>Sarme RTA</span></button>
+          <button class="category-link" data-jump="consumables"><span class="cat-mark">C</span><span>Consumabile RTA</span></button>
           <button class="category-link" data-jump="tcGuide"><span class="cat-mark">TC</span><span>Control temperatura</span></button>
           <button class="category-link" data-jump="liquidGuide"><span class="cat-mark">DIY</span><span>Cum facem lichidele vape</span></button>
           <button class="category-link" data-jump="legislativ"><span class="cat-mark">LG</span><span>Legislativ</span></button>
@@ -403,6 +439,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
               <button class="btn" data-jump="recommender">Recomandare</button>
               <button class="btn secondary" data-jump="atomizers">Atomizoare</button>
               <button class="btn review-cta" data-jump="sources">Recenzii RTA</button>
+              <button class="btn secondary" data-jump="consumables">Consumabile RTA</button>
               <button class="btn tc-cta" data-jump="tcGuide">Ghid TC</button>
               <button class="btn secondary" data-jump="liquidGuide">Cum facem lichidele vape</button>
               <button class="btn ghost" data-jump="legislativ">Legislativ</button>
@@ -911,6 +948,40 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
     </div>
   </section>
 
+  <section id="consumables" class="section">
+    <div class="consumables-hero">
+      <div>
+        <p class="kicker">Smokee consumabile RTA</p>
+        <h2>Consumabile RTA</h2>
+        <p class="lead">Sarme, bumbac si unelte pentru setup-uri rebuildable, grupate pe zone utile si legate direct de produsele Smokee.</p>
+        <div class="chips">
+          <span class="chip warn">Sarme</span>
+          <span class="chip good">Bumbac</span>
+          <span class="chip cold">Unelte</span>
+        </div>
+      </div>
+      <div class="consumables-contact">
+        <span class="wa-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" focusable="false" aria-hidden="true"><path d="M16.02 3.2c-7.02 0-12.72 5.66-12.72 12.64 0 2.23.59 4.42 1.72 6.34L3.2 28.8l6.81-1.78a12.81 12.81 0 0 0 6.01 1.5c7.02 0 12.72-5.66 12.72-12.64S23.04 3.2 16.02 3.2Zm0 22.95c-1.92 0-3.8-.53-5.43-1.54l-.39-.23-4.04 1.06 1.08-3.92-.26-.4a10.2 10.2 0 0 1-1.56-5.28c0-5.67 4.75-10.29 10.6-10.29s10.6 4.62 10.6 10.29-4.75 10.31-10.6 10.31Zm5.83-7.69c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.18.21-.37.24-.69.08-.32-.16-1.36-.5-2.59-1.59-.96-.85-1.61-1.91-1.8-2.23-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.55.16-.18.21-.32.32-.53.11-.21.05-.4-.03-.55-.08-.16-.71-1.7-.97-2.33-.26-.61-.52-.53-.71-.54h-.61c-.21 0-.55.08-.84.4-.29.32-1.1 1.07-1.1 2.61s1.13 3.03 1.29 3.24c.16.21 2.23 3.39 5.4 4.75.75.32 1.34.51 1.8.65.76.24 1.44.2 1.99.12.61-.09 1.89-.77 2.16-1.51.27-.75.27-1.38.19-1.51-.08-.13-.29-.21-.61-.37Z"/></svg>
+        </span>
+        <div>
+          <b>Comenzi si disponibilitate</b>
+          <p>Ce nu este pe stoc sau daca se doreste altceva se poate comanda telefonic sau pe WhatsApp.</p>
+          <div class="source-actions">
+            <a class="mini-link" href="tel:+40736018023">0736 018 023</a>
+            <a class="mini-link" target="_blank" rel="noreferrer" href="https://wa.me/40736018023">WhatsApp</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="consumable-actions">
+      <a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/product-category/diy/">DIY pe Smokee</a>
+      <a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/product-category/accesorii/">Accesorii pe Smokee</a>
+      <a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/product-category/atomizoare/rezistente/">Rezistente pe Smokee</a>
+    </div>
+    <div class="consumable-grid" id="consumableGrid"></div>
+  </section>
+
   <section id="sources" class="section">
     <div class="panel-title"><div><p class="kicker">Recenzii si builduri</p><h2>Surse, review-uri si exemple YouTube</h2><p class="muted">Linkurile sunt grupate pe model pentru verificarea recenziilor, buildurilor si detaliilor constructive.</p></div><div class="toolbar"><input id="sourceSearch" placeholder="Filtrare atomizor, recenzie sau build..." /><select id="sourceAtom"><option value="">Toate atomizoarele</option></select></div></div>
     <div class="source-grid" id="sourceList"></div>
@@ -1289,6 +1360,47 @@ var WIRE_GUIDE = [
   {name:'Builduri de pornire', role:'Puncte de plecare pentru lichid, atomizor si sarma, apoi ajustare dupa atomizor.', practical:['Default NET/tutun: K1 28ga, 2.5mm, 6 spire.', 'Tutun sec/precis: K1 29ga, 2.5mm, 7 spire.', 'Bright/Oriental/Perique: SS316L 30ga sau NiFe30 30, 2.0-2.5mm, 7 spire.', 'Dark/Kentucky/Latakia: K1 28ga, 2.5mm, 5-6 spire.', 'Cigar/dark foarte sec: K1 28ga sau K1 27ga prudent, 2.5-3.0mm, 5 spire.', 'Textura fara Clapton: SS316L 32 twisted, 2.5mm, 6-7 spire.', 'Aromatizat rece/plat: Ni80 30ga, 2.5mm, 6-7 spire.', 'TC fin: NiFe30 29/30, 2.0-2.5mm, 6-8 spire.'], avoid:'Buildul se ajusteaza dupa airflow, camera, pozitia coilului si lichidul folosit.'}
 ];
 
+var SMOKEE_CONSUMABLES = {
+  /* AUTO-SMOKEE-CONSUMABLES-START */
+  wires: [
+    {title:'Rezistențe MTL Fused Clapton 0.72Ω Ni80 (2 buc) - Premium by Scott',url:'https://smokee.ro/product/rezistente-mtl-fused-clapton-0-72%cf%89-ni80-2-buc-premium-by-scott/',image:'https://smokee.ro/wp-content/uploads/2026/03/mtl-fused-clapton-072-ni80-2pcs-coils-by-scott-430x430.webp',tag:'Ni80 Clapton',stock:true},
+    {title:'Rezistențe MTL Alien Clapton 0.63Ω Ni80 (2 buc) - Premium by Scott',url:'https://smokee.ro/product/rezistente-mtl-alien-clapton-0-63%cf%89-ni80-2-buc-premium-by-scott/',image:'https://smokee.ro/wp-content/uploads/2026/03/mtl-alien-clapton-063-ni80-2pcs-coils-by-scott-2-430x430.webp',tag:'Ni80 Alien',stock:true},
+    {title:'Rezistente Coilology MTL Staple Coil Ni80 0.68ohm - set de 10 bucăți',url:'https://smokee.ro/product/rezistente-coilology-mtl-staple-coil-ni80-0-68ohm-set-de-10-bucati/',image:'https://smokee.ro/wp-content/uploads/2026/03/0003843_coilology-mtl-staple-coil-ni80-068ohm-10pcs_1000-1-430x430.jpeg',tag:'Ni80',stock:true},
+    {title:'Rezistențe ThunderHead Creations THC 3-Core Alien Ni80 30GA Parallel - 0.5Ohm',url:'https://smokee.ro/product/rezistente-thunderhead-creations-thc-3-core-alien-ni80-30ga-parallel-0-5ohm/',image:'https://smokee.ro/wp-content/uploads/2026/02/thunderhead-creations-ni80-3-core-alien-coil-30ga-diagonal-430x430.jpg',tag:'Ni80 Alien',stock:true},
+    {title:'Rezistențe ThunderHead Creations THC 3-Core Alien Ni80 30GA Diagonal - 0.5Ohm',url:'https://smokee.ro/product/rezistente-thunderhead-creations-thc-3-core-alien-ni80-30ga-diagonal-0-5ohm/',image:'https://smokee.ro/wp-content/uploads/2026/02/thunderhead-creations-ni80-3-core-alien-coil-30ga-diagonal-430x430.jpg',tag:'Ni80 Alien',stock:true},
+    {title:'Rezistențe BD Vape Staggered Fused Clapton Ni80 Handmade - 0.35 Ohm',url:'https://smokee.ro/product/rezistente-bd-vape-staggered-fused-clapton-ni80-handmade-0-35-ohm/',image:'https://smokee.ro/wp-content/uploads/2026/02/staggered-fused-clapton-ni80-035-handmade-2pcs-bd-vape-430x430.webp',tag:'Ni80 Clapton',stock:false},
+    {title:'Rezistente Yacht Vape MTL Fused Clapton 2-30/40 Ni80 2.5mm - 0.7 Ohm',url:'https://smokee.ro/product/rezistente-yacht-vape-mtl-fused-clapton-2-30-40-ni80-2-5mm-0-8-ohm/',image:'https://smokee.ro/wp-content/uploads/2026/02/mtl-coil-mtl-fused-clapton-2-3040-ni80-080-25mm-10pcs-yachtvape-430x430.webp',tag:'Ni80 Clapton',stock:false},
+    {title:'Rezistente Fumytech Micro Fused Clapton MTL Ni80 - 0.88 Ohm',url:'https://smokee.ro/product/rezistente-fumytech-micro-fused-clapton-mtl-ni80-0-88-ohm-2/',image:'https://smokee.ro/wp-content/uploads/2026/02/fumytech-coil-micro-fused-clapton-mtl-prebuilt-x10-430x430.jpg',tag:'Ni80 Clapton',stock:true},
+    {title:'Set Rezistente Coilology MTL 4-in-1 Prebuilt 24 buc NI80',url:'https://smokee.ro/product/set-rezistente-coilology-mtl-4-in-1-prebuilt-24-buc-ni80/',image:'https://smokee.ro/wp-content/uploads/2026/02/MTL-4-in-1-Prebuilt-Coils-Kits-1-430x430.webp',tag:'Ni80',stock:true},
+    {title:'Rezistente Dotmod x Steam Craft MTL Dual-Core Fused Clapton NI80 - 1.20Ω',url:'https://smokee.ro/product/rezistente-dotmod-x-steam-craft-mtl-dual-core-fused-clapton-ni80-1-20%cf%89/',image:'https://smokee.ro/wp-content/uploads/2026/01/mtl-dual-core-fused-clapton-ni80-120-2pcs-dotmod-x-steam-craft-430x430.jpg',tag:'Ni80 Clapton',stock:false},
+    {title:'Rezistente Fumytech Alien Clapton MTL Ni80 Handmade Series -0.63Ω',url:'https://smokee.ro/product/rezistente-fumytech-alien-clapton-mtl-ni80-handmade-series-0-63%cf%89/',image:'https://smokee.ro/wp-content/uploads/2026/01/alien-clapton-mtl-ni80-063-handmade-series-2pcs-fumytech-430x430.webp',tag:'Ni80 Alien',stock:false},
+    {title:'2 x Rezistente Crazy Fab Coils Fused MTL NI80 2X30/40 - 0.85Ω',url:'https://smokee.ro/product/2-x-rezistente-crazy-fab-coils-fused-mtl-ni80-2x30-40-0-85%cf%89/',image:'https://smokee.ro/wp-content/uploads/2026/01/fused-mtl-ni-80-2x3040-085-crazy-fab-coils-430x430.webp',tag:'Ni80 Clapton',stock:false},
+    {title:'Rezistente Coilology MTL Plain Coil Ni80 0,79 Ω - set de 10 bucăți',url:'https://smokee.ro/product/rezistente-coilology-mtl-plain-coil-ni80-079-%cf%89-set-de-10-bucati/',image:'https://smokee.ro/wp-content/uploads/2026/01/Coilology-Prebuilt-10pcs-Sandvik-Coils-plain-coil-27ga-0.79-ohm-ni80_480x-430x430.webp',tag:'Ni80',stock:false},
+    {title:'Rezistente Coilology MTL Clapton Coil Ni80 0,73 Ω - set de 10 bucăți',url:'https://smokee.ro/product/rezistente-coilology-mtl-clapton-coil-ni80-092-%cf%89-set-de-10-bucati-copie/',image:'https://smokee.ro/wp-content/uploads/2026/01/0017626_coilology-mtl-clapton-sandvik-ni80-2737-25mm-65lp-073ohm-10pcs_1000-430x430.jpeg',tag:'Ni80 Clapton',stock:true},
+    {title:'Rezistente Coilology MTL Clapton Coil Ni80 0,92 Ω - set de 10 bucăți',url:'https://smokee.ro/product/rezistente-coilology-mtl-fused-clapton-coil-ni80-092-%cf%89-set-de-10-bucati/',image:'https://smokee.ro/wp-content/uploads/2025/11/set-rezistente-coilology-mtl-clapton-ni80-092ohm-10buc-430x430.jpg',tag:'Ni80 Clapton',stock:false},
+    {title:'Rola Coilology - MTL Fused Clapton Wire Ni80 (2-30/40, 3.74Ω/ft)',url:'https://smokee.ro/product/rola-coilology-mtl-fused-clapton-wire-ni80-2-30-40-3-74%cf%89-ft/',image:'https://smokee.ro/wp-content/uploads/2025/11/0019140_coilology-mtl-fused-clapton-ni80-2-3040-374ft_1000-1-430x430.jpeg',tag:'Ni80 Clapton',stock:false},
+    {title:'Rola Coilology - Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m',url:'https://smokee.ro/product/rola-coilology-tricore-fused-clapton-wire-3m-ni80-3-28-36-1-73ohm-m/',image:'https://smokee.ro/wp-content/uploads/2025/11/0007835_coilology-tricore-fused-clapton-wire-3m-ni80-3-2836-173ohmm_1000-430x430.gif',tag:'Ni80 Clapton',stock:true},
+    {title:'Rola Coilology - Quad Core Fused Clapton Ni80 (1.3Ω/m) 3m',url:'https://smokee.ro/product/rola-coilology-quad-core-fused-clapton-ni80-1-3%cf%89-m-3m/',image:'https://smokee.ro/wp-content/uploads/2025/11/0007834_coilology-quad-core-fused-clapton-wire-3m-ni80-13ohmm_1000-430x430.gif',tag:'Ni80 Clapton',stock:true}
+  ],
+  cotton: [
+    {title:'Bumbac Swag Project -Supreme Premium Cotton Fibre',url:'https://smokee.ro/product/bumbac-swag-project-supreme-premium-cotton-fibre/',image:'https://smokee.ro/wp-content/uploads/2026/03/Bumbac-Swag-430x430.jpeg',tag:'bumbac',stock:true},
+    {title:'Bumbac Fiber N\'Cotton V2',url:'https://smokee.ro/product/bumbac-fiber-ncotton-v2/',image:'https://smokee.ro/wp-content/uploads/2026/01/coton-fiber-n-cotton-v2-1-430x430.webp',tag:'bumbac',stock:true},
+    {title:'Bumbac Vivismoke Hiphop',url:'https://smokee.ro/product/bumbac-vivismok-hiphop/',image:'https://smokee.ro/wp-content/uploads/2025/12/hiphop-coton-vivismoke-430x430.jpg',tag:'bumbac',stock:true},
+    {title:'Bumbac Hellvape Shoelace Organic',url:'https://smokee.ro/product/bumbac-hellvape-shoelace-organic/',image:'https://smokee.ro/wp-content/uploads/2025/12/coton-en-lacet-organique-20pcs-hellvape-430x430.jpg',tag:'bumbac',stock:true},
+    {title:'Bumbac Organic Ambition Mods 2.5 mm',url:'https://smokee.ro/product/bumbac-organic-ambition-mods-2-5-mm/',image:'https://smokee.ro/wp-content/uploads/2025/12/0014617_ambition-mods-premium-organic-cotton-25mm_1000-430x430.jpeg',tag:'bumbac 2.5 mm',stock:true},
+    {title:'Bumbac Cloud 9',url:'https://smokee.ro/product/bumbac-cloud-9/',image:'https://smokee.ro/wp-content/uploads/2025/12/coton-cloud-9-cloud-9-430x430.jpg',tag:'bumbac',stock:true},
+    {title:'Bumbac BP Mods Pro Vape 2.5mm',url:'https://smokee.ro/product/bumbac-bp-mods-pro-vape-2-5mm/',image:'https://smokee.ro/wp-content/uploads/2025/08/0014619_bp-mods-pro-vape-cotton-25mm_1000-430x430.jpeg',tag:'bumbac 2.5 mm',stock:true},
+    {title:'Longfill Bombo Hyper Boost 10ml/120ml - Cotton Candy Fruits Ice',url:'https://smokee.ro/product/longfill-bombo-hyper-boost-10ml-120ml-cotton-candy-fruits-ice/',image:'https://smokee.ro/wp-content/uploads/2025/10/aroma-cotton-candy-fruits-ice-10ml120-longfill-bombo-bar-juice-hyper-boost-430x430.jpg',tag:'bumbac',stock:true}
+  ],
+  tools: [
+    {title:'Tool Kit - Thunder Cloud x Coilturd',url:'https://smokee.ro/product/tool-kit-recoil-pro-thunder-cloud-x-grimm-green/',image:'https://smokee.ro/wp-content/uploads/2025/10/pro-tool-kit-thunder-cloud-x-coilturd-430x430.webp',tag:'unelte RTA',stock:true},
+    {title:'Tool Kit Master - E-Cig Power',url:'https://smokee.ro/product/tool-kit-master-e-cig-power/',image:'https://smokee.ro/wp-content/uploads/2025/08/Toolkit-Master-E-Cig-430x430.jpeg',tag:'unelte RTA',stock:false},
+    {title:'Tool Kit GeekVape',url:'https://smokee.ro/product/tool-kit-geekvape/',image:'https://smokee.ro/wp-content/uploads/2025/06/simple-tool-kit-geekvape-430x430.jpg',tag:'unelte RTA',stock:false}
+  ],
+  generated:'2026-07-02'
+  /* AUTO-SMOKEE-CONSUMABLES-END */
+};
+
 function $(id){return document.getElementById(id)}
 function esc(s){return String(s == null ? '' : s).replace(/[&<>"']/g,function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]})}
 function cleanVisibleText(s){return String(s == null ? '' : s)
@@ -1454,9 +1566,9 @@ wireChoices = function(profile, problemId, atom){
   return set;
 }
 
-var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','tcGuide','liquidGuide','legislativ','sources'];
+var MAIN_ROUTES=['home','recommender','atomizers','profiles','wires','consumables','tcGuide','liquidGuide','legislativ','sources'];
 function activeSection(id, navId){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.navbtn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===(navId||id))})}
-function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',liquidGuide:'Cum facem lichidele vape - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
+function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Smokee';var names={home:'Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',consumables:'Consumabile RTA - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',liquidGuide:'Cum facem lichidele vape - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};return names[id]||names.home}
 function routeHash(route){return '#'+String(route||'home').replace(/^#/,'')}
 function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash)}applyRoute(true)}
 function goTab(id){setRoute(id)}
@@ -1469,6 +1581,7 @@ var SEARCH_MODES=[
   {id:'atomizers',label:'Atomizoare'},
   {id:'profiles',label:'Lichide'},
   {id:'wires',label:'Sarme'},
+  {id:'consumables',label:'Consumabile'},
   {id:'liquidGuide',label:'Calculator'},
   {id:'legislativ',label:'Legislativ'},
   {id:'sources',label:'Recenzii'}
@@ -1495,19 +1608,43 @@ var LEGISLATIVE_SEARCH_TEXT='legislativ lege reglementari vape romania uniunea e
 function legislativeSearchResult(q){return {tab:'legislativ',route:'legislativ',title:'Legislativ vape 2026',meta:'Reguli, taxe, TPD3, checklist cumparatori',query:q,score:fieldScore(q,[[LEGISLATIVE_SEARCH_TEXT,35],['Lege 201 2016 Lege 64 2024 Directiva 2014 40 UE accize 2026',25]])}}
 var LIQUID_GUIDE_SEARCH_TEXT='cum facem lichidele vape calculator diy lichid mtl vg pg 50 50 60 40 70 30 aroma arome nicotina freebase salt nic shot shortfill longfill maturare steep dozaj reteta ml calcul pg vg dry hit curge bolboroseste aspru coil negru siguranta manusi ochelari youtube tutorial video make your own e-liquid in 5 steps';
 function liquidGuideSearchResult(q){return {tab:'liquidGuide',route:'liquidGuide',title:'Cum facem lichidele vape',meta:'Calculator VG/PG, aroma, nicotina si reteta MTL',query:q,score:fieldScore(q,[[LIQUID_GUIDE_SEARCH_TEXT,36],['calculator lichid vape diy vg pg aroma nicotina ml reteta',28]])}}
+var CONSUMABLE_GROUPS=[
+  {id:'wires',title:'Sarme si coiluri RTA',note:'Fire, role si rezistente MTL utile pentru rebuildable.',terms:['Ni80','SS316L','NiFe30','Kanthal','clapton']},
+  {id:'cotton',title:'Bumbac RTA',note:'Bumbac, shoelace si fibre pentru wick stabil.',terms:['bumbac','cotton']},
+  {id:'tools',title:'Unelte RTA',note:'Kituri si scule pentru coil, taiere, montaj si verificare.',terms:['tool kit','coiling tool','ceramic tweezer']}
+];
+var CONSUMABLE_CACHE_KEY='smokeeConsumablesDailyV3';
+var consumableState=SMOKEE_CONSUMABLES;
+function todayKey(){return new Date().toISOString().slice(0,10)}
+function decodeHtmlText(s){var el=document.createElement('textarea');el.innerHTML=String(s||'');return el.value.replace(/\s+/g,' ').trim()}
+function consumableItems(data){var out=[];CONSUMABLE_GROUPS.forEach(function(g){(data&&data[g.id]||[]).forEach(function(item){out.push({group:g,item:item})})});return out}
+function consumableSearchText(data){return consumableItems(data||consumableState).map(function(x){return [x.group.title,x.group.note,x.item.title,x.item.tag,x.item.url].join(' ')}).join(' ')}
+function inferConsumableTag(title,group){var t=norm(title);if(group==='cotton')return /2\.5|2,5/.test(t)?'bumbac 2.5 mm':'bumbac';if(group==='tools')return 'unelte RTA';if(/nife/.test(t))return 'NiFe30 TC';if(/ss316l|inox/.test(t))return /clapton|fused/.test(t)?'SS316L Clapton':'SS316L';if(/ni80|n80/.test(t))return /alien/.test(t)?'Ni80 Alien':(/clapton|fused/.test(t)?'Ni80 Clapton':'Ni80');if(/kanthal|ka1|k1/.test(t))return 'Kanthal';if(/clapton|fused/.test(t))return 'Clapton MTL';return 'sarma RTA'}
+function isConsumableProduct(item,group){var t=norm([item.title,item.url,item.tag].join(' '));if(!/smokee\.ro\/product\//.test(item.url||''))return false;if(/atomizor|drip tip|cartus|cartridge|pod|mod full kit|converter box|horizontech talons/.test(t))return false;if(group==='cotton')return /bumbac|cotton|coton/.test(t);if(group==='tools')return /tool kit|scule|coil tool|tweezer|penseta|foarfeca|cleste|ohm/.test(t)&&!/full kit/.test(t);if(group==='wires'){if(/\b(rdl|boro|dl)\b/.test(t)&&!/\bmtl\b/.test(t))return false;return /rezistent|resistance|coil|coils|rola|wire|kanthal|ka1|k1|ss316|nife|ni80|clapton|fused|staple|alien/.test(t)}return false}
+function normalizeStoreProduct(p,group){var img='';if(p&&p.images&&p.images.length){img=p.images[0].thumbnail||p.images[0].src||''}var title=decodeHtmlText((p&&p.name)||(p&&p.title)||'');return {title:title,url:(p&&p.permalink)||(p&&p.url)||'',image:img,tag:inferConsumableTag(title,group),stock:p&&p.is_in_stock===true?true:(p&&p.is_in_stock===false?false:null)}}
+function uniqueConsumables(list,group){var seen={};return list.filter(function(item){if(!item||!item.url||!item.title)return false;item.url=item.url.replace(/[?#].*$/,'').replace(/\/?$/,'/');if(seen[item.url])return false;seen[item.url]=1;return isConsumableProduct(item,group)}).slice(0,18)}
+function fetchConsumableGroup(group){var calls=group.terms.map(function(term){var url='https://smokee.ro/wp-json/wc/store/v1/products?search='+encodeURIComponent(term)+'&per_page=20';return fetch(url,{cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).catch(function(){return []})});return Promise.all(calls).then(function(chunks){return uniqueConsumables([].concat.apply([],chunks).map(function(p){return normalizeStoreProduct(p,group.id)}),group.id)})}
+function refreshConsumables(){return Promise.all(CONSUMABLE_GROUPS.map(fetchConsumableGroup)).then(function(groups){var next={generated:todayKey()};CONSUMABLE_GROUPS.forEach(function(g,i){next[g.id]=groups[i].length?groups[i]:(SMOKEE_CONSUMABLES[g.id]||[])});consumableState=next;try{localStorage.setItem(CONSUMABLE_CACHE_KEY,JSON.stringify(next))}catch(e){}renderConsumables(next,'actualizat')}).catch(function(){renderConsumables(consumableState,'fallback')})}
+function initConsumables(){renderConsumables(consumableState,'fallback');try{var cached=JSON.parse(localStorage.getItem(CONSUMABLE_CACHE_KEY)||'null');if(cached&&cached.generated===todayKey()){consumableState=cached;renderConsumables(cached,'cache');return}}catch(e){}refreshConsumables()}
+function stockPill(item){if(item.stock===true)return '<span class="stock-pill in">in stoc</span>';if(item.stock===false)return '<span class="stock-pill out">verifica stoc</span>';return '<span class="stock-pill link">Smokee</span>'}
+function consumableCard(item){var img=item.image?'<img src="'+esc(item.image)+'" alt="'+esc(item.title)+'" loading="lazy">':'RTA';return '<a class="consumable-item" target="_blank" rel="noreferrer" href="'+esc(item.url)+'"><span class="consumable-thumb">'+img+'</span><span class="consumable-copy"><b>'+esc(item.title)+'</b><small>'+esc(item.tag||'consumabil RTA')+'</small><span class="stock-row">'+stockPill(item)+'<span class="stock-pill link">deschide produs</span></span></span></a>'}
+function renderConsumables(data,status){var box=$('consumableGrid');if(!box)return;data=data||SMOKEE_CONSUMABLES;var date=data.generated||'Smokee';box.innerHTML=CONSUMABLE_GROUPS.map(function(g){var list=(data[g.id]||[]);return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(list.length)+' produse</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee live':'sincronizare zilnica')+'</span></div><div class="consumable-list">'+(list.length?list.map(consumableCard).join(''):'<div class="empty">Nu sunt produse in zona aceasta.</div>')+'</div></article>'}).join('')}
+function scoreConsumable(item,group,q){return fieldScore(q,[[item.title,30],[item.tag,18],[group.title,20],[group.note,12],[item.url,4],['consumabile rta sarme bumbac unelte smokee coil wire cotton tool kit',12]])}
+function consumableSearchResults(q){var nq=norm(q);var rows=consumableItems(consumableState).map(function(x){return {x:x,score:scoreConsumable(x.item,x.group,q)}}).filter(function(row){return !nq||row.score>0}).sort(function(a,b){return b.score-a.score||a.x.item.title.localeCompare(b.x.item.title)}).slice(0,8);if(rows.length)return rows.map(function(row){return {tab:'consumables',route:'consumables',title:row.x.item.title,meta:row.x.group.title+' - '+(row.x.item.tag||'Smokee'),query:q,score:row.score}});var score=fieldScore(q,[[consumableSearchText(consumableState),20],['consumabile rta sarme bumbac unelte smokee whatsapp',30]]);return score>0?[{tab:'consumables',route:'consumables',title:'Consumabile RTA',meta:'Sarme, bumbac si unelte Smokee',query:q,score:score}]:[]}
 function searchBuckets(q){var nq=norm(q);return {
   atomizers:atomizers.map(function(a){return {a:a,score:scoreAtom(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'atomizers',route:'atomizor/'+atomSlug(x.a),title:publicAtomName(x.a),meta:'Atomizor - '+(airflowInfo(x.a).label||'MTL'),query:q,score:x.score}}),
   profiles:profiles.map(function(p,i){return {p:p,i:i,score:scoreProfile(p,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||profileDisplayName(x.p).localeCompare(profileDisplayName(y.p))}).slice(0,8).map(function(x){return {tab:'profiles',title:profileDisplayName(x.p),meta:'Lichid - '+liquidClassLabel(x.p),query:q,index:x.i,score:x.score}}),
   wires:WIRE_GUIDE.map(function(w){return {w:w,score:scoreWire(w,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||x.w.name.localeCompare(y.w.name)}).slice(0,8).map(function(x){return {tab:'wires',title:x.w.name,meta:'Sarma - '+x.w.role,query:q,score:x.score}}),
+  consumables:consumableSearchResults(q),
   liquidGuide:[liquidGuideSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   legislativ:[legislativeSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   sources:atomizers.map(function(a){return {a:a,score:scoreSource(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'sources',title:publicAtomName(x.a),meta:'Recenzii si builduri',query:q,score:x.score}})
 }}
-function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,liquidGuide:3,legislativ:4,tcGuide:5,sources:6};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
+function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,wires:2,consumables:3,liquidGuide:4,legislativ:5,tcGuide:6,sources:7};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
 function bestSearchMode(q,b){if(searchMode!=='auto')return searchMode;var first=autoSearchList(q,b)[0];return first?first.tab:'atomizers'}
 function applySearch(item){var q=item.query||$('globalSearch').value.trim();if(item.route){hideSearchPanel();setRoute(item.route);return}if(item.tab==='wires'){if($('wireSearch')){$('wireSearch').value=q;renderWires()}}else if(item.tab==='profiles'){if($('profileSearch')){$('profileSearch').value=q;renderProfiles()}}else if(item.tab==='sources'){if($('sourceSearch')){$('sourceSearch').value=q;renderSources()}}else{if($('atomSearch')){$('atomSearch').value=q;selectedRole='all';renderAtomizers()}}goTab(item.tab);hideSearchPanel()}
 function hideSearchPanel(){var p=$('searchPanel');if(p)p.classList.remove('active')}
-function renderSearchPanel(){var box=$('globalSearch');var panel=$('searchPanel');if(!box||!panel)return;var q=box.value.trim();var modes=$('searchModes');modes.innerHTML=SEARCH_MODES.map(function(m){return '<button class="search-mode'+(searchMode===m.id?' active':'')+'" type="button" data-search-mode="'+esc(m.id)+'">'+esc(m.label)+'</button>'}).join('');if(!q){$('searchResults').innerHTML='<div class="search-empty">Scrie un model, un lichid, calculatorul, o sarma sau o recenzie.</div>';panel.classList.add('active');return}var b=searchBuckets(q);var list=searchMode==='auto'?autoSearchList(q,b):(b[searchMode]||[]);if(!list.length){$('searchResults').innerHTML='<div class="search-empty">Nu exista rezultate clare. Incearca un termen mai specific.</div>';panel.classList.add('active');return}$('searchResults').innerHTML=list.map(function(item,i){return '<button class="search-result" type="button" data-search-result="'+i+'"><b>'+esc(item.title)+'</b><small>'+esc(item.meta)+'</small></button>'}).join('');$('searchResults').querySelectorAll('[data-search-result]').forEach(function(btn){btn.onclick=function(){applySearch(list[parseInt(btn.dataset.searchResult,10)])}});panel.classList.add('active')}
+function renderSearchPanel(){var box=$('globalSearch');var panel=$('searchPanel');if(!box||!panel)return;var q=box.value.trim();var modes=$('searchModes');modes.innerHTML=SEARCH_MODES.map(function(m){return '<button class="search-mode'+(searchMode===m.id?' active':'')+'" type="button" data-search-mode="'+esc(m.id)+'">'+esc(m.label)+'</button>'}).join('');if(!q){$('searchResults').innerHTML='<div class="search-empty">Scrie un model, un lichid, un consumabil, calculatorul, o sarma sau o recenzie.</div>';panel.classList.add('active');return}var b=searchBuckets(q);var list=searchMode==='auto'?autoSearchList(q,b):(b[searchMode]||[]);if(!list.length){$('searchResults').innerHTML='<div class="search-empty">Nu exista rezultate clare. Incearca un termen mai specific.</div>';panel.classList.add('active');return}$('searchResults').innerHTML=list.map(function(item,i){return '<button class="search-result" type="button" data-search-result="'+i+'"><b>'+esc(item.title)+'</b><small>'+esc(item.meta)+'</small></button>'}).join('');$('searchResults').querySelectorAll('[data-search-result]').forEach(function(btn){btn.onclick=function(){applySearch(list[parseInt(btn.dataset.searchResult,10)])}});panel.classList.add('active')}
 function initGlobalSearch(){var box=$('globalSearch');if(!box)return;$('searchModes').addEventListener('click',function(e){var b=e.target.closest('[data-search-mode]');if(!b)return;searchMode=b.dataset.searchMode;renderSearchPanel()});box.addEventListener('input',renderSearchPanel);box.addEventListener('focus',renderSearchPanel);box.addEventListener('keydown',function(e){if(e.key==='Escape'){hideSearchPanel();return}if(e.key!=='Enter')return;var q=box.value.trim();if(!q){goTab('recommender');hideSearchPanel();return}var buckets=searchBuckets(q);var mode=bestSearchMode(q,buckets);var list=searchMode==='auto'?autoSearchList(q,buckets):(buckets[mode]||[]);var first=list[0]||{tab:mode,query:q};applySearch(first)});document.addEventListener('click',function(e){if(!e.target.closest('.site-search'))hideSearchPanel()})}
 function mixNum(id,fallback){var el=$(id);var n=el?parseFloat(el.value):NaN;return isFinite(n)?n:fallback}
 function clampNum(n,min,max){return Math.max(min,Math.min(max,n))}
@@ -1577,7 +1714,7 @@ function initLiquidCalculator(){
   document.querySelectorAll('[data-mix-ratio]').forEach(function(btn){btn.addEventListener('click',function(){if($('mixTargetVg'))$('mixTargetVg').value=btn.dataset.mixRatio;calcLiquidRecipe()})});
   calcLiquidRecipe();
 }
-function init(){initVisitCounter();initNav();initGlobalSearch();initDetail();initLiquidCalculator();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();renderSources();applyRoute(false)}
+function init(){initVisitCounter();initNav();initGlobalSearch();initDetail();initLiquidCalculator();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();initConsumables();renderSources();applyRoute(false)}
 
 function renderMetrics(){var src=atomizers.reduce(function(n,a){return n+getSources(a).length},0);$('metricsBox').innerHTML = [
   ['Atomizoare', atomizers.length, 'modele analizate', 'atomizers'],
