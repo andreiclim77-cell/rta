@@ -26,6 +26,9 @@ jobs:
       - name: Check Smokee RTA consumables
         run: node tools/sync-smokee-consumables.js --write
 
+      - name: Check Smokee liquids
+        run: node tools/sync-smokee-liquids.js --write
+
       - name: Commit catalog update
         run: |
           if git diff --quiet -- index.html; then
