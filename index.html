@@ -12,15 +12,15 @@
 <meta name="theme-color" content="#0b0b0b" />
 <meta name="application-name" content="Ghid RTA MTL - Smokee" />
 <meta name="apple-mobile-web-app-title" content="Ghid RTA MTL" />
-<link rel="canonical" href="https://andreiclim77-cell.github.io/rta/" />
-<link rel="image_src" href="https://andreiclim77-cell.github.io/rta/assets/smokee-ghid-rta-banner-1500x1000.png" />
+<link rel="canonical" href="https://ghid-rta.ro/" />
+<link rel="image_src" href="https://ghid-rta.ro/assets/smokee-ghid-rta-banner-1500x1000.png" />
 <meta property="og:locale" content="ro_RO" />
 <meta property="og:type" content="website" />
 <meta property="og:site_name" content="Ghid RTA MTL - Smokee" />
 <meta property="og:title" content="Ghid RTA MTL - Smokee" />
 <meta property="og:description" content="Recomandari RTA MTL pentru lichide tutunoase si NET: atomizor, sarma, build, recenzii, TC, lichide si consumabile." />
-<meta property="og:url" content="https://andreiclim77-cell.github.io/rta/" />
-<meta property="og:image" content="https://andreiclim77-cell.github.io/rta/assets/smokee-ghid-rta-banner-1500x1000.png" />
+<meta property="og:url" content="https://ghid-rta.ro/" />
+<meta property="og:image" content="https://ghid-rta.ro/assets/smokee-ghid-rta-banner-1500x1000.png" />
 <meta property="og:image:type" content="image/png" />
 <meta property="og:image:width" content="1500" />
 <meta property="og:image:height" content="1000" />
@@ -28,15 +28,15 @@
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Ghid RTA MTL - Smokee" />
 <meta name="twitter:description" content="Potriviri RTA MTL pentru lichide tutunoase si NET, cu atomizoare, sarme, builduri si surse." />
-<meta name="twitter:image" content="https://andreiclim77-cell.github.io/rta/assets/smokee-ghid-rta-banner-1500x1000.png" />
+<meta name="twitter:image" content="https://ghid-rta.ro/assets/smokee-ghid-rta-banner-1500x1000.png" />
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
   "name": "Ghid RTA MTL - Smokee",
   "alternateName": "Ghid RTA MTL",
-  "url": "https://andreiclim77-cell.github.io/rta/",
-  "image": "https://andreiclim77-cell.github.io/rta/assets/smokee-ghid-rta-banner-1500x1000.png",
+  "url": "https://ghid-rta.ro/",
+  "image": "https://ghid-rta.ro/assets/smokee-ghid-rta-banner-1500x1000.png",
   "description": "Ghid interactiv RTA MTL pentru potrivirea lichidelor tutunoase si NET cu atomizoare, sarme si builduri potrivite.",
   "applicationCategory": "LifestyleApplication",
   "operatingSystem": "Any",
@@ -829,7 +829,7 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
         <span class="chip good">Share pack</span>
         <h3>Distribuire Smokee</h3>
         <div class="share-preview"><img src="assets/smokee-ghid-rta-banner-1500x1000.png" alt="Banner Ghid RTA MTL Smokee pentru distribuire"></div>
-        <div class="source-actions"><button class="mini-link" type="button" data-copy-site>Copiaza link</button><a class="mini-link" href="assets/smokee-ghid-rta-banner-1500x1000.png" target="_blank" rel="noreferrer">Deschide banner</a><a class="mini-link" target="_blank" rel="noreferrer" href="https://api.qrserver.com/v1/create-qr-code/?size=900x900&data=https%3A%2F%2Fandreiclim77-cell.github.io%2Frta%2F">QR online</a></div><span class="copy-status"></span>
+        <div class="source-actions"><button class="mini-link" type="button" data-copy-site>Copiaza link</button><a class="mini-link" href="assets/smokee-ghid-rta-banner-1500x1000.png" target="_blank" rel="noreferrer">Deschide banner</a><a class="mini-link" target="_blank" rel="noreferrer" href="https://api.qrserver.com/v1/create-qr-code/?size=900x900&data=https%3A%2F%2Fghid-rta.ro%2F">QR online</a></div><span class="copy-status"></span>
       </article>
       <article class="card span-6 trust-card">
         <span class="chip cold">Google</span>
@@ -2471,7 +2471,7 @@ function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==h
 function goTab(id){setRoute(id)}
 function applyRoute(shouldScroll){var raw=decodeURIComponent((location.hash||'#home').replace(/^#/,''));if(raw.indexOf('atomizor/')===0){var a=atomBySlug(raw.split('/').slice(1).join('/'));if(a){renderAtomizerPage(a);activeSection('atomizerPage','atomizers');document.title=routeTitle('atomizerPage',a);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'});return}raw='atomizers'}var route=MAIN_ROUTES.indexOf(raw)>=0?raw:'home';activeSection(route,route);document.title=routeTitle(route);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'})}
 function copyCurrentUrl(){var btn=$('copyAtomPage');if(!btn)return;var url=location.href;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){btn.textContent='Link copiat';setTimeout(function(){btn.textContent='Copiaza link'},1400)}).catch(function(){btn.textContent='Linkul este in bara';setTimeout(function(){btn.textContent='Copiaza link'},1400)})}else{btn.textContent='Linkul este in bara';setTimeout(function(){btn.textContent='Copiaza link'},1400)}}
-function initShareTools(){var siteUrl='https://andreiclim77-cell.github.io/rta/';document.querySelectorAll('[data-copy-site]').forEach(function(btn){btn.addEventListener('click',function(){var card=btn.closest('.card');var status=card?card.querySelector('.copy-status'):null;var baseText=btn.textContent||'Copiaza link';function done(msg){btn.textContent='Link copiat';if(status)status.textContent=msg;setTimeout(function(){btn.textContent=baseText;if(status)status.textContent=''},1600)}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(siteUrl).then(function(){done('Link copiat pentru distribuire.')}).catch(function(){done('Linkul este in adresa paginii.')})}else{done('Linkul este: '+siteUrl)}})})}
+function initShareTools(){var siteUrl='https://ghid-rta.ro/';document.querySelectorAll('[data-copy-site]').forEach(function(btn){btn.addEventListener('click',function(){var card=btn.closest('.card');var status=card?card.querySelector('.copy-status'):null;var baseText=btn.textContent||'Copiaza link';function done(msg){btn.textContent='Link copiat';if(status)status.textContent=msg;setTimeout(function(){btn.textContent=baseText;if(status)status.textContent=''},1600)}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(siteUrl).then(function(){done('Link copiat pentru distribuire.')}).catch(function(){done('Linkul este in adresa paginii.')})}else{done('Linkul este: '+siteUrl)}})})}
 function initNav(){document.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.tab)})});document.querySelectorAll('[data-jump]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.jump)})});window.addEventListener('popstate',function(){applyRoute(false)});window.addEventListener('hashchange',function(){applyRoute(true)});if($('copyAtomPage'))$('copyAtomPage').addEventListener('click',copyCurrentUrl);initShareTools()}
 var searchMode='auto';
 var SEARCH_MODES=[
