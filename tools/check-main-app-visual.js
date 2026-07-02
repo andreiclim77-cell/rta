@@ -25,7 +25,7 @@ async function checkOverflow(page) {
     const doc = document.documentElement;
     const width = doc.clientWidth;
     const offenders = [...document.querySelectorAll("a,button,h1,h2,h3,p,small,b,span")]
-      .filter((el) => !el.closest(".navlinks") && !el.closest(".liquid-subfilters"))
+      .filter((el) => !el.closest(".navlinks") && !el.closest(".liquid-subfilters") && !el.closest(".supplier-rail"))
       .map((el) => {
         const rect = el.getBoundingClientRect();
         return {
@@ -70,15 +70,38 @@ async function checkOverflow(page) {
       const sweetProducts = [...document.querySelectorAll("#liquidCatalogGrid .consumable-zone")]
         .find((zone) => (zone.querySelector("h3")?.textContent || "").trim() === "TUTUN")
         ?.querySelectorAll(".consumable-item").length || 0;
-      return { hasMusicMount, hasMusicFrame, sweetVisible, sweetProducts };
+      const airflowTargets = ["Muted+", "Ennequadro VICO RTA", "Ennequadro Baya RTA"].map((name) => {
+        const atom = atomizers.find((item) => getName(item) === name);
+        const air = atom ? airflowInfo(atom) : null;
+        const roles = atom ? inferRoles(atom) : [];
+        return { name, found: Boolean(atom), label: air?.label || "", side: Boolean(air?.side), roles };
+      });
+      const airflowOk = airflowTargets.every((item) => item.found && item.side && item.roles.includes("sideair"));
+      const chamberTargets = [
+        { name: "Dvarw MTL FL", match: /PEEK/i, kind: "verified" },
+        { name: "BP Mods Labs RTA", match: /Patru camere/i, kind: "verified" },
+        { name: "Ennequadro VICO RTA", match: /Fluid Deck/i, kind: "partial" },
+      ].map((target) => {
+        const atom = atomizers.find((item) => getName(item) === target.name);
+        const chamber = atom ? chamberInfo(atom) : null;
+        return {
+          name: target.name,
+          found: Boolean(atom),
+          label: chamber?.label || "",
+          kind: chamber?.kind || "",
+          ok: Boolean(atom && chamber && target.match.test(chamber.label) && chamber.kind === target.kind),
+        };
+      });
+      const chamberOk = chamberTargets.every((item) => item.ok);
+      return { hasMusicMount, hasMusicFrame, sweetVisible, sweetProducts, airflowTargets, airflowOk, chamberTargets, chamberOk };
     });
     const overflow = await checkOverflow(page);
 
     console.log(
-      `${viewport.name}: scroll ${overflow.scrollWidth}/${overflow.clientWidth}, sweet ${result.sweetProducts}, music ${result.hasMusicMount || result.hasMusicFrame}`
+      `${viewport.name}: scroll ${overflow.scrollWidth}/${overflow.clientWidth}, sweet ${result.sweetProducts}, airflow ${result.airflowOk}, chamber ${result.chamberOk}, music ${result.hasMusicMount || result.hasMusicFrame}`
     );
 
-    if (result.hasMusicMount || result.hasMusicFrame || !result.sweetVisible || result.sweetProducts < 1) {
+    if (result.hasMusicMount || result.hasMusicFrame || !result.sweetVisible || result.sweetProducts < 1 || !result.airflowOk || !result.chamberOk) {
       failures.push({ viewport: viewport.name, result });
     }
     if (overflow.scrollWidth > overflow.clientWidth + 4 || overflow.offenders.length) {

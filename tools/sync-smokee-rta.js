@@ -236,6 +236,8 @@ function existingState(html) {
 
 function inferPairing(product, pageText) {
   const text = norm([product.title, product.cardText, pageText].join(' '));
+  const airflow = inferAirflow(product, pageText);
+  const chamber = inferChamber(product, pageText);
   const open = /\b(rdl|dl|direct lung|open draw|open airflow|23 mm|24 mm)\b/.test(text) && !/\bmtl\b/.test(text);
   const modular = /\b(pin|pini|airflow pin|air pin|insert|camera|camere|chamber|bell|clopot|jfc|juice control|modular|triple air|afc)\b/.test(text);
   const body = /\b(kentucky|latakia|dark|cigar|trabuc|burley|fum|smoky|dead rabbit|blaze|baya|muted|blade)\b/.test(text);
@@ -243,7 +245,7 @@ function inferPairing(product, pageText) {
   const clarity = /\b(virginia|oriental|turkish|perique|bright|vico|amazier|trinity|berserker|arcana|precizie|precision)\b/.test(text);
 
   if (open) {
-    return {
+    return withArchitecture({
       score: 7.35,
       confidence: 'Smokee / RTA cu potrivire limitata MTL strans',
       classes: 'Tutun aromatizat, dark sweet, cacao, cafea si cigar dulce; potrivire limitata pentru NET MTL fin.',
@@ -252,46 +254,150 @@ function inferPairing(product, pageText) {
       status: 'Smokee RTA / potrivire limitata MTL',
       mtlFit: 'limited',
       value: 'limited'
-    };
+    }, airflow, chamber);
   }
   if (modular) {
-    return {
+    return withArchitecture({
       score: 8.2,
       confidence: 'Smokee / RTA in verificare',
       classes: 'Virginia, Burley, Oriental, NET complex si lichide care cer reglaj fin al camerei sau airflow-ului.',
       dna: 'RTA listat de Smokee, cu potential de reglaj prin airflow, camera sau deck; potrivirea se calibreaza dupa lichid si build.',
       builds: body ? 'bodyBuilds()' : 'clarityBuilds()',
       status: 'Smokee RTA / in verificare'
-    };
+    }, airflow, chamber);
   }
   if (body) {
-    return {
+    return withArchitecture({
       score: 8.05,
       confidence: 'Smokee / RTA in verificare',
       classes: 'Burley, Kentucky, Latakia light, cigar light, dark blend si NET cu corp moderat.',
       dna: 'RTA listat de Smokee; profil de corp, hit si textura, de calibrat dupa camera si airflow.',
       builds: 'bodyBuilds()',
       status: 'Smokee RTA / in verificare'
-    };
+    }, airflow, chamber);
   }
   if (smooth) {
-    return {
+    return withArchitecture({
       score: 8.05,
       confidence: 'Smokee / RTA in verificare',
       classes: 'NET daily, Virginia-Burley, pipe natural, Cavendish si tutunuri rotunde sau echilibrate.',
       dna: 'RTA listat de Smokee; profil orientat spre rotunjime, confort si echilibru aromatic.',
       builds: 'smoothBuilds()',
       status: 'Smokee RTA / in verificare'
-    };
+    }, airflow, chamber);
   }
-  return {
+  return withArchitecture({
     score: clarity ? 8.05 : 7.95,
     confidence: 'Smokee / RTA in verificare',
     classes: 'Virginia, Oriental, tutun simplu sec, NET luminos si blenduri echilibrate.',
     dna: 'RTA listat de Smokee; profil initial orientat spre claritate si control, de verificat prin camera, deck si airflow.',
     builds: 'clarityBuilds()',
     status: 'Smokee RTA / in verificare'
-  };
+  }, airflow, chamber);
+}
+
+function inferAirflow(product, pageText) {
+  const text = norm([product.title, product.cardText, pageText].join(' '));
+  if (/side[-\s]?air.*bottom[-\s]?air|bottom[-\s]?air.*side[-\s]?air|side\s*\+\s*bottom|bottom\s*\+\s*side|triple[-\s]?air|hibrid|hybrid|combinat|side[-\s]?air kit|45\s*grade/.test(text)) {
+    return {
+      dna: 'Airflow detectat din pagina Smokee: configuratie laterala/combinata sau multi-air; incadrare initiala side + bottom/multi.',
+      claim: 'airflow lateral/combinat sau multi-air mentionat in pagina produsului'
+    };
+  }
+  if (/side[-\s]?air|airflow lateral|aer lateral|lateral|din parti|around coil|3d airflow|multi[-\s]?side/.test(text)) {
+    return {
+      dna: 'Airflow detectat din pagina Smokee: aer lateral spre coil; incadrare initiala side-air.',
+      claim: 'airflow lateral mentionat in pagina produsului'
+    };
+  }
+  if (/top[-\s]?air|top airflow|top-down|top side|top air/.test(text)) {
+    return {
+      dna: 'Airflow detectat din pagina Smokee: aer de sus coborat spre coil; incadrare initiala top-down.',
+      claim: 'top airflow mentionat in pagina produsului'
+    };
+  }
+  if (/bottom[-\s]?air|flux de aer inferior|airflow inferior|aer inferior|sub[-\s]?coil|sub coil|sub rezistenta|airpin|air pin|insert sub/.test(text)) {
+    return {
+      dna: 'Airflow detectat din pagina Smokee: aer inferior/sub-coil; incadrare initiala bottom sub-coil.',
+      claim: 'airflow inferior/sub-coil mentionat in pagina produsului'
+    };
+  }
+  const range = text.match(/\b(?:0[.,]\d|1[.,]\d)\s*-\s*(?:0[.,]\d|1[.,]\d)\s*mm\b/);
+  if (/airflow reglabil|flux de aer personalizabil|afc|pini airflow|pinuri|pini de aer/.test(text)) {
+    return {
+      dna: `Airflow mentionat pe pagina Smokee: reglabil${range ? ` ${range[0]}` : ''}; arhitectura interna se confirma vizual inainte de incadrarea side/bottom.`,
+      claim: `airflow reglabil${range ? ` ${range[0]}` : ''} mentionat in pagina produsului`
+    };
+  }
+  return null;
+}
+
+function inferChamber(product, pageText) {
+  const text = norm([product.title, product.cardText, pageText].join(' '));
+  if (/peek chimney/.test(text)) {
+    return {
+      dna: 'Camera detectata din pagina Smokee: PEEK chimney mentionat; forma exacta se confirma vizual.',
+      claim: 'PEEK chimney mentionat in pagina produsului'
+    };
+  }
+  if (/stainless chimney|taller chamber|camera inox|camera mai inalta/.test(text)) {
+    return {
+      dna: 'Camera detectata din pagina Smokee: chimney/camera inox sau camera mai inalta mentionata.',
+      claim: 'chimney/camera inox sau camera mai inalta mentionata in pagina produsului'
+    };
+  }
+  if (/freehand bell|rhodesian bell|duke bell/.test(text)) {
+    const bell = /freehand bell/.test(text) ? 'Freehand bell' : (/rhodesian bell/.test(text) ? 'Rhodesian bell' : 'Duke bell');
+    return {
+      dna: `Camera detectata din pagina Smokee: ${bell} mentionat; alegerea se confirma pe setul folosit.`,
+      claim: `${bell} mentionat in pagina produsului`
+    };
+  }
+  if (/patru camere|4 camere|four chambers/.test(text)) {
+    return {
+      dna: 'Camera detectata din pagina Smokee: patru camere de vaporizare mentionate.',
+      claim: 'patru camere de vaporizare mentionate in pagina produsului'
+    };
+  }
+  if (/camere interschimbabile|interchangeable chambers?|clopote modulare|camere modulare|modular chambers?|bell caps?/.test(text)) {
+    return {
+      dna: 'Camera detectata din pagina Smokee: camera sau clopot modular mentionat; configuratia exacta se confirma pe set.',
+      claim: 'camera/clopot modular mentionat in pagina produsului'
+    };
+  }
+  if (/camera de vaporizare avansata|camera avansata|advanced chamber/.test(text)) {
+    return {
+      dna: 'Camera detectata din pagina Smokee: camera de vaporizare avansata mentionata.',
+      claim: 'camera de vaporizare avansata mentionata in pagina produsului'
+    };
+  }
+  if (/fluid deck/.test(text)) {
+    return {
+      dna: 'Pagina Smokee mentioneaza Fluid Deck Technology; forma camerei ramane de confirmat vizual.',
+      claim: 'Fluid Deck Technology mentionata; forma camerei de confirmat vizual'
+    };
+  }
+  if (/deck optimizat/.test(text)) {
+    return {
+      dna: 'Pagina Smokee mentioneaza deck optimizat; forma camerei ramane de confirmat vizual.',
+      claim: 'deck optimizat mentionat; forma camerei de confirmat vizual'
+    };
+  }
+  return null;
+}
+
+function withArchitecture(pairing, airflow, chamber) {
+  if (airflow) {
+    pairing.dna = `${pairing.dna} ${airflow.dna}`;
+    pairing.airflowClaim = airflow.claim;
+  } else {
+    pairing.airflowClaim = 'profilul se verifica dupa camera, deck, airflow si alimentare';
+  }
+  if (chamber) {
+    pairing.dna = `${pairing.dna} ${chamber.dna}`;
+    pairing.chamberClaim = chamber.claim;
+  }
+  return pairing;
 }
 
 function extractOgImage(html) {
@@ -305,7 +411,9 @@ function entryFor(product, pageHtml) {
   const name = displayName(product.title);
   const pairing = inferPairing(product, pageText);
   const image = extractOgImage(pageHtml) || product.image;
-  const claim = `Smokee: ${name}, RTA listat in categoria Atomizoare; profilul se verifica dupa camera, deck, airflow si alimentare.`;
+  const claimParts = [pairing.airflowClaim];
+  if (pairing.chamberClaim) claimParts.push(pairing.chamberClaim);
+  const claim = `Smokee: ${name}, RTA listat in categoria Atomizoare; ${claimParts.join('; ')}.`;
   const lines = [
     '  {',
     `    rank:'smokee-auto',`,
