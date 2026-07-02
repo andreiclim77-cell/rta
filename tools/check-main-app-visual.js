@@ -55,6 +55,33 @@ async function checkOverflow(page) {
 
     const accept = page.locator("#ageAccept");
     if (await accept.isVisible().catch(() => false)) {
+      const ageResult = await page.evaluate(() => {
+        const gate = document.querySelector("#ageGate");
+        const card = document.querySelector(".age-card");
+        const actions = document.querySelector(".age-actions");
+        const rail = document.querySelector("#ageSupplierRail");
+        const cardRect = card?.getBoundingClientRect();
+        const actionsRect = actions?.getBoundingClientRect();
+        return {
+          visible: Boolean(gate && !gate.hidden),
+          ageCards: rail?.querySelectorAll(".supplier-card").length || 0,
+          scrollWidth: document.documentElement.scrollWidth,
+          clientWidth: document.documentElement.clientWidth,
+          cardTop: Math.round(cardRect?.top || 0),
+          cardBottom: Math.round(cardRect?.bottom || 0),
+          actionsBottom: Math.round(actionsRect?.bottom || 0),
+          viewportHeight: window.innerHeight,
+        };
+      });
+      if (
+        !ageResult.visible ||
+        ageResult.ageCards < 4 ||
+        ageResult.scrollWidth > ageResult.clientWidth + 4 ||
+        ageResult.cardTop < -4 ||
+        ageResult.actionsBottom > ageResult.viewportHeight + 4
+      ) {
+        failures.push({ viewport: viewport.name, ageResult });
+      }
       await accept.click();
     }
 
