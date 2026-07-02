@@ -75,6 +75,34 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn.law-nav:hover,.navbtn.law-nav.active{color:#100902;border-color:#ffd27b;background:linear-gradient(135deg,#ffb347,#ffdd8a);box-shadow:0 8px 24px rgba(255,190,84,.26)}
 .navbtn.mix-nav{color:#fff;border-color:rgba(217,15,153,.56);background:linear-gradient(135deg,#27101f,#112a32);font-weight:900}
 .navbtn.mix-nav:hover,.navbtn.mix-nav.active{color:#111;border-color:#ff8bd5;background:linear-gradient(135deg,#ff8bd5,#37bfe8);box-shadow:0 8px 24px rgba(217,15,153,.22)}
+.navbtn[data-tab]{--nav-a:#ff7a1a;--nav-b:#ffb000;--nav-dim:#17110c;--nav-border:rgba(255,122,26,.58);--nav-idle:#fff0de;--nav-active:#080808;color:var(--nav-idle);border-color:var(--nav-border);background:linear-gradient(135deg,var(--nav-dim),#111)}
+.navbtn[data-tab]:hover,.navbtn[data-tab].active{color:var(--nav-active);border-color:var(--nav-a);background:linear-gradient(135deg,var(--nav-a),var(--nav-b));box-shadow:0 10px 24px rgba(0,0,0,.24),0 0 0 1px rgba(255,255,255,.08) inset;transform:translateY(-1px)}
+.navbtn[data-tab="home"]{--nav-a:#ff7a1a;--nav-b:#ffbd2e;--nav-dim:#241206;--nav-border:rgba(255,122,26,.62);--nav-idle:#fff0df;--nav-active:#111}
+.navbtn[data-tab="recommender"]{--nav-a:#55d17a;--nav-b:#b8ee65;--nav-dim:#0d2115;--nav-border:rgba(85,209,122,.62);--nav-idle:#eaffef;--nav-active:#061008}
+.navbtn[data-tab="atomizers"]{--nav-a:#5da7ff;--nav-b:#37bfe8;--nav-dim:#071827;--nav-border:rgba(93,167,255,.66);--nav-idle:#eaf6ff;--nav-active:#061014}
+.navbtn[data-tab="wires"]{--nav-a:#24d3a3;--nav-b:#55d17a;--nav-dim:#082018;--nav-border:rgba(36,211,163,.64);--nav-idle:#e8fff6;--nav-active:#03110b}
+.navbtn[data-tab="consumables"]{--nav-a:#ff9f1c;--nav-b:#37bfe8;--nav-dim:#201409;--nav-border:rgba(255,159,28,.68);--nav-idle:#fff4df;--nav-active:#0a0a0a}
+.navbtn[data-tab="tcGuide"]{--nav-a:#37bfe8;--nav-b:#9eeaff;--nav-dim:#071d25;--nav-border:rgba(55,191,232,.68);--nav-idle:#eafcff;--nav-active:#061014}
+.navbtn[data-tab="liquidGuide"]{--nav-a:#ff8bd5;--nav-b:#37bfe8;--nav-dim:#23101d;--nav-border:rgba(255,139,213,.62);--nav-idle:#fff0fb;--nav-active:#111}
+.navbtn[data-tab="legislativ"]{--nav-a:#ffd166;--nav-b:#ffe89a;--nav-dim:#221708;--nav-border:rgba(255,209,102,.66);--nav-idle:#fff8df;--nav-active:#120b02}
+.navbtn[data-tab="sources"]{--nav-a:#ff4f7b;--nav-b:#ffb000;--nav-dim:#231018;--nav-border:rgba(255,79,123,.62);--nav-idle:#ffeef3;--nav-active:#111}
+.navbtn.music-nav{color:#f2fff9;border-color:rgba(36,211,163,.62);background:linear-gradient(135deg,#102018,#161018);font-weight:900}
+.navbtn.music-nav:hover,.navbtn.music-nav.playing{color:#061008;border-color:#24d3a3;background:linear-gradient(135deg,#24d3a3,#ffd166);box-shadow:0 10px 24px rgba(36,211,163,.22)}
+.navbtn.ai-nav{color:#eef5ff;border-color:rgba(93,167,255,.64);background:linear-gradient(135deg,#101827,#15121f);font-weight:900;text-decoration:none}
+.navbtn.ai-nav:hover{color:#061014;border-color:#5da7ff;background:linear-gradient(135deg,#5da7ff,#b8ee65);box-shadow:0 10px 24px rgba(93,167,255,.22);transform:translateY(-1px)}
+.music-mount{position:fixed;right:14px;bottom:14px;z-index:38;width:min(330px,calc(100vw - 28px));border:1px solid rgba(255,122,26,.55);border-radius:8px;background:#101010;color:#fff;box-shadow:0 18px 44px rgba(0,0,0,.36);overflow:hidden;transform:translateY(120%);opacity:0;pointer-events:none;transition:.18s ease}
+.music-mount.active{transform:translateY(0);opacity:1;pointer-events:auto}
+.music-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;background:linear-gradient(90deg,#ff7a1a,#24d3a3);color:#080808}
+.music-head b{font-size:13px}
+.music-close{width:28px;height:28px;border:0;border-radius:50%;background:rgba(0,0,0,.16);color:#080808;font-weight:900;cursor:pointer}
+.music-frame{background:#000;aspect-ratio:16/9}
+.music-frame iframe{display:block;width:100%;height:100%;border:0}
+.music-tools{display:grid;grid-template-columns:1fr auto;gap:7px;padding:9px;background:#151515;border-top:1px solid #2a2a2a}
+.music-tools input{min-width:0;border:1px solid #3a3a3a;border-radius:999px;background:#fff;color:#111;padding:8px 10px;font:inherit;font-size:13px}
+.music-tools button,.music-actions a,.music-actions button{border:1px solid #3a3a3a;border-radius:999px;background:#242424;color:#fff;padding:8px 10px;font-weight:900;font-size:12px;cursor:pointer;text-decoration:none}
+.music-tools button{background:#ff7a1a;color:#080808;border-color:#ff9f1c}
+.music-actions{display:flex;gap:7px;flex-wrap:wrap;padding:0 9px 9px;background:#151515}
+.music-actions a:hover,.music-actions button:hover{text-decoration:none;border-color:#24d3a3;color:#24d3a3}
 main{padding:28px 0 54px;background:repeating-linear-gradient(90deg,#fff 0,#fff 196px,#f2f2f2 197px,#fff 198px)}
 .section{display:none;animation:fade .18s ease}
 .section.active{display:block}
@@ -219,7 +247,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .consumables-contact .source-actions{margin-top:0}
 .consumable-actions{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 14px}
 .consumable-actions .mini-link{background:#111;color:#fff;border-color:#2d2d2d}
-.consumable-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.consumable-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .consumable-zone{position:relative;overflow:hidden;border:1px solid #dedede;background:linear-gradient(180deg,#fff,#fbfbfb);border-radius:var(--radius);box-shadow:0 8px 20px rgba(0,0,0,.08);padding:14px;min-width:0}
 .consumable-zone:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#ff7a1a,#ffb000,#37bfe8)}
 .consumable-zone-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:2px 0 12px}
@@ -239,6 +267,9 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .stock-pill.in{border-color:rgba(85,209,122,.42);background:rgba(85,209,122,.12);color:#24733a}
 .stock-pill.out{border-color:rgba(255,85,72,.38);background:rgba(255,85,72,.10);color:#9b3027}
 .stock-pill.link{border-color:rgba(255,122,26,.42);background:#fff4e8;color:#a94700}
+.component-model{border:1px solid #e4e4e4;background:#fff;border-radius:var(--radius);padding:10px;margin-bottom:9px}
+.component-model h4{margin:0 0 8px;font-size:13px;color:#111}
+.component-model .consumable-list{gap:7px}
 .detail-overlay{position:fixed;inset:0;z-index:40;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.58);padding:18px}
 .detail-overlay.active{display:flex}
 .detail-panel{width:min(980px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:var(--radius);box-shadow:0 22px 70px rgba(0,0,0,.32);border:1px solid #d8d8d8}
@@ -409,6 +440,8 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <button class="navbtn mix-nav" data-tab="liquidGuide">Cum facem lichidele vape</button>
       <button class="navbtn law-nav" data-tab="legislativ">Legislativ</button>
       <button class="navbtn review-nav" data-tab="sources">Recenzii RTA</button>
+      <button class="navbtn music-nav" id="musicToggle" type="button" aria-pressed="false">Muzica</button>
+      <a class="navbtn ai-nav" href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a>
     </nav>
   </div>
 </header>
@@ -953,11 +986,12 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <div>
         <p class="kicker">Smokee consumabile RTA</p>
         <h2>Consumabile RTA</h2>
-        <p class="lead">Sarme, bumbac si unelte pentru setup-uri rebuildable, grupate pe zone utile si legate direct de produsele Smokee.</p>
+        <p class="lead">Sarme, bumbac, unelte si componente pentru setup-uri rebuildable, grupate pe zone utile si legate direct de produsele Smokee.</p>
         <div class="chips">
           <span class="chip warn">Sarme</span>
           <span class="chip good">Bumbac</span>
           <span class="chip cold">Unelte</span>
+          <span class="chip neutral">Componente RTA</span>
         </div>
       </div>
       <div class="consumables-contact">
@@ -978,6 +1012,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/product-category/diy/">DIY pe Smokee</a>
       <a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/product-category/accesorii/">Accesorii pe Smokee</a>
       <a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/product-category/atomizoare/rezistente/">Rezistente pe Smokee</a>
+      <a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/?s=RTA&post_type=product">Componente RTA pe Smokee</a>
     </div>
     <div class="consumable-grid" id="consumableGrid"></div>
   </section>
@@ -1003,6 +1038,21 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
   </section>
 </main>
 <footer class="wrap footer">Ghid informativ pentru adulti. Nu este sfat medical; sunt necesare surse, experienta proprie si reguli de siguranta pentru acumulatori si builduri.</footer>
+<div class="music-mount" id="musicMount" aria-hidden="true">
+  <div class="music-head">
+    <b>YouTube</b>
+    <button class="music-close" id="musicClose" type="button" aria-label="Inchide playerul">X</button>
+  </div>
+  <div class="music-frame" id="musicFrame"></div>
+  <form class="music-tools" id="musicSearchForm">
+    <input id="musicSearch" type="search" placeholder="Cauta pe YouTube" autocomplete="off" aria-label="Cauta pe YouTube">
+    <button type="submit">Cauta</button>
+  </form>
+  <div class="music-actions">
+    <a id="musicOpenYoutube" href="https://www.youtube.com/watch?v=shBOxW0bEJo&list=RDshBOxW0bEJo&start_radio=1" target="_blank" rel="noreferrer">Deschide YouTube</a>
+    <button id="musicStop" type="button">Opreste</button>
+  </div>
+</div>
 <div class="detail-overlay" id="atomDetail" aria-hidden="true">
   <article class="detail-panel" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
     <div class="detail-head">
@@ -1389,13 +1439,20 @@ var SMOKEE_CONSUMABLES = {
     {title:'Bumbac Hellvape Shoelace Organic',url:'https://smokee.ro/product/bumbac-hellvape-shoelace-organic/',image:'https://smokee.ro/wp-content/uploads/2025/12/coton-en-lacet-organique-20pcs-hellvape-430x430.jpg',tag:'bumbac',stock:true},
     {title:'Bumbac Organic Ambition Mods 2.5 mm',url:'https://smokee.ro/product/bumbac-organic-ambition-mods-2-5-mm/',image:'https://smokee.ro/wp-content/uploads/2025/12/0014617_ambition-mods-premium-organic-cotton-25mm_1000-430x430.jpeg',tag:'bumbac 2.5 mm',stock:true},
     {title:'Bumbac Cloud 9',url:'https://smokee.ro/product/bumbac-cloud-9/',image:'https://smokee.ro/wp-content/uploads/2025/12/coton-cloud-9-cloud-9-430x430.jpg',tag:'bumbac',stock:true},
-    {title:'Bumbac BP Mods Pro Vape 2.5mm',url:'https://smokee.ro/product/bumbac-bp-mods-pro-vape-2-5mm/',image:'https://smokee.ro/wp-content/uploads/2025/08/0014619_bp-mods-pro-vape-cotton-25mm_1000-430x430.jpeg',tag:'bumbac 2.5 mm',stock:true},
-    {title:'Longfill Bombo Hyper Boost 10ml/120ml - Cotton Candy Fruits Ice',url:'https://smokee.ro/product/longfill-bombo-hyper-boost-10ml-120ml-cotton-candy-fruits-ice/',image:'https://smokee.ro/wp-content/uploads/2025/10/aroma-cotton-candy-fruits-ice-10ml120-longfill-bombo-bar-juice-hyper-boost-430x430.jpg',tag:'bumbac',stock:true}
+    {title:'Bumbac BP Mods Pro Vape 2.5mm',url:'https://smokee.ro/product/bumbac-bp-mods-pro-vape-2-5mm/',image:'https://smokee.ro/wp-content/uploads/2025/08/0014619_bp-mods-pro-vape-cotton-25mm_1000-430x430.jpeg',tag:'bumbac 2.5 mm',stock:true}
   ],
   tools: [
     {title:'Tool Kit - Thunder Cloud x Coilturd',url:'https://smokee.ro/product/tool-kit-recoil-pro-thunder-cloud-x-grimm-green/',image:'https://smokee.ro/wp-content/uploads/2025/10/pro-tool-kit-thunder-cloud-x-coilturd-430x430.webp',tag:'unelte RTA',stock:true},
     {title:'Tool Kit Master - E-Cig Power',url:'https://smokee.ro/product/tool-kit-master-e-cig-power/',image:'https://smokee.ro/wp-content/uploads/2025/08/Toolkit-Master-E-Cig-430x430.jpeg',tag:'unelte RTA',stock:false},
     {title:'Tool Kit GeekVape',url:'https://smokee.ro/product/tool-kit-geekvape/',image:'https://smokee.ro/wp-content/uploads/2025/06/simple-tool-kit-geekvape-430x430.jpg',tag:'unelte RTA',stock:false}
+  ],
+  components: [
+    {title:'Spare Parts Prime Minister RTA',url:'https://smokee.ro/product/spare-parts-prime-minister-rta/',image:'https://smokee.ro/wp-content/uploads/2026/03/JFY0029-800x1000-1-430x430.jpg',tag:'piese schimb',stock:true,model:'Prime Minister MTL RTA'},
+    {title:'Arcana Mods Muted RTA Kit Nano',url:'https://smokee.ro/product/arcana-mods-muted-rta-kit-nano/',image:'https://smokee.ro/wp-content/uploads/2026/05/muted_rta_nano_kit_by_arcana_mods_1.jpg',tag:'kit nano / short',stock:false,model:'Arcana Mods Muted RTA'},
+    {title:'Arcana Mods - Muted RTA Glass Tank Kit',url:'https://smokee.ro/product/arcana-mods-muted-rta-glass-tank-kit/',image:'https://smokee.ro/wp-content/uploads/2026/02/arcana-mods-muted-rta-glastank-kit-430x430.jpg',tag:'sticla / tank',stock:false,model:'Arcana Mods Muted RTA'},
+    {title:'Repair Kit Ennequadro Mods Baya RTA',url:'https://smokee.ro/product/repair-kit-ennequadro-mods-baya-rta/',image:'https://smokee.ro/wp-content/uploads/2026/01/small-pctg-vico-rta-430x430.jpg',tag:'piese schimb',stock:true,model:'Ennequadro Mods Baya RTA'},
+    {title:'Curl PEEK Insert pentru Vico RTA Ennequadro Mods',url:'https://smokee.ro/product/curl-peek-insert-pentru-vico-rta-ennequadro-mods/',image:'https://smokee.ro/wp-content/uploads/2026/03/1097-large_default-430x430.jpg',tag:'pini / inserturi airflow',stock:false,model:'Ennequadro Mods Vico RTA'},
+    {title:'Repair Kit Ennequadro Mods Vico RTA',url:'https://smokee.ro/product/repair-kit-ennequadro-mods-vico-rta/',image:'https://smokee.ro/wp-content/uploads/2026/01/small-pctg-vico-rta-430x430.jpg',tag:'piese schimb',stock:true,model:'Ennequadro Mods Vico RTA'}
   ],
   generated:'2026-07-02'
   /* AUTO-SMOKEE-CONSUMABLES-END */
@@ -1485,6 +1542,57 @@ function openAtomDetail(index){var a=atomizers[parseInt(index,10)];if(!a)return;
 function closeAtomDetail(){var overlay=$('atomDetail');if(!overlay)return;overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
 function initDetail(){document.addEventListener('click',function(e){var b=e.target.closest('[data-detail-index]');if(b){openAtomDetail(b.dataset.detailIndex);return}if(e.target.matches('.close-detail')||e.target.id==='atomDetail')closeAtomDetail()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAtomDetail()})}
 function initVisitCounter(){var img=$('visitCounter');if(!img)return;var box=img.closest('.visit-counter');img.onerror=function(){if(box)box.style.display='none'};img.onload=function(){if(box)box.style.display='inline-flex'};img.src=img.dataset.src}
+var MUSIC_VIDEO_ID='shBOxW0bEJo';
+var musicUserStarted=false;
+var musicPlaying=false;
+function musicSrc(play){
+  var params=[
+    'autoplay='+(play?'1':'0'),
+    'loop=1',
+    'playlist='+MUSIC_VIDEO_ID,
+    'controls=1',
+    'playsinline=1',
+    'enablejsapi=1',
+    'mute=0',
+    'rel=0',
+    'origin='+encodeURIComponent(location.origin)
+  ];
+  return 'https://www.youtube.com/embed/'+MUSIC_VIDEO_ID+'?'+params.join('&');
+}
+function setMusicButton(active,label){
+  var btn=$('musicToggle');
+  if(!btn)return;
+  musicPlaying=!!active;
+  btn.classList.toggle('playing',musicPlaying);
+  btn.setAttribute('aria-pressed',musicPlaying?'true':'false');
+  btn.textContent=label || (musicPlaying?'Muzica pornita':'Muzica');
+}
+function mountMusic(play){
+  var frame=$('musicFrame');
+  if(!frame)return;
+  frame.innerHTML=play?'<iframe title="Muzica fundal YouTube" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" src="'+esc(musicSrc(true))+'"></iframe>':'';
+}
+function showMusicPanel(open){
+  var mount=$('musicMount');
+  if(!mount)return;
+  mount.classList.toggle('active',!!open);
+  mount.setAttribute('aria-hidden',open?'false':'true');
+}
+function initMusic(){
+  var btn=$('musicToggle');
+  if(!btn)return;
+  mountMusic(true);
+  setMusicButton(false,'Muzica');
+  btn.addEventListener('click',function(){
+    musicUserStarted=true;
+    mountMusic(true);
+    setMusicButton(true,'Muzica pornita');
+    showMusicPanel(true);
+  });
+  if($('musicClose'))$('musicClose').addEventListener('click',function(){showMusicPanel(false)});
+  if($('musicStop'))$('musicStop').addEventListener('click',function(){musicUserStarted=false;mountMusic(false);setMusicButton(false,'Muzica');showMusicPanel(false)});
+  if($('musicSearchForm'))$('musicSearchForm').addEventListener('submit',function(e){e.preventDefault();var q=($('musicSearch')&&$('musicSearch').value.trim())||'';window.open(q?'https://www.youtube.com/results?search_query='+encodeURIComponent(q):'https://www.youtube.com/','_blank','noopener')});
+}
 function buildSummary(a){var list=Array.isArray(a&&a.builds)?a.builds.slice(0,2):[];if(!list.length)return 'K1/SS316L 29-30ga, 2.0-2.5mm, 5-6 spire';return list.map(function(b){return cleanVisibleText([b.wire,b.build].filter(Boolean).join(' - ').replace(/Build practica vaperi:?/ig,'').replace(/build raportat[^|]*/ig,'build MTL').trim())}).join(' | ')}
 function roleWordHit(text, word){var w=norm(word);if(w.length<=4&&/^[a-z0-9]+$/.test(w)){return new RegExp('(^|[^a-z0-9])'+w+'([^a-z0-9]|$)').test(text)}return text.indexOf(w)>=0}
 function inferRoles(obj){var t=atomRoleText(obj);var roles=[];ROLES.forEach(function(r){if(r.id==='sideair')return;if(r.words.some(function(w){return roleWordHit(t,w)})) roles.push(r.id)});if(airflowInfo(obj).side)roles.push('sideair');if(!roles.length) roles.push('daily');return Array.from(new Set(roles))}
@@ -1611,26 +1719,60 @@ function liquidGuideSearchResult(q){return {tab:'liquidGuide',route:'liquidGuide
 var CONSUMABLE_GROUPS=[
   {id:'wires',title:'Sarme si coiluri RTA',note:'Fire, role si rezistente MTL utile pentru rebuildable.',terms:['Ni80','SS316L','NiFe30','Kanthal','clapton']},
   {id:'cotton',title:'Bumbac RTA',note:'Bumbac, shoelace si fibre pentru wick stabil.',terms:['bumbac','cotton']},
-  {id:'tools',title:'Unelte RTA',note:'Kituri si scule pentru coil, taiere, montaj si verificare.',terms:['tool kit','coiling tool','ceramic tweezer']}
+  {id:'tools',title:'Unelte RTA',note:'Kituri si scule pentru coil, taiere, montaj si verificare.',terms:['tool kit','coiling tool','ceramic tweezer']},
+  {id:'components',title:'Componente atomizoare RTA',note:'Piese dedicate atomizoarelor, grupate pe model atunci cand produsul permite identificarea.',terms:['air pin RTA','pini airflow RTA','pinuri airflow RTA','sticla atomizor RTA','glass RTA','tank kit RTA','nano kit RTA','kit nano RTA','top refill RTA','chamber RTA','camera RTA','clopot RTA','chimney RTA','bell cap RTA','spare RTA','replacement RTA','extensie RTA','BKS Blade RTA','By-Ka V11 RTA','Labs RTA','Minister RTA','Prime Minister RTA','Diplomat RTA','Arcana RTA','Muted RTA','Baya RTA','Vico RTA','Chephren RTA']}
 ];
-var CONSUMABLE_CACHE_KEY='smokeeConsumablesDailyV3';
+var CONSUMABLE_CACHE_KEY='smokeeConsumablesDailyV4';
 var consumableState=SMOKEE_CONSUMABLES;
+var COMPONENT_MODELS=[
+  ['BKS Blade RTA',/\b(bks|blade)\b/],
+  ['NTSU / Netsu MTL RTA',/\b(ntsu|netsu)\b/],
+  ['Chephren RTA',/\bchephren\b/],
+  ['Prime Minister MTL RTA',/\bprime\s+minister\b/],
+  ['Minister MTL RTA',/\bminister\b/],
+  ['Diplomat MTL RTA',/\bdiplomat\b/],
+  ['By-Ka V.11 RTA',/\bby[-\s]?ka\b|\bv\.?\s*11\b|\bv11\b/],
+  ['BP Mods Labs RTA',/\blabs\b|\bbp\s+mods\b/],
+  ['Arcana Mods Muted RTA',/\bmuted\b/],
+  ['Arcana 22 RTA',/\barcana\s*22\b/],
+  ['Ambition Mods Trinity RTA',/\btrinity\b/],
+  ['Ambition Mods Revorie RTA',/\brevorie\b/],
+  ['Ambition Mods Bi2hop RTA',/\bbi2hop\b/],
+  ['Ambition Mods Amazier RTA',/\bamazier\b/],
+  ['Ennequadro Mods Vico RTA',/\bvico\b/],
+  ['Ennequadro Mods Baya RTA',/\bbaya\b/],
+  ['Blaze MTL RTA',/\bblaze\b/],
+  ['Berserker Mini V3 MTL RTA',/\bberserker\b/],
+  ['Dead Rabbit MTL RTA 2',/\bdead\s+rabbit\b/],
+  ['GD Mods MD01 RTA',/\bmd01\b|\bgd\s+mods\b/],
+  ['Kayfun RTA',/\bkayfun\b/],
+  ['Dvarw MTL RTA',/\bdvarw\b/],
+  ['Taifun RTA',/\btaifun\b|\bgtr\b/],
+  ['415 RTA',/\b415\b/],
+  ['Bishop RTA',/\bbishop\b/],
+  ['Flash-e-Vapor RTA',/\bflash[-\s]?e[-\s]?vapor\b|\bfev\b/]
+];
 function todayKey(){return new Date().toISOString().slice(0,10)}
 function decodeHtmlText(s){var el=document.createElement('textarea');el.innerHTML=String(s||'');return el.value.replace(/\s+/g,' ').trim()}
 function consumableItems(data){var out=[];CONSUMABLE_GROUPS.forEach(function(g){(data&&data[g.id]||[]).forEach(function(item){out.push({group:g,item:item})})});return out}
-function consumableSearchText(data){return consumableItems(data||consumableState).map(function(x){return [x.group.title,x.group.note,x.item.title,x.item.tag,x.item.url].join(' ')}).join(' ')}
-function inferConsumableTag(title,group){var t=norm(title);if(group==='cotton')return /2\.5|2,5/.test(t)?'bumbac 2.5 mm':'bumbac';if(group==='tools')return 'unelte RTA';if(/nife/.test(t))return 'NiFe30 TC';if(/ss316l|inox/.test(t))return /clapton|fused/.test(t)?'SS316L Clapton':'SS316L';if(/ni80|n80/.test(t))return /alien/.test(t)?'Ni80 Alien':(/clapton|fused/.test(t)?'Ni80 Clapton':'Ni80');if(/kanthal|ka1|k1/.test(t))return 'Kanthal';if(/clapton|fused/.test(t))return 'Clapton MTL';return 'sarma RTA'}
-function isConsumableProduct(item,group){var t=norm([item.title,item.url,item.tag].join(' '));if(!/smokee\.ro\/product\//.test(item.url||''))return false;if(/atomizor|drip tip|cartus|cartridge|pod|mod full kit|converter box|horizontech talons/.test(t))return false;if(group==='cotton')return /bumbac|cotton|coton/.test(t);if(group==='tools')return /tool kit|scule|coil tool|tweezer|penseta|foarfeca|cleste|ohm/.test(t)&&!/full kit/.test(t);if(group==='wires'){if(/\b(rdl|boro|dl)\b/.test(t)&&!/\bmtl\b/.test(t))return false;return /rezistent|resistance|coil|coils|rola|wire|kanthal|ka1|k1|ss316|nife|ni80|clapton|fused|staple|alien/.test(t)}return false}
-function normalizeStoreProduct(p,group){var img='';if(p&&p.images&&p.images.length){img=p.images[0].thumbnail||p.images[0].src||''}var title=decodeHtmlText((p&&p.name)||(p&&p.title)||'');return {title:title,url:(p&&p.permalink)||(p&&p.url)||'',image:img,tag:inferConsumableTag(title,group),stock:p&&p.is_in_stock===true?true:(p&&p.is_in_stock===false?false:null)}}
-function uniqueConsumables(list,group){var seen={};return list.filter(function(item){if(!item||!item.url||!item.title)return false;item.url=item.url.replace(/[?#].*$/,'').replace(/\/?$/,'/');if(seen[item.url])return false;seen[item.url]=1;return isConsumableProduct(item,group)}).slice(0,18)}
+function consumableSearchText(data){return consumableItems(data||consumableState).map(function(x){return [x.group.title,x.group.note,x.item.title,x.item.tag,x.item.model,x.item.url].join(' ')}).join(' ')}
+function inferComponentKind(title){var t=norm(title);if(/\b(air pin|air-pin|pini airflow|pinuri|pin airflow|airflow pin|insert)\b/.test(t))return 'pini / inserturi airflow';if(/\b(sticla|glass|tank|rezervor)\b/.test(t)&&!/\bgradata\b/.test(t))return 'sticla / tank';if(/\b(chamber|camera|clopot|chimney|bell cap|bell)\b/.test(t))return 'camera / clopot';if(/\b(top refill|top-fill|top fill|refill)\b/.test(t))return 'top refill';if(/\b(nano kit|kit nano|short tank)\b/.test(t))return 'kit nano / short';if(/\b(extensie|extension|extender)\b/.test(t))return 'extensie';if(/\b(deck|post|surub|screw|o[-\s]?ring|oring|garnitur|repair|spare|replacement)\b/.test(t))return 'piese schimb';return 'componenta RTA'}
+function inferComponentModel(title){var t=norm(title);for(var i=0;i<COMPONENT_MODELS.length;i++){if(COMPONENT_MODELS[i][1].test(t))return COMPONENT_MODELS[i][0]}var m=t.match(/\b(?:pentru|for|dedicat(?:a|e)?\s+pentru)\s+(.+?)(?:\s+-|\s+\||$)/);if(m&&m[1]){var label=m[1].replace(/\b(atomizor|rta|mtl|dl|rdl|set|kit|glass|tank|sticla|pini|pinuri|airflow|replacement|spare)\b/gi,' ').replace(/\s+/g,' ').trim();if(label)return label.replace(/\b\w/g,function(c){return c.toUpperCase()})}return 'Componente RTA diverse'}
+function inferConsumableTag(title,group){var t=norm(title);if(group==='cotton')return /2\.5|2,5/.test(t)?'bumbac 2.5 mm':'bumbac';if(group==='tools')return 'unelte RTA';if(group==='components')return inferComponentKind(title);if(/nife/.test(t))return 'NiFe30 TC';if(/ss316l|inox/.test(t))return /clapton|fused/.test(t)?'SS316L Clapton':'SS316L';if(/ni80|n80/.test(t))return /alien/.test(t)?'Ni80 Alien':(/clapton|fused/.test(t)?'Ni80 Clapton':'Ni80');if(/kanthal|ka1|k1/.test(t))return 'Kanthal';if(/clapton|fused/.test(t))return 'Clapton MTL';return 'sarma RTA'}
+function isRtaComponentProduct(item){var t=norm([item.title,item.url,item.tag,item.model].join(' '));if(!/smokee\.ro\/product\//.test(item.url||''))return false;if(/\b(sticla gradata|dualfill|bottle|recipient|aroma|longfill|shortfill|lichid|nic shot|nic-shot|bumbac|cotton|tool kit|scule|unelte|coil|coils|rezistent|rezistenta|pod|cartus|cartridge|clearomizor|mod full kit|kit voopoo|dispozitiv)\b/.test(t))return false;var hasPart=/\b(air pin|air-pin|pini airflow|pinuri|pin airflow|airflow pin|insert|sticla|glass|tank kit|short tank|glass tank|nano kit|kit nano|top refill|top-fill|top fill|repair kit|chamber|camera|clopot|chimney|bell cap|bell|deck|post|surub|screw|o[-\s]?ring|oring|garnitur|spare|replacement|extensie|extension|extender)\b/.test(t);var hasModel=/\b(rta|atomizor|by[-\s]?ka|bks|blade|ntsu|netsu|chephren|minister|diplomat|labs|arcana|muted|baya|vico|trinity|revorie|bi2hop|amazier|blaze|berserker|dead rabbit|md01|kayfun|dvarw|taifun|gtr|415|bishop|fev|flash[-\s]?e[-\s]?vapor)\b/.test(t);return hasPart&&hasModel}
+function isConsumableProduct(item,group){var t=norm([item.title,item.url,item.tag].join(' '));if(!/smokee\.ro\/product\//.test(item.url||''))return false;if(group==='components')return isRtaComponentProduct(item);if(/atomizor|drip tip|cartus|cartridge|pod|mod full kit|converter box|horizontech talons/.test(t))return false;if(group==='cotton')return /bumbac|cotton|coton/.test(t)&&!/\b(cotton candy|aroma|longfill|shortfill|lichid|juice|bombo|hyper boost)\b/.test(t);if(group==='tools')return /tool kit|scule|coil tool|tweezer|penseta|foarfeca|cleste|ohm/.test(t)&&!/full kit/.test(t);if(group==='wires'){if(/\b(rdl|boro|dl)\b/.test(t)&&!/\bmtl\b/.test(t))return false;return /rezistent|resistance|coil|coils|rola|wire|kanthal|ka1|k1|ss316|nife|ni80|clapton|fused|staple|alien/.test(t)}return false}
+function normalizeStoreProduct(p,group){var img='';if(p&&p.images&&p.images.length){img=p.images[0].thumbnail||p.images[0].src||''}var title=decodeHtmlText((p&&p.name)||(p&&p.title)||'');var item={title:title,url:(p&&p.permalink)||(p&&p.url)||'',image:img,tag:inferConsumableTag(title,group),stock:p&&p.is_in_stock===true?true:(p&&p.is_in_stock===false?false:null)};if(group==='components')item.model=inferComponentModel(title);return item}
+function uniqueConsumables(list,group){var seen={};return list.filter(function(item){if(!item||!item.url||!item.title)return false;item.url=item.url.replace(/[?#].*$/,'').replace(/\/?$/,'/');if(seen[item.url])return false;seen[item.url]=1;return isConsumableProduct(item,group)}).slice(0,group==='components'?40:18)}
 function fetchConsumableGroup(group){var calls=group.terms.map(function(term){var url='https://smokee.ro/wp-json/wc/store/v1/products?search='+encodeURIComponent(term)+'&per_page=20';return fetch(url,{cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).catch(function(){return []})});return Promise.all(calls).then(function(chunks){return uniqueConsumables([].concat.apply([],chunks).map(function(p){return normalizeStoreProduct(p,group.id)}),group.id)})}
 function refreshConsumables(){return Promise.all(CONSUMABLE_GROUPS.map(fetchConsumableGroup)).then(function(groups){var next={generated:todayKey()};CONSUMABLE_GROUPS.forEach(function(g,i){next[g.id]=groups[i].length?groups[i]:(SMOKEE_CONSUMABLES[g.id]||[])});consumableState=next;try{localStorage.setItem(CONSUMABLE_CACHE_KEY,JSON.stringify(next))}catch(e){}renderConsumables(next,'actualizat')}).catch(function(){renderConsumables(consumableState,'fallback')})}
 function initConsumables(){renderConsumables(consumableState,'fallback');try{var cached=JSON.parse(localStorage.getItem(CONSUMABLE_CACHE_KEY)||'null');if(cached&&cached.generated===todayKey()){consumableState=cached;renderConsumables(cached,'cache');return}}catch(e){}refreshConsumables()}
 function stockPill(item){if(item.stock===true)return '<span class="stock-pill in">in stoc</span>';if(item.stock===false)return '<span class="stock-pill out">verifica stoc</span>';return '<span class="stock-pill link">Smokee</span>'}
-function consumableCard(item){var img=item.image?'<img src="'+esc(item.image)+'" alt="'+esc(item.title)+'" loading="lazy">':'RTA';return '<a class="consumable-item" target="_blank" rel="noreferrer" href="'+esc(item.url)+'"><span class="consumable-thumb">'+img+'</span><span class="consumable-copy"><b>'+esc(item.title)+'</b><small>'+esc(item.tag||'consumabil RTA')+'</small><span class="stock-row">'+stockPill(item)+'<span class="stock-pill link">deschide produs</span></span></span></a>'}
-function renderConsumables(data,status){var box=$('consumableGrid');if(!box)return;data=data||SMOKEE_CONSUMABLES;var date=data.generated||'Smokee';box.innerHTML=CONSUMABLE_GROUPS.map(function(g){var list=(data[g.id]||[]);return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(list.length)+' produse</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee live':'sincronizare zilnica')+'</span></div><div class="consumable-list">'+(list.length?list.map(consumableCard).join(''):'<div class="empty">Nu sunt produse in zona aceasta.</div>')+'</div></article>'}).join('')}
-function scoreConsumable(item,group,q){return fieldScore(q,[[item.title,30],[item.tag,18],[group.title,20],[group.note,12],[item.url,4],['consumabile rta sarme bumbac unelte smokee coil wire cotton tool kit',12]])}
-function consumableSearchResults(q){var nq=norm(q);var rows=consumableItems(consumableState).map(function(x){return {x:x,score:scoreConsumable(x.item,x.group,q)}}).filter(function(row){return !nq||row.score>0}).sort(function(a,b){return b.score-a.score||a.x.item.title.localeCompare(b.x.item.title)}).slice(0,8);if(rows.length)return rows.map(function(row){return {tab:'consumables',route:'consumables',title:row.x.item.title,meta:row.x.group.title+' - '+(row.x.item.tag||'Smokee'),query:q,score:row.score}});var score=fieldScore(q,[[consumableSearchText(consumableState),20],['consumabile rta sarme bumbac unelte smokee whatsapp',30]]);return score>0?[{tab:'consumables',route:'consumables',title:'Consumabile RTA',meta:'Sarme, bumbac si unelte Smokee',query:q,score:score}]:[]}
+function consumableCard(item){var img=item.image?'<img src="'+esc(item.image)+'" alt="'+esc(item.title)+'" loading="lazy">':'RTA';var meta=item.model?item.model+' - '+(item.tag||'componenta RTA'):(item.tag||'consumabil RTA');return '<a class="consumable-item" target="_blank" rel="noreferrer" href="'+esc(item.url)+'"><span class="consumable-thumb">'+img+'</span><span class="consumable-copy"><b>'+esc(item.title)+'</b><small>'+esc(meta)+'</small><span class="stock-row">'+stockPill(item)+'<span class="stock-pill link">deschide produs</span></span></span></a>'}
+function componentListHtml(list){var grouped={};list.forEach(function(item){var model=item.model||inferComponentModel(item.title);if(!grouped[model])grouped[model]=[];grouped[model].push(item)});var names=Object.keys(grouped).sort(function(a,b){if(a==='Componente RTA diverse')return 1;if(b==='Componente RTA diverse')return -1;return a.localeCompare(b)});return names.map(function(name){return '<div class="component-model"><h4>'+esc(name)+'</h4><div class="consumable-list">'+grouped[name].map(consumableCard).join('')+'</div></div>'}).join('')}
+function consumableListHtml(group,list){if(!list.length)return '<div class="empty">Nu sunt produse in zona aceasta.</div>';if(group.id==='components')return componentListHtml(list);return list.map(consumableCard).join('')}
+function renderConsumables(data,status){var box=$('consumableGrid');if(!box)return;data=data||SMOKEE_CONSUMABLES;var date=data.generated||'Smokee';box.innerHTML=CONSUMABLE_GROUPS.map(function(g){var list=(data[g.id]||[]);return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(list.length)+' produse</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee live':'sincronizare zilnica')+'</span></div><div class="consumable-list">'+consumableListHtml(g,list)+'</div></article>'}).join('')}
+function scoreConsumable(item,group,q){return fieldScore(q,[[item.title,30],[item.tag,18],[item.model,18],[group.title,20],[group.note,12],[item.url,4],['consumabile rta sarme bumbac unelte componente atomizoare smokee coil wire cotton tool kit air pin sticla tank chamber clopot',12]])}
+function consumableSearchResults(q){var nq=norm(q);var rows=consumableItems(consumableState).map(function(x){return {x:x,score:scoreConsumable(x.item,x.group,q)}}).filter(function(row){return !nq||row.score>0}).sort(function(a,b){return b.score-a.score||a.x.item.title.localeCompare(b.x.item.title)}).slice(0,8);if(rows.length)return rows.map(function(row){var meta=row.x.group.title+' - '+(row.x.item.model?row.x.item.model+' - ':'')+(row.x.item.tag||'Smokee');return {tab:'consumables',route:'consumables',title:row.x.item.title,meta:meta,query:q,score:row.score}});var score=fieldScore(q,[[consumableSearchText(consumableState),20],['consumabile rta sarme bumbac unelte componente atomizoare smokee whatsapp',30]]);return score>0?[{tab:'consumables',route:'consumables',title:'Consumabile RTA',meta:'Sarme, bumbac, unelte si componente Smokee',query:q,score:score}]:[]}
 function searchBuckets(q){var nq=norm(q);return {
   atomizers:atomizers.map(function(a){return {a:a,score:scoreAtom(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'atomizers',route:'atomizor/'+atomSlug(x.a),title:publicAtomName(x.a),meta:'Atomizor - '+(airflowInfo(x.a).label||'MTL'),query:q,score:x.score}}),
   profiles:profiles.map(function(p,i){return {p:p,i:i,score:scoreProfile(p,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||profileDisplayName(x.p).localeCompare(profileDisplayName(y.p))}).slice(0,8).map(function(x){return {tab:'profiles',title:profileDisplayName(x.p),meta:'Lichid - '+liquidClassLabel(x.p),query:q,index:x.i,score:x.score}}),
@@ -1714,7 +1856,7 @@ function initLiquidCalculator(){
   document.querySelectorAll('[data-mix-ratio]').forEach(function(btn){btn.addEventListener('click',function(){if($('mixTargetVg'))$('mixTargetVg').value=btn.dataset.mixRatio;calcLiquidRecipe()})});
   calcLiquidRecipe();
 }
-function init(){initVisitCounter();initNav();initGlobalSearch();initDetail();initLiquidCalculator();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();initConsumables();renderSources();applyRoute(false)}
+function init(){initVisitCounter();initMusic();initNav();initGlobalSearch();initDetail();initLiquidCalculator();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();initConsumables();renderSources();applyRoute(false)}
 
 function renderMetrics(){var src=atomizers.reduce(function(n,a){return n+getSources(a).length},0);$('metricsBox').innerHTML = [
   ['Atomizoare', atomizers.length, 'modele analizate', 'atomizers'],
