@@ -226,9 +226,8 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .music-close{width:13px;height:13px;border:0;border-radius:50%;background:rgba(0,0,0,.16);color:#080808;font-weight:900;cursor:pointer;line-height:1;font-size:8px;padding:0}
 .music-frame{position:relative;background:#000;height:55px;overflow:hidden}
 .music-frame iframe{display:block;width:240px;height:135px;border:0;transform:scale(var(--yt-scale));transform-origin:0 0}
-.music-hit{position:absolute;inset:0;display:block;border:0;background:transparent;text-indent:-999px;overflow:hidden;cursor:pointer}
-.music-hit:after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);border-radius:50%;background:rgba(255,122,26,.88);box-shadow:0 0 16px rgba(255,122,26,.45)}
-.music-hit:before{content:"";position:absolute;left:50%;top:50%;z-index:1;transform:translate(-35%,-50%);border-left:7px solid #080808;border-top:5px solid transparent;border-bottom:5px solid transparent}
+.music-hit{position:absolute;left:8px;right:8px;top:50%;transform:translateY(-50%);height:24px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:linear-gradient(135deg,#ff7a1a,#ffb000);color:#080808;font-size:10px;font-weight:1000;letter-spacing:0;text-indent:0;overflow:hidden;cursor:pointer;box-shadow:0 8px 18px rgba(255,122,26,.28)}
+.music-hit:hover{filter:brightness(1.06)}
 .music-tools{display:none}
 .music-tools input{min-width:0;border:1px solid #3a3a3a;border-radius:999px;background:#fff;color:#111;padding:7px 8px;font:inherit;font-size:12px}
 .music-tools button,.music-actions a,.music-actions button{border:1px solid #3a3a3a;border-radius:999px;background:#242424;color:#fff;padding:6px 8px;font-weight:900;font-size:11px;cursor:pointer;text-decoration:none}
@@ -700,7 +699,7 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
 @media(max-width:380px){.wrap{padding:0 9px}.wrap.nav{padding:7px 9px 8px}.smokee-logo{width:84px}.brand b{font-size:11px;max-width:calc(100vw - 116px)}.navlinks{margin:0 -9px;padding-left:9px;padding-right:9px}.navbtn{font-size:11px;padding:7px 8px}.problem-grid,.role-tabs,.category-list,.calc-examples{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:25px}.shop-hero-content{padding:14px}.btn{padding:8px}.card{padding:11px}.cat-mark{width:24px;height:24px}.category-link{font-size:14px}}
 @media(max-width:340px){.hero-actions{grid-template-columns:1fr}.shop-hero h1{font-size:23px}.lead{font-size:14px}}
 @media(max-width:900px){.nav{grid-template-columns:1fr;align-items:stretch;padding-left:112px}.music-mount{left:10px;top:7px;width:86px;--yt-scale:.36}.music-frame{height:45px}.brand,.site-search,.head-tools,.navlinks{grid-column:auto}.site-search,.head-tools,.navlinks{grid-column:1/-1}.navlinks{width:auto;margin-left:0}}
-@media(max-width:640px){.wrap.nav{grid-template-columns:auto minmax(0,1fr);align-items:center;padding:4px 8px 5px 62px;gap:4px 6px;overflow:visible}.music-mount{left:6px;top:6px;width:50px;--yt-scale:.21;border-radius:6px}.music-head{height:12px;padding:1px 3px}.music-head a{font-size:0}.music-head a:before{content:"YT";font-size:7px}.music-close{width:10px;height:10px;font-size:7px}.music-frame{height:28px}.music-hit{padding:0}.music-hit:after{width:15px;height:15px}.music-hit:before{border-left-width:6px;border-top-width:4px;border-bottom-width:4px}.music-tools,.music-actions{display:none}.brand{min-width:0}.brand-top{gap:0}.brand b{display:none}.smokee-logo{width:64px}.site-search{grid-column:auto;height:31px;padding:0 8px}.search-icon{width:14px;height:14px}.site-search input{height:29px;font-size:12px}.navlinks{grid-column:1/-1;margin:0 -8px 0 -62px;padding:3px 8px 0;border-top:0;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{min-height:30px;padding:6px 9px;font-size:12px;line-height:1.12}.hero-actions .btn{min-height:44px;padding:9px 10px;font-size:13px;line-height:1.18}.shop-metrics{grid-template-columns:1fr}.shop-metrics .metric{min-height:88px;grid-template-columns:1fr auto;align-items:center}.shop-metrics .metric strong{font-size:30px}.liquid-subfilters{gap:6px}.liquid-subfilters button{padding:7px 8px;font-size:11px}}
+@media(max-width:640px){.wrap.nav{grid-template-columns:auto minmax(0,1fr);align-items:center;padding:4px 8px 5px 62px;gap:4px 6px;overflow:visible}.music-mount{left:6px;top:6px;width:50px;--yt-scale:.21;border-radius:6px}.music-head{height:12px;padding:1px 3px}.music-head a{font-size:0}.music-head a:before{content:"YT";font-size:7px}.music-close{width:10px;height:10px;font-size:7px}.music-frame{height:28px}.music-hit{left:4px;right:4px;height:17px;padding:0;font-size:7px}.music-tools,.music-actions{display:none}.brand{min-width:0}.brand-top{gap:0}.brand b{display:none}.smokee-logo{width:64px}.site-search{grid-column:auto;height:31px;padding:0 8px}.search-icon{width:14px;height:14px}.site-search input{height:29px;font-size:12px}.navlinks{grid-column:1/-1;margin:0 -8px 0 -62px;padding:3px 8px 0;border-top:0;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{min-height:30px;padding:6px 9px;font-size:12px;line-height:1.12}.hero-actions .btn{min-height:44px;padding:9px 10px;font-size:13px;line-height:1.18}.shop-metrics{grid-template-columns:1fr}.shop-metrics .metric{min-height:88px;grid-template-columns:1fr auto;align-items:center}.shop-metrics .metric strong{font-size:30px}.liquid-subfilters{gap:6px}.liquid-subfilters button{padding:7px 8px;font-size:11px}}
 @media(max-width:640px){.age-gate{padding:12px}.age-card{padding:20px 16px;border-radius:15px}.age-logo{width:150px;margin-bottom:14px}.age-chip{height:38px;min-width:66px;font-size:18px}.age-card h2{font-size:30px}.age-card p{font-size:14px;line-height:1.5}.age-actions{grid-template-columns:1fr}.age-actions button,.age-actions a{min-height:46px}}
 @media(max-width:380px){.wrap.nav{padding-left:58px;gap:4px}.music-mount{left:6px;width:47px;--yt-scale:.195}.music-frame{height:26px}.smokee-logo{width:58px}.navlinks{margin-left:-58px}.navbtn{padding:6px 8px;font-size:11px}.music-head a{font-size:0}.music-head a:before{content:"YT";font-size:7px}}
 </style>
@@ -2377,6 +2376,7 @@ function initAgeGate(){
   function unlock(){
     gate.hidden=true;
     document.body.classList.remove('age-gated');
+    if(typeof activateMusicSound==='function')activateMusicSound();
   }
   gate.hidden=false;
   document.body.classList.add('age-gated');
@@ -2398,7 +2398,8 @@ function musicSrc(play,audible){
     'playsinline=1',
     'enablejsapi=1',
     'rel=0',
-    'modestbranding=1'
+    'modestbranding=1',
+    'origin='+encodeURIComponent(location.origin)
   ];
   return 'https://www.youtube-nocookie.com/embed/'+MUSIC_VIDEO_ID+'?'+params.join('&');
 }
@@ -2410,17 +2411,31 @@ function setMusicButton(active,label){
   btn.setAttribute('aria-pressed',musicPlaying?'true':'false');
   btn.textContent=label || (musicPlaying?'Muzica pornita':'Muzica');
 }
+function youtubePlayerCommand(func,args){
+  var frame=$('musicFrame');
+  var iframe=frame?frame.querySelector('iframe'):null;
+  if(!iframe||!iframe.contentWindow)return false;
+  iframe.contentWindow.postMessage(JSON.stringify({event:'command',func:func,args:args||[]}), '*');
+  return true;
+}
 function activateMusicSound(){
   musicUserStarted=true;
   musicAudible=true;
-  mountMusic(true,true);
+  youtubePlayerCommand('unMute');
+  youtubePlayerCommand('setVolume',[80]);
+  youtubePlayerCommand('playVideo');
+  setTimeout(function(){
+    youtubePlayerCommand('unMute');
+    youtubePlayerCommand('setVolume',[80]);
+    youtubePlayerCommand('playVideo');
+  },250);
   setMusicButton(true,'Muzica pornita');
   showMusicPanel(true);
 }
 function mountMusic(play,audible){
   var frame=$('musicFrame');
   if(!frame)return;
-  var soundButton=audible?'':'<button class="music-hit" id="musicSound" type="button" aria-label="Porneste sunetul in pagina">Porneste sunetul</button>';
+  var soundButton=audible?'':'<button class="music-hit" id="musicSound" type="button" aria-label="Porneste sunetul in pagina">SUNET</button>';
   frame.innerHTML=play?'<iframe title="Muzica fundal YouTube" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" src="'+esc(musicSrc(true,!!audible))+'"></iframe>'+soundButton:'';
   if($('musicSound'))$('musicSound').addEventListener('click',activateMusicSound);
 }
