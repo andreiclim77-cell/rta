@@ -51,12 +51,46 @@ async function checkOverflow(page) {
 
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport });
-    await page.goto("http://127.0.0.1:8794/#liquids", { waitUntil: "domcontentloaded" });
+    await page.goto("http://127.0.0.1:8794/", { waitUntil: "domcontentloaded" });
 
     const accept = page.locator("#ageAccept");
     if (await accept.isVisible().catch(() => false)) {
       await accept.click();
     }
+
+    await page.waitForSelector(".supplier-showcase", { timeout: 5000 });
+    const homeResult = await page.evaluate(() => {
+      const supplier = document.querySelector(".supplier-showcase");
+      const guide = document.querySelector(".guide-hub");
+      const wrap = document.querySelector("main.wrap");
+      const wrapStyle = wrap ? getComputedStyle(wrap) : null;
+      const wrapPadding =
+        (parseFloat(wrapStyle?.paddingLeft || "0") || 0) + (parseFloat(wrapStyle?.paddingRight || "0") || 0);
+      const supplierCards = [...document.querySelectorAll(".supplier-card")];
+      return {
+        supplierWidth: Math.round(supplier?.getBoundingClientRect().width || 0),
+        guideWidth: Math.round(guide?.getBoundingClientRect().width || 0),
+        wrapWidth: Math.round(wrap?.getBoundingClientRect().width || 0),
+        wrapContentWidth: Math.round((wrap?.getBoundingClientRect().width || 0) - wrapPadding),
+        supplierCards: supplierCards.length,
+        supplierImages: supplierCards.filter((el) => (el.getAttribute("style") || "").includes("--supplier-img")).length,
+      };
+    });
+    const homeOverflow = await checkOverflow(page);
+
+    if (
+      homeOverflow.scrollWidth > homeOverflow.clientWidth + 4 ||
+      homeOverflow.offenders.length ||
+      homeResult.supplierCards < 20 ||
+      homeResult.supplierImages !== homeResult.supplierCards ||
+      (viewport.width > 900 &&
+        (homeResult.supplierWidth < homeResult.wrapContentWidth - 12 ||
+          homeResult.guideWidth < homeResult.wrapContentWidth - 12))
+    ) {
+      failures.push({ viewport: viewport.name, homeResult, homeOverflow });
+    }
+
+    await page.goto("http://127.0.0.1:8794/#liquids", { waitUntil: "domcontentloaded" });
 
     await page.waitForSelector("#liquidCatalogGrid", { timeout: 5000 });
     await page.locator('[data-liquid-group="tutun"][data-liquid-sub="dulci"]').first().click();
