@@ -204,13 +204,31 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn[data-tab="liquidGuide"]{--nav-a:#ff8bd5;--nav-b:#37bfe8;--nav-dim:#23101d;--nav-border:rgba(255,139,213,.62);--nav-idle:#fff0fb;--nav-active:#111}
 .navbtn[data-tab="legislativ"]{--nav-a:#ffd166;--nav-b:#ffe89a;--nav-dim:#221708;--nav-border:rgba(255,209,102,.66);--nav-idle:#fff8df;--nav-active:#120b02}
 .navbtn[data-tab="sources"]{--nav-a:#ff4f7b;--nav-b:#ffb000;--nav-dim:#231018;--nav-border:rgba(255,79,123,.62);--nav-idle:#ffeef3;--nav-active:#111}
-.music-mount{position:absolute;left:18px;top:8px;width:96px;z-index:4;border:1px solid rgba(255,122,26,.5);border-radius:7px;background:linear-gradient(180deg,#0c0c0c,#151515);color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.24);overflow:hidden;opacity:.98;pointer-events:auto;transition:.18s ease}
+.age-gated{overflow:hidden}
+.age-gate{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;padding:18px;background:radial-gradient(circle at 75% 25%,rgba(36,211,163,.22),transparent 34%),radial-gradient(circle at 18% 78%,rgba(255,122,26,.24),transparent 36%),linear-gradient(135deg,rgba(0,0,0,.96),rgba(12,12,12,.98));color:#fff}
+.age-gate[hidden]{display:none}
+.age-card{width:min(620px,100%);border:1px solid rgba(255,255,255,.16);border-radius:18px;background:linear-gradient(145deg,rgba(18,18,18,.98),rgba(5,5,5,.96));box-shadow:0 34px 95px rgba(0,0,0,.58),0 0 0 1px rgba(255,122,26,.18) inset;padding:26px;position:relative;overflow:hidden}
+.age-card:before{content:"";position:absolute;inset:0 0 auto;height:5px;background:linear-gradient(90deg,#ff7a1a,#ffb000,#24d3a3,#22a7f2)}
+.age-logo{width:190px;max-width:62vw;display:block;margin:0 0 18px;filter:drop-shadow(0 12px 18px rgba(0,0,0,.4))}
+.age-chip{display:inline-flex;align-items:center;justify-content:center;min-width:72px;height:42px;border-radius:999px;background:linear-gradient(135deg,#ff7a1a,#ffb000);color:#080808;font-weight:1000;font-size:20px;box-shadow:0 12px 28px rgba(255,122,26,.3)}
+.age-card h2{margin:16px 0 10px;font-size:clamp(28px,5vw,44px);line-height:1.02;letter-spacing:0}
+.age-card p{margin:0 0 12px;color:#e9e9e9;font-size:16px;line-height:1.58}
+.age-note{border-left:4px solid #24d3a3;padding:10px 12px;background:rgba(36,211,163,.08);border-radius:10px;color:#f5f5f5}
+.age-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.age-actions button,.age-actions a{min-height:48px;border-radius:13px;border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;text-align:center;text-decoration:none;font-weight:1000;cursor:pointer;font-size:15px}
+.age-accept{background:linear-gradient(135deg,#ff7a1a,#ffb000);color:#080808;box-shadow:0 14px 26px rgba(255,122,26,.26)}
+.age-exit{background:#101010;color:#fff}
+.age-legal{display:block;margin-top:12px;color:#aaa;font-size:12px;line-height:1.45}
+.music-mount{--yt-scale:.44;position:absolute;left:18px;top:8px;width:106px;z-index:4;border:1px solid rgba(255,122,26,.5);border-radius:7px;background:linear-gradient(180deg,#0c0c0c,#151515);color:#fff;box-shadow:0 8px 18px rgba(0,0,0,.24);overflow:hidden;opacity:.98;pointer-events:auto;transition:.18s ease}
 .music-mount.hidden{display:none}
 .music-head{display:flex;align-items:center;justify-content:space-between;gap:4px;height:16px;padding:2px 4px;background:linear-gradient(90deg,#ff7a1a,#24d3a3);color:#080808}
 .music-head a{color:#080808;text-decoration:none;font-size:9px;font-weight:950;line-height:1}
 .music-close{width:13px;height:13px;border:0;border-radius:50%;background:rgba(0,0,0,.16);color:#080808;font-weight:900;cursor:pointer;line-height:1;font-size:8px;padding:0}
-.music-frame{background:#000;height:36px}
-.music-frame iframe{display:block;width:100%;height:100%;border:0}
+.music-frame{position:relative;background:#000;height:55px;overflow:hidden}
+.music-frame iframe{display:block;width:240px;height:135px;border:0;transform:scale(var(--yt-scale));transform-origin:0 0}
+.music-hit{position:absolute;inset:0;display:block;text-indent:-999px;overflow:hidden}
+.music-hit:after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;transform:translate(-50%,-50%);border-radius:50%;background:rgba(255,122,26,.88);box-shadow:0 0 16px rgba(255,122,26,.45)}
+.music-hit:before{content:"";position:absolute;left:50%;top:50%;z-index:1;transform:translate(-35%,-50%);border-left:7px solid #080808;border-top:5px solid transparent;border-bottom:5px solid transparent}
 .music-tools{display:none}
 .music-tools input{min-width:0;border:1px solid #3a3a3a;border-radius:999px;background:#fff;color:#111;padding:7px 8px;font:inherit;font-size:12px}
 .music-tools button,.music-actions a,.music-actions button{border:1px solid #3a3a3a;border-radius:999px;background:#242424;color:#fff;padding:6px 8px;font-weight:900;font-size:11px;cursor:pointer;text-decoration:none}
@@ -681,12 +699,28 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
 @media(max-width:640px){.atom-card .fit-strip,.result-card .fit-strip{grid-template-columns:1fr}.fit-item b,.fit-item span{overflow-wrap:anywhere}.card:hover,.consumable-zone:hover,.detail-block:hover{transform:none}}
 @media(max-width:380px){.wrap{padding:0 9px}.wrap.nav{padding:7px 9px 8px}.smokee-logo{width:84px}.brand b{font-size:11px;max-width:calc(100vw - 116px)}.navlinks{margin:0 -9px;padding-left:9px;padding-right:9px}.navbtn{font-size:11px;padding:7px 8px}.problem-grid,.role-tabs,.category-list,.calc-examples{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:25px}.shop-hero-content{padding:14px}.btn{padding:8px}.card{padding:11px}.cat-mark{width:24px;height:24px}.category-link{font-size:14px}}
 @media(max-width:340px){.hero-actions{grid-template-columns:1fr}.shop-hero h1{font-size:23px}.lead{font-size:14px}}
-@media(max-width:900px){.nav{grid-template-columns:1fr;align-items:stretch;padding-left:112px}.music-mount{left:10px;top:7px;width:86px}.brand,.site-search,.head-tools,.navlinks{grid-column:auto}.site-search,.head-tools,.navlinks{grid-column:1/-1}.navlinks{width:auto;margin-left:0}}
-@media(max-width:640px){.wrap.nav{grid-template-columns:auto minmax(0,1fr);align-items:center;padding:4px 8px 5px 56px;gap:4px 6px;overflow:visible}.music-mount{left:6px;top:6px;width:43px;border-radius:6px}.music-head{height:12px;padding:1px 3px}.music-head a{font-size:0}.music-head a:before{content:"YT";font-size:7px}.music-close{width:10px;height:10px;font-size:7px}.music-frame{height:21px}.music-frame iframe{height:21px;min-height:0}.music-tools,.music-actions{display:none}.brand{min-width:0}.brand-top{gap:0}.brand b{display:none}.smokee-logo{width:64px}.site-search{grid-column:auto;height:31px;padding:0 8px}.search-icon{width:14px;height:14px}.site-search input{height:29px;font-size:12px}.navlinks{grid-column:1/-1;margin:0 -8px 0 -56px;padding:3px 8px 0;border-top:0;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{min-height:30px;padding:6px 9px;font-size:12px;line-height:1.12}.hero-actions .btn{min-height:44px;padding:9px 10px;font-size:13px;line-height:1.18}.shop-metrics{grid-template-columns:1fr}.shop-metrics .metric{min-height:88px;grid-template-columns:1fr auto;align-items:center}.shop-metrics .metric strong{font-size:30px}.liquid-subfilters{gap:6px}.liquid-subfilters button{padding:7px 8px;font-size:11px}}
-@media(max-width:380px){.wrap.nav{padding-left:52px;gap:4px}.music-mount{left:6px;width:40px}.music-frame{height:20px}.smokee-logo{width:58px}.navlinks{margin-left:-52px}.navbtn{padding:6px 8px;font-size:11px}.music-head a{font-size:0}.music-head a:before{content:"YT";font-size:7px}}
+@media(max-width:900px){.nav{grid-template-columns:1fr;align-items:stretch;padding-left:112px}.music-mount{left:10px;top:7px;width:86px;--yt-scale:.36}.music-frame{height:45px}.brand,.site-search,.head-tools,.navlinks{grid-column:auto}.site-search,.head-tools,.navlinks{grid-column:1/-1}.navlinks{width:auto;margin-left:0}}
+@media(max-width:640px){.wrap.nav{grid-template-columns:auto minmax(0,1fr);align-items:center;padding:4px 8px 5px 62px;gap:4px 6px;overflow:visible}.music-mount{left:6px;top:6px;width:50px;--yt-scale:.21;border-radius:6px}.music-head{height:12px;padding:1px 3px}.music-head a{font-size:0}.music-head a:before{content:"YT";font-size:7px}.music-close{width:10px;height:10px;font-size:7px}.music-frame{height:28px}.music-hit:after{width:15px;height:15px}.music-hit:before{border-left-width:6px;border-top-width:4px;border-bottom-width:4px}.music-tools,.music-actions{display:none}.brand{min-width:0}.brand-top{gap:0}.brand b{display:none}.smokee-logo{width:64px}.site-search{grid-column:auto;height:31px;padding:0 8px}.search-icon{width:14px;height:14px}.site-search input{height:29px;font-size:12px}.navlinks{grid-column:1/-1;margin:0 -8px 0 -62px;padding:3px 8px 0;border-top:0;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{min-height:30px;padding:6px 9px;font-size:12px;line-height:1.12}.hero-actions .btn{min-height:44px;padding:9px 10px;font-size:13px;line-height:1.18}.shop-metrics{grid-template-columns:1fr}.shop-metrics .metric{min-height:88px;grid-template-columns:1fr auto;align-items:center}.shop-metrics .metric strong{font-size:30px}.liquid-subfilters{gap:6px}.liquid-subfilters button{padding:7px 8px;font-size:11px}}
+@media(max-width:640px){.age-gate{padding:12px}.age-card{padding:20px 16px;border-radius:15px}.age-logo{width:150px;margin-bottom:14px}.age-chip{height:38px;min-width:66px;font-size:18px}.age-card h2{font-size:30px}.age-card p{font-size:14px;line-height:1.5}.age-actions{grid-template-columns:1fr}.age-actions button,.age-actions a{min-height:46px}}
+@media(max-width:380px){.wrap.nav{padding-left:58px;gap:4px}.music-mount{left:6px;width:47px;--yt-scale:.195}.music-frame{height:26px}.smokee-logo{width:58px}.navlinks{margin-left:-58px}.navbtn{padding:6px 8px;font-size:11px}.music-head a{font-size:0}.music-head a:before{content:"YT";font-size:7px}}
 </style>
 </head>
-<body>
+<body class="age-gated">
+<div class="age-gate" id="ageGate" role="dialog" aria-modal="true" aria-labelledby="ageGateTitle" aria-describedby="ageGateText">
+  <section class="age-card">
+    <img class="age-logo" src="assets/smokee-logo-official.png" alt="Smokee">
+    <span class="age-chip">18+</span>
+    <h2 id="ageGateTitle">Acces exclusiv persoanelor majore</h2>
+    <p id="ageGateText">Acest site contine informatii despre tigari electronice, atomizoare RTA, lichide si produse destinate exclusiv persoanelor care au implinit varsta de 18 ani.</p>
+    <p class="age-note">Produsele care contin nicotina pot crea dependenta si nu sunt recomandate minorilor, nefumatorilor, femeilor insarcinate sau care alapteaza.</p>
+    <p>Prin continuarea navigarii confirmati ca aveti cel putin 18 ani si accesati continutul in scop informativ si orientativ.</p>
+    <div class="age-actions">
+      <button class="age-accept" id="ageAccept" type="button">Confirm ca am 18 ani</button>
+      <a class="age-exit" id="ageExit" href="https://www.google.com/" rel="noreferrer">Nu am 18 ani</a>
+    </div>
+    <small class="age-legal">Daca nu ati implinit 18 ani, parasiti aceasta pagina. Continutul nu reprezinta recomandare medicala si nu incurajeaza utilizarea produselor cu nicotina.</small>
+  </section>
+</div>
 <header>
   <div class="wrap nav">
     <div class="music-mount" id="musicMount" aria-hidden="false">
@@ -2336,22 +2370,42 @@ function openAtomDetail(index){var a=atomizers[parseInt(index,10)];if(!a)return;
 function closeAtomDetail(){var overlay=$('atomDetail');if(!overlay)return;overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
 function initDetail(){document.addEventListener('click',function(e){var b=e.target.closest('[data-detail-index]');if(b){openAtomDetail(b.dataset.detailIndex);return}if(e.target.matches('.close-detail')||e.target.id==='atomDetail')closeAtomDetail()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAtomDetail()})}
 function initVisitCounter(){var img=$('visitCounter');if(!img)return;var box=img.closest('.visit-counter');img.onerror=function(){if(box)box.style.display='none'};img.onload=function(){if(box)box.style.display='inline-flex'};img.src=img.dataset.src}
+function initAgeGate(){
+  var gate=$('ageGate');
+  var accept=$('ageAccept');
+  if(!gate)return;
+  var key='ghidRtaAgeConfirmed';
+  function stored(){
+    try{return localStorage.getItem(key)==='yes'}catch(e){return false}
+  }
+  function unlock(){
+    gate.hidden=true;
+    document.body.classList.remove('age-gated');
+    try{localStorage.setItem(key,'yes')}catch(e){}
+  }
+  if(stored()){unlock();return}
+  gate.hidden=false;
+  document.body.classList.add('age-gated');
+  if(accept)accept.addEventListener('click',unlock);
+  setTimeout(function(){if(accept)accept.focus()},80);
+}
 var MUSIC_VIDEO_ID='shBOxW0bEJo';
+var MUSIC_WATCH_URL='https://www.youtube.com/watch?v='+MUSIC_VIDEO_ID+'&list=RD'+MUSIC_VIDEO_ID+'&start_radio=1';
 var musicUserStarted=false;
 var musicPlaying=false;
 function musicSrc(play){
   var params=[
     'autoplay='+(play?'1':'0'),
+    'mute=1',
     'loop=1',
     'playlist='+MUSIC_VIDEO_ID,
     'controls=1',
     'playsinline=1',
     'enablejsapi=1',
-    'mute=0',
     'rel=0',
-    'origin='+encodeURIComponent(location.origin)
+    'modestbranding=1'
   ];
-  return 'https://www.youtube.com/embed/'+MUSIC_VIDEO_ID+'?'+params.join('&');
+  return 'https://www.youtube-nocookie.com/embed/'+MUSIC_VIDEO_ID+'?'+params.join('&');
 }
 function setMusicButton(active,label){
   musicPlaying=!!active;
@@ -2364,7 +2418,7 @@ function setMusicButton(active,label){
 function mountMusic(play){
   var frame=$('musicFrame');
   if(!frame)return;
-  frame.innerHTML=play?'<iframe title="Muzica fundal YouTube" allow="autoplay; encrypted-media" referrerpolicy="strict-origin-when-cross-origin" src="'+esc(musicSrc(true))+'"></iframe>':'';
+  frame.innerHTML=play?'<iframe title="Muzica fundal YouTube" allow="autoplay; encrypted-media; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" src="'+esc(musicSrc(true))+'"></iframe><a class="music-hit" target="_blank" rel="noreferrer" href="'+esc(MUSIC_WATCH_URL)+'">Deschide muzica pe YouTube</a>':'';
 }
 function showMusicPanel(open){
   var mount=$('musicMount');
@@ -2704,7 +2758,7 @@ function initLiquidCalculator(){
   document.querySelectorAll('[data-mix-ratio]').forEach(function(btn){btn.addEventListener('click',function(){if($('mixTargetVg'))$('mixTargetVg').value=btn.dataset.mixRatio;calcLiquidRecipe()})});
   calcLiquidRecipe();
 }
-function init(){initVisitCounter();initMusic();initNav();initGlobalSearch();initDetail();initLiquidCalculator();initLiquidCatalog();initConsumables();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();renderSources();applyRoute(false)}
+function init(){initAgeGate();initVisitCounter();initMusic();initNav();initGlobalSearch();initDetail();initLiquidCalculator();initLiquidCatalog();initConsumables();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();renderSources();applyRoute(false)}
 
 function renderMetrics(){var src=atomizers.reduce(function(n,a){return n+getSources(a).length},0);$('metricsBox').innerHTML = [
   ['Atomizoare', atomizers.length, 'modele analizate', 'atomizers'],
