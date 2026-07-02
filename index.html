@@ -185,6 +185,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .fit-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .fit-item{border:1px solid #e2e2e2;background:#fff;border-radius:var(--radius);padding:9px;min-width:0}
 .fit-item b{display:block;font-size:12px;text-transform:uppercase;color:#a94700;letter-spacing:.06em;margin-bottom:3px}
+.fit-item b,.fit-item span{overflow-wrap:anywhere}
 .fit-item span{display:block;font-size:13px;color:#333;line-height:1.35}
 .source-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto}
 .mini-link{border:1px solid #ff7a1a;background:#fff4e8;border-radius:999px;padding:6px 10px;color:#b74c00;font-size:12px;font-weight:800;text-align:center;white-space:normal;overflow-wrap:anywhere}
@@ -407,9 +408,138 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .liquid-subfilters button{border:1px solid #d9d9d9;background:#fff;color:#222;border-radius:999px;padding:7px 10px;font-size:12px;font-weight:900;line-height:1.1}
 .liquid-subfilters button:hover,.liquid-subfilters button.active{border-color:#ff7a1a;background:#fff1e3;color:#111;box-shadow:0 6px 14px rgba(255,122,26,.13)}
 .liquid-subnote{margin:-2px 0 10px;color:#666;font-size:13px}
+
+/* Luxury UI layer */
+:root{
+  --lux-ink:#080808;
+  --lux-ink2:#161616;
+  --lux-line:rgba(10,10,10,.12);
+  --lux-warm:#ff7a1a;
+  --lux-gold:#ffbc3b;
+  --lux-cyan:#37bfe8;
+  --lux-mint:#55d17a;
+  --lux-rose:#ff8bd5;
+  --lux-paper:#ffffff;
+  --lux-veil:#f6f3ee;
+  --lux-shadow:0 18px 44px rgba(0,0,0,.14);
+}
+body{background:linear-gradient(180deg,#f8f8f8 0,#fff 280px);letter-spacing:0}
+main{background:linear-gradient(180deg,#f7f7f7 0,#fff 330px)}
+header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
+.site-search{border-radius:6px;border-color:#eeeeee;box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.search-panel{border-radius:7px;box-shadow:0 20px 50px rgba(0,0,0,.28)}
+.shop-hero,.tc-hero,.mix-hero,.law-hero,.consumables-hero{border-radius:7px;box-shadow:0 22px 60px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.04) inset}
+.shop-hero{position:relative;min-height:410px;background:linear-gradient(90deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.72) 42%,rgba(0,0,0,.18) 74%),url("assets/rta-hero-background.png") center/cover no-repeat}
+.shop-hero:after,.tc-hero:after,.mix-hero:after,.law-hero:after,.consumables-hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--lux-warm),var(--lux-cyan),transparent);opacity:.9}
+.shop-hero-content{position:relative;z-index:1;max-width:650px}
+.shop-hero h1,.tc-hero h2,.mix-hero h2,.law-hero h2,.consumables-hero h2{text-shadow:0 6px 28px rgba(0,0,0,.42)}
+.kicker{color:#c65300}
+.shop-hero .kicker,.tc-hero .kicker,.mix-hero .kicker,.law-hero .kicker,.consumables-hero .kicker{color:#ffb66f}
+.btn,.navbtn,.problem-btn,.rolebtn,.tag-choice,.mini-link,.calc-preset,.liquid-subfilters button{transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease,color .16s ease}
+.btn:hover,.mini-link:hover,.problem-btn:hover,.rolebtn:hover,.tag-choice:hover,.liquid-subfilters button:hover{transform:translateY(-1px);text-decoration:none}
+.btn{border-radius:7px;box-shadow:0 14px 28px rgba(255,122,26,.20),0 1px 0 rgba(255,255,255,.34) inset}
+.btn.secondary,.btn.ghost{box-shadow:0 12px 24px rgba(0,0,0,.16)}
+.navbtn,.btn,.mini-link,.problem-btn,.rolebtn,.tag-choice{box-shadow:0 9px 18px rgba(0,0,0,.18),0 1px 0 rgba(255,255,255,.22) inset}
+.navbtn[data-tab]{box-shadow:0 10px 22px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.10) inset}
+.navbtn[data-tab]:hover,.navbtn[data-tab].active,.btn:hover,.mini-link:hover{box-shadow:0 14px 30px rgba(0,0,0,.26),0 0 0 1px rgba(255,255,255,.12) inset,0 1px 0 rgba(255,255,255,.38) inset}
+.btn:active,.navbtn:active,.mini-link:active{transform:translateY(0);box-shadow:0 5px 14px rgba(0,0,0,.22),0 1px 0 rgba(255,255,255,.16) inset}
+.card,.detail-block,.consumable-zone,.source-line,.fit-item,.wire-option,.liquid-match,.wire-match,.calc-result,.ratio-card,.law-time,.mix-step,.component-model{border-radius:7px}
+.card{border-color:#e5e0d8;box-shadow:0 12px 28px rgba(0,0,0,.08),0 1px 0 rgba(255,255,255,.88) inset;background:linear-gradient(180deg,#fff,#fffdfb)}
+.card:hover{border-color:#d7c7b5;box-shadow:0 16px 38px rgba(0,0,0,.11),0 1px 0 rgba(255,255,255,.9) inset}
+.card,.detail-panel,.search-panel,.consumable-zone,.detail-block{box-shadow:0 18px 42px rgba(0,0,0,.12),0 1px 0 rgba(255,255,255,.88) inset,0 -1px 0 rgba(0,0,0,.04) inset}
+.detail-panel{box-shadow:0 28px 80px rgba(0,0,0,.38),0 1px 0 rgba(255,255,255,.12) inset}
+.search-panel{box-shadow:0 24px 62px rgba(0,0,0,.30),0 1px 0 rgba(255,255,255,.96) inset}
+.metric-btn{position:relative;overflow:hidden}
+.metric-btn:before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--lux-warm),var(--lux-cyan));opacity:.88}
+.metric strong{font-size:34px}
+.notice{border-left-color:var(--lux-warm);background:linear-gradient(90deg,#fff3e6,#fffaf3);box-shadow:0 10px 24px rgba(255,122,26,.10)}
+.workflow .step{position:relative;overflow:hidden}
+.workflow .step:before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--lux-warm),var(--lux-gold),var(--lux-cyan))}
+.step .num,.guide-step b,.step-badge{box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.guide-card{border-color:#d7c7b5;background:linear-gradient(180deg,#fff,#fff9f1)}
+.guided-step{background:#fff;border-color:#eadfce}
+.result-card,.atom-card,.profile-card,.wire-card,.source-card{border-color:#e4ded5}
+.result-card:before,.atom-card:before,.profile-card:before,.wire-card:before,.source-card:before{height:4px;background:linear-gradient(90deg,var(--lux-warm),var(--lux-gold),var(--lux-cyan),var(--lux-rose))}
+.result-summary{background:linear-gradient(135deg,#111 0,#1b130d 46%,#0b2630 100%);color:#fff;border-color:#2b2b2b;box-shadow:0 22px 50px rgba(0,0,0,.22)}
+.result-summary h3,.result-summary .why,.result-summary .fit-item b,.result-summary .fit-item span{color:#fff}
+.result-summary .fit-item{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.16)}
+.result-summary .chip{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22);color:#fff}
+.luxe-summary{position:relative;overflow:hidden}
+.luxe-summary:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--lux-gold),var(--lux-cyan),transparent)}
+.luxe-result{background:linear-gradient(180deg,#fff,#fffaf5);border-color:#e1d2bf}
+.luxe-result .atom-media{box-shadow:0 14px 28px rgba(0,0,0,.12)}
+.result-headline{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.result-rank{display:inline-flex;align-items:center;justify-content:center;min-width:34px;height:34px;border-radius:50%;background:#111;color:#ffbc3b;font-weight:950;border:1px solid rgba(255,188,59,.38);box-shadow:0 8px 18px rgba(0,0,0,.18)}
+.triad-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.triad-tile{border:1px solid #e5ded3;background:#fff;border-radius:7px;padding:10px;min-width:0}
+.triad-tile b{display:block;color:#a94700;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px}
+.triad-tile span{display:block;color:#333;font-size:13px;line-height:1.35}
+.wire-options{grid-template-columns:repeat(3,minmax(0,1fr))}
+.wire-option{background:linear-gradient(180deg,#fff,#fbfbfb)}
+.atom-media{border-color:#d8c8b5;box-shadow:0 10px 22px rgba(0,0,0,.10)}
+.atom-media:after{content:"";position:absolute;inset:auto 0 0 0;height:34%;background:linear-gradient(180deg,transparent,rgba(0,0,0,.38));pointer-events:none}
+.media-badge{z-index:2}
+.atom-card .fit-strip,.result-card .fit-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
+.source-actions .mini-link{min-height:32px}
+.page-summary{align-items:stretch}
+.page-premium-hero{border:1px solid #111;background:linear-gradient(120deg,#0b0b0b,#1d130b 46%,#0a2932);color:#fff;border-radius:7px;padding:18px;margin-bottom:14px;box-shadow:var(--lux-shadow)}
+.page-premium-hero h3{color:#fff;margin-bottom:6px}
+.page-premium-hero p{color:#f2f2f2;margin:0}
+.detail-block h3,.consumable-zone-head h3,.panel-title h2{letter-spacing:0}
+.trust-row .chip,.chips .chip{backdrop-filter:saturate(1.1)}
+.source-line{box-shadow:0 8px 18px rgba(0,0,0,.05)}
+.source-line:hover{box-shadow:0 12px 26px rgba(255,122,26,.12)}
+.consumable-item:hover,.category-link:hover{transform:translateY(-1px)}
+.consumable-item,.category-link{transition:.16s ease}
+.result-headline h3{margin:4px 0 0}
+.result-card h3,.atom-card h3,.profile-card h3,.wire-card h3,.source-card h3{line-height:1.16}
+.luxe-result .score{color:#9d4100;text-transform:uppercase;letter-spacing:.06em}
+.luxe-result .trust-row{margin-top:-2px}
+.detail-build,.wire-match,.liquid-match,.wire-option{box-shadow:0 8px 18px rgba(0,0,0,.04),0 1px 0 rgba(255,255,255,.9) inset}
+.detail-build:hover,.wire-match:hover,.liquid-match:hover,.wire-option:hover{border-color:#d7c7b5;background:#fffdfa}
+.category-panel{border-radius:7px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.12)}
+.category-panel h2{background:linear-gradient(180deg,#d20f99,#7a3656 58%,#34222a)}
+.category-link{position:relative}
+.category-link:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,#dedede,transparent)}
+.shop-metrics .metric{min-height:96px}
+.trust-row .chip{font-weight:900}
+.stock-pill,.consumable-status{box-shadow:0 4px 10px rgba(0,0,0,.05),0 1px 0 rgba(255,255,255,.8) inset}
+.card,.detail-block,.consumable-zone,.source-line,.category-link,.wire-option,.liquid-match,.wire-match,.detail-build,.calc-result,.ratio-card,.law-time,.mix-step,.component-model{transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease}
+.luxe-summary,.page-premium-hero{box-shadow:0 28px 72px rgba(0,0,0,.26),0 1px 0 rgba(255,255,255,.10) inset}
+.luxe-result,.atom-card,.profile-card,.wire-card,.source-card{box-shadow:0 18px 44px rgba(0,0,0,.10),0 1px 0 rgba(255,255,255,.90) inset,0 -1px 0 rgba(0,0,0,.04) inset}
+.triad-tile,.wire-option,.detail-build,.wire-match,.liquid-match,.calc-result,.ratio-card{border-color:#e8ddcf;box-shadow:0 10px 22px rgba(0,0,0,.055),0 1px 0 rgba(255,255,255,.96) inset}
+.result-rank,.step .num,.guide-step b,.step-badge,.mix-pill,.calc-step-line b{background:radial-gradient(circle at 32% 18%,#ffd98a 0,#ffbc3b 34%,#151515 36%,#080808 100%);color:#fff;border:1px solid rgba(255,188,59,.46);text-shadow:0 1px 5px rgba(0,0,0,.34)}
+.detail-overlay.active{backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.detail-panel,.search-panel{background:linear-gradient(180deg,#fff,#fffdf9)}
+.detail-head{background:linear-gradient(180deg,#111,#181818)}
+.music-mount{box-shadow:0 12px 28px rgba(0,0,0,.34),0 1px 0 rgba(255,255,255,.14) inset}
+@media(min-width:901px){
+  .atom-card,.result-card,.profile-card,.wire-card,.source-card{min-height:100%}
+  .result{gap:16px}
+  .shop-metrics{gap:12px}
+  .card:hover,.consumable-zone:hover,.detail-block:hover{transform:translateY(-2px)}
+  .luxe-result:hover,.atom-card:hover,.profile-card:hover,.wire-card:hover,.source-card:hover{box-shadow:0 24px 58px rgba(0,0,0,.13),0 1px 0 rgba(255,255,255,.94) inset}
+}
+@media(max-width:900px){
+  .wire-options,.triad-strip{grid-template-columns:1fr}
+  .page-premium-hero{padding:14px}
+}
+@media(max-width:640px){
+  body{background:#fff}
+  .shop-hero{min-height:0}
+  .card:hover{transform:none}
+  .metric strong{font-size:30px}
+  .result-card,.atom-card,.profile-card,.wire-card,.source-card{gap:8px}
+  .triad-tile{padding:9px}
+  .result-headline{gap:8px}
+  .result-rank{min-width:30px;height:30px}
+  .wire-options{gap:7px}
+  .page-premium-hero{margin-bottom:10px}
+}
 @media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid,.mix-grid,.calc-layout,.mix-workflow,.consumables-hero,.consumable-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid,.mix-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ratio-grid{grid-template-columns:1fr}.consumables-hero{padding:20px}}
 @media(max-width:900px){.guide-card{position:static}.guided-flow,.fit-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:640px){header{position:static}main{padding:10px 0 32px;background:#fff}.wrap{padding:0 10px}.wrap.nav{padding:8px 10px 9px}.nav{gap:7px}.brand{min-width:0}.brand-top{flex-wrap:nowrap;gap:7px;min-width:0}.smokee-logo{width:92px;flex:0 0 auto}.brand b{font-size:12px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 128px)}.brand span{display:none}.head-tools{display:none}.site-search{height:38px;padding:0 10px}.search-icon{width:16px;height:16px}.site-search input{height:36px;font-size:13px}.search-panel{top:calc(100% + 6px);padding:8px}.search-modes{grid-template-columns:repeat(2,minmax(0,1fr))}.navlinks{display:flex;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;margin:0 -10px;padding:7px 10px 2px;border-top:1px solid #222;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{flex:0 0 auto;white-space:nowrap;min-height:34px;padding:7px 9px;font-size:12px;line-height:1.12}.shop-layout{gap:10px;margin-bottom:14px}.category-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}.category-panel h2{padding:12px 10px;font-size:15px}.shop-hero{min-height:0;background-position:64% center}.shop-hero-content{padding:16px}.shop-hero h1{font-size:27px;line-height:1.06;margin-bottom:10px}.kicker{font-size:11px;margin-bottom:6px}.lead{font-size:15px;line-height:1.38}.shop-hero .lead{margin-bottom:0}.hero-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:15px}.hero-actions .btn{width:auto;min-height:39px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:13px;line-height:1.16;padding:8px 9px}.page-actions .btn{width:100%;text-align:center}.shop-metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.shop-metrics .metric{display:grid;grid-template-columns:1fr;align-content:space-between;justify-content:stretch;align-items:start;gap:10px;min-height:118px;padding:12px;overflow:hidden}.shop-metrics .metric h3{font-size:20px;line-height:1.12;margin-bottom:6px;overflow-wrap:anywhere}.shop-metrics .metric strong{justify-self:end;max-width:100%;font-size:clamp(26px,8.4vw,34px);line-height:.95}.shop-metrics .metric span{display:block;font-size:12px;line-height:1.35;overflow-wrap:anywhere}.card{padding:12px}.toolbar{width:100%;display:grid;grid-template-columns:1fr}.toolbar>*{flex:auto;width:100%}.guided-flow{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.guide-step{padding:9px;align-items:flex-start}.guide-step b,.step-badge{width:24px;height:24px;font-size:12px}.guided-step{padding:9px}.panel-title{gap:8px}.problem-grid,.role-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.problem-btn,.rolebtn,.tag-choice{min-height:38px;padding:8px 7px;font-size:13px;line-height:1.2}.tagrow,.chips{gap:6px}.chip{font-size:11px;line-height:1.2;border-radius:12px}.source-actions{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}.mini-link{display:flex;align-items:center;justify-content:center;min-height:36px;padding:7px 8px;line-height:1.2}.source-actions .chip{justify-content:center}.metric{align-items:center}.metric strong{font-size:23px}.metric span{font-size:12px}.atom-media{aspect-ratio:4/3}.fit-strip,.calc-fields,.calc-result-grid{grid-template-columns:1fr}.calc-examples{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-overlay{padding:8px;align-items:stretch}.detail-panel{max-height:calc(100svh - 16px);border-radius:6px}.detail-head{padding:12px;align-items:center}.detail-head h2{font-size:20px;line-height:1.15}.detail-body{padding:12px}.detail-block{padding:10px}.page-head{gap:10px}.page-head h2{font-size:24px;line-height:1.15}.page-actions{display:grid;grid-template-columns:1fr;width:100%}.category-link{min-height:48px;padding:8px 9px;font-size:13px;gap:9px}.wire-option,.detail-build,.liquid-match,.wire-match{font-size:12px}.source-line{padding:8px}.consumables-hero{padding:16px;background-position:center}.consumables-contact{display:grid;grid-template-columns:auto 1fr}.consumable-zone{padding:12px}.consumable-item{grid-template-columns:50px minmax(0,1fr);padding:7px}.consumable-thumb{width:50px}.footer{padding-bottom:22px}}
+@media(max-width:640px){.atom-card .fit-strip,.result-card .fit-strip{grid-template-columns:1fr}.fit-item b,.fit-item span{overflow-wrap:anywhere}.card:hover,.consumable-zone:hover,.detail-block:hover{transform:none}}
 @media(max-width:380px){.wrap{padding:0 9px}.wrap.nav{padding:7px 9px 8px}.smokee-logo{width:84px}.brand b{font-size:11px;max-width:calc(100vw - 116px)}.navlinks{margin:0 -9px;padding-left:9px;padding-right:9px}.navbtn{font-size:11px;padding:7px 8px}.problem-grid,.role-tabs,.category-list,.calc-examples{grid-template-columns:1fr}.source-actions{grid-template-columns:1fr}.shop-hero h1{font-size:25px}.shop-hero-content{padding:14px}.btn{padding:8px}.card{padding:11px}.cat-mark{width:24px;height:24px}.category-link{font-size:14px}}
 @media(max-width:340px){.hero-actions{grid-template-columns:1fr}.shop-hero h1{font-size:23px}.lead{font-size:14px}}
 @media(max-width:900px){.nav{grid-template-columns:1fr;align-items:stretch;padding-left:112px}.music-mount{left:10px;top:7px;width:86px}.brand,.site-search,.head-tools,.navlinks{grid-column:auto}.site-search,.head-tools,.navlinks{grid-column:1/-1}.navlinks{width:auto;margin-left:0}}
@@ -2006,7 +2136,7 @@ function atomActionsHtml(a){var r=primaryReview(a);var b=primaryBuild(a);var rq=
 function atomDetailHtml(a){var air=airflowInfo(a);var roles=inferRoles(a);var builds=Array.isArray(a&&a.builds)?a.builds:[];var sources=getSources(a);var status=first(a,['catalogStatus','confidence'])||'profil disponibil';return '<div class="detail-grid"><div class="detail-block">'+atomMediaHtml(a)+verificationChipsHtml(a)+'<div class="chips"><span class="chip cold">Airflow: '+esc(air.label)+'</span><span class="chip neutral">'+esc(cleanVisibleText(status))+'</span>'+roles.map(function(id){var r=ROLES.find(function(x){return x.id===id});return '<span class="chip warn">'+esc(r?r.short:id)+'</span>'}).join('')+'</div><p class="dna">'+esc(publicAtomText(getDna(a)||'Camera, deck si airflow pentru profil MTL tutunos.'))+'</p><p class="why">'+esc(publicAtomText(getWhy(a)||'Potrivirea este calculata din profilul lichidului, arhitectura atomizorului si sarmele recomandate.'))+'</p></div><div class="detail-block"><h3>Builduri de pornire</h3><div class="detail-list">'+(builds.length?builds.map(function(b){return '<div class="detail-build"><b>'+esc(cleanVisibleText((b.type?b.type+' - ':'')+(b.wire||'')))+'</b><small>'+esc(cleanVisibleText(b.build||'Reglat dupa lichid, airflow si camera.'))+'</small></div>'}).join(''):'<p class="muted small">Buildurile se calibreaza dupa lichid, camera si airflow.</p>')+'</div></div><div class="detail-block detail-wide"><h3>Surse si verificare</h3><div class="review-list">'+(sources.length?sources.map(function(s){return sourceLineHtml(a,s)}).join(''):'<p class="muted small">Surse in curs de verificare.</p>')+'</div></div></div>'}
 function atomPageWireMatches(a){var roles=inferRoles(a);var out=[];function add(name,setup,why){if(out.length>=3)return;if(out.some(function(x){return x.name===name}))return;out.push({name:name,setup:setup,why:why})}if(roles.indexOf('clarity')>=0){add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si separare pentru Virginia, Oriental si profile luminoase');add('K1 29 GA','2.0-2.5 mm / 6-7 spire','contur sec si tutun mai direct');add('SS316L Clapton fin','2.0 mm / 5-6 spire','textura usoara cand lichidul cere volum fara dulceata grea')}if(roles.indexOf('body')>=0){add('K1 28 GA','2.5 mm / 5-6 spire','corp, hit si substrat pentru Kentucky, Latakia, cigar sau dark NET');add('K1 Clapton fin','2.5 mm / 5 spire','textura pentru lichide foarte seci, fara masa mare');add('SS32 twisted','2.5 mm / 6-7 spire','separare cu corp, mai curat decat Clapton gros')}if(roles.indexOf('smooth')>=0){add('K1 28 GA','2.5 mm / 6 spire','corp curat si rotunjire naturala');add('Ni80 30 GA','2.5 mm / 6-7 spire','raspuns rapid si mouthfeel mai moale');add('Clapton fin 1-core','2.5 mm / 5-6 spire','textura controlata pentru pipe, Cavendish sau aromatizat sec')}if(roles.indexOf('modular')>=0){add('K1 28 GA','2.5 mm / 6 spire','baza stabila pentru compararea pinilor sau camerelor');add('SS32 twisted','2.5 mm / 6-7 spire','straturi si textura fara incalzire grea');add('NiFe30 30 GA','2.0-2.5 mm / 6-8 spire','control fin cand reglajele modifica temperatura perceputa')}if(!out.length){add('K1 28 GA','2.5 mm / 6 spire','punct de pornire echilibrat pentru tobacco si NET');add('K1 29 GA','2.0-2.5 mm / 6-7 spire','contur mai sec');add('SS316L 30 GA','2.0 mm / 6-7 spire','claritate si viteza')}return out}
 function atomLiquidMatches(a){var roles=inferRoles(a);var t=atomRoleText(a);return profiles.map(function(p){var tags=profileTags(p).slice(0,5);var ctx=liquidContext(p,'balance',tags);var score=0;ctx.roles.forEach(function(id){if(roles.indexOf(id)>=0)score+=20});profileTop(p).forEach(function(name,idx){if(norm(name)===norm(getName(a)))score+=36-idx*5});tags.forEach(function(tag){if(t.indexOf(norm(tag))>=0)score+=5});return {profile:p,score:score,ctx:ctx}}).filter(function(x){return x.score>0}).sort(function(x,y){return y.score-x.score || profileDisplayName(x.profile).localeCompare(profileDisplayName(y.profile))}).slice(0,6)}
-function renderAtomizerPage(a){var air=airflowInfo(a);var roles=inferRoles(a);var builds=Array.isArray(a&&a.builds)?a.builds:[];var liquids=atomLiquidMatches(a);var wires=atomPageWireMatches(a);var sources=getSources(a);var status=first(a,['catalogStatus','confidence'])||'profil disponibil';$('atomPageTitle').textContent=publicAtomName(a);$('atomPageSubtitle').textContent='Pagina directa pentru review, builduri, potriviri si surse.';$('atomPageContent').innerHTML='<div class="page-summary"><article class="detail-block">'+atomMediaHtml(a)+verificationChipsHtml(a)+'<div class="chips"><span class="chip cold">Airflow: '+esc(air.label)+'</span><span class="chip neutral">'+esc(cleanVisibleText(status))+'</span>'+roles.map(function(id){var r=ROLES.find(function(x){return x.id===id});return '<span class="chip warn">'+esc(r?r.short:id)+'</span>'}).join('')+'</div><p class="dna">'+esc(publicAtomText(getDna(a)||'Camera, deck si airflow pentru profil MTL tutunos.'))+'</p><p class="why">'+esc(publicAtomText(getWhy(a)||'Potrivire calculata din profilul lichidului, atomizor si sarma.'))+'</p>'+atomActionsHtml(a)+'</article><article class="detail-block"><h3>Potriviri lichide</h3><div class="page-section-grid">'+(liquids.length?liquids.map(function(item){var p=item.profile;return '<div class="liquid-match"><b>'+esc(profileDisplayName(p))+'</b><small>'+esc(liquidClassLabel(p))+'</small><small>'+esc(profileNote(p)||'Profil tutunos potrivit pentru arhitectura atomizorului.')+'</small></div>'}).join(''):'<p class="muted small">Potrivirile se stabilesc din profilul lichidului si comportamentul atomizorului.</p>')+'</div></article></div><div class="page-section-grid" style="margin-top:14px"><article class="detail-block"><h3>Sarme potrivite</h3><div class="detail-list">'+wires.map(function(w){return '<div class="wire-match"><b>'+esc(w.name)+'</b><small>'+esc(w.setup+' - '+w.why)+'</small></div>'}).join('')+'</div></article><article class="detail-block"><h3>Builduri de pornire</h3><div class="detail-list">'+(builds.length?builds.slice(0,6).map(function(b){return '<div class="detail-build"><b>'+esc(cleanVisibleText((b.type?b.type+' - ':'')+(b.wire||'')))+'</b><small>'+esc(cleanVisibleText(b.build||'Reglat dupa lichid, airflow si camera.'))+'</small></div>'}).join(''):'<p class="muted small">Buildurile se calibreaza dupa lichid, camera si airflow.</p>')+'</div></article><article class="detail-block"><h3>Surse</h3><div class="review-list">'+(sources.length?sources.slice(0,8).map(function(s){return sourceLineHtml(a,s)}).join(''):'<p class="muted small">Surse in curs de verificare.</p>')+'</div></article></div>'}
+function renderAtomizerPage(a){var air=airflowInfo(a);var roles=inferRoles(a);var builds=Array.isArray(a&&a.builds)?a.builds:[];var liquids=atomLiquidMatches(a);var wires=atomPageWireMatches(a);var sources=getSources(a);var status=first(a,['catalogStatus','confidence'])||'profil disponibil';$('atomPageTitle').textContent=publicAtomName(a);$('atomPageSubtitle').textContent='Pagina directa pentru review, builduri, potriviri si surse.';$('atomPageContent').innerHTML='<article class="page-premium-hero"><div class="result-headline"><div><span class="chip warn">Fisa model</span><h3>'+esc(publicAtomName(a))+'</h3></div><span class="result-rank">RTA</span></div><p>'+esc(compactReason(publicAtomText(getWhy(a)||getDna(a)||'Potrivire calculata din lichid, atomizor si sarma.')))+'</p><div class="chips"><span class="chip cold">Airflow: '+esc(air.label)+'</span><span class="chip neutral">'+esc(cleanVisibleText(status))+'</span><span class="chip good">'+esc(sources.length)+' surse</span></div></article><div class="page-summary"><article class="detail-block">'+atomMediaHtml(a)+verificationChipsHtml(a)+'<div class="chips"><span class="chip cold">Airflow: '+esc(air.label)+'</span><span class="chip neutral">'+esc(cleanVisibleText(status))+'</span>'+roles.map(function(id){var r=ROLES.find(function(x){return x.id===id});return '<span class="chip warn">'+esc(r?r.short:id)+'</span>'}).join('')+'</div><p class="dna">'+esc(publicAtomText(getDna(a)||'Camera, deck si airflow pentru profil MTL tutunos.'))+'</p><p class="why">'+esc(publicAtomText(getWhy(a)||'Potrivire calculata din profilul lichidului, atomizor si sarma.'))+'</p>'+atomActionsHtml(a)+'</article><article class="detail-block"><h3>Potriviri lichide</h3><div class="page-section-grid">'+(liquids.length?liquids.map(function(item){var p=item.profile;return '<div class="liquid-match"><b>'+esc(profileDisplayName(p))+'</b><small>'+esc(liquidClassLabel(p))+'</small><small>'+esc(profileNote(p)||'Profil tutunos potrivit pentru arhitectura atomizorului.')+'</small></div>'}).join(''):'<p class="muted small">Potrivirile se stabilesc din profilul lichidului si comportamentul atomizorului.</p>')+'</div></article></div><div class="page-section-grid" style="margin-top:14px"><article class="detail-block"><h3>Sarme potrivite</h3><div class="detail-list">'+wires.map(function(w){return '<div class="wire-match"><b>'+esc(w.name)+'</b><small>'+esc(w.setup+' - '+w.why)+'</small></div>'}).join('')+'</div></article><article class="detail-block"><h3>Builduri de pornire</h3><div class="detail-list">'+(builds.length?builds.slice(0,6).map(function(b){return '<div class="detail-build"><b>'+esc(cleanVisibleText((b.type?b.type+' - ':'')+(b.wire||'')))+'</b><small>'+esc(cleanVisibleText(b.build||'Reglat dupa lichid, airflow si camera.'))+'</small></div>'}).join(''):'<p class="muted small">Buildurile se calibreaza dupa lichid, camera si airflow.</p>')+'</div></article><article class="detail-block"><h3>Surse</h3><div class="review-list">'+(sources.length?sources.slice(0,8).map(function(s){return sourceLineHtml(a,s)}).join(''):'<p class="muted small">Surse in curs de verificare.</p>')+'</div></article></div>'}
 function openAtomDetail(index){var a=atomizers[parseInt(index,10)];if(!a)return;var overlay=$('atomDetail');$('detailTitle').textContent=publicAtomName(a);$('detailBody').innerHTML=atomDetailHtml(a);overlay.classList.add('active');overlay.setAttribute('aria-hidden','false')}
 function closeAtomDetail(){var overlay=$('atomDetail');if(!overlay)return;overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
 function initDetail(){document.addEventListener('click',function(e){var b=e.target.closest('[data-detail-index]');if(b){openAtomDetail(b.dataset.detailIndex);return}if(e.target.matches('.close-detail')||e.target.id==='atomDetail')closeAtomDetail()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAtomDetail()})}
@@ -2416,14 +2546,14 @@ function makeRecommendation(){
   var nuance=selectedTags.length?selectedTags.join(', '):'profil general';
   var axes=ctx.axis.length?Array.from(new Set(ctx.axis)).join(', '):'echilibru';
   var riskNotes=Array.from(new Set([].concat(ctx.avoid||[],profileAvoid(prof)||[]).filter(Boolean)));
-  var intro='<article class="card span-12 result-card result-summary"><h3>'+esc(profileDisplayName(prof))+'</h3><p class="why">Recomandarea combina experienta publica a vaperilor cu potrivirea dintre ADN-ul lichidului, arhitectura atomizorului si sarmele potrivite.</p><div class="fit-strip"><div class="fit-item"><b>Lichid</b><span>'+esc(profileDisplayName(prof))+'</span></div><div class="fit-item"><b>Intentie</b><span>'+esc(ctx.problem.label)+' - '+esc(axes)+'</span></div><div class="fit-item"><b>Build pornire</b><span>'+esc(ctx.label)+'</span></div></div><div class="chips"><span class="chip cold">Nuante: '+esc(nuance)+'</span><span class="chip">'+atomizers.length+' modele analizate</span></div>'+(riskNotes.length?'<p class="risk">Observatie: '+esc(riskNotes.join('; '))+'</p>':'')+'</article>';
+  var intro='<article class="card span-12 result-card result-summary luxe-summary"><div class="result-headline"><div><span class="chip warn">Triangulare</span><h3>'+esc(profileDisplayName(prof))+'</h3></div><span class="result-rank">MTL</span></div><p class="why">Recomandarea combina experienta publica a vaperilor cu potrivirea dintre ADN-ul lichidului, arhitectura atomizorului si sarmele potrivite.</p><div class="triad-strip"><div class="triad-tile"><b>Lichid</b><span>'+esc(profileDisplayName(prof))+'</span></div><div class="triad-tile"><b>Intentie</b><span>'+esc(ctx.problem.label)+' - '+esc(axes)+'</span></div><div class="triad-tile"><b>Build pornire</b><span>'+esc(ctx.label)+'</span></div></div><div class="chips"><span class="chip cold">Nuante: '+esc(nuance)+'</span><span class="chip">'+atomizers.length+' modele analizate</span></div>'+(riskNotes.length?'<p class="risk">Observatie: '+esc(riskNotes.join('; '))+'</p>':'')+'</article>';
   var cards=picked.map(function(item,idx){
     var a=item.a;
     var roles=inferRoles(a);
     var air=airflowInfo(a);
     var tb=tripodBuild(prof,selectedProblem,a);
     var wires=wireChoices(prof,selectedProblem,a);
-    return '<article class="card result-card">'+atomMediaHtml(a)+verificationChipsHtml(a)+'<div><div class="score">'+esc(matchLabel(idx))+'</div><h3>'+esc(publicAtomName(a))+'</h3></div><div class="chips"><span class="chip warn">'+esc(roleLabel(roles))+'</span><span class="chip cold" title="'+esc(air.detail)+'">Airflow: '+esc(air.label)+'</span><span class="chip good" title="'+esc(item.value.note)+'">'+esc(item.value.label)+'</span><span class="chip cold" title="'+esc(item.practice.note)+'">Validare: '+esc(item.practice.label)+'</span></div><p class="dna">'+esc(compactReason(publicAtomText(getDna(a) || 'Camera si airflow potrivite pentru profilul ales.')))+'</p><div class="fit-strip"><div class="fit-item"><b>Atomizor</b><span>'+esc(compactReason(publicAtomText(tb.reason)))+'</span></div><div class="fit-item"><b>Build</b><span>'+esc(tb.label)+'</span></div><div class="fit-item"><b>Alternativa</b><span>'+esc(tb.alt||'Se ajusteaza dupa lichid si airflow')+'</span></div></div><div class="wire-options">'+wires.map(function(w,i){return '<div class="wire-option"><b>Sarma '+(i+1)+': '+esc(w.name)+'</b><span>'+esc(w.setup)+' - '+esc(w.why)+'</span></div>'}).join('')+'</div>'+(tb.avoid?'<p class="risk">Observatie: '+esc(tb.avoid)+'</p>':'')+atomActionsHtml(a)+'</article>'
+    return '<article class="card result-card luxe-result">'+atomMediaHtml(a)+verificationChipsHtml(a)+'<div class="result-headline"><div><div class="score">'+esc(matchLabel(idx))+'</div><h3>'+esc(publicAtomName(a))+'</h3></div><span class="result-rank">'+esc(idx+1)+'</span></div><div class="chips"><span class="chip warn">'+esc(roleLabel(roles))+'</span><span class="chip cold" title="'+esc(air.detail)+'">Airflow: '+esc(air.label)+'</span><span class="chip good" title="'+esc(item.value.note)+'">'+esc(item.value.label)+'</span><span class="chip cold" title="'+esc(item.practice.note)+'">Validare: '+esc(item.practice.label)+'</span></div><p class="dna">'+esc(compactReason(publicAtomText(getDna(a) || 'Camera si airflow potrivite pentru profilul ales.')))+'</p><div class="triad-strip"><div class="triad-tile"><b>Atomizor</b><span>'+esc(compactReason(publicAtomText(tb.reason)))+'</span></div><div class="triad-tile"><b>Build</b><span>'+esc(tb.label)+'</span></div><div class="triad-tile"><b>Alternativa</b><span>'+esc(tb.alt||'Se ajusteaza dupa lichid si airflow')+'</span></div></div><div class="wire-options">'+wires.map(function(w,i){return '<div class="wire-option"><b>Sarma '+(i+1)+': '+esc(w.name)+'</b><span>'+esc(w.setup)+' - '+esc(w.why)+'</span></div>'}).join('')+'</div>'+(tb.avoid?'<p class="risk">Observatie: '+esc(tb.avoid)+'</p>':'')+atomActionsHtml(a)+'</article>'
   }).join('');
   $('recommendation').innerHTML=intro+cards
 }
