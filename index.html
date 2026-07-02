@@ -86,22 +86,20 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn[data-tab="liquidGuide"]{--nav-a:#ff8bd5;--nav-b:#37bfe8;--nav-dim:#23101d;--nav-border:rgba(255,139,213,.62);--nav-idle:#fff0fb;--nav-active:#111}
 .navbtn[data-tab="legislativ"]{--nav-a:#ffd166;--nav-b:#ffe89a;--nav-dim:#221708;--nav-border:rgba(255,209,102,.66);--nav-idle:#fff8df;--nav-active:#120b02}
 .navbtn[data-tab="sources"]{--nav-a:#ff4f7b;--nav-b:#ffb000;--nav-dim:#231018;--nav-border:rgba(255,79,123,.62);--nav-idle:#ffeef3;--nav-active:#111}
-.navbtn.music-nav{color:#f2fff9;border-color:rgba(36,211,163,.62);background:linear-gradient(135deg,#102018,#161018);font-weight:900}
-.navbtn.music-nav:hover,.navbtn.music-nav.playing{color:#061008;border-color:#24d3a3;background:linear-gradient(135deg,#24d3a3,#ffd166);box-shadow:0 10px 24px rgba(36,211,163,.22)}
 .navbtn.ai-nav{color:#eef5ff;border-color:rgba(93,167,255,.64);background:linear-gradient(135deg,#101827,#15121f);font-weight:900;text-decoration:none}
 .navbtn.ai-nav:hover{color:#061014;border-color:#5da7ff;background:linear-gradient(135deg,#5da7ff,#b8ee65);box-shadow:0 10px 24px rgba(93,167,255,.22);transform:translateY(-1px)}
-.music-mount{position:fixed;right:14px;bottom:14px;z-index:38;width:min(330px,calc(100vw - 28px));border:1px solid rgba(255,122,26,.55);border-radius:8px;background:#101010;color:#fff;box-shadow:0 18px 44px rgba(0,0,0,.36);overflow:hidden;transform:translateY(120%);opacity:0;pointer-events:none;transition:.18s ease}
-.music-mount.active{transform:translateY(0);opacity:1;pointer-events:auto}
-.music-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 10px;background:linear-gradient(90deg,#ff7a1a,#24d3a3);color:#080808}
-.music-head b{font-size:13px}
-.music-close{width:28px;height:28px;border:0;border-radius:50%;background:rgba(0,0,0,.16);color:#080808;font-weight:900;cursor:pointer}
+.music-mount{position:fixed;right:10px;bottom:10px;z-index:38;width:min(236px,calc(100vw - 20px));border:1px solid rgba(255,122,26,.48);border-radius:8px;background:#101010;color:#fff;box-shadow:0 14px 34px rgba(0,0,0,.30);overflow:hidden;opacity:1;pointer-events:auto;transition:.18s ease}
+.music-mount.hidden{transform:translateY(120%);opacity:0;pointer-events:none}
+.music-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 8px;background:linear-gradient(90deg,#ff7a1a,#24d3a3);color:#080808}
+.music-head a{color:#080808;text-decoration:none;font-size:12px;font-weight:950;line-height:1}
+.music-close{width:24px;height:24px;border:0;border-radius:50%;background:rgba(0,0,0,.16);color:#080808;font-weight:900;cursor:pointer;line-height:1}
 .music-frame{background:#000;aspect-ratio:16/9}
 .music-frame iframe{display:block;width:100%;height:100%;border:0}
-.music-tools{display:grid;grid-template-columns:1fr auto;gap:7px;padding:9px;background:#151515;border-top:1px solid #2a2a2a}
-.music-tools input{min-width:0;border:1px solid #3a3a3a;border-radius:999px;background:#fff;color:#111;padding:8px 10px;font:inherit;font-size:13px}
+.music-tools{display:grid;grid-template-columns:1fr auto;gap:5px;padding:7px;background:#151515;border-top:1px solid #2a2a2a}
+.music-tools input{min-width:0;border:1px solid #3a3a3a;border-radius:999px;background:#fff;color:#111;padding:7px 8px;font:inherit;font-size:12px}
 .music-tools button,.music-actions a,.music-actions button{border:1px solid #3a3a3a;border-radius:999px;background:#242424;color:#fff;padding:8px 10px;font-weight:900;font-size:12px;cursor:pointer;text-decoration:none}
 .music-tools button{background:#ff7a1a;color:#080808;border-color:#ff9f1c}
-.music-actions{display:flex;gap:7px;flex-wrap:wrap;padding:0 9px 9px;background:#151515}
+.music-actions{display:flex;gap:7px;flex-wrap:wrap;padding:0 7px 7px;background:#151515}
 .music-actions a:hover,.music-actions button:hover{text-decoration:none;border-color:#24d3a3;color:#24d3a3}
 main{padding:28px 0 54px;background:repeating-linear-gradient(90deg,#fff 0,#fff 196px,#f2f2f2 197px,#fff 198px)}
 .section{display:none;animation:fade .18s ease}
@@ -440,7 +438,6 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
       <button class="navbtn mix-nav" data-tab="liquidGuide">Cum facem lichidele vape</button>
       <button class="navbtn law-nav" data-tab="legislativ">Legislativ</button>
       <button class="navbtn review-nav" data-tab="sources">Recenzii RTA</button>
-      <button class="navbtn music-nav" id="musicToggle" type="button" aria-pressed="false">Muzica</button>
       <a class="navbtn ai-nav" href="https://chatgpt.com/" target="_blank" rel="noreferrer">ChatGPT</a>
     </nav>
   </div>
@@ -1038,9 +1035,9 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
   </section>
 </main>
 <footer class="wrap footer">Ghid informativ pentru adulti. Nu este sfat medical; sunt necesare surse, experienta proprie si reguli de siguranta pentru acumulatori si builduri.</footer>
-<div class="music-mount" id="musicMount" aria-hidden="true">
+<div class="music-mount" id="musicMount" aria-hidden="false">
   <div class="music-head">
-    <b>YouTube</b>
+    <a href="https://www.youtube.com/watch?v=shBOxW0bEJo&list=RDshBOxW0bEJo&start_radio=1" target="_blank" rel="noreferrer">YouTube</a>
     <button class="music-close" id="musicClose" type="button" aria-label="Inchide playerul">X</button>
   </div>
   <div class="music-frame" id="musicFrame"></div>
@@ -1560,9 +1557,9 @@ function musicSrc(play){
   return 'https://www.youtube.com/embed/'+MUSIC_VIDEO_ID+'?'+params.join('&');
 }
 function setMusicButton(active,label){
+  musicPlaying=!!active;
   var btn=$('musicToggle');
   if(!btn)return;
-  musicPlaying=!!active;
   btn.classList.toggle('playing',musicPlaying);
   btn.setAttribute('aria-pressed',musicPlaying?'true':'false');
   btn.textContent=label || (musicPlaying?'Muzica pornita':'Muzica');
@@ -1575,21 +1572,16 @@ function mountMusic(play){
 function showMusicPanel(open){
   var mount=$('musicMount');
   if(!mount)return;
-  mount.classList.toggle('active',!!open);
+  mount.classList.toggle('hidden',!open);
   mount.setAttribute('aria-hidden',open?'false':'true');
 }
 function initMusic(){
   var btn=$('musicToggle');
-  if(!btn)return;
   mountMusic(true);
-  setMusicButton(false,'Muzica');
-  btn.addEventListener('click',function(){
-    musicUserStarted=true;
-    mountMusic(true);
-    setMusicButton(true,'Muzica pornita');
-    showMusicPanel(true);
-  });
-  if($('musicClose'))$('musicClose').addEventListener('click',function(){showMusicPanel(false)});
+  setMusicButton(true,'Muzica pornita');
+  showMusicPanel(true);
+  if(btn)btn.addEventListener('click',function(){musicUserStarted=true;mountMusic(true);setMusicButton(true,'Muzica pornita');showMusicPanel(true)});
+  if($('musicClose'))$('musicClose').addEventListener('click',function(){musicUserStarted=false;mountMusic(false);setMusicButton(false,'Muzica');showMusicPanel(false)});
   if($('musicStop'))$('musicStop').addEventListener('click',function(){musicUserStarted=false;mountMusic(false);setMusicButton(false,'Muzica');showMusicPanel(false)});
   if($('musicSearchForm'))$('musicSearchForm').addEventListener('submit',function(e){e.preventDefault();var q=($('musicSearch')&&$('musicSearch').value.trim())||'';window.open(q?'https://www.youtube.com/results?search_query='+encodeURIComponent(q):'https://www.youtube.com/','_blank','noopener')});
 }
