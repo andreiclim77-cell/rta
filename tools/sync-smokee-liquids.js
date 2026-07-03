@@ -74,8 +74,25 @@ function jsString(value) {
   return `'${String(value || '').replace(/\\/g, '\\\\').replace(/'/g, "\\'").replace(/\r?\n/g, ' ')}'`;
 }
 
+function unjsString(value) {
+  return String(value || '').replace(/\\'/g, "'").replace(/\\\\/g, '\\');
+}
+
 function cleanUrl(url) {
   return String(url || '').replace(/[?#].*$/, '').replace(/\/?$/, '/');
+}
+
+function todayInRomania() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Bucharest',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date()).reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+  return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
 function sourceText(product) {
@@ -211,7 +228,8 @@ async function fetchGroup(group) {
 
 function itemBlock(item) {
   const stock = item.stock === true ? 'true' : (item.stock === false ? 'false' : 'null');
-  return `{title:${jsString(item.title)},url:${jsString(item.url)},image:${jsString(item.image)},tag:${jsString(item.tag)},stock:${stock}}`;
+  const addedAt = item.addedAt ? `,addedAt:${jsString(item.addedAt)}` : '';
+  return `{title:${jsString(item.title)},url:${jsString(item.url)},image:${jsString(item.image)},tag:${jsString(item.tag)},stock:${stock}${addedAt}}`;
 }
 
 function dataBlock(data) {
@@ -221,7 +239,7 @@ function dataBlock(data) {
     lines.push(data[group.id].map(item => `    ${itemBlock(item)}`).join(',\n'));
     lines.push('  ],');
   }
-  lines.push(`  generated:${jsString(new Date().toISOString().slice(0, 10))}`);
+  lines.push(`  generated:${jsString(todayInRomania())}`);
   return lines.join('\n');
 }
 
@@ -236,11 +254,42 @@ function replaceBlock(html, block) {
   return `${before}\n${block}\n  ${after}`;
 }
 
+function existingLiquidInfo(html) {
+  const start = html.indexOf(START_MARKER);
+  const end = html.indexOf(END_MARKER);
+  const info = { seen: new Set(), addedAt: new Map() };
+  if (start < 0 || end < 0 || end <= start) return info;
+
+  const block = html.slice(start, end);
+  const re = /\{[^{}]*url:'((?:\\'|[^'])*)'[^{}]*\}/g;
+  let match;
+  while ((match = re.exec(block))) {
+    const item = match[0];
+    const url = cleanUrl(unjsString(match[1]));
+    if (!url) continue;
+    info.seen.add(url);
+    const date = item.match(/addedAt:'(\d{4}-\d{2}-\d{2})'/);
+    if (date) info.addedAt.set(url, date[1]);
+  }
+  return info;
+}
+
+function stampAddedDates(items, existing, today) {
+  return items.map(item => {
+    const url = cleanUrl(item.url);
+    if (existing.addedAt.has(url)) return { ...item, addedAt: existing.addedAt.get(url) };
+    if (existing.seen.has(url)) return item;
+    return { ...item, addedAt: today };
+  });
+}
+
 async function main() {
   const html = fs.readFileSync(INDEX_PATH, 'utf8');
+  const existing = existingLiquidInfo(html);
+  const today = todayInRomania();
   const data = {};
   for (const group of GROUPS) {
-    data[group.id] = await fetchGroup(group);
+    data[group.id] = stampAddedDates(await fetchGroup(group), existing, today);
   }
   const total = GROUPS.reduce((sum, group) => sum + data[group.id].length, 0);
   if (!total) {
