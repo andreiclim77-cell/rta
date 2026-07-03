@@ -20,6 +20,19 @@ function valueAfter(flag) {
   return index >= 0 ? args[index + 1] : '';
 }
 
+function todayInRomania() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Bucharest',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date()).reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
 function decodeEntities(value) {
   return String(value || '')
     .replace(/&#x([0-9a-f]+);/gi, (_, n) => String.fromCodePoint(parseInt(n, 16)))
@@ -420,6 +433,7 @@ function entryFor(product, pageHtml) {
     `    name:${jsString(name)},`,
     `    score:${pairing.score},`,
     `    confidence:${jsString(pairing.confidence)},`,
+    `    addedAt:${jsString(todayInRomania())},`,
     `    classes:${jsString(pairing.classes)},`,
     `    dna:${jsString(pairing.dna)},`,
     `    market:'Smokee RTA original.',`,
