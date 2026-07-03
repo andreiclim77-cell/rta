@@ -242,6 +242,12 @@ img,svg,video{max-width:100%;height:auto}
 header{position:sticky;top:0;z-index:10;background:rgba(5,5,5,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,122,26,.42)}
 header:before{content:"";display:block;height:3px;background:linear-gradient(90deg,#ff7a1a,#ffb000,#37bfe8)}
 .nav{position:relative;display:grid;grid-template-columns:auto minmax(260px,1fr) auto;gap:9px 14px;align-items:center;padding:8px 0 8px 128px}
+.live-status{position:absolute;left:0;top:8px;width:116px;min-height:58px;border:1px solid rgba(255,190,84,.46);border-radius:10px;background:linear-gradient(145deg,#171717,#050505 58%,#18252b);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.55),0 18px 36px rgba(0,0,0,.34),0 1px 0 rgba(255,255,255,.16) inset,0 0 0 1px rgba(255,122,26,.10) inset;display:grid;grid-template-columns:auto 1fr;grid-template-areas:"ico time" "date date" "temp temp";gap:2px 7px;align-items:center;padding:7px 8px;overflow:hidden}
+.live-status:before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,122,26,.18),transparent 45%,rgba(55,191,232,.14));pointer-events:none}
+.live-icon{position:relative;z-index:1;grid-area:ico;width:28px;height:28px;border-radius:9px;background:linear-gradient(135deg,#ffb000,#37bfe8);display:inline-flex;align-items:center;justify-content:center;font-size:17px;box-shadow:0 10px 20px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.28) inset}
+.live-time{position:relative;z-index:1;grid-area:time;font-size:15px;font-weight:1000;line-height:1;color:#fff;text-shadow:0 2px 9px rgba(0,0,0,.55)}
+.live-date{position:relative;z-index:1;grid-area:date;font-size:10px;font-weight:900;line-height:1.1;color:#ffcf83;text-transform:uppercase;letter-spacing:.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live-weather{position:relative;z-index:1;grid-area:temp;font-size:10px;font-weight:800;line-height:1.14;color:#d9f7ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .brand{display:flex;flex-direction:column;gap:5px;min-width:230px}
 .brand-top{display:flex;align-items:center;gap:11px}
 .smokee-logo{display:block;width:118px;height:auto;object-fit:contain}
@@ -881,7 +887,7 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
 @media(max-width:340px){.hero-actions{grid-template-columns:1fr}.shop-hero h1{font-size:23px}.lead{font-size:14px}}
 @media(max-width:900px){.nav{grid-template-columns:1fr;align-items:stretch}.brand,.site-search,.head-tools,.navlinks{grid-column:auto}.site-search,.head-tools,.navlinks{grid-column:1/-1}.navlinks{width:auto;margin-left:0}}
 @media(max-width:900px){.guide-hub-grid,.guide-page-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.guide-path{grid-template-columns:1fr}}
-@media(max-width:640px){.wrap.nav{grid-template-columns:auto minmax(0,1fr);align-items:center;padding:4px 8px 5px;gap:4px 6px;overflow:visible}.brand{min-width:0}.brand-top{gap:0}.brand b{display:none}.smokee-logo{width:64px}.site-search{grid-column:auto;height:31px;padding:0 8px}.search-icon{width:14px;height:14px}.site-search input{height:29px;font-size:12px}.navlinks{grid-column:1/-1;margin:0 -8px;padding:3px 8px 0;border-top:0;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{min-height:30px;padding:6px 9px;font-size:12px;line-height:1.12}.hero-actions .btn{min-height:44px;padding:9px 10px;font-size:13px;line-height:1.18}.shop-metrics{grid-template-columns:1fr}.shop-metrics .metric{min-height:88px;grid-template-columns:1fr auto;align-items:center}.shop-metrics .metric strong{font-size:30px}.liquid-subfilters{gap:6px}.liquid-subfilters button{padding:7px 8px;font-size:11px}}
+@media(max-width:640px){.wrap.nav{grid-template-columns:auto minmax(0,1fr);align-items:center;padding:4px 8px 5px;gap:4px 6px;overflow:visible}.live-status{position:relative;left:auto;top:auto;width:auto;min-height:27px;grid-column:1/-1;display:flex;align-items:center;gap:7px;padding:4px 8px;border-radius:8px}.live-icon{width:20px;height:20px;border-radius:7px;font-size:13px;flex:0 0 auto}.live-time{font-size:13px;min-width:42px}.live-date{font-size:10px;flex:1;min-width:0}.live-weather{font-size:10px;max-width:118px}.brand{min-width:0}.brand-top{gap:0}.brand b{display:none}.smokee-logo{width:64px}.site-search{grid-column:auto;height:31px;padding:0 8px}.search-icon{width:14px;height:14px}.site-search input{height:29px;font-size:12px}.navlinks{grid-column:1/-1;margin:0 -8px;padding:3px 8px 0;border-top:0;gap:6px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.navlinks::-webkit-scrollbar{display:none}.navbtn{min-height:30px;padding:6px 9px;font-size:12px;line-height:1.12}.hero-actions .btn{min-height:44px;padding:9px 10px;font-size:13px;line-height:1.18}.shop-metrics{grid-template-columns:1fr}.shop-metrics .metric{min-height:88px;grid-template-columns:1fr auto;align-items:center}.shop-metrics .metric strong{font-size:30px}.liquid-subfilters{gap:6px}.liquid-subfilters button{padding:7px 8px;font-size:11px}}
 @media(max-width:640px){.guide-hub,.guide-page-hero{padding:10px;margin-top:10px}.guide-hub-head{display:block}.guide-hub-head h2,.guide-page-hero h2{font-size:20px}.guide-hub-head p,.guide-page-hero p{font-size:12px}.guide-link{min-height:82px;padding:10px}.guide-link b{font-size:13px}.guide-link span{font-size:11px}.guide-page-grid{grid-template-columns:1fr}.guide-card{min-height:0;padding:11px}.guide-card h3{font-size:18px}.guide-card p,.guide-card li{font-size:13px}.guide-path .card{min-height:0}}
 @media(max-width:640px){.age-gate{align-items:start;padding:8px}.age-card{max-height:calc(100svh - 16px);padding:14px;border-radius:15px}.age-logo{width:122px;margin-bottom:8px}.age-chip{height:31px;min-width:58px;font-size:16px}.age-card h2{font-size:24px;margin:10px 0 7px}.age-card p{font-size:13px;line-height:1.42;margin-bottom:8px}.age-note{padding:8px 9px;border-radius:8px}.age-actions{grid-template-columns:1fr;gap:8px;margin-top:12px}.age-actions button,.age-actions a{min-height:42px;font-size:14px}.age-legal{font-size:10.5px;margin-top:9px}}
 @media(max-width:380px){.wrap.nav{gap:4px}.smokee-logo{width:58px}.navbtn{padding:6px 8px;font-size:11px}.guide-hub-grid,.guide-page-grid{grid-template-columns:1fr}.guide-link{min-height:0}}
@@ -906,12 +912,24 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
       </div>
     </div>
     <div class="age-actions">
-      <button class="age-accept" id="ageAccept" type="button">Confirm ca am 18 ani</button>
+      <button class="age-accept" id="ageAccept" type="button" onclick="document.getElementById('ageGate').hidden=true;document.body.classList.remove('age-gated');window.__rtaAccepted=true;if(typeof window.__rtaStartApp==='function')window.__rtaStartApp();return false">Confirm ca am 18 ani</button>
       <a class="age-exit" id="ageExit" href="https://www.google.com/" rel="noreferrer">Nu am 18 ani</a>
     </div>
     <small class="age-legal">Daca nu ati implinit 18 ani, parasiti aceasta pagina. Continutul nu reprezinta recomandare medicala si nu incurajeaza utilizarea produselor cu nicotina.</small>
   </section>
 </div>
+<script>
+window.__rtaAccepted=false;
+window.__rtaStarted=false;
+function rtaEarlyAccept(){
+  var gate=document.getElementById('ageGate');
+  if(gate)gate.hidden=true;
+  document.body.classList.remove('age-gated');
+  window.__rtaAccepted=true;
+  if(typeof window.__rtaStartApp==='function')window.__rtaStartApp();
+  return false;
+}
+</script>
 <noscript>
   <div class="wrap" style="padding:16px 10px;background:#fff8f1;color:#111">
     <h1>Ghid RTA MTL - Smokee</h1>
@@ -921,6 +939,12 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
 </noscript>
 <header>
   <div class="wrap nav">
+    <div class="live-status" id="liveStatus" aria-label="Data, ora si vremea">
+      <span class="live-icon" id="liveWeatherIcon" aria-hidden="true">◐</span>
+      <span class="live-time" id="liveTime">--:--</span>
+      <span class="live-date" id="liveDate">--</span>
+      <span class="live-weather" id="liveWeather">Vreme live</span>
+    </div>
     <div class="brand">
       <div class="brand-top"><img class="smokee-logo" src="https://www.smokee.ro/wp-content/uploads/2024/11/smokee_logo.png" alt="Smokee"><b>Ghid RTA MTL - Smokee</b></div>
       <span>lichid - atomizor - sarma</span>
@@ -2771,17 +2795,28 @@ function openAtomDetail(index){var a=atomizers[parseInt(index,10)];if(!a)return;
 function closeAtomDetail(){var overlay=$('atomDetail');if(!overlay)return;overlay.classList.remove('active');overlay.setAttribute('aria-hidden','true')}
 function initDetail(){document.addEventListener('click',function(e){var b=e.target.closest('[data-detail-index]');if(b){openAtomDetail(b.dataset.detailIndex);return}if(e.target.matches('.close-detail')||e.target.id==='atomDetail')closeAtomDetail()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAtomDetail()})}
 function initVisitCounter(){var img=$('visitCounter');if(!img)return;var box=img.closest('.visit-counter');img.onerror=function(){if(box)box.style.display='none'};img.onload=function(){if(box)box.style.display='inline-flex'};img.src=img.dataset.src}
-function initAgeGate(){
+function liveWeatherIcon(code,isDay){code=Number(code);if(code===0)return isDay?'☀':'☾';if([1,2].indexOf(code)>=0)return isDay?'◐':'☾';if(code===3)return '☁';if([45,48].indexOf(code)>=0)return '≋';if((code>=51&&code<=67)||(code>=80&&code<=82))return '☂';if(code>=71&&code<=77)return '❄';if(code>=95)return '⚡';return '◐'}
+function initLiveStatus(){var timeEl=$('liveTime'),dateEl=$('liveDate'),weatherEl=$('liveWeather'),iconEl=$('liveWeatherIcon');if(!timeEl||!dateEl)return;function tick(){var now=new Date();timeEl.textContent=now.toLocaleTimeString('ro-RO',{timeZone:'Europe/Bucharest',hour:'2-digit',minute:'2-digit'});dateEl.textContent=now.toLocaleDateString('ro-RO',{timeZone:'Europe/Bucharest',weekday:'short',day:'2-digit',month:'short'})}tick();setInterval(tick,1000);if(!weatherEl||typeof fetch!=='function')return;setTimeout(function(){fetch('https://api.open-meteo.com/v1/forecast?latitude=44.4268&longitude=26.1025&current=temperature_2m,weather_code,is_day&timezone=Europe%2FBucharest',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(data){var c=data&&data.current;if(!c)return;if(iconEl)iconEl.textContent=liveWeatherIcon(c.weather_code,c.is_day);var temp=Math.round(Number(c.temperature_2m));weatherEl.textContent=(isFinite(temp)?temp+'°C':'Vreme')+' Bucuresti'}).catch(function(){weatherEl.textContent='Vreme live'})},500)}
+function initAgeGate(onAccept){
   var gate=$('ageGate');
   var accept=$('ageAccept');
-  if(!gate)return;
+  function start(){
+    if(window.__rtaStarted)return;
+    window.__rtaStarted=true;
+    setTimeout(function(){
+      if(typeof onAccept==='function')onAccept();
+      if($('globalSearch')&&$('globalSearch').value.trim())setTimeout(renderSearchPanel,180);
+    },0);
+  }
+  window.__rtaStartApp=start;
+  if(!gate){start();return}
   function unlock(){
     gate.hidden=true;
     document.body.classList.remove('age-gated');
-    if(typeof activateMusicSound==='function')activateMusicSound();
-    if(typeof applyRoute==='function')setTimeout(function(){applyRoute(false);window.scrollTo(0,0)},80);
-    if($('globalSearch')&&$('globalSearch').value.trim())setTimeout(renderSearchPanel,180);
+    window.__rtaAccepted=true;
+    start();
   }
+  if(window.__rtaAccepted){unlock();return}
   gate.hidden=false;
   document.body.classList.add('age-gated');
   if(accept)accept.addEventListener('click',unlock);
@@ -2874,7 +2909,7 @@ function routeTitle(id, atom){if(atom)return getName(atom)+' - Ghid RTA MTL - Sm
 function routeHash(route){return '#'+String(route||'home').replace(/^#/,'')}
 function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash)}applyRoute(true)}
 function goTab(id){setRoute(id)}
-function applyRoute(shouldScroll){var raw=decodeURIComponent((location.hash||'#home').replace(/^#/,''));if(raw.indexOf('atomizor/')===0){var a=atomBySlug(raw.split('/').slice(1).join('/'));if(a){renderAtomizerPage(a);activeSection('atomizerPage','atomizers');document.title=routeTitle('atomizerPage',a);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'});return}raw='atomizers'}var route=MAIN_ROUTES.indexOf(raw)>=0?raw:'home';var guideRoutes=['guides','methodology','tcGuide','liquidGuide','legislativ'];activeSection(route,guideRoutes.indexOf(route)>=0?'guides':route);document.title=routeTitle(route);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'})}
+function applyRoute(shouldScroll){var raw=decodeURIComponent((location.hash||'#home').replace(/^#/,''));if(raw.indexOf('atomizor/')===0){var a=atomBySlug(raw.split('/').slice(1).join('/'));if(a){renderAtomizerPage(a);activeSection('atomizerPage','atomizers');document.title=routeTitle('atomizerPage',a);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'});return}raw='atomizers'}var route=MAIN_ROUTES.indexOf(raw)>=0?raw:'home';ensureSectionRendered(route);var guideRoutes=['guides','methodology','tcGuide','liquidGuide','legislativ'];activeSection(route,guideRoutes.indexOf(route)>=0?'guides':route);document.title=routeTitle(route);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'})}
 function copyCurrentUrl(){var btn=$('copyAtomPage');if(!btn)return;var url=location.href;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){btn.textContent='Link copiat';setTimeout(function(){btn.textContent='Copiaza link'},1400)}).catch(function(){btn.textContent='Linkul este in bara';setTimeout(function(){btn.textContent='Copiaza link'},1400)})}else{btn.textContent='Linkul este in bara';setTimeout(function(){btn.textContent='Copiaza link'},1400)}}
 function initShareTools(){var siteUrl='https://ghid-rta.ro/';document.querySelectorAll('[data-copy-site]').forEach(function(btn){btn.addEventListener('click',function(){var card=btn.closest('.card');var status=card?card.querySelector('.copy-status'):null;var baseText=btn.textContent||'Copiaza link';function done(msg){btn.textContent='Link copiat';if(status)status.textContent=msg;setTimeout(function(){btn.textContent=baseText;if(status)status.textContent=''},1600)}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(siteUrl).then(function(){done('Link copiat pentru distribuire.')}).catch(function(){done('Linkul este in adresa paginii.')})}else{done('Linkul este: '+siteUrl)}})})}
 function initNav(){document.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.tab)})});document.querySelectorAll('[data-jump]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.jump)})});window.addEventListener('popstate',function(){applyRoute(false)});window.addEventListener('hashchange',function(){applyRoute(true)});if($('copyAtomPage'))$('copyAtomPage').addEventListener('click',copyCurrentUrl);initShareTools()}
@@ -2968,7 +3003,7 @@ function normalizeStoreProduct(p,group){var img='';if(p&&p.images&&p.images.leng
 function uniqueConsumables(list,group){var seen={};return list.filter(function(item){if(!item||!item.url||!item.title)return false;item.url=item.url.replace(/[?#].*$/,'').replace(/\/?$/,'/');if(seen[item.url])return false;seen[item.url]=1;return isConsumableProduct(item,group)}).slice(0,group==='components'?40:18)}
 function fetchConsumableGroup(group){var calls=group.terms.map(function(term){var url='https://smokee.ro/wp-json/wc/store/v1/products?search='+encodeURIComponent(term)+'&per_page=20';return fetch(url,{cache:'no-store'}).then(function(r){return r.ok?r.json():[]}).catch(function(){return []})});return Promise.all(calls).then(function(chunks){return uniqueConsumables([].concat.apply([],chunks).map(function(p){return normalizeStoreProduct(p,group.id)}),group.id)})}
 function refreshConsumables(){return Promise.all(CONSUMABLE_GROUPS.map(fetchConsumableGroup)).then(function(groups){var next={generated:todayKey()};CONSUMABLE_GROUPS.forEach(function(g,i){next[g.id]=groups[i].length?groups[i]:(SMOKEE_CONSUMABLES[g.id]||[])});consumableState=next;try{localStorage.setItem(CONSUMABLE_CACHE_KEY,JSON.stringify(next))}catch(e){}renderConsumables(next,'actualizat')}).catch(function(){renderConsumables(consumableState,'fallback')})}
-function initConsumables(){renderConsumables(consumableState,'fallback');try{var cached=JSON.parse(localStorage.getItem(CONSUMABLE_CACHE_KEY)||'null');if(cached&&cached.generated===todayKey()){consumableState=cached;renderConsumables(cached,'cache');return}}catch(e){}refreshConsumables()}
+function initConsumables(){renderConsumables(consumableState,'fallback');try{var cached=JSON.parse(localStorage.getItem(CONSUMABLE_CACHE_KEY)||'null');if(cached&&cached.generated===todayKey()){consumableState=cached;renderConsumables(cached,'cache')}}catch(e){}}
 function stockPill(item){if(item.stock===true)return '<span class="stock-pill in">in stoc</span>';if(item.stock===false)return '<span class="stock-pill out">verifica stoc</span>';return '<span class="stock-pill link">Smokee</span>'}
 function consumableCard(item){var img=item.image?'<img src="'+esc(item.image)+'" alt="'+esc(item.title)+'" loading="lazy">':'RTA';var meta=item.model?item.model+' - '+(item.tag||'componenta RTA'):(item.tag||'consumabil RTA');return '<a class="consumable-item" target="_blank" rel="noreferrer" href="'+esc(item.url)+'"><span class="consumable-thumb">'+img+'</span><span class="consumable-copy"><b>'+esc(item.title)+'</b><small>'+esc(meta)+'</small><span class="stock-row">'+stockPill(item)+'<span class="stock-pill link">deschide produs</span></span></span></a>'}
 function componentListHtml(list){var grouped={};list.forEach(function(item){var model=item.model||inferComponentModel(item.title);if(!grouped[model])grouped[model]=[];grouped[model].push(item)});var names=Object.keys(grouped).sort(function(a,b){if(a==='Componente RTA diverse')return 1;if(b==='Componente RTA diverse')return -1;return a.localeCompare(b)});return names.map(function(name){return '<div class="component-model"><h4>'+esc(name)+'</h4><div class="consumable-list">'+grouped[name].map(consumableCard).join('')+'</div></div>'}).join('')}
@@ -3087,7 +3122,7 @@ function fetchLiquidCatalogGroup(group){var calls=[];for(var i=1;i<=LIQUID_CATEG
 function liquidKnownState(){var dates={},known={};[SMOKEE_LIQUIDS,liquidCatalogState].forEach(function(data){(data?liquidCatalogItems(data):[]).forEach(function(x){if(x.item&&x.item.url){known[x.item.url]=true;if(x.item.addedAt)dates[x.item.url]=x.item.addedAt}})});return {dates:dates,known:known}}
 function stampLiquidDates(list,state,today){return (list||[]).map(function(item){var copy=Object.assign({},item);copy.addedAt=copy.addedAt||state.dates[copy.url]||(!state.known[copy.url]?today:'');return copy})}
 function refreshLiquidCatalog(){return Promise.all(LIQUID_CATALOG_GROUPS.map(fetchLiquidCatalogGroup)).then(function(groups){var next={generated:todayKey()};var state=liquidKnownState();LIQUID_CATALOG_GROUPS.forEach(function(g,i){next[g.id]=stampLiquidDates(groups[i].length?groups[i]:(SMOKEE_LIQUIDS[g.id]||[]),state,next.generated)});liquidCatalogState=next;try{localStorage.setItem(LIQUID_CATALOG_CACHE_KEY,JSON.stringify(next))}catch(e){}renderLiquidCatalog(next,'actualizat');renderSupplierShowcase(next);renderRegistry();renderMetrics()}).catch(function(){renderLiquidCatalog(liquidCatalogState,'fallback');renderSupplierShowcase(liquidCatalogState);renderRegistry()})}
-function initLiquidCatalog(){renderLiquidCatalog(liquidCatalogState,'fallback');renderSupplierShowcase(liquidCatalogState);try{var cached=JSON.parse(localStorage.getItem(LIQUID_CATALOG_CACHE_KEY)||'null');if(cached&&cached.generated===todayKey()){liquidCatalogState=cached;renderLiquidCatalog(cached,'cache');renderSupplierShowcase(cached);renderRegistry();return}}catch(e){}refreshLiquidCatalog()}
+function initLiquidCatalog(){renderLiquidCatalog(liquidCatalogState,'fallback');renderSupplierShowcase(liquidCatalogState);try{var cached=JSON.parse(localStorage.getItem(LIQUID_CATALOG_CACHE_KEY)||'null');if(cached&&cached.generated===todayKey()){liquidCatalogState=cached;renderLiquidCatalog(cached,'cache');renderSupplierShowcase(cached);renderRegistry()}}catch(e){}}
 function liquidCatalogListHtml(list){if(!list.length)return '<div class="empty">Nu sunt produse in zona aceasta.</div>';return list.map(consumableCard).join('')}
 function bindLiquidCatalogFilters(data,status){document.querySelectorAll('[data-liquid-sub]').forEach(function(btn){btn.onclick=function(){liquidCatalogFilters[btn.dataset.liquidGroup]=btn.dataset.liquidSub;liquidCatalogExpanded[btn.dataset.liquidGroup]=null;renderLiquidCatalog(data,status)}});document.querySelectorAll('[data-liquid-expand]').forEach(function(btn){btn.onclick=function(){liquidCatalogExpanded[btn.dataset.liquidExpand]=liquidCatalogFilters[btn.dataset.liquidExpand]||'all';renderLiquidCatalog(data,status)}})}
 function renderLiquidCatalog(data,status){var box=$('liquidCatalogGrid');if(!box)return;data=data||SMOKEE_LIQUIDS;var date=data.generated||'Smokee';box.innerHTML=LIQUID_CATALOG_GROUPS.map(function(g){var list=(data[g.id]||[]);var selected=liquidSelectedSubgroup(g.id,list);var filtered=selected==='all'?list:list.filter(function(item){return liquidMatchesSubgroup(item,selected)});var expanded=liquidCatalogExpanded[g.id]===selected;var visible=expanded?filtered:filtered.slice(0,18);var more=filtered.length>visible.length?'<button type="button" class="mini-link liquid-expand" data-liquid-expand="'+esc(g.id)+'">Arata toate cele '+esc(filtered.length)+' produse</button>':'';return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(visible.length)+' / '+esc(filtered.length)+' afisate</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee live':'sincronizare zilnica')+'</span><span class="chip neutral">'+esc(list.length)+' total</span></div>'+liquidFilterButtonsHtml(g.id,list,selected)+'<p class="liquid-subnote">Afisare: '+esc(g.title+' '+liquidSubgroupLabel(selected))+'</p><div class="consumable-list">'+liquidCatalogListHtml(visible)+'</div>'+more+'</article>'}).join('');bindLiquidCatalogFilters(data,status)}
@@ -3182,7 +3217,10 @@ function initLiquidCalculator(){
   document.querySelectorAll('[data-mix-ratio]').forEach(function(btn){btn.addEventListener('click',function(){if($('mixTargetVg'))$('mixTargetVg').value=btn.dataset.mixRatio;calcLiquidRecipe()})});
   calcLiquidRecipe();
 }
-function init(){initAgeGate();initVisitCounter();initNav();initGlobalSearch();initDetail();initLiquidCalculator();initLiquidCatalog();initConsumables();refreshSupplierRtaDirect();renderMetrics();renderRoleMini();initRecommender();renderAtomizers();renderProfiles();renderWires();renderRegistry();renderSources();applyRoute(false)}
+var renderedSections={};
+function ensureSectionRendered(id){if(id==='home'&&!renderedSections.home){renderMetrics();renderRoleMini();renderSupplierShowcase(liquidCatalogState);renderedSections.home=true;return}if(id==='recommender'&&!renderedSections.recommender){initRecommender();renderedSections.recommender=true;return}if(id==='atomizers'&&!renderedSections.atomizers){renderAtomizers();renderedSections.atomizers=true;return}if(id==='profiles'&&!renderedSections.profiles){renderProfiles();renderedSections.profiles=true;return}if(id==='wires'&&!renderedSections.wires){renderWires();renderedSections.wires=true;return}if(id==='liquids'&&!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true;return}if(id==='consumables'&&!renderedSections.consumables){initConsumables();renderedSections.consumables=true;return}if(id==='registry'&&!renderedSections.registry){if(!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true}renderRegistry();renderedSections.registry=true;return}if(id==='sources'&&!renderedSections.sources){renderSources();renderedSections.sources=true;return}if(id==='liquidGuide'&&!renderedSections.liquidGuide){initLiquidCalculator();renderedSections.liquidGuide=true;return}}
+function initAppContent(){initLiveStatus();initVisitCounter();initNav();initGlobalSearch();initDetail();applyRoute(false);window.scrollTo(0,0)}
+function init(){initAgeGate(initAppContent)}
 
 function renderMetrics(){var src=atomizers.reduce(function(n,a){return n+getSources(a).length},0);$('metricsBox').innerHTML = [
   ['Atomizoare', atomizers.length, 'modele analizate', 'atomizers'],

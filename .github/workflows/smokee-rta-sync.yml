@@ -2,11 +2,10 @@ name: Smokee Catalog Sync
 
 on:
   schedule:
-    # 06:00 Romania in summer time, with backup retries.
+    # GitHub cron uses UTC. The guard below runs sync only during 06:00-06:59 Romania.
     - cron: '0 3 * * *'
     - cron: '20 3 * * *'
     - cron: '40 3 * * *'
-    # 06:00 Romania in winter time, with backup retries.
     - cron: '0 4 * * *'
     - cron: '20 4 * * *'
     - cron: '40 4 * * *'
@@ -34,16 +33,38 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Keep 06:00 Romania sync window
+        id: sync-window
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Manual run accepted."
+            exit 0
+          fi
+          hour="$(TZ=Europe/Bucharest date +%H)"
+          if [ "$hour" = "06" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            echo "Smokee sync accepted for $(TZ=Europe/Bucharest date)."
+          else
+            echo "run=false" >> "$GITHUB_OUTPUT"
+            echo "Skipped outside 06:00 Romania window: $(TZ=Europe/Bucharest date)."
+          fi
+
       - name: Check Smokee RTA products
+        if: steps.sync-window.outputs.run == 'true'
         run: node tools/sync-smokee-rta.js --write
 
       - name: Check Smokee RTA consumables
+        if: steps.sync-window.outputs.run == 'true'
         run: node tools/sync-smokee-consumables.js --write
 
       - name: Check Smokee liquids
+        if: steps.sync-window.outputs.run == 'true'
         run: node tools/sync-smokee-liquids.js --write
 
       - name: Commit catalog update
+        if: steps.sync-window.outputs.run == 'true'
         run: |
           if git diff --quiet -- index.html; then
             echo "No Smokee catalog changes."

@@ -73,6 +73,19 @@ function cleanUrl(url) {
   return String(url || '').replace(/[?#].*$/, '').replace(/\/?$/, '/');
 }
 
+function todayInRomania() {
+  const parts = new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Europe/Bucharest',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).formatToParts(new Date()).reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
 const COMPONENT_MODELS = [
   ['BKS Blade RTA', /\b(bks|blade)\b/],
   ['NTSU / Netsu MTL RTA', /\b(ntsu|netsu)\b/],
@@ -221,7 +234,7 @@ function dataBlock(data) {
     lines.push(data[group.id].map(item => `    ${itemBlock(item)}`).join(',\n'));
     lines.push('  ],');
   }
-  lines.push(`  generated:${jsString(new Date().toISOString().slice(0, 10))}`);
+  lines.push(`  generated:${jsString(todayInRomania())}`);
   return lines.join('\n');
 }
 

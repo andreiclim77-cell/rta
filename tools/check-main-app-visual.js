@@ -118,6 +118,10 @@ async function checkOverflow(page) {
     }
 
     await page.goto("http://127.0.0.1:8794/#liquids", { waitUntil: "domcontentloaded" });
+    const routeAccept = page.locator("#ageAccept");
+    if (await routeAccept.isVisible().catch(() => false)) {
+      await routeAccept.click();
+    }
 
     await page.waitForSelector("#liquidCatalogGrid", { timeout: 5000 });
     await page.locator('[data-liquid-group="tutun"][data-liquid-sub="dulci"]').first().click();
