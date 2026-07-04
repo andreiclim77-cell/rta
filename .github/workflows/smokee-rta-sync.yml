@@ -3,12 +3,9 @@ name: Smokee Catalog Sync
 on:
   schedule:
     # GitHub cron uses UTC. The guard below runs sync only during 06:00-06:59 Romania.
-    - cron: '0 3 * * *'
-    - cron: '20 3 * * *'
-    - cron: '40 3 * * *'
-    - cron: '0 4 * * *'
-    - cron: '20 4 * * *'
-    - cron: '40 4 * * *'
+    # Several off-peak attempts are used because scheduled GitHub runs can be delayed or dropped.
+    - cron: '7,17,27,37,47,57 3 * * *'
+    - cron: '7,17,27,37,47,57 4 * * *'
   workflow_dispatch:
 
 permissions:
