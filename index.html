@@ -336,6 +336,20 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .age-accept{background:linear-gradient(135deg,#ff7a1a,#ffb000);color:#080808;box-shadow:0 14px 26px rgba(255,122,26,.26)}
 .age-exit{background:#101010;color:#fff}
 .age-legal{display:block;margin-top:12px;color:#aaa;font-size:12px;line-height:1.45}
+.app-prep{position:fixed;inset:0;z-index:80;display:none;place-items:center;padding:18px;background:rgba(0,0,0,.34);backdrop-filter:blur(5px);color:#fff}
+body.app-preparing .app-prep{display:grid}
+.app-prep-card{width:min(390px,100%);border:1px solid rgba(255,255,255,.18);border-radius:14px;background:linear-gradient(145deg,rgba(18,18,18,.98),rgba(5,5,5,.96));box-shadow:0 24px 70px rgba(0,0,0,.42),0 1px 0 rgba(255,255,255,.14) inset;padding:20px;text-align:left;animation:prepCardPulse 1.45s ease-in-out infinite}
+.app-prep-head{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.app-prep-spinner{position:relative;width:38px;height:38px;border-radius:50%;background:conic-gradient(from 0deg,#ff7a1a,#ffb000,#37bfe8,#ff7a1a);box-shadow:0 0 24px rgba(255,122,26,.22);animation:prepSpin .85s linear infinite;flex:0 0 auto}
+.app-prep-spinner:after{content:"";position:absolute;inset:5px;border-radius:50%;background:#0d0d0d;box-shadow:0 1px 0 rgba(255,255,255,.12) inset}
+.app-prep-card span{display:block;color:#ffb000;font-size:11px;font-weight:950;text-transform:uppercase;letter-spacing:.12em;margin-bottom:3px}
+.app-prep-card b{display:block;font-size:21px;line-height:1.15;margin-bottom:6px}
+.app-prep-card small{display:block;color:#dedede;line-height:1.45}
+.app-prep-bar{height:7px;border-radius:999px;background:rgba(255,255,255,.12);margin-top:16px;overflow:hidden}
+.app-prep-bar i{display:block;width:42%;height:100%;border-radius:inherit;background:linear-gradient(90deg,#ff7a1a,#ffb000,#37bfe8);animation:prepSweep 1.05s ease-in-out infinite}
+@keyframes prepSpin{to{transform:rotate(360deg)}}
+@keyframes prepCardPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.018)}}
+@keyframes prepSweep{0%{transform:translateX(-120%)}100%{transform:translateX(260%)}}
 main{padding:28px 0 54px;background:repeating-linear-gradient(90deg,#fff 0,#fff 196px,#f2f2f2 197px,#fff 198px)}
 .section{display:none;animation:fade .18s ease;scroll-margin-top:148px}
 .section.active{display:block}
@@ -2798,6 +2812,8 @@ function initDetail(){document.addEventListener('click',function(e){var b=e.targ
 function initVisitCounter(){var img=$('visitCounter');if(!img)return;var box=img.closest('.visit-counter');img.onerror=function(){if(box)box.style.display='none'};img.onload=function(){if(box)box.style.display='inline-flex'};img.src=img.dataset.src}
 function liveWeatherIcon(code,isDay){code=Number(code);if(code===0)return isDay?'☀':'☾';if([1,2].indexOf(code)>=0)return isDay?'◐':'☾';if(code===3)return '☁';if([45,48].indexOf(code)>=0)return '≋';if((code>=51&&code<=67)||(code>=80&&code<=82))return '☂';if(code>=71&&code<=77)return '❄';if(code>=95)return '⚡';return '◐'}
 function initLiveStatus(){var timeEl=$('liveTime'),dateEl=$('liveDate'),weatherEl=$('liveWeather'),iconEl=$('liveWeatherIcon');if(!timeEl||!dateEl)return;var visitorTz='Europe/Bucharest';try{visitorTz=Intl.DateTimeFormat().resolvedOptions().timeZone||visitorTz}catch(e){}function tick(){var now=new Date();try{timeEl.textContent=now.toLocaleTimeString('ro-RO',{timeZone:visitorTz,hour:'2-digit',minute:'2-digit'});dateEl.textContent=now.toLocaleDateString('ro-RO',{timeZone:visitorTz,weekday:'short',day:'2-digit',month:'short'})}catch(e){timeEl.textContent=now.toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'});dateEl.textContent=now.toLocaleDateString('ro-RO',{weekday:'short',day:'2-digit',month:'short'})}}tick();setInterval(tick,1000);if(!weatherEl||typeof fetch!=='function')return;function fetchWeather(lat,lon){var q='latitude='+encodeURIComponent(Number(lat).toFixed(4))+'&longitude='+encodeURIComponent(Number(lon).toFixed(4))+'&current=temperature_2m,weather_code,is_day&daily=temperature_2m_min,temperature_2m_max,precipitation_probability_max&timezone=auto';fetch('https://api.open-meteo.com/v1/forecast?'+q,{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(data){var c=data&&data.current;var d=data&&data.daily;if(!c)return;if(iconEl)iconEl.textContent=liveWeatherIcon(c.weather_code,c.is_day);var temp=Math.round(Number(c.temperature_2m));var min=d&&d.temperature_2m_min?Math.round(Number(d.temperature_2m_min[0])):NaN;var max=d&&d.temperature_2m_max?Math.round(Number(d.temperature_2m_max[0])):NaN;var rain=d&&d.precipitation_probability_max?Math.round(Number(d.precipitation_probability_max[0])):NaN;var text=isFinite(temp)?temp+'°C':'Vreme';if(isFinite(min)&&isFinite(max))text+=' | azi '+min+'-'+max+'°C';if(isFinite(rain)&&rain>=30)text+=' | ploaie '+rain+'%';weatherEl.textContent=text;weatherEl.title=(isFinite(temp)?'Acum '+temp+'°C. ':'')+(isFinite(min)&&isFinite(max)?'Azi '+min+'-'+max+'°C. ':'')+(isFinite(rain)?'Ploaie '+rain+'%.':'')}).catch(function(){weatherEl.textContent='Vreme live'})}function fallbackWeather(){fetchWeather(44.4268,26.1025)}setTimeout(function(){if(!navigator.geolocation||!window.isSecureContext){fallbackWeather();return}weatherEl.textContent='Vreme...';navigator.geolocation.getCurrentPosition(function(pos){var c=pos&&pos.coords;if(!c||!isFinite(c.latitude)||!isFinite(c.longitude)){fallbackWeather();return}fetchWeather(c.latitude,c.longitude)},fallbackWeather,{enableHighAccuracy:false,timeout:4500,maximumAge:900000})},500)}
+function prepOverlay(){var box=$('appPrep');if(box)return box;box=document.createElement('div');box.id='appPrep';box.className='app-prep';box.setAttribute('aria-live','polite');box.setAttribute('aria-hidden','true');box.innerHTML='<div class="app-prep-card"><div class="app-prep-head"><i class="app-prep-spinner" aria-hidden="true"></i><div><span>Ghid RTA MTL</span><b id="appPrepTitle">Se pregateste ghidul</b></div></div><small id="appPrepText">O clipa, se aseaza recomandarile.</small><div class="app-prep-bar"><i></i></div></div>';document.body.appendChild(box);return box}
+function setAppPreparing(on,text){var box=prepOverlay();var body=document.body;if(text&&$('appPrepText'))$('appPrepText').textContent=text;box.setAttribute('aria-hidden',on?'false':'true');body.classList.toggle('app-preparing',!!on)}
 function initAgeGate(onAccept){
   var gate=$('ageGate');
   var accept=$('ageAccept');
@@ -2805,8 +2821,13 @@ function initAgeGate(onAccept){
     if(window.__rtaStarted)return;
     window.__rtaStarted=true;
     setTimeout(function(){
-      if(typeof onAccept==='function')onAccept();
-      if($('globalSearch')&&$('globalSearch').value.trim())setTimeout(renderSearchPanel,180);
+      try{
+        if(typeof onAccept==='function')onAccept();
+        if($('globalSearch')&&$('globalSearch').value.trim())setTimeout(renderSearchPanel,180);
+      }catch(e){
+        setAppPreparing(false);
+        throw e;
+      }
     },0);
   }
   window.__rtaStartApp=start;
@@ -2815,7 +2836,8 @@ function initAgeGate(onAccept){
     gate.hidden=true;
     document.body.classList.remove('age-gated');
     window.__rtaAccepted=true;
-    start();
+    setAppPreparing(true,'O clipa, se pregateste ghidul.');
+    setTimeout(start,90);
   }
   if(window.__rtaAccepted){unlock();return}
   gate.hidden=false;
@@ -3219,8 +3241,12 @@ function initLiquidCalculator(){
   calcLiquidRecipe();
 }
 var renderedSections={};
+var appPrepStarted=false;
+var APP_PREP_SECTIONS=['home','recommender','atomizers','profiles','wires','liquids','consumables','registry','sources','liquidGuide'];
 function ensureSectionRendered(id){if(id==='home'&&!renderedSections.home){renderMetrics();renderRoleMini();renderSupplierShowcase(liquidCatalogState);renderedSections.home=true;return}if(id==='recommender'&&!renderedSections.recommender){initRecommender();renderedSections.recommender=true;return}if(id==='atomizers'&&!renderedSections.atomizers){renderAtomizers();renderedSections.atomizers=true;return}if(id==='profiles'&&!renderedSections.profiles){renderProfiles();renderedSections.profiles=true;return}if(id==='wires'&&!renderedSections.wires){renderWires();renderedSections.wires=true;return}if(id==='liquids'&&!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true;return}if(id==='consumables'&&!renderedSections.consumables){initConsumables();renderedSections.consumables=true;return}if(id==='registry'&&!renderedSections.registry){if(!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true}renderRegistry();renderedSections.registry=true;return}if(id==='sources'&&!renderedSections.sources){renderSources();renderedSections.sources=true;return}if(id==='liquidGuide'&&!renderedSections.liquidGuide){initLiquidCalculator();renderedSections.liquidGuide=true;return}}
-function initAppContent(){initLiveStatus();initVisitCounter();initNav();initGlobalSearch();initDetail();applyRoute(false);window.scrollTo(0,0)}
+function runPrepTask(fn,delay){setTimeout(function(){if(window.requestIdleCallback){requestIdleCallback(function(){fn()},{timeout:700})}else{fn()}},delay||0)}
+function prepareAppSections(done){if(appPrepStarted){if(done)done();return}appPrepStarted=true;var queue=APP_PREP_SECTIONS.filter(function(id){return !renderedSections[id]});var total=queue.length||1;function finish(){setAppPreparing(false);if(done)done()}function step(){if(!queue.length){finish();return}var doneCount=total-queue.length+1;var id=queue.shift();setAppPreparing(true,'Se incarca datele ghidului '+doneCount+' / '+total+'.');try{ensureSectionRendered(id)}catch(e){console.warn('Pregatire sectiune:',id,e)}runPrepTask(step,45)}runPrepTask(step,140)}
+function initAppContent(){setAppPreparing(true,'Se pregateste ghidul.');initLiveStatus();initVisitCounter();initNav();initGlobalSearch();initDetail();applyRoute(false);window.scrollTo(0,0);prepareAppSections()}
 function init(){initAgeGate(initAppContent)}
 
 function renderMetrics(){var src=atomizers.reduce(function(n,a){return n+getSources(a).length},0);$('metricsBox').innerHTML = [
