@@ -83,9 +83,10 @@ async function checkOverflow(page) {
         failures.push({ viewport: viewport.name, ageResult });
       }
       await accept.click();
+      await page.waitForFunction(() => !document.body.classList.contains("app-preparing"), { timeout: 45000 });
     }
 
-    await page.waitForSelector(".supplier-showcase", { timeout: 5000 });
+    await page.waitForSelector(".supplier-showcase", { timeout: 12000 });
     const homeResult = await page.evaluate(() => {
       const supplier = document.querySelector(".supplier-showcase");
       const guide = document.querySelector(".guide-hub");
@@ -121,6 +122,7 @@ async function checkOverflow(page) {
     const routeAccept = page.locator("#ageAccept");
     if (await routeAccept.isVisible().catch(() => false)) {
       await routeAccept.click();
+      await page.waitForFunction(() => !document.body.classList.contains("app-preparing"), { timeout: 45000 });
     }
 
     await page.waitForSelector("#liquidCatalogGrid", { timeout: 5000 });
