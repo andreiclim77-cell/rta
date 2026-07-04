@@ -1,0 +1,19 @@
+name = "ghid-rta-smokee-sync-backup"
+main = "worker.mjs"
+compatibility_date = "2026-07-04"
+workers_dev = true
+routes = [
+  { pattern = "ghid-rta.ro/__smokee-sync-backup*", zone_name = "ghid-rta.ro" }
+]
+
+[triggers]
+crons = [
+  "5,35 3 * * *",
+  "5,35 4 * * *"
+]
+
+[vars]
+GITHUB_OWNER = "andreiclim77-cell"
+GITHUB_REPO = "rta"
+GITHUB_WORKFLOW = "smokee-rta-sync.yml"
+GITHUB_REF = "main"
