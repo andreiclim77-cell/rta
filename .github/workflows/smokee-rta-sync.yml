@@ -2,10 +2,10 @@ name: Smokee Catalog Sync
 
 on:
   schedule:
-    # GitHub cron uses UTC. The guard below runs sync only during 06:00-06:59 Romania.
-    # Several off-peak attempts are used because scheduled GitHub runs can be delayed or dropped.
-    - cron: '7,17,27,37,47,57 3 * * *'
-    - cron: '7,17,27,37,47,57 4 * * *'
+    # GitHub cron uses UTC. The guard below keeps only schedules intended for 06:00 Romania.
+    # Repeated attempts are used because scheduled GitHub runs can be delayed or dropped.
+    - cron: '*/5 3 * * *'
+    - cron: '*/5 4 * * *'
   workflow_dispatch:
 
 permissions:
@@ -30,7 +30,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Keep 06:00 Romania sync window
+      - name: Accept Smokee sync trigger
         id: sync-window
         shell: bash
         run: |
@@ -39,13 +39,15 @@ jobs:
             echo "Manual run accepted."
             exit 0
           fi
-          hour="$(TZ=Europe/Bucharest date +%H)"
-          if [ "$hour" = "06" ]; then
+          schedule='${{ github.event.schedule }}'
+          scheduled_utc_hour="$(printf '%s\n' "$schedule" | awk '{print $2}')"
+          intended_local_hour="$(node -e "const h=Number(process.argv[1]); const d=new Date(); const intended=new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), h, 0, 0)); console.log(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bucharest', hour: '2-digit', hour12: false }).format(intended));" "$scheduled_utc_hour")"
+          if [ "$intended_local_hour" = "06" ]; then
             echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "Smokee sync accepted for $(TZ=Europe/Bucharest date)."
+            echo "Smokee sync accepted. Scheduled cron '$schedule' maps to 06:00 Romania. Runner started at $(TZ=Europe/Bucharest date)."
           else
             echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipped outside 06:00 Romania window: $(TZ=Europe/Bucharest date)."
+            echo "Skipped cron '$schedule' because it maps to $intended_local_hour:00 Romania. Runner started at $(TZ=Europe/Bucharest date)."
           fi
 
       - name: Check Smokee RTA products

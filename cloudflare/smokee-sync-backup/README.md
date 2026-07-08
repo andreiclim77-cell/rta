@@ -1,6 +1,6 @@
 # Cloudflare Smokee Sync Backup
 
-Worker backup pentru sincronizarea zilnica Smokee. Cloudflare porneste workflow-ul GitHub `Smokee Catalog Sync` la 06:05 si 06:35 ora Romaniei.
+Worker live pentru sincronizarea Smokee. Cloudflare porneste workflow-ul GitHub `Smokee Catalog Sync` din 2 in 2 minute, toata ziua.
 
 Worker publicat:
 
@@ -12,10 +12,8 @@ Endpointul manual `/trigger` raspunde doar daca exista `TRIGGER_TOKEN` si reques
 
 ## Cum functioneaza
 
-- Cloudflare Cron porneste Worker-ul la ore UTC pentru vara si iarna.
-- Worker-ul verifica ora reala in `Europe/Bucharest`.
-- Daca ora locala nu este 06, se opreste.
-- Daca ora locala este 06, trimite `workflow_dispatch` catre GitHub Actions.
+- Cloudflare Cron porneste Worker-ul din 2 in 2 minute, permanent.
+- Worker-ul trimite `workflow_dispatch` catre GitHub Actions.
 - Workflow-ul GitHub face sincronizarea RTA, consumabile si lichide direct pe GitHub.
 
 ## Secrete necesare
@@ -60,7 +58,6 @@ ghid-rta-smokee.workers.dev
    - `GITHUB_REF` = `main`
    - secret `GITHUB_TOKEN`
 4. Settings > Triggers > Cron Triggers:
-   - `5,35 3 * * *`
-   - `5,35 4 * * *`
+   - `*/2 * * * *`
 
-Cele doua cronuri acopera ora de vara si ora de iarna. Worker-ul ruleaza efectiv numai cand ora in Romania este 06.
+Cronul ruleaza permanent, din 2 in 2 minute. Workflow-ul GitHub pastreaza protectia de concurenta, ca sincronizarile sa nu ruleze suprapus.

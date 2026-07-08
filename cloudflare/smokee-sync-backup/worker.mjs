@@ -2,28 +2,8 @@ const DEFAULT_OWNER = "andreiclim77-cell";
 const DEFAULT_REPO = "rta";
 const DEFAULT_WORKFLOW = "smokee-rta-sync.yml";
 const DEFAULT_REF = "main";
-const ROMANIA_TZ = "Europe/Bucharest";
-
 function envValue(env, key, fallback) {
   return env && env[key] ? String(env[key]) : fallback;
-}
-
-function romaniaClockParts(timestamp) {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: ROMANIA_TZ,
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date(timestamp));
-  const map = Object.fromEntries(parts.map((part) => [part.type, part.value]));
-  return {
-    hour: Number(map.hour),
-    minute: Number(map.minute),
-  };
-}
-
-function isRomaniaSixWindow(timestamp) {
-  return romaniaClockParts(timestamp).hour === 6;
 }
 
 function jsonResponse(payload, status = 200) {
@@ -77,11 +57,6 @@ async function dispatchSmokeeWorkflow(env) {
 
 export default {
   async scheduled(controller, env) {
-    const scheduledTime = controller && controller.scheduledTime ? controller.scheduledTime : Date.now();
-    if (!isRomaniaSixWindow(scheduledTime)) {
-      console.log("Skipped outside 06:00 Romania window.");
-      return;
-    }
     const result = await dispatchSmokeeWorkflow(env);
     console.log("Smokee workflow dispatched.", result);
   },
@@ -112,7 +87,7 @@ export default {
     return jsonResponse({
       ok: true,
       service: "Smokee Catalog Sync backup",
-      schedule: "06:05 and 06:35 Romania, guarded by local time",
+      schedule: "Every 2 minutes, all day",
     });
   },
 };
