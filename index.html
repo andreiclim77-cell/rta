@@ -316,6 +316,11 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn[data-tab="liquidGuide"]{--nav-a:#ff8bd5;--nav-b:#37bfe8;--nav-dim:#23101d;--nav-border:rgba(255,139,213,.62);--nav-idle:#fff0fb;--nav-active:#111}
 .navbtn[data-tab="legislativ"]{--nav-a:#ffd166;--nav-b:#ffe89a;--nav-dim:#221708;--nav-border:rgba(255,209,102,.66);--nav-idle:#fff8df;--nav-active:#120b02}
 .navbtn[data-tab="sources"]{--nav-a:#ff4f7b;--nav-b:#ffb000;--nav-dim:#231018;--nav-border:rgba(255,79,123,.62);--nav-idle:#ffeef3;--nav-active:#111}
+.navbtn[data-tab="diagnostic"]{--nav-a:#f7d27a;--nav-b:#37bfe8;--nav-dim:#17100a;--nav-border:rgba(247,210,122,.76);--nav-idle:#fff8df;--nav-active:#070707}
+.navbtn.diagnostic-nav{isolation:isolate;overflow:hidden}
+.navbtn.diagnostic-nav:before{content:"";width:8px;height:8px;border-radius:50%;margin-right:7px;background:radial-gradient(circle,#fff 0,#f7d27a 34%,#37bfe8 72%);box-shadow:0 0 14px rgba(247,210,122,.65)}
+.navbtn.diagnostic-nav:after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(110deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-120%);transition:transform .36s ease;pointer-events:none}
+.navbtn.diagnostic-nav:hover:after,.navbtn.diagnostic-nav.active:after{transform:translateX(120%)}
 .age-gated{overflow:hidden}
 .age-gate{position:fixed;inset:0;z-index:9999;display:grid;place-items:center;overflow:auto;padding:18px;background:radial-gradient(circle at 75% 25%,rgba(36,211,163,.22),transparent 34%),radial-gradient(circle at 18% 78%,rgba(255,122,26,.24),transparent 36%),linear-gradient(135deg,rgba(0,0,0,.96),rgba(12,12,12,.98));color:#fff;-webkit-overflow-scrolling:touch}
 .age-gate[hidden]{display:none}
@@ -729,7 +734,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .guide-hub-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px}
 .guide-hub-head h2{margin:0;font-size:24px;line-height:1.12}
 .guide-hub-head p{margin:4px 0 0;color:#d8d8d8}
-.guide-hub-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.guide-hub-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}
 .guide-link{border:1px solid rgba(255,255,255,.18);border-radius:8px;background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(0,0,0,.18));color:#fff;padding:12px;text-align:left;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.42),0 14px 24px rgba(0,0,0,.25),0 1px 0 rgba(255,255,255,.20) inset}
 .guide-link b{display:block;font-size:15px;line-height:1.2;margin-bottom:5px}
 .guide-link span{display:block;color:#dadada;font-size:12px;line-height:1.35}
@@ -738,11 +743,12 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .guide-link.diy{background:linear-gradient(135deg,#27101f,#11313a)}
 .guide-link.law{background:linear-gradient(135deg,#261709,#3b260f)}
 .guide-link.method{background:linear-gradient(135deg,#201409,#102018)}
+.guide-link.diagnostic{background:linear-gradient(135deg,#17100a,#10242c);border-color:rgba(247,210,122,.34)}
 .guide-page-hero{border:1px solid #222;border-radius:8px;background:linear-gradient(135deg,#0c0c0c,#23170c 50%,#0b2630);color:#fff;padding:18px;margin-bottom:14px;box-shadow:0 20px 42px rgba(0,0,0,.22),0 1px 0 rgba(255,255,255,.12) inset}
 .guide-page-hero h2{margin:4px 0 8px;color:#fff;font-size:clamp(28px,4vw,46px);line-height:1.05}
 .guide-page-hero p{max-width:900px;color:#e8e8e8}
 .guide-page-hero .chip{background:#fff;color:#111;border-color:rgba(255,255,255,.55)}
-.guide-page-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.guide-page-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
 .guide-card{border:1px solid #e2e2e2;border-radius:8px;background:#fff;padding:13px;min-height:260px;display:flex;flex-direction:column;gap:9px;box-shadow:0 14px 28px rgba(0,0,0,.08)}
 .guide-card h3{font-size:20px;line-height:1.12;margin:4px 0 0}
 .guide-card p,.guide-card li{font-size:13px;line-height:1.45;color:#555}
@@ -752,9 +758,50 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .guide-card.diy{border-top:5px solid #ff8bd5}
 .guide-card.law{border-top:5px solid #ffd166}
 .guide-card.method{border-top:5px solid #55d17a}
+.guide-card.diagnostic{border-top:5px solid #f7d27a}
 .guide-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:14px}
 .guide-path .card{min-height:140px}
 .guide-path b{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:#111;color:#fff;margin-bottom:8px}
+.diagnostic-hero{position:relative;overflow:hidden;border:1px solid #141414;border-radius:7px;background:linear-gradient(124deg,rgba(9,9,9,.95),rgba(33,22,10,.84) 44%,rgba(4,34,43,.80)),url("assets/rta-hero-background.png") center/cover no-repeat;color:#fff;padding:30px;margin-bottom:14px;box-shadow:0 28px 72px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.12) inset}
+.diagnostic-hero:before{content:"";position:absolute;inset:0;background:linear-gradient(100deg,rgba(247,210,122,.18),transparent 36%,rgba(55,191,232,.18));pointer-events:none}
+.diagnostic-hero>*{position:relative;z-index:1}
+.diagnostic-hero h2{color:#fff;margin:4px 0 9px;font-size:clamp(31px,4vw,54px);line-height:1.02;text-shadow:0 8px 28px rgba(0,0,0,.5)}
+.diagnostic-hero .lead{color:#f5efe4;max-width:860px}
+.diagnostic-hero-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.diagnostic-hero-actions .mini-link{border-color:rgba(255,255,255,.22);background:rgba(255,255,255,.10);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.46),0 16px 30px rgba(0,0,0,.24),0 1px 0 rgba(255,255,255,.20) inset}
+.diagnostic-layout{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);gap:14px;align-items:start}
+.diagnostic-selector{position:sticky;top:126px;display:grid;gap:10px}
+.diagnostic-search{height:40px}
+.diagnostic-filter-row{display:flex;flex-wrap:wrap;gap:7px}
+.diagnostic-filter{border:1px solid #ded2bf;background:#fffaf3;color:#2a2118;border-radius:999px;padding:7px 9px;font-size:12px;font-weight:900}
+.diagnostic-filter.active{background:#111;color:#ffd889;border-color:#ffd889}
+.diagnostic-symptoms{display:grid;gap:7px;max-height:680px;overflow:auto;padding-right:2px}
+.diagnostic-symptom{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px;align-items:start;border:1px solid #e4ded4;background:linear-gradient(180deg,#fff,#fffaf4);color:#1d1d1d;border-radius:8px;padding:9px;text-align:left;box-shadow:0 9px 18px rgba(0,0,0,.055),0 1px 0 rgba(255,255,255,.95) inset}
+.diagnostic-symptom:hover,.diagnostic-symptom.active{border-color:#ffb000;background:linear-gradient(135deg,#fff7e9,#eefaff)}
+.diagnostic-symptom.active{box-shadow:0 3px 0 rgba(0,0,0,.20),0 18px 36px rgba(255,176,0,.14),0 1px 0 rgba(255,255,255,.95) inset}
+.diagnostic-code{display:inline-flex;align-items:center;justify-content:center;min-width:37px;height:26px;border-radius:999px;background:#111;color:#ffd889;font-size:11px;font-weight:1000}
+.diagnostic-symptom b{display:block;line-height:1.18;font-size:13px;overflow-wrap:anywhere}
+.diagnostic-symptom small{display:block;color:#6a5d4f;line-height:1.25;margin-top:2px}
+.diagnostic-main{display:grid;gap:12px;min-width:0}
+.diagnostic-flow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.diagnostic-flow span{position:relative;display:grid;align-content:center;min-height:64px;border:1px solid #e1d4c3;border-radius:8px;background:linear-gradient(180deg,#fff,#fff9f1);padding:9px;text-align:center;color:#2c241c;font-size:12px;font-weight:900;box-shadow:0 3px 0 rgba(0,0,0,.045),0 14px 28px rgba(0,0,0,.08),0 1px 0 rgba(255,255,255,.94) inset}
+.diagnostic-flow span:before{content:attr(data-step);display:inline-flex;align-items:center;justify-content:center;width:23px;height:23px;border-radius:50%;margin:0 auto 5px;background:#111;color:#ffd889;font-size:11px}
+.diagnostic-panel{position:relative;overflow:hidden;border:1px solid #171717;border-radius:8px;background:linear-gradient(135deg,#111,#1e140c 44%,#092833);color:#fff;padding:18px;box-shadow:0 5px 0 rgba(0,0,0,.26),0 34px 84px rgba(0,0,0,.30),0 1px 0 rgba(255,255,255,.12) inset}
+.diagnostic-panel:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,#f7d27a,#ff7a1a,#37bfe8,#ff8bd5)}
+.diagnostic-panel>*{position:relative}
+.diagnostic-panel h3{color:#fff;font-size:28px;line-height:1.08;margin:7px 0 8px}
+.diagnostic-panel .why{color:#f2efe7}
+.diagnostic-badges{display:flex;flex-wrap:wrap;gap:7px}
+.diagnostic-badges .chip{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);color:#fff}
+.diagnostic-card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.diagnostic-tile{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.075);border-radius:8px;padding:11px;min-width:0}
+.diagnostic-tile b{display:block;color:#ffd889;font-size:12px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.diagnostic-tile p,.diagnostic-tile li{color:#f4f0e9;font-size:13px;line-height:1.42}
+.diagnostic-tile ul{margin:0;padding-left:18px}
+.diagnostic-cta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.diagnostic-cta .mini-link{border-color:rgba(247,210,122,.55);background:rgba(247,210,122,.12);color:#fff}
+.diagnostic-support{margin-top:14px}
+.diagnostic-support .trust-card p{font-size:14px}
 .seo-faq{margin-top:14px}
 .seo-faq .card h3{font-size:18px}
 .liquid-subfilters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
@@ -781,13 +828,13 @@ main{background:linear-gradient(180deg,#f7f7f7 0,#fff 330px)}
 header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
 .site-search{border-radius:6px;border-color:#eeeeee;box-shadow:0 8px 20px rgba(0,0,0,.18)}
 .search-panel{border-radius:7px;box-shadow:0 20px 50px rgba(0,0,0,.28)}
-.shop-hero,.tc-hero,.mix-hero,.law-hero,.consumables-hero{border-radius:7px;box-shadow:0 22px 60px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.04) inset}
+.shop-hero,.tc-hero,.mix-hero,.law-hero,.consumables-hero,.diagnostic-hero{border-radius:7px;box-shadow:0 22px 60px rgba(0,0,0,.22),0 0 0 1px rgba(255,255,255,.04) inset}
 .shop-hero{position:relative;min-height:410px;background:linear-gradient(90deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.72) 42%,rgba(0,0,0,.18) 74%),url("assets/rta-hero-background.png") center/cover no-repeat}
-.shop-hero:after,.tc-hero:after,.mix-hero:after,.law-hero:after,.consumables-hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--lux-warm),var(--lux-cyan),transparent);opacity:.9}
+.shop-hero:after,.tc-hero:after,.mix-hero:after,.law-hero:after,.consumables-hero:after,.diagnostic-hero:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,var(--lux-warm),var(--lux-cyan),transparent);opacity:.9}
 .shop-hero-content{position:relative;z-index:1;max-width:650px}
-.shop-hero h1,.tc-hero h2,.mix-hero h2,.law-hero h2,.consumables-hero h2{text-shadow:0 6px 28px rgba(0,0,0,.42)}
+.shop-hero h1,.tc-hero h2,.mix-hero h2,.law-hero h2,.consumables-hero h2,.diagnostic-hero h2{text-shadow:0 6px 28px rgba(0,0,0,.42)}
 .kicker{color:#c65300}
-.shop-hero .kicker,.tc-hero .kicker,.mix-hero .kicker,.law-hero .kicker,.consumables-hero .kicker{color:#ffb66f}
+.shop-hero .kicker,.tc-hero .kicker,.mix-hero .kicker,.law-hero .kicker,.consumables-hero .kicker,.diagnostic-hero .kicker{color:#ffb66f}
 .btn,.navbtn,.problem-btn,.rolebtn,.tag-choice,.mini-link,.calc-preset,.liquid-subfilters button{transition:transform .16s ease,border-color .16s ease,background .16s ease,box-shadow .16s ease,color .16s ease}
 .btn:hover,.mini-link:hover,.problem-btn:hover,.rolebtn:hover,.tag-choice:hover,.liquid-subfilters button:hover{transform:translateY(-1px);text-decoration:none}
 .btn{border-radius:7px;box-shadow:0 14px 28px rgba(255,122,26,.20),0 1px 0 rgba(255,255,255,.34) inset}
@@ -884,10 +931,15 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
   .shop-metrics{gap:12px}
   .card:hover,.consumable-zone:hover,.detail-block:hover{transform:translateY(-2px)}
   .luxe-result:hover,.atom-card:hover,.profile-card:hover,.wire-card:hover,.source-card:hover{box-shadow:0 24px 58px rgba(0,0,0,.13),0 1px 0 rgba(255,255,255,.94) inset}
+  .diagnostic-symptom:hover{transform:translateY(-1px)}
 }
 @media(max-width:900px){
-  .wire-options,.triad-strip{grid-template-columns:1fr}
+  .wire-options,.triad-strip,.diagnostic-layout,.diagnostic-flow,.diagnostic-card-grid{grid-template-columns:1fr}
   .page-premium-hero{padding:14px}
+  .diagnostic-selector{position:static}
+  .diagnostic-symptoms{max-height:none}
+  .diagnostic-flow span{min-height:52px;text-align:left;grid-template-columns:auto 1fr;align-items:center;gap:8px}
+  .diagnostic-flow span:before{margin:0}
 }
 @media(max-width:640px){
   body{background:#fff}
@@ -900,6 +952,21 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
   .result-rank{min-width:30px;height:30px}
   .wire-options{gap:7px}
   .page-premium-hero{margin-bottom:10px}
+  .diagnostic-hero{padding:16px;margin-bottom:10px;background-position:center}
+  .diagnostic-hero h2{font-size:27px;line-height:1.06}
+  .diagnostic-hero .lead{font-size:14px}
+  .diagnostic-hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+  .diagnostic-hero-actions .mini-link{min-height:38px;font-size:12px;padding:7px 8px}
+  .diagnostic-selector{gap:8px}
+  .diagnostic-filter-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .diagnostic-filter{min-height:34px;font-size:11px;padding:7px}
+  .diagnostic-symptom{grid-template-columns:auto minmax(0,1fr);padding:8px}
+  .diagnostic-code{min-width:34px;height:24px;font-size:10px}
+  .diagnostic-panel{padding:13px}
+  .diagnostic-panel h3{font-size:22px;line-height:1.12}
+  .diagnostic-card-grid{gap:8px}
+  .diagnostic-tile{padding:9px}
+  .diagnostic-cta{display:grid;grid-template-columns:1fr;width:100%}
 }
 @media(max-width:900px){.hero,.grid,.result,.atom-grid,.profile-list,.wire-table,.source-grid,.workflow,.detail-grid,.page-summary,.page-section-grid,.tc-layout,.tc-settings,.tc-source-grid,.law-grid,.law-signal,.law-timeline,.law-source-grid,.mix-grid,.calc-layout,.mix-workflow,.consumables-hero,.consumable-grid{grid-template-columns:1fr}.span-3,.span-4,.span-5,.span-6,.span-7,.span-8,.span-12{grid-column:auto}.nav{grid-template-columns:1fr;align-items:stretch}.site-search,.head-tools,.navlinks{grid-column:auto}.head-tools{justify-content:flex-start}.navlinks{justify-content:flex-start}.shop-layout{grid-template-columns:1fr}.category-panel{order:2}.shop-main{order:1}.shop-hero{min-height:410px;background-position:center right}.hero-panel{padding:20px}.panel-title,.page-head{align-items:flex-start;flex-direction:column}.page-actions{justify-content:flex-start}.atom-card{min-height:auto}.law-stat-grid,.mix-stat-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ratio-grid{grid-template-columns:1fr}.consumables-hero{padding:20px}}
 @media(max-width:900px){.guide-card{position:static}.guided-flow,.fit-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -977,7 +1044,7 @@ var I18N_EXACT={
   'Vitrina Smokee':'Smokee showcase',
   'RTA si lichide tutunoase':'RTA and tobacco liquids',
   'lichid - atomizor - sarma':'liquid - atomizer - wire',
-  'Cautare: ghid, atomizor, lichid, consumabil, sarma, review':'Search: guide, atomizer, liquid, supply, wire, review',
+  'Cautare: diagnostic, ghid, atomizor, lichid, consumabil, sarma, review':'Search: diagnosis, guide, atomizer, liquid, supply, wire, review',
   'Cautare in aplicatie':'Search the app',
   'Rezultate cautare':'Search results',
   'Data, ora si vremea':'Date, time and weather',
@@ -994,6 +1061,53 @@ var I18N_EXACT={
   'Ghiduri utile':'Useful Guides',
   'Recenzii RTA':'RTA Reviews',
   'Noutati':'New',
+  'Diagnostic gust':'Taste Diagnosis',
+  'Diagnostic':'Diagnosis',
+  'Diagnostic gust RTA MTL':'MTL RTA Taste Diagnosis',
+  'Identifica simptomul inainte de schimbarea setupului':'Identify the symptom before changing the setup',
+  'Nu toate problemele de aroma vin din atomizor. Diagnosticul porneste de la ce se simte in puf, apoi verifica pe rand bumbacul, puterea, airflow-ul, pozitia coilului, sarma, lichidul si abia la final atomizorul.':'Not every flavor issue comes from the atomizer. Diagnosis starts from what is felt in the puff, then checks cotton, power, airflow, coil position, wire, liquid and only then the atomizer.',
+  'Simptom, cauza probabila, test rapid si corectie graduala.':'Symptom, probable cause, quick test and gradual correction.',
+  'Selector simptome':'Symptom selector',
+  'Ce se simte?':'What is felt?',
+  'Alege simptomul cel mai apropiat. Diagnosticul indica ordinea probabila a verificarilor, nu un verdict absolut.':'Choose the closest symptom. The diagnosis indicates the likely order of checks, not an absolute verdict.',
+  'Cauta: dry hit, NET, curge, TC, airflow...':'Search: dry hit, NET, leaking, TC, airflow...',
+  'Cautare diagnostic gust':'Taste diagnosis search',
+  'Filtre diagnostic':'Diagnosis filters',
+  'Bumbac':'Cotton',
+  'Putere / TC':'Power / TC',
+  'Airflow':'Airflow',
+  'Pozitie coil':'Coil position',
+  'Sarma / build':'Wire / build',
+  'Atomizor':'Atomizer',
+  'Regula':'Rule',
+  'Un singur reglaj pe rand':'One adjustment at a time',
+  'Se modifica un singur parametru, apoi se testeaza. Daca se schimba simultan bumbacul, puterea si airflow-ul, cauza reala ramane neclara.':'Change one parameter, then test. If cotton, power and airflow are changed at the same time, the real cause stays unclear.',
+  'Coil incarcat nu inseamna automat atomizor gresit':'A loaded coil does not automatically mean the atomizer is wrong',
+  'Extractele naturale si lichidele inchise pot incarca rezistenta mai repede. Se verifica intai temperatura, indulcirea, bumbacul si masa coilului.':'Natural extracts and dark liquids can load the coil faster. Temperature, sweetness, cotton and coil mass are checked first.',
+  'Urmatorul pas':'Next step',
+  'Recomandarea ramane dupa diagnostic':'Recommendation comes after diagnosis',
+  'Dupa identificarea cauzei probabile, alegerea atomizorului si a sarmei se face din Recomandare, cu profilul lichidului si intentia gustului.':'After the likely cause is identified, atomizer and wire choice is made from Recommendation, using the liquid profile and taste intention.',
+  'Tip problema':'Problem type',
+  'Cauze probabile':'Probable causes',
+  'Teste rapide':'Quick tests',
+  'Corectii graduale':'Gradual corrections',
+  'Cand se evalueaza atomizorul':'When to evaluate the atomizer',
+  'Mergi la Recomandare':'Go to Recommendation',
+  'Verifica sarmele':'Check wires',
+  'Deschide diagnosticul':'Open diagnosis',
+  'Esentiale':'Essential',
+  'Alimentare':'Wicking',
+  'Exces lichid':'Liquid excess',
+  'Claritate':'Clarity',
+  'Profil aromatic':'Aromatic profile',
+  'Stabilitate / TC':'Stability / TC',
+  'Toate':'All',
+  'Gust ars':'Burnt taste',
+  'Aroma slaba':'Weak flavor',
+  'NET incarcat':'Loaded NET',
+  'Gurgling':'Gurgling',
+  'TC instabil':'Unstable TC',
+  'Nu exista rezultate clare pentru filtrul ales.':'No clear results for the selected filter.',
   'Categorii':'Categories',
   'Lichide Smokee':'Smokee Liquids',
   'Clase lichide':'Liquid Classes',
@@ -1191,7 +1305,7 @@ var I18N_EXACT={
   'Se pregateste ghidul':'Preparing the guide',
   'O clipa, se pregateste ghidul.':'One moment, the guide is being prepared.',
   'O clipa, se aseaza recomandarile.':'One moment, the recommendations are being prepared.',
-  'Scrie un model, un lichid, un consumabil, calculatorul, o sarma sau o recenzie.':'Type a model, liquid, supply, calculator, wire or review.',
+  'Scrie un diagnostic, un model, un lichid, un consumabil, calculatorul, o sarma sau o recenzie.':'Type a diagnosis, model, liquid, supply, calculator, wire or review.',
   'Nu exista rezultate clare. Incearca un termen mai specific.':'No clear results. Try a more specific term.',
   'Nu exista profil selectat.':'No profile selected.',
   'Nu am gasit atomizoare pentru filtrul ales.':'No atomizers found for the selected filter.',
@@ -1551,7 +1665,7 @@ function rtaEarlyAccept(){
       <div class="brand-top"><img class="smokee-logo" src="https://www.smokee.ro/wp-content/uploads/2024/11/smokee_logo.png" alt="Smokee"><b>Ghid RTA MTL - Smokee</b><div class="language-switch brand-lang" aria-label="Limba / Language"><button type="button" data-lang="ro" class="active">RO</button><button type="button" data-lang="en">EN</button></div></div>
       <span>lichid - atomizor - sarma</span>
     </div>
-    <div class="site-search"><span class="search-icon" aria-hidden="true"></span><input id="globalSearch" type="search" placeholder="Cautare: ghid, atomizor, lichid, consumabil, sarma, review" autocomplete="off" aria-label="Cautare in aplicatie" />
+    <div class="site-search"><span class="search-icon" aria-hidden="true"></span><input id="globalSearch" type="search" placeholder="Cautare: diagnostic, ghid, atomizor, lichid, consumabil, sarma, review" autocomplete="off" aria-label="Cautare in aplicatie" />
       <div class="search-panel" id="searchPanel" aria-label="Rezultate cautare">
         <div class="search-modes" id="searchModes"></div>
         <div class="search-results" id="searchResults"></div>
@@ -1566,6 +1680,7 @@ function rtaEarlyAccept(){
     <nav class="navlinks" aria-label="Navigatie principala">
       <button class="navbtn active" data-tab="home">Home</button>
       <button class="navbtn" data-tab="recommender">Recomandare</button>
+      <button class="navbtn diagnostic-nav" data-tab="diagnostic">Diagnostic gust</button>
       <button class="navbtn" data-tab="atomizers">Atomizoare</button>
       <button class="navbtn cart-nav" data-tab="liquids"><span class="cart-ico" aria-hidden="true"></span><span>Lichide</span></button>
       <button class="navbtn wire-nav" data-tab="wires">Sarme RTA</button>
@@ -1583,6 +1698,7 @@ function rtaEarlyAccept(){
         <h2>Categorii</h2>
         <div class="category-list">
           <button class="category-link" data-jump="recommender"><span class="cat-mark">R</span><span>Recomandare</span></button>
+          <button class="category-link" data-jump="diagnostic"><span class="cat-mark">DG</span><span>Diagnostic gust</span></button>
           <button class="category-link" data-jump="atomizers"><span class="cat-mark">A</span><span>Atomizoare</span></button>
           <button class="category-link" data-jump="liquids"><span class="cat-mark">LQ</span><span>Lichide Smokee</span></button>
           <button class="category-link" data-jump="wires"><span class="cat-mark">S</span><span>Sarme RTA</span></button>
@@ -1601,6 +1717,7 @@ function rtaEarlyAccept(){
             <p class="lead">Profilul lichidului si preferinta de gust indica atomizoare, sarme si builduri potrivite pentru sesiuni MTL.</p>
             <div class="hero-actions">
               <button class="btn" data-jump="recommender">Recomandare</button>
+              <button class="btn secondary" data-jump="diagnostic">Diagnostic gust</button>
               <button class="btn secondary" data-jump="atomizers">Atomizoare</button>
               <button class="btn secondary" data-jump="liquids">Lichide</button>
               <button class="btn secondary" data-jump="registry">Noutati</button>
@@ -1659,9 +1776,10 @@ function rtaEarlyAccept(){
               <p class="kicker">Ghiduri utile</p>
               <h2>Repere rapide pentru setari si decizii</h2>
             </div>
-            <span class="chip warn">4 ghiduri</span>
+            <span class="chip warn">5 ghiduri</span>
           </div>
           <div class="guide-hub-grid">
+            <button class="guide-link diagnostic" type="button" data-jump="diagnostic"><b>Diagnostic gust</b><span>Simptom, cauza probabila, test rapid si corectie graduala.</span></button>
             <button class="guide-link tc" type="button" data-jump="tcGuide"><b>Ghid TC</b><span>Control temperatura, sarme, chipseturi, coil si reglaje.</span></button>
             <button class="guide-link diy" type="button" data-jump="liquidGuide"><b>Cum facem lichidele vape</b><span>VG/PG, aroma, nicotina, maturare si calculator simplu.</span></button>
             <button class="guide-link law" type="button" data-jump="legislativ"><b>Legislativ</b><span>Reguli, exemple rosu/galben/verde si repere pentru cumparatori.</span></button>
@@ -1702,6 +1820,18 @@ function rtaEarlyAccept(){
       <div class="chips"><span class="chip warn">Explicat simplu</span><span class="chip cold">Cu exemple</span><span class="chip good">Cu butoane directe</span><span class="chip neutral">18+</span></div>
     </div>
     <div class="guide-page-grid">
+      <article class="guide-card diagnostic">
+        <span class="chip warn">Gust</span>
+        <h3>Diagnostic gust</h3>
+        <p>Pentru cine are gust ars, aroma slaba, curgeri, gurgling sau comportament instabil.</p>
+        <ul>
+          <li>pornire de la simptom;</li>
+          <li>ordine corecta de verificare;</li>
+          <li>teste rapide fara schimbari mari;</li>
+          <li>corectii graduale pana la recomandare.</li>
+        </ul>
+        <button class="mini-link" type="button" data-jump="diagnostic">Deschide diagnosticul</button>
+      </article>
       <article class="guide-card tc">
         <span class="chip cold">TC</span>
         <h3>Control temperatura</h3>
@@ -1813,6 +1943,50 @@ function rtaEarlyAccept(){
         <p>Pagina are canonical, robots, sitemap, favicon, manifest, Open Graph, Twitter preview si JSON-LD. Exista si pagini tematice indexabile pentru cautari concrete, plus un kit de link pentru Smokee.</p>
         <div class="source-actions"><a class="mini-link" target="_blank" rel="noreferrer" href="robots.txt">robots.txt</a><a class="mini-link" target="_blank" rel="noreferrer" href="sitemap.xml">sitemap.xml</a><a class="mini-link" href="smokee-link-kit.html">Kit link Smokee</a></div>
       </article>
+    </div>
+  </section>
+
+  <section id="diagnostic" class="section">
+    <div class="diagnostic-hero">
+      <p class="kicker">Diagnostic gust RTA MTL</p>
+      <h2>Identifica simptomul inainte de schimbarea setupului</h2>
+      <p class="lead">Nu toate problemele de aroma vin din atomizor. Diagnosticul porneste de la ce se simte in puf, apoi verifica pe rand bumbacul, puterea, airflow-ul, pozitia coilului, sarma, lichidul si abia la final atomizorul.</p>
+      <div class="diagnostic-hero-actions">
+        <button class="mini-link" type="button" data-diagnostic-preset="P01">Gust ars</button>
+        <button class="mini-link" type="button" data-diagnostic-preset="P02">Aroma slaba</button>
+        <button class="mini-link" type="button" data-diagnostic-preset="P04">NET incarcat</button>
+        <button class="mini-link" type="button" data-diagnostic-preset="P10">Gurgling</button>
+        <button class="mini-link" type="button" data-diagnostic-preset="P19">TC instabil</button>
+      </div>
+    </div>
+    <div class="diagnostic-flow" aria-label="Ordine verificare diagnostic">
+      <span data-step="1">Bumbac</span>
+      <span data-step="2">Putere / TC</span>
+      <span data-step="3">Airflow</span>
+      <span data-step="4">Pozitie coil</span>
+      <span data-step="5">Sarma / build</span>
+      <span data-step="6">Lichid</span>
+      <span data-step="7">Atomizor</span>
+    </div>
+    <div class="diagnostic-layout">
+      <aside class="card diagnostic-selector">
+        <div>
+          <span class="chip warn">Selector simptome</span>
+          <h3 style="margin-top:9px">Ce se simte?</h3>
+          <p class="muted small">Alege simptomul cel mai apropiat. Diagnosticul indica ordinea probabila a verificarilor, nu un verdict absolut.</p>
+        </div>
+        <input id="diagnosticSearch" class="diagnostic-search" type="search" placeholder="Cauta: dry hit, NET, curge, TC, airflow..." aria-label="Cautare diagnostic gust">
+        <div class="diagnostic-filter-row" id="diagnosticFilters" aria-label="Filtre diagnostic"></div>
+        <div class="diagnostic-symptoms" id="diagnosticSymptomList"></div>
+      </aside>
+      <div class="diagnostic-main">
+        <div id="diagnosticDetail"></div>
+        <div class="grid diagnostic-support">
+          <article class="card span-4 trust-card"><span class="chip cold">Regula</span><h3>Un singur reglaj pe rand</h3><p>Se modifica un singur parametru, apoi se testeaza. Daca se schimba simultan bumbacul, puterea si airflow-ul, cauza reala ramane neclara.</p></article>
+          <article class="card span-4 trust-card"><span class="chip warn">NET</span><h3>Coil incarcat nu inseamna automat atomizor gresit</h3><p>Extractele naturale si lichidele inchise pot incarca rezistenta mai repede. Se verifica intai temperatura, indulcirea, bumbacul si masa coilului.</p></article>
+          <article class="card span-4 trust-card"><span class="chip good">Urmatorul pas</span><h3>Recomandarea ramane dupa diagnostic</h3><p>Dupa identificarea cauzei probabile, alegerea atomizorului si a sarmei se face din Recomandare, cu profilul lichidului si intentia gustului.</p></article>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -3381,9 +3555,9 @@ wireChoices = function(profile, problemId, atom){
   return set;
 }
 
-var MAIN_ROUTES=['home','guides','methodology','recommender','atomizers','profiles','liquids','wires','consumables','registry','tcGuide','liquidGuide','legislativ','sources'];
+var MAIN_ROUTES=['home','guides','methodology','diagnostic','recommender','atomizers','profiles','liquids','wires','consumables','registry','tcGuide','liquidGuide','legislativ','sources'];
 function activeSection(id, navId){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.navbtn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===(navId||id))})}
-function routeTitle(id, atom){var en=window.__rtaLang==='en';if(atom)return getName(atom)+(en?' - MTL RTA Guide - Smokee':' - Ghid RTA MTL - Smokee');var names={home:'Ghid RTA MTL - Smokee',guides:'Ghiduri utile - Ghid RTA MTL - Smokee',methodology:'Metodologie - Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',liquids:'Lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',consumables:'Consumabile RTA - Ghid RTA MTL - Smokee',registry:'Noutati - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',liquidGuide:'Cum facem lichidele vape - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};var namesEn={home:'MTL RTA Guide - Smokee',guides:'Useful Guides - MTL RTA Guide - Smokee',methodology:'Methodology - MTL RTA Guide - Smokee',recommender:'Recommendation - MTL RTA Guide - Smokee',atomizers:'Atomizers - MTL RTA Guide - Smokee',profiles:'Liquid Classes - MTL RTA Guide - Smokee',liquids:'Liquids - MTL RTA Guide - Smokee',wires:'RTA Wires - MTL RTA Guide - Smokee',consumables:'RTA Supplies - MTL RTA Guide - Smokee',registry:'New Items - MTL RTA Guide - Smokee',tcGuide:'TC Guide - MTL RTA Guide - Smokee',liquidGuide:'How to make vape liquids - MTL RTA Guide - Smokee',legislativ:'Legal - MTL RTA Guide - Smokee',sources:'RTA Reviews - MTL RTA Guide - Smokee'};return en?(namesEn[id]||namesEn.home):(names[id]||names.home)}
+function routeTitle(id, atom){var en=window.__rtaLang==='en';if(atom)return getName(atom)+(en?' - MTL RTA Guide - Smokee':' - Ghid RTA MTL - Smokee');var names={home:'Ghid RTA MTL - Smokee',guides:'Ghiduri utile - Ghid RTA MTL - Smokee',methodology:'Metodologie - Ghid RTA MTL - Smokee',diagnostic:'Diagnostic gust - Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',liquids:'Lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',consumables:'Consumabile RTA - Ghid RTA MTL - Smokee',registry:'Noutati - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',liquidGuide:'Cum facem lichidele vape - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};var namesEn={home:'MTL RTA Guide - Smokee',guides:'Useful Guides - MTL RTA Guide - Smokee',methodology:'Methodology - MTL RTA Guide - Smokee',diagnostic:'Taste Diagnosis - MTL RTA Guide - Smokee',recommender:'Recommendation - MTL RTA Guide - Smokee',atomizers:'Atomizers - MTL RTA Guide - Smokee',profiles:'Liquid Classes - MTL RTA Guide - Smokee',liquids:'Liquids - MTL RTA Guide - Smokee',wires:'RTA Wires - MTL RTA Guide - Smokee',consumables:'RTA Supplies - MTL RTA Guide - Smokee',registry:'New Items - MTL RTA Guide - Smokee',tcGuide:'TC Guide - MTL RTA Guide - Smokee',liquidGuide:'How to make vape liquids - MTL RTA Guide - Smokee',legislativ:'Legal - MTL RTA Guide - Smokee',sources:'RTA Reviews - MTL RTA Guide - Smokee'};return en?(namesEn[id]||namesEn.home):(names[id]||names.home)}
 function routeHash(route){return '#'+String(route||'home').replace(/^#/,'')}
 function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash)}applyRoute(true)}
 function goTab(id){setRoute(id)}
@@ -3404,6 +3578,7 @@ var SEARCH_MODES=[
   {id:'wires',label:'Sarme'},
   {id:'consumables',label:'Consumabile'},
   {id:'registry',label:'Noutati'},
+  {id:'diagnostic',label:'Diagnostic'},
   {id:'guides',label:'Ghiduri'},
   {id:'methodology',label:'Metodologie'},
   {id:'liquidGuide',label:'Calculator'},
@@ -3436,6 +3611,58 @@ var LIQUID_GUIDE_SEARCH_TEXT='cum facem lichidele vape calculator diy lichid mtl
 function liquidGuideSearchResult(q){return {tab:'liquidGuide',route:'liquidGuide',title:'Cum facem lichidele vape',meta:'Calculator VG/PG, aroma, nicotina si reteta MTL',query:q,score:fieldScore(q,[[LIQUID_GUIDE_SEARCH_TEXT,36],['calculator lichid vape diy vg pg aroma nicotina ml reteta',28]])}}
 var METHODOLOGY_SEARCH_TEXT='metodologie triangulare lichid atomizor sarma recomandari cum se formeaza potrivirea practica vaperilor surse validare limite rta mtl adn lichid camera cupola deck airflow build adulti 18 plus informativ share pack google search console sitemap robots';
 function methodologySearchResult(q){return {tab:'methodology',route:'methodology',title:'Metodologie recomandari',meta:'Cum se formeaza triangularea lichid-atomizor-sarma',query:q,score:fieldScore(q,[[METHODOLOGY_SEARCH_TEXT,34],['triangulare rta mtl practica vaperilor surse recomandari',28]])}}
+var DIAGNOSTIC_CATEGORIES=[
+  {id:'priority',label:'Esentiale'},
+  {id:'feeding',label:'Alimentare'},
+  {id:'flooding',label:'Exces lichid'},
+  {id:'flavor',label:'Claritate'},
+  {id:'profile',label:'Profil aromatic'},
+  {id:'stability',label:'Stabilitate / TC'},
+  {id:'airflow',label:'Airflow'}
+];
+var DIAGNOSTIC_CASES=[
+  {id:'P01',cat:'feeding',priority:true,title:'Gust ars / dry hit',tag:'alimentare insuficienta',moment:'Apare la pufuri lungi, dupa cateva secunde sau cand rezervorul scade.',type:'Bumbac prea strans, alimentare slaba sau putere prea mare.',causes:['bumbac presat in canale','VG prea mare pentru alimentare','wattaj sau temperatura peste ritmul de alimentare','coil prea sus sau prea cald pentru airflow'],tests:['scade puterea cu 1-2 W si deschide usor airflow-ul','asteapta 30-60 secunde intre pufuri si verifica daca revine gustul','priveste bumbacul dupa cateva pufuri: daca ramane alb/uscat, alimentarea e cauza'],fixes:['subtiaza foarte usor capetele de bumbac','foloseste 50/50 sau 60/40 daca atomizorul alimenteaza greu','coboara coilul spre airflow si redu masa buildului','in TC verifica citirea la rece si profilul sarmei'],atomizer:'Schimbarea atomizorului are sens numai daca alimentarea ramane insuficienta dupa wick corect, putere moderata si lichid potrivit.'},
+  {id:'P02',cat:'flavor',priority:true,title:'Aroma slaba / muta',tag:'claritate redusa',moment:'Apare de la inceput sau dupa schimbarea lichidului/buildului.',type:'Coil-airflow nealiniat, camera prea larga, putere nepotrivita sau build prea inert.',causes:['coil prea jos, prea sus sau in afara jetului de aer','airflow prea deschis si aroma diluata','coil prea gros pentru camera','lichid prea rece sau prea putin maturat'],tests:['inchide airflow-ul un pas si testeaza 5 pufuri','ridica sau coboara coilul cu aproximativ 0.5 mm','urca puterea in pasi mici, fara sa incalzesti excesiv vaporul'],fixes:['foloseste SS316L 30-31 GA sau K1 29 GA pentru contur','redu diametrul coilului la 2.0-2.5 mm in camere compacte','alege camera mai concentrata pentru tutun simplu','pentru NET complex cauta separare, nu doar caldura'],atomizer:'Atomizorul devine suspect cand mai multe builduri corecte raman plate cu acelasi profil de lichid.'},
+  {id:'P03',cat:'profile',priority:true,title:'Tutun prea dulce / prea rotund',tag:'dulceata excesiva',moment:'Apare la RY4, pipe, Cavendish, creme sau tutunuri aromatizate.',type:'Camera rotunjeste prea mult, coilul e cald sau sarma indulceste profilul.',causes:['Ni80 sau Clapton prea masiv','airflow prea inchis si vapor prea cald','lichid deja dulce amplificat de camera','putere peste zona de claritate'],tests:['scade puterea si deschide airflow-ul un pas','compara cu K1 29 GA sau SS316L simplu','testeaza coil simplu in loc de Clapton'],fixes:['K1 29 GA pentru uscaciune si contur','SS316L 30 GA pentru claritate','evita Clapton gros pe lichide deja dulci','alege atomizor cu separare si camera mai putin rotunjita'],atomizer:'Schimbarea atomizorului are sens cand lichidul ramane lipicios si rotund si pe builduri simple, mai reci.'},
+  {id:'P04',cat:'feeding',priority:true,title:'NET greu, gust inchis, coil murdar rapid',tag:'NET incarcat',moment:'Apare dupa 1-3 ml sau chiar mai repede la extracte inchise.',type:'Reziduu natural, temperatura ridicata, sweetener sau coil cu masa mare.',causes:['NET inchis sau organic cu particule aromatice dense','putere prea mare si caramelizare accelerata','Clapton sau coil cu suprafata mare','bumbac incalzit prea mult intre pufuri'],tests:['scade puterea si verifica daca gustul ramane mai curat','foloseste coil simplu K1/SS in loc de complex','schimba bumbacul si compara dupa acelasi volum de lichid'],fixes:['K1 28-29 GA sau SS316L 30 GA pentru setup mai curat','TC cu NiFe30 pentru temperatura constanta','evita coilurile grele pe NET complex','accepta rewick mai des la NET-uri inchise'],atomizer:'Atomizorul se schimba doar daca alimentarea, camera si airflow-ul incarca lichidul in mod repetat fata de alte modele.'},
+  {id:'P05',cat:'profile',priority:true,title:'Latakia prea agresiva / afumatul acopera tot',tag:'fum dominant',moment:'Apare la English, Balkan, Latakia, Kentucky afumat sau blenduri dark.',type:'Temperatura prea mare, camera comprimata sau airflow prea strans.',causes:['coil prea cald si prea aproape de airflow','camera concentreaza fumul in detrimentul notelor secundare','sarma cu corp prea mare','airflow inchis excesiv'],tests:['deschide airflow-ul un pas si scade 1 W','coboara temperatura in TC cu 5-10 C','testeaza SS316L simplu sau NiFe30 TC'],fixes:['SS316L 30 GA pentru separare','NiFe30 TC pentru controlul fumului','coil 2.0-2.5 mm, masa moderata','camera cu airflow lateral sau mixt poate calma asprimea'],atomizer:'Are sens alt atomizor cand Latakia ramane monolitica dupa reducerea temperaturii si a masei coilului.'},
+  {id:'P06',cat:'flavor',priority:true,title:'Virginia / Oriental fara claritate',tag:'note luminoase plate',moment:'Apare la tutunuri bright, floral-citrice, Oriental, Izmir sau Samsun.',type:'Prea multa caldura, camera prea rotunda sau coil prea mare.',causes:['build 2.5-3.0 mm intr-o camera compacta','airflow insuficient pentru note fine','K1 prea gros sau Clapton care rotunjeste','lichid supraincalzit'],tests:['redu diametrul coilului la 2.0 mm','testeaza SS316L 30-31 GA','deschide airflow-ul fin, fara sa diluezi complet'],fixes:['SS316L pentru claritate','K1 29-30 GA pentru contur sec','coil simplu spaced, masa mica','atomizor cu camera precisa si airflow curat'],atomizer:'Schimbarea are sens cand atomizorul adauga constant rotunjime si pierde notele de varf.'},
+  {id:'P07',cat:'profile',priority:false,title:'Burley / cigar prea uscat, amar sau aspru',tag:'amar / sec excesiv',moment:'Apare la Burley, cigar, Kentucky, Maduro sau tutunuri seci.',type:'Temperatura ridicata, hit prea dur sau camera prea concentrata.',causes:['nicotina sau PG prea sus','coil prea aproape de airflow','K1 prea subtire pe lichid deja sec','airflow prea strans'],tests:['deschide airflow-ul si coboara puterea','testeaza K1 28 GA in loc de 29-30 GA','verifica daca nicotina accentueaza asprimea'],fixes:['K1 28 GA pentru corp curat','NiFe30 TC pentru limitarea caldurii','camera cu volum moderat daca cigarul e prea aspru','evita temperaturile mari si pufurile prea lungi'],atomizer:'Alt atomizor ajuta daca lichidul are nevoie de corp si camera actuala il face mereu amar.'},
+  {id:'P08',cat:'stability',priority:true,title:'Gust metalic',tag:'contact / coil',moment:'Apare imediat dupa build, dupa dry-burn sau cand rezistenta fluctueaza.',type:'Hotspot, contact slab, wire contaminat sau dry-burn prea agresiv.',causes:['coil neuniform sau hotspoturi','suruburi slabite','picioare de coil prea lungi','sarma incalzita excesiv la curatare'],tests:['verifica ohmii la rece si miscarea valorii','strange suruburile si curata contactele','pulseaza minim la putere mica doar pentru stabilizare'],fixes:['refa coil spaced simplu','taie picioarele coilului aproape de posturi','spala atomizorul si schimba bumbacul','in TC initializeaza doar la rece'],atomizer:'Daca problema continua cu build nou si contacte curate, se verifica pinul 510 si izolatorii atomizorului.'},
+  {id:'P09',cat:'feeding',priority:false,title:'Gust de bumbac / gust nou',tag:'wick nou',moment:'Apare la primele pufuri dupa schimbarea bumbacului.',type:'Bumbac neimbibat complet, prea strans sau lichid insuficient in fibra.',causes:['wick neamorsat','capete prea compacte','putere prea mare la primele pufuri','bumbac cu gust initial pronuntat'],tests:['lasa wickul imbibat cateva minute','fa primele pufuri la putere mai mica','verifica daca gustul dispare dupa 10-15 pufuri'],fixes:['amorseaza bine bumbacul inainte de inchidere','aeriseste capetele fara sa le golesti complet','foloseste bumbac curat pentru MTL','creste puterea progresiv'],atomizer:'Nu indica atomizor gresit daca dispare dupa amorsare si cateva pufuri controlate.'},
+  {id:'P10',cat:'flooding',priority:true,title:'Gurgling / bolboroseala',tag:'exces lichid',moment:'Apare dupa refill, dupa pauza sau cand atomizorul sta inclinat.',type:'Prea mult lichid in camera sau sub coil.',causes:['bumbac prea putin in canale','vid pierdut dupa refill','putere prea mica pentru alimentare','condens acumulat in airflow'],tests:['curata airflow-ul si drip tipul','ridica puterea usor pentru cateva pufuri','verifica daca apare imediat dupa refill'],fixes:['adauga usor suport in canale, fara sa blochezi alimentarea','inchide airflow/juice control la refill daca modelul permite','nu supraumple rezervorul','verifica garniturile si montajul tankului'],atomizer:'Atomizorul devine suspect daca vidul se pierde constant desi garniturile si wickul sunt corecte.'},
+  {id:'P11',cat:'flooding',priority:true,title:'Spitback / lichid in gura',tag:'lichid pe coil',moment:'Apare la primele pufuri sau dupa pauza.',type:'Coil inundat, putere mica, airflow condensat sau lichid prea fluid.',causes:['prea putin bumbac sub coil','coil jos si lichid acumulat','PG ridicat sau lichid foarte fluid','putere insuficienta pentru evaporare'],tests:['creste usor puterea','curata condensul si sufla foarte usor prin atomizor','verifica daca se repeta dupa pauze lungi'],fixes:['mai mult suport de bumbac in zona coilului','pozitioneaza coilul putin mai sus daca modelul permite','foloseste drip tip mai potrivit pentru condens','verifica garniturile si refillul'],atomizer:'Daca designul condenseaza constant si scuipa cu builduri corecte, se alege un model mai stabil pe alimentare.'},
+  {id:'P12',cat:'flooding',priority:false,title:'Condens excesiv',tag:'condens',moment:'Apare in drip tip, sub top cap sau pe airflow dupa sesiuni scurte.',type:'Vapor prea rece, airflow umed sau pufuri scurte care lasa vapori neevaporati.',causes:['putere prea mica','drip tip rece sau lung','airflow prea inchis','pauze dese cu vapor ramas in camera'],tests:['creste puterea cu 0.5-1 W','curata drip tipul si airflow-ul','testeaza puf usor mai lung si constant'],fixes:['drip tip cu diametru interior potrivit','putere putin mai sus, fara sa arzi wickul','curatarea periodica a condensului','coil aliniat cu airflow-ul'],atomizer:'Se schimba doar daca geometria produce condens deranjant indiferent de setari.'},
+  {id:'P13',cat:'flooding',priority:true,title:'RTA curge pe airflow dupa refill',tag:'pierdere vid',moment:'Apare imediat dupa umplere sau la cateva minute.',type:'Vid pierdut, wick insuficient sau refill facut cu airflow deschis.',causes:['capete de bumbac prea subtiri in canale','garnituri uzate sau montate gresit','top cap inchis fara control al presiunii','lichid prea fluid pentru canale'],tests:['refill cu airflow inchis si atomizorul drept','verifica o-ringurile si sticla','testeaza putin mai mult bumbac in canale'],fixes:['echilibreaza bumbacul: suficient pentru etansare, nu compact','verifica montajul tankului si filetul','nu umple peste limita utila','la modele cu juice control, inchide la refill'],atomizer:'Schimbarea are sens daca sistemul de refill pierde constant vidul cu wick si garnituri corecte.'},
+  {id:'P14',cat:'flooding',priority:false,title:'Scurgere lenta peste noapte',tag:'scurgere pasiva',moment:'Apare dupa ore de repaus.',type:'Lichid trece lent prin wick sau vidul se pierde in repaus.',causes:['bumbac prea putin','lichid foarte fluid','garnituri slabite','temperatura ambientala schimbata'],tests:['depoziteaza atomizorul vertical','verifica daca apare cu alt lichid mai vascos','verifica garniturile si inchiderea rezervorului'],fixes:['mai mult suport in canale','lichid 50/50 sau 60/40 adaptat atomizorului','inlocuire garnituri daca sunt uzate','nu lasa rezervorul complet plin in caldura'],atomizer:'Daca un model curge pasiv in mod repetat, se prefera unul cu etansare si vacuum mai stabile.'},
+  {id:'P15',cat:'flooding',priority:false,title:'Pocnituri puternice',tag:'evaporare brusca',moment:'Apare cand lichidul se strange pe coil si se evapora brusc.',type:'Coil inundat, putere nepotrivita sau spire neuniforme.',causes:['wick prea lejer','putere prea mica apoi crestere brusca','coil cu hotspoturi','lichid prea fluid'],tests:['curata excesul si testeaza putere constanta','verifica uniformitatea coilului','testeaza un puf de pornire mai bland'],fixes:['stabilizeaza coilul spaced','mai mult control de bumbac sub coil','ajusteaza puterea in pasi mici','verifica airflow-ul pentru condens'],atomizer:'De regula nu cere schimbare de atomizor daca wickul si coilul se pot stabiliza.'},
+  {id:'P16',cat:'profile',priority:false,title:'Vapor prea cald / hit prea dur',tag:'caldura excesiva',moment:'Apare la pufuri lungi, airflow inchis sau lichide cu nicotina mai mare.',type:'Putere prea mare, coil prea masiv, airflow strans sau camera compacta.',causes:['wattaj ridicat','coil 27-28 GA prea cald pentru lichid','airflow inchis excesiv','nicotina/PG amplifica hitul'],tests:['scade puterea cu 1-2 W','deschide airflow-ul un pas','testeaza coil mai subtire sau diametru mai mic'],fixes:['K1 29-30 GA sau SS316L 30-31 GA','TC cu NiFe30/SS pentru limitare caldura','coil pozitionat corect in fata aerului','alege lichid mai fluid sau nicotina mai potrivita'],atomizer:'Alt atomizor ajuta daca actualul concentreaza prea mult caldura pentru stilul de puf.'},
+  {id:'P17',cat:'flavor',priority:false,title:'Vapor prea rece / aroma subtire',tag:'energie insuficienta',moment:'Apare la putere mica, airflow deschis sau coil cu masa prea mare.',type:'Coil nu ajunge in zona buna de evaporare.',causes:['wattaj prea mic','airflow prea deschis','coil cu masa mare si ramp-up lent','lichid cu VG mare in setup rece'],tests:['urca puterea in pasi de 0.5-1 W','inchide airflow-ul fin','testeaza wire mai subtire sau Ni80/K1 potrivit'],fixes:['build mai usor sau diametru 2.0-2.5 mm','Ni80 simplu pentru ramp rapid in wattage','K1 28 GA cand se cere corp','airflow mai concentrat'],atomizer:'Se schimba daca atomizorul ramane prea aerat sau rece chiar pe builduri rapide.'},
+  {id:'P18',cat:'stability',priority:false,title:'Rezistenta instabila / ohmi fluctuanti',tag:'contact instabil',moment:'Apare la infiletare, dupa incalzire sau cand misti atomizorul.',type:'Contact mecanic slab, pin 510, suruburi sau picioare de coil.',causes:['suruburi nestranse','pin 510 murdar sau mobil','picioare de coil atinse de camera','spire care se ating accidental'],tests:['verifica ohmii la rece si dupa miscarea atomizorului','strange posturile si curata pinul','inspecteaza daca picioarele coilului ating clopotul'],fixes:['refa coilul cu picioare scurte','curata filetul si contactele','verifica izolatorii si pinul 510','evita microcoil in TC'],atomizer:'Daca fluctuatiile raman fara legatura cu buildul, se verifica atomizorul mecanic inainte de folosire.'},
+  {id:'P19',cat:'stability',priority:true,title:'TC intra prea repede in protectie',tag:'TC / TCR',moment:'Apare imediat la puf sau dupa cateva secunde, cu putere taiata.',type:'Rezistenta initiala gresita, TCR nepotrivit, wick insuficient sau contact instabil.',causes:['atomizor initializat cald','profil SS/NiFe gresit','coil cu contacte intre spire','bumbac prea strans si uscat'],tests:['lasa atomizorul 15 minute la temperatura camerei si reciteste rezistenta','verifica spaced coil si suruburile','testeaza 210-220 C cu putere limita moderata'],fixes:['NiFe30 cu profil/TCR corect pentru TC fin','SS316L numai pe chipset stabil','coil spaced simplu, fara Clapton greu','wick aerisit si alimentare constanta'],atomizer:'Daca TC ramane imprevizibil cu build simplu si contacte curate, se verifica 510-ul si stabilitatea atomizorului.'},
+  {id:'P20',cat:'stability',priority:false,title:'Coil se incalzeste prea lent / ramp-up lent',tag:'masa prea mare',moment:'Apare la coil gros, Clapton sau diametru mare.',type:'Masa coilului depaseste puterea si airflow-ul MTL.',causes:['Clapton/fused prea greu','27-28 GA prea masiv in camera mica','putere limitata pe mod','airflow prea strans pentru coil'],tests:['compara cu wire simplu 29-30 GA','scade diametrul interior','creste usor puterea doar daca wickul tine pasul'],fixes:['coil simplu K1/SS/Ni80 in loc de complex','diametru 2.0-2.5 mm','mai putine spire daca rezistenta permite','Clapton fin doar pe lichide foarte seci si camere potrivite'],atomizer:'Daca deckul cere coil mare si modul nu il sustine, se alege un atomizor mai potrivit pentru builduri fine.'},
+  {id:'P21',cat:'feeding',priority:true,title:'Aroma foarte buna la inceput, apoi cade rapid',tag:'saturatie / gunk',moment:'Apare dupa cateva pufuri sau dupa primul ml.',type:'Bumbac incarcat, temperatura urca, airflow se condenseaza sau lichidul satureaza coilul.',causes:['NET sau dulceata incarca wickul','putere prea mare in timp','coil retine caldura','condens in camera'],tests:['pauza 1 minut: daca aroma revine, alimentarea sau temperatura sunt cauza','scade puterea si curata condensul','verifica bumbacul dupa volum egal de lichid'],fixes:['TC sau putere mai joasa pentru stabilitate','wire simplu cu masa moderata','rewick mai des la NET-uri grele','airflow putin mai deschis pentru racire'],atomizer:'Alt atomizor ajuta daca aceeasi cadere apare repetat numai in camera actuala.'},
+  {id:'P22',cat:'airflow',priority:false,title:'Whistle / airflow zgomotos',tag:'turbulenta',moment:'Apare la anumite deschideri de airflow sau cu drip tip specific.',type:'Aerul trece prin muchii, inserturi sau condens.',causes:['insert airflow partial aliniat','condens in canal','coil prea aproape de airflow','drip tip nepotrivit'],tests:['schimba deschiderea airflow-ului cu un pas','curata condensul','testeaza alt drip tip'],fixes:['aliniaza corect insertul daca modelul permite','muta coilul usor in raport cu jetul de aer','curata periodic airflow-ul','alege deschiderea care nu produce turbulenta'],atomizer:'Daca fluieratul este structural si deranjant pe toate setarile, se prefera un airflow mai lin.'},
+  {id:'P23',cat:'airflow',priority:false,title:'Draw prea strans / senzatie blocata',tag:'airflow restrictionat',moment:'Apare cand puful cere prea mult efort sau aroma devine incalzita.',type:'Insert prea mic, condens, coil blocand fluxul sau wick prea aproape de aer.',causes:['pin airflow subdimensionat','condens in canal','coil prea jos','bumbac atinge zona de airflow'],tests:['deschide airflow-ul sau schimba pinul','curata baza si drip tipul','ridica putin coilul daca este prea jos'],fixes:['pin airflow mai mare','coil centrat fara sa acopere aerul','bumbac asezat departe de intrarea aerului','drip tip cu diametru interior potrivit'],atomizer:'Daca atomizorul ramane prea strans pentru stilul de puf, se alege un model cu plaja mai larga.'},
+  {id:'P24',cat:'airflow',priority:false,title:'Draw prea aerat / aroma diluata',tag:'aer prea mult',moment:'Apare cand puful este usor, dar aroma pare subtire.',type:'Airflow prea deschis sau camera prea aerata pentru lichid.',causes:['pin prea mare','airflow lateral prea larg','coil mic intr-o camera mare','putere prea mica pentru aerul disponibil'],tests:['inchide airflow-ul treptat','ridica putin puterea daca wickul permite','testeaza coil cu putin mai mult corp'],fixes:['pin mai mic sau reglaj mai strans','K1 28 GA pentru corp sau K1 29 GA pentru contur','pozitie coil mai aproape de aer','camera mai concentrata pentru tutun simplu'],atomizer:'Alt atomizor ajuta cand modelul nu poate oferi restrictia necesara fara turbulenta.'},
+  {id:'P25',cat:'profile',priority:false,title:'Gust de plastic / o-ring / ulei de fabricatie',tag:'contaminare initiala',moment:'Apare la atomizor nou sau dupa schimbare de garnituri.',type:'Reziduuri de fabricatie, garnituri noi sau piese nespalate.',causes:['ulei de prelucrare ramas pe piese','o-ring nou cu miros','tank sau drip tip nespalat','bumbac contaminat la montaj'],tests:['spala complet piesele si lasa-le sa se usuce','schimba bumbacul dupa spalare','testeaza cu lichid cunoscut'],fixes:['curatare completa a atomizorului inainte de prima folosire','inlocuire o-ring suspect daca mirosul persista','evita dry-burn agresiv pentru mascarea mirosului','foloseste maini/scule curate la wick'],atomizer:'Nu se evalueaza aromatic un atomizor pana nu este curatat si stabilizat.'},
+  {id:'P26',cat:'stability',priority:false,title:'Aroma inconsistenta intre zile',tag:'variabile schimbate',moment:'Apare fara schimbari evidente de lichid sau atomizor.',type:'Temperatura mediului, bumbac, nivel tank, oxidare, baterie sau stil de puf.',causes:['lichid mai vascos la rece','bumbac schimbat sau imbatranit','nivel tank diferit','baterie/mod cu livrare variabila'],tests:['noteaza putere, airflow, lichid si varsta wickului','testeaza la acelasi nivel de tank','curata condensul si verifica ohmii'],fixes:['standardizeaza un setup de referinta','schimba un singur parametru pe rand','foloseste TC cand se cauta repetabilitate','pastreaza lichidele in conditii constante'],atomizer:'Atomizorul se schimba doar dupa ce variabilele de utilizare sunt controlate.'},
+  {id:'P27',cat:'flavor',priority:false,title:'Nu este clar daca problema e lichidul, buildul sau atomizorul',tag:'diagnostic comparativ',moment:'Apare cand acelasi lichid se comporta diferit sau nu exista reper.',type:'Lipsa unui test A/B controlat.',causes:['prea multe schimbari simultane','lichid necunoscut','build fara reper anterior','atomizor nou neverificat'],tests:['testeaza un lichid cunoscut in atomizorul actual','testeaza lichidul problematic intr-un atomizor cunoscut','pastreaza aceeasi sarma, diametru si putere pentru comparatie'],fixes:['construieste un setup de referinta cu K1 29 GA sau SS316L 30 GA','noteaza rezultatul dupa 10 pufuri si dupa 1 ml','schimba apoi doar sarma sau atomizorul','foloseste Recomandare dupa ce simptomul e clar'],atomizer:'Concluzia despre atomizor se trage doar dupa comparatie cu lichid si build de referinta.'}
+];
+var selectedDiagnostic='P01';
+var diagnosticFilter='priority';
+function diagnosticCaseById(id){return DIAGNOSTIC_CASES.find(function(d){return d.id===id})||DIAGNOSTIC_CASES[0]}
+function diagnosticCategoryLabel(cat){var c=DIAGNOSTIC_CATEGORIES.find(function(x){return x.id===cat});return c?c.label:'Diagnostic'}
+function diagnosticSearchText(d){return norm([d.id,d.title,d.tag,d.moment,d.type,(d.causes||[]).join(' '),(d.tests||[]).join(' '),(d.fixes||[]).join(' '),d.atomizer,diagnosticCategoryLabel(d.cat)].join(' '))}
+function diagnosticVisibleCases(){var q=norm($('diagnosticSearch')?$('diagnosticSearch').value:'');return DIAGNOSTIC_CASES.filter(function(d){var filterOk=diagnosticFilter==='all'||(diagnosticFilter==='priority'?d.priority:d.cat===diagnosticFilter);return filterOk&&(!q||diagnosticSearchText(d).indexOf(q)>=0)}).sort(function(a,b){return (b.priority===true)-(a.priority===true)||a.id.localeCompare(b.id)})}
+function diagnosticList(title,items){return '<div class="diagnostic-tile"><b>'+esc(title)+'</b><ul>'+items.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>'}
+function renderDiagnosticFilters(){var box=$('diagnosticFilters');if(!box)return;var opts=[{id:'all',label:'Toate'}].concat(DIAGNOSTIC_CATEGORIES);box.innerHTML=opts.map(function(c){return '<button type="button" class="diagnostic-filter'+(diagnosticFilter===c.id?' active':'')+'" data-diagnostic-filter="'+esc(c.id)+'">'+esc(c.label)+'</button>'}).join('')}
+function renderDiagnosticPicker(){var list=$('diagnosticSymptomList');if(!list)return;var rows=diagnosticVisibleCases();list.innerHTML=rows.length?rows.map(function(d){return '<button type="button" class="diagnostic-symptom'+(d.id===selectedDiagnostic?' active':'')+'" data-diagnostic-id="'+esc(d.id)+'"><span class="diagnostic-code">'+esc(d.id)+'</span><span><b>'+esc(d.title)+'</b><small>'+esc(d.tag+' - '+diagnosticCategoryLabel(d.cat))+'</small></span></button>'}).join(''):'<div class="empty">Nu exista rezultate clare pentru filtrul ales.</div>';list.querySelectorAll('[data-diagnostic-id]').forEach(function(btn){btn.onclick=function(){selectDiagnostic(btn.dataset.diagnosticId)}});if(window.__rtaLang==='en')applyLanguage(list)}
+function renderDiagnosticDetail(){var box=$('diagnosticDetail');if(!box)return;var d=diagnosticCaseById(selectedDiagnostic);box.innerHTML='<article class="diagnostic-panel"><div class="diagnostic-badges"><span class="chip warn">'+esc(d.id)+'</span><span class="chip cold">'+esc(d.tag)+'</span><span class="chip neutral">'+esc(diagnosticCategoryLabel(d.cat))+'</span></div><h3>'+esc(d.title)+'</h3><p class="why">'+esc(d.moment)+'</p><div class="diagnostic-card-grid"><div class="diagnostic-tile"><b>Tip problema</b><p>'+esc(d.type)+'</p></div>'+diagnosticList('Cauze probabile',d.causes)+diagnosticList('Teste rapide',d.tests)+diagnosticList('Corectii graduale',d.fixes)+'<div class="diagnostic-tile"><b>Cand se evalueaza atomizorul</b><p>'+esc(d.atomizer)+'</p></div></div><div class="diagnostic-cta"><button class="mini-link" type="button" data-jump="recommender">Mergi la Recomandare</button><button class="mini-link" type="button" data-jump="wires">Verifica sarmele</button><button class="mini-link" type="button" data-jump="tcGuide">Ghid TC</button><button class="mini-link" type="button" data-jump="consumables">Consumabile RTA</button></div></article>';box.querySelectorAll('[data-jump]').forEach(function(btn){btn.onclick=function(){goTab(btn.dataset.jump)}});if(window.__rtaLang==='en')applyLanguage(box)}
+function selectDiagnostic(id){selectedDiagnostic=id;renderDiagnosticPicker();renderDiagnosticDetail()}
+function initDiagnostic(){renderDiagnosticFilters();renderDiagnosticPicker();renderDiagnosticDetail();var search=$('diagnosticSearch');if(search&&!search.dataset.ready){search.dataset.ready='1';search.addEventListener('input',function(){renderDiagnosticPicker()})}var filters=$('diagnosticFilters');if(filters&&!filters.dataset.ready){filters.dataset.ready='1';filters.addEventListener('click',function(e){var b=e.target.closest('[data-diagnostic-filter]');if(!b)return;diagnosticFilter=b.dataset.diagnosticFilter;renderDiagnosticFilters();renderDiagnosticPicker()})}document.querySelectorAll('[data-diagnostic-preset]').forEach(function(btn){if(btn.dataset.ready)return;btn.dataset.ready='1';btn.addEventListener('click',function(){diagnosticFilter='all';renderDiagnosticFilters();selectDiagnostic(btn.dataset.diagnosticPreset)})})}
+var DIAGNOSTIC_SEARCH_TEXT='diagnostic gust rta mtl gust ars dry hit aroma slaba muta net murdar coil incarcat latakia agresiva virginia oriental claritate burley cigar amar gust metalic gust de bumbac gurgling bolboroseala spitback condens curge airflow refill scurgere pocnituri vapor cald rece rezistenta instabila ohmi tc protectie ramp up whistle draw strans aerat plastic o-ring ulei fabricatie inconsistent lichid build atomizor';
+function diagnosticSearchResult(q){return {tab:'diagnostic',route:'diagnostic',title:'Diagnostic gust RTA MTL',meta:'Simptom, cauze probabile, teste rapide si corectii graduale',query:q,score:fieldScore(q,[[DIAGNOSTIC_SEARCH_TEXT,46],[DIAGNOSTIC_CASES.map(diagnosticSearchText).join(' '),34]])}}
 var CONSUMABLE_GROUPS=[
   {id:'wires',title:'Sarme si coiluri RTA',note:'Fire, role si rezistente MTL utile pentru rebuildable.',terms:['Ni80','SS316L','NiFe30','Kanthal','clapton','MTL coil','rola wire'],categoryIds:[198,293]},
   {id:'cotton',title:'Bumbac RTA',note:'Bumbac, shoelace si fibre pentru wick stabil.',terms:['bumbac','cotton'],categoryIds:[293,77]},
@@ -3625,17 +3852,18 @@ function searchBuckets(q){var nq=norm(q);return {
   wires:WIRE_GUIDE.map(function(w){return {w:w,score:scoreWire(w,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||x.w.name.localeCompare(y.w.name)}).slice(0,8).map(function(x){return {tab:'wires',title:x.w.name,meta:'Sarma - '+x.w.role,query:q,score:x.score}}),
   consumables:consumableSearchResults(q),
   registry:registrySearchResults(q),
+  diagnostic:[diagnosticSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   guides:[guidesSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   methodology:[methodologySearchResult(q)].filter(function(x){return !nq||x.score>0}),
   liquidGuide:[liquidGuideSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   legislativ:[legislativeSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   sources:atomizers.map(function(a){return {a:a,score:scoreSource(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'sources',title:publicAtomName(x.a),meta:'Recenzii si builduri',query:q,score:x.score}})
 }}
-function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,liquids:2,wires:3,consumables:4,registry:5,guides:6,methodology:7,liquidGuide:8,legislativ:9,tcGuide:10,sources:11};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
+function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,liquids:2,wires:3,diagnostic:4,consumables:5,registry:6,guides:7,methodology:8,liquidGuide:9,legislativ:10,tcGuide:11,sources:12};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
 function bestSearchMode(q,b){if(searchMode!=='auto')return searchMode;var first=autoSearchList(q,b)[0];return first?first.tab:'atomizers'}
 function applySearch(item){var q=item.query||$('globalSearch').value.trim();if(item.liquidGroup&&item.liquidSub){liquidCatalogFilters[item.liquidGroup]=item.liquidSub;renderLiquidCatalog(liquidCatalogState,'filtrat')}if(item.route){hideSearchPanel();setRoute(item.route);return}if(item.tab==='wires'){if($('wireSearch')){$('wireSearch').value=q;renderWires()}}else if(item.tab==='profiles'){if($('profileSearch')){$('profileSearch').value=q;renderProfiles()}}else if(item.tab==='sources'){if($('sourceSearch')){$('sourceSearch').value=q;renderSources()}}else if(item.tab==='liquids'){renderLiquidCatalog(liquidCatalogState,'filtrat')}else{if($('atomSearch')){$('atomSearch').value=q;selectedRole='all';renderAtomizers()}}goTab(item.tab);hideSearchPanel()}
 function hideSearchPanel(){var p=$('searchPanel');if(p)p.classList.remove('active')}
-function renderSearchPanel(){var box=$('globalSearch');var panel=$('searchPanel');if(!box||!panel)return;var q=box.value.trim();var modes=$('searchModes');modes.innerHTML=SEARCH_MODES.map(function(m){return '<button class="search-mode'+(searchMode===m.id?' active':'')+'" type="button" data-search-mode="'+esc(m.id)+'">'+esc(m.label)+'</button>'}).join('');if(!q){$('searchResults').innerHTML='<div class="search-empty">Scrie un model, un lichid, un consumabil, calculatorul, o sarma sau o recenzie.</div>';panel.classList.add('active');return}var b=searchBuckets(q);var list=searchMode==='auto'?autoSearchList(q,b):(b[searchMode]||[]);if(!list.length){$('searchResults').innerHTML='<div class="search-empty">Nu exista rezultate clare. Incearca un termen mai specific.</div>';panel.classList.add('active');return}$('searchResults').innerHTML=list.map(function(item,i){return '<button class="search-result" type="button" data-search-result="'+i+'"><b>'+esc(item.title)+'</b><small>'+esc(item.meta)+'</small></button>'}).join('');$('searchResults').querySelectorAll('[data-search-result]').forEach(function(btn){btn.onclick=function(){applySearch(list[parseInt(btn.dataset.searchResult,10)])}});panel.classList.add('active')}
+function renderSearchPanel(){var box=$('globalSearch');var panel=$('searchPanel');if(!box||!panel)return;var q=box.value.trim();var modes=$('searchModes');modes.innerHTML=SEARCH_MODES.map(function(m){return '<button class="search-mode'+(searchMode===m.id?' active':'')+'" type="button" data-search-mode="'+esc(m.id)+'">'+esc(m.label)+'</button>'}).join('');if(!q){$('searchResults').innerHTML='<div class="search-empty">Scrie un diagnostic, un model, un lichid, un consumabil, calculatorul, o sarma sau o recenzie.</div>';panel.classList.add('active');return}var b=searchBuckets(q);var list=searchMode==='auto'?autoSearchList(q,b):(b[searchMode]||[]);if(!list.length){$('searchResults').innerHTML='<div class="search-empty">Nu exista rezultate clare. Incearca un termen mai specific.</div>';panel.classList.add('active');return}$('searchResults').innerHTML=list.map(function(item,i){return '<button class="search-result" type="button" data-search-result="'+i+'"><b>'+esc(item.title)+'</b><small>'+esc(item.meta)+'</small></button>'}).join('');$('searchResults').querySelectorAll('[data-search-result]').forEach(function(btn){btn.onclick=function(){applySearch(list[parseInt(btn.dataset.searchResult,10)])}});panel.classList.add('active')}
 function initGlobalSearch(){var box=$('globalSearch');if(!box)return;$('searchModes').addEventListener('click',function(e){var b=e.target.closest('[data-search-mode]');if(!b)return;searchMode=b.dataset.searchMode;renderSearchPanel()});box.addEventListener('input',renderSearchPanel);box.addEventListener('focus',renderSearchPanel);box.addEventListener('keydown',function(e){if(e.key==='Escape'){hideSearchPanel();return}if(e.key!=='Enter')return;var q=box.value.trim();if(!q){goTab('recommender');hideSearchPanel();return}var buckets=searchBuckets(q);var mode=bestSearchMode(q,buckets);var list=searchMode==='auto'?autoSearchList(q,buckets):(buckets[mode]||[]);var first=list[0]||{tab:mode,query:q};applySearch(first)});document.addEventListener('click',function(e){if(!e.target.closest('.site-search'))hideSearchPanel()});try{var incoming=new URLSearchParams(location.search).get('q');if(incoming){box.value=incoming.trim();setTimeout(renderSearchPanel,120)}}catch(e){}}
 function mixNum(id,fallback){var el=$(id);var n=el?parseFloat(el.value):NaN;return isFinite(n)?n:fallback}
 function clampNum(n,min,max){return Math.max(min,Math.min(max,n))}
@@ -3707,8 +3935,8 @@ function initLiquidCalculator(){
 }
 var renderedSections={};
 var appPrepStarted=false;
-var APP_PREP_SECTIONS=['home','recommender','atomizers','profiles','wires','liquids','consumables','registry','sources','liquidGuide'];
-function ensureSectionRendered(id){if(id==='home'&&!renderedSections.home){renderMetrics();renderRoleMini();renderSupplierShowcase(liquidCatalogState);renderedSections.home=true;return}if(id==='recommender'&&!renderedSections.recommender){initRecommender();renderedSections.recommender=true;return}if(id==='atomizers'&&!renderedSections.atomizers){renderAtomizers();renderedSections.atomizers=true;return}if(id==='profiles'&&!renderedSections.profiles){renderProfiles();renderedSections.profiles=true;return}if(id==='wires'&&!renderedSections.wires){renderWires();renderedSections.wires=true;return}if(id==='liquids'&&!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true;return}if(id==='consumables'&&!renderedSections.consumables){initConsumables();renderedSections.consumables=true;return}if(id==='registry'&&!renderedSections.registry){if(!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true}if(!renderedSections.consumables){initConsumables();renderedSections.consumables=true}renderRegistry();renderedSections.registry=true;return}if(id==='sources'&&!renderedSections.sources){renderSources();renderedSections.sources=true;return}if(id==='liquidGuide'&&!renderedSections.liquidGuide){initLiquidCalculator();renderedSections.liquidGuide=true;return}}
+var APP_PREP_SECTIONS=['home','diagnostic','recommender','atomizers','profiles','wires','liquids','consumables','registry','sources','liquidGuide'];
+function ensureSectionRendered(id){if(id==='home'&&!renderedSections.home){renderMetrics();renderRoleMini();renderSupplierShowcase(liquidCatalogState);renderedSections.home=true;return}if(id==='diagnostic'&&!renderedSections.diagnostic){initDiagnostic();renderedSections.diagnostic=true;return}if(id==='recommender'&&!renderedSections.recommender){initRecommender();renderedSections.recommender=true;return}if(id==='atomizers'&&!renderedSections.atomizers){renderAtomizers();renderedSections.atomizers=true;return}if(id==='profiles'&&!renderedSections.profiles){renderProfiles();renderedSections.profiles=true;return}if(id==='wires'&&!renderedSections.wires){renderWires();renderedSections.wires=true;return}if(id==='liquids'&&!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true;return}if(id==='consumables'&&!renderedSections.consumables){initConsumables();renderedSections.consumables=true;return}if(id==='registry'&&!renderedSections.registry){if(!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true}if(!renderedSections.consumables){initConsumables();renderedSections.consumables=true}renderRegistry();renderedSections.registry=true;return}if(id==='sources'&&!renderedSections.sources){renderSources();renderedSections.sources=true;return}if(id==='liquidGuide'&&!renderedSections.liquidGuide){initLiquidCalculator();renderedSections.liquidGuide=true;return}}
 function runPrepTask(fn,delay){setTimeout(function(){if(window.requestIdleCallback){requestIdleCallback(function(){fn()},{timeout:700})}else{fn()}},delay||0)}
 function prepareAppSections(done){if(appPrepStarted){if(done)done();return}appPrepStarted=true;var queue=APP_PREP_SECTIONS.filter(function(id){return !renderedSections[id]});var total=queue.length||1;function finish(){setAppPreparing(false);if(done)done()}function step(){if(!queue.length){finish();return}var doneCount=total-queue.length+1;var id=queue.shift();setAppPreparing(true,'Se incarca datele ghidului '+doneCount+' / '+total+'.');try{ensureSectionRendered(id)}catch(e){console.warn('Pregatire sectiune:',id,e)}runPrepTask(step,45)}runPrepTask(step,140)}
 function initAppContent(){setAppPreparing(true,'Se pregateste ghidul.');initLiveStatus();initVisitCounter();initNav();initGlobalSearch();initDetail();applyRoute(false);window.scrollTo(0,0);prepareAppSections()}
