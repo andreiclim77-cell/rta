@@ -788,6 +788,7 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .diagnostic-filter{border:1px solid #ded2bf;background:#fffaf3;color:#2a2118;border-radius:999px;padding:7px 9px;font-size:12px;font-weight:900}
 .diagnostic-filter.active{background:#111;color:#ffd889;border-color:#ffd889}
 .diagnostic-symptoms{display:grid;gap:7px;max-height:680px;overflow:auto;padding-right:2px}
+.diagnostic-assist + .diagnostic-symptoms{margin-top:-2px;max-height:430px;border:1px solid #f0e3cf;border-radius:8px;background:linear-gradient(180deg,#fff,#fffaf4);padding:7px;box-shadow:0 12px 24px rgba(0,0,0,.045),0 1px 0 rgba(255,255,255,.96) inset}
 .diagnostic-symptom{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px;align-items:start;border:1px solid #e4ded4;background:linear-gradient(180deg,#fff,#fffaf4);color:#1d1d1d;border-radius:8px;padding:9px;text-align:left;box-shadow:0 9px 18px rgba(0,0,0,.055),0 1px 0 rgba(255,255,255,.95) inset}
 .diagnostic-symptom:hover,.diagnostic-symptom.active{border-color:#ffb000;background:linear-gradient(135deg,#fff7e9,#eefaff)}
 .diagnostic-symptom.active{box-shadow:0 3px 0 rgba(0,0,0,.20),0 18px 36px rgba(255,176,0,.14),0 1px 0 rgba(255,255,255,.95) inset}
@@ -2085,9 +2086,9 @@ function rtaEarlyAccept(){
         </div>
         <input id="diagnosticSearch" class="diagnostic-search" type="search" placeholder="Cauta: dry hit, NET, curge, TC, airflow..." aria-label="Cautare diagnostic gust">
         <div class="diagnostic-assist" id="diagnosticAssist" aria-live="polite"></div>
+        <div class="diagnostic-symptoms" id="diagnosticSymptomList"></div>
         <div class="diagnostic-suggestions" id="diagnosticSuggestions" aria-label="Sugestii rapide diagnostic"></div>
         <div class="diagnostic-filter-row" id="diagnosticFilters" aria-label="Filtre diagnostic"></div>
-        <div class="diagnostic-symptoms" id="diagnosticSymptomList"></div>
       </aside>
       <div class="diagnostic-main">
         <div id="diagnosticDetail"></div>
