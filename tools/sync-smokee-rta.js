@@ -6,6 +6,12 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const INDEX_PATH = path.join(ROOT, 'index.html');
 const CATEGORY_URL = 'https://smokee.ro/product-category/atomizoare/';
+const STORE_PRODUCTS_URL = 'https://smokee.ro/wp-json/wc/store/v1/products';
+const ATOMIZER_CATEGORY_ID = 76;
+const STORE_PER_PAGE = 100;
+const STORE_PAGE_LIMIT = 8;
+const STORE_SEARCH_TERMS = ['RTA', 'atomizor RTA', 'MTL RTA'];
+const FETCH_TIMEOUT_MS = 25000;
 const START_MARKER = '/* AUTO-SMOKEE-RTA-START */';
 const END_MARKER = '/* AUTO-SMOKEE-RTA-END */';
 
@@ -128,24 +134,29 @@ function displayName(title) {
 }
 
 function isAccessoryText(value) {
-  return /\b(air pin|air-pin|set de pini|pinuri|pini airflow|glass|sticla|tank kit|short tank|glass tank|kit nano|nano kit|top refill|repair kit|evaporation chamber|chamber|insert|curl peek|rezistente|rezistenta|coil|coils|bumbac|cotton|mesh|drip tip|cap|bell cap|chimney|clopot|kit pentru|open mtl kit|tight mtl kit|accesoriu|dedicat pentru|spare|replacement|extensie|extender)\b/.test(norm(value));
+  return /\b(air pin|air-pin|set de pini|pinuri|pini airflow|glass|sticla|tank|tank kit|short tank|glass tank|kit nano|nano kit|top refill|repair kit|evaporation chamber|chamber|insert|curl peek|rezistente|rezistenta|coil|coils|bumbac|cotton|mesh|drip tip|cap|bell cap|chimney|clopot|kit pentru|open mtl kit|tight mtl kit|accesoriu|dedicat pentru|spare|replacement|extensie|extender|ring|beauty ring|decorative ring|accessory pack|spare pack)\b/.test(norm(value));
 }
 
 function isRtaCandidate(product) {
   const hay = norm([product.title, product.url, product.cardClass, product.cardText].join(' '));
+  const identity = norm([product.title, product.url, product.cardClass].join(' '));
   if (!/\brta\b/.test(hay)) return false;
+  if (!/(product_cat-atomizoare|\batomizoare\b)/.test(identity)) return false;
   if (/\b(product_cat-accesorii|product_cat-rezistente|product_cat-diy)\b/.test(hay)) return false;
-  if (isAccessoryText(product.title) || isAccessoryText(product.cardText)) return false;
-  if (/\b(pod|cartus|clearomizor|rda|rdta)\b/.test(hay) && !/\brta\b/.test(hay)) return false;
+  if (isAccessoryText(identity)) return false;
+  if (/\b(pod|cartus|cartridge|clearomizor|clearomizer|subohm|sub-ohm|rda|rdta|kit[-\s]|full kit)\b/.test(identity)) return false;
   return true;
 }
 
-function isConfirmedMtlRta(product, pageHtml) {
+function isConfirmedRta(product, pageHtml) {
   const pageText = productFocusText(pageHtml);
   const hay = norm([product.title, product.url, product.cardClass, product.cardText, pageText].join(' '));
+  const identity = norm([product.title, product.url, product.cardClass].join(' '));
   if (!/\brta\b/.test(hay)) return false;
-  if (isAccessoryText(hay)) return false;
+  if (isAccessoryText(identity)) return false;
+  if (/\b(pod|cartus|cartridge|clearomizor|clearomizer|subohm|sub-ohm|rda|rdta|kit[-\s]|full kit)\b/.test(identity)) return false;
   if (!/\bmtl\b|mouth[\s-]*to[\s-]*lung/.test(hay)) return false;
+  if (/\b(dl|direct lung|subohm|sub-ohm|cloud chasing|26\s*mm|nightmare|hellbeast|dead rabbit 3|dead rabbit 4)\b/.test(hay) && !/\bmtl\b/.test(hay)) return false;
   return true;
 }
 
@@ -203,15 +214,81 @@ function parseCategoryProducts(html) {
   return products;
 }
 
+function storeProductText(product) {
+  const categories = Array.isArray(product.categories) ? product.categories.map(c => `${c.name || ''} ${c.slug || ''}`).join(' ') : '';
+  const tags = Array.isArray(product.tags) ? product.tags.map(t => `${t.name || ''} ${t.slug || ''}`).join(' ') : '';
+  return stripTags([product.short_description, product.description, categories, tags].filter(Boolean).join(' '));
+}
+
+function isSmokeeNewProduct(product) {
+  return Array.isArray(product.categories) && product.categories.some(category => {
+    const text = norm(`${category.name || ''} ${category.slug || ''}`);
+    return /\bnoutati\b/.test(text);
+  });
+}
+
+function normalizeStoreProduct(product) {
+  const images = Array.isArray(product.images) ? product.images : [];
+  const firstImage = images.length ? (images[0].src || images[0].thumbnail || '') : '';
+  const categories = Array.isArray(product.categories) ? product.categories.map(c => `product_cat-${c.slug || ''} ${c.name || ''}`).join(' ') : '';
+  return {
+    title: stripTags(product.name || product.title || ''),
+    url: cleanUrl(product.permalink || product.url || ''),
+    image: absoluteUrl(firstImage),
+    cardClass: categories,
+    cardText: storeProductText(product),
+    newOnSmokee: isSmokeeNewProduct(product)
+  };
+}
+
 async function fetchText(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   const res = await fetch(url, {
+    signal: controller.signal,
     headers: {
       'user-agent': 'Mozilla/5.0 (compatible; RTA-MTL-Smokee-Sync/1.0)',
       'accept': 'text/html,application/xhtml+xml'
     }
-  });
+  }).finally(() => clearTimeout(timer));
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   return await res.text();
+}
+
+async function fetchStoreProducts(params) {
+  const url = new URL(STORE_PRODUCTS_URL);
+  Object.entries(params).forEach(([key, value]) => url.searchParams.set(key, value));
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+  const res = await fetch(url.href, {
+    signal: controller.signal,
+    headers: {
+      'user-agent': 'Mozilla/5.0 (compatible; RTA-MTL-Smokee-Sync/1.0)',
+      'accept': 'application/json'
+    }
+  }).finally(() => clearTimeout(timer));
+  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url.href}`);
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+async function loadStoreProducts() {
+  const chunks = [];
+  for (let page = 1; page <= STORE_PAGE_LIMIT; page += 1) {
+    const products = await fetchStoreProducts({
+      category: String(ATOMIZER_CATEGORY_ID),
+      page: String(page),
+      per_page: String(STORE_PER_PAGE)
+    }).catch(() => []);
+    if (!products.length) break;
+    chunks.push(products);
+    if (products.length < STORE_PER_PAGE) break;
+  }
+  const searchChunks = await Promise.all(STORE_SEARCH_TERMS.map(term => fetchStoreProducts({
+    search: term,
+    per_page: '100'
+  }).catch(() => [])));
+  return chunks.concat(searchChunks).flat().map(normalizeStoreProduct).filter(product => product.title && product.url);
 }
 
 async function loadCategoryPages() {
@@ -433,7 +510,7 @@ function entryFor(product, pageHtml) {
     `    name:${jsString(name)},`,
     `    score:${pairing.score},`,
     `    confidence:${jsString(pairing.confidence)},`,
-    `    addedAt:${jsString(todayInRomania())},`,
+    product.newOnSmokee ? `    addedAt:${jsString(todayInRomania())},` : '',
     `    classes:${jsString(pairing.classes)},`,
     `    dna:${jsString(pairing.dna)},`,
     `    market:'Smokee RTA original.',`,
@@ -467,11 +544,14 @@ async function main() {
   const html = fs.readFileSync(INDEX_PATH, 'utf8');
   const state = existingState(html);
   const pages = await loadCategoryPages();
-  const products = pages.flatMap(parseCategoryProducts);
+  const htmlProducts = pages.flatMap(parseCategoryProducts);
+  const storeProducts = fromFile ? [] : await loadStoreProducts();
+  const products = htmlProducts.concat(storeProducts);
   const byUrl = new Map();
   for (const product of products) {
     product.url = cleanUrl(product.url);
-    if (!byUrl.has(product.url)) byUrl.set(product.url, product);
+    const existing = byUrl.get(product.url);
+    byUrl.set(product.url, existing ? { ...existing, ...product, newOnSmokee: existing.newOnSmokee || product.newOnSmokee } : product);
   }
 
   const potentialProducts = [];
@@ -498,13 +578,13 @@ async function main() {
     } catch (error) {
       console.warn(`Smokee sync: product page unavailable for ${product.url}: ${error.message}`);
     }
-    if (!isConfirmedMtlRta(product, pageHtml)) continue;
+    if (!isConfirmedRta(product, pageHtml)) continue;
     newProducts.push(product);
     entries.push(entryFor(product, pageHtml));
   }
 
   if (!newProducts.length) {
-    console.log(`Smokee sync: ${products.length} products scanned, no new MTL RTA entries.`);
+    console.log(`Smokee sync: ${products.length} products scanned, no new RTA entries.`);
     return;
   }
 

@@ -10,6 +10,7 @@ const END_MARKER = '/* AUTO-SMOKEE-LIQUIDS-END */';
 const TOBACCO_CATEGORY_ID = 270;
 const CATEGORY_PAGE_LIMIT = 20;
 const CATEGORY_PER_PAGE = 100;
+const FETCH_TIMEOUT_MS = 25000;
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
@@ -82,6 +83,13 @@ function cleanUrl(url) {
   return String(url || '').replace(/[?#].*$/, '').replace(/\/?$/, '/');
 }
 
+function isSmokeeNewProduct(product) {
+  return Array.isArray(product.categories) && product.categories.some(category => {
+    const text = norm(`${category.name || ''} ${category.slug || ''}`);
+    return /\bnoutati\b/.test(text);
+  });
+}
+
 function todayInRomania() {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Europe/Bucharest',
@@ -152,6 +160,7 @@ function normalizeProduct(product, group) {
     image,
     tag: inferTag(tagText, group),
     stock: product.is_in_stock === true ? true : (product.is_in_stock === false ? false : null),
+    newOnSmokee: isSmokeeNewProduct(product),
     sourceText: text,
     metaText: metaText(product)
   };
@@ -187,24 +196,30 @@ function uniqueItems(items, group) {
 
 async function fetchStoreProducts(term) {
   const url = `https://smokee.ro/wp-json/wc/store/v1/products?search=${encodeURIComponent(term)}&per_page=25`;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   const response = await fetch(url, {
+    signal: controller.signal,
     headers: {
       'user-agent': 'Mozilla/5.0 (compatible; RTA-MTL-Smokee-Liquids-Sync/1.0)',
       'accept': 'application/json'
     }
-  });
+  }).finally(() => clearTimeout(timer));
   if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
   return response.json();
 }
 
 async function fetchCategoryProducts(page) {
   const url = `https://smokee.ro/wp-json/wc/store/v1/products?category=${TOBACCO_CATEGORY_ID}&page=${page}&per_page=${CATEGORY_PER_PAGE}`;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
   const response = await fetch(url, {
+    signal: controller.signal,
     headers: {
       'user-agent': 'Mozilla/5.0 (compatible; RTA-MTL-Smokee-Liquids-Sync/1.0)',
       'accept': 'application/json'
     }
-  });
+  }).finally(() => clearTimeout(timer));
   if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
   return response.json();
 }
@@ -254,16 +269,21 @@ function replaceBlock(html, block) {
   return `${before}\n${block}\n  ${after}`;
 }
 
-function existingLiquidInfo(html) {
+function existingLiquidInfo(html, groupId) {
   const start = html.indexOf(START_MARKER);
   const end = html.indexOf(END_MARKER);
-  const info = { seen: new Set(), addedAt: new Map() };
+  const info = { seen: new Set(), addedAt: new Map(), initialized: false };
   if (start < 0 || end < 0 || end <= start) return info;
 
   const block = html.slice(start, end);
+  let scanBlock = block;
+  if (groupId) {
+    const groupMatch = block.match(new RegExp(`\\n\\s*${groupId}:\\s*\\[([\\s\\S]*?)\\n\\s*\\]`, 'm'));
+    scanBlock = groupMatch ? groupMatch[1] : '';
+  }
   const re = /\{[^{}]*url:'((?:\\'|[^'])*)'[^{}]*\}/g;
   let match;
-  while ((match = re.exec(block))) {
+  while ((match = re.exec(scanBlock))) {
     const item = match[0];
     const url = cleanUrl(unjsString(match[1]));
     if (!url) continue;
@@ -271,6 +291,7 @@ function existingLiquidInfo(html) {
     const date = item.match(/addedAt:'(\d{4}-\d{2}-\d{2})'/);
     if (date) info.addedAt.set(url, date[1]);
   }
+  info.initialized = info.seen.size > 0;
   return info;
 }
 
@@ -279,16 +300,17 @@ function stampAddedDates(items, existing, today) {
     const url = cleanUrl(item.url);
     if (existing.addedAt.has(url)) return { ...item, addedAt: existing.addedAt.get(url) };
     if (existing.seen.has(url)) return item;
-    return { ...item, addedAt: today };
+    if (item.newOnSmokee || existing.initialized) return { ...item, addedAt: today };
+    return item;
   });
 }
 
 async function main() {
   const html = fs.readFileSync(INDEX_PATH, 'utf8');
-  const existing = existingLiquidInfo(html);
   const today = todayInRomania();
   const data = {};
   for (const group of GROUPS) {
+    const existing = existingLiquidInfo(html, group.id);
     data[group.id] = stampAddedDates(await fetchGroup(group), existing, today);
   }
   const total = GROUPS.reduce((sum, group) => sum + data[group.id].length, 0);
