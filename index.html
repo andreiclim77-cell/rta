@@ -317,6 +317,7 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .navbtn[data-tab="legislativ"]{--nav-a:#ffd166;--nav-b:#ffe89a;--nav-dim:#221708;--nav-border:rgba(255,209,102,.66);--nav-idle:#fff8df;--nav-active:#120b02}
 .navbtn[data-tab="sources"]{--nav-a:#ff4f7b;--nav-b:#ffb000;--nav-dim:#231018;--nav-border:rgba(255,79,123,.62);--nav-idle:#ffeef3;--nav-active:#111}
 .navbtn[data-tab="diagnostic"]{--nav-a:#f7d27a;--nav-b:#37bfe8;--nav-dim:#17100a;--nav-border:rgba(247,210,122,.76);--nav-idle:#fff8df;--nav-active:#070707}
+.navbtn[data-tab="setupList"]{--nav-a:#d6b46b;--nav-b:#37bfe8;--nav-dim:#16110a;--nav-border:rgba(214,180,107,.74);--nav-idle:#fff7df;--nav-active:#070707}
 .navbtn.diagnostic-nav{isolation:isolate;overflow:hidden}
 .navbtn.diagnostic-nav:before{content:"";width:8px;height:8px;border-radius:50%;margin-right:7px;background:radial-gradient(circle,#fff 0,#f7d27a 34%,#37bfe8 72%);box-shadow:0 0 14px rgba(247,210,122,.65)}
 .navbtn.diagnostic-nav:after{content:"";position:absolute;inset:1px;border-radius:inherit;background:linear-gradient(110deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-120%);transition:transform .36s ease;pointer-events:none}
@@ -772,11 +773,14 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .diagnostic-layout{display:grid;grid-template-columns:minmax(260px,.72fr) minmax(0,1.28fr);gap:14px;align-items:start}
 .diagnostic-selector{position:sticky;top:126px;display:grid;gap:10px}
 .diagnostic-search{height:40px}
-.diagnostic-assist{border:1px solid #eadfce;background:linear-gradient(180deg,#fffaf3,#fff);border-radius:8px;padding:9px;box-shadow:0 8px 18px rgba(0,0,0,.045),0 1px 0 rgba(255,255,255,.96) inset}
+.diagnostic-assist{border:1px solid #eadfce;background:linear-gradient(180deg,#fffaf3,#fff);border-radius:8px;padding:8px 9px;box-shadow:0 8px 18px rgba(0,0,0,.045),0 1px 0 rgba(255,255,255,.96) inset}
 .diagnostic-assist b{display:block;color:#1b1b1b;font-size:12px;line-height:1.25;margin-bottom:4px}
 .diagnostic-assist span{display:block;color:#65584a;font-size:12px;line-height:1.35}
 .diagnostic-assist .diagnostic-hint{margin-top:6px;color:#9a4a0c;font-weight:900}
-.diagnostic-suggestions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.diagnostic-assist-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.diagnostic-assist-head b{margin:0;white-space:nowrap}
+.diagnostic-count{display:inline-flex!important;align-items:center;justify-content:center;border:1px solid #ffd48d;background:#fff4df;color:#8d3d00;border-radius:999px;padding:3px 7px;font-size:11px!important;font-weight:900;white-space:nowrap}
+.diagnostic-suggestions{display:flex;flex-wrap:wrap;gap:6px;margin-top:-2px}
 .diagnostic-suggest{border:1px solid #ded2bf;background:#fff;color:#2a2118;border-radius:999px;padding:6px 8px;font-size:11px;font-weight:900;cursor:pointer;box-shadow:0 2px 0 rgba(0,0,0,.12),0 8px 16px rgba(0,0,0,.06),0 1px 0 rgba(255,255,255,.92) inset}
 .diagnostic-suggest:hover{border-color:#ffb000;background:#fff5e5;color:#111}
 .diagnostic-filter-row{display:flex;flex-wrap:wrap;gap:7px}
@@ -809,6 +813,40 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .diagnostic-cta .mini-link{border-color:rgba(247,210,122,.55);background:rgba(247,210,122,.12);color:#fff}
 .diagnostic-support{margin-top:14px}
 .diagnostic-support .trust-card p{font-size:14px}
+.setup-list-hero{border:1px solid #272018;background:radial-gradient(circle at 15% 12%,rgba(255,176,0,.24),transparent 30%),linear-gradient(135deg,#0e0d0b,#20150d 48%,#092733);color:#fff;border-radius:8px;padding:18px;box-shadow:0 20px 44px rgba(0,0,0,.28),0 1px 0 rgba(255,255,255,.12) inset}
+.setup-list-hero h2{margin:4px 0 8px;font-size:34px;line-height:1.05}
+.setup-list-hero p{color:#e9dfcf;max-width:850px}
+.setup-list-layout{display:grid;grid-template-columns:minmax(280px,.74fr) minmax(0,1.26fr);gap:14px;margin-top:14px;align-items:start}
+.setup-list-panel{display:grid;gap:11px}
+.setup-step{border:1px solid #eadfce;background:#fffaf3;border-radius:8px;padding:11px;box-shadow:0 10px 22px rgba(0,0,0,.05),0 1px 0 rgba(255,255,255,.95) inset}
+.setup-step label{display:block;font-weight:900;margin-bottom:8px;color:#1b1b1b}
+.setup-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.setup-option{border:1px solid #d8c8ad;background:#fff;color:#23180c;border-radius:8px;padding:8px;font-size:12px;font-weight:900;text-align:left;line-height:1.2;box-shadow:0 2px 0 rgba(0,0,0,.12),0 10px 18px rgba(0,0,0,.05),0 1px 0 rgba(255,255,255,.94) inset}
+.setup-option.active{border-color:#ffb000;background:linear-gradient(135deg,#ff7a1a,#ffbf3a);color:#111}
+.setup-results{display:grid;gap:12px}
+.setup-verdict{border:1px solid #282018;background:linear-gradient(135deg,#111,#1b130c 56%,#10242c);color:#fff;border-radius:8px;padding:14px;box-shadow:0 16px 34px rgba(0,0,0,.22),0 1px 0 rgba(255,255,255,.12) inset}
+.setup-verdict h3{margin:5px 0 6px;font-size:24px}
+.setup-verdict p{color:#e7ddcf}
+.setup-livebar{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin-top:9px}
+.setup-product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.setup-product{display:grid;grid-template-columns:64px minmax(0,1fr);gap:9px;border:1px solid #e1d4bf;background:#fff;border-radius:8px;padding:8px;box-shadow:0 10px 22px rgba(0,0,0,.06),0 1px 0 rgba(255,255,255,.94) inset;min-width:0}
+.setup-product.off{opacity:.48}
+.setup-thumb{width:64px;aspect-ratio:1/1;border-radius:7px;background:#111;color:#ffd889;display:grid;place-items:center;overflow:hidden;font-size:11px;font-weight:900}
+.setup-thumb img{width:100%;height:100%;object-fit:cover}
+.setup-copy{min-width:0}
+.setup-copy b{display:block;font-size:13px;line-height:1.2;color:#151515;overflow-wrap:anywhere}
+.setup-copy small{display:block;margin-top:3px;color:#6e6258;line-height:1.25}
+.setup-product-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}
+.setup-toggle{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:900;color:#2c2116}
+.setup-toggle input{accent-color:#ff7a1a}
+.setup-picker-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.setup-picker{border:1px solid #e1d4bf;background:#fff;border-radius:8px;padding:8px}
+.setup-picker label{display:block;font-size:12px;font-weight:900;margin-bottom:5px}
+.setup-picker select{width:100%;height:36px;border:1px solid #d8c8ad;border-radius:7px;padding:0 8px;background:#fff;color:#1c1c1c}
+.setup-actions{display:flex;flex-wrap:wrap;gap:8px}
+.setup-note{border-left:4px solid #ff7a1a;background:#fff5e8;border-radius:8px;padding:10px;color:#25190e}
+@media(max-width:900px){.setup-list-layout{grid-template-columns:1fr}.setup-list-hero h2{font-size:28px}.setup-product-grid,.setup-picker-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.setup-list-hero{padding:14px}.setup-list-hero h2{font-size:24px}.setup-options{grid-template-columns:1fr}.setup-product{grid-template-columns:54px minmax(0,1fr)}.setup-thumb{width:54px}.setup-actions{display:grid;grid-template-columns:1fr}.setup-actions .mini-link,.setup-actions .btn{width:100%}}
 .seo-faq{margin-top:14px}
 .seo-faq .card h3{font-size:18px}
 .liquid-subfilters{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 12px}
@@ -1055,9 +1093,8 @@ var I18N_EXACT={
   'Cautare in aplicatie':'Search the app',
   'Rezultate cautare':'Search results',
   'Data, ora si vremea':'Date, time and weather',
-  'Vreme live':'Live weather',
-  'Vreme...':'Weather...',
   'Vreme':'Weather',
+  'Vreme...':'Weather...',
   'Navigatie principala':'Main navigation',
   'Home':'Home',
   'Recomandare':'Recommendation',
@@ -1070,6 +1107,51 @@ var I18N_EXACT={
   'Noutati':'New',
   'Diagnostic gust':'Taste Diagnosis',
   'Diagnostic':'Diagnosis',
+  'Lista Smokee':'Smokee List',
+  'Lista produse Smokee':'Smokee Product List',
+  'Lista de produse recomandate':'Recommended product list',
+  'Configurator RTA/MTL cu produse existente pe Smokee: atomizor, lichide tutunoase, sarme si bumbac. Lista este orientativa; alegerea si cumpararea se fac pe Smokee.':'RTA/MTL configurator with products available on Smokee: atomizer, tobacco liquids, wires and cotton. The list is guidance; selection and purchase are made on Smokee.',
+  'Se verifica produsele Smokee':'Checking Smokee products',
+  'verificare la 2 minute':'check every 2 minutes',
+  'cumpararea se face pe Smokee':'purchase is made on Smokee',
+  'Profilul listei':'List profile',
+  'Alege directia principala. Produsele sunt preluate din Smokee si ordonate dupa potrivirea cu profilul ales.':'Choose the main direction. Products are taken from Smokee and ordered by fit with the selected profile.',
+  'Stil MTL':'MTL style',
+  'MTL strans':'Tight MTL',
+  'MTL mediu':'Medium MTL',
+  'MTL aerisit':'Airy MTL',
+  'Usor de folosit':'Easy to use',
+  'Tip lichid':'Liquid type',
+  'TUTUN simplu':'Simple TOBACCO',
+  'TUTUN complex':'Complex TOBACCO',
+  'TUTUN dulce':'Sweet TOBACCO',
+  'Intentie':'Intention',
+  'Recomanda RTA':'Recommend RTA',
+  'Exista deja RTA':'RTA already exists',
+  'Verifica produsele':'Check products',
+  'Alegere produse':'Product selection',
+  'Produse Smokee disponibile':'Available Smokee products',
+  'Se pot adauga alternative din produsele disponibile pe Smokee.':'Alternatives can be added from products available on Smokee.',
+  'Lista recomandata':'Recommended list',
+  'Produse de cumparat de pe Smokee':'Products to choose on Smokee',
+  'Debifeaza ce nu trebuie pastrat. Linkurile duc catre paginile produselor de pe Smokee.':'Uncheck what should not be kept. Links open the product pages on Smokee.',
+  'Copiaza lista':'Copy list',
+  'Deschide Smokee':'Open Smokee',
+  'Pretul, stocul si varianta exacta se verifica pe Smokee. GHID nu vinde produse si nu proceseaza comenzi.':'Price, stock and exact variant are checked on Smokee. GHID does not sell products or process orders.',
+  'Produse verificate:':'Products checked:',
+  'Se foloseste ultima lista valida':'Using the last valid list',
+  'Smokee verificat':'Smokee checked',
+  'lista salvata':'saved list',
+  'Lista orientativa':'Guidance list',
+  'Setup Smokee pentru profilul ales':'Smokee setup for the selected profile',
+  'Lista combina profilul lichidului, intentia de gust si produsele disponibile pe Smokee. Se pastreaza doar produsele bifate.':'The list combines the liquid profile, taste intention and products available on Smokee. Only checked products are kept.',
+  'produse pastrate':'products kept',
+  'Atomizoare RTA':'RTA atomizers',
+  'Lichide tutunoase':'Tobacco liquids',
+  'Adauga in lista':'Add to list',
+  'Pastreaza':'Keep',
+  'Vezi pe Smokee':'View on Smokee',
+  'Lista a fost copiata.':'The list has been copied.',
   'Diagnostic gust RTA MTL':'MTL RTA Taste Diagnosis',
   'Identifica simptomul inainte de schimbarea setupului':'Identify the symptom before changing the setup',
   'Nu toate problemele de aroma vin din atomizor. Diagnosticul porneste de la ce se simte in puf, apoi verifica pe rand bumbacul, puterea, airflow-ul, pozitia coilului, sarma, lichidul si abia la final atomizorul.':'Not every flavor issue comes from the atomizer. Diagnosis starts from what is felt in the puff, then checks cotton, power, airflow, coil position, wire, liquid and only then the atomizer.',
@@ -1290,7 +1372,6 @@ var I18N_EXACT={
   'produse':'products',
   'afisate':'shown',
   'Actualizare':'Update',
-  'sincronizare zilnica':'daily sync',
   'Afisare':'Display',
   'Toate':'All',
   'Simplu':'Simple',
@@ -1682,7 +1763,7 @@ function rtaEarlyAccept(){
       <span class="live-icon" id="liveWeatherIcon" aria-hidden="true">◐</span>
       <span class="live-time" id="liveTime">--:--</span>
       <span class="live-date" id="liveDate">--</span>
-      <span class="live-weather" id="liveWeather">Vreme live</span>
+      <span class="live-weather" id="liveWeather">Vreme</span>
     </div>
     <div class="brand">
       <div class="brand-top"><img class="smokee-logo" src="https://www.smokee.ro/wp-content/uploads/2024/11/smokee_logo.png" alt="Smokee"><b>Ghid RTA MTL - Smokee</b><div class="language-switch brand-lang" aria-label="Limba / Language"><button type="button" data-lang="ro" class="active">RO</button><button type="button" data-lang="en">EN</button></div></div>
@@ -1704,6 +1785,7 @@ function rtaEarlyAccept(){
       <button class="navbtn active" data-tab="home">Home</button>
       <button class="navbtn" data-tab="recommender">Recomandare</button>
       <button class="navbtn diagnostic-nav" data-tab="diagnostic">Diagnostic gust</button>
+      <button class="navbtn" data-tab="setupList">Lista Smokee</button>
       <button class="navbtn" data-tab="atomizers">Atomizoare</button>
       <button class="navbtn cart-nav" data-tab="liquids"><span class="cart-ico" aria-hidden="true"></span><span>Lichide</span></button>
       <button class="navbtn wire-nav" data-tab="wires">Sarme RTA</button>
@@ -1722,6 +1804,7 @@ function rtaEarlyAccept(){
         <div class="category-list">
           <button class="category-link" data-jump="recommender"><span class="cat-mark">R</span><span>Recomandare</span></button>
           <button class="category-link" data-jump="diagnostic"><span class="cat-mark">DG</span><span>Diagnostic gust</span></button>
+          <button class="category-link" data-jump="setupList"><span class="cat-mark">LS</span><span>Lista Smokee</span></button>
           <button class="category-link" data-jump="atomizers"><span class="cat-mark">A</span><span>Atomizoare</span></button>
           <button class="category-link" data-jump="liquids"><span class="cat-mark">LQ</span><span>Lichide Smokee</span></button>
           <button class="category-link" data-jump="wires"><span class="cat-mark">S</span><span>Sarme RTA</span></button>
@@ -1741,6 +1824,7 @@ function rtaEarlyAccept(){
             <div class="hero-actions">
               <button class="btn" data-jump="recommender">Recomandare</button>
               <button class="btn secondary" data-jump="diagnostic">Diagnostic gust</button>
+              <button class="btn secondary" data-jump="setupList">Lista produse Smokee</button>
               <button class="btn secondary" data-jump="atomizers">Atomizoare</button>
               <button class="btn secondary" data-jump="liquids">Lichide</button>
               <button class="btn secondary" data-jump="registry">Noutati</button>
@@ -1799,10 +1883,11 @@ function rtaEarlyAccept(){
               <p class="kicker">Ghiduri utile</p>
               <h2>Repere rapide pentru setari si decizii</h2>
             </div>
-            <span class="chip warn">5 ghiduri</span>
+            <span class="chip warn">6 ghiduri</span>
           </div>
           <div class="guide-hub-grid">
             <button class="guide-link diagnostic" type="button" data-jump="diagnostic"><b>Diagnostic gust</b><span>Simptom, cauza probabila, test rapid si corectie graduala.</span></button>
+            <button class="guide-link method" type="button" data-jump="setupList"><b>Lista Smokee</b><span>Produse existente pe Smokee, alese pentru profilul RTA/MTL.</span></button>
             <button class="guide-link tc" type="button" data-jump="tcGuide"><b>Ghid TC</b><span>Control temperatura, sarme, chipseturi, coil si reglaje.</span></button>
             <button class="guide-link diy" type="button" data-jump="liquidGuide"><b>Cum facem lichidele vape</b><span>VG/PG, aroma, nicotina, maturare si calculator simplu.</span></button>
             <button class="guide-link law" type="button" data-jump="legislativ"><b>Legislativ</b><span>Reguli, exemple rosu/galben/verde si repere pentru cumparatori.</span></button>
@@ -2000,6 +2085,7 @@ function rtaEarlyAccept(){
         </div>
         <input id="diagnosticSearch" class="diagnostic-search" type="search" placeholder="Cauta: dry hit, NET, curge, TC, airflow..." aria-label="Cautare diagnostic gust">
         <div class="diagnostic-assist" id="diagnosticAssist" aria-live="polite"></div>
+        <div class="diagnostic-suggestions" id="diagnosticSuggestions" aria-label="Sugestii rapide diagnostic"></div>
         <div class="diagnostic-filter-row" id="diagnosticFilters" aria-label="Filtre diagnostic"></div>
         <div class="diagnostic-symptoms" id="diagnosticSymptomList"></div>
       </aside>
@@ -2010,6 +2096,84 @@ function rtaEarlyAccept(){
           <article class="card span-4 trust-card"><span class="chip warn">NET</span><h3>Coil incarcat nu inseamna automat atomizor gresit</h3><p>Extractele naturale si lichidele inchise pot incarca rezistenta mai repede. Se verifica intai temperatura, indulcirea, bumbacul si masa coilului.</p></article>
           <article class="card span-4 trust-card"><span class="chip good">Urmatorul pas</span><h3>Recomandarea ramane dupa diagnostic</h3><p>Dupa identificarea cauzei probabile, alegerea atomizorului si a sarmei se face din Recomandare, cu profilul lichidului si intentia gustului.</p></article>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="setupList" class="section">
+    <div class="setup-list-hero">
+      <p class="kicker">GHID x Smokee</p>
+      <h2>Lista de produse recomandate</h2>
+      <p>Configurator RTA/MTL cu produse existente pe Smokee: atomizor, lichide tutunoase, sarme si bumbac. Lista este orientativa; alegerea si cumpararea se fac pe Smokee.</p>
+      <div class="setup-livebar">
+        <span class="chip warn" id="setupLiveStatus">Se verifica produsele Smokee</span>
+        <span class="chip cold">verificare la 2 minute</span>
+        <span class="chip neutral">cumpararea se face pe Smokee</span>
+      </div>
+    </div>
+    <div class="setup-list-layout">
+      <aside class="card setup-list-panel">
+        <div>
+          <span class="chip warn">Configurator</span>
+          <h3 style="margin-top:9px">Profilul listei</h3>
+          <p class="muted small">Alege directia principala. Produsele sunt preluate din Smokee si ordonate dupa potrivirea cu profilul ales.</p>
+        </div>
+        <div class="setup-step">
+          <label>Stil MTL</label>
+          <div class="setup-options" data-setup-group="style">
+            <button class="setup-option active" type="button" data-value="mtl-tight">MTL strans</button>
+            <button class="setup-option" type="button" data-value="mtl-medium">MTL mediu</button>
+            <button class="setup-option" type="button" data-value="mtl-airy">MTL aerisit</button>
+            <button class="setup-option" type="button" data-value="beginner">Usor de folosit</button>
+          </div>
+        </div>
+        <div class="setup-step">
+          <label>Tip lichid</label>
+          <div class="setup-options" data-setup-group="liquid">
+            <button class="setup-option active" type="button" data-value="net">NET</button>
+            <button class="setup-option" type="button" data-value="tutun-simplu">TUTUN simplu</button>
+            <button class="setup-option" type="button" data-value="tutun-complex">TUTUN complex</button>
+            <button class="setup-option" type="button" data-value="tutun-dulce">TUTUN dulce</button>
+          </div>
+        </div>
+        <div class="setup-step">
+          <label>Intentie</label>
+          <div class="setup-options" data-setup-group="goal">
+            <button class="setup-option active" type="button" data-value="aroma">Aroma</button>
+            <button class="setup-option" type="button" data-value="claritate">Claritate</button>
+            <button class="setup-option" type="button" data-value="hit">Throat hit</button>
+            <button class="setup-option" type="button" data-value="stabilitate">Stabilitate</button>
+          </div>
+        </div>
+        <div class="setup-step">
+          <label>Atomizor</label>
+          <div class="setup-options" data-setup-group="rta">
+            <button class="setup-option active" type="button" data-value="need">Recomanda RTA</button>
+            <button class="setup-option" type="button" data-value="have">Exista deja RTA</button>
+          </div>
+        </div>
+        <button class="btn" type="button" id="setupRefreshBtn">Verifica produsele</button>
+      </aside>
+      <div class="setup-results">
+        <article class="setup-verdict" id="setupVerdict"></article>
+        <article class="card">
+          <div class="panel-title" style="margin-top:0">
+            <div><p class="kicker">Alegere produse</p><h2>Produse Smokee disponibile</h2><p class="muted">Se pot adauga alternative din produsele disponibile pe Smokee.</p></div>
+          </div>
+          <div class="setup-picker-grid" id="setupPickers"></div>
+        </article>
+        <article class="card">
+          <div class="panel-title" style="margin-top:0">
+            <div><p class="kicker">Lista recomandata</p><h2>Produse de cumparat de pe Smokee</h2><p class="muted">Debifeaza ce nu trebuie pastrat. Linkurile duc catre paginile produselor de pe Smokee.</p></div>
+          </div>
+          <div class="setup-product-grid" id="setupProductList"></div>
+          <div class="setup-actions" style="margin-top:12px">
+            <button class="btn" type="button" id="setupCopyBtn">Copiaza lista</button>
+            <a class="mini-link" href="https://smokee.ro/?post_type=product" target="_blank" rel="noreferrer">Deschide Smokee</a>
+          </div>
+          <div class="setup-note" style="margin-top:12px">Pretul, stocul si varianta exacta se verifica pe Smokee. GHID nu vinde produse si nu proceseaza comenzi.</div>
+          <span class="copy-status" id="setupCopyStatus"></span>
+        </article>
       </div>
     </div>
   </section>
@@ -3464,7 +3628,7 @@ function closeAtomDetail(){var overlay=$('atomDetail');if(!overlay)return;overla
 function initDetail(){document.addEventListener('click',function(e){var b=e.target.closest('[data-detail-index]');if(b){openAtomDetail(b.dataset.detailIndex);return}if(e.target.matches('.close-detail')||e.target.id==='atomDetail')closeAtomDetail()});document.addEventListener('keydown',function(e){if(e.key==='Escape')closeAtomDetail()})}
 function initVisitCounter(){var img=$('visitCounter');if(!img)return;var box=img.closest('.visit-counter');img.onerror=function(){if(box)box.style.display='none'};img.onload=function(){if(box)box.style.display='inline-flex'};img.src=img.dataset.src}
 function liveWeatherIcon(code,isDay){code=Number(code);if(code===0)return isDay?'☀':'☾';if([1,2].indexOf(code)>=0)return isDay?'◐':'☾';if(code===3)return '☁';if([45,48].indexOf(code)>=0)return '≋';if((code>=51&&code<=67)||(code>=80&&code<=82))return '☂';if(code>=71&&code<=77)return '❄';if(code>=95)return '⚡';return '◐'}
-function initLiveStatus(){var timeEl=$('liveTime'),dateEl=$('liveDate'),weatherEl=$('liveWeather'),iconEl=$('liveWeatherIcon');if(!timeEl||!dateEl)return;var visitorTz='Europe/Bucharest';var lastWeather=null;try{visitorTz=Intl.DateTimeFormat().resolvedOptions().timeZone||visitorTz}catch(e){}function liveLocale(){return window.__rtaLang==='en'?'en-GB':'ro-RO'}function liveWord(ro,en){return window.__rtaLang==='en'?en:ro}function tick(){var now=new Date();var locale=liveLocale();try{timeEl.textContent=now.toLocaleTimeString(locale,{timeZone:visitorTz,hour:'2-digit',minute:'2-digit'});dateEl.textContent=now.toLocaleDateString(locale,{timeZone:visitorTz,weekday:'short',day:'2-digit',month:'short'}).toUpperCase()}catch(e){timeEl.textContent=now.toLocaleTimeString(locale,{hour:'2-digit',minute:'2-digit'});dateEl.textContent=now.toLocaleDateString(locale,{weekday:'short',day:'2-digit',month:'short'}).toUpperCase()}}function renderWeather(data){if(!weatherEl||!data)return;var c=data.current,d=data.daily;if(!c)return;if(iconEl)iconEl.textContent=liveWeatherIcon(c.weather_code,c.is_day);var temp=Math.round(Number(c.temperature_2m));var min=d&&d.temperature_2m_min?Math.round(Number(d.temperature_2m_min[0])):NaN;var max=d&&d.temperature_2m_max?Math.round(Number(d.temperature_2m_max[0])):NaN;var rain=d&&d.precipitation_probability_max?Math.round(Number(d.precipitation_probability_max[0])):NaN;var text=isFinite(temp)?temp+'°C':liveWord('Vreme','Weather');if(isFinite(min)&&isFinite(max))text+=' | '+liveWord('azi','today')+' '+min+'-'+max+'°C';if(isFinite(rain)&&rain>=30)text+=' | '+liveWord('ploaie','rain')+' '+rain+'%';weatherEl.textContent=text;weatherEl.title=(isFinite(temp)?liveWord('Acum','Now')+' '+temp+'°C. ':'')+(isFinite(min)&&isFinite(max)?liveWord('Azi','Today')+' '+min+'-'+max+'°C. ':'')+(isFinite(rain)?liveWord('Ploaie','Rain')+' '+rain+'%.':'')}window.__rtaRefreshLiveStatus=function(){tick();if(lastWeather)renderWeather(lastWeather)};tick();setInterval(tick,1000);if(!weatherEl||typeof fetch!=='function')return;function fetchWeather(lat,lon){var q='latitude='+encodeURIComponent(Number(lat).toFixed(4))+'&longitude='+encodeURIComponent(Number(lon).toFixed(4))+'&current=temperature_2m,weather_code,is_day&daily=temperature_2m_min,temperature_2m_max,precipitation_probability_max&timezone=auto';fetch('https://api.open-meteo.com/v1/forecast?'+q,{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(data){if(!data||!data.current)return;lastWeather=data;renderWeather(data)}).catch(function(){weatherEl.textContent=liveWord('Vreme live','Live weather')})}function fallbackWeather(){fetchWeather(44.4268,26.1025)}setTimeout(function(){if(!navigator.geolocation||!window.isSecureContext){fallbackWeather();return}weatherEl.textContent=liveWord('Vreme...','Weather...');navigator.geolocation.getCurrentPosition(function(pos){var c=pos&&pos.coords;if(!c||!isFinite(c.latitude)||!isFinite(c.longitude)){fallbackWeather();return}fetchWeather(c.latitude,c.longitude)},fallbackWeather,{enableHighAccuracy:false,timeout:4500,maximumAge:900000})},500)}
+function initLiveStatus(){var timeEl=$('liveTime'),dateEl=$('liveDate'),weatherEl=$('liveWeather'),iconEl=$('liveWeatherIcon');if(!timeEl||!dateEl)return;var visitorTz='Europe/Bucharest';var lastWeather=null;try{visitorTz=Intl.DateTimeFormat().resolvedOptions().timeZone||visitorTz}catch(e){}function liveLocale(){return window.__rtaLang==='en'?'en-GB':'ro-RO'}function liveWord(ro,en){return window.__rtaLang==='en'?en:ro}function tick(){var now=new Date();var locale=liveLocale();try{timeEl.textContent=now.toLocaleTimeString(locale,{timeZone:visitorTz,hour:'2-digit',minute:'2-digit'});dateEl.textContent=now.toLocaleDateString(locale,{timeZone:visitorTz,weekday:'short',day:'2-digit',month:'short'}).toUpperCase()}catch(e){timeEl.textContent=now.toLocaleTimeString(locale,{hour:'2-digit',minute:'2-digit'});dateEl.textContent=now.toLocaleDateString(locale,{weekday:'short',day:'2-digit',month:'short'}).toUpperCase()}}function renderWeather(data){if(!weatherEl||!data)return;var c=data.current,d=data.daily;if(!c)return;if(iconEl)iconEl.textContent=liveWeatherIcon(c.weather_code,c.is_day);var temp=Math.round(Number(c.temperature_2m));var min=d&&d.temperature_2m_min?Math.round(Number(d.temperature_2m_min[0])):NaN;var max=d&&d.temperature_2m_max?Math.round(Number(d.temperature_2m_max[0])):NaN;var rain=d&&d.precipitation_probability_max?Math.round(Number(d.precipitation_probability_max[0])):NaN;var text=isFinite(temp)?temp+'°C':liveWord('Vreme','Weather');if(isFinite(min)&&isFinite(max))text+=' | '+liveWord('azi','today')+' '+min+'-'+max+'°C';if(isFinite(rain)&&rain>=30)text+=' | '+liveWord('ploaie','rain')+' '+rain+'%';weatherEl.textContent=text;weatherEl.title=(isFinite(temp)?liveWord('Acum','Now')+' '+temp+'°C. ':'')+(isFinite(min)&&isFinite(max)?liveWord('Azi','Today')+' '+min+'-'+max+'°C. ':'')+(isFinite(rain)?liveWord('Ploaie','Rain')+' '+rain+'%.':'')}window.__rtaRefreshLiveStatus=function(){tick();if(lastWeather)renderWeather(lastWeather)};tick();setInterval(tick,1000);if(!weatherEl||typeof fetch!=='function')return;function fetchWeather(lat,lon){var q='latitude='+encodeURIComponent(Number(lat).toFixed(4))+'&longitude='+encodeURIComponent(Number(lon).toFixed(4))+'&current=temperature_2m,weather_code,is_day&daily=temperature_2m_min,temperature_2m_max,precipitation_probability_max&timezone=auto';fetch('https://api.open-meteo.com/v1/forecast?'+q,{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).then(function(data){if(!data||!data.current)return;lastWeather=data;renderWeather(data)}).catch(function(){weatherEl.textContent=liveWord('Vreme','Weather')})}function fallbackWeather(){fetchWeather(44.4268,26.1025)}setTimeout(function(){if(!navigator.geolocation||!window.isSecureContext){fallbackWeather();return}weatherEl.textContent=liveWord('Vreme...','Weather...');navigator.geolocation.getCurrentPosition(function(pos){var c=pos&&pos.coords;if(!c||!isFinite(c.latitude)||!isFinite(c.longitude)){fallbackWeather();return}fetchWeather(c.latitude,c.longitude)},fallbackWeather,{enableHighAccuracy:false,timeout:4500,maximumAge:900000})},500)}
 function prepOverlay(){var box=$('appPrep');if(box)return box;box=document.createElement('div');box.id='appPrep';box.className='app-prep';box.setAttribute('aria-live','polite');box.setAttribute('aria-hidden','true');box.innerHTML='<div class="app-prep-card"><div class="app-prep-head"><i class="app-prep-spinner" aria-hidden="true"></i><div><span>Ghid RTA MTL</span><b id="appPrepTitle">Se pregateste ghidul</b></div></div><small id="appPrepText">O clipa, se aseaza recomandarile.</small><div class="app-prep-bar"><i></i></div></div>';document.body.appendChild(box);return box}
 function setAppPreparing(on,text){var box=prepOverlay();var body=document.body;if(text&&$('appPrepText'))$('appPrepText').textContent=text;box.setAttribute('aria-hidden',on?'false':'true');body.classList.toggle('app-preparing',!!on);if(!on&&window.__rtaLang==='en')setTimeout(function(){applyLanguage(document.body)},60)}
 function initAgeGate(onAccept){
@@ -3579,9 +3743,9 @@ wireChoices = function(profile, problemId, atom){
   return set;
 }
 
-var MAIN_ROUTES=['home','guides','methodology','diagnostic','recommender','atomizers','profiles','liquids','wires','consumables','registry','tcGuide','liquidGuide','legislativ','sources'];
+var MAIN_ROUTES=['home','guides','methodology','diagnostic','setupList','recommender','atomizers','profiles','liquids','wires','consumables','registry','tcGuide','liquidGuide','legislativ','sources'];
 function activeSection(id, navId){document.querySelectorAll('.section').forEach(function(s){s.classList.toggle('active',s.id===id)});document.querySelectorAll('.navbtn').forEach(function(b){b.classList.toggle('active',b.dataset.tab===(navId||id))})}
-function routeTitle(id, atom){var en=window.__rtaLang==='en';if(atom)return getName(atom)+(en?' - MTL RTA Guide - Smokee':' - Ghid RTA MTL - Smokee');var names={home:'Ghid RTA MTL - Smokee',guides:'Ghiduri utile - Ghid RTA MTL - Smokee',methodology:'Metodologie - Ghid RTA MTL - Smokee',diagnostic:'Diagnostic gust - Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',liquids:'Lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',consumables:'Consumabile RTA - Ghid RTA MTL - Smokee',registry:'Noutati - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',liquidGuide:'Cum facem lichidele vape - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};var namesEn={home:'MTL RTA Guide - Smokee',guides:'Useful Guides - MTL RTA Guide - Smokee',methodology:'Methodology - MTL RTA Guide - Smokee',diagnostic:'Taste Diagnosis - MTL RTA Guide - Smokee',recommender:'Recommendation - MTL RTA Guide - Smokee',atomizers:'Atomizers - MTL RTA Guide - Smokee',profiles:'Liquid Classes - MTL RTA Guide - Smokee',liquids:'Liquids - MTL RTA Guide - Smokee',wires:'RTA Wires - MTL RTA Guide - Smokee',consumables:'RTA Supplies - MTL RTA Guide - Smokee',registry:'New Items - MTL RTA Guide - Smokee',tcGuide:'TC Guide - MTL RTA Guide - Smokee',liquidGuide:'How to make vape liquids - MTL RTA Guide - Smokee',legislativ:'Legal - MTL RTA Guide - Smokee',sources:'RTA Reviews - MTL RTA Guide - Smokee'};return en?(namesEn[id]||namesEn.home):(names[id]||names.home)}
+function routeTitle(id, atom){var en=window.__rtaLang==='en';if(atom)return getName(atom)+(en?' - MTL RTA Guide - Smokee':' - Ghid RTA MTL - Smokee');var names={home:'Ghid RTA MTL - Smokee',guides:'Ghiduri utile - Ghid RTA MTL - Smokee',methodology:'Metodologie - Ghid RTA MTL - Smokee',diagnostic:'Diagnostic gust - Ghid RTA MTL - Smokee',setupList:'Lista Smokee - Ghid RTA MTL - Smokee',recommender:'Recomandare - Ghid RTA MTL - Smokee',atomizers:'Atomizoare - Ghid RTA MTL - Smokee',profiles:'Clase lichide - Ghid RTA MTL - Smokee',liquids:'Lichide - Ghid RTA MTL - Smokee',wires:'Sarme RTA - Ghid RTA MTL - Smokee',consumables:'Consumabile RTA - Ghid RTA MTL - Smokee',registry:'Noutati - Ghid RTA MTL - Smokee',tcGuide:'Ghid TC - Ghid RTA MTL - Smokee',liquidGuide:'Cum facem lichidele vape - Ghid RTA MTL - Smokee',legislativ:'Legislativ - Ghid RTA MTL - Smokee',sources:'Recenzii RTA - Ghid RTA MTL - Smokee'};var namesEn={home:'MTL RTA Guide - Smokee',guides:'Useful Guides - MTL RTA Guide - Smokee',methodology:'Methodology - MTL RTA Guide - Smokee',diagnostic:'Taste Diagnosis - MTL RTA Guide - Smokee',setupList:'Smokee Product List - MTL RTA Guide - Smokee',recommender:'Recommendation - MTL RTA Guide - Smokee',atomizers:'Atomizers - MTL RTA Guide - Smokee',profiles:'Liquid Classes - MTL RTA Guide - Smokee',liquids:'Liquids - MTL RTA Guide - Smokee',wires:'RTA Wires - MTL RTA Guide - Smokee',consumables:'RTA Supplies - MTL RTA Guide - Smokee',registry:'New Items - MTL RTA Guide - Smokee',tcGuide:'TC Guide - MTL RTA Guide - Smokee',liquidGuide:'How to make vape liquids - MTL RTA Guide - Smokee',legislativ:'Legal - MTL RTA Guide - Smokee',sources:'RTA Reviews - MTL RTA Guide - Smokee'};return en?(namesEn[id]||namesEn.home):(names[id]||names.home)}
 function routeHash(route){return '#'+String(route||'home').replace(/^#/,'')}
 function setRoute(route, replace){var hash=routeHash(route);if(location.hash!==hash){if(replace)history.replaceState(null,'',hash);else history.pushState(null,'',hash)}applyRoute(true)}
 function goTab(id){setRoute(id)}
@@ -3712,12 +3876,13 @@ function diagnosticVisibleCases(){return diagnosticVisibleRows().map(function(ro
 function diagnosticBestRows(q){return DIAGNOSTIC_CASES.map(function(d){return {d:d,score:diagnosticScore(d,q)}}).filter(function(row){return !norm(q).trim()||row.score>0}).sort(function(a,b){return b.score-a.score||(b.d.priority===true)-(a.d.priority===true)||a.d.id.localeCompare(b.d.id)})}
 function diagnosticBestMatch(q){var row=diagnosticBestRows(q)[0];return row?row.d:null}
 function diagnosticBestScore(q){var row=diagnosticBestRows(q)[0];return row?row.score:0}
-function diagnosticSuggestionHtml(){return '<div class="diagnostic-suggestions">'+DIAGNOSTIC_SUGGESTIONS.map(function(x){return '<button type="button" class="diagnostic-suggest" data-diagnostic-query="'+esc(x)+'">'+esc(x)+'</button>'}).join('')+'</div>'}
+function diagnosticSuggestionHtml(){return DIAGNOSTIC_SUGGESTIONS.map(function(x){return '<button type="button" class="diagnostic-suggest" data-diagnostic-query="'+esc(x)+'">'+esc(x)+'</button>'}).join('')}
 function bindDiagnosticAssist(box){box.querySelectorAll('[data-diagnostic-query]').forEach(function(btn){btn.onclick=function(){var search=$('diagnosticSearch');if(search)search.value=btn.dataset.diagnosticQuery;diagnosticFilter='all';renderDiagnosticFilters();var first=diagnosticBestMatch(btn.dataset.diagnosticQuery);if(first)selectedDiagnostic=first.id;renderDiagnosticPicker();renderDiagnosticDetail()}})}
-function renderDiagnosticAssist(rows){var box=$('diagnosticAssist');if(!box)return;var q=$('diagnosticSearch')?$('diagnosticSearch').value.trim():'';if(!q){box.innerHTML='<b>Cauta dupa cum se simte puful</b><span>Scrie natural: gust ars, nu simt aroma, curge dupa refill, lichid in gura, TC taie, coil murdar.</span><span class="diagnostic-hint">Sugestii rapide</span>'+diagnosticSuggestionHtml()}else if(rows.length){box.innerHTML='<b>Cautare asistata</b><span>Potriviri: '+esc(rows.length)+'</span><span class="diagnostic-hint">Prima verificare: '+esc(rows[0].d.title)+'</span><span>Apasa Enter pentru primul rezultat.</span>'+diagnosticSuggestionHtml()}else{box.innerHTML='<b>Cautare asistata</b><span>Nu exista potrivire clara. Incearca sa descrii momentul: dupa refill, dupa cateva pufuri, peste noapte, in TC, la NET.</span>'+diagnosticSuggestionHtml()}bindDiagnosticAssist(box);if(window.__rtaLang==='en')applyLanguage(box)}
+function renderDiagnosticSuggestions(){var box=$('diagnosticSuggestions');if(!box)return;box.innerHTML=diagnosticSuggestionHtml();bindDiagnosticAssist(box);if(window.__rtaLang==='en')applyLanguage(box)}
+function renderDiagnosticAssist(rows){var box=$('diagnosticAssist');if(!box)return;var q=$('diagnosticSearch')?$('diagnosticSearch').value.trim():'';if(!q){box.innerHTML='<b>Cauta dupa cum se simte puful</b><span>Scrie natural: gust ars, nu simt aroma, curge dupa refill, lichid in gura, TC taie, coil murdar.</span>'}else if(rows.length){box.innerHTML='<div class="diagnostic-assist-head"><b>Cautare asistata</b><span class="diagnostic-count">Potriviri: '+esc(rows.length)+'</span></div><span class="diagnostic-hint">Prima verificare: '+esc(rows[0].d.title)+'</span><span>Apasa Enter pentru primul rezultat.</span>'}else{box.innerHTML='<b>Cautare asistata</b><span>Nu exista potrivire clara. Incearca sa descrii momentul: dupa refill, dupa cateva pufuri, peste noapte, in TC, la NET.</span>'}if(window.__rtaLang==='en')applyLanguage(box)}
 function diagnosticList(title,items){return '<div class="diagnostic-tile"><b>'+esc(title)+'</b><ul>'+items.map(function(x){return '<li>'+esc(x)+'</li>'}).join('')+'</ul></div>'}
 function renderDiagnosticFilters(){var box=$('diagnosticFilters');if(!box)return;var opts=[{id:'all',label:'Toate'}].concat(DIAGNOSTIC_CATEGORIES);box.innerHTML=opts.map(function(c){return '<button type="button" class="diagnostic-filter'+(diagnosticFilter===c.id?' active':'')+'" data-diagnostic-filter="'+esc(c.id)+'">'+esc(c.label)+'</button>'}).join('')}
-function renderDiagnosticPicker(){var list=$('diagnosticSymptomList');if(!list)return;var rows=diagnosticVisibleRows();renderDiagnosticAssist(rows);list.innerHTML=rows.length?rows.map(function(row){var d=row.d;return '<button type="button" class="diagnostic-symptom'+(d.id===selectedDiagnostic?' active':'')+'" data-diagnostic-id="'+esc(d.id)+'"><span class="diagnostic-code">'+esc(d.id)+'</span><span><b>'+esc(d.title)+'</b><small>'+esc(d.tag+' - '+diagnosticCategoryLabel(d.cat))+'</small></span></button>'}).join(''):'<div class="empty">Nu exista rezultate clare pentru filtrul ales.</div>';list.querySelectorAll('[data-diagnostic-id]').forEach(function(btn){btn.onclick=function(){selectDiagnostic(btn.dataset.diagnosticId)}});if(window.__rtaLang==='en')applyLanguage(list)}
+function renderDiagnosticPicker(){var list=$('diagnosticSymptomList');if(!list)return;var rows=diagnosticVisibleRows();renderDiagnosticAssist(rows);renderDiagnosticSuggestions();list.innerHTML=rows.length?rows.map(function(row){var d=row.d;return '<button type="button" class="diagnostic-symptom'+(d.id===selectedDiagnostic?' active':'')+'" data-diagnostic-id="'+esc(d.id)+'"><span class="diagnostic-code">'+esc(d.id)+'</span><span><b>'+esc(d.title)+'</b><small>'+esc(d.tag+' - '+diagnosticCategoryLabel(d.cat))+'</small></span></button>'}).join(''):'<div class="empty">Nu exista rezultate clare pentru filtrul ales.</div>';list.querySelectorAll('[data-diagnostic-id]').forEach(function(btn){btn.onclick=function(){selectDiagnostic(btn.dataset.diagnosticId)}});if(window.__rtaLang==='en')applyLanguage(list)}
 function renderDiagnosticDetail(){var box=$('diagnosticDetail');if(!box)return;var d=diagnosticCaseById(selectedDiagnostic);box.innerHTML='<article class="diagnostic-panel"><div class="diagnostic-badges"><span class="chip warn">'+esc(d.id)+'</span><span class="chip cold">'+esc(d.tag)+'</span><span class="chip neutral">'+esc(diagnosticCategoryLabel(d.cat))+'</span></div><h3>'+esc(d.title)+'</h3><p class="why">'+esc(d.moment)+'</p><div class="diagnostic-card-grid"><div class="diagnostic-tile"><b>Tip problema</b><p>'+esc(d.type)+'</p></div>'+diagnosticList('Cauze probabile',d.causes)+diagnosticList('Teste rapide',d.tests)+diagnosticList('Corectii graduale',d.fixes)+'<div class="diagnostic-tile"><b>Cand se evalueaza atomizorul</b><p>'+esc(d.atomizer)+'</p></div></div><div class="diagnostic-cta"><button class="mini-link" type="button" data-jump="recommender">Mergi la Recomandare</button><button class="mini-link" type="button" data-jump="wires">Verifica sarmele</button><button class="mini-link" type="button" data-jump="tcGuide">Ghid TC</button><button class="mini-link" type="button" data-jump="consumables">Consumabile RTA</button></div></article>';box.querySelectorAll('[data-jump]').forEach(function(btn){btn.onclick=function(){goTab(btn.dataset.jump)}});if(window.__rtaLang==='en')applyLanguage(box)}
 function selectDiagnostic(id){selectedDiagnostic=id;renderDiagnosticPicker();renderDiagnosticDetail()}
 function syncDiagnosticSelectionFromSearch(){var rows=diagnosticVisibleRows();if(rows.length&&!rows.some(function(row){return row.d.id===selectedDiagnostic})){selectedDiagnostic=rows[0].d.id;renderDiagnosticDetail()}}
@@ -3784,7 +3949,7 @@ function stockPill(item){if(item.stock===true)return '<span class="stock-pill in
 function consumableCard(item){var img=item.image?'<img src="'+esc(item.image)+'" alt="'+esc(item.title)+'" loading="lazy">':'RTA';var meta=item.model?item.model+' - '+(item.tag||'componenta RTA'):(item.tag||'consumabil RTA');return '<a class="consumable-item" target="_blank" rel="noreferrer" href="'+esc(item.url)+'"><span class="consumable-thumb">'+img+'</span><span class="consumable-copy"><b>'+esc(item.title)+'</b><small>'+esc(meta)+'</small><span class="stock-row">'+stockPill(item)+'<span class="stock-pill link">deschide produs</span></span></span></a>'}
 function componentListHtml(list){var grouped={};list.forEach(function(item){var model=item.model||inferComponentModel(item.title);if(!grouped[model])grouped[model]=[];grouped[model].push(item)});var names=Object.keys(grouped).sort(function(a,b){if(a==='Componente RTA diverse')return 1;if(b==='Componente RTA diverse')return -1;return a.localeCompare(b)});return names.map(function(name){return '<div class="component-model"><h4>'+esc(name)+'</h4><div class="consumable-list">'+grouped[name].map(consumableCard).join('')+'</div></div>'}).join('')}
 function consumableListHtml(group,list){if(!list.length)return '<div class="empty">Nu sunt produse in zona aceasta.</div>';if(group.id==='components')return componentListHtml(list);return list.map(consumableCard).join('')}
-function renderConsumables(data,status){var box=$('consumableGrid');if(!box)return;data=data||SMOKEE_CONSUMABLES;var date=data.generated||'Smokee';box.innerHTML=CONSUMABLE_GROUPS.map(function(g){var list=(data[g.id]||[]);return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(list.length)+' produse</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee live':'sincronizare zilnica')+'</span></div><div class="consumable-list">'+consumableListHtml(g,list)+'</div></article>'}).join('')}
+function renderConsumables(data,status){var box=$('consumableGrid');if(!box)return;data=data||SMOKEE_CONSUMABLES;var date=data.generated||'Smokee';box.innerHTML=CONSUMABLE_GROUPS.map(function(g){var list=(data[g.id]||[]);return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(list.length)+' produse</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee verificat':'lista salvata')+'</span></div><div class="consumable-list">'+consumableListHtml(g,list)+'</div></article>'}).join('')}
 function scoreConsumable(item,group,q){return fieldScore(q,[[item.title,30],[item.tag,18],[item.model,18],[group.title,20],[group.note,12],[item.url,4],['consumabile rta sarme bumbac unelte componente atomizoare smokee coil wire cotton tool kit air pin sticla tank chamber clopot',12]])}
 function consumableSearchResults(q){var nq=norm(q);var rows=consumableItems(consumableState).map(function(x){return {x:x,score:scoreConsumable(x.item,x.group,q)}}).filter(function(row){return !nq||row.score>0}).sort(function(a,b){return b.score-a.score||a.x.item.title.localeCompare(b.x.item.title)}).slice(0,8);if(rows.length)return rows.map(function(row){var meta=row.x.group.title+' - '+(row.x.item.model?row.x.item.model+' - ':'')+(row.x.item.tag||'Smokee');return {tab:'consumables',route:'consumables',title:row.x.item.title,meta:meta,query:q,score:row.score}});var score=fieldScore(q,[[consumableSearchText(consumableState),20],['consumabile rta sarme bumbac unelte componente atomizoare smokee whatsapp',30]]);return score>0?[{tab:'consumables',route:'consumables',title:'Consumabile RTA',meta:'Sarme, bumbac, unelte si componente Smokee',query:q,score:score}]:[]}
 var LIQUID_CATALOG_GROUPS=[
@@ -3902,9 +4067,39 @@ function refreshLiquidCatalog(){return Promise.all(LIQUID_CATALOG_GROUPS.map(fet
 function initLiquidCatalog(){renderLiquidCatalog(liquidCatalogState,'fallback');renderSupplierShowcase(liquidCatalogState);try{var cached=JSON.parse(localStorage.getItem(LIQUID_CATALOG_CACHE_KEY)||'null');if(cached&&cached.generated===todayKey()){liquidCatalogState=cached;renderLiquidCatalog(cached,'cache');renderSupplierShowcase(cached);renderRegistry()}}catch(e){}}
 function liquidCatalogListHtml(list){if(!list.length)return '<div class="empty">Nu sunt produse in zona aceasta.</div>';return list.map(consumableCard).join('')}
 function bindLiquidCatalogFilters(data,status){document.querySelectorAll('[data-liquid-sub]').forEach(function(btn){btn.onclick=function(){liquidCatalogFilters[btn.dataset.liquidGroup]=btn.dataset.liquidSub;liquidCatalogExpanded[btn.dataset.liquidGroup]=null;renderLiquidCatalog(data,status)}});document.querySelectorAll('[data-liquid-expand]').forEach(function(btn){btn.onclick=function(){liquidCatalogExpanded[btn.dataset.liquidExpand]=liquidCatalogFilters[btn.dataset.liquidExpand]||'all';renderLiquidCatalog(data,status)}})}
-function renderLiquidCatalog(data,status){var box=$('liquidCatalogGrid');if(!box)return;data=data||SMOKEE_LIQUIDS;var date=data.generated||'Smokee';box.innerHTML=LIQUID_CATALOG_GROUPS.map(function(g){var list=(data[g.id]||[]);var selected=liquidSelectedSubgroup(g.id,list);var filtered=selected==='all'?list:list.filter(function(item){return liquidMatchesSubgroup(item,selected)});var expanded=liquidCatalogExpanded[g.id]===selected;var visible=expanded?filtered:filtered.slice(0,18);var more=filtered.length>visible.length?'<button type="button" class="mini-link liquid-expand" data-liquid-expand="'+esc(g.id)+'">Arata toate cele '+esc(filtered.length)+' produse</button>':'';return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(visible.length)+' / '+esc(filtered.length)+' afisate</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee live':'sincronizare zilnica')+'</span><span class="chip neutral">'+esc(list.length)+' total</span></div>'+liquidFilterButtonsHtml(g.id,list,selected)+'<p class="liquid-subnote">Afisare: '+esc(g.title+' '+liquidSubgroupLabel(selected))+'</p><div class="consumable-list">'+liquidCatalogListHtml(visible)+'</div>'+more+'</article>'}).join('');bindLiquidCatalogFilters(data,status)}
+function renderLiquidCatalog(data,status){var box=$('liquidCatalogGrid');if(!box)return;data=data||SMOKEE_LIQUIDS;var date=data.generated||'Smokee';box.innerHTML=LIQUID_CATALOG_GROUPS.map(function(g){var list=(data[g.id]||[]);var selected=liquidSelectedSubgroup(g.id,list);var filtered=selected==='all'?list:list.filter(function(item){return liquidMatchesSubgroup(item,selected)});var expanded=liquidCatalogExpanded[g.id]===selected;var visible=expanded?filtered:filtered.slice(0,18);var more=filtered.length>visible.length?'<button type="button" class="mini-link liquid-expand" data-liquid-expand="'+esc(g.id)+'">Arata toate cele '+esc(filtered.length)+' produse</button>':'';return '<article class="consumable-zone"><div class="consumable-zone-head"><div><h3>'+esc(g.title)+'</h3><span>'+esc(g.note)+'</span></div><span class="consumable-status">'+esc(visible.length)+' / '+esc(filtered.length)+' afisate</span></div><div class="chips" style="margin-bottom:10px"><span class="chip cold">Actualizare: '+esc(date)+'</span><span class="chip warn">'+esc(status==='actualizat'?'Smokee verificat':'lista salvata')+'</span><span class="chip neutral">'+esc(list.length)+' total</span></div>'+liquidFilterButtonsHtml(g.id,list,selected)+'<p class="liquid-subnote">Afisare: '+esc(g.title+' '+liquidSubgroupLabel(selected))+'</p><div class="consumable-list">'+liquidCatalogListHtml(visible)+'</div>'+more+'</article>'}).join('');bindLiquidCatalogFilters(data,status)}
 function scoreLiquidCatalog(item,group,q){return fieldScore(q,[[item.title,32],[item.tag,22],[group.title,24],[group.note,14],[item.url,4],['lichide smokee net tutun tobacco tabac tabaco ry4 latakia kentucky virginia burley cigar cavendish oriental perique pipe dulce sweet caramel vanilie miere cafea cacao ciocolata crema custard toffee butterscotch longfill shortfill aroma concentrat',16]])}
 function liquidCatalogSearchResults(q){var nq=norm(q);var rows=liquidCatalogItems(liquidCatalogState).map(function(x){return {x:x,score:scoreLiquidCatalog(x.item,x.group,q)}}).filter(function(row){return !nq||row.score>0}).sort(function(a,b){return b.score-a.score||a.x.item.title.localeCompare(b.x.item.title)}).slice(0,8);if(rows.length)return rows.map(function(row){return {tab:'liquids',route:'liquids',title:row.x.item.title,meta:'Lichide '+row.x.group.title+' - '+(row.x.item.tag||'Smokee'),query:q,score:row.score,liquidGroup:row.x.group.id,liquidSub:liquidBestSubgroup(row.x.item)}});var score=fieldScore(q,[[liquidCatalogSearchText(liquidCatalogState),20],['lichide smokee net tutun tobacco tabac tabaco ry4 latakia kentucky virginia burley cigar cavendish oriental perique dulce sweet caramel vanilie miere cafea cacao ciocolata crema custard toffee butterscotch',34]]);return score>0?[{tab:'liquids',route:'liquids',title:'Lichide NET si TUTUN',meta:'Produse Smokee impartite pe cele doua familii',query:q,score:score}]:[]}
+var setupProfile={style:'mtl-tight',liquid:'net',goal:'aroma',rta:'need'};
+var setupLiveState={generated:'',rta:[],liquids:[],wires:[],cotton:[]};
+var setupSelected={};
+var setupManualItems=[];
+var setupRefreshBusy=false;
+var setupRefreshTimer=null;
+function setupUtm(url){try{var u=new URL(url,location.href);if(/smokee\.ro$/i.test(u.hostname)||/\.smokee\.ro$/i.test(u.hostname)){u.searchParams.set('utm_source','ghid-rta');u.searchParams.set('utm_medium','lista-produse');u.searchParams.set('utm_campaign','smokee_recomandari')}return u.href}catch(e){return url||'https://smokee.ro/'}}
+function setupRawText(p){var cats=Array.isArray(p&&p.categories)?p.categories.map(function(c){return c.name||c.slug||''}).join(' '):'';var tags=Array.isArray(p&&p.tags)?p.tags.map(function(t){return t.name||t.slug||''}).join(' '):'';return norm(decodeHtmlText([p&&p.name,p&&p.short_description,p&&p.description,cats,tags,p&&p.permalink].filter(Boolean).join(' ')))}
+function setupNormalizeStoreProduct(p,kind){var img='';if(p&&p.images&&p.images.length)img=p.images[0].thumbnail||p.images[0].src||'';var title=decodeHtmlText((p&&p.name)||(p&&p.title)||'');var url=(p&&p.permalink)||(p&&p.url)||'';return {id:kind+'-'+(p&&p.id?p.id:compactText(url||title)),productId:p&&p.id,title:title,url:url,image:img,kind:kind,stock:p&&p.is_in_stock===true?true:(p&&p.is_in_stock===false?false:null),tag:setupKindLabel(kind),source:'Smokee'}}
+function setupKindLabel(kind){return {rta:'Atomizor RTA',liquids:'Lichid',wires:'Sarma',cotton:'Bumbac'}[kind]||'Produs'}
+function setupAcceptProduct(p,kind){var t=setupRawText(p);var url=(p&&p.permalink)||(p&&p.url)||'';if(!/smokee\.ro\/product\//.test(url))return false;if(kind==='rta')return /\brta\b|atomizor/.test(t)&&!/\b(rda|rdta|pod|cartus|cartridge|clearomizor|clearomizer|kit voopoo|full kit|subohm|sub-ohm)\b/.test(t);if(kind==='liquids')return /\b(lichid|liquid|longfill|shortfill|aroma|concentrat|tobacco|tutun|tabac|tabaco|net|ry4|latakia|kentucky|virginia|burley|cigar|pipe|cavendish)\b/.test(t)&&!/\b(atomizor|rta|bumbac|cotton|wire|sarma|coil|cartus|pod|nic shot|baza|base)\b/.test(t);if(kind==='wires')return /\b(sarma|wire|kanthal|ka1|k1|ss316|ss316l|nife|ni80|clapton|coil|coils|rezistent|rezistenta)\b/.test(t)&&!/\b(pod|cartus|cartridge|rda|dl)\b/.test(t);if(kind==='cotton')return /\b(bumbac|cotton|coton)\b/.test(t)&&!/\b(cotton candy|aroma|lichid|longfill|shortfill)\b/.test(t);return false}
+function setupUniqueProducts(list){var seen={};return (list||[]).filter(function(item){var key=String(item.url||item.title||'').replace(/[?#].*$/,'').replace(/\/?$/,'/');if(!key||seen[key])return false;seen[key]=1;item.id=item.id||item.kind+'-'+compactText(key);return true})}
+function setupTerms(kind){if(kind==='rta')return ['RTA','MTL RTA','atomizor RTA','BKS Blade','Arcana Mods','Centenary Mods','Ennequadro Mods','By-Ka','Ambition Mods','BP Mods Labs'];if(kind==='liquids')return ['tutun','tobacco','NET','RY4','La Tabaccheria','Black Note','Centenary Mods','Don Cristo','Ripe Vapes','Manabush'];if(kind==='wires')return ['sarma','wire','Ni80','SS316L','Kanthal','Clapton','MTL coil','NiFe30'];return ['bumbac','cotton','COTN','Cotton Bacon','Angorabbit']}
+function setupFetchKind(kind){return Promise.all(setupTerms(kind).map(fetchSupplierProducts)).then(function(chunks){return setupUniqueProducts([].concat.apply([],chunks).filter(function(p){return setupAcceptProduct(p,kind)}).map(function(p){return setupNormalizeStoreProduct(p,kind)})).slice(0,kind==='liquids'?80:40)}).catch(function(){return []})}
+function setupFallbackKind(kind){if(kind==='rta')return setupUniqueProducts(supplierRtaItems().map(function(item){return {id:'rta-'+compactText(item.url||item.title),title:item.title||item.name,url:item.url,image:item.image,kind:'rta',stock:null,tag:'Atomizor RTA',source:'Smokee'}})).slice(0,30);if(kind==='liquids')return setupUniqueProducts(liquidCatalogItems(liquidCatalogState).map(function(x){return {id:'liq-'+compactText(x.item.url||x.item.title),title:x.item.title,url:x.item.url,image:x.item.image,kind:'liquids',stock:x.item.stock,tag:x.item.tag||x.group.title,source:'Smokee'}})).slice(0,80);var group=kind==='wires'?'wires':'cotton';return setupUniqueProducts((consumableState[group]||[]).map(function(item){return {id:kind+'-'+compactText(item.url||item.title),title:item.title,url:item.url,image:item.image,kind:kind,stock:item.stock,tag:item.tag||setupKindLabel(kind),source:'Smokee'}})).slice(0,40)}
+function setupProfileTerms(kind){var p=setupProfile;var terms={rta:'rta mtl atomizor airflow aroma',liquids:'tutun tobacco net',wires:'wire sarma mtl',cotton:'bumbac cotton mtl'}[kind]||'';if(p.liquid==='net')terms+=' net organic tabaccheria latakia kentucky black note';if(p.liquid==='tutun-simplu')terms+=' tobacco tutun virginia burley classic ry4';if(p.liquid==='tutun-complex')terms+=' cigar pipe cavendish latakia kentucky blend complex';if(p.liquid==='tutun-dulce')terms+=' ry4 caramel vanilla vanilie honey miere vct don cristo sweet';if(p.goal==='claritate')terms+=' ss316 ss316l nife arcana by-ka virginia oriental';if(p.goal==='hit')terms+=' kanthal k1 kentucky cigar throat hit';if(p.goal==='stabilitate')terms+=' cotton bumbac kayfun taifun labs leak stable';if(p.style==='beginner')terms+=' easy beginner usor kit bumbac';return terms}
+function setupTermScore(text,terms){var score=0;var t=norm(text);norm(terms).split(/\s+/).filter(Boolean).forEach(function(token){if(token.length>1&&t.indexOf(token)>=0)score+=7});return score}
+function setupScoreProduct(item,kind){var text=[item.title,item.tag,item.url].join(' ');var score=setupTermScore(text,setupProfileTerms(kind));if(item.stock===true)score+=12;if(kind==='rta'&&/\brta\b|atomizor/.test(norm(text)))score+=18;if(kind==='liquids'&&/tutun|tobacco|net|ry4|latakia|kentucky|virginia|burley|cigar|pipe/.test(norm(text)))score+=18;if(kind==='wires'&&/ss316|nife|ni80|kanthal|k1|clapton|wire|sarma|coil/.test(norm(text)))score+=18;if(kind==='cotton'&&/bumbac|cotton/.test(norm(text)))score+=20;return score}
+function setupSorted(kind){var list=(setupLiveState[kind]&&setupLiveState[kind].length?setupLiveState[kind]:setupFallbackKind(kind));return list.slice().map(function(item){return {item:item,score:setupScoreProduct(item,kind)}}).sort(function(a,b){return b.score-a.score||a.item.title.localeCompare(b.item.title)}).map(function(x){return x.item})}
+function setupProductKey(item){return item.kind+'|'+String(item.url||item.title)}
+function setupRecommendedProducts(){var out=[];if(setupProfile.rta==='need')out=out.concat(setupSorted('rta').slice(0,1));out=out.concat(setupSorted('liquids').slice(0,2));out=out.concat(setupSorted('wires').slice(0,2));out=out.concat(setupSorted('cotton').slice(0,1));setupManualItems.forEach(function(item){if(out.every(function(x){return setupProductKey(x)!==setupProductKey(item)}))out.push(item)});out=setupUniqueProducts(out);out.forEach(function(item){var key=setupProductKey(item);if(setupSelected[key] == null)setupSelected[key]=true});return out}
+function setupProductCard(item){var key=setupProductKey(item);var active=setupSelected[key]!==false;var img=item.image?'<img src="'+esc(item.image)+'" alt="'+esc(item.title)+'" loading="lazy">':esc(setupKindLabel(item.kind));return '<article class="setup-product'+(active?'':' off')+'"><span class="setup-thumb">'+img+'</span><span class="setup-copy"><b>'+esc(item.title)+'</b><small>'+esc(setupKindLabel(item.kind)+' - '+(item.tag||'Smokee'))+'</small><span class="stock-row">'+stockPill(item)+'</span><span class="setup-product-actions"><label class="setup-toggle"><input type="checkbox" data-setup-toggle="'+esc(key)+'" '+(active?'checked':'')+'>Pastreaza</label><a class="mini-link" target="_blank" rel="noreferrer" href="'+esc(setupUtm(item.url))+'">Vezi pe Smokee</a></span></span></article>'}
+function setupPickerHtml(kind,label){var list=setupSorted(kind).slice(0,40);return '<div class="setup-picker"><label>'+esc(label)+'</label><select data-setup-picker="'+esc(kind)+'">'+list.map(function(item){return '<option value="'+esc(setupProductKey(item))+'">'+esc(item.title)+'</option>'}).join('')+'</select><button class="mini-link" type="button" data-setup-add="'+esc(kind)+'" style="margin-top:7px;width:100%">Adauga in lista</button></div>'}
+function setupFindProduct(key){var all=['rta','liquids','wires','cotton'].reduce(function(acc,k){return acc.concat(setupSorted(k))},[]);return all.find(function(item){return setupProductKey(item)===key})}
+function setupRender(){var verdict=$('setupVerdict');var list=$('setupProductList');var pickers=$('setupPickers');if(!verdict||!list||!pickers)return;var items=setupRecommendedProducts();var activeCount=items.filter(function(item){return setupSelected[setupProductKey(item)]!==false}).length;verdict.innerHTML='<span class="chip warn">Lista orientativa</span><h3>Setup Smokee pentru profilul ales</h3><p>Lista combina profilul lichidului, intentia de gust si produsele disponibile pe Smokee. Se pastreaza doar produsele bifate.</p><div class="setup-livebar"><span class="chip good">'+esc(activeCount)+' produse pastrate</span><span class="chip cold">'+esc(setupLiveState.generated||'Smokee')+'</span></div>';list.innerHTML=items.length?items.map(setupProductCard).join(''):'<div class="empty">Nu exista produse suficiente pentru lista. Verifica produsele Smokee.</div>';pickers.innerHTML=setupPickerHtml('rta','Atomizoare RTA')+setupPickerHtml('liquids','Lichide tutunoase')+setupPickerHtml('wires','Sarme')+setupPickerHtml('cotton','Bumbac');if(window.__rtaLang==='en')applyLanguage($('setupList'))}
+function setupSetStatus(text,kind){var el=$('setupLiveStatus');if(el){el.textContent=text;el.className='chip '+(kind||'warn')}}
+function refreshSetupProducts(silent){if(setupRefreshBusy)return Promise.resolve();setupRefreshBusy=true;if(!silent)setupSetStatus('Se verifica produsele Smokee','warn');return Promise.all(['rta','liquids','wires','cotton'].map(setupFetchKind)).then(function(groups){['rta','liquids','wires','cotton'].forEach(function(kind,i){if(groups[i]&&groups[i].length)setupLiveState[kind]=groups[i];else if(!setupLiveState[kind].length)setupLiveState[kind]=setupFallbackKind(kind)});setupLiveState.generated=new Date().toLocaleTimeString('ro-RO',{hour:'2-digit',minute:'2-digit'});setupSetStatus('Produse verificate: '+setupLiveState.generated,'good');setupRender()}).catch(function(){['rta','liquids','wires','cotton'].forEach(function(kind){if(!setupLiveState[kind].length)setupLiveState[kind]=setupFallbackKind(kind)});setupSetStatus('Se foloseste ultima lista valida','warn');setupRender()}).finally(function(){setupRefreshBusy=false})}
+function setupCopyList(){var items=setupRecommendedProducts().filter(function(item){return setupSelected[setupProductKey(item)]!==false});var text=items.map(function(item,i){return (i+1)+'. '+item.title+' - '+setupUtm(item.url)}).join('\n');navigator.clipboard.writeText(text).then(function(){var s=$('setupCopyStatus');if(s)s.textContent='Lista a fost copiata.'}).catch(function(){var s=$('setupCopyStatus');if(s)s.textContent='Copierea nu a reusit. Linkurile pot fi deschise individual.'})}
+function initSetupList(){setupRender();if(!setupLiveState.generated)refreshSetupProducts(false);if(!setupRefreshTimer)setupRefreshTimer=setInterval(function(){if($('setupList')&&$('setupList').classList.contains('active'))refreshSetupProducts(true)},120000);document.querySelectorAll('[data-setup-group]').forEach(function(group){if(group.dataset.ready)return;group.dataset.ready='1';group.addEventListener('click',function(e){var btn=e.target.closest('[data-value]');if(!btn)return;setupProfile[group.dataset.setupGroup]=btn.dataset.value;group.querySelectorAll('.setup-option').forEach(function(b){b.classList.toggle('active',b===btn)});setupSelected={};setupManualItems=[];setupRender()})});var refresh=$('setupRefreshBtn');if(refresh&&!refresh.dataset.ready){refresh.dataset.ready='1';refresh.onclick=function(){refreshSetupProducts(false)}}var copy=$('setupCopyBtn');if(copy&&!copy.dataset.ready){copy.dataset.ready='1';copy.onclick=setupCopyList}var root=$('setupList');if(root&&!root.dataset.setupEvents){root.dataset.setupEvents='1';root.addEventListener('change',function(e){var toggle=e.target.closest('[data-setup-toggle]');if(toggle){setupSelected[toggle.dataset.setupToggle]=toggle.checked;setupRender()}});root.addEventListener('click',function(e){var add=e.target.closest('[data-setup-add]');if(!add)return;var sel=root.querySelector('[data-setup-picker="'+add.dataset.setupAdd+'"]');var item=sel?setupFindProduct(sel.value):null;if(item&&setupManualItems.every(function(x){return setupProductKey(x)!==setupProductKey(item)})){setupManualItems.push(item);setupSelected[setupProductKey(item)]=true;setupRender()}})}}
+function setupListSearchResult(q){return {tab:'setupList',route:'setupList',title:'Lista de produse recomandate',meta:'Atomizor, lichide tutunoase, sarme si bumbac de pe Smokee',query:q,score:fieldScore(q,[['lista produse smokee setup rta mtl atomizor lichide tutun net sarme bumbac cumparare recomandate',42],[liquidCatalogSearchText(liquidCatalogState),12],[consumableSearchText(consumableState),12]])}}
 function registrySearchResults(q){var nq=norm(q);var baseScore=fieldScore(q,[['noutati rta mtl smokee modele recente review surse build potriviri lichide sarme accesorii bumbac unelte componente net tutun',34]]);var atomRows=registryEntries().map(function(e){var a=e.atom;var score=fieldScore(q,[[publicAtomName(a),34],[entryMetaText(e),20],[getDna(a),8],[getSources(a).map(function(s){return sourceTitle(s)+' '+sourceClaim(s)+' '+sourceUrl(s)}).join(' '),8]]);return {kind:'rta',entry:e,score:score,title:publicAtomName(a),meta:'RTA - '+e.status+' - '+registryDateLabel(e.date)}});var liquidRows=registryLiquidEntries(liquidCatalogState).map(function(e){var score=fieldScore(q,[[e.item.title,34],[e.item.tag,22],[e.group.title,18],[e.item.url,6]]);return {kind:'liquid',entry:e,score:score,title:e.item.title,meta:'Lichide '+e.group.title+' - '+registryDateLabel(e.date)}});var consumableRows=consumableRegistryEntries(consumableState,'wires').concat(consumableRegistryEntries(consumableState,'accessories')).map(function(e){var score=fieldScore(q,[[e.item.title,34],[e.item.tag,22],[e.item.model,18],[e.group.title,18],[e.item.url,6]]);return {kind:e.group.id==='wires'?'wire':'accessory',entry:e,score:score,title:e.item.title,meta:(e.group.id==='wires'?'Sarme':'Accesorii')+' - '+registryDateLabel(e.date)}});var rows=atomRows.concat(liquidRows,consumableRows).filter(function(row){return !nq||row.score>0}).sort(function(a,b){return b.score-a.score||a.title.localeCompare(b.title)}).slice(0,8);if(rows.length)return rows.map(function(row){return {tab:'registry',route:'registry',title:row.title,meta:'Noutati - '+row.meta,query:q,score:row.score}});return baseScore>0?[{tab:'registry',route:'registry',title:'Noutati Smokee',meta:'Lichide, RTA, sarme si accesorii recente',query:q,score:baseScore}]:[]}
 function entryMetaText(e){var a=e.atom;return [e.status,e.date,first(a,['catalogStatus','confidence','market']),getWhy(a),getDna(a)].join(' ')}
 function searchBuckets(q){var nq=norm(q);return {
@@ -3912,6 +4107,7 @@ function searchBuckets(q){var nq=norm(q);return {
   profiles:profiles.map(function(p,i){return {p:p,i:i,score:scoreProfile(p,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||profileDisplayName(x.p).localeCompare(profileDisplayName(y.p))}).slice(0,8).map(function(x){return {tab:'profiles',title:profileDisplayName(x.p),meta:'Lichid - '+liquidClassLabel(x.p),query:q,index:x.i,score:x.score}}),
   liquids:liquidCatalogSearchResults(q),
   wires:WIRE_GUIDE.map(function(w){return {w:w,score:scoreWire(w,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||x.w.name.localeCompare(y.w.name)}).slice(0,8).map(function(x){return {tab:'wires',title:x.w.name,meta:'Sarma - '+x.w.role,query:q,score:x.score}}),
+  setupList:[setupListSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   consumables:consumableSearchResults(q),
   registry:registrySearchResults(q),
   diagnostic:[diagnosticSearchResult(q)].filter(function(x){return !nq||x.score>0}),
@@ -3921,7 +4117,7 @@ function searchBuckets(q){var nq=norm(q);return {
   legislativ:[legislativeSearchResult(q)].filter(function(x){return !nq||x.score>0}),
   sources:atomizers.map(function(a){return {a:a,score:scoreSource(a,q)}}).filter(function(x){return !nq||x.score>0}).sort(function(x,y){return y.score-x.score||getName(x.a).localeCompare(getName(y.a))}).slice(0,8).map(function(x){return {tab:'sources',title:publicAtomName(x.a),meta:'Recenzii si builduri',query:q,score:x.score}})
 }}
-function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,liquids:2,wires:3,diagnostic:4,consumables:5,registry:6,guides:7,methodology:8,liquidGuide:9,legislativ:10,tcGuide:11,sources:12};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
+function autoSearchList(q,b){if(isTemperatureQuery(q))return [tcGuideSearchResult(q)].concat(b.wires.slice(0,7));if(isWireQuery(q))return b.wires.slice(0,8);var order={atomizers:0,profiles:1,liquids:2,wires:3,setupList:4,diagnostic:5,consumables:6,registry:7,guides:8,methodology:9,liquidGuide:10,legislativ:11,tcGuide:12,sources:13};var all=[];Object.keys(b).forEach(function(k){b[k].forEach(function(item){item.autoScore=(item.score||0)+(k==='atomizers'&&compactText(item.title)===compactText(q)?80:0);all.push(item)})});return all.sort(function(x,y){return y.autoScore-x.autoScore||(order[x.tab]-order[y.tab])||x.title.localeCompare(y.title)}).slice(0,8)}
 function bestSearchMode(q,b){if(searchMode!=='auto')return searchMode;var first=autoSearchList(q,b)[0];return first?first.tab:'atomizers'}
 function applySearch(item){var q=item.query||$('globalSearch').value.trim();if(item.liquidGroup&&item.liquidSub){liquidCatalogFilters[item.liquidGroup]=item.liquidSub;renderLiquidCatalog(liquidCatalogState,'filtrat')}if(item.tab==='diagnostic'){hideSearchPanel();setRoute(item.route||'diagnostic');applyDiagnosticQuery(q);return}if(item.route){hideSearchPanel();setRoute(item.route);return}if(item.tab==='wires'){if($('wireSearch')){$('wireSearch').value=q;renderWires()}}else if(item.tab==='profiles'){if($('profileSearch')){$('profileSearch').value=q;renderProfiles()}}else if(item.tab==='sources'){if($('sourceSearch')){$('sourceSearch').value=q;renderSources()}}else if(item.tab==='liquids'){renderLiquidCatalog(liquidCatalogState,'filtrat')}else{if($('atomSearch')){$('atomSearch').value=q;selectedRole='all';renderAtomizers()}}goTab(item.tab);hideSearchPanel()}
 function hideSearchPanel(){var p=$('searchPanel');if(p)p.classList.remove('active')}
@@ -3998,7 +4194,7 @@ function initLiquidCalculator(){
 var renderedSections={};
 var appPrepStarted=false;
 var APP_PREP_SECTIONS=['home','diagnostic','recommender','atomizers','profiles','wires','liquids','consumables','registry','sources','liquidGuide'];
-function ensureSectionRendered(id){if(id==='home'&&!renderedSections.home){renderMetrics();renderRoleMini();renderSupplierShowcase(liquidCatalogState);renderedSections.home=true;return}if(id==='diagnostic'&&!renderedSections.diagnostic){initDiagnostic();renderedSections.diagnostic=true;return}if(id==='recommender'&&!renderedSections.recommender){initRecommender();renderedSections.recommender=true;return}if(id==='atomizers'&&!renderedSections.atomizers){renderAtomizers();renderedSections.atomizers=true;return}if(id==='profiles'&&!renderedSections.profiles){renderProfiles();renderedSections.profiles=true;return}if(id==='wires'&&!renderedSections.wires){renderWires();renderedSections.wires=true;return}if(id==='liquids'&&!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true;return}if(id==='consumables'&&!renderedSections.consumables){initConsumables();renderedSections.consumables=true;return}if(id==='registry'&&!renderedSections.registry){if(!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true}if(!renderedSections.consumables){initConsumables();renderedSections.consumables=true}renderRegistry();renderedSections.registry=true;return}if(id==='sources'&&!renderedSections.sources){renderSources();renderedSections.sources=true;return}if(id==='liquidGuide'&&!renderedSections.liquidGuide){initLiquidCalculator();renderedSections.liquidGuide=true;return}}
+function ensureSectionRendered(id){if(id==='home'&&!renderedSections.home){renderMetrics();renderRoleMini();renderSupplierShowcase(liquidCatalogState);renderedSections.home=true;return}if(id==='diagnostic'&&!renderedSections.diagnostic){initDiagnostic();renderedSections.diagnostic=true;return}if(id==='setupList'&&!renderedSections.setupList){initSetupList();renderedSections.setupList=true;return}if(id==='recommender'&&!renderedSections.recommender){initRecommender();renderedSections.recommender=true;return}if(id==='atomizers'&&!renderedSections.atomizers){renderAtomizers();renderedSections.atomizers=true;return}if(id==='profiles'&&!renderedSections.profiles){renderProfiles();renderedSections.profiles=true;return}if(id==='wires'&&!renderedSections.wires){renderWires();renderedSections.wires=true;return}if(id==='liquids'&&!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true;return}if(id==='consumables'&&!renderedSections.consumables){initConsumables();renderedSections.consumables=true;return}if(id==='registry'&&!renderedSections.registry){if(!renderedSections.liquids){initLiquidCatalog();renderedSections.liquids=true}if(!renderedSections.consumables){initConsumables();renderedSections.consumables=true}renderRegistry();renderedSections.registry=true;return}if(id==='sources'&&!renderedSections.sources){renderSources();renderedSections.sources=true;return}if(id==='liquidGuide'&&!renderedSections.liquidGuide){initLiquidCalculator();renderedSections.liquidGuide=true;return}}
 function runPrepTask(fn,delay){setTimeout(function(){if(window.requestIdleCallback){requestIdleCallback(function(){fn()},{timeout:700})}else{fn()}},delay||0)}
 function prepareAppSections(done){if(appPrepStarted){if(done)done();return}appPrepStarted=true;var queue=APP_PREP_SECTIONS.filter(function(id){return !renderedSections[id]});var total=queue.length||1;function finish(){setAppPreparing(false);if(done)done()}function step(){if(!queue.length){finish();return}var doneCount=total-queue.length+1;var id=queue.shift();setAppPreparing(true,'Se incarca datele ghidului '+doneCount+' / '+total+'.');try{ensureSectionRendered(id)}catch(e){console.warn('Pregatire sectiune:',id,e)}runPrepTask(step,45)}runPrepTask(step,140)}
 function initAppContent(){setAppPreparing(true,'Se pregateste ghidul.');initLiveStatus();initVisitCounter();initNav();initGlobalSearch();initDetail();applyRoute(false);window.scrollTo(0,0);prepareAppSections()}
