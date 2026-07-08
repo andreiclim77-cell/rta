@@ -509,12 +509,12 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .registry-hero>*{position:relative;z-index:1}
 .registry-hero h2{margin:0 0 8px;font-size:30px;line-height:1.08;color:#fff}
 .registry-hero p{margin:0;max-width:790px;color:#e9f4f6}
-.registry-jumpbar{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.registry-jumpbar .mini-link{border-color:rgba(255,255,255,.24);background:linear-gradient(135deg,rgba(255,122,26,.96),rgba(55,191,232,.20));color:#fff;box-shadow:0 10px 26px rgba(0,0,0,.26),0 1px 0 rgba(255,255,255,.16) inset}
-.registry-jumpbar .mini-link:hover{border-color:#ffb000;background:linear-gradient(135deg,#ff7a1a,#37bfe8);color:#080808}
+.registry-jumpbar{position:sticky;top:calc(var(--header-stick-height,118px) + 8px);z-index:8;display:flex;flex-wrap:wrap;gap:8px;margin:-4px 0 14px;padding:9px;border:1px solid rgba(255,255,255,.18);border-radius:10px;background:linear-gradient(135deg,rgba(6,6,6,.94),rgba(31,18,8,.92) 48%,rgba(7,34,42,.92));backdrop-filter:blur(12px);box-shadow:0 18px 42px rgba(0,0,0,.24),0 1px 0 rgba(255,255,255,.12) inset}
+.registry-jumpbar .mini-link{flex:1 1 118px;border-color:rgba(255,255,255,.24);background:linear-gradient(135deg,rgba(255,122,26,.96),rgba(55,191,232,.20));color:#fff;box-shadow:0 10px 26px rgba(0,0,0,.26),0 1px 0 rgba(255,255,255,.16) inset;white-space:nowrap}
+.registry-jumpbar .mini-link:hover,.registry-jumpbar .mini-link.active{border-color:#ffb000;background:linear-gradient(135deg,#ff7a1a,#37bfe8);color:#080808}
 .registry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
 .registry-sections{display:grid;gap:18px}
-.registry-zone{min-width:0}
+.registry-zone{min-width:0;scroll-margin-top:calc(var(--header-stick-height,118px) + 74px)}
 .registry-zone-head{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:10px;border:1px solid #e4ded4;border-left:4px solid #ff7a1a;border-radius:7px;background:#fff;padding:12px 14px;box-shadow:0 12px 30px rgba(0,0,0,.07)}
 .registry-zone-head h3{margin:3px 0 0;font-size:22px;line-height:1.1}
 .registry-zone-head p{margin:0;color:#666;max-width:740px}
@@ -914,7 +914,7 @@ header{box-shadow:0 10px 30px rgba(0,0,0,.24)}
 @media(max-width:640px){.guide-hub,.guide-page-hero{padding:10px;margin-top:10px}.guide-hub-head{display:block}.guide-hub-head h2,.guide-page-hero h2{font-size:20px}.guide-hub-head p,.guide-page-hero p{font-size:12px}.guide-link{min-height:82px;padding:10px}.guide-link b{font-size:13px}.guide-link span{font-size:11px}.guide-page-grid{grid-template-columns:1fr}.guide-card{min-height:0;padding:11px}.guide-card h3{font-size:18px}.guide-card p,.guide-card li{font-size:13px}.guide-path .card{min-height:0}}
 @media(max-width:640px){.age-gate{align-items:start;padding:8px}.age-card{max-height:calc(100svh - 16px);padding:14px;border-radius:15px}.age-logo{width:122px;margin-bottom:8px}.age-chip{height:31px;min-width:58px;font-size:16px}.age-card h2{font-size:24px;margin:10px 0 7px}.age-card p{font-size:13px;line-height:1.42;margin-bottom:8px}.age-note{padding:8px 9px;border-radius:8px}.age-actions{grid-template-columns:1fr;gap:8px;margin-top:12px}.age-actions button,.age-actions a{min-height:42px;font-size:14px}.age-legal{font-size:10.5px;margin-top:9px}}
 @media(max-width:380px){.wrap.nav{gap:4px}.smokee-logo{width:58px}.navbtn{padding:6px 8px;font-size:11px}.guide-hub-grid,.guide-page-grid{grid-template-columns:1fr}.guide-link{min-height:0}}
-@media(max-width:640px){.registry-grid,.registry-meta{grid-template-columns:1fr !important}.registry-meta span{overflow-wrap:break-word;word-break:normal}.registry-meta div{padding:9px}.registry-product-media span{max-width:calc(100% - 20px);white-space:normal;overflow-wrap:break-word}.registry-card .source-actions{grid-template-columns:1fr}.registry-card .mini-link{white-space:normal;overflow-wrap:break-word}.registry-head h3{overflow-wrap:break-word}}
+@media(max-width:640px){.registry-grid,.registry-meta{grid-template-columns:1fr !important}.registry-jumpbar{top:0;flex-wrap:nowrap;margin:0 -2px 12px;padding:7px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch}.registry-jumpbar::-webkit-scrollbar{display:none}.registry-jumpbar .mini-link{flex:0 0 auto;min-width:96px;min-height:34px;font-size:12px;padding:7px 9px}.registry-zone{scroll-margin-top:54px}.registry-meta span{overflow-wrap:break-word;word-break:normal}.registry-meta div{padding:9px}.registry-product-media span{max-width:calc(100% - 20px);white-space:normal;overflow-wrap:break-word}.registry-card .source-actions{grid-template-columns:1fr}.registry-card .mini-link{white-space:normal;overflow-wrap:break-word}.registry-head h3{overflow-wrap:break-word}}
 </style>
 </head>
 <body class="age-gated">
@@ -2373,13 +2373,13 @@ function rtaEarlyAccept(){
       <p class="kicker">Noutati</p>
       <h2>Noutati Smokee</h2>
       <p>Produse adaugate in ultimele 7 zile: lichide tutunoase, RTA-uri, sarme si accesorii pentru setup-uri rebuildable, cu imagine si link direct.</p>
-      <div class="registry-jumpbar" aria-label="Capitole noutati">
-        <button type="button" class="mini-link" data-registry-jump="registryLiquidZone">Lichide</button>
-        <button type="button" class="mini-link" data-registry-jump="registryRtaZone">RTA</button>
-        <button type="button" class="mini-link" data-registry-jump="registryWireZone">Sarme</button>
-        <button type="button" class="mini-link" data-registry-jump="registryAccessoryZone">Accesorii</button>
-      </div>
       <div class="chips" style="margin-top:12px"><span class="chip warn">Lichide</span><span class="chip cold">RTA</span><span class="chip good">Sarme</span><span class="chip neutral">Accesorii</span><span class="chip neutral">7 zile</span></div>
+    </div>
+    <div class="registry-jumpbar" aria-label="Capitole noutati">
+      <button type="button" class="mini-link" data-registry-jump="registryLiquidZone">Lichide</button>
+      <button type="button" class="mini-link" data-registry-jump="registryRtaZone">RTA</button>
+      <button type="button" class="mini-link" data-registry-jump="registryWireZone">Sarme</button>
+      <button type="button" class="mini-link" data-registry-jump="registryAccessoryZone">Accesorii</button>
     </div>
     <div class="registry-sections">
       <div class="registry-zone" id="registryLiquidZone">
@@ -3532,7 +3532,11 @@ function goTab(id){setRoute(id)}
 function applyRoute(shouldScroll){var raw=decodeURIComponent((location.hash||'#home').replace(/^#/,''));if(raw.indexOf('atomizor/')===0){var a=atomBySlug(raw.split('/').slice(1).join('/'));if(a){renderAtomizerPage(a);activeSection('atomizerPage','atomizers');document.title=routeTitle('atomizerPage',a);if(window.__rtaLang==='en')setTimeout(function(){applyLanguage(document.body)},0);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'});return}raw='atomizers'}var route=MAIN_ROUTES.indexOf(raw)>=0?raw:'home';ensureSectionRendered(route);var guideRoutes=['guides','methodology','tcGuide','liquidGuide','legislativ'];activeSection(route,guideRoutes.indexOf(route)>=0?'guides':route);document.title=routeTitle(route);if(window.__rtaLang==='en')setTimeout(function(){applyLanguage(document.body)},0);if(shouldScroll!==false)window.scrollTo({top:0,behavior:'smooth'})}
 function copyCurrentUrl(){var btn=$('copyAtomPage');if(!btn)return;var url=location.href;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(function(){btn.textContent='Link copiat';setTimeout(function(){btn.textContent='Copiaza link'},1400)}).catch(function(){btn.textContent='Linkul este in bara';setTimeout(function(){btn.textContent='Copiaza link'},1400)})}else{btn.textContent='Linkul este in bara';setTimeout(function(){btn.textContent='Copiaza link'},1400)}}
 function initShareTools(){var siteUrl='https://ghid-rta.ro/';document.querySelectorAll('[data-copy-site]').forEach(function(btn){btn.addEventListener('click',function(){var card=btn.closest('.card');var status=card?card.querySelector('.copy-status'):null;var baseText=btn.textContent||'Copiaza link';function done(msg){btn.textContent='Link copiat';if(status)status.textContent=msg;setTimeout(function(){btn.textContent=baseText;if(status)status.textContent=''},1600)}if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(siteUrl).then(function(){done('Link copiat pentru distribuire.')}).catch(function(){done('Linkul este in adresa paginii.')})}else{done('Linkul este: '+siteUrl)}})})}
-function initNav(){document.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.tab)})});document.querySelectorAll('[data-jump]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.jump)})});document.querySelectorAll('[data-registry-jump]').forEach(function(b){b.addEventListener('click',function(){goTab('registry');setTimeout(function(){var target=$(b.dataset.registryJump);if(target)target.scrollIntoView({behavior:'smooth',block:'start'})},80)})});window.addEventListener('popstate',function(){applyRoute(false)});window.addEventListener('hashchange',function(){applyRoute(true)});if($('copyAtomPage'))$('copyAtomPage').addEventListener('click',copyCurrentUrl);initShareTools()}
+function updateStickyHeaderOffset(){var header=document.querySelector('header');var height=0;if(header&&getComputedStyle(header).position==='sticky')height=Math.ceil(header.getBoundingClientRect().height);document.documentElement.style.setProperty('--header-stick-height',height+'px')}
+function setRegistryJumpActive(id){document.querySelectorAll('[data-registry-jump]').forEach(function(b){b.classList.toggle('active',b.dataset.registryJump===id)})}
+function initRegistryJumpbar(){var ids=['registryLiquidZone','registryRtaZone','registryWireZone','registryAccessoryZone'];var ticking=false;function refresh(){ticking=false;updateStickyHeaderOffset();if(!$('registry')||!$('registry').classList.contains('active'))return;var header=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-stick-height'))||0;var line=header+86;var current=ids[0];ids.forEach(function(id){var el=$(id);if(el&&el.getBoundingClientRect().top<=line)current=id});if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-10)current=ids[ids.length-1];setRegistryJumpActive(current)}function schedule(){if(ticking)return;ticking=true;requestAnimationFrame(refresh)}window.addEventListener('scroll',schedule,{passive:true});window.addEventListener('resize',schedule);refresh()}
+function jumpRegistryZone(id){setRegistryJumpActive(id);var already=$('registry')&&$('registry').classList.contains('active');if(!already)goTab('registry');setTimeout(function(){var target=$(id);if(target)target.scrollIntoView({behavior:'smooth',block:'start'})},already?20:160)}
+function initNav(){document.querySelectorAll('[data-tab]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.tab)})});document.querySelectorAll('[data-jump]').forEach(function(b){b.addEventListener('click',function(){goTab(b.dataset.jump)})});document.querySelectorAll('[data-registry-jump]').forEach(function(b){b.addEventListener('click',function(){jumpRegistryZone(b.dataset.registryJump)})});window.addEventListener('popstate',function(){applyRoute(false)});window.addEventListener('hashchange',function(){applyRoute(true)});if($('copyAtomPage'))$('copyAtomPage').addEventListener('click',copyCurrentUrl);initRegistryJumpbar();initShareTools()}
 var searchMode='auto';
 var SEARCH_MODES=[
   {id:'auto',label:'Auto'},
