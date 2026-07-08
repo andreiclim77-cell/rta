@@ -16,34 +16,61 @@ function jsonResponse(payload, status = 200) {
   });
 }
 
-async function dispatchSmokeeWorkflow(env) {
-  const token = envValue(env, "GITHUB_TOKEN", "");
-  if (!token) {
-    throw new Error("Missing GITHUB_TOKEN secret.");
-  }
-
+function workflowEndpoint(env) {
   const owner = envValue(env, "GITHUB_OWNER", DEFAULT_OWNER);
   const repo = envValue(env, "GITHUB_REPO", DEFAULT_REPO);
   const workflow = envValue(env, "GITHUB_WORKFLOW", DEFAULT_WORKFLOW);
-  const ref = envValue(env, "GITHUB_REF", DEFAULT_REF);
-  const endpoint =
+  const base =
     "https://api.github.com/repos/" +
     encodeURIComponent(owner) +
     "/" +
     encodeURIComponent(repo) +
     "/actions/workflows/" +
-    encodeURIComponent(workflow) +
-    "/dispatches";
+    encodeURIComponent(workflow);
+  return { owner, repo, workflow, base };
+}
 
-  const response = await fetch(endpoint, {
-    method: "POST",
+async function githubRequest(env, endpoint, options = {}) {
+  const token = envValue(env, "GITHUB_TOKEN", "");
+  if (!token) {
+    throw new Error("Missing GITHUB_TOKEN secret.");
+  }
+
+  return fetch(endpoint, {
+    ...options,
     headers: {
       accept: "application/vnd.github+json",
       authorization: "Bearer " + token,
       "content-type": "application/json",
       "user-agent": "ghid-rta-smokee-sync-backup",
       "x-github-api-version": "2022-11-28",
+      ...(options.headers || {}),
     },
+  });
+}
+
+async function hasActiveWorkflowRun(env) {
+  const { base } = workflowEndpoint(env);
+  const ref = envValue(env, "GITHUB_REF", DEFAULT_REF);
+  const response = await githubRequest(env, `${base}/runs?branch=${encodeURIComponent(ref)}&per_page=10`);
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error("GitHub runs check failed: " + response.status + " " + body.slice(0, 400));
+  }
+  const payload = await response.json();
+  const runs = Array.isArray(payload.workflow_runs) ? payload.workflow_runs : [];
+  return runs.some((run) => run && (run.status === "queued" || run.status === "in_progress"));
+}
+
+async function dispatchSmokeeWorkflow(env) {
+  const owner = envValue(env, "GITHUB_OWNER", DEFAULT_OWNER);
+  const repo = envValue(env, "GITHUB_REPO", DEFAULT_REPO);
+  const workflow = envValue(env, "GITHUB_WORKFLOW", DEFAULT_WORKFLOW);
+  const ref = envValue(env, "GITHUB_REF", DEFAULT_REF);
+  const { base } = workflowEndpoint(env);
+
+  const response = await githubRequest(env, `${base}/dispatches`, {
+    method: "POST",
     body: JSON.stringify({ ref }),
   });
 
@@ -57,6 +84,10 @@ async function dispatchSmokeeWorkflow(env) {
 
 export default {
   async scheduled(controller, env) {
+    if (await hasActiveWorkflowRun(env)) {
+      console.log("Skipped dispatch because a Smokee workflow run is already queued or running.");
+      return;
+    }
     const result = await dispatchSmokeeWorkflow(env);
     console.log("Smokee workflow dispatched.", result);
   },
@@ -87,7 +118,7 @@ export default {
     return jsonResponse({
       ok: true,
       service: "Smokee Catalog Sync backup",
-      schedule: "Every 2 minutes, all day",
+      schedule: "Every 2 minutes, all day; skips when a sync is already running",
     });
   },
 };

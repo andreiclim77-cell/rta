@@ -13,7 +13,9 @@ Endpointul manual `/trigger` raspunde doar daca exista `TRIGGER_TOKEN` si reques
 ## Cum functioneaza
 
 - Cloudflare Cron porneste Worker-ul din 2 in 2 minute, permanent.
-- Worker-ul trimite `workflow_dispatch` catre GitHub Actions.
+- Worker-ul verifica daca exista deja o sincronizare pornita sau in asteptare.
+- Daca exista una, nu porneste alta peste ea.
+- Daca nu exista, trimite `workflow_dispatch` catre GitHub Actions.
 - Workflow-ul GitHub face sincronizarea RTA, consumabile si lichide direct pe GitHub.
 
 ## Secrete necesare
@@ -60,4 +62,4 @@ ghid-rta-smokee.workers.dev
 4. Settings > Triggers > Cron Triggers:
    - `*/2 * * * *`
 
-Cronul ruleaza permanent, din 2 in 2 minute. Workflow-ul GitHub pastreaza protectia de concurenta, ca sincronizarile sa nu ruleze suprapus.
+Cronul verifica permanent, din 2 in 2 minute. Worker-ul si workflow-ul GitHub pastreaza protectii de concurenta, ca sincronizarile sa nu ruleze suprapus.
