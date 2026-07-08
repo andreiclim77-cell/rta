@@ -10,6 +10,7 @@ const END_MARKER = '/* AUTO-SMOKEE-CONSUMABLES-END */';
 const CATEGORY_PER_PAGE = 100;
 const CATEGORY_PAGE_LIMIT = 6;
 const FETCH_TIMEOUT_MS = 65000;
+const NEWS_START_DATE = '2026-07-06';
 
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
@@ -108,6 +109,11 @@ function todayInRomania() {
   return `${parts.year}-${parts.month}-${parts.day}`;
 }
 
+function dateKey(value) {
+  const match = String(value || '').match(/\d{4}-\d{2}-\d{2}/);
+  return match ? match[0] : '';
+}
+
 const COMPONENT_MODELS = [
   ['BKS Blade RTA', /\b(bks|blade)\b/],
   ['NTSU / Netsu MTL RTA', /\b(ntsu|netsu)\b/],
@@ -197,12 +203,14 @@ function normalizeProduct(product, group) {
     product.permalink || product.url || ''
   ].join(' '));
   const item = {
+    productId: product.id || null,
     title,
     url: cleanUrl(product.permalink || product.url || ''),
     image,
     tag: inferTag(title, group),
     stock: product.is_in_stock === true ? true : (product.is_in_stock === false ? false : null),
     newOnSmokee: isSmokeeNewProduct(product),
+    productDate: dateKey(product.date || product.date_created || product.date_gmt),
     sourceText
   };
   if (group === 'components') item.model = inferComponentModel(title);
@@ -250,6 +258,40 @@ function uniqueItems(items, group) {
   return out.slice(0, group === 'components' ? 40 : 18);
 }
 
+async function enrichPublishedDates(items) {
+  const ids = Array.from(new Set(items
+    .filter(item => item.newOnSmokee && item.productId && !item.productDate)
+    .map(item => item.productId)));
+  if (!ids.length) return items;
+
+  const dates = new Map();
+  for (let i = 0; i < ids.length; i += 50) {
+    const batch = ids.slice(i, i + 50);
+    const url = `https://smokee.ro/wp-json/wp/v2/product?include=${batch.join(',')}&per_page=${batch.length}&_fields=id,date,date_gmt`;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    const response = await fetch(url, {
+      signal: controller.signal,
+      headers: {
+        'user-agent': 'Mozilla/5.0 (compatible; RTA-MTL-Smokee-Consumables-Sync/1.0)',
+        'accept': 'application/json'
+      }
+    }).finally(() => clearTimeout(timer)).catch(() => null);
+    if (!response || !response.ok) continue;
+    const products = await response.json().catch(() => []);
+    if (!Array.isArray(products)) continue;
+    for (const product of products) {
+      const key = dateKey(product.date || product.date_gmt);
+      if (product && product.id && key) dates.set(product.id, key);
+    }
+  }
+
+  for (const item of items) {
+    if (item.productId && dates.has(item.productId)) item.productDate = dates.get(item.productId);
+  }
+  return items;
+}
+
 async function fetchStoreProducts(term) {
   const url = `https://smokee.ro/wp-json/wc/store/v1/products?search=${encodeURIComponent(term)}&per_page=20`;
   const controller = new AbortController();
@@ -295,7 +337,7 @@ async function fetchGroup(group) {
   const searchCalls = group.terms.map(term => fetchStoreProducts(term).catch(() => []));
   const categoryCalls = (group.categoryIds || []).map(categoryId => fetchAllCategoryProducts(categoryId).catch(() => []));
   const chunks = await Promise.all(searchCalls.concat(categoryCalls));
-  return uniqueItems(chunks.flat().map(product => normalizeProduct(product, group.id)), group.id);
+  return enrichPublishedDates(uniqueItems(chunks.flat().map(product => normalizeProduct(product, group.id)), group.id));
 }
 
 function itemBlock(item) {
@@ -371,9 +413,12 @@ function existingConsumableInfo(html, groupId) {
 function stampAddedDates(items, existing, today) {
   return items.map(item => {
     const url = cleanUrl(item.url);
+    if (item.newOnSmokee && item.productDate) {
+      return item.productDate >= NEWS_START_DATE ? { ...item, addedAt: item.productDate } : item;
+    }
     if (existing.addedAt.has(url)) return { ...item, addedAt: existing.addedAt.get(url) };
     if (existing.seen.has(url)) return item;
-    if (item.newOnSmokee) return { ...item, addedAt: today };
+    if (item.newOnSmokee && !item.productDate) return { ...item, addedAt: today };
     return item;
   });
 }

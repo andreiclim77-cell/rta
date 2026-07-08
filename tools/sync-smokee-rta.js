@@ -11,7 +11,8 @@ const ATOMIZER_CATEGORY_ID = 76;
 const STORE_PER_PAGE = 100;
 const STORE_PAGE_LIMIT = 8;
 const STORE_SEARCH_TERMS = ['RTA', 'atomizor RTA', 'MTL RTA'];
-const FETCH_TIMEOUT_MS = 25000;
+const FETCH_TIMEOUT_MS = 65000;
+const NEWS_START_DATE = '2026-07-06';
 const START_MARKER = '/* AUTO-SMOKEE-RTA-START */';
 const END_MARKER = '/* AUTO-SMOKEE-RTA-END */';
 
@@ -37,6 +38,11 @@ function todayInRomania() {
     return acc;
   }, {});
   return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function dateKey(value) {
+  const match = String(value || '').match(/\d{4}-\d{2}-\d{2}/);
+  return match ? match[0] : '';
 }
 
 function decodeEntities(value) {
@@ -232,12 +238,14 @@ function normalizeStoreProduct(product) {
   const firstImage = images.length ? (images[0].src || images[0].thumbnail || '') : '';
   const categories = Array.isArray(product.categories) ? product.categories.map(c => `product_cat-${c.slug || ''} ${c.name || ''}`).join(' ') : '';
   return {
+    productId: product.id || null,
     title: stripTags(product.name || product.title || ''),
     url: cleanUrl(product.permalink || product.url || ''),
     image: absoluteUrl(firstImage),
     cardClass: categories,
     cardText: storeProductText(product),
-    newOnSmokee: isSmokeeNewProduct(product)
+    newOnSmokee: isSmokeeNewProduct(product),
+    productDate: dateKey(product.date || product.date_created || product.date_gmt)
   };
 }
 
@@ -496,11 +504,32 @@ function extractOgImage(html) {
   return match ? absoluteUrl(decodeEntities(match[1])) : '';
 }
 
+function publishedDateFromHtml(html) {
+  const source = String(html || '');
+  const matches = [
+    source.match(/"datePublished"\s*:\s*"([^"]+)"/i),
+    source.match(/<meta[^>]+property=["']article:published_time["'][^>]+content=["']([^"']+)["']/i),
+    source.match(/<meta[^>]+content=["']([^"']+)["'][^>]+property=["']article:published_time["']/i)
+  ];
+  for (const match of matches) {
+    const key = dateKey(match && match[1]);
+    if (key) return key;
+  }
+  return '';
+}
+
+function productNewsDate(product, pageHtml) {
+  if (!product.newOnSmokee) return '';
+  const key = dateKey(product.productDate || publishedDateFromHtml(pageHtml));
+  return key && key >= NEWS_START_DATE ? key : '';
+}
+
 function entryFor(product, pageHtml) {
   const pageText = productFocusText(pageHtml);
   const name = displayName(product.title);
   const pairing = inferPairing(product, pageText);
   const image = extractOgImage(pageHtml) || product.image;
+  const addedAt = productNewsDate(product, pageHtml);
   const claimParts = [pairing.airflowClaim];
   if (pairing.chamberClaim) claimParts.push(pairing.chamberClaim);
   const claim = `Smokee: ${name}, RTA listat in categoria Atomizoare; ${claimParts.join('; ')}.`;
@@ -510,7 +539,7 @@ function entryFor(product, pageHtml) {
     `    name:${jsString(name)},`,
     `    score:${pairing.score},`,
     `    confidence:${jsString(pairing.confidence)},`,
-    product.newOnSmokee ? `    addedAt:${jsString(todayInRomania())},` : '',
+    addedAt ? `    addedAt:${jsString(addedAt)},` : '',
     `    classes:${jsString(pairing.classes)},`,
     `    dna:${jsString(pairing.dna)},`,
     `    market:'Smokee RTA original.',`,

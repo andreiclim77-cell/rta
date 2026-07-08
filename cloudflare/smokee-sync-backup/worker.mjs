@@ -94,15 +94,17 @@ export default {
 
   async fetch(request, env) {
     const url = new URL(request.url);
+    const path = url.pathname.replace(/^\/__smokee-sync-backup/, "") || "/";
 
-    if (url.pathname === "/health") {
+    if (path === "/health") {
       return jsonResponse({
         ok: true,
         worker: "ghid-rta-smokee-sync-backup",
+        schedule: "Every 2 minutes, all day; skips when a sync is already running",
       });
     }
 
-    if (url.pathname === "/trigger" && request.method === "POST") {
+    if (path === "/trigger" && request.method === "POST") {
       const expected = envValue(env, "TRIGGER_TOKEN", "");
       const received = request.headers.get("x-trigger-token") || "";
       if (!expected || received !== expected) {
