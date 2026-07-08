@@ -300,7 +300,7 @@ function stampAddedDates(items, existing, today) {
     const url = cleanUrl(item.url);
     if (existing.addedAt.has(url)) return { ...item, addedAt: existing.addedAt.get(url) };
     if (existing.seen.has(url)) return item;
-    if (item.newOnSmokee || existing.initialized) return { ...item, addedAt: today };
+    if (item.newOnSmokee) return { ...item, addedAt: today };
     return item;
   });
 }
