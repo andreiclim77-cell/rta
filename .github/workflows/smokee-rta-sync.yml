@@ -2,10 +2,9 @@ name: Smokee Catalog Sync
 
 on:
   schedule:
-    # GitHub cron uses UTC. The guard below keeps only schedules intended for 06:00 Romania.
-    # Repeated attempts are used because scheduled GitHub runs can be delayed or dropped.
-    - cron: '*/5 3 * * *'
-    - cron: '*/5 4 * * *'
+    # GitHub scheduled workflows are independent of Codex/local sessions.
+    # Five minutes is the practical public GitHub cron floor; the page itself also checks live every 2 minutes while open.
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -13,7 +12,7 @@ permissions:
 
 concurrency:
   group: smokee-catalog-sync
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   sync-smokee-catalog:
@@ -30,40 +29,16 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Accept Smokee sync trigger
-        id: sync-window
-        shell: bash
-        run: |
-          if [ "${{ github.event_name }}" != "schedule" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "Manual run accepted."
-            exit 0
-          fi
-          schedule='${{ github.event.schedule }}'
-          scheduled_utc_hour="$(printf '%s\n' "$schedule" | awk '{print $2}')"
-          intended_local_hour="$(node -e "const h=Number(process.argv[1]); const d=new Date(); const intended=new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate(), h, 0, 0)); console.log(new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Bucharest', hour: '2-digit', hour12: false }).format(intended));" "$scheduled_utc_hour")"
-          if [ "$intended_local_hour" = "06" ]; then
-            echo "run=true" >> "$GITHUB_OUTPUT"
-            echo "Smokee sync accepted. Scheduled cron '$schedule' maps to 06:00 Romania. Runner started at $(TZ=Europe/Bucharest date)."
-          else
-            echo "run=false" >> "$GITHUB_OUTPUT"
-            echo "Skipped cron '$schedule' because it maps to $intended_local_hour:00 Romania. Runner started at $(TZ=Europe/Bucharest date)."
-          fi
-
       - name: Check Smokee RTA products
-        if: steps.sync-window.outputs.run == 'true'
         run: node tools/sync-smokee-rta.js --write
 
       - name: Check Smokee RTA consumables
-        if: steps.sync-window.outputs.run == 'true'
         run: node tools/sync-smokee-consumables.js --write
 
       - name: Check Smokee liquids
-        if: steps.sync-window.outputs.run == 'true'
         run: node tools/sync-smokee-liquids.js --write
 
       - name: Commit catalog update
-        if: steps.sync-window.outputs.run == 'true'
         run: |
           if git diff --quiet -- index.html; then
             echo "No Smokee catalog changes."

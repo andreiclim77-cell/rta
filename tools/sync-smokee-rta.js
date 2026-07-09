@@ -11,7 +11,7 @@ const ATOMIZER_CATEGORY_ID = 76;
 const STORE_PER_PAGE = 100;
 const STORE_PAGE_LIMIT = 8;
 const STORE_SEARCH_TERMS = ['RTA', 'atomizor RTA', 'MTL RTA'];
-const FETCH_TIMEOUT_MS = 65000;
+const FETCH_TIMEOUT_MS = 22000;
 const NEWS_START_DATE = '2026-07-06';
 const START_MARKER = '/* AUTO-SMOKEE-RTA-START */';
 const END_MARKER = '/* AUTO-SMOKEE-RTA-END */';
@@ -311,7 +311,10 @@ async function loadCategoryPages() {
       pages.push(html);
       if (!html.includes(`${CATEGORY_URL}page/${page + 1}/`) && !/rel=["']next["']/i.test(html)) break;
     } catch (error) {
-      if (page === 1) throw error;
+      if (page === 1) {
+        console.warn(`Smokee sync: category page unavailable, continuing with Store API fallback: ${error.message}`);
+        break;
+      }
       break;
     }
   }
@@ -576,6 +579,10 @@ async function main() {
   const htmlProducts = pages.flatMap(parseCategoryProducts);
   const storeProducts = fromFile ? [] : await loadStoreProducts();
   const products = htmlProducts.concat(storeProducts);
+  if (!products.length) {
+    console.warn('Smokee sync: source returned no RTA products; keeping the existing catalog.');
+    return;
+  }
   const byUrl = new Map();
   for (const product of products) {
     product.url = cleanUrl(product.url);
