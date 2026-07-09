@@ -13,9 +13,23 @@ Pe langa aplicatia principala exista pagini tematice indexabile:
 - `atomizoare-rta-mtl.html`
 - `lichide-net-tutun.html`
 - `sarme-rta-builduri.html`
+- `net-rta-mtl.html`
+- `tutun-rta-mtl.html`
+- `builduri-mtl-sarme-rta.html`
+- `airflow-camera-rta-mtl.html`
 - `control-temperatura-mtl.html`
+- `nife30-control-temperatura-mtl.html`
+- `ss316l-mtl-rta.html`
+- `clapton-mtl-rta.html`
+- `kanthal-ni80-mtl-rta.html`
+- `net-complex-rta-mtl.html`
+- `ry4-tutun-dulce-rta-mtl.html`
+- `bottom-side-airflow-rta-mtl.html`
+- `diagnostic-gust-rta-mtl.html`
 - `calculator-lichide-vape.html`
 - `consumabile-rta-smokee.html`
+- `wizard-smokee.html`
+- `rta-mtl-smokee.html`
 - `legislativ-vape.html`
 - `smokee-link-kit.html`
 
