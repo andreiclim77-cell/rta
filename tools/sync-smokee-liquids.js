@@ -10,7 +10,7 @@ const END_MARKER = '/* AUTO-SMOKEE-LIQUIDS-END */';
 const TOBACCO_CATEGORY_ID = 270;
 const CATEGORY_PAGE_LIMIT = 20;
 const CATEGORY_PER_PAGE = 100;
-const FETCH_TIMEOUT_MS = 22000;
+const FETCH_TIMEOUT_MS = 9000;
 const NEWS_START_DATE = '2026-07-06';
 
 const args = process.argv.slice(2);

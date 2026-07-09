@@ -12,12 +12,12 @@ permissions:
 
 concurrency:
   group: smokee-catalog-sync
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   sync-smokee-catalog:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 3
     steps:
       - name: Checkout
         uses: actions/checkout@v4
