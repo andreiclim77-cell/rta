@@ -89,6 +89,42 @@ function cleanUrl(url) {
   return String(url || '').replace(/[?#].*$/, '').replace(/\/?$/, '/');
 }
 
+function absoluteUrl(url) {
+  if (!url) return '';
+  if (/^https?:\/\//i.test(url)) return url;
+  if (String(url).startsWith('//')) return 'https:' + url;
+  return new URL(url, 'https://smokee.ro/').href;
+}
+
+function usableProductImage(url) {
+  const value = String(url || '').trim();
+  if (!value || /placeholder|blank|data:image|\.svg(?:\?|$)/i.test(value)) return '';
+  return absoluteUrl(value);
+}
+
+function storeProductImage(product) {
+  const images = Array.isArray(product.images) ? product.images : [];
+  for (const image of images) {
+    const sizes = image && image.sizes ? image.sizes : {};
+    const candidates = [
+      image && image.src,
+      image && image.thumbnail,
+      image && image.full,
+      image && image.large,
+      image && image.medium,
+      sizes.full && sizes.full.src,
+      sizes.large && sizes.large.src,
+      sizes.medium && sizes.medium.src,
+      sizes.thumbnail && sizes.thumbnail.src
+    ];
+    for (const candidate of candidates) {
+      const value = usableProductImage(candidate);
+      if (value) return value;
+    }
+  }
+  return '';
+}
+
 function isSmokeeNewProduct(product) {
   return Array.isArray(product.categories) && product.categories.some(category => {
     const text = norm(`${category.name || ''} ${category.slug || ''}`);
@@ -190,8 +226,7 @@ function inferTag(title, group) {
 
 function normalizeProduct(product, group) {
   const title = decodeEntities(product.name || product.title || '');
-  const images = Array.isArray(product.images) ? product.images : [];
-  const image = images.length ? (images[0].thumbnail || images[0].src || '') : '';
+  const image = storeProductImage(product);
   const categories = Array.isArray(product.categories) ? product.categories.map(category => category.name || category.slug || '').join(' ') : '';
   const tags = Array.isArray(product.tags) ? product.tags.map(tag => tag.name || tag.slug || '').join(' ') : '';
   const sourceText = decodeEntities([

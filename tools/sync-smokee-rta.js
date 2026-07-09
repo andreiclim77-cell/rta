@@ -226,6 +226,35 @@ function storeProductText(product) {
   return stripTags([product.short_description, product.description, categories, tags].filter(Boolean).join(' '));
 }
 
+function usableProductImage(url) {
+  const value = String(url || '').trim();
+  if (!value || /placeholder|blank|data:image|\.svg(?:\?|$)/i.test(value)) return '';
+  return absoluteUrl(value);
+}
+
+function storeProductImage(product) {
+  const images = Array.isArray(product.images) ? product.images : [];
+  for (const image of images) {
+    const sizes = image && image.sizes ? image.sizes : {};
+    const candidates = [
+      image && image.src,
+      image && image.thumbnail,
+      image && image.full,
+      image && image.large,
+      image && image.medium,
+      sizes.full && sizes.full.src,
+      sizes.large && sizes.large.src,
+      sizes.medium && sizes.medium.src,
+      sizes.thumbnail && sizes.thumbnail.src
+    ];
+    for (const candidate of candidates) {
+      const value = usableProductImage(candidate);
+      if (value) return value;
+    }
+  }
+  return '';
+}
+
 function isSmokeeNewProduct(product) {
   return Array.isArray(product.categories) && product.categories.some(category => {
     const text = norm(`${category.name || ''} ${category.slug || ''}`);
@@ -234,14 +263,12 @@ function isSmokeeNewProduct(product) {
 }
 
 function normalizeStoreProduct(product) {
-  const images = Array.isArray(product.images) ? product.images : [];
-  const firstImage = images.length ? (images[0].src || images[0].thumbnail || '') : '';
   const categories = Array.isArray(product.categories) ? product.categories.map(c => `product_cat-${c.slug || ''} ${c.name || ''}`).join(' ') : '';
   return {
     productId: product.id || null,
     title: stripTags(product.name || product.title || ''),
     url: cleanUrl(product.permalink || product.url || ''),
-    image: absoluteUrl(firstImage),
+    image: storeProductImage(product),
     cardClass: categories,
     cardText: storeProductText(product),
     newOnSmokee: isSmokeeNewProduct(product),
