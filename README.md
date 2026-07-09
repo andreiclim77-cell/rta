@@ -20,3 +20,10 @@ Pe langa aplicatia principala exista pagini tematice indexabile:
 - `smokee-link-kit.html`
 
 Pentru expunere din Smokee, pagina recomandata pentru materiale si linkuri este `smokee-link-kit.html`, iar linkul public principal ramane `https://ghid-rta.ro/`.
+
+SEO operational:
+
+- `sitemap.xml` listeaza aplicatia si paginile tematice indexabile.
+- `robots.txt` permite indexarea si indica sitemap-ul.
+- `llms.txt` ofera un rezumat pentru cautari asistate de AI.
+- IndexNow este configurat prin `tools/submit-indexnow.js` si workflow-ul `Submit URLs to IndexNow`.

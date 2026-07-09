@@ -1,0 +1,44 @@
+name: Submit URLs to IndexNow
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "*.html"
+      - "sitemap.xml"
+      - "robots.txt"
+      - "llms.txt"
+      - "assets/**"
+      - "tools/submit-indexnow.js"
+  schedule:
+    - cron: "45 3 * * *"
+    - cron: "45 4 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  submit-indexnow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gate daily schedule to 06:45 Bucharest
+        if: github.event_name == 'schedule'
+        run: |
+          hour="$(TZ=Europe/Bucharest date +%H)"
+          minute="$(TZ=Europe/Bucharest date +%M)"
+          if [ "$hour" != "06" ] || [ "$minute" != "45" ]; then
+            echo "Not 06:45 Bucharest, skipping."
+            exit 0
+          fi
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Wait for Pages to publish fresh files
+        if: github.event_name == 'push'
+        run: sleep 120
+      - name: Submit sitemap URLs
+        run: node tools/submit-indexnow.js
