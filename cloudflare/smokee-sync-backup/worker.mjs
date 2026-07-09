@@ -30,6 +30,22 @@ function workflowEndpoint(env) {
   return { owner, repo, workflow, base };
 }
 
+function bucharestSyncWindow(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Bucharest",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  }).formatToParts(date).reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+  const hour = parts.hour || "00";
+  const minute = Number(parts.minute || "0");
+  const run = hour === "06" && ((minute >= 0 && minute < 10) || (minute >= 20 && minute < 30));
+  return { run, label: `${hour}:${String(parts.minute || "00").padStart(2, "0")}` };
+}
+
 async function githubRequest(env, endpoint, options = {}) {
   const token = envValue(env, "GITHUB_TOKEN", "");
   if (!token) {
@@ -84,6 +100,11 @@ async function dispatchSmokeeWorkflow(env) {
 
 export default {
   async scheduled(controller, env) {
+    const window = bucharestSyncWindow();
+    if (!window.run) {
+      console.log("Skipped dispatch outside Bucharest 06:00/06:20 windows.", window);
+      return;
+    }
     if (await hasActiveWorkflowRun(env)) {
       console.log("Skipped dispatch because a Smokee workflow run is already queued or running.");
       return;
@@ -100,7 +121,7 @@ export default {
       return jsonResponse({
         ok: true,
         worker: "ghid-rta-smokee-sync-backup",
-        schedule: "Every 2 minutes, all day; skips when a sync is already running",
+        schedule: "Daily at 06:00 and 06:20 Bucharest time; skips when a sync is already running",
       });
     }
 
@@ -120,7 +141,7 @@ export default {
     return jsonResponse({
       ok: true,
       service: "Smokee Catalog Sync backup",
-      schedule: "Every 2 minutes, all day; skips when a sync is already running",
+      schedule: "Daily at 06:00 and 06:20 Bucharest time; skips when a sync is already running",
     });
   },
 };

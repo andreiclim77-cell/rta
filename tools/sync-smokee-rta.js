@@ -7,6 +7,7 @@ const ROOT = path.resolve(__dirname, '..');
 const INDEX_PATH = path.join(ROOT, 'index.html');
 const CATEGORY_URL = 'https://smokee.ro/product-category/atomizoare/';
 const STORE_PRODUCTS_URL = 'https://smokee.ro/wp-json/wc/store/v1/products';
+const WP_PRODUCTS_URL = 'https://smokee.ro/wp-json/wp/v2/product';
 const ATOMIZER_CATEGORY_ID = 76;
 const STORE_PER_PAGE = 100;
 const STORE_PAGE_LIMIT = 8;
@@ -326,6 +327,43 @@ async function loadStoreProducts() {
   return chunks.concat(searchChunks).flat().map(normalizeStoreProduct).filter(product => product.title && product.url);
 }
 
+async function enrichPublishedDates(products) {
+  const ids = Array.from(new Set(products
+    .filter(product => product.productId && !product.productDate)
+    .map(product => product.productId)));
+  if (!ids.length) return products;
+
+  const dates = new Map();
+  for (let i = 0; i < ids.length; i += 50) {
+    const batch = ids.slice(i, i + 50);
+    const url = new URL(WP_PRODUCTS_URL);
+    url.searchParams.set('include', batch.join(','));
+    url.searchParams.set('per_page', String(batch.length));
+    url.searchParams.set('_fields', 'id,date,date_gmt');
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    const response = await fetch(url.href, {
+      signal: controller.signal,
+      headers: {
+        'user-agent': 'Mozilla/5.0 (compatible; RTA-MTL-Smokee-Sync/1.0)',
+        'accept': 'application/json'
+      }
+    }).finally(() => clearTimeout(timer)).catch(() => null);
+    if (!response || !response.ok) continue;
+    const payload = await response.json().catch(() => []);
+    if (!Array.isArray(payload)) continue;
+    for (const product of payload) {
+      const key = dateKey(product.date || product.date_gmt);
+      if (product && product.id && key) dates.set(product.id, key);
+    }
+  }
+
+  for (const product of products) {
+    if (product.productId && dates.has(product.productId)) product.productDate = dates.get(product.productId);
+  }
+  return products;
+}
+
 async function loadCategoryPages() {
   if (fromFile) return [fs.readFileSync(path.resolve(fromFile), 'utf8')];
   const pages = [];
@@ -549,7 +587,6 @@ function publishedDateFromHtml(html) {
 }
 
 function productNewsDate(product, pageHtml) {
-  if (!product.newOnSmokee) return '';
   const key = dateKey(product.productDate || publishedDateFromHtml(pageHtml));
   return key && key >= NEWS_START_DATE ? key : '';
 }
@@ -604,7 +641,7 @@ async function main() {
   const state = existingState(html);
   const pages = await loadCategoryPages();
   const htmlProducts = pages.flatMap(parseCategoryProducts);
-  const storeProducts = fromFile ? [] : await loadStoreProducts();
+  const storeProducts = fromFile ? [] : await enrichPublishedDates(await loadStoreProducts());
   const products = htmlProducts.concat(storeProducts);
   if (!products.length) {
     console.warn('Smokee sync: source returned no RTA products; keeping the existing catalog.');

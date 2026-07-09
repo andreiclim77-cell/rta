@@ -239,7 +239,7 @@ function uniqueItems(items, group) {
 
 async function enrichPublishedDates(items) {
   const ids = Array.from(new Set(items
-    .filter(item => item.newOnSmokee && item.productId && !item.productDate)
+    .filter(item => item.productId && !item.productDate)
     .map(item => item.productId)));
   if (!ids.length) return items;
 
@@ -388,12 +388,10 @@ function existingLiquidInfo(html, groupId) {
 function stampAddedDates(items, existing, today) {
   return items.map(item => {
     const url = cleanUrl(item.url);
-    if (item.newOnSmokee && item.productDate) {
+    if (item.productDate) {
       return item.productDate >= NEWS_START_DATE ? { ...item, addedAt: item.productDate } : item;
     }
     if (existing.addedAt.has(url)) return { ...item, addedAt: existing.addedAt.get(url) };
-    if (existing.seen.has(url)) return item;
-    if (item.newOnSmokee && !item.productDate) return { ...item, addedAt: today };
     return item;
   });
 }
