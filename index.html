@@ -296,6 +296,16 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .visit-counter img{display:block;height:20px;min-width:58px;max-width:120px}
 .visit-counter img:not([src]){display:none}
 .counter-fallback{display:none;color:#f1f1f1;font-size:12px;font-weight:800}
+.mystic-orbit{position:relative;display:flex;align-items:center;justify-content:space-between;gap:9px;width:min(420px,100%);margin:8px 0 10px auto;padding:7px 10px;min-height:40px;border:1px solid rgba(125,211,252,.46);border-radius:9px;background:linear-gradient(135deg,#070a16,#101f38 48%,#261333);color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.18),0 14px 32px rgba(15,41,68,.18),0 1px 0 rgba(255,255,255,.16) inset;overflow:hidden;text-decoration:none}
+.mystic-orbit:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 12% 30%,rgba(255,255,255,.32),transparent 4px),radial-gradient(circle at 34% 70%,rgba(125,211,252,.30),transparent 5px),radial-gradient(circle at 72% 18%,rgba(255,139,213,.26),transparent 6px),linear-gradient(90deg,rgba(125,211,252,.20),transparent 36%,rgba(255,139,213,.18));pointer-events:none}
+.mystic-orbit:after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:linear-gradient(90deg,transparent,#7dd3fc,#ff8bd5,transparent)}
+.mystic-orbit:hover{text-decoration:none;border-color:#9eeaff;transform:translateY(-1px);box-shadow:0 4px 0 rgba(0,0,0,.20),0 20px 44px rgba(15,41,68,.24),0 1px 0 rgba(255,255,255,.22) inset}
+.mystic-orbit-copy,.mystic-orbit-action{position:relative;z-index:1}
+.mystic-orbit-copy{display:flex;align-items:center;gap:8px;min-width:0}
+.mystic-orbit-mark{width:24px;height:24px;border-radius:50%;flex:0 0 auto;background:radial-gradient(circle at 35% 30%,#fff 0 12%,#9eeaff 14% 38%,#ff8bd5 68%,#1b1030 100%);box-shadow:0 0 18px rgba(125,211,252,.32),0 1px 0 rgba(255,255,255,.42) inset}
+.mystic-orbit b{display:block;font-size:13px;line-height:1.1;color:#fff}
+.mystic-orbit span{display:block;font-size:11px;line-height:1.2;color:#eaf7ff}
+.mystic-orbit-action{display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-size:11px;font-weight:1000;padding:5px 8px;white-space:nowrap;box-shadow:0 2px 0 rgba(0,0,0,.18),0 1px 0 rgba(255,255,255,.18) inset}
 .navlinks{grid-column:1/-1;display:grid;grid-template-columns:repeat(11,minmax(0,1fr));gap:5px;justify-content:stretch;width:calc(100% + 128px);margin-left:-128px;border-top:1px solid #222;padding-top:10px;overflow:visible;scrollbar-width:none;-webkit-overflow-scrolling:touch}
 .navlinks::-webkit-scrollbar{display:none}
 .navbtn{display:inline-flex;align-items:center;justify-content:center;flex:1 1 auto;min-width:0;width:100%;border:1px solid #303030;background:#151515;color:#e8e1d8;padding:8px 6px;border-radius:999px;transition:.16s ease;white-space:nowrap;text-align:center;font-size:clamp(10.6px,.78vw,12px);font-weight:950;line-height:1.12;overflow:hidden;text-overflow:clip}
@@ -1141,9 +1151,10 @@ var I18N_EXACT={
   'Ghiduri utile':'Useful Guides',
   'Recenzii RTA':'RTA Reviews',
   'Noutati':'New',
-  '7 ghiduri':'7 guides',
+  '6 ghiduri':'6 guides',
+  'Deschide aplicatia':'Open app',
   'Profil Mystic':'Mystic Profile',
-  'Acces rapid catre aplicatia externa, deschisa separat.':'Quick access to the external app, opened separately.',
+  'Acces celest rapid, deschis separat.':'Quick celestial access, opened separately.',
   'Diagnostic gust':'Taste Diagnosis',
   'Diagnostic':'Diagnosis',
   'Wizard Smokee':'Smokee Wizard',
@@ -1861,6 +1872,10 @@ function rtaEarlyAccept(){
   </div>
 </header>
 <main class="wrap">
+  <a class="mystic-orbit" target="_blank" rel="noopener noreferrer nofollow" href="https://mystic-profile-online-full-test-cmln.onrender.com/?lang=ro">
+    <span class="mystic-orbit-copy"><i class="mystic-orbit-mark" aria-hidden="true"></i><span><b>Profil Mystic</b><span>Acces celest rapid, deschis separat.</span></span></span>
+    <span class="mystic-orbit-action">Deschide aplicatia</span>
+  </a>
   <section id="home" class="section active">
     <div class="shop-layout">
       <aside class="category-panel" aria-label="Categorii ghid">
@@ -1947,7 +1962,7 @@ function rtaEarlyAccept(){
               <p class="kicker">Ghiduri utile</p>
               <h2>Repere rapide pentru setari si decizii</h2>
             </div>
-            <span class="chip warn">7 ghiduri</span>
+            <span class="chip warn">6 ghiduri</span>
           </div>
           <div class="guide-hub-grid">
             <button class="guide-link diagnostic" type="button" data-jump="diagnostic"><b>Diagnostic gust</b><span>Simptom, cauza probabila, test rapid si corectie graduala.</span></button>
@@ -1956,7 +1971,6 @@ function rtaEarlyAccept(){
             <button class="guide-link diy" type="button" data-jump="liquidGuide"><b>Cum facem lichidele vape</b><span>VG/PG, aroma, nicotina, maturare si calculator simplu.</span></button>
             <button class="guide-link law" type="button" data-jump="legislativ"><b>Legislativ</b><span>Reguli, exemple rosu/galben/verde si repere pentru cumparatori.</span></button>
             <button class="guide-link method" type="button" data-jump="methodology"><b>Metodologie recomandari</b><span>Cum se formeaza potrivirea lichid - atomizor - sarma.</span></button>
-            <a class="guide-link mystic" target="_blank" rel="noopener noreferrer nofollow" href="https://mystic-profile-online-full-test-cmln.onrender.com/?lang=ro"><b>Profil Mystic</b><span>Acces rapid catre aplicatia externa, deschisa separat.</span></a>
           </div>
         </section>
         <div class="notice" style="margin-top:14px">Gustul bun apare cand lichidul, atomizorul si buildul lucreaza impreuna.</div>
