@@ -760,6 +760,10 @@ select:focus,input:focus{border-color:#ff7a1a;box-shadow:0 0 0 2px rgba(255,122,
 .guide-link.law{background:linear-gradient(135deg,#261709,#3b260f)}
 .guide-link.method{background:linear-gradient(135deg,#201409,#102018)}
 .guide-link.diagnostic{background:linear-gradient(135deg,#17100a,#10242c);border-color:rgba(247,210,122,.34)}
+a.guide-link{text-decoration:none;display:block}
+.guide-link.mystic{background:linear-gradient(135deg,#150f28,#092733 54%,#261709);border-color:rgba(255,139,213,.32)}
+.guide-link.mystic b{color:#fff}
+.guide-link.mystic span{color:#efe5ff}
 .guide-page-hero{border:1px solid #222;border-radius:8px;background:linear-gradient(135deg,#0c0c0c,#23170c 50%,#0b2630);color:#fff;padding:18px;margin-bottom:14px;box-shadow:0 20px 42px rgba(0,0,0,.22),0 1px 0 rgba(255,255,255,.12) inset}
 .guide-page-hero h2{margin:4px 0 8px;color:#fff;font-size:clamp(28px,4vw,46px);line-height:1.05}
 .guide-page-hero p{max-width:900px;color:#e8e8e8}
@@ -1137,6 +1141,9 @@ var I18N_EXACT={
   'Ghiduri utile':'Useful Guides',
   'Recenzii RTA':'RTA Reviews',
   'Noutati':'New',
+  '7 ghiduri':'7 guides',
+  'Profil Mystic':'Mystic Profile',
+  'Acces rapid catre aplicatia externa, deschisa separat.':'Quick access to the external app, opened separately.',
   'Diagnostic gust':'Taste Diagnosis',
   'Diagnostic':'Diagnosis',
   'Wizard Smokee':'Smokee Wizard',
@@ -1940,7 +1947,7 @@ function rtaEarlyAccept(){
               <p class="kicker">Ghiduri utile</p>
               <h2>Repere rapide pentru setari si decizii</h2>
             </div>
-            <span class="chip warn">6 ghiduri</span>
+            <span class="chip warn">7 ghiduri</span>
           </div>
           <div class="guide-hub-grid">
             <button class="guide-link diagnostic" type="button" data-jump="diagnostic"><b>Diagnostic gust</b><span>Simptom, cauza probabila, test rapid si corectie graduala.</span></button>
@@ -1949,6 +1956,7 @@ function rtaEarlyAccept(){
             <button class="guide-link diy" type="button" data-jump="liquidGuide"><b>Cum facem lichidele vape</b><span>VG/PG, aroma, nicotina, maturare si calculator simplu.</span></button>
             <button class="guide-link law" type="button" data-jump="legislativ"><b>Legislativ</b><span>Reguli, exemple rosu/galben/verde si repere pentru cumparatori.</span></button>
             <button class="guide-link method" type="button" data-jump="methodology"><b>Metodologie recomandari</b><span>Cum se formeaza potrivirea lichid - atomizor - sarma.</span></button>
+            <a class="guide-link mystic" target="_blank" rel="noopener noreferrer nofollow" href="https://mystic-profile-online-full-test-cmln.onrender.com/?lang=ro"><b>Profil Mystic</b><span>Acces rapid catre aplicatia externa, deschisa separat.</span></a>
           </div>
         </section>
         <div class="notice" style="margin-top:14px">Gustul bun apare cand lichidul, atomizorul si buildul lucreaza impreuna.</div>
