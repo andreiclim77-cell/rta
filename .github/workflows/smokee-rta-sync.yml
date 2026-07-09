@@ -12,7 +12,7 @@ permissions:
 
 concurrency:
   group: smokee-catalog-sync
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   sync-smokee-catalog:

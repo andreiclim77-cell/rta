@@ -9,7 +9,7 @@ const START_MARKER = '/* AUTO-SMOKEE-CONSUMABLES-START */';
 const END_MARKER = '/* AUTO-SMOKEE-CONSUMABLES-END */';
 const CATEGORY_PER_PAGE = 100;
 const CATEGORY_PAGE_LIMIT = 6;
-const FETCH_TIMEOUT_MS = 65000;
+const FETCH_TIMEOUT_MS = 22000;
 const NEWS_START_DATE = '2026-07-06';
 
 const args = process.argv.slice(2);
