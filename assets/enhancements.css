@@ -433,3 +433,167 @@ header{box-shadow:0 3px 0 rgba(0,0,0,.16),0 18px 42px rgba(12,18,16,.25)}
 
 @media(max-width:380px){.footer .footer-links{grid-template-columns:1fr}}
 @media(max-width:340px){.shop-hero h1{font-size:23px}}
+
+/* Functional signature: recommendation triangle and atomizer aromatic DNA. */
+.triangulation-signature{
+  position:relative;
+  overflow:hidden;
+  margin:8px 0 4px;
+  padding:16px 0;
+  border-top:1px solid rgba(255,255,255,.14);
+  border-bottom:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(90deg,rgba(255,122,26,.035),transparent 42%,rgba(55,191,232,.045));
+  color:#fff;
+}
+.triangulation-signature:after{
+  content:"";
+  position:absolute;
+  right:0;
+  bottom:0;
+  left:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--ui-orange),var(--ui-cyan),transparent);
+}
+.triangulation-copy{position:relative;z-index:2;margin-bottom:8px}
+.triangulation-copy>span{
+  display:block;
+  margin-bottom:3px;
+  color:#f4b365;
+  font-size:10px;
+  font-weight:900;
+  line-height:1.2;
+  text-transform:uppercase;
+}
+.triangulation-copy h4{margin:0;color:#fff;font-size:20px;line-height:1.15}
+.triangulation-copy p{margin:5px 0 0;color:#d9e3df;font-size:12px;line-height:1.45}
+.triangulation-layout{display:grid;grid-template-columns:minmax(240px,.88fr) minmax(0,1.45fr);align-items:center;gap:18px}
+.triangulation-stage{position:relative;width:min(100%,320px);aspect-ratio:16/11;justify-self:center;isolation:isolate}
+.triangulation-lines{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.triangulation-lines path{
+  fill:none;
+  stroke:#ed9a4c;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  vector-effect:non-scaling-stroke;
+  filter:drop-shadow(0 0 7px rgba(255,122,26,.30));
+  stroke-dasharray:760;
+  stroke-dashoffset:0;
+}
+.triangulation-lines .triangulation-spokes{stroke:#48bcdc;stroke-width:1.25;stroke-dasharray:4 7;filter:none}
+.triangulation-core{
+  position:absolute;
+  z-index:2;
+  left:50%;
+  top:46.5%;
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(255,188,59,.58);
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 25%,#303631,#121715 62%,#080a09);
+  color:#ffd27c;
+  font-size:11px;
+  font-weight:950;
+  box-shadow:0 12px 24px rgba(0,0,0,.40),0 1px 0 rgba(255,255,255,.15) inset;
+}
+.triangulation-node{
+  position:absolute;
+  z-index:3;
+  display:grid;
+  justify-items:center;
+  gap:3px;
+  min-width:70px;
+  color:#fff;
+  font-size:10px;
+  font-weight:900;
+  line-height:1.1;
+  text-transform:uppercase;
+}
+.triangulation-node img{
+  display:block;
+  width:42px;
+  height:42px;
+  padding:10px;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50%;
+  background:linear-gradient(145deg,#fff,#dfe8e4);
+  box-shadow:0 3px 0 rgba(0,0,0,.32),0 13px 24px rgba(0,0,0,.34),0 1px 0 #fff inset;
+}
+.triangulation-node.node-liquid{left:50%;top:0;transform:translateX(-50%)}
+.triangulation-node.node-atom{left:0;bottom:0}
+.triangulation-node.node-wire{right:0;bottom:0}
+.triangulation-values{display:grid;gap:0;min-width:0;border-top:1px solid rgba(255,255,255,.12)}
+.triangulation-values>div{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.12);min-width:0}
+.triangulation-values span{color:#78cde5;font-size:10px;font-weight:900;line-height:1.3;text-transform:uppercase}
+.triangulation-values b{color:#fff;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+
+.aroma-dna{
+  display:grid;
+  gap:8px;
+  margin:2px 0;
+  padding:11px 0 10px;
+  border-top:1px solid rgba(54,50,45,.12);
+  border-bottom:1px solid rgba(54,50,45,.12);
+}
+.aroma-dna-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;min-width:0}
+.aroma-dna-head b{color:#332d28;font-size:11px;font-weight:950;line-height:1.2;text-transform:uppercase}
+.aroma-dna-head small{color:#7a756f;font-size:9px;font-weight:750;line-height:1.2;text-align:right}
+.aroma-dna-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;min-width:0}
+.aroma-dna-metric{min-width:0;--dna-color:#607d8b}
+.aroma-dna-metric>span{display:block;margin-bottom:5px;color:#5f5a55;font-size:9px;font-weight:850;line-height:1.15;overflow-wrap:anywhere}
+.aroma-dna-scale{display:grid;grid-template-columns:repeat(5,minmax(3px,1fr));gap:2px;height:6px}
+.aroma-dna-segment{display:block;border-radius:2px;background:#dde3e0;box-shadow:0 1px 0 rgba(255,255,255,.85) inset}
+.aroma-dna-segment.is-active{background:var(--dna-color);box-shadow:0 0 8px color-mix(in srgb,var(--dna-color) 30%,transparent),0 1px 0 rgba(255,255,255,.42) inset}
+.aroma-clarity{--dna-color:#27afd5}
+.aroma-body{--dna-color:#d36a1c}
+.aroma-dryness{--dna-color:#c29a42}
+.aroma-warmth{--dna-color:#bc5b73}
+.aroma-layering{--dna-color:#38986b}
+.page-premium-hero+.page-summary .aroma-dna,.detail-panel .aroma-dna{margin-top:8px}
+
+@keyframes triadLineDraw{from{stroke-dashoffset:760}to{stroke-dashoffset:0}}
+@keyframes triadNodeSettle{from{opacity:0;scale:.84}to{opacity:1;scale:1}}
+@keyframes dnaSegmentReveal{from{opacity:.22;transform:scaleX(.18)}to{opacity:1;transform:scaleX(1)}}
+@keyframes resultSettle{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.section.active .triangulation-lines path{animation:triadLineDraw .62s var(--ui-ease) both}
+.section.active .triangulation-node{animation:triadNodeSettle .28s var(--ui-ease) both}
+.section.active .triangulation-node.node-atom{animation-delay:.08s}
+.section.active .triangulation-node.node-wire{animation-delay:.14s}
+.section.active .aroma-dna-segment.is-active{transform-origin:left center;animation:dnaSegmentReveal .26s var(--ui-ease) both;animation-delay:var(--dna-delay)}
+#recommendation>.result-card{animation:resultSettle .30s var(--ui-ease) both}
+#recommendation>.result-card:nth-child(2){animation-delay:.04s}
+#recommendation>.result-card:nth-child(3){animation-delay:.08s}
+#recommendation>.result-card:nth-child(4){animation-delay:.12s}
+#recommendation>.result-card:nth-child(5){animation-delay:.16s}
+#recommendation>.result-card:nth-child(6){animation-delay:.20s}
+#atomizerList>.atom-card:nth-child(-n+12){animation:resultSettle .26s var(--ui-ease) both}
+
+@media(max-width:900px){
+  .triangulation-layout{grid-template-columns:1fr;gap:10px}
+  .triangulation-stage{width:min(100%,300px)}
+}
+@media(max-width:640px){
+  .triangulation-signature{padding:13px 0}
+  .triangulation-copy h4{font-size:18px}
+  .triangulation-stage{width:min(100%,272px)}
+  .triangulation-node{min-width:62px;font-size:9px}
+  .triangulation-node img{width:38px;height:38px;padding:9px}
+  .triangulation-values>div{grid-template-columns:72px minmax(0,1fr);padding:8px 0}
+  .aroma-dna-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px 10px}
+  .aroma-dna-metric>span{font-size:9px}
+}
+@media(max-width:340px){
+  .triangulation-stage{width:min(100%,248px)}
+  .aroma-dna-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(prefers-reduced-motion:reduce){
+  .section.active .triangulation-lines path,
+  .section.active .triangulation-node,
+  .section.active .aroma-dna-segment.is-active,
+  #recommendation>.result-card,
+  #atomizerList>.atom-card:nth-child(-n+12){animation:none!important}
+  .triangulation-lines path{stroke-dashoffset:0!important}
+}

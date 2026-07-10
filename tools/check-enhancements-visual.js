@@ -134,6 +134,85 @@ async function enter(page, route) {
     await page.waitForSelector('.atom-card .atom-media img');
     const atomImageFit = await page.locator('.atom-card .atom-media img').first().evaluate(image => getComputedStyle(image).objectFit);
     if (atomImageFit !== 'contain') failures.push(`${viewport.name}: atomizer images are still cropped`);
+    const atomizerDna = await page.evaluate(() => {
+      const cards = [...document.querySelectorAll('#atomizerList>.atom-card')];
+      const panels = cards.map(card => card.querySelector('.aroma-dna'));
+      return {
+        cards: cards.length,
+        panels: panels.filter(Boolean).length,
+        validMetrics: panels.filter(Boolean).every(panel => {
+          const metrics = [...panel.querySelectorAll('.aroma-dna-metric')];
+          return metrics.length === 5 && metrics.every(metric => {
+            const segments = metric.querySelectorAll('.aroma-dna-segment').length;
+            const active = metric.querySelectorAll('.aroma-dna-segment.is-active').length;
+            return segments === 5 && active >= 1 && active <= 5 && Boolean(metric.getAttribute('aria-label'));
+          });
+        }),
+        docWidth: document.documentElement.scrollWidth,
+        viewportWidth: document.documentElement.clientWidth
+      };
+    });
+    if (!atomizerDna.cards || atomizerDna.panels !== atomizerDna.cards || !atomizerDna.validMetrics) failures.push(`${viewport.name}: atomizer aromatic DNA is incomplete`);
+    if (atomizerDna.docWidth > atomizerDna.viewportWidth + 4) failures.push(`${viewport.name}: aromatic DNA causes atomizer page overflow`);
+    const atomizerDetailDna = await page.evaluate(() => {
+      renderAtomizerPage(atomizers[0]);
+      const pageDna = document.querySelector('#atomPageContent .aroma-dna');
+      openAtomDetail(0);
+      const modalDna = document.querySelector('#detailBody .aroma-dna');
+      const result = {
+        pageMetrics: pageDna?.querySelectorAll('.aroma-dna-metric').length || 0,
+        modalMetrics: modalDna?.querySelectorAll('.aroma-dna-metric').length || 0
+      };
+      closeAtomDetail();
+      return result;
+    });
+    if (atomizerDetailDna.pageMetrics !== 5 || atomizerDetailDna.modalMetrics !== 5) failures.push(`${viewport.name}: atomizer profile or detail aromatic DNA is incomplete`);
+
+    await page.evaluate(() => goTab('recommender'));
+    await page.waitForSelector('#recommendation .triangulation-signature');
+    const recommendationSignature = await page.evaluate(() => {
+      const signature = document.querySelector('#recommendation .triangulation-signature');
+      const values = [...signature.querySelectorAll('.triangulation-values b')].map(node => node.textContent.trim());
+      const cards = [...document.querySelectorAll('#recommendation>.luxe-result')];
+      const firstModel = cards[0]?.querySelector('.result-headline h3')?.textContent.trim() || '';
+      const firstDna = cards[0]?.querySelector('.aroma-dna');
+      return {
+        title: signature.querySelector('h4')?.textContent.trim() || '',
+        nodes: signature.querySelectorAll('.triangulation-node').length,
+        values,
+        firstModel,
+        cards: cards.length,
+        dnaPanels: cards.filter(card => card.querySelector('.aroma-dna')).length,
+        firstDnaMetrics: firstDna?.querySelectorAll('.aroma-dna-metric').length || 0,
+        docWidth: document.documentElement.scrollWidth,
+        viewportWidth: document.documentElement.clientWidth
+      };
+    });
+    if (recommendationSignature.nodes !== 3 || recommendationSignature.values.length !== 3 || recommendationSignature.values.some(value => !value)) failures.push(`${viewport.name}: triangulation signature is incomplete`);
+    if (recommendationSignature.values[1] !== recommendationSignature.firstModel) failures.push(`${viewport.name}: triangulation signature does not follow the leading recommendation`);
+    if (recommendationSignature.cards !== 5 || recommendationSignature.dnaPanels !== 5 || recommendationSignature.firstDnaMetrics !== 5) failures.push(`${viewport.name}: recommendation aromatic DNA is incomplete`);
+    if (recommendationSignature.docWidth > recommendationSignature.viewportWidth + 4) failures.push(`${viewport.name}: triangulation signature causes horizontal overflow`);
+    const adaptiveSignature = await page.evaluate(() => {
+      const read = () => [...document.querySelectorAll('#recommendation .triangulation-values b')].map(node => node.textContent.trim()).join('|');
+      const before = read();
+      document.querySelector('[data-problem="tooDry"]')?.click();
+      const after = read();
+      document.querySelector('[data-problem="balance"]')?.click();
+      return { before, after };
+    });
+    if (!adaptiveSignature.before || adaptiveSignature.before === adaptiveSignature.after) failures.push(`${viewport.name}: triangulation signature does not react to intent changes`);
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    const reducedMotion = await page.evaluate(() => ({
+      line: getComputedStyle(document.querySelector('.triangulation-lines path')).animationName,
+      node: getComputedStyle(document.querySelector('.triangulation-node')).animationName,
+      segment: getComputedStyle(document.querySelector('.aroma-dna-segment.is-active')).animationName
+    }));
+    if (Object.values(reducedMotion).some(name => name !== 'none')) failures.push(`${viewport.name}: reduced-motion preference is not respected`);
+    await page.emulateMedia({ reducedMotion: 'no-preference' });
+
+    if (viewport.name === 'phone-390' || viewport.name === 'desktop-1366') {
+      await page.screenshot({ path: path.join(OUTPUT, `${viewport.name}-triangulation.png`), fullPage: true });
+    }
 
     await page.evaluate(() => goTab('comparator'));
     await page.waitForSelector('#compareResults .compare-table');
