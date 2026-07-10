@@ -9,6 +9,8 @@ Pagina principala este `index.html` si poate fi publicata direct prin GitHub Pag
 Pe langa aplicatia principala exista pagini tematice indexabile:
 
 - `ghid-rta-mtl.html`
+- `start.html`
+- `ce-atomizor-rta-mtl-aleg.html`
 - `recomandari-rta-mtl.html`
 - `atomizoare-rta-mtl.html`
 - `lichide-net-tutun.html`
@@ -32,6 +34,8 @@ Pe langa aplicatia principala exista pagini tematice indexabile:
 - `rta-mtl-smokee.html`
 - `legislativ-vape.html`
 - `smokee-link-kit.html`
+
+Pentru WhatsApp, profiluri si QR, linkul recomandat este `https://ghid-rta.ro/start.html`.
 
 Pentru expunere din Smokee, pagina recomandata pentru materiale si linkuri este `smokee-link-kit.html`, iar linkul public principal ramane `https://ghid-rta.ro/`.
 

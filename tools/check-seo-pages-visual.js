@@ -17,6 +17,8 @@ const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 const pages = [
   "ghid-rta-mtl.html",
+  "start.html",
+  "ce-atomizor-rta-mtl-aleg.html",
   "recomandari-rta-mtl.html",
   "atomizoare-rta-mtl.html",
   "lichide-net-tutun.html",
