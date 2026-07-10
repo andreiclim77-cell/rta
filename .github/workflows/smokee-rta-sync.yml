@@ -68,6 +68,12 @@ jobs:
         if: steps.sync_window.outputs.run_sync == 'true'
         run: node tools/rewrite-smokee-images.js --write
 
+      - name: Refresh exact YouTube reviews and builds
+        if: steps.sync_window.outputs.run_sync == 'true'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: node tools/sync-youtube-reviews.js --write
+
       - name: Refresh validation, catalog pages and sync status
         if: steps.sync_window.outputs.run_sync == 'true'
         run: |
@@ -81,6 +87,7 @@ jobs:
         run: |
           node tools/validate-app-js.js
           node tools/check-catalog-integrity.js
+          node tools/check-youtube-review-data.js
           node tools/validate-seo-pages.js
 
       - name: Commit catalog update

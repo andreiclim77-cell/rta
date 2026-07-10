@@ -1,3 +1,36 @@
+@font-face{
+  font-family:"Manrope Local";
+  font-style:normal;
+  font-weight:400 800;
+  font-display:swap;
+  src:url("/assets/fonts/manrope-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"Manrope Local";
+  font-style:normal;
+  font-weight:400 800;
+  font-display:swap;
+  src:url("/assets/fonts/manrope-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Cormorant Garamond Local";
+  font-style:normal;
+  font-weight:600 700;
+  font-display:swap;
+  src:url("/assets/fonts/cormorant-garamond-latin-ext.woff2") format("woff2");
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+@font-face{
+  font-family:"Cormorant Garamond Local";
+  font-style:normal;
+  font-weight:600 700;
+  font-display:swap;
+  src:url("/assets/fonts/cormorant-garamond-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
 :root{
   --ui-surface:#fff;
   --ui-surface-soft:#fffaf4;
@@ -188,6 +221,7 @@ html{background:var(--ui-canvas)}
 body{
   color:#1b1e1d;
   background:linear-gradient(180deg,#edf2f0 0,#faf8f4 320px,#f6f8f7 760px,#fff 100%);
+  font-family:"Manrope Local",Manrope,"Segoe UI",Arial,sans-serif;
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
@@ -200,6 +234,10 @@ header{box-shadow:0 3px 0 rgba(0,0,0,.16),0 18px 42px rgba(12,18,16,.25)}
 .section{animation-timing-function:var(--ui-ease)}
 .panel-title{margin-bottom:16px}
 .panel-title h2,.journey-head h2,.supplier-head h2,.guide-hub-head h2{line-height:1.12;font-weight:850}
+.category-panel h2,.supplier-head h2,.guide-hub-head h2,.age-card h2{
+  font-family:"Cormorant Garamond Local",Georgia,serif;
+  font-weight:700;
+}
 #home .shop-main>.journey-hub,#home .shop-main>.shop-metrics,#home .shop-main>.supplier-showcase,#home .shop-main>.guide-hub{margin-top:18px}
 #home>.workflow{margin:28px 0 26px}
 
@@ -220,7 +258,82 @@ header{box-shadow:0 3px 0 rgba(0,0,0,.16),0 18px 42px rgba(12,18,16,.25)}
 .category-panel{border-color:rgba(48,45,40,.15);box-shadow:0 2px 0 rgba(0,0,0,.05),0 18px 38px rgba(28,38,34,.10)}
 .category-link{background:linear-gradient(180deg,#fff,#fdfdfc)}
 .category-link:hover{background:#fff6ed;color:#b94c00}
+.cat-mark{
+  width:30px;
+  height:30px;
+  border:1px solid rgba(20,24,22,.20);
+  border-radius:7px;
+  background:linear-gradient(145deg,#fff,#eef3f1);
+  box-shadow:0 2px 0 rgba(0,0,0,.10),0 7px 14px rgba(24,34,30,.10),0 1px 0 #fff inset;
+}
+.cat-icon{display:block;width:17px;height:17px}
 .notice{padding:13px 15px;line-height:1.55;border-radius:0 7px 7px 0}
+
+.atom-media{aspect-ratio:4/3;background:#edf1ef}
+.atom-media img{
+  object-fit:contain;
+  padding:8px;
+  background:linear-gradient(145deg,#fbfcfb,#e8eeeb);
+}
+.registry-product-media{background:#f2f5f3}
+.registry-product-media img{
+  object-fit:contain;
+  padding:8px;
+  background:linear-gradient(145deg,#fff,#eef2f0);
+}
+.consumable-thumb,.setup-thumb{background:linear-gradient(145deg,#fff,#edf2ef)}
+.consumable-thumb img,.setup-thumb img{
+  object-fit:contain;
+  padding:4px;
+  background:#f3f5f4;
+}
+
+.footer{
+  display:grid;
+  grid-template-columns:minmax(220px,.72fr) minmax(0,1.8fr);
+  align-items:start;
+  justify-content:stretch;
+  gap:26px;
+  margin-top:28px;
+  padding:26px 18px 34px;
+  border-top:1px solid rgba(42,39,35,.15);
+  color:#5c605e;
+}
+.footer-intro{display:grid;align-content:start;justify-items:start;gap:10px;min-width:0}
+.footer-intro img{display:block;width:132px;max-width:100%;height:auto}
+.footer-intro>span:not(.chip){max-width:36ch;font-size:12px;line-height:1.55}
+.footer-intro .chip{margin:0;justify-self:start}
+.footer-map{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;min-width:0}
+.footer-group{min-width:0}
+.footer-group h2{
+  margin:0 0 8px;
+  color:#242826;
+  font-family:"Manrope Local",Manrope,"Segoe UI",Arial,sans-serif;
+  font-size:12px;
+  font-weight:900;
+  line-height:1.25;
+  letter-spacing:0;
+  text-transform:uppercase;
+}
+.footer .footer-links{display:grid;align-items:start;justify-content:stretch;gap:2px}
+.footer .footer-links a{
+  position:relative;
+  display:block;
+  min-width:0;
+  padding:5px 4px 5px 14px;
+  border:0;
+  border-radius:0;
+  background:transparent;
+  color:#5b4736;
+  font-size:12px;
+  font-weight:750;
+  line-height:1.35;
+  text-decoration:none;
+  overflow-wrap:anywhere;
+  box-shadow:none;
+}
+.footer .footer-links a:before{content:">";position:absolute;left:0;top:5px;color:#d55b08;font-weight:900}
+.footer .footer-links a:hover{border-color:transparent;background:transparent;color:#b94c00;text-decoration:underline;text-underline-offset:3px}
 
 .journey-hub,.supplier-showcase,.guide-hub{
   border-color:rgba(255,255,255,.16);
@@ -280,6 +393,8 @@ header{box-shadow:0 3px 0 rgba(0,0,0,.16),0 18px 42px rgba(12,18,16,.25)}
 
 @media(max-width:900px){
   .shop-hero h1{font-size:42px}
+  .footer{grid-template-columns:1fr;gap:20px}
+  .footer-intro>span:not(.chip){max-width:72ch}
   .nav{position:relative}
   .nav:after{
     content:"";
@@ -308,6 +423,13 @@ header{box-shadow:0 3px 0 rgba(0,0,0,.16),0 18px 42px rgba(12,18,16,.25)}
   .supplier-showcase .supplier-copy b{font-size:12px}
   .supplier-showcase .supplier-copy small{font-size:10px}
   .guide-link{min-height:88px}
+  .cat-mark{width:27px;height:27px}
+  .cat-icon{width:16px;height:16px}
+  .footer{gap:18px;margin-top:20px;padding:22px 10px 28px}
+  .footer-map{grid-template-columns:1fr;gap:17px}
+  .footer .footer-links{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:12px}
+  .footer-intro img{width:118px}
 }
 
+@media(max-width:380px){.footer .footer-links{grid-template-columns:1fr}}
 @media(max-width:340px){.shop-hero h1{font-size:23px}}

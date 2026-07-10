@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ghid-rta-static-v3';
+const CACHE_VERSION = 'ghid-rta-static-v4';
 const OFFLINE_URL = '/offline.html';
 const SAFE_PAGES = [
   OFFLINE_URL,
@@ -52,6 +52,19 @@ async function networkFirst(request, fallback) {
   }
 }
 
+async function networkFirstData(request) {
+  try {
+    const response = await fetch(request);
+    if (response && response.ok) {
+      const cache = await caches.open(CACHE_VERSION);
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    return caches.match(request);
+  }
+}
+
 self.addEventListener('fetch', event => {
   const request = event.request;
   if (request.method !== 'GET') return;
@@ -66,6 +79,11 @@ self.addEventListener('fetch', event => {
 
   if (url.pathname === '/sync-status.json' || url.pathname === '/' || url.pathname === '/index.html' || url.pathname.startsWith('/en/')) {
     event.respondWith(fetch(request));
+    return;
+  }
+
+  if (url.pathname === '/data/youtube-reviews.js') {
+    event.respondWith(networkFirstData(request));
     return;
   }
 

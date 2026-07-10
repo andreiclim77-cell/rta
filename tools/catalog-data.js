@@ -195,6 +195,50 @@ function publicAtomName(value) {
     .trim();
 }
 
+function catalogNameKey(value) {
+  return publicAtomName(value)
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '');
+}
+
+function youtubeSourceFromRecord(atomName, video, fallbackDate) {
+  const clone = video.scope === 'clone';
+  const kind = video.kind === 'build' ? 'Build' : 'Review';
+  const checked = video.lastSeenAt || fallbackDate || '';
+  return {
+    Atomizor: atomName,
+    'Titlu / identificare review YouTube': `${kind} YouTube verificat${clone ? ' pe clona' : ''} - ${video.title}`,
+    URL: video.url,
+    Observatie: clone
+      ? `Exemplu realizat pe clona; nu este recenzie a originalului.${checked ? ` Identificat la ${checked}.` : ''}`
+      : `Titlul identifica direct modelul.${checked ? ` Identificat la ${checked}.` : ''}`
+  };
+}
+
+function mergeYouTubeReviewFeed(atomizers, root) {
+  const feedPath = path.join(root, 'data', 'youtube-reviews.json');
+  if (!fs.existsSync(feedPath)) return;
+  let feed;
+  try {
+    feed = JSON.parse(fs.readFileSync(feedPath, 'utf8'));
+  } catch (error) {
+    return;
+  }
+  const byName = new Map(atomizers.map(atom => [catalogNameKey(atom.name), atom]));
+  Object.values(feed.models || {}).forEach(entry => {
+    const atom = byName.get(catalogNameKey(entry.name));
+    if (!atom) return;
+    const existing = new Set(allSources(atom).map(sourceUrl).filter(Boolean));
+    const additions = (entry.videos || []).filter(video => video.url && !existing.has(video.url)).map(video => {
+      existing.add(video.url);
+      return youtubeSourceFromRecord(publicAtomName(atom.name), video, String(feed.generatedAt || '').slice(0, 10));
+    });
+    if (additions.length) atom.youtube = additions.concat(atom.youtube || []);
+  });
+}
+
 function loadCatalog(root = path.resolve(__dirname, '..')) {
   const indexPath = path.join(root, 'index.html');
   const html = fs.readFileSync(indexPath, 'utf8');
@@ -214,6 +258,7 @@ function loadCatalog(root = path.resolve(__dirname, '..')) {
     atom.sources = [].concat(atom.sources || [], update.sources || []);
     atom.catalogStatus = atom.catalogStatus || 'Smokee RTA confirmat';
   });
+  mergeYouTubeReviewFeed(atomizers, root);
   const profiles = [].concat(
     data.profiles || [],
     evaluateLiteral(html, 'NET_PROFILE_EXTENSIONS'),

@@ -44,6 +44,7 @@ async function enter(page, route) {
   }
   await page.waitForFunction(() => !document.body.classList.contains('app-preparing'), { timeout: 20000 });
   await page.waitForFunction(() => typeof window.comparatorValidation === 'function', { timeout: 8000 });
+  await page.evaluate(() => document.fonts.ready);
   return gate;
 }
 
@@ -96,9 +97,15 @@ async function enter(page, route) {
         supplierHeightSpread: supplierHeights.length ? Math.max(...supplierHeights) - Math.min(...supplierHeights) : 0,
         mysticGap: promptRect && eRect ? Math.round(eRect.left - promptRect.right) : 0,
         heroTitleLines,
+        categoryIcons: document.querySelectorAll('.category-link .cat-icon').length,
+        categoryIconAltValid: [...document.querySelectorAll('.category-link .cat-icon')].every(icon => icon.hasAttribute('alt') && icon.alt === ''),
+        footerGroups: document.querySelectorAll('.footer-map .footer-group').length,
+        footerLinks: document.querySelectorAll('.footer-map a[href]').length,
+        manropeReady: document.fonts.check('16px "Manrope Local"'),
+        cormorantReady: document.fonts.check('20px "Cormorant Garamond Local"'),
         duplicateIds: Array.from(new Set(duplicateIds)),
         emptyActions,
-        missingAlt: [...document.images].filter(image => !image.hasAttribute('alt') || !image.alt.trim()).length
+        missingAlt: [...document.images].filter(image => !image.hasAttribute('alt')).length
       };
     });
 
@@ -109,6 +116,9 @@ async function enter(page, route) {
     if (home.duplicateIds.length) failures.push(`${viewport.name}: duplicate IDs ${home.duplicateIds.join(', ')}`);
     if (home.emptyActions.length) failures.push(`${viewport.name}: unnamed actions ${home.emptyActions.join(' | ')}`);
     if (home.missingAlt) failures.push(`${viewport.name}: ${home.missingAlt} images have no alt text`);
+    if (home.categoryIcons !== 12 || !home.categoryIconAltValid) failures.push(`${viewport.name}: category icon system is incomplete or inaccessible`);
+    if (home.footerGroups !== 3 || home.footerLinks < 20) failures.push(`${viewport.name}: grouped footer is incomplete`);
+    if (!home.manropeReady || !home.cormorantReady) failures.push(`${viewport.name}: local premium fonts are not available`);
     if (viewport.width >= 1200 && (home.navRows !== 1 || home.navScrollWidth > home.navClientWidth + 4)) failures.push(`${viewport.name}: desktop navigation does not fit on one row`);
     if (viewport.width >= 1200 && home.guideColumns !== 3) failures.push(`${viewport.name}: useful guides are not balanced in three columns`);
     if (viewport.width >= 1200 && home.heroTitleLines !== 1) failures.push(`${viewport.name}: Home title wraps on desktop`);
@@ -119,6 +129,11 @@ async function enter(page, route) {
     if (viewport.name === 'phone-390' || viewport.name === 'desktop-1366') {
       await page.screenshot({ path: path.join(OUTPUT, `${viewport.name}-home.png`), fullPage: true });
     }
+
+    await page.evaluate(() => goTab('atomizers'));
+    await page.waitForSelector('.atom-card .atom-media img');
+    const atomImageFit = await page.locator('.atom-card .atom-media img').first().evaluate(image => getComputedStyle(image).objectFit);
+    if (atomImageFit !== 'contain') failures.push(`${viewport.name}: atomizer images are still cropped`);
 
     await page.evaluate(() => goTab('comparator'));
     await page.waitForSelector('#compareResults .compare-table');
