@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="theme-color" content="#080808">
+  <title>Ghid RTA MTL - acces offline</title>
+  <link rel="icon" href="/assets/favicon-192.png">
+  <link rel="stylesheet" href="/assets/seo-pages.css">
+  <link rel="stylesheet" href="/assets/enhancements.css">
+</head>
+<body>
+  <header class="top"><div class="top-inner"><a class="brand" href="/"><img src="/assets/smokee-logo-official.png" alt="Smokee"><b>Ghid RTA MTL</b></a><span class="pill">18+</span></div></header>
+  <main class="wrap">
+    <section class="hero">
+      <p class="kicker" data-en="Offline access">Acces offline</p>
+      <h1 data-en="Stable guides remain available">Ghidurile stabile raman disponibile</h1>
+      <p class="lead" data-en="The Smokee catalog, stock and updated products require a connection. Commercial information is never presented offline as current.">Catalogul Smokee, stocul si produsele actualizate necesita conexiune. Informatiile comerciale nu sunt prezentate offline ca fiind actuale.</p>
+      <div class="actions"><a class="btn" href="/" data-en="Retry the application">Reincearca aplicatia</a></div>
+    </section>
+    <section class="grid" aria-label="Ghiduri offline" data-en-aria="Offline guides">
+      <article class="card wide"><span class="chip">RTA MTL</span><h2 data-en="Fundamentals">Fundamente</h2><p data-en="Chamber, airflow, deck and build should be considered together.">Camera, airflow-ul, deckul si buildul trebuie citite impreuna.</p><a class="btn secondary" href="/ghid-rta-mtl.html" data-en="Open guide">Deschide ghidul</a></article>
+      <article class="card wide"><span class="chip blue" data-en="Builds">Builduri</span><h2 data-en="Wires and wraps">Sarme si spire</h2><p data-en="Reference points for Kanthal, SS316L, NiFe30, Ni80 and fine Clapton.">Repere pentru Kanthal, SS316L, NiFe30, Ni80 si Clapton fin.</p><a class="btn secondary" href="/sarme-rta-builduri.html" data-en="Open guide">Deschide ghidul</a></article>
+      <article class="card wide"><span class="chip green">TC</span><h2 data-en="Temperature control">Controlul temperaturii</h2><p data-en="Rules for the coil, cold resistance reading and temperature adjustment.">Reguli pentru coil, citirea la rece si reglajul temperaturii.</p><a class="btn secondary" href="/control-temperatura-mtl.html" data-en="Open guide">Deschide ghidul</a></article>
+      <article class="card wide"><span class="chip pink" data-en="Diagnosis">Diagnostic</span><h2 data-en="Flavor correction">Corectarea gustului</h2><p data-en="Gradual checks before changing the atomizer.">Teste graduale înainte de schimbarea atomizorului.</p><a class="btn secondary" href="/diagnostic-gust-rta-mtl.html" data-en="Open guide">Deschide ghidul</a></article>
+    </section>
+    <div class="safe"><b data-en="18+ information.">Informare 18+.</b> <span data-en="Content is for guidance and does not constitute medical advice.">Conținutul este orientativ și nu reprezintă recomandare medicală.</span></div>
+  </main>
+  <script>
+  if(/^\/en(?:\/|$)/i.test(location.pathname)){
+    document.documentElement.lang='en';
+    document.title='MTL RTA Guide - offline access';
+    document.querySelectorAll('[data-en]').forEach(function(node){node.textContent=node.dataset.en});
+    document.querySelectorAll('[data-en-aria]').forEach(function(node){node.setAttribute('aria-label',node.dataset.enAria)});
+  }
+  </script>
+</body>
+</html>

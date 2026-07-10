@@ -18,7 +18,7 @@ concurrency:
 jobs:
   sync-smokee-catalog:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 5
     steps:
       - name: Confirm Bucharest sync window
         id: sync_window
@@ -64,15 +64,34 @@ jobs:
         if: steps.sync_window.outputs.run_sync == 'true'
         run: node tools/sync-smokee-liquids.js --write
 
+      - name: Route product images through Cloudflare cache
+        if: steps.sync_window.outputs.run_sync == 'true'
+        run: node tools/rewrite-smokee-images.js --write
+
+      - name: Refresh validation, catalog pages and sync status
+        if: steps.sync_window.outputs.run_sync == 'true'
+        run: |
+          node tools/generate-atomizer-validation.js
+          node tools/generate-catalog-pages.js
+          node tools/write-sync-status.js --source-sync
+          node tools/generate-localized-app.js
+
+      - name: Validate catalog and generated pages
+        if: steps.sync_window.outputs.run_sync == 'true'
+        run: |
+          node tools/validate-app-js.js
+          node tools/check-catalog-integrity.js
+          node tools/validate-seo-pages.js
+
       - name: Commit catalog update
         if: steps.sync_window.outputs.run_sync == 'true'
         run: |
-          if git diff --quiet -- index.html; then
+          if git diff --quiet; then
             echo "No Smokee catalog changes."
           else
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add index.html
+            git add index.html sync-status.json sitemap.xml llms.txt en data atomizoare lichide
             git commit -m "Sync Smokee catalog"
             git pull --rebase
             git push

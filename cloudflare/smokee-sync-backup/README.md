@@ -2,6 +2,12 @@
 
 Worker backup pentru sincronizarea Smokee. Cloudflare porneste workflow-ul GitHub `Smokee Catalog Sync` zilnic la 06:00 si 06:20, ora Romaniei.
 
+Acelasi Worker ofera cache pentru fotografiile publice de produs prin ruta
+`https://ghid-rta-smokee-sync-backup.ghid-rta-smokee.workers.dev/media/smokee/`.
+Ruta echivalenta `https://ghid-rta.ro/media/smokee/` devine activa daca inregistrarea
+DNS a domeniului este trecuta ulterior prin proxy-ul Cloudflare. Astfel, paginile ghidului nu descarca aceeasi
+imagine direct de pe hostingul Smokee pentru fiecare vizitator.
+
 Worker publicat:
 
 ```text
@@ -18,6 +24,8 @@ Endpointul manual `/trigger` raspunde doar daca exista `TRIGGER_TOKEN` si reques
 - Daca exista una, nu porneste alta peste ea.
 - Daca nu exista, trimite `workflow_dispatch` catre GitHub Actions.
 - Workflow-ul GitHub face sincronizarea RTA, consumabile si lichide direct pe GitHub.
+- Imaginile din `wp-content/uploads` sunt servite prin Cloudflare, cu cache de sapte zile si rezerva stale.
+- Evenimentele anonime de utilizare ale ghidului ajung in logurile Worker-ului; nu sunt trimise nume, emailuri sau identificatori de utilizator. Pentru rapoarte agregate, bindingul Analytics Engine poate fi activat ulterior din contul Cloudflare.
 
 ## Secrete necesare
 

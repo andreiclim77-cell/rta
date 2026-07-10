@@ -3,7 +3,8 @@ main = "worker.mjs"
 compatibility_date = "2026-07-04"
 workers_dev = true
 routes = [
-  { pattern = "ghid-rta.ro/__smokee-sync-backup*", zone_name = "ghid-rta.ro" }
+  { pattern = "ghid-rta.ro/__smokee-sync-backup*", zone_name = "ghid-rta.ro" },
+  { pattern = "ghid-rta.ro/media/smokee/*", zone_name = "ghid-rta.ro" }
 ]
 
 [triggers]

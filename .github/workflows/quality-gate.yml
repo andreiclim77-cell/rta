@@ -1,0 +1,45 @@
+name: RTA Guide Quality Gate
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+    paths:
+      - "index.html"
+      - "assets/**"
+      - "atomizoare/**"
+      - "lichide/**"
+      - "en/**"
+      - "data/**"
+      - "tools/**"
+      - "sw.js"
+      - "site.webmanifest"
+      - "sitemap.xml"
+      - ".github/workflows/**"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate scripts and JSON
+        run: |
+          node tools/validate-app-js.js
+          node --check assets/enhancements.js
+          node --check sw.js
+          node --check cloudflare/smokee-sync-backup/worker.mjs
+          node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8'))"
+      - name: Validate catalog and public pages
+        run: |
+          node tools/rewrite-smokee-images.js
+          node tools/check-catalog-integrity.js
+          node tools/validate-seo-pages.js

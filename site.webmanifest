@@ -1,10 +1,16 @@
 {
   "name": "Ghid RTA MTL - Smokee",
   "short_name": "Ghid RTA",
+  "id": "/",
   "description": "Ghid RTA MTL pentru lichide tutunoase si NET, atomizoare, sarme, builduri, recenzii si consumabile.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],
   "background_color": "#0b0b0b",
   "theme_color": "#0b0b0b",
   "lang": "ro-RO",
@@ -14,18 +20,44 @@
     "education",
     "reference"
   ],
+  "shortcuts": [
+    {
+      "name": "Recomandare RTA MTL",
+      "short_name": "Recomandare",
+      "url": "/#recommender",
+      "icons": [{"src": "/assets/favicon-192.png", "sizes": "192x192", "type": "image/png"}]
+    },
+    {
+      "name": "Diagnostic gust",
+      "short_name": "Diagnostic",
+      "url": "/#diagnostic",
+      "icons": [{"src": "/assets/favicon-192.png", "sizes": "192x192", "type": "image/png"}]
+    },
+    {
+      "name": "Comparator RTA",
+      "short_name": "Comparator",
+      "url": "/#comparator",
+      "icons": [{"src": "/assets/favicon-192.png", "sizes": "192x192", "type": "image/png"}]
+    },
+    {
+      "name": "Wizard Smokee",
+      "short_name": "Wizard",
+      "url": "/#setupList",
+      "icons": [{"src": "/assets/favicon-192.png", "sizes": "192x192", "type": "image/png"}]
+    }
+  ],
   "icons": [
     {
       "src": "/assets/favicon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
       "src": "/assets/favicon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     }
   ]
 }

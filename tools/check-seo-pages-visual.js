@@ -1,4 +1,5 @@
 const path = require("path");
+const os = require("os");
 
 const dependencyNodeModules =
   "C:\\Users\\acasa\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\node\\node_modules";
@@ -40,6 +41,19 @@ const pages = [
   "rta-mtl-smokee.html",
   "legislativ-vape.html",
   "smokee-link-kit.html",
+  "atomizoare/index.html",
+  "atomizoare/dvarw-mtl-fl/index.html",
+  "atomizoare/taifun-gtr/index.html",
+  "atomizoare/ennequadro-vico-rta/index.html",
+  "atomizoare/ambition-mods-amazier-mtl-rta/index.html",
+  "atomizoare/four-one-five-415rta-mtl/index.html",
+  "lichide/clase/index.html",
+  "lichide/net-virginia/index.html",
+  "lichide/net-burley/index.html",
+  "lichide/net-kentucky-latakia/index.html",
+  "lichide/net-oriental-perique/index.html",
+  "lichide/net-cigar-pipe/index.html",
+  "lichide/tutun-aromatizat/index.html",
 ];
 
 const viewports = [
@@ -48,6 +62,8 @@ const viewports = [
 ];
 
 (async () => {
+  const output = path.join(os.tmpdir(), "ghid-rta-seo-qa");
+  require("fs").mkdirSync(output, { recursive: true });
   const browser = await chromium.launch({
     headless: true,
     executablePath: require("fs").existsSync(chromePath) ? chromePath : undefined,
@@ -86,6 +102,9 @@ const viewports = [
         `${viewport.name} ${file}: scroll ${result.scrollWidth}/${result.clientWidth}, offenders ${result.offenders.length}`
       );
       if (hasOverflow) failures.push({ viewport: viewport.name, file, result });
+      if (file === "atomizoare/dvarw-mtl-fl/index.html" || file === "lichide/net-kentucky-latakia/index.html") {
+        await page.screenshot({ path: path.join(output, `${viewport.name}-${file.replace(/[\\/]/g, "-")}.png`), fullPage: true });
+      }
     }
     await page.close();
   }
@@ -96,4 +115,5 @@ const viewports = [
     console.error(JSON.stringify(failures, null, 2));
     process.exit(1);
   }
+  console.log(`SEO screenshots: ${output}`);
 })();
