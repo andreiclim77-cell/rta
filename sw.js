@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ghid-rta-static-v6';
+const CACHE_VERSION = 'ghid-rta-static-v7';
 const OFFLINE_URL = '/offline.html';
 const SAFE_PAGES = [
   OFFLINE_URL,
@@ -18,8 +18,8 @@ const STATIC_ASSETS = [
   '/assets/smokee-logo-official.png',
   '/assets/rta-hero-background.png',
   '/assets/seo-pages.css',
-  '/assets/enhancements.css',
-  '/assets/enhancements.js',
+  '/assets/enhancements.css?v=7',
+  '/assets/enhancements.js?v=7',
   '/site.webmanifest',
   '/site-en.webmanifest'
 ];

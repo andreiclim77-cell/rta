@@ -17,6 +17,7 @@ const viewports = [
   { name: 'phone-375', width: 375, height: 812 },
   { name: 'phone-390', width: 390, height: 844 },
   { name: 'tablet-768', width: 768, height: 1024 },
+  { name: 'tablet-landscape-1024', width: 1024, height: 768 },
   { name: 'desktop-1366', width: 1366, height: 900 },
   { name: 'desktop-1920', width: 1920, height: 1080 }
 ];
@@ -101,6 +102,8 @@ async function enter(page, route) {
         categoryIconAltValid: [...document.querySelectorAll('.category-link .cat-icon')].every(icon => icon.hasAttribute('alt') && icon.alt === ''),
         footerGroups: document.querySelectorAll('.footer-map .footer-group').length,
         footerLinks: document.querySelectorAll('.footer-map a[href]').length,
+        installPlacement: document.querySelector('#pwaInstallButton')?.parentElement?.className || '',
+        installVisible: Boolean(document.querySelector('#pwaInstallButton') && !document.querySelector('#pwaInstallButton').hidden && getComputedStyle(document.querySelector('#pwaInstallButton')).display !== 'none'),
         manropeReady: document.fonts.check('16px "Manrope Local"'),
         cormorantReady: document.fonts.check('20px "Cormorant Garamond Local"'),
         duplicateIds: Array.from(new Set(duplicateIds)),
@@ -118,6 +121,9 @@ async function enter(page, route) {
     if (home.missingAlt) failures.push(`${viewport.name}: ${home.missingAlt} images have no alt text`);
     if (home.categoryIcons !== 12 || !home.categoryIconAltValid) failures.push(`${viewport.name}: category icon system is incomplete or inaccessible`);
     if (home.footerGroups !== 3 || home.footerLinks < 20) failures.push(`${viewport.name}: grouped footer is incomplete`);
+    if (!home.installVisible) failures.push(`${viewport.name}: install button is not visible`);
+    if (viewport.width <= 900 && !/navlinks/.test(home.installPlacement)) failures.push(`${viewport.name}: mobile install button is not in navigation`);
+    if (viewport.width > 900 && !/head-tools/.test(home.installPlacement)) failures.push(`${viewport.name}: desktop install button is not in header tools`);
     if (!home.manropeReady || !home.cormorantReady) failures.push(`${viewport.name}: local premium fonts are not available`);
     if (viewport.width >= 1200 && (home.navRows !== 1 || home.navScrollWidth > home.navClientWidth + 4)) failures.push(`${viewport.name}: desktop navigation does not fit on one row`);
     if (viewport.width >= 1200 && home.guideColumns !== 3) failures.push(`${viewport.name}: useful guides are not balanced in three columns`);

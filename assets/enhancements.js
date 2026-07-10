@@ -283,9 +283,18 @@
     return Boolean((window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true)
   }
 
+  function placePwaInstallButton(button){
+    var mobile=window.matchMedia&&window.matchMedia('(max-width: 900px)').matches;
+    var homeButton=document.querySelector('.navlinks [data-tab="home"]');
+    var tools=document.querySelector('.head-tools');
+    if(mobile&&homeButton)homeButton.insertAdjacentElement('afterend',button);
+    else if(tools)tools.insertBefore(button,tools.firstChild);
+    else document.body.appendChild(button)
+  }
+
   function ensurePwaInstallButton(){
     var button=byId('pwaInstallButton');
-    if(button)return button;
+    if(button){placePwaInstallButton(button);return button}
     button=document.createElement('button');
     button.id='pwaInstallButton';
     button.className='pwa-install-launch';
@@ -294,10 +303,14 @@
     button.setAttribute('aria-haspopup','dialog');
     button.setAttribute('aria-expanded','false');
     button.innerHTML='<img src="/assets/icons/badge-plus.svg" alt="" aria-hidden="true"><span>'+html(word('Instaleaza aplicatia','Install app'))+'</span>';
-    var homeButton=document.querySelector('.navlinks [data-tab="home"]');
-    if(homeButton)homeButton.insertAdjacentElement('afterend',button);
-    else document.body.appendChild(button);
+    placePwaInstallButton(button);
     button.addEventListener('click',handlePwaInstall);
+    var placementQuery=window.matchMedia&&window.matchMedia('(max-width: 900px)');
+    if(placementQuery){
+      var move=function(){placePwaInstallButton(button)};
+      if(placementQuery.addEventListener)placementQuery.addEventListener('change',move);
+      else if(placementQuery.addListener)placementQuery.addListener(move)
+    }
     return button
   }
 
@@ -314,17 +327,21 @@
     var platform=pwaPlatform();
     var ios=platform.ios;
     var overlay=document.createElement('div');
-    var title=ios?word('Instalare pe iPhone sau iPad','Install on iPhone or iPad'):word('Instalare pe telefon','Install on phone');
+    var title=ios?word('Instalare pe iPhone sau iPad','Install on iPhone or iPad'):(platform.mobile?word('Instalare pe telefon','Install on phone'):word('Instalare aplicatie','Install app'));
     var intro=ios?word('Apple cere confirmarea instalarii din meniul Safari. Dureaza doar cateva secunde.','Apple requires installation confirmation from the Safari menu. It only takes a few seconds.'):word('Daca fereastra de instalare nu apare automat, aplicatia se adauga din meniul browserului.','If the install prompt does not appear automatically, add the app from the browser menu.');
     var steps=ios?[
       word('Deschide ghid-rta.ro in Safari.','Open ghid-rta.ro in Safari.'),
       word('Apasa Distribuie, simbolul patrat cu sageata in sus.','Tap Share, the square with an upward arrow.'),
       word('Alege Adaugati la ecranul principal, apoi confirma Adaugati.','Choose Add to Home Screen, then confirm Add.')
-    ]:[
+    ]:(platform.mobile?[
       word('Deschide meniul browserului, simbolul cu trei puncte.','Open the browser menu, shown as three dots.'),
       word('Alege Instaleaza aplicatia sau Adauga pe ecranul de pornire.','Choose Install app or Add to Home screen.'),
       word('Confirma instalarea. Iconita va aparea pe telefon.','Confirm installation. The icon will appear on the phone.')
-    ];
+    ]:[
+      word('Apasa iconita de instalare din bara de adrese sau deschide meniul browserului.','Select the install icon in the address bar or open the browser menu.'),
+      word('Alege Instaleaza Ghid RTA MTL.','Choose Install MTL RTA Guide.'),
+      word('Confirma instalarea. Aplicatia se va deschide intr-o fereastra separata.','Confirm installation. The app will open in a separate window.')
+    ]);
     overlay.id='pwaInstallGuide';
     overlay.className='pwa-install-overlay';
     overlay.setAttribute('role','dialog');
@@ -387,7 +404,7 @@
   function initPwa(){
     var platform=pwaPlatform();
     ensurePwaInstallButton();
-    if(!pwaStandalone()&&platform.mobile)setPwaInstallAvailable(true);
+    if(!pwaStandalone())setPwaInstallAvailable(true);
     window.addEventListener('beforeinstallprompt',function(event){
       event.preventDefault();
       deferredInstallPrompt=event;
