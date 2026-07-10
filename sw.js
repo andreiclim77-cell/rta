@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ghid-rta-static-v5';
+const CACHE_VERSION = 'ghid-rta-static-v6';
 const OFFLINE_URL = '/offline.html';
 const SAFE_PAGES = [
   OFFLINE_URL,
@@ -20,7 +20,8 @@ const STATIC_ASSETS = [
   '/assets/seo-pages.css',
   '/assets/enhancements.css',
   '/assets/enhancements.js',
-  '/site.webmanifest'
+  '/site.webmanifest',
+  '/site-en.webmanifest'
 ];
 
 self.addEventListener('install', event => {
@@ -87,7 +88,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  if (url.pathname.startsWith('/assets/') || url.pathname === '/site.webmanifest') {
+  if (url.pathname.startsWith('/assets/') || url.pathname === '/site.webmanifest' || url.pathname === '/site-en.webmanifest') {
     event.respondWith(
       caches.match(request).then(cached => cached || fetch(request).then(response => {
         if (!response || !response.ok) return response;

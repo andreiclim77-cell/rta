@@ -269,6 +269,110 @@
     }
   }
 
+  var deferredInstallPrompt=null;
+
+  function pwaPlatform(){
+    var ua=navigator.userAgent||'';
+    var ios=/iPad|iPhone|iPod/i.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+    var android=/Android/i.test(ua);
+    var mobile=ios||android||Boolean(navigator.userAgentData&&navigator.userAgentData.mobile);
+    return {ios:ios,android:android,mobile:mobile}
+  }
+
+  function pwaStandalone(){
+    return Boolean((window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||navigator.standalone===true)
+  }
+
+  function ensurePwaInstallButton(){
+    var button=byId('pwaInstallButton');
+    if(button)return button;
+    button=document.createElement('button');
+    button.id='pwaInstallButton';
+    button.className='pwa-install-launch';
+    button.type='button';
+    button.hidden=true;
+    button.setAttribute('aria-haspopup','dialog');
+    button.setAttribute('aria-expanded','false');
+    button.innerHTML='<img src="/assets/icons/badge-plus.svg" alt="" aria-hidden="true"><span>'+html(word('Instaleaza aplicatia','Install app'))+'</span>';
+    var homeButton=document.querySelector('.navlinks [data-tab="home"]');
+    if(homeButton)homeButton.insertAdjacentElement('afterend',button);
+    else document.body.appendChild(button);
+    button.addEventListener('click',handlePwaInstall);
+    return button
+  }
+
+  function setPwaInstallAvailable(available){
+    var button=ensurePwaInstallButton();
+    var show=Boolean(available&&!pwaStandalone());
+    button.hidden=!show;
+    document.body.classList.toggle('pwa-install-available',show)
+  }
+
+  function showPwaInstallGuide(){
+    var previous=byId('pwaInstallGuide');
+    if(previous)previous.remove();
+    var platform=pwaPlatform();
+    var ios=platform.ios;
+    var overlay=document.createElement('div');
+    var title=ios?word('Instalare pe iPhone sau iPad','Install on iPhone or iPad'):word('Instalare pe telefon','Install on phone');
+    var intro=ios?word('Apple cere confirmarea instalarii din meniul Safari. Dureaza doar cateva secunde.','Apple requires installation confirmation from the Safari menu. It only takes a few seconds.'):word('Daca fereastra de instalare nu apare automat, aplicatia se adauga din meniul browserului.','If the install prompt does not appear automatically, add the app from the browser menu.');
+    var steps=ios?[
+      word('Deschide ghid-rta.ro in Safari.','Open ghid-rta.ro in Safari.'),
+      word('Apasa Distribuie, simbolul patrat cu sageata in sus.','Tap Share, the square with an upward arrow.'),
+      word('Alege Adaugati la ecranul principal, apoi confirma Adaugati.','Choose Add to Home Screen, then confirm Add.')
+    ]:[
+      word('Deschide meniul browserului, simbolul cu trei puncte.','Open the browser menu, shown as three dots.'),
+      word('Alege Instaleaza aplicatia sau Adauga pe ecranul de pornire.','Choose Install app or Add to Home screen.'),
+      word('Confirma instalarea. Iconita va aparea pe telefon.','Confirm installation. The icon will appear on the phone.')
+    ];
+    overlay.id='pwaInstallGuide';
+    overlay.className='pwa-install-overlay';
+    overlay.setAttribute('role','dialog');
+    overlay.setAttribute('aria-modal','true');
+    overlay.setAttribute('aria-labelledby','pwaInstallTitle');
+    overlay.innerHTML='<section class="pwa-install-dialog"><button class="pwa-install-close" type="button" aria-label="'+html(word('Inchide','Close'))+'">&times;</button><div class="pwa-install-mark"><img src="/assets/favicon-192.png" alt=""></div><span class="pwa-install-kicker">Ghid RTA MTL</span><h2 id="pwaInstallTitle">'+html(title)+'</h2><p>'+html(intro)+'</p><ol class="pwa-install-steps">'+steps.map(function(step,index){return '<li><b>'+html(index+1)+'</b><span>'+html(step)+'</span></li>'}).join('')+'</ol><small>'+html(word('Nu este necesar Google Play sau App Store. Actualizarile se preiau din pagina online.','Google Play or the App Store is not required. Updates are received from the online page.'))+'</small></section>';
+    document.body.classList.add('pwa-install-open');
+    document.body.appendChild(overlay);
+    var launch=ensurePwaInstallButton();
+    launch.setAttribute('aria-expanded','true');
+    function close(){
+      document.removeEventListener('keydown',onKey);
+      launch.setAttribute('aria-expanded','false');
+      document.body.classList.remove('pwa-install-open');
+      overlay.remove();
+      launch.focus()
+    }
+    function onKey(event){if(event.key==='Escape')close()}
+    overlay.querySelector('.pwa-install-close').addEventListener('click',close);
+    overlay.addEventListener('click',function(event){if(event.target===overlay)close()});
+    document.addEventListener('keydown',onKey);
+    requestAnimationFrame(function(){overlay.classList.add('active');overlay.querySelector('.pwa-install-close').focus()});
+    if(typeof window.rtaTrack==='function')window.rtaTrack('pwa_install_guide',{platform:ios?'ios':'browser'})
+  }
+
+  async function handlePwaInstall(){
+    var button=ensurePwaInstallButton();
+    if(deferredInstallPrompt&&typeof deferredInstallPrompt.prompt==='function'){
+      var promptEvent=deferredInstallPrompt;
+      deferredInstallPrompt=null;
+      button.disabled=true;
+      try{
+        await promptEvent.prompt();
+        var choice=await Promise.resolve(promptEvent.userChoice);
+        var accepted=Boolean(choice&&choice.outcome==='accepted');
+        setPwaInstallAvailable(!accepted);
+        if(typeof window.rtaTrack==='function')window.rtaTrack('pwa_install_result',{outcome:accepted?'accepted':'dismissed'})
+      }catch(error){
+        setPwaInstallAvailable(true);
+        showPwaInstallGuide()
+      }finally{
+        button.disabled=false
+      }
+      return
+    }
+    showPwaInstallGuide()
+  }
+
   function showPwaUpdate(registration){
     if(byId('pwaUpdate'))return;
     var box=document.createElement('div');
@@ -281,6 +385,20 @@
   }
 
   function initPwa(){
+    var platform=pwaPlatform();
+    ensurePwaInstallButton();
+    if(!pwaStandalone()&&platform.mobile)setPwaInstallAvailable(true);
+    window.addEventListener('beforeinstallprompt',function(event){
+      event.preventDefault();
+      deferredInstallPrompt=event;
+      setPwaInstallAvailable(true)
+    });
+    window.addEventListener('appinstalled',function(){
+      deferredInstallPrompt=null;
+      setPwaInstallAvailable(false);
+      if(typeof window.rtaTrack==='function')window.rtaTrack('pwa_install_result',{outcome:'installed'})
+    });
+    if(typeof navigator.getInstalledRelatedApps==='function')navigator.getInstalledRelatedApps().then(function(apps){if(apps&&apps.length)setPwaInstallAvailable(false)}).catch(function(){});
     if(!('serviceWorker' in navigator)||!window.isSecureContext)return;
     navigator.serviceWorker.register('/sw.js',{scope:'/'}).then(function(registration){
       if(registration.waiting&&navigator.serviceWorker.controller)showPwaUpdate(registration);

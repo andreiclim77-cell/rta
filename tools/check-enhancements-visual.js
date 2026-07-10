@@ -268,6 +268,117 @@ async function enter(page, route) {
     await context.close();
   }
 
+  const androidContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    userAgent: 'Mozilla/5.0 (Linux; Android 15; Pixel 9) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36'
+  });
+  const androidPage = await androidContext.newPage();
+  await enter(androidPage, '/');
+  await androidPage.waitForSelector('#pwaInstallButton:not([hidden])');
+  const androidButtonLayout = await androidPage.locator('#pwaInstallButton').evaluate(button => {
+    const rect = button.getBoundingClientRect();
+    return {
+      text: button.textContent.trim(),
+      left: Math.round(rect.left),
+      right: Math.round(rect.right),
+      top: Math.round(rect.top),
+      bottom: Math.round(rect.bottom),
+      width: Math.round(rect.width),
+      height: Math.round(rect.height),
+      inNavigation: Boolean(button.closest('.navlinks'))
+    };
+  });
+  if (!/Instaleaza aplicatia/i.test(androidButtonLayout.text) || !androidButtonLayout.inNavigation || androidButtonLayout.left < -4 || androidButtonLayout.right > 394 || androidButtonLayout.top < -4 || androidButtonLayout.bottom > 848 || androidButtonLayout.width < 130 || androidButtonLayout.height < 30) failures.push('Android install button is clipped or unclear');
+  await androidPage.screenshot({ path: path.join(OUTPUT, 'android-install-button.png') });
+  await androidPage.evaluate(() => {
+    window.__pwaPromptCalled = false;
+    const event = new Event('beforeinstallprompt', { cancelable: true });
+    Object.defineProperty(event, 'prompt', { value: async () => { window.__pwaPromptCalled = true; } });
+    Object.defineProperty(event, 'userChoice', { value: Promise.resolve({ outcome: 'accepted', platform: 'web' }) });
+    window.dispatchEvent(event);
+  });
+  await androidPage.locator('#pwaInstallButton').click();
+  await androidPage.waitForFunction(() => window.__pwaPromptCalled === true);
+  const androidInstall = await androidPage.evaluate(() => ({
+    hiddenAfterAccept: document.querySelector('#pwaInstallButton').hidden,
+    dialog: Boolean(document.querySelector('#pwaInstallGuide')),
+    docWidth: document.documentElement.scrollWidth,
+    viewportWidth: document.documentElement.clientWidth
+  }));
+  if (!androidInstall.hiddenAfterAccept || androidInstall.dialog) failures.push('Android install button did not use the native install prompt');
+  if (androidInstall.docWidth > androidInstall.viewportWidth + 4) failures.push('Android install button causes horizontal overflow');
+  await androidContext.close();
+
+  const iosContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1'
+  });
+  const iosPage = await iosContext.newPage();
+  await iosPage.goto(`${BASE_URL}/`, { waitUntil: 'domcontentloaded' });
+  await iosPage.waitForSelector('#pwaInstallButton', { state: 'attached' });
+  const hiddenBehindGate = await iosPage.locator('#pwaInstallButton').evaluate(button => getComputedStyle(button).visibility === 'hidden');
+  if (!hiddenBehindGate) failures.push('iOS install button is visible over the 18+ gate');
+  await iosPage.locator('#ageAccept').click();
+  await iosPage.waitForFunction(() => !document.body.classList.contains('app-preparing'), { timeout: 20000 });
+  await iosPage.waitForSelector('#pwaInstallButton:not([hidden])');
+  await iosPage.locator('#pwaInstallButton').click();
+  await iosPage.waitForSelector('#pwaInstallGuide.active');
+  const iosInstall = await iosPage.evaluate(() => {
+    const button = document.querySelector('#pwaInstallButton');
+    const dialog = document.querySelector('.pwa-install-dialog');
+    const rect = dialog.getBoundingClientRect();
+    return {
+      buttonText: button.textContent.trim(),
+      dialogText: dialog.textContent.replace(/\s+/g, ' ').trim(),
+      dialogLeft: Math.round(rect.left),
+      dialogRight: Math.round(rect.right),
+      dialogTop: Math.round(rect.top),
+      dialogBottom: Math.round(rect.bottom),
+      docWidth: document.documentElement.scrollWidth,
+      viewportWidth: document.documentElement.clientWidth,
+      appleCapable: document.querySelector('meta[name="apple-mobile-web-app-capable"]')?.content || '',
+      manifest: document.querySelector('link[rel="manifest"]')?.href || ''
+    };
+  });
+  if (!/Instaleaza aplicatia/i.test(iosInstall.buttonText)) failures.push('iOS install button label is missing');
+  if (!/Safari/i.test(iosInstall.dialogText) || !/ecranul principal/i.test(iosInstall.dialogText)) failures.push('iOS install guide is incomplete');
+  if (iosInstall.dialogLeft < -4 || iosInstall.dialogRight > 394 || iosInstall.dialogTop < -4 || iosInstall.dialogBottom > 848) failures.push('iOS install guide is clipped');
+  if (iosInstall.docWidth > iosInstall.viewportWidth + 4) failures.push('iOS install guide causes horizontal overflow');
+  if (iosInstall.appleCapable !== 'yes' || !/site\.webmanifest/.test(iosInstall.manifest)) failures.push('iOS PWA metadata is incomplete');
+  await iosPage.screenshot({ path: path.join(OUTPUT, 'iphone-install-guide.png'), fullPage: true });
+  await iosPage.close();
+  const iosEnglishPage = await iosContext.newPage();
+  await enter(iosEnglishPage, '/en/');
+  await iosEnglishPage.waitForSelector('#pwaInstallButton:not([hidden])');
+  await iosEnglishPage.locator('#pwaInstallButton').click();
+  await iosEnglishPage.waitForSelector('#pwaInstallGuide.active');
+  const iosEnglishInstall = await iosEnglishPage.evaluate(() => ({
+    buttonText: document.querySelector('#pwaInstallButton').textContent.trim(),
+    dialogText: document.querySelector('.pwa-install-dialog').textContent.replace(/\s+/g, ' ').trim(),
+    manifest: document.querySelector('link[rel="manifest"]')?.href || '',
+    appTitle: document.querySelector('meta[name="apple-mobile-web-app-title"]')?.content || ''
+  }));
+  if (!/Install app/i.test(iosEnglishInstall.buttonText) || !/Install on iPhone or iPad/i.test(iosEnglishInstall.dialogText) || !/Add to Home Screen/i.test(iosEnglishInstall.dialogText)) failures.push('English iOS install flow is incomplete');
+  if (!/site-en\.webmanifest/.test(iosEnglishInstall.manifest) || iosEnglishInstall.appTitle !== 'MTL RTA Guide') failures.push('English installed app metadata is incorrect');
+  await iosContext.close();
+
+  const standaloneContext = await browser.newContext({
+    viewport: { width: 390, height: 844 },
+    isMobile: true,
+    hasTouch: true,
+    userAgent: 'Mozilla/5.0 (iPhone; CPU iPhone OS 18_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Mobile/15E148 Safari/604.1'
+  });
+  await standaloneContext.addInitScript(() => Object.defineProperty(navigator, 'standalone', { configurable: true, value: true }));
+  const standalonePage = await standaloneContext.newPage();
+  await enter(standalonePage, '/');
+  const standaloneHidden = await standalonePage.locator('#pwaInstallButton').evaluate(button => button.hidden);
+  if (!standaloneHidden) failures.push('Install button remains visible inside the installed app');
+  await standaloneContext.close();
+
   const pwaContext = await browser.newContext({ viewport: { width: 390, height: 844 }, serviceWorkers: 'allow' });
   const pwaPage = await pwaContext.newPage();
   await enter(pwaPage, '/');
@@ -302,7 +413,7 @@ async function enter(page, route) {
     console.error(failures.map(item => `- ${item}`).join('\n'));
     process.exit(1);
   }
-  console.log('Responsive, accessibility, EN and PWA checks passed.');
+  console.log('Responsive, accessibility, EN, install flow and PWA checks passed.');
 })().catch(error => {
   console.error(error);
   process.exit(1);
