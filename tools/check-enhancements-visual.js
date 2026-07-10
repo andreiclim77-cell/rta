@@ -71,6 +71,15 @@ async function enter(page, route) {
       const navButtons = [...document.querySelectorAll('.navlinks .navbtn')];
       const navTops = navButtons.map(button => button.getBoundingClientRect().top);
       const topSpread = navTops.length ? Math.max(...navTops) - Math.min(...navTops) : 0;
+      const guideGrid = document.querySelector('.guide-hub-grid');
+      const supplierRail = document.querySelector('.supplier-showcase .supplier-rail');
+      const supplierHeights = [...document.querySelectorAll('.supplier-showcase .supplier-card')].map(card => Math.round(card.getBoundingClientRect().height));
+      const promptRect = document.querySelector('.mystic-orbit-prompt')?.getBoundingClientRect();
+      const eRect = document.querySelector('.mystic-orbit-e')?.getBoundingClientRect();
+      const heroTitle = document.querySelector('.shop-hero h1');
+      const heroRange = document.createRange();
+      if (heroTitle) heroRange.selectNodeContents(heroTitle);
+      const heroTitleLines = heroTitle ? new Set([...heroRange.getClientRects()].map(rect => Math.round(rect.top))).size : 0;
       return {
         docWidth: document.documentElement.scrollWidth,
         viewportWidth: document.documentElement.clientWidth,
@@ -82,6 +91,11 @@ async function enter(page, route) {
         navTopSpread: Math.round(topSpread * 10) / 10,
         navScrollWidth: nav?.scrollWidth || 0,
         navClientWidth: nav?.clientWidth || 0,
+        guideColumns: guideGrid ? getComputedStyle(guideGrid).gridTemplateColumns.split(' ').filter(Boolean).length : 0,
+        supplierScrollable: Boolean(supplierRail && supplierRail.scrollWidth > supplierRail.clientWidth + 4),
+        supplierHeightSpread: supplierHeights.length ? Math.max(...supplierHeights) - Math.min(...supplierHeights) : 0,
+        mysticGap: promptRect && eRect ? Math.round(eRect.left - promptRect.right) : 0,
+        heroTitleLines,
         duplicateIds: Array.from(new Set(duplicateIds)),
         emptyActions,
         missingAlt: [...document.images].filter(image => !image.hasAttribute('alt') || !image.alt.trim()).length
@@ -96,6 +110,11 @@ async function enter(page, route) {
     if (home.emptyActions.length) failures.push(`${viewport.name}: unnamed actions ${home.emptyActions.join(' | ')}`);
     if (home.missingAlt) failures.push(`${viewport.name}: ${home.missingAlt} images have no alt text`);
     if (viewport.width >= 1200 && (home.navRows !== 1 || home.navScrollWidth > home.navClientWidth + 4)) failures.push(`${viewport.name}: desktop navigation does not fit on one row`);
+    if (viewport.width >= 1200 && home.guideColumns !== 3) failures.push(`${viewport.name}: useful guides are not balanced in three columns`);
+    if (viewport.width >= 1200 && home.heroTitleLines !== 1) failures.push(`${viewport.name}: Home title wraps on desktop`);
+    if (home.supplierHeightSpread > 2) failures.push(`${viewport.name}: supplier cards do not have a stable height`);
+    if (viewport.width <= 640 && !home.supplierScrollable) failures.push(`${viewport.name}: supplier showcase does not expose horizontal exploration`);
+    if (home.mysticGap < 6) failures.push(`${viewport.name}: celestial E overlaps its label`);
 
     if (viewport.name === 'phone-390' || viewport.name === 'desktop-1366') {
       await page.screenshot({ path: path.join(OUTPUT, `${viewport.name}-home.png`), fullPage: true });

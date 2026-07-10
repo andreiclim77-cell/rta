@@ -164,3 +164,150 @@
   .compare-actions .btn{width:100%}
   .compare-cell{grid-template-columns:minmax(94px,36%) minmax(0,1fr);font-size:13px}
 }
+
+/* Final cozy luxury polish: restrained color, depth and rhythm. */
+:root{
+  --ui-canvas:#eef2f1;
+  --ui-canvas-warm:#faf8f4;
+  --ui-surface:#fffefa;
+  --ui-surface-soft:#f7f4ee;
+  --ui-graphite:#0d1110;
+  --ui-petrol:#0a2a31;
+  --ui-orange:#ff7a1a;
+  --ui-cyan:#37bfe8;
+  --ui-green:#55d17a;
+  --ui-gold:#d7ad58;
+  --ui-border:rgba(42,39,35,.14);
+  --ui-ease:cubic-bezier(.2,.74,.24,1);
+  --ui-shadow-control:0 2px 0 rgba(0,0,0,.27),0 10px 22px rgba(18,24,22,.15),0 1px 0 rgba(255,255,255,.50) inset;
+  --ui-shadow-card:0 2px 0 rgba(21,25,23,.055),0 15px 34px rgba(28,38,34,.09),0 1px 0 rgba(255,255,255,.96) inset;
+  --ui-shadow-overlay:0 4px 0 rgba(0,0,0,.13),0 30px 68px rgba(14,22,20,.24),0 1px 0 rgba(255,255,255,.14) inset;
+}
+
+html{background:var(--ui-canvas)}
+body{
+  color:#1b1e1d;
+  background:linear-gradient(180deg,#edf2f0 0,#faf8f4 320px,#f6f8f7 760px,#fff 100%);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+main.wrap{background:transparent}
+h1,h2,h3{text-wrap:balance}
+p,li{text-wrap:pretty}
+.shop-hero h1{font-size:46px;text-wrap:wrap}
+
+header{box-shadow:0 3px 0 rgba(0,0,0,.16),0 18px 42px rgba(12,18,16,.25)}
+.section{animation-timing-function:var(--ui-ease)}
+.panel-title{margin-bottom:16px}
+.panel-title h2,.journey-head h2,.supplier-head h2,.guide-hub-head h2{line-height:1.12;font-weight:850}
+#home .shop-main>.journey-hub,#home .shop-main>.shop-metrics,#home .shop-main>.supplier-showcase,#home .shop-main>.guide-hub{margin-top:18px}
+#home>.workflow{margin:28px 0 26px}
+
+.card,.consumable-zone,.diagnostic-panel,.setup-verdict,.detail-panel{border-color:var(--ui-border)}
+.card,.consumable-zone,.diagnostic-panel,.setup-verdict{box-shadow:var(--ui-shadow-card)}
+.detail-panel,.search-panel{box-shadow:var(--ui-shadow-overlay)}
+.btn,.navbtn,.mini-link,.problem-btn,.rolebtn,.tag-choice,.category-link{box-shadow:var(--ui-shadow-control)}
+.shop-hero,.journey-hub,.supplier-showcase,.guide-hub,.compare-hero,.guide-page-hero,.page-premium-hero{
+  box-shadow:var(--ui-shadow-overlay);
+}
+
+#home .shop-metrics .metric,#home>.workflow .step,#home .trust-card{
+  border-color:rgba(48,45,40,.13);
+  background:linear-gradient(145deg,#fffefa 0,#fff 54%,#f7faf9 100%);
+  box-shadow:var(--ui-shadow-card);
+}
+#home>.workflow .step{padding:17px}
+.category-panel{border-color:rgba(48,45,40,.15);box-shadow:0 2px 0 rgba(0,0,0,.05),0 18px 38px rgba(28,38,34,.10)}
+.category-link{background:linear-gradient(180deg,#fff,#fdfdfc)}
+.category-link:hover{background:#fff6ed;color:#b94c00}
+.notice{padding:13px 15px;line-height:1.55;border-radius:0 7px 7px 0}
+
+.journey-hub,.supplier-showcase,.guide-hub{
+  border-color:rgba(255,255,255,.16);
+  background:linear-gradient(135deg,var(--ui-graphite) 0,#1b1510 52%,var(--ui-petrol) 100%);
+}
+.journey-card,.guide-link{
+  transition:transform .20s var(--ui-ease),border-color .20s var(--ui-ease),box-shadow .20s var(--ui-ease),filter .20s var(--ui-ease);
+}
+.guide-link{min-height:96px}
+
+.supplier-showcase .supplier-rail{scroll-padding-inline:2px 38px;padding-right:38px}
+.supplier-showcase .supplier-card{
+  flex-basis:220px;
+  height:104px;
+  min-height:104px;
+  padding:12px;
+  background:#0d1110;
+  transition:transform .20s var(--ui-ease),border-color .20s var(--ui-ease),box-shadow .20s var(--ui-ease),filter .20s var(--ui-ease);
+}
+.supplier-showcase .supplier-card:before{
+  background-size:112px 112px,cover,cover;
+  background-position:right 0 center,center,center;
+  filter:saturate(.96) contrast(1.02);
+  opacity:.94;
+}
+.supplier-showcase .supplier-card:after{
+  background:linear-gradient(90deg,rgba(7,9,8,.96) 0%,rgba(7,9,8,.82) 46%,rgba(7,9,8,.18) 76%,rgba(7,9,8,.34) 100%),linear-gradient(180deg,rgba(255,255,255,.09),transparent 48%);
+}
+.supplier-showcase .supplier-copy{max-width:144px}
+.supplier-showcase .supplier-copy b,.supplier-showcase .supplier-copy small{
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.supplier-showcase .supplier-copy b{-webkit-line-clamp:2}
+.supplier-showcase .supplier-copy small{-webkit-line-clamp:2}
+
+.navlinks{scroll-snap-type:x proximity;scroll-padding-inline:10px}
+.navbtn{scroll-snap-align:start}
+.btn,.navbtn,.mini-link,.problem-btn,.rolebtn,.tag-choice,.category-link,.card,.consumable-zone,.detail-block{
+  transition-timing-function:var(--ui-ease);
+  transition-duration:.20s;
+}
+
+@media(min-width:901px){
+  .guide-hub-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .guide-link{min-height:100px;padding:14px}
+  .guide-link b{font-size:16px}
+  .guide-link span{max-width:34ch}
+}
+
+@media(hover:hover) and (pointer:fine){
+  .card:hover,.consumable-zone:hover,.detail-block:hover{transform:translateY(-1px);box-shadow:0 3px 0 rgba(21,25,23,.06),0 20px 42px rgba(28,38,34,.12),0 1px 0 rgba(255,255,255,.97) inset}
+  .supplier-showcase .supplier-card:hover,.journey-card:hover,.guide-link:hover{transform:translateY(-2px);filter:brightness(1.035)}
+  .category-link:hover{transform:translateX(2px)}
+}
+
+@media(max-width:900px){
+  .shop-hero h1{font-size:42px}
+  .nav{position:relative}
+  .nav:after{
+    content:"";
+    position:absolute;
+    z-index:4;
+    right:0;
+    bottom:0;
+    width:24px;
+    height:35px;
+    background:linear-gradient(90deg,transparent,rgba(5,5,5,.96));
+    pointer-events:none;
+  }
+  .navlinks{padding-right:40px!important}
+}
+
+@media(max-width:640px){
+  body{background:linear-gradient(180deg,#eef2f1 0,#faf8f4 250px,#fff 720px)}
+  main.wrap{background:transparent}
+  #home>.workflow{margin:20px 0}
+  .panel-title{margin-bottom:12px}
+  .supplier-showcase .supplier-rail{padding-right:34px}
+  .shop-hero h1{font-size:27px}
+  .supplier-showcase .supplier-card{flex-basis:160px;height:90px;min-height:90px;padding:9px}
+  .supplier-showcase .supplier-card:before{background-size:88px 88px}
+  .supplier-showcase .supplier-copy{max-width:100px}
+  .supplier-showcase .supplier-copy b{font-size:12px}
+  .supplier-showcase .supplier-copy small{font-size:10px}
+  .guide-link{min-height:88px}
+}
+
+@media(max-width:340px){.shop-hero h1{font-size:23px}}

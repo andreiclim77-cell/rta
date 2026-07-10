@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ghid-rta-static-v2';
+const CACHE_VERSION = 'ghid-rta-static-v3';
 const OFFLINE_URL = '/offline.html';
 const SAFE_PAGES = [
   OFFLINE_URL,
