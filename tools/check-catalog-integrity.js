@@ -10,6 +10,11 @@ const {
   slugify,
   sourceUrl
 } = require('./catalog-data');
+const {
+  hasSweetTobaccoProfile,
+  hasTobaccoProfile,
+  inferTag
+} = require('./sync-smokee-liquids');
 
 const ROOT = path.resolve(__dirname, '..');
 const catalog = loadCatalog(ROOT);
@@ -33,8 +38,18 @@ function validProductUrl(value) {
 
 check(catalog.atomizers.length >= 80, `catalog too small: ${catalog.atomizers.length} atomizers`);
 check(catalog.profiles.length >= 170, `profile taxonomy too small: ${catalog.profiles.length}`);
-check(listCount(catalog.liquids) >= 200, `liquid catalog too small: ${listCount(catalog.liquids)}`);
+check(listCount(catalog.liquids) >= 350, `liquid catalog too small: ${listCount(catalog.liquids)}`);
 check(listCount(catalog.consumables) >= 50, `consumables catalog too small: ${listCount(catalog.consumables)}`);
+
+const sweetTobaccoLiquids = allItems(catalog.liquids).filter(({ item }) => /\bdulce\b/i.test(String(item && item.tag || '')));
+check((catalog.liquids.tutun || []).length >= 250, `TUTUN catalog is incomplete: ${(catalog.liquids.tutun || []).length}`);
+check(sweetTobaccoLiquids.length >= 100, `sweet tobacco classification is incomplete: ${sweetTobaccoLiquids.length}`);
+check(hasTobaccoProfile('Tutun Virginia cu caramel si vanilie'), 'tobacco profile fixture was rejected');
+check(hasTobaccoProfile('Ripe Vapes VCT Sweet Almond'), 'VCT tobacco profile fixture was rejected');
+check(!hasTobaccoProfile('Vanilla custard cu bourbon Kentucky'), 'dessert-only fixture was accepted as tobacco');
+check(hasSweetTobaccoProfile('Tutun Burley cu miere si crema'), 'sweet tobacco fixture was rejected');
+check(!hasSweetTobaccoProfile('Tutun Burley sec si lemnos'), 'dry tobacco fixture was classified as sweet');
+check(/^TUTUN dulce\b/.test(inferTag('Tutun Virginia cu mar si caramel', 'tutun')), 'sweet tobacco tag fixture is incorrect');
 
 const atomSlugs = new Map();
 catalog.atomizers.forEach(atom => {
@@ -70,8 +85,10 @@ allItems(catalog.liquids).concat(allItems(catalog.consumables)).forEach(({ group
 
 const source = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const workflow = fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'smokee-rta-sync.yml'), 'utf8');
+const liquidSync = fs.readFileSync(path.join(ROOT, 'tools', 'sync-smokee-liquids.js'), 'utf8');
 check(/var NEWS_WINDOW_DAYS=7;/.test(source), 'Noutati rolling window is no longer seven days');
 check(/var SMOKEE_BROWSER_LIVE_SYNC=false;/.test(source), 'browser-side Smokee polling must stay disabled');
+check(/var LIQUID_CATALOG_CACHE_KEY='smokeeLiquidsDailyV3';/.test(source), 'liquid cache version was not refreshed');
 check(/Math\.round\(Math\.max\(0,fit\)\*0\.30\*weight\)/.test(source), '30% public-practice recommendation weighting changed');
 check(/\.sort\(compareRecommendation\)\.slice\(0,5\)/.test(source), 'recommendation engine no longer returns five ranked matches');
 check(/var wires=wireChoices\(prof,selectedProblem,a\)/.test(source), 'three-wire recommendation path is missing');
@@ -80,6 +97,9 @@ check(/cron: ['"]0,20 3 \* \* \*['"]/.test(workflow), 'EEST 06:00/06:20 schedule
 check(/cron: ['"]0,20 4 \* \* \*['"]/.test(workflow), 'EET 06:00/06:20 schedule is missing');
 check(/Europe\/Bucharest/.test(workflow), 'Bucharest timezone gate is missing');
 check(!/https:\/\/(?:www\.)?smokee\.ro\/wp-content\/uploads\//i.test(source), 'direct Smokee image URLs bypass the Cloudflare cache');
+check(/const products = await fetchAllCategoryProducts\(\);/.test(liquidSync), 'liquid category is no longer fetched in one shared pass');
+check(/sourceComplete \? dated : mergeWithExisting\(dated, existing\.items\)/.test(liquidSync), 'partial liquid sync no longer preserves the last-known-good catalog');
+check(!/slice\(0,\s*140\)/.test(liquidSync), 'legacy 140-liquid cap returned');
 
 const validationPath = path.join(ROOT, 'data', 'atomizer-validation.json');
 check(fs.existsSync(validationPath), 'atomizer validation registry is missing');

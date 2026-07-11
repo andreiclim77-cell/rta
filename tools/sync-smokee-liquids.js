@@ -10,6 +10,7 @@ const END_MARKER = '/* AUTO-SMOKEE-LIQUIDS-END */';
 const TOBACCO_CATEGORY_ID = 270;
 const CATEGORY_PAGE_LIMIT = 20;
 const CATEGORY_PER_PAGE = 100;
+const MIN_COMPLETE_CATEGORY_PRODUCTS = 300;
 const FETCH_TIMEOUT_MS = 9000;
 const NEWS_START_DATE = '2026-07-06';
 
@@ -19,28 +20,10 @@ const write = args.includes('--write') || (!dryRun && !args.includes('--check'))
 
 const GROUPS = [
   {
-    id: 'net',
-    terms: [
-      'NET', 'La Tabaccheria', 'Holy Vape Tobacco', 'Montreal Original', 'Centenary Mods',
-      'Organic 4Pod', 'Extra Dry', 'Azhad', 'Vapor Cave', 'Angolo della Guancia',
-      'Distillati', 'estratto', 'organic tobacco', 'Virginia', 'Kentucky', 'Latakia',
-      'Burley', 'Perique'
-    ]
+    id: 'net'
   },
   {
-    id: 'tutun',
-    terms: [
-      'tobacco', 'tabac', 'tutun', 'RY4', 'sweet tobacco', 'vanilla tobacco',
-      'caramel tobacco', 'honey tobacco', 'coffee tobacco', 'cacao tobacco',
-      'chocolate tobacco', 'cream tobacco', 'dessert tobacco', 'pipe tobacco',
-      'tabaco', 'tabaco dulce', 'tutun vanilie', 'tutun caramel', 'tutun miere',
-      'tutun cafea', 'tutun cacao', 'tutun crema', 'tobacco custard',
-      'toffee tobacco', 'butterscotch tobacco', 'aromatizat tutun',
-      'Virginia', 'Burley', 'Kentucky', 'Latakia',
-      'Cigar', 'Cubano', 'Cavendish', 'Oriental', 'Classic Tobacco', 'Pipe tobacco',
-      'Manabush', 'TNT Vape', 'Scandal Flavors', 'VnV Liquids', 'Ripe Vapes Tobacco',
-      'Bombo Tobacco', 'Vampire Vape Tobacco'
-    ]
+    id: 'tutun'
   }
 ];
 
@@ -161,11 +144,23 @@ function metaText(product) {
 }
 
 function isNetText(text) {
-  return /\b(net|organic|organico|organice|estratto|estratti|extract|extracts|microfiltrat|microfiltrati|distillati|distillato|tabaccheria|azhad|vapor cave|angolo della guancia|black note)\b/.test(text);
+  const value = norm(text);
+  return /\b(net|naturally extracted|organic|organico|organice|estratto|estratti|extract|extracts|microfiltrat|microfiltrati|distillati|distillato|tabaccheria|azhad|vapor cave|angolo della guancia|black note|holy vape tobacco)\b/.test(value);
 }
 
 function hasTobaccoProfile(text) {
-  return /\b(tutun|tutunuri|tobacco|tabac|tabaco|tabaccoso|ry4|virginia|brightleaf|burley|kentucky|latakia|cigar|trabuc|cubano|havana|san andres|cavendish|oriental|turkish|izmir|basma|samsun|dokha|perique|pipe|american blend|english blend|english night|balkan|mixture|fire cured|fire-cured|dark fired|dark-fired|dry leaf|smooth tobacco|strong tobacco|sweet tobacco|vanilla tobacco|caramel tobacco|honey tobacco|coffee tobacco|cacao tobacco|chocolate tobacco|cream tobacco|dessert tobacco|brown classic|classic usa|classic ry4|classic kml|classic mlb|westblend|eastblend|mlb classic|kml)\b/.test(text);
+  const value = norm(text);
+  const direct = /\b(tutun(?:uri|os|oase)?|tobacco|tabac|tabaco|tabaccoso|ry4|vct|cigar(?:illo)?|trabuc|cubano|havana|san andres|cavendish|pipe tobacco|tutun de pipa|american blend|english blend|english night|balkan|mixture|fire cured|fire-cured|dark fired|dark-fired|dry leaf|smooth tobacco|strong tobacco|sweet tobacco|vanilla tobacco|caramel tobacco|honey tobacco|coffee tobacco|cacao tobacco|chocolate tobacco|cream tobacco|dessert tobacco|brown classic|classic usa|classic ry4|classic kml|classic mlb|westblend|eastblend|mlb classic|kml|brightleaf)\b/.test(value);
+  if (direct) return true;
+  const varieties = /\b(virginia|burley|kentucky|latakia|oriental|turkish|izmir|basma|samsun|dokha|perique)\b/;
+  if (!varieties.test(value)) return false;
+  const withoutBourbonOrigin = value.replace(/\b(?:bourbon kentucky|kentucky bourbon)\b/g, ' ');
+  return varieties.test(withoutBourbonOrigin);
+}
+
+function hasSweetTobaccoProfile(text) {
+  const value = norm(text);
+  return /\b(ry4|vct|dulce|dulci|dulceag|sweet|vanilla|vanilie|caramel|caramelo|toffee|butterscotch|honey|miere|cappuccino|coffee|cafea|latte|cream|crema|cremos|cremoso|cacao|chocolate|ciocolata|custard|dessert|desert|patiserie|pastry|biscuit|biscuiti|cookie|cookies|maple|artar|marshmallow|praline|nugat|nougat|almond|migdale|hazelnut|alune|peanut|arahide|nuts|nuci|coconut|cocos|banana|banane|apple|mar|pear|para|fig|smochine|date|curmale|raisin|stafide|plum|prune|apricot|caise|cherry|cirese|orange|portocala|molasses|melasa|brown sugar|zahar brun|jam|marmelada)\b/.test(value);
 }
 
 function isComplexTobacco(text) {
@@ -175,14 +170,14 @@ function isComplexTobacco(text) {
 function inferTag(text, group) {
   const t = norm(text);
   const prefix = group === 'net' ? 'NET' : 'TUTUN';
-  const sweet = /\b(ry4|dulce|sweet|vanilla|vanilie|caramel|toffee|butterscotch|honey|miere|cappuccino|coffee|cafea|latte|cream|crema|cremos|cremoso|cacao|chocolate|ciocolata|custard|dessert|vct)\b/.test(t);
+  const sweet = hasSweetTobaccoProfile(t);
   const subtype = sweet ? 'dulce' : (isComplexTobacco(t) ? 'complex' : 'simplu');
   if (/latakia/.test(t)) return `${prefix} ${subtype} Latakia`;
   if (/kentucky|dark[-\s]?fired|fire cured|fire-cured/.test(t)) return `${prefix} ${subtype} Kentucky`;
   if (/virginia|bright|flue/.test(t)) return `${prefix} ${subtype} Virginia`;
   if (/burley|white burley/.test(t)) return `${prefix} ${subtype} Burley`;
   if (/oriental|turkish|izmir|basma|samsun/.test(t)) return `${prefix} ${subtype} Oriental`;
-  if (/perique|vaper/.test(t)) return `${prefix} ${subtype} Perique`;
+  if (/perique/.test(t)) return `${prefix} ${subtype} Perique`;
   if (/cigar|trabuc|cubano|maduro|havana/.test(t)) return `${prefix} ${subtype} Cigar`;
   if (/cavendish|pipe/.test(t)) return `${prefix} ${subtype} Pipe`;
   if (/ry4/.test(t)) return `${prefix} ${subtype} RY4`;
@@ -193,7 +188,8 @@ function inferTag(text, group) {
 function normalizeProduct(product, group) {
   const title = decodeEntities(product.name || product.title || '');
   const text = sourceText(product);
-  const tagText = `${title} ${product.permalink || product.url || ''}`;
+  const metadata = metaText(product);
+  const tagText = `${title} ${product.permalink || product.url || ''} ${metadata} ${text}`;
   const image = storeProductImage(product);
   return {
     productId: product.id || null,
@@ -205,21 +201,21 @@ function normalizeProduct(product, group) {
     newOnSmokee: isSmokeeNewProduct(product),
     productDate: dateKey(product.date || product.date_created || product.date_gmt),
     sourceText: text,
-    metaText: metaText(product)
+    metaText: metadata
   };
 }
 
 function isLiquid(item, group) {
   const text = norm([item.title, item.url, item.sourceText].join(' '));
   const visible = norm([item.title, item.url, item.tag].join(' '));
-  const classification = norm([item.title, item.url, item.metaText].join(' '));
   if (!/smokee\.ro\/product\//.test(item.url)) return false;
   if (/\b(atomizor|rta|kit|cartus|cartridge|clearomizor|bumbac|cotton|coil|coils|rezistent|rezistenta|wire|sarma|unelte|tool|baterie|acumulator|drip tip|sticla gradata|flacon gol|box mod|mod full kit|tigara electronica|dispozitiv)\b/.test(visible)) return false;
   if (/\b(nic shot|nic-shot|nicotina|nicotine shot|baza|base|vg simplu|pg simplu|glicerina|propylene glycol|vegetable glycerin)\b/.test(visible)) return false;
   const hasLiquidSignal = /\b(lichid|liquid|e[-\s]?liquid|eliquid|longfill|shortfill|aroma|arome|concentrat|flavour|flavor|tobacco|tutun|tabac|tabaco|net|tabaccheria|azhad|vapor cave|distillati|estratto|organic)\b/.test(text);
   if (!hasLiquidSignal) return false;
-  if (group === 'net') return isNetText(classification) && hasTobaccoProfile(text);
-  return !isNetText(classification) && hasTobaccoProfile(text);
+  if (!hasTobaccoProfile(text)) return false;
+  if (group === 'net') return isNetText(text);
+  return !isNetText(text);
 }
 
 function uniqueItems(items, group) {
@@ -271,21 +267,6 @@ async function enrichPublishedDates(items) {
   return items;
 }
 
-async function fetchStoreProducts(term) {
-  const url = `https://smokee.ro/wp-json/wc/store/v1/products?search=${encodeURIComponent(term)}&per_page=25`;
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-  const response = await fetch(url, {
-    signal: controller.signal,
-    headers: {
-      'user-agent': 'Mozilla/5.0 (compatible; RTA-MTL-Smokee-Liquids-Sync/1.0)',
-      'accept': 'application/json'
-    }
-  }).finally(() => clearTimeout(timer));
-  if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
-  return response.json();
-}
-
 async function fetchCategoryProducts(page) {
   const url = `https://smokee.ro/wp-json/wc/store/v1/products?category=${TOBACCO_CATEGORY_ID}&page=${page}&per_page=${CATEGORY_PER_PAGE}`;
   const controller = new AbortController();
@@ -310,12 +291,6 @@ async function fetchAllCategoryProducts() {
     if (products.length < CATEGORY_PER_PAGE) break;
   }
   return pages.flat();
-}
-
-async function fetchGroup(group) {
-  const searchCalls = group.terms.map(term => fetchStoreProducts(term).catch(() => []));
-  const chunks = await Promise.all([fetchAllCategoryProducts()].concat(searchCalls));
-  return enrichPublishedDates(uniqueItems(chunks.flat().map(product => normalizeProduct(product, group.id)), group.id));
 }
 
 function itemBlock(item) {
@@ -412,15 +387,23 @@ async function main() {
   const html = fs.readFileSync(INDEX_PATH, 'utf8');
   const today = todayInRomania();
   const data = {};
+  const products = await fetchAllCategoryProducts();
+  const sourceComplete = products.length >= MIN_COMPLETE_CATEGORY_PRODUCTS;
+  const fetchedByGroup = {};
+  for (const group of GROUPS) {
+    fetchedByGroup[group.id] = uniqueItems(products.map(product => normalizeProduct(product, group.id)), group.id);
+  }
+  await enrichPublishedDates(GROUPS.flatMap(group => fetchedByGroup[group.id]));
+
   for (const group of GROUPS) {
     const existing = existingLiquidInfo(html, group.id);
-    const fetched = await fetchGroup(group);
+    const fetched = fetchedByGroup[group.id];
     if (!fetched.length && existing.items.length) {
       console.log(`Smokee liquids sync: kept ${existing.items.length} existing ${group.id} products because live fetch returned no usable items.`);
       data[group.id] = existing.items;
     } else {
       const dated = stampAddedDates(fetched, existing, today);
-      data[group.id] = mergeWithExisting(dated, existing.items).slice(0, 140);
+      data[group.id] = sourceComplete ? dated : mergeWithExisting(dated, existing.items);
     }
   }
   const total = GROUPS.reduce((sum, group) => sum + data[group.id].length, 0);
@@ -431,6 +414,7 @@ async function main() {
 
   const updated = replaceBlock(html, dataBlock(data));
   console.log(`Smokee liquids sync: ${total} products prepared.`);
+  console.log(`- source category: ${products.length} products (${sourceComplete ? 'complete' : 'partial; merged with last-known-good'})`);
   for (const group of GROUPS) {
     console.log(`- ${group.id}: ${data[group.id].length}`);
   }
@@ -439,7 +423,17 @@ async function main() {
   fs.writeFileSync(INDEX_PATH, updated, 'utf8');
 }
 
-main().catch(error => {
-  console.error(error);
-  process.exit(1);
-});
+if (require.main === module) {
+  main().catch(error => {
+    console.error(error);
+    process.exit(1);
+  });
+}
+
+module.exports = {
+  hasSweetTobaccoProfile,
+  hasTobaccoProfile,
+  inferTag,
+  isNetText,
+  norm
+};

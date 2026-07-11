@@ -128,6 +128,13 @@ async function checkOverflow(page) {
     await page.waitForSelector("#liquidCatalogGrid", { timeout: 5000 });
     await page.locator('[data-liquid-group="tutun"][data-liquid-sub="dulci"]').first().click();
     await page.waitForTimeout(250);
+    const sweetExpected = Number(await page.locator('[data-liquid-group="tutun"][data-liquid-sub="dulci"] span').first().textContent());
+    const expandSweet = page.locator('[data-liquid-expand="tutun"]').first();
+    const expandVisible = await expandSweet.isVisible().catch(() => false);
+    if (expandVisible) {
+      await expandSweet.click();
+      await page.waitForTimeout(250);
+    }
 
     const result = await page.evaluate(() => {
       const hasMusicMount = Boolean(document.querySelector("#musicMount"));
@@ -162,13 +169,15 @@ async function checkOverflow(page) {
       const chamberOk = chamberTargets.every((item) => item.ok);
       return { hasMusicMount, hasMusicFrame, sweetVisible, sweetProducts, airflowTargets, airflowOk, chamberTargets, chamberOk };
     });
+    result.sweetExpected = sweetExpected;
+    result.expandVisible = expandVisible;
     const overflow = await checkOverflow(page);
 
     console.log(
-      `${viewport.name}: scroll ${overflow.scrollWidth}/${overflow.clientWidth}, sweet ${result.sweetProducts}, airflow ${result.airflowOk}, chamber ${result.chamberOk}, music ${result.hasMusicMount || result.hasMusicFrame}`
+      `${viewport.name}: scroll ${overflow.scrollWidth}/${overflow.clientWidth}, sweet ${result.sweetProducts}/${result.sweetExpected}, airflow ${result.airflowOk}, chamber ${result.chamberOk}, music ${result.hasMusicMount || result.hasMusicFrame}`
     );
 
-    if (result.hasMusicMount || result.hasMusicFrame || !result.sweetVisible || result.sweetProducts < 1 || !result.airflowOk || !result.chamberOk) {
+    if (result.hasMusicMount || result.hasMusicFrame || !result.sweetVisible || !result.expandVisible || result.sweetExpected < 100 || result.sweetProducts !== result.sweetExpected || !result.airflowOk || !result.chamberOk) {
       failures.push({ viewport: viewport.name, result });
     }
     if (overflow.scrollWidth > overflow.clientWidth + 4 || overflow.offenders.length) {
