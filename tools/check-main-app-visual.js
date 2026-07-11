@@ -16,6 +16,7 @@ const { chromium } = require("playwright");
 const chromePath = "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe";
 
 const viewports = [
+  { name: "mobile-320", width: 320, height: 740 },
   { name: "mobile", width: 390, height: 844 },
   { name: "desktop", width: 1366, height: 768 },
 ];
@@ -182,6 +183,75 @@ async function checkOverflow(page) {
     }
     if (overflow.scrollWidth > overflow.clientWidth + 4 || overflow.offenders.length) {
       failures.push({ viewport: viewport.name, overflow });
+    }
+
+    await page.goto("http://127.0.0.1:8794/#setupList", { waitUntil: "domcontentloaded" });
+    const wizardAccept = page.locator("#ageAccept");
+    if (await wizardAccept.isVisible().catch(() => false)) {
+      await wizardAccept.click();
+      await page.waitForFunction(() => !document.body.classList.contains("app-preparing"), { timeout: 45000 });
+    }
+    await page.locator('[data-setup-group="liquid"] [data-value="tutun-dulce"]').click();
+    await page.waitForTimeout(250);
+    const wizardResult = await page.evaluate(() => {
+      const liquids = document.querySelector('[data-setup-picker="liquids"]');
+      const search = document.querySelector('[data-setup-picker-search="liquids"]');
+      const liquidGroup = [...document.querySelectorAll('#setupSuggestedProducts .setup-suggestion-group')]
+        .find(group => /Lichide sugerate/.test(group.textContent || ''));
+      const compatibleChip = [...document.querySelectorAll('#setupVerdict .chip')]
+        .find(chip => /lichide compatibile/.test(chip.textContent || ''));
+      return {
+        options: liquids ? liquids.options.length : 0,
+        search: Boolean(search),
+        suggestedCards: liquidGroup ? liquidGroup.querySelectorAll('.setup-product').length : 0,
+        suggestionCount: liquidGroup?.querySelector('.setup-suggestion-head span')?.textContent || '',
+        compatibleCount: compatibleChip?.textContent || '',
+        pickerLabel: liquids?.closest('.setup-picker')?.querySelector('label')?.textContent || ''
+      };
+    });
+    const wizardOverflow = await checkOverflow(page);
+    console.log(`${viewport.name}: wizard sweet ${wizardResult.suggestedCards}/${wizardResult.options}, search ${wizardResult.search}`);
+    if (
+      wizardResult.options < 100 ||
+      wizardResult.suggestedCards !== 4 ||
+      !wizardResult.search ||
+      !/4 sugestii principale din \d+ compatibile/.test(wizardResult.suggestionCount) ||
+      !new RegExp(`${wizardResult.options}\\s+lichide compatibile`).test(wizardResult.compatibleCount) ||
+      !new RegExp(`${wizardResult.options}\\s+compatibile`).test(wizardResult.pickerLabel)
+    ) {
+      failures.push({ viewport: viewport.name, wizardResult });
+    }
+    if (wizardOverflow.scrollWidth > wizardOverflow.clientWidth + 4 || wizardOverflow.offenders.length) {
+      failures.push({ viewport: viewport.name, wizardOverflow });
+    }
+
+    if (viewport.name === "mobile-320" || viewport.name === "desktop") {
+      await page.goto("http://127.0.0.1:8794/en/#setupList", { waitUntil: "domcontentloaded" });
+      const englishAccept = page.locator("#ageAccept");
+      if (await englishAccept.isVisible().catch(() => false)) {
+        await englishAccept.click();
+        await page.waitForFunction(() => !document.body.classList.contains("app-preparing"), { timeout: 45000 });
+      }
+      await page.locator('[data-setup-group="liquid"] [data-value="tutun-dulce"]').click();
+      await page.waitForTimeout(250);
+      const englishWizard = await page.evaluate(() => {
+        const liquids = document.querySelector('[data-setup-picker="liquids"]');
+        const liquidGroup = [...document.querySelectorAll('#setupSuggestedProducts .setup-suggestion-group')]
+          .find(group => /Suggested liquids/.test(group.textContent || ''));
+        return {
+          options: liquids ? liquids.options.length : 0,
+          heading: liquidGroup?.querySelector('.setup-suggestion-head span')?.textContent || '',
+          placeholder: document.querySelector('[data-setup-picker-search="liquids"]')?.getAttribute('placeholder') || ''
+        };
+      });
+      const englishWizardOverflow = await checkOverflow(page);
+      console.log(`${viewport.name}: EN wizard sweet ${englishWizard.options}, search ${englishWizard.placeholder}`);
+      if (englishWizard.options < 100 || !/4 primary suggestions out of \d+ compatible/.test(englishWizard.heading) || englishWizard.placeholder !== 'Search product') {
+        failures.push({ viewport: viewport.name, englishWizard });
+      }
+      if (englishWizardOverflow.scrollWidth > englishWizardOverflow.clientWidth + 4 || englishWizardOverflow.offenders.length) {
+        failures.push({ viewport: viewport.name, englishWizardOverflow });
+      }
     }
 
     await page.close();

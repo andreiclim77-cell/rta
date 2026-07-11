@@ -76,6 +76,26 @@ async function enterApp(page, route = '/') {
     setupEnsureFallbackState();
     const setupCountsNow = setupCounts();
     const setupItems = setupSuggestedItems();
+    const previousLiquidProfile = setupProfile.liquid;
+    setupProfile.liquid = 'tutun-dulce';
+    setupSelected = {};
+    setupManualItems = [];
+    setupRender();
+    const sweetAvailable = setupAvailableProducts('liquids');
+    const sweetSuggestions = setupSuggestedItems().filter(item => item.kind === 'liquids');
+    const sweetCatalogCount = setupFallbackKind('liquids').filter(item => /^tutun dulce\b/.test(norm(item.tag))).length;
+    const sweetPicker = document.querySelector('[data-setup-picker="liquids"]');
+    const sweetSearch = document.querySelector('[data-setup-picker-search="liquids"]');
+    const sweetSuggestionHeading = [...document.querySelectorAll('#setupSuggestedProducts .setup-suggestion-group')]
+      .find(group => /Lichide sugerate/.test(group.textContent || ''))?.querySelector('.setup-suggestion-head span')?.textContent || '';
+    const sweetPickerLabel = sweetPicker?.closest('.setup-picker')?.querySelector('label')?.textContent || '';
+    const sweetPickerOptionCount = sweetPicker ? sweetPicker.options.length : 0;
+    if (sweetSearch) {
+      sweetSearch.value = 'tribeca';
+      sweetSearch.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    const filteredSweetOptions = [...(sweetPicker?.options || [])].map(option => option.textContent || '');
+    setupProfile.liquid = previousLiquidProfile;
     const search = ['ss', 'ni', 'fe'].map(query => ({
       query,
       wires: searchBuckets(query).wires.map(item => item.title).slice(0, 5),
@@ -104,6 +124,17 @@ async function enterApp(page, route = '/') {
       setupCounts: setupCountsNow,
       setupKinds: Array.from(new Set(setupItems.map(item => item.kind))),
       setupProducts: setupItems.map(item => ({ title: item.title, kind: item.kind, url: item.url })),
+      wizardSweet: {
+        available: sweetAvailable.length,
+        catalog: sweetCatalogCount,
+        suggestions: sweetSuggestions.length,
+        pickerOptions: sweetPickerOptionCount,
+        allCompatible: sweetAvailable.every(item => /^tutun dulce\b/.test(norm(item.tag))),
+        suggestionHeading: sweetSuggestionHeading,
+        pickerLabel: sweetPickerLabel,
+        searchPresent: Boolean(sweetSearch),
+        filteredOptions: filteredSweetOptions
+      },
       externalSmokeeRequests: resources.filter(url => /^https:\/\/(?:www\.)?smokee\.ro\//i.test(url))
     };
   });
@@ -133,6 +164,11 @@ async function enterApp(page, route = '/') {
   check(['rta', 'liquids', 'wires', 'cotton'].every(kind => result.setupKinds.includes(kind)), `Wizard suggestions are missing a product group: ${result.setupKinds.join(', ')}`);
   check(result.setupProducts.every(item => /^https:\/\/(?:www\.)?smokee\.ro\/product\//i.test(item.url)), 'Wizard contains a non-Smokee product URL');
   check(result.setupProducts.filter(item => item.kind === 'rta').every(item => !/\bpod\b|\brda\b|rdta/i.test(item.title)), 'Wizard RTA suggestions include a non-RTA product');
+  check(result.wizardSweet.available === result.wizardSweet.catalog && result.wizardSweet.available >= 100, `Wizard sweet-tobacco catalog is incomplete: ${JSON.stringify(result.wizardSweet)}`);
+  check(result.wizardSweet.suggestions === 4 && result.wizardSweet.allCompatible, `Wizard sweet-tobacco suggestions are incorrect: ${JSON.stringify(result.wizardSweet)}`);
+  check(result.wizardSweet.pickerOptions === result.wizardSweet.available, `Wizard sweet-tobacco picker hides products: ${JSON.stringify(result.wizardSweet)}`);
+  check(result.wizardSweet.searchPresent && result.wizardSweet.filteredOptions.length >= 1 && result.wizardSweet.filteredOptions.every(title => /tribeca/i.test(title)), `Wizard sweet-tobacco search is not filtering correctly: ${JSON.stringify(result.wizardSweet)}`);
+  check(/4 sugestii principale din \d+ compatibile/.test(result.wizardSweet.suggestionHeading) && new RegExp(`${result.wizardSweet.available}\\s+compatibile`).test(result.wizardSweet.pickerLabel), `Wizard sweet-tobacco counts are unclear: ${JSON.stringify(result.wizardSweet)}`);
   check(result.externalSmokeeRequests.length === 0, `page load contacted Smokee directly: ${result.externalSmokeeRequests.join(', ')}`);
   check(pageErrors.length === 0, `browser errors: ${pageErrors.join(' | ')}`);
 
@@ -140,6 +176,7 @@ async function enterApp(page, route = '/') {
     counts: result.counts,
     recommendations: result.snapshots.map(snapshot => ({ profile: snapshot.profile, models: snapshot.rows.map(row => row.name) })),
     setupCounts: result.setupCounts,
+    wizardSweet: result.wizardSweet,
     newsWindow: result.newsWindow
   }, null, 2));
 
