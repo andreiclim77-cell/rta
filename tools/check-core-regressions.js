@@ -95,6 +95,31 @@ async function enterApp(page, route = '/') {
       sweetSearch.dispatchEvent(new Event('input', { bubbles: true }));
     }
     const filteredSweetOptions = [...(sweetPicker?.options || [])].map(option => option.textContent || '');
+    const viewAllButtons = Object.fromEntries(['rta', 'liquids', 'wires', 'cotton'].map(kind => {
+      const button = document.querySelector(`[data-setup-view-all="${kind}"]`);
+      return [kind, button ? button.textContent.trim() : ''];
+    }));
+    const sweetViewAll = document.querySelector('[data-setup-view-all="liquids"]');
+    openSetupCatalog('liquids', sweetViewAll);
+    const modalInitial = {
+      active: document.querySelector('#setupCatalogDetail')?.classList.contains('active') || false,
+      cards: document.querySelectorAll('#setupCatalogGrid .setup-product').length,
+      links: document.querySelectorAll('#setupCatalogGrid a[href*="smokee.ro/product/"]').length,
+      addButtons: document.querySelectorAll('#setupCatalogGrid [data-setup-catalog-add]').length,
+      title: document.querySelector('#setupCatalogTitle')?.textContent || '',
+      summary: document.querySelector('#setupCatalogSummary')?.textContent || ''
+    };
+    const modalSearch = document.querySelector('#setupCatalogSearch');
+    if (modalSearch) {
+      modalSearch.value = 'tribeca';
+      setupCatalogRender();
+    }
+    const modalFiltered = {
+      cards: document.querySelectorAll('#setupCatalogGrid .setup-product').length,
+      links: document.querySelectorAll('#setupCatalogGrid a[href*="smokee.ro/product/"]').length,
+      titles: [...document.querySelectorAll('#setupCatalogGrid .setup-copy b')].map(node => node.textContent || '')
+    };
+    closeSetupCatalog();
     setupProfile.liquid = previousLiquidProfile;
     const search = ['ss', 'ni', 'fe'].map(query => ({
       query,
@@ -133,7 +158,10 @@ async function enterApp(page, route = '/') {
         suggestionHeading: sweetSuggestionHeading,
         pickerLabel: sweetPickerLabel,
         searchPresent: Boolean(sweetSearch),
-        filteredOptions: filteredSweetOptions
+        filteredOptions: filteredSweetOptions,
+        viewAllButtons,
+        modalInitial,
+        modalFiltered
       },
       externalSmokeeRequests: resources.filter(url => /^https:\/\/(?:www\.)?smokee\.ro\//i.test(url))
     };
@@ -169,6 +197,10 @@ async function enterApp(page, route = '/') {
   check(result.wizardSweet.pickerOptions === result.wizardSweet.available, `Wizard sweet-tobacco picker hides products: ${JSON.stringify(result.wizardSweet)}`);
   check(result.wizardSweet.searchPresent && result.wizardSweet.filteredOptions.length >= 1 && result.wizardSweet.filteredOptions.every(title => /tribeca/i.test(title)), `Wizard sweet-tobacco search is not filtering correctly: ${JSON.stringify(result.wizardSweet)}`);
   check(/4 sugestii principale din \d+ compatibile/.test(result.wizardSweet.suggestionHeading) && new RegExp(`${result.wizardSweet.available}\\s+compatibile`).test(result.wizardSweet.pickerLabel), `Wizard sweet-tobacco counts are unclear: ${JSON.stringify(result.wizardSweet)}`);
+  check(['rta', 'liquids', 'wires', 'cotton'].every(kind => /^Vezi toate cele \d+$/.test(result.wizardSweet.viewAllButtons[kind])), `Wizard category links are incomplete: ${JSON.stringify(result.wizardSweet.viewAllButtons)}`);
+  check(result.wizardSweet.modalInitial.active && result.wizardSweet.modalInitial.cards === result.wizardSweet.available && result.wizardSweet.modalInitial.links === result.wizardSweet.available && result.wizardSweet.modalInitial.addButtons === result.wizardSweet.available, `Wizard full category modal is incomplete: ${JSON.stringify(result.wizardSweet.modalInitial)}`);
+  check(new RegExp(`${result.wizardSweet.available}$`).test(result.wizardSweet.modalInitial.title) && new RegExp(`${result.wizardSweet.available} din ${result.wizardSweet.available} produse`).test(result.wizardSweet.modalInitial.summary), `Wizard full category modal count is unclear: ${JSON.stringify(result.wizardSweet.modalInitial)}`);
+  check(result.wizardSweet.modalFiltered.cards >= 1 && result.wizardSweet.modalFiltered.cards === result.wizardSweet.modalFiltered.links && result.wizardSweet.modalFiltered.titles.every(title => /tribeca/i.test(title)), `Wizard full category search is incorrect: ${JSON.stringify(result.wizardSweet.modalFiltered)}`);
   check(result.externalSmokeeRequests.length === 0, `page load contacted Smokee directly: ${result.externalSmokeeRequests.join(', ')}`);
   check(pageErrors.length === 0, `browser errors: ${pageErrors.join(' | ')}`);
 

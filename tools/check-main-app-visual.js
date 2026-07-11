@@ -206,7 +206,8 @@ async function checkOverflow(page) {
         suggestedCards: liquidGroup ? liquidGroup.querySelectorAll('.setup-product').length : 0,
         suggestionCount: liquidGroup?.querySelector('.setup-suggestion-head span')?.textContent || '',
         compatibleCount: compatibleChip?.textContent || '',
-        pickerLabel: liquids?.closest('.setup-picker')?.querySelector('label')?.textContent || ''
+        pickerLabel: liquids?.closest('.setup-picker')?.querySelector('label')?.textContent || '',
+        viewAllButtons: [...document.querySelectorAll('[data-setup-view-all]')].map(button => ({ kind: button.dataset.setupViewAll, text: button.textContent || '' }))
       };
     });
     const wizardOverflow = await checkOverflow(page);
@@ -217,13 +218,40 @@ async function checkOverflow(page) {
       !wizardResult.search ||
       !/4 sugestii principale din \d+ compatibile/.test(wizardResult.suggestionCount) ||
       !new RegExp(`${wizardResult.options}\\s+lichide compatibile`).test(wizardResult.compatibleCount) ||
-      !new RegExp(`${wizardResult.options}\\s+compatibile`).test(wizardResult.pickerLabel)
+      !new RegExp(`${wizardResult.options}\\s+compatibile`).test(wizardResult.pickerLabel) ||
+      wizardResult.viewAllButtons.length !== 4 ||
+      !wizardResult.viewAllButtons.every(button => /^Vezi toate cele \d+$/.test(button.text.trim()))
     ) {
       failures.push({ viewport: viewport.name, wizardResult });
     }
     if (wizardOverflow.scrollWidth > wizardOverflow.clientWidth + 4 || wizardOverflow.offenders.length) {
       failures.push({ viewport: viewport.name, wizardOverflow });
     }
+
+    await page.locator('[data-setup-view-all="liquids"]').click();
+    await page.waitForTimeout(250);
+    const catalogResult = await page.evaluate(() => ({
+      active: document.querySelector('#setupCatalogDetail')?.classList.contains('active') || false,
+      cards: document.querySelectorAll('#setupCatalogGrid .setup-product').length,
+      links: document.querySelectorAll('#setupCatalogGrid a[href*="smokee.ro/product/"]').length,
+      summary: document.querySelector('#setupCatalogSummary')?.textContent || '',
+      title: document.querySelector('#setupCatalogTitle')?.textContent || ''
+    }));
+    const catalogOverflow = await checkOverflow(page);
+    await page.locator('#setupCatalogSearch').fill('tribeca');
+    await page.waitForTimeout(150);
+    const catalogFiltered = await page.evaluate(() => ({
+      cards: document.querySelectorAll('#setupCatalogGrid .setup-product').length,
+      titles: [...document.querySelectorAll('#setupCatalogGrid .setup-copy b')].map(node => node.textContent || '')
+    }));
+    console.log(`${viewport.name}: full sweet catalog ${catalogResult.cards}, filtered ${catalogFiltered.cards}`);
+    if (!catalogResult.active || catalogResult.cards !== wizardResult.options || catalogResult.links !== wizardResult.options || !new RegExp(`${wizardResult.options} din ${wizardResult.options} produse`).test(catalogResult.summary) || catalogFiltered.cards < 1 || !catalogFiltered.titles.every(title => /tribeca/i.test(title))) {
+      failures.push({ viewport: viewport.name, catalogResult, catalogFiltered });
+    }
+    if (catalogOverflow.scrollWidth > catalogOverflow.clientWidth + 4 || catalogOverflow.offenders.length) {
+      failures.push({ viewport: viewport.name, catalogOverflow });
+    }
+    await page.locator('.close-setup-catalog').click();
 
     if (viewport.name === "mobile-320" || viewport.name === "desktop") {
       await page.goto("http://127.0.0.1:8794/en/#setupList", { waitUntil: "domcontentloaded" });
@@ -241,17 +269,34 @@ async function checkOverflow(page) {
         return {
           options: liquids ? liquids.options.length : 0,
           heading: liquidGroup?.querySelector('.setup-suggestion-head span')?.textContent || '',
-          placeholder: document.querySelector('[data-setup-picker-search="liquids"]')?.getAttribute('placeholder') || ''
+          placeholder: document.querySelector('[data-setup-picker-search="liquids"]')?.getAttribute('placeholder') || '',
+          viewAll: liquidGroup?.querySelector('[data-setup-view-all="liquids"]')?.textContent || ''
         };
       });
       const englishWizardOverflow = await checkOverflow(page);
       console.log(`${viewport.name}: EN wizard sweet ${englishWizard.options}, search ${englishWizard.placeholder}`);
-      if (englishWizard.options < 100 || !/4 primary suggestions out of \d+ compatible/.test(englishWizard.heading) || englishWizard.placeholder !== 'Search product') {
+      if (englishWizard.options < 100 || !/4 primary suggestions out of \d+ compatible/.test(englishWizard.heading) || englishWizard.placeholder !== 'Search product' || !/^View all \d+$/.test(englishWizard.viewAll.trim())) {
         failures.push({ viewport: viewport.name, englishWizard });
       }
       if (englishWizardOverflow.scrollWidth > englishWizardOverflow.clientWidth + 4 || englishWizardOverflow.offenders.length) {
         failures.push({ viewport: viewport.name, englishWizardOverflow });
       }
+      await page.locator('[data-setup-view-all="liquids"]').click();
+      await page.waitForTimeout(200);
+      const englishCatalog = await page.evaluate(() => ({
+        cards: document.querySelectorAll('#setupCatalogGrid .setup-product').length,
+        title: document.querySelector('#setupCatalogTitle')?.textContent || '',
+        summary: document.querySelector('#setupCatalogSummary')?.textContent || '',
+        placeholder: document.querySelector('#setupCatalogSearch')?.getAttribute('placeholder') || ''
+      }));
+      const englishCatalogOverflow = await checkOverflow(page);
+      if (englishCatalog.cards !== englishWizard.options || !new RegExp(`${englishWizard.options} of ${englishWizard.options} products`).test(englishCatalog.summary) || englishCatalog.placeholder !== 'Search selected category') {
+        failures.push({ viewport: viewport.name, englishCatalog });
+      }
+      if (englishCatalogOverflow.scrollWidth > englishCatalogOverflow.clientWidth + 4 || englishCatalogOverflow.offenders.length) {
+        failures.push({ viewport: viewport.name, englishCatalogOverflow });
+      }
+      await page.locator('.close-setup-catalog').click();
     }
 
     await page.close();
