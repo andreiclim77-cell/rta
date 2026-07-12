@@ -370,8 +370,11 @@ async function fetchJson(url, options = {}, attempts = 3) {
 
 async function verifyFacebookPage() {
   const params = new URLSearchParams({ fields: 'id,name', access_token: accessToken });
-  const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}?${params}`);
+  const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/me?${params}`);
   if (!payload.id) throw new Error('Meta did not return the Page ID');
+  if (String(payload.id) !== pageId) {
+    throw new Error('FACEBOOK_PAGE_ACCESS_TOKEN is not issued for FACEBOOK_PAGE_ID.');
+  }
   return payload;
 }
 
@@ -429,7 +432,6 @@ async function main() {
       throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
     }
     const page = await verifyFacebookPage();
-    if (String(page.id) !== pageId) throw new Error('Meta returned a different Page ID.');
     console.log(`Facebook credentials valid for Page: ${page.name || page.id}.`);
     return;
   }
