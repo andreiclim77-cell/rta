@@ -103,6 +103,10 @@ async function enter(page, route) {
         categoryIconAltValid: [...document.querySelectorAll('.category-link .cat-icon')].every(icon => icon.hasAttribute('alt') && icon.alt === ''),
         footerGroups: document.querySelectorAll('.footer-map .footer-group').length,
         footerLinks: document.querySelectorAll('.footer-map a[href]').length,
+        facebookHeaderVisible: Boolean(document.querySelector('.facebook-head-link') && getComputedStyle(document.querySelector('.facebook-head-link')).display !== 'none'),
+        facebookHeaderHref: document.querySelector('.facebook-head-link')?.href || '',
+        facebookHeaderRect: (() => { const rect = document.querySelector('.facebook-head-link')?.getBoundingClientRect(); return rect ? { left: rect.left, right: rect.right, width: rect.width } : null; })(),
+        facebookCoverLinked: Boolean(document.querySelector('a[href="assets/facebook-cover-ghid-rta-smokee.png"]')),
         installPlacement: document.querySelector('#pwaInstallButton')?.parentElement?.className || '',
         installVisible: Boolean(document.querySelector('#pwaInstallButton') && !document.querySelector('#pwaInstallButton').hidden && getComputedStyle(document.querySelector('#pwaInstallButton')).display !== 'none'),
         manropeReady: document.fonts.check('16px "Manrope Local"'),
@@ -122,6 +126,9 @@ async function enter(page, route) {
     if (home.missingAlt) failures.push(`${viewport.name}: ${home.missingAlt} images have no alt text`);
     if (home.categoryIcons !== 12 || !home.categoryIconAltValid) failures.push(`${viewport.name}: category icon system is incomplete or inaccessible`);
     if (home.footerGroups !== 3 || home.footerLinks < 20) failures.push(`${viewport.name}: grouped footer is incomplete`);
+    if (!home.facebookHeaderVisible || !/facebook\.com\/people\/Ghid-RTA-MTL-Smokee/.test(home.facebookHeaderHref)) failures.push(`${viewport.name}: Facebook page link is missing from the header`);
+    if (!home.facebookHeaderRect || home.facebookHeaderRect.width < 24 || home.facebookHeaderRect.left < 0 || home.facebookHeaderRect.right > home.viewportWidth + 1) failures.push(`${viewport.name}: Facebook header link is clipped`);
+    if (!home.facebookCoverLinked) failures.push(`${viewport.name}: Facebook cover is not linked from the page`);
     if (!home.installVisible) failures.push(`${viewport.name}: install button is not visible`);
     if (viewport.width <= 900 && !/navlinks/.test(home.installPlacement)) failures.push(`${viewport.name}: mobile install button is not in navigation`);
     if (viewport.width > 900 && !/head-tools/.test(home.installPlacement)) failures.push(`${viewport.name}: desktop install button is not in header tools`);
