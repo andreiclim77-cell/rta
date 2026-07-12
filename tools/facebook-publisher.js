@@ -19,6 +19,7 @@ const checkOnly = args.includes('--check');
 const publish = args.includes('--publish');
 const pendingCountOnly = args.includes('--pending-count');
 const verifyCredentialsOnly = args.includes('--verify-credentials');
+const diagnoseCredentialsOnly = args.includes('--diagnose-credentials');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -378,6 +379,37 @@ async function verifyFacebookPage() {
   return payload;
 }
 
+async function diagnoseFacebookCredentials() {
+  if (!pageId || !accessToken) {
+    throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
+  }
+  const permissionParams = new URLSearchParams({ access_token: accessToken });
+  try {
+    const permissionPayload = await fetchJson(`https://graph.facebook.com/${graphVersion}/me/permissions?${permissionParams}`);
+    const granted = (permissionPayload.data || [])
+      .filter(item => item && item.status === 'granted')
+      .map(item => item.permission)
+      .filter(Boolean)
+      .sort();
+    console.log(`Granted Facebook permissions: ${granted.join(', ') || 'none returned'}.`);
+  } catch (error) {
+    console.log(`Facebook permission inspection unavailable: ${error.message}`);
+  }
+
+  const accountParams = new URLSearchParams({ fields: 'id,name,tasks', access_token: accessToken });
+  try {
+    const accounts = await fetchJson(`https://graph.facebook.com/${graphVersion}/me/accounts?${accountParams}`);
+    const target = (accounts.data || []).find(item => String(item && item.id || '') === pageId);
+    if (target) {
+      console.log('Stored credential is a User access token that can retrieve the target Page.');
+      return;
+    }
+    console.log('Stored credential did not return the target Page through /me/accounts.');
+  } catch (error) {
+    console.log(`Facebook account inspection unavailable: ${error.message}`);
+  }
+}
+
 async function waitForPublicLink(url) {
   if (!/^https:\/\/ghid-rta\.ro\//i.test(url)) return;
   let lastStatus = 0;
@@ -427,6 +459,11 @@ async function publishEvent(event) {
 }
 
 async function main() {
+  if (diagnoseCredentialsOnly) {
+    await diagnoseFacebookCredentials();
+    return;
+  }
+
   if (verifyCredentialsOnly) {
     if (!pageId || !accessToken) {
       throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
