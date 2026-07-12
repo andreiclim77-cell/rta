@@ -20,6 +20,7 @@ const publish = args.includes('--publish');
 const pendingCountOnly = args.includes('--pending-count');
 const verifyCredentialsOnly = args.includes('--verify-credentials');
 const diagnoseCredentialsOnly = args.includes('--diagnose-credentials');
+const verifyPublishCapabilityOnly = args.includes('--verify-publish-capability');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -410,6 +411,41 @@ async function diagnoseFacebookCredentials() {
   }
 }
 
+async function verifyFacebookPublishCapability() {
+  if (!pageId || !accessToken) {
+    throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
+  }
+
+  let postId = '';
+  try {
+    const body = new URLSearchParams({
+      message: `Ghid RTA MTL credential check ${nowIso()}`,
+      published: 'false',
+      unpublished_content_type: 'DRAFT',
+      access_token: accessToken
+    });
+    const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body
+    }, 1);
+    postId = String(payload.id || '').trim();
+    if (!postId) throw new Error('Meta did not return an ID for the unpublished verification post.');
+    console.log('Facebook publish permission verified with an unpublished Page post.');
+  } finally {
+    if (postId) {
+      const deleteParams = new URLSearchParams({ access_token: accessToken });
+      const deleted = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(postId)}?${deleteParams}`, {
+        method: 'DELETE'
+      }, 1);
+      if (deleted.success !== true) {
+        throw new Error('The unpublished verification post was created but Meta did not confirm its deletion.');
+      }
+      console.log('Unpublished Facebook verification post deleted.');
+    }
+  }
+}
+
 async function waitForPublicLink(url) {
   if (!/^https:\/\/ghid-rta\.ro\//i.test(url)) return;
   let lastStatus = 0;
@@ -459,6 +495,11 @@ async function publishEvent(event) {
 }
 
 async function main() {
+  if (verifyPublishCapabilityOnly) {
+    await verifyFacebookPublishCapability();
+    return;
+  }
+
   if (diagnoseCredentialsOnly) {
     await diagnoseFacebookCredentials();
     return;
