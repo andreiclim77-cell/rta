@@ -20,6 +20,10 @@ without changing its state when either required secret is missing.
 - Existing catalog entries and existing YouTube links form a baseline and are
   not published retroactively.
 - New atomizers create one post linking to the exact atomizer page.
+- Atomizer, review and recommendation posts use the catalog's validated product
+  image as a native Facebook photo whenever an HTTPS image is available.
+- If an individual public page is not generated yet, the post links to the
+  validated atomizer library instead of exposing a missing page.
 - Material recommendation changes create one update post.
 - New exact-model YouTube reviews or builds create one grouped post per model.
 - Clone material is explicitly labeled as a clone example.

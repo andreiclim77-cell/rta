@@ -71,7 +71,14 @@ function cleanText(value, maxLength = 240) {
 }
 
 function atomizerUrl(atom) {
-  return `${SITE}/atomizoare/${slugify(publicAtomName(atom.name))}/`;
+  const slug = slugify(publicAtomName(atom.name));
+  const localPage = path.join(ROOT, 'atomizoare', slug, 'index.html');
+  return fs.existsSync(localPage) ? `${SITE}/atomizoare/${slug}/` : `${SITE}/atomizoare/`;
+}
+
+function atomizerImage(atom) {
+  const image = String(atom && atom.image || '').trim();
+  return /^https:\/\//i.test(image) ? image : '';
 }
 
 function recommendationSignature(atom) {
@@ -267,6 +274,7 @@ function planUpdates(catalog, feed, state, options = {}) {
       slug,
       name: atom.name,
       link: atomizerUrl(atom),
+      image: atomizerImage(atom),
       message: atomizerMessage(atom, atomVideos),
       signature: recommendationSignature(atom),
       videoIds: atomVideos.map(video => video.videoId)
@@ -284,6 +292,7 @@ function planUpdates(catalog, feed, state, options = {}) {
       slug,
       name: atom.name,
       link: atomizerUrl(atom),
+      image: atomizerImage(atom),
       message: recommendationMessage(atom),
       signature,
       videoIds: []
@@ -306,6 +315,7 @@ function planUpdates(catalog, feed, state, options = {}) {
       slug,
       name: atom.name,
       link: chosen[0].url,
+      image: atomizerImage(atom),
       message: reviewMessage(atom, chosen),
       signature: recommendationSignature(atom),
       videoIds: chosen.map(video => video.videoId)
@@ -382,6 +392,22 @@ async function waitForPublicLink(url) {
 
 async function publishEvent(event) {
   await waitForPublicLink(event.link);
+  if (event.image) {
+    const photoBody = new URLSearchParams({
+      url: event.image,
+      caption: event.message,
+      published: 'true',
+      access_token: accessToken
+    });
+    const photo = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/photos`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: photoBody
+    });
+    const photoPostId = photo.post_id || photo.id;
+    if (!photoPostId) throw new Error(`Meta did not return a photo post ID for ${event.name}`);
+    return photoPostId;
+  }
   const body = new URLSearchParams({
     message: event.message,
     link: event.link,
@@ -459,7 +485,9 @@ async function main() {
 
 module.exports = {
   applyPublishedEvent,
+  atomizerImage,
   atomizerMessage,
+  atomizerUrl,
   baselineState,
   emptyState,
   planUpdates,

@@ -3,6 +3,7 @@
 const assert = require('assert');
 const {
   applyPublishedEvent,
+  atomizerUrl,
   baselineState,
   planUpdates,
   recommendationSignature,
@@ -15,6 +16,7 @@ function clone(value) {
 
 const atomA = {
   name: 'Test Alpha RTA',
+  image: 'https://images.example/test-alpha.jpg',
   addedAt: '2026-07-12',
   classes: 'Virginia, Oriental si NET luminos.',
   dna: 'Camera compacta si airflow inferior.',
@@ -22,6 +24,7 @@ const atomA = {
 };
 const atomB = {
   name: 'Test Beta RTA',
+  image: 'https://images.example/test-beta.jpg',
   addedAt: '2026-07-13',
   classes: 'Burley, Kentucky si NET complex.',
   dna: 'Camera rotunda si airflow lateral.',
@@ -65,8 +68,13 @@ delete newAtomState.seenVideos.xyz987ZYX65;
 const newAtomPlan = planUpdates(catalog, feed, newAtomState);
 assert.strictEqual(newAtomPlan[0].type, 'atomizer');
 assert.strictEqual(newAtomPlan[0].name, 'Test Beta RTA');
+assert.strictEqual(newAtomPlan[0].image, 'https://images.example/test-beta.jpg');
 assert(newAtomPlan[0].message.includes('exemplu pe clonă'));
-assert(newAtomPlan[0].message.includes('/atomizoare/test-beta-rta/'));
+assert.strictEqual(newAtomPlan[0].link, 'https://ghid-rta.ro/atomizoare/');
+assert.strictEqual(
+  atomizerUrl({ name: 'Ambition Mods Amazier MTL RTA' }),
+  'https://ghid-rta.ro/atomizoare/ambition-mods-amazier-mtl-rta/'
+);
 
 const recommendationState = clone(baseline);
 recommendationState.recommendationSignatures['test-alpha-rta'] = 'outdated';
