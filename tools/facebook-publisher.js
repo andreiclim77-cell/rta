@@ -18,6 +18,7 @@ const initialize = args.includes('--initialize');
 const checkOnly = args.includes('--check');
 const publish = args.includes('--publish');
 const pendingCountOnly = args.includes('--pending-count');
+const verifyCredentialsOnly = args.includes('--verify-credentials');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -423,6 +424,16 @@ async function publishEvent(event) {
 }
 
 async function main() {
+  if (verifyCredentialsOnly) {
+    if (!pageId || !accessToken) {
+      throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
+    }
+    const page = await verifyFacebookPage();
+    if (String(page.id) !== pageId) throw new Error('Meta returned a different Page ID.');
+    console.log(`Facebook credentials valid for Page: ${page.name || page.id}.`);
+    return;
+  }
+
   const catalog = loadCatalog(ROOT);
   const feed = readJson(REVIEW_PATH, { schemaVersion: 1, models: {} });
   const stateExists = fs.existsSync(STATE_PATH);
