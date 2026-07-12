@@ -18,7 +18,7 @@ concurrency:
 jobs:
   sync-smokee-catalog:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 12
     steps:
       - name: Confirm Bucharest sync window
         id: sync_window
@@ -88,6 +88,8 @@ jobs:
           node tools/validate-app-js.js
           node tools/check-catalog-integrity.js
           node tools/check-youtube-review-data.js
+          node tools/check-facebook-publisher.js
+          node tools/facebook-publisher.js --check
           node tools/validate-seo-pages.js
 
       - name: Commit catalog update
@@ -103,3 +105,44 @@ jobs:
             git pull --rebase
             git push
           fi
+
+      - name: Detect Facebook updates
+        if: steps.sync_window.outputs.run_sync == 'true'
+        id: facebook_updates
+        shell: bash
+        run: |
+          pending="$(node tools/facebook-publisher.js --pending-count)"
+          echo "count=$pending" >> "$GITHUB_OUTPUT"
+          echo "Facebook pending posts: $pending"
+
+      - name: Publish real Facebook Page updates
+        if: steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0'
+        id: facebook_publish
+        continue-on-error: true
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/facebook-publisher.js --publish --max-posts 4
+
+      - name: Commit Facebook publish state
+        if: always() && steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0'
+        shell: bash
+        run: |
+          if git diff --quiet -- data/facebook-publish-state.json; then
+            echo "No Facebook state changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/facebook-publish-state.json
+            git commit -m "Record Facebook catalog updates"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Report Facebook publishing failure
+        if: steps.facebook_publish.outcome == 'failure'
+        shell: bash
+        run: |
+          echo "Facebook publishing failed after preserving every successful post ID." >&2
+          exit 1

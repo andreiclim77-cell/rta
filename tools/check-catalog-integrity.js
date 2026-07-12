@@ -85,6 +85,7 @@ allItems(catalog.liquids).concat(allItems(catalog.consumables)).forEach(({ group
 
 const source = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const workflow = fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'smokee-rta-sync.yml'), 'utf8');
+const facebookPublisher = fs.readFileSync(path.join(ROOT, 'tools', 'facebook-publisher.js'), 'utf8');
 const liquidSync = fs.readFileSync(path.join(ROOT, 'tools', 'sync-smokee-liquids.js'), 'utf8');
 check(/var NEWS_WINDOW_DAYS=7;/.test(source), 'Noutati rolling window is no longer seven days');
 check(/var SMOKEE_BROWSER_LIVE_SYNC=false;/.test(source), 'browser-side Smokee polling must stay disabled');
@@ -95,6 +96,10 @@ check(/var wires=wireChoices\(prof,selectedProblem,a\)/.test(source), 'three-wir
 check(/var NEWS_WINDOW_DAYS=7;[\s\S]*days>=0&&days<NEWS_WINDOW_DAYS/.test(source), 'rolling seven-day Noutati calculation changed');
 check(/cron: ['"]0,20 3 \* \* \*['"]/.test(workflow), 'EEST 06:00/06:20 schedule is missing');
 check(/cron: ['"]0,20 4 \* \* \*['"]/.test(workflow), 'EET 06:00/06:20 schedule is missing');
+check(/facebook-publisher\.js --pending-count/.test(workflow), 'Facebook update detection is missing from the catalog workflow');
+check(/facebook-publisher\.js --publish --max-posts 4/.test(workflow), 'Facebook publisher is missing from the catalog workflow');
+check(/FACEBOOK_PAGE_ACCESS_TOKEN: \$\{\{ secrets\.FACEBOOK_PAGE_ACCESS_TOKEN \}\}/.test(workflow), 'Facebook Page token is not read from GitHub Secrets');
+check(!/FACEBOOK_PAGE_ACCESS_TOKEN\s*=\s*['"][^'"]+['"]/.test(facebookPublisher), 'Facebook Page token must not be stored in source code');
 check(/Europe\/Bucharest/.test(workflow), 'Bucharest timezone gate is missing');
 check(!/https:\/\/(?:www\.)?smokee\.ro\/wp-content\/uploads\//i.test(source), 'direct Smokee image URLs bypass the Cloudflare cache');
 check(/const products = await fetchAllCategoryProducts\(\);/.test(liquidSync), 'liquid category is no longer fetched in one shared pass');
