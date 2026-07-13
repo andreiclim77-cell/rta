@@ -59,7 +59,7 @@ jobs:
         if: always() && steps.window.outputs.run == 'true'
         shell: bash
         run: |
-          if git diff --quiet -- data/indexing-health.json; then
+          if [ -z "$(git status --porcelain -- data/indexing-health.json)" ]; then
             exit 0
           fi
           git config user.name "github-actions[bot]"
