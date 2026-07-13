@@ -1,0 +1,54 @@
+name: Repair today's Facebook RTA posts
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: facebook-rta-editorial-series
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate complete Facebook albums
+        run: |
+          node --check tools/facebook-publisher.js
+          node tools/check-facebook-publisher.js
+
+      - name: Replace today's posts with complete albums
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: |
+          node tools/facebook-publisher.js --check-repair-today
+          node tools/facebook-publisher.js --repair-today
+
+      - name: Commit repaired campaign state
+        shell: bash
+        run: |
+          if git diff --quiet -- data/facebook-campaign-state.json; then
+            echo "No campaign state change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/facebook-campaign-state.json
+          git commit -m "Record complete Facebook product albums"
+          git pull --rebase
+          git push
