@@ -17,8 +17,37 @@ const CAMPAIGN_STATE_PATH = path.join(ROOT, 'data', 'facebook-campaign-state.jso
 const REVIEW_PATH = path.join(ROOT, 'data', 'youtube-reviews.json');
 const SITE = 'https://ghid-rta.ro';
 const RECOMMENDATIONS_URL = `${SITE}/recomandari-rta-mtl.html`;
+const LIQUIDS_URL = `${SITE}/lichide-net-tutun.html`;
 const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_MAX_POSTS = 4;
+
+const ATOM_ROLE_RULES = {
+  clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
+  body: ['body', 'corp', 'hit', 'latakia', 'kentucky', 'cigar', 'dark', 'fire', 'burley', 'asylum', 'muted', 'dvarw cl', 'prime minister'],
+  smooth: ['smooth', 'elegant', 'round', 'rotund', 'taifun', 'by-ka', 'kayfun prime', 'kayfun x', 'diplomat'],
+  modular: ['modular', 'bell', 'clopot', 'insert', 'pins', 'pin', 'air disk', 'disc', 'millennium', 'diplomat', 'sputnik', '415', 'prime minister', 'minister'],
+  daily: ['daily', 'baseline', 'berserker', 'ares', 'sirens', 'easy', 'general', 'versatil', 'versatile']
+};
+
+const PROFILE_ROLE_RULES = {
+  clarity: ['virginia', 'bright', 'oriental', 'turkish', 'perique', 'cigarette', 'rolling', 'blond', 'sec', 'dry', 'luminos'],
+  body: ['kentucky', 'latakia', 'dark', 'dark-fired', 'fire', 'cigar', 'trabuc', 'fum', 'smoky', 'earthy', 'piele', 'lemn', 'robust', 'amar', 'greu'],
+  smooth: ['cavendish', 'pipe', 'vanilie', 'rom', 'bourbon', 'crema', 'cream', 'dulce', 'sweet', 'aromatizat', 'aromatic', 'cafea', 'cacao', 'nuci', 'moale', 'rotund'],
+  modular: ['complex', 'blend', 'organic', 'balkan', 'english', 'italian', 'straturi', 'layer', 'oriental-forward']
+};
+
+const TOBACCO_AXES = [
+  'virginia', 'oriental', 'turkish', 'perique', 'kentucky', 'latakia', 'burley',
+  'cigar', 'trabuc', 'pipe', 'cavendish', 'ry4', 'dark', 'fire', 'smoky',
+  'blend', 'balkan', 'english', 'rolling', 'cigarette', 'vanilie', 'caramel',
+  'crema', 'cafea', 'cacao', 'rom', 'bourbon', 'miere', 'nuci'
+];
+
+const MATCH_STOPWORDS = new Set([
+  'aroma', 'arome', 'longfill', 'lichid', 'lichide', 'tutun', 'tutunuri', 'tobacco',
+  'simplu', 'simpla', 'complex', 'complexa', 'dulce', 'net', 'ml', 'mix', 'vape',
+  'profil', 'foarte', 'pentru', 'care', 'este', 'sau', 'din', 'mai', 'fara', 'prin'
+]);
 
 const args = process.argv.slice(2);
 const initialize = args.includes('--initialize');
@@ -88,6 +117,281 @@ function cleanText(value, maxLength = 240) {
   if (text.length <= maxLength) return text;
   const clipped = text.slice(0, maxLength - 1).replace(/\s+\S*$/, '');
   return `${clipped || text.slice(0, maxLength - 1)}…`;
+}
+
+function normalizeMatchText(value) {
+  return String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function matchTokens(value) {
+  return Array.from(new Set(normalizeMatchText(value)
+    .split(' ')
+    .filter(token => token.length >= 3 && !MATCH_STOPWORDS.has(token))));
+}
+
+function modelKey(value) {
+  const generic = new Set(['rta', 'mtl', 'atomizor', 'atomizer', 'mods', 'mod', 'by', 'the']);
+  return normalizeMatchText(publicAtomName(value))
+    .split(' ')
+    .filter(token => token && !generic.has(token))
+    .join('');
+}
+
+function sameModelName(left, right) {
+  const a = modelKey(left);
+  const b = modelKey(right);
+  if (!a || !b) return false;
+  return a === b || (Math.min(a.length, b.length) >= 7 && (a.includes(b) || b.includes(a)));
+}
+
+function profileGroup(profile) {
+  return cleanText(profile && (profile.group || profile.Group || profile.Grup || profile.Clasa), 100) || 'Tutun';
+}
+
+function profileName(profile) {
+  return cleanText(profile && (profile.name || profile.Nume || profile.Profil || profile.Subcategorie), 120) || 'Profil tutunos';
+}
+
+function profileTags(profile) {
+  const raw = profile && (profile.tags || profile.Tags || profile.Taguri || profile.taguri);
+  if (Array.isArray(raw)) return raw.map(value => cleanText(value, 80)).filter(Boolean);
+  return String(raw || '').split(/[,;|]/).map(value => cleanText(value, 80)).filter(Boolean);
+}
+
+function profileTop(profile) {
+  const raw = profile && (profile.top || profile.Atomizoare || profile['Atomizoare recomandate'] || profile['Top atomizoare']);
+  if (Array.isArray(raw)) return raw.map(value => cleanText(value, 120)).filter(Boolean);
+  return String(raw || '').split(/[,;|]/).map(value => cleanText(value, 120)).filter(Boolean);
+}
+
+function profileNote(profile) {
+  return cleanText(profile && (profile.note || profile.Note || profile.Nota || profile.Observatii || profile.Descriere), 180);
+}
+
+function profileFamily(profile) {
+  return /\bnet\b/.test(normalizeMatchText(profileGroup(profile))) ? 'NET' : 'TUTUN';
+}
+
+function profileSubtype(profile) {
+  return /\bcomplex\b/.test(normalizeMatchText(profileGroup(profile))) ? 'complex' : 'simplu';
+}
+
+function textHasTerm(text, term) {
+  const normalized = normalizeMatchText(term);
+  if (!normalized) return false;
+  if (/^[a-z0-9]{1,4}$/.test(normalized)) {
+    return new RegExp(`(^|[^a-z0-9])${normalized}([^a-z0-9]|$)`).test(text);
+  }
+  return text.includes(normalized);
+}
+
+function inferAtomRoles(atom) {
+  const text = normalizeMatchText([
+    atom && atom.name,
+    atom && atom.dna,
+    atom && atom.classes,
+    atom && atom.market
+  ].filter(Boolean).join(' '));
+  const roles = Object.entries(ATOM_ROLE_RULES)
+    .filter(([, terms]) => terms.some(term => textHasTerm(text, term)))
+    .map(([role]) => role);
+  return roles.length ? roles : ['daily'];
+}
+
+function inferProfileRoles(profile) {
+  const text = normalizeMatchText([
+    profileGroup(profile),
+    profileName(profile),
+    profileTags(profile).join(' '),
+    profileNote(profile)
+  ].filter(Boolean).join(' '));
+  const roles = Object.entries(PROFILE_ROLE_RULES)
+    .filter(([, terms]) => terms.some(term => textHasTerm(text, term)))
+    .map(([role]) => role);
+  return roles.length ? roles : ['smooth', 'daily'];
+}
+
+function sharedAxes(left, right) {
+  const a = normalizeMatchText(left);
+  const b = normalizeMatchText(right);
+  return TOBACCO_AXES.filter(axis => textHasTerm(a, axis) && textHasTerm(b, axis));
+}
+
+function axesInNormalizedText(text) {
+  return TOBACCO_AXES.filter(axis => textHasTerm(text, axis));
+}
+
+function profileMatchesForAtom(atom, profiles, limit = 18) {
+  const atomRoles = inferAtomRoles(atom);
+  const atomText = normalizeMatchText([
+    atom && atom.name,
+    atom && atom.dna,
+    atom && atom.classes,
+    atom && atom.market
+  ].filter(Boolean).join(' '));
+
+  return [].concat(profiles || []).map(profile => {
+    const roles = inferProfileRoles(profile);
+    const tags = profileTags(profile).slice(0, 8);
+    const profileText = [profileGroup(profile), profileName(profile), tags.join(' '), profileNote(profile)].join(' ');
+    const axes = sharedAxes(atomText, profileText);
+    let score = 0;
+    roles.forEach(role => {
+      if (atomRoles.includes(role)) score += 20;
+    });
+    profileTop(profile).forEach((name, index) => {
+      if (sameModelName(name, atom && atom.name)) score += Math.max(16, 36 - index * 5);
+    });
+    tags.forEach(tag => {
+      if (textHasTerm(atomText, tag)) score += 5;
+    });
+    score += Math.min(24, axes.length * 8);
+    return { profile, score, roles, axes };
+  }).filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score || profileName(a.profile).localeCompare(profileName(b.profile)))
+    .slice(0, Math.max(1, Number(limit) || 18));
+}
+
+function liquidCatalogItems(catalog) {
+  const liquids = catalog && catalog.liquids || {};
+  return ['net', 'tutun'].flatMap(group => [].concat(liquids[group] || []).map(item => {
+    const text = normalizeMatchText([item && item.title, item && item.tag].join(' '));
+    return {
+      item,
+      family: group === 'net' ? 'NET' : 'TUTUN',
+      subtype: liquidSubtype(item),
+      text,
+      words: new Set(text.split(' ').filter(Boolean)),
+      axes: axesInNormalizedText(text)
+    };
+  }));
+}
+
+function liquidSubtype(item) {
+  const text = normalizeMatchText([item && item.tag, item && item.title].join(' '));
+  if (/\bcomplex\b/.test(text)) return 'complex';
+  if (/\bdulce\b|\bsweet\b/.test(text)) return 'dulce';
+  return 'simplu';
+}
+
+function productProfileScore(atomMeta, catalogItem, profileMatch) {
+  const item = catalogItem.item || {};
+  const tokenOverlap = profileMatch.tokens.filter(token => catalogItem.words.has(token));
+  const profileAxes = catalogItem.axes.filter(axis => profileMatch.axisSet.has(axis));
+  const atomAxes = catalogItem.axes.filter(axis => atomMeta.axisSet.has(axis));
+  let score = profileMatch.match.score;
+  score += catalogItem.family === profileMatch.family ? 30 : -22;
+  if (catalogItem.subtype === profileMatch.subtype) score += 14;
+  score += Math.min(40, tokenOverlap.length * 10);
+  score += Math.min(42, profileAxes.length * 14);
+  score += Math.min(36, atomAxes.length * 12);
+  if (item.stock === true) score += 12;
+  if (item.stock === false) score -= 80;
+  if (/^https:\/\/smokee\.ro\/product\//i.test(String(item.url || ''))) score += 5;
+  if (/^https:\/\//i.test(String(item.image || ''))) score += 2;
+  if (catalogItem.subtype === 'dulce' && profileMatch.match.roles.includes('smooth')) score += 8;
+  if (catalogItem.subtype === 'dulce' && profileMatch.match.roles.includes('clarity')) score -= 5;
+  return { score, tokenOverlap, profileAxes, atomAxes };
+}
+
+function liquidMatchReason(profileMatch, scoreDetails) {
+  const note = profileNote(profileMatch.profile);
+  if (note) return note;
+  const axes = Array.from(new Set([].concat(scoreDetails.atomAxes || [], scoreDetails.profileAxes || []))).slice(0, 3);
+  if (axes.length) return `Profilul păstrează în prim-plan notele de ${axes.join(', ')}.`;
+  if (profileMatch.roles.includes('clarity')) return 'Profil orientat spre claritate și separarea notelor.';
+  if (profileMatch.roles.includes('body')) return 'Profil orientat spre corp, structură și prezență.';
+  if (profileMatch.roles.includes('smooth')) return 'Profil orientat spre o redare rotundă și echilibrată.';
+  return 'Profil tutunos compatibil cu arhitectura și buildul atomizorului.';
+}
+
+function topLiquidMatchesForAtom(atom, catalog, limit = 3) {
+  const atomText = normalizeMatchText([atom && atom.classes, atom && atom.dna, atom && atom.market].join(' '));
+  const atomMeta = { axisSet: new Set(axesInNormalizedText(atomText)) };
+  const profiles = profileMatchesForAtom(atom, catalog && catalog.profiles, 24).map(match => {
+    const text = normalizeMatchText([
+      profileName(match.profile),
+      profileTags(match.profile).join(' '),
+      profileNote(match.profile)
+    ].join(' '));
+    return {
+      match,
+      family: profileFamily(match.profile),
+      subtype: profileSubtype(match.profile),
+      tokens: matchTokens(text),
+      axisSet: new Set(axesInNormalizedText(text))
+    };
+  });
+  const products = liquidCatalogItems(catalog).filter(entry => {
+    const item = entry.item || {};
+    return item.title && /^https:\/\/smokee\.ro\/product\//i.test(String(item.url || ''));
+  });
+  if (!profiles.length || !products.length) return [];
+
+  const ranked = products.map(entry => {
+    const scoredProfiles = profiles.map(profileMatch => ({
+      profileMatch,
+      details: productProfileScore(atomMeta, entry, profileMatch)
+    })).sort((a, b) => b.details.score - a.details.score);
+    const best = scoredProfiles[0];
+    return {
+      title: cleanText(entry.item.title, 150),
+      url: String(entry.item.url || '').trim(),
+      image: String(entry.item.image || '').trim(),
+      tag: cleanText(entry.item.tag || entry.family, 80),
+      stock: entry.item.stock,
+      family: entry.family,
+      subtype: entry.subtype,
+      profile: profileName(best.profileMatch.match.profile),
+      profileGroup: profileGroup(best.profileMatch.match.profile),
+      reason: liquidMatchReason(best.profileMatch.match, best.details),
+      score: best.details.score
+    };
+  }).filter(item => item.stock !== false)
+    .sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+
+  const selected = [];
+  const usedUrls = new Set();
+  while (selected.length < Math.max(1, Number(limit) || 3)) {
+    const candidates = ranked.filter(item => !usedUrls.has(item.url)).map(item => {
+      const sameTag = selected.filter(chosen => normalizeMatchText(chosen.tag) === normalizeMatchText(item.tag)).length;
+      const sameProfile = selected.filter(chosen => normalizeMatchText(chosen.profile) === normalizeMatchText(item.profile)).length;
+      return { item, adjustedScore: item.score - sameTag * 16 - sameProfile * 10 };
+    }).sort((a, b) => b.adjustedScore - a.adjustedScore || b.item.score - a.item.score || a.item.title.localeCompare(b.item.title));
+    if (!candidates.length) break;
+    selected.push(candidates[0].item);
+    usedUrls.add(candidates[0].item.url);
+  }
+  return selected.sort((a, b) => b.score - a.score || a.title.localeCompare(b.title));
+}
+
+function liquidMatchLines(matches) {
+  if (!Array.isArray(matches) || !matches.length) return [];
+  const lines = ['', '3 lichide potrivite din catalog:'];
+  matches.slice(0, 3).forEach((match, index) => {
+    lines.push(
+      `${index + 1}. ${cleanText(match.title, 130)} [${cleanText(match.tag, 60)}]`,
+      `Profil: ${cleanText(match.profile, 90)} — ${cleanText(match.reason, 155)}`,
+      match.url
+    );
+  });
+  lines.push(`Catalog lichide: ${LIQUIDS_URL}`);
+  return lines;
+}
+
+function liquidStateItems(matches) {
+  return [].concat(matches || []).slice(0, 3).map(match => ({
+    title: cleanText(match.title, 150),
+    tag: cleanText(match.tag, 80),
+    profile: cleanText(match.profile, 120),
+    url: String(match.url || '').trim()
+  }));
 }
 
 function atomizerUrl(atom) {
@@ -277,7 +581,7 @@ function directVideoLines(videos) {
   });
 }
 
-function atomizerMessage(atom, videos) {
+function atomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 260);
   const build = topBuild(atom);
   const lines = [
@@ -287,6 +591,7 @@ function atomizerMessage(atom, videos) {
   ];
   if (profile) lines.push('', `Potrivire inițială: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
+  lines.push(...liquidMatchLines(liquidMatches));
   const videoLines = directVideoLines(videos);
   if (videoLines.length) lines.push('', ...videoLines);
   lines.push(
@@ -300,7 +605,7 @@ function atomizerMessage(atom, videos) {
   return lines.join('\n');
 }
 
-function editorialAtomizerMessage(atom, videos) {
+function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
   const lines = [
@@ -310,6 +615,7 @@ function editorialAtomizerMessage(atom, videos) {
   ];
   if (profile) lines.push('', `Potrivire aromatică: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
+  lines.push(...liquidMatchLines(liquidMatches));
   const videoLines = directVideoLines(videos);
   if (videoLines.length) lines.push('', ...videoLines);
   lines.push(
@@ -323,7 +629,7 @@ function editorialAtomizerMessage(atom, videos) {
   return lines.join('\n');
 }
 
-function recommendationMessage(atom) {
+function recommendationMessage(atom, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
   const lines = [
@@ -333,6 +639,7 @@ function recommendationMessage(atom) {
   ];
   if (profile) lines.push('', `Profil: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
+  lines.push(...liquidMatchLines(liquidMatches));
   lines.push(
     '',
     `Fișă și surse: ${atomizerUrl(atom)}`,
@@ -385,6 +692,8 @@ function planUpdates(catalog, feed, state, options = {}) {
     if (state.seenAtomizers[slug]) return;
     newSlugs.add(slug);
     const atomVideos = videosForAtom(videos, slug);
+    const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
+    if (liquidMatches.length < 3) return;
     events.push({
       type: 'atomizer',
       key: `atomizer:${slug}`,
@@ -393,7 +702,8 @@ function planUpdates(catalog, feed, state, options = {}) {
       link: atomizerUrl(atom),
       image: atomizerImage(atom, atomVideos),
       imageCandidates: atomizerImageCandidates(atom, atomVideos),
-      message: atomizerMessage(atom, atomVideos),
+      message: atomizerMessage(atom, atomVideos, liquidMatches),
+      liquidMatches,
       signature: recommendationSignature(atom),
       videoIds: atomVideos.map(video => video.videoId)
     });
@@ -405,6 +715,8 @@ function planUpdates(catalog, feed, state, options = {}) {
     const signature = recommendationSignature(atom);
     if (state.recommendationSignatures[slug] === signature) return;
     const atomVideos = videosForAtom(videos, slug);
+    const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
+    if (liquidMatches.length < 3) return;
     events.push({
       type: 'recommendation',
       key: `recommendation:${slug}:${signature}`,
@@ -413,7 +725,8 @@ function planUpdates(catalog, feed, state, options = {}) {
       link: atomizerUrl(atom),
       image: atomizerImage(atom, atomVideos),
       imageCandidates: atomizerImageCandidates(atom, atomVideos),
-      message: recommendationMessage(atom),
+      message: recommendationMessage(atom, liquidMatches),
+      liquidMatches,
       signature,
       videoIds: []
     });
@@ -457,7 +770,14 @@ function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
   });
   state.updatedAt = timestamp;
   state.pageId = pageId || state.pageId || '';
-  state.history.unshift({ key: event.key, type: event.type, name: event.name, postId, publishedAt: timestamp });
+  state.history.unshift({
+    key: event.key,
+    type: event.type,
+    name: event.name,
+    postId,
+    publishedAt: timestamp,
+    liquids: liquidStateItems(event.liquidMatches)
+  });
   state.history = state.history.slice(0, 200);
 }
 
@@ -472,27 +792,43 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
   const limit = Math.min(Math.max(1, Number(options.maxPosts || 1)), dailyRemaining);
   if (limit === 0) return [];
   const videos = reviewEntries(feed);
-  return uniqueAtomizers(catalog)
+  const candidates = uniqueAtomizers(catalog)
     .filter(atom => !state.postedAtomizers[slugify(atom.name)])
     .map(atom => {
       const slug = slugify(atom.name);
       const atomVideos = videosForAtom(videos, slug);
       return {
-        type: 'editorial',
-        key: `editorial:${slug}`,
+        atom,
         slug,
-        name: atom.name,
-        link: atomizerUrl(atom),
+        atomVideos,
         image: atomizerImage(atom, atomVideos),
         imageCandidates: atomizerImageCandidates(atom, atomVideos),
-        message: editorialAtomizerMessage(atom, atomVideos),
-        videoIds: atomVideos.map(video => video.videoId),
         videoCount: atomVideos.length
       };
     })
-    .filter(event => Boolean(event.image))
-    .sort((a, b) => b.videoCount - a.videoCount || a.name.localeCompare(b.name))
-    .slice(0, limit);
+    .filter(candidate => Boolean(candidate.image))
+    .sort((a, b) => b.videoCount - a.videoCount || a.atom.name.localeCompare(b.atom.name));
+
+  const events = [];
+  for (const candidate of candidates) {
+    const liquidMatches = topLiquidMatchesForAtom(candidate.atom, catalog, 3);
+    if (liquidMatches.length !== 3) continue;
+    events.push({
+      type: 'editorial',
+      key: `editorial:${candidate.slug}`,
+      slug: candidate.slug,
+      name: candidate.atom.name,
+      link: atomizerUrl(candidate.atom),
+      image: candidate.image,
+      imageCandidates: candidate.imageCandidates,
+      message: editorialAtomizerMessage(candidate.atom, candidate.atomVideos, liquidMatches),
+      liquidMatches,
+      videoIds: candidate.atomVideos.map(video => video.videoId),
+      videoCount: candidate.videoCount
+    });
+    if (events.length >= limit) break;
+  }
+  return events;
 }
 
 function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()) {
@@ -504,13 +840,15 @@ function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()
     publishedAt: timestamp,
     image: event.image,
     source: 'facebook-api',
-    postId
+    postId,
+    liquids: liquidStateItems(event.liquidMatches)
   };
   state.history.unshift({
     slug: event.slug,
     name: event.name,
     publishedAt: timestamp,
-    postId
+    postId,
+    liquids: liquidStateItems(event.liquidMatches)
   });
   state.history = state.history.slice(0, 200);
   return state;
@@ -834,13 +1172,17 @@ module.exports = {
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
+  inferAtomRoles,
+  liquidMatchLines,
   normalizeCampaignState,
   planEditorialPosts,
   planUpdates,
+  profileMatchesForAtom,
   recommendationMessage,
   recommendationSignature,
   reviewEntries,
   reviewMessage,
+  topLiquidMatchesForAtom,
   uniqueAtomizers,
   validateState
 };
