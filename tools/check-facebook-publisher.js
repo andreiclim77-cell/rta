@@ -4,10 +4,8 @@ const assert = require('assert');
 const {
   applyEditorialPublished,
   applyPublishedEvent,
-  albumPhotoEntries,
   atomizerImage,
   atomizerImageCandidates,
-  atomizerProduct,
   atomizerUrl,
   baselineState,
   dateInRomania,
@@ -15,12 +13,9 @@ const {
   emptyState,
   facebookPostsOnDate,
   liquidMatchLines,
-  multiPhotoFeedBody,
   planEditorialPosts,
   planUpdates,
   recommendationSignature,
-  smokeeProductUrl,
-  stockFromProductHtml,
   topLiquidMatchesForAtom,
   uniqueAtomizers,
   validateState
@@ -156,7 +151,7 @@ fallbackCatalog.liquids.tutun = [];
 const fallbackMatches = topLiquidMatchesForAtom(atomA, fallbackCatalog, 3);
 assert.strictEqual(fallbackMatches.length, 3, 'an out-of-stock match may be shown only when three stocked alternatives do not exist');
 assert(fallbackMatches.some(item => item.stock === false));
-assert(liquidMatchLines(fallbackMatches).join('\n').includes('Pentru comenzi sunați la 0736 018 023.'));
+assert(!liquidMatchLines(fallbackMatches).join('\n').includes('Pentru comenzi'));
 
 const baseline = baselineState(catalog, feed, '2026-07-13T00:00:00.000Z');
 assert.deepStrictEqual(validateState(baseline), []);
@@ -170,32 +165,18 @@ const newAtomPlan = planUpdates(catalog, feed, newAtomState);
 assert.strictEqual(newAtomPlan[0].type, 'atomizer');
 assert.strictEqual(newAtomPlan[0].name, 'Test Beta RTA');
 assert.strictEqual(newAtomPlan[0].image, 'https://images.example/test-beta.jpg');
-assert(newAtomPlan[0].message.includes('exemplu pe clonă'));
-assert(newAtomPlan[0].message.includes('3 lichide potrivite din catalog'));
-assert(newAtomPlan[0].message.includes('https://smokee.ro/product/test-beta-rta/'));
-assert(newAtomPlan[0].message.includes('Pentru comenzi sunați la 0736 018 023.'));
+assert(newAtomPlan[0].message.includes('materialele pe clone sunt marcate distinct'));
+assert(newAtomPlan[0].message.includes('3 lichide analizate'));
+assert(!newAtomPlan[0].message.includes('smokee.ro/product'));
+assert(!newAtomPlan[0].message.includes('Pentru comenzi'));
+assert(!/preț|stoc|cumpărare/i.test(newAtomPlan[0].message));
 assert.strictEqual(newAtomPlan[0].liquidMatches.length, 3);
-newAtomPlan[0].liquidMatches.forEach(match => assert(newAtomPlan[0].message.includes(match.url)));
-const plannedAlbum = albumPhotoEntries(newAtomPlan[0]);
-assert.strictEqual(plannedAlbum.length, 4, 'an RTA post must contain one atomizer photo and three liquid photos');
-assert.strictEqual(new Set(plannedAlbum.map(item => item.image)).size, 4, 'all album photos must be distinct');
 newAtomPlan[0].liquidMatches.forEach(match => {
-  const photo = plannedAlbum.find(item => item.image === match.image);
-  assert(photo.caption.includes(match.url));
-  assert(photo.caption.includes('Descriere:'));
+  assert(newAtomPlan[0].message.includes(match.title));
+  assert(newAtomPlan[0].message.includes(match.profile));
+  assert(!newAtomPlan[0].message.includes(match.url));
 });
-const albumBody = multiPhotoFeedBody('Test album', ['media-1', 'media-2', 'media-3', 'media-4'], 'test-token');
-assert.strictEqual(albumBody.get('message'), 'Test album');
-assert.strictEqual(albumBody.get('access_token'), 'test-token');
-for (let index = 0; index < 4; index += 1) {
-  assert.deepStrictEqual(JSON.parse(albumBody.get(`attached_media[${index}]`)), { media_fbid: `media-${index + 1}` });
-}
-assert.strictEqual(smokeeProductUrl(atomA), 'https://smokee.ro/product/test-alpha-rta/');
-assert.deepStrictEqual(atomizerProduct(atomB), { url: 'https://smokee.ro/product/test-beta-rta/', stock: false });
-assert.strictEqual(stockFromProductHtml('<p class="stock out-of-stock">Stoc epuizat</p>'), false);
-assert.strictEqual(stockFromProductHtml('<p class="stock in-stock">În stoc</p>'), true);
-assert.strictEqual(stockFromProductHtml('<p class="stock in-stock">În stoc</p><article class="outofstock">Produs asociat</article>'), true);
-assert.strictEqual(stockFromProductHtml('<main>status necunoscut</main>', false), false);
+assert.strictEqual((newAtomPlan[0].message.match(/https:\/\//g) || []).length, 1, 'a future Facebook post must contain one guide link');
 assert.strictEqual(newAtomPlan[0].link, 'https://ghid-rta.ro/atomizoare/');
 assert.strictEqual(
   atomizerUrl({ name: 'Ambition Mods Amazier MTL RTA' }),
@@ -215,9 +196,9 @@ const reviewPlan = planUpdates(catalog, feed, reviewState);
 assert.strictEqual(reviewPlan[0].type, 'review');
 assert(reviewPlan[0].message.includes('Test Alpha RTA review'));
 assert.strictEqual(
-  planUpdates(catalog, feed, reviewState, { maxPosts: 4, dailyPublished: 4 }).length,
+  planUpdates(catalog, feed, reviewState, { maxPosts: 2, dailyPublished: 2 }).length,
   0,
-  'catalog updates must share the four-post daily ceiling'
+  'catalog updates must share the two-post daily ceiling'
 );
 
 const applied = clone(newAtomState);
@@ -226,6 +207,7 @@ assert(applied.seenAtomizers['test-beta-rta']);
 assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
+assert.strictEqual(applied.history[0].formatVersion, 'educational-single-photo-v1');
 
 const campaignState = emptyCampaignState();
 campaignState.postedAtomizers['test-alpha-rta'] = {
@@ -237,16 +219,17 @@ assert.strictEqual(editorialPlan.length, 1);
 assert.strictEqual(editorialPlan[0].name, 'Test Beta RTA');
 assert.strictEqual(editorialPlan[0].image, 'https://images.example/test-beta.jpg');
 assert(editorialPlan[0].message.includes('Fișă RTA MTL'));
-assert(editorialPlan[0].message.includes('3 lichide potrivite din catalog'));
+assert(editorialPlan[0].message.includes('3 lichide analizate'));
 assert.strictEqual(editorialPlan[0].liquidMatches.length, 3);
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
-assert.strictEqual(editorialApplied.pace, 'four-posts-per-day');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-single-photo-v1');
+assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 
 const dailyLimitedState = emptyCampaignState();
-for (let index = 0; index < 4; index += 1) {
+for (let index = 0; index < 2; index += 1) {
   dailyLimitedState.postedAtomizers[`manual-${index}`] = {
     name: `Manual ${index}`,
     publishedAt: `2026-07-13T0${index}:00:00.000Z`
@@ -255,9 +238,9 @@ for (let index = 0; index < 4; index += 1) {
 assert.strictEqual(
   planEditorialPosts(catalog, feed, dailyLimitedState, { maxPosts: 1, today: '2026-07-13' }).length,
   0,
-  'editorial publishing must stop after four posts in the Romanian calendar day'
+  'editorial publishing must stop after two posts in the Romanian calendar day'
 );
-assert.strictEqual(facebookPostsOnDate(dailyLimitedState, emptyState(), '2026-07-13'), 4);
+assert.strictEqual(facebookPostsOnDate(dailyLimitedState, emptyState(), '2026-07-13'), 2);
 const sharedPublishState = emptyState();
 sharedPublishState.history.push({
   key: 'review:test',
@@ -265,7 +248,7 @@ sharedPublishState.history.push({
   postId: 'page_post_1',
   publishedAt: '2026-07-13T04:00:00.000Z'
 });
-assert.strictEqual(facebookPostsOnDate(dailyLimitedState, sharedPublishState, '2026-07-13'), 5);
+assert.strictEqual(facebookPostsOnDate(dailyLimitedState, sharedPublishState, '2026-07-13'), 3);
 
 const exactVideoFallback = atomizerImage({
   name: 'Test Gamma RTA',
@@ -306,16 +289,18 @@ assert.deepStrictEqual(
 );
 
 const liveEditorialPreview = planEditorialPosts(liveCatalog, { schemaVersion: 1, models: {} }, emptyCampaignState(), {
-  maxPosts: 4,
+  maxPosts: 2,
   dailyPublished: 0,
   today: '2099-01-01'
 });
 assert(liveEditorialPreview.length > 0, 'the live editorial catalog must produce publishable previews');
 liveEditorialPreview.forEach(event => {
   assert.strictEqual(event.liquidMatches.length, 3);
-  assert(event.message.includes('3 lichide potrivite din catalog'));
-  assert.strictEqual(albumPhotoEntries(event).length, 4);
+  assert(event.message.includes('3 lichide analizate'));
+  assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023/i.test(event.message));
+  assert(!/smokee\.ro\/product|youtube\.com|youtu\.be/i.test(event.message));
+  assert.strictEqual((event.message.match(/https:\/\//g) || []).length, 1);
   assert(!/[ÃÂÄÈ]/.test(event.message), `mojibake detected in Facebook message for ${event.name}`);
 });
 
-console.log('Facebook publisher: baseline, three-liquid pairing, editorial series, deduplication, recommendation and review checks passed.');
+console.log('Facebook publisher: educational format, two-post daily limit, three-liquid pairing, deduplication, recommendation and review checks passed.');

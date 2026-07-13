@@ -16,12 +16,9 @@ const STATE_PATH = path.join(ROOT, 'data', 'facebook-publish-state.json');
 const CAMPAIGN_STATE_PATH = path.join(ROOT, 'data', 'facebook-campaign-state.json');
 const REVIEW_PATH = path.join(ROOT, 'data', 'youtube-reviews.json');
 const SITE = 'https://ghid-rta.ro';
-const RECOMMENDATIONS_URL = `${SITE}/recomandari-rta-mtl.html`;
-const LIQUIDS_URL = `${SITE}/lichide-net-tutun.html`;
-const SMOKEE_ATOMIZERS_URL = 'https://smokee.ro/product-category/atomizoare/';
-const SMOKEE_ORDER_PHONE = '0736 018 023';
 const DEFAULT_GRAPH_VERSION = 'v25.0';
-const DEFAULT_MAX_POSTS = 4;
+const DEFAULT_DAILY_POSTS = 2;
+const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
@@ -63,8 +60,6 @@ const publishEditorial = args.includes('--publish-editorial');
 const editorialPendingCountOnly = args.includes('--editorial-pending-count');
 const editorialUnpostedCountOnly = args.includes('--editorial-unposted-count');
 const checkEditorialOnly = args.includes('--check-editorial');
-const repairToday = args.includes('--repair-today');
-const checkRepairToday = args.includes('--check-repair-today');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -379,17 +374,15 @@ function topLiquidMatchesForAtom(atom, catalog, limit = 3) {
 
 function liquidMatchLines(matches) {
   if (!Array.isArray(matches) || !matches.length) return [];
-  const lines = ['', '3 lichide potrivite din catalogul Smokee:'];
+  const lines = ['', '3 lichide analizate pentru acest profil:'];
   matches.slice(0, 3).forEach((match, index) => {
     lines.push(
-      `${index + 1}. ${cleanText(match.title, 130)} [${cleanText(match.tag, 60)}]`,
-      `Descriere: ${cleanText(match.reason, 180)}`,
-      `Profil de potrivire: ${cleanText(match.profile, 110)}`,
-      `Preț, stoc și cumpărare: ${match.url}`
+      `${index + 1}. ${cleanText(match.title, 130)}`,
+      `Categorie aromatică: ${cleanText(match.tag || match.profile, 100)}`,
+      `Profil aromatic: ${cleanText(match.profile, 110)}`,
+      `Comportament estimat: ${cleanText(match.reason, 180)}`
     );
-    if (match.stock === false) lines.push(`Pentru comenzi sunați la ${SMOKEE_ORDER_PHONE}.`);
   });
-  lines.push(`Catalog lichide: ${LIQUIDS_URL}`);
   return lines;
 }
 
@@ -408,27 +401,6 @@ function atomizerUrl(atom) {
   const slug = slugify(publicAtomName(atom.name));
   const localPage = path.join(ROOT, 'atomizoare', slug, 'index.html');
   return fs.existsSync(localPage) ? `${SITE}/atomizoare/${slug}/` : `${SITE}/atomizoare/`;
-}
-
-function smokeeProductUrl(atom) {
-  return allSources(atom).map(sourceUrl).find(url => /^https:\/\/smokee\.ro\/product\//i.test(String(url || ''))) || '';
-}
-
-function atomizerProduct(atom) {
-  const url = smokeeProductUrl(atom);
-  if (!url) return { url: '', stock: null };
-  return {
-    url,
-    stock: typeof atom.stock === 'boolean' ? atom.stock : null
-  };
-}
-
-function atomizerPurchaseLines(atom) {
-  const product = atomizerProduct(atom);
-  if (!product.url) return [`Catalog RTA Smokee: ${SMOKEE_ATOMIZERS_URL}`];
-  const lines = [`Preț, stoc și cumpărare pe Smokee: ${product.url}`];
-  if (product.stock === false) lines.push(`Pentru comenzi sunați la ${SMOKEE_ORDER_PHONE}.`);
-  return lines;
 }
 
 function youtubeVideoId(value) {
@@ -543,7 +515,7 @@ function emptyCampaignState() {
     schemaVersion: 1,
     startedAt: nowIso(),
     updatedAt: '',
-    pace: 'four-posts-per-day',
+    pace: 'two-posts-per-day',
     pageId: '',
     postedAtomizers: {},
     history: []
@@ -555,7 +527,7 @@ function normalizeCampaignState(value) {
   state.schemaVersion = 1;
   state.startedAt = state.startedAt || nowIso();
   state.updatedAt = state.updatedAt || '';
-  state.pace = 'four-posts-per-day';
+  state.pace = 'two-posts-per-day';
   state.pageId = state.pageId || '';
   state.postedAtomizers = state.postedAtomizers && typeof state.postedAtomizers === 'object'
     ? state.postedAtomizers
@@ -600,16 +572,11 @@ function videosForAtom(feedVideos, slug) {
 }
 
 function directVideoLines(videos) {
-  const chosen = [];
-  const review = videos.find(video => video.kind === 'review');
-  const build = videos.find(video => video.kind === 'build');
-  if (review) chosen.push(review);
-  if (build && (!review || build.videoId !== review.videoId)) chosen.push(build);
-  return chosen.slice(0, 2).map(video => {
-    const label = video.kind === 'build' ? 'Build video' : 'Recenzie video';
-    const clone = video.scope === 'clone' ? ' (exemplu pe clonă, specificat distinct)' : '';
-    return `${label}${clone}: ${video.url}`;
-  });
+  if (!Array.isArray(videos) || !videos.length) return [];
+  const hasClone = videos.some(video => video.scope === 'clone');
+  return [
+    `Recenziile și buildurile video verificate sunt disponibile în fișa completă${hasClone ? '; materialele pe clone sunt marcate distinct' : ''}.`
+  ];
 }
 
 function atomizerMessage(atom, videos, liquidMatches = []) {
@@ -627,12 +594,11 @@ function atomizerMessage(atom, videos, liquidMatches = []) {
   if (videoLines.length) lines.push('', ...videoLines);
   lines.push(
     '',
-    ...atomizerPurchaseLines(atom),
-    `Fișă, surse și potriviri: ${atomizerUrl(atom)}`,
-    `Recomandări: ${RECOMMENDATIONS_URL}`,
+    `Fișa completă, cu surse, recenzii și potriviri: ${atomizerUrl(atom)}`,
     '',
+    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
     'Conținut informativ destinat exclusiv adulților 18+.',
-    '#RTAMTL #AtomizoareRTA #BuildRTA #Smokee'
+    '#GhidRTAMTL #AtomizoareRTA #BuildRTA #Smokee'
   );
   return lines.join('\n');
 }
@@ -652,12 +618,11 @@ function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
   if (videoLines.length) lines.push('', ...videoLines);
   lines.push(
     '',
-    ...atomizerPurchaseLines(atom),
-    `Fișă, surse și potriviri: ${atomizerUrl(atom)}`,
-    `Ghid interactiv: ${SITE}/`,
+    `Fișa completă, cu surse, recenzii și potriviri: ${atomizerUrl(atom)}`,
     '',
+    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
     'Conținut informativ destinat exclusiv adulților 18+.',
-    '#RTAMTL #AtomizoareRTA #BuildRTA #Smokee'
+    '#GhidRTAMTL #AtomizoareRTA #BuildRTA #Smokee'
   );
   return lines.join('\n');
 }
@@ -675,34 +640,34 @@ function recommendationMessage(atom, liquidMatches = []) {
   lines.push(...liquidMatchLines(liquidMatches));
   lines.push(
     '',
-    ...atomizerPurchaseLines(atom),
-    `Fișă și surse: ${atomizerUrl(atom)}`,
-    `Motorul de recomandare: ${RECOMMENDATIONS_URL}`,
+    `Fișa completă, cu surse și potriviri: ${atomizerUrl(atom)}`,
     '',
+    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
     'Conținut informativ destinat exclusiv adulților 18+.',
-    '#RTAMTL #RecomandariRTA #BuildRTA #Smokee'
+    '#GhidRTAMTL #RecomandariRTA #BuildRTA #Smokee'
   );
   return lines.join('\n');
 }
 
-function reviewMessage(atom, videos) {
+function reviewMessage(atom, videos, liquidMatches = []) {
   const lines = [
     `Review nou verificat: ${atom.name}`,
     '',
-    'Legăturile de mai jos identifică direct modelul. Materialele realizate pe clone sunt marcate distinct.'
+    'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'
   ];
   videos.slice(0, 2).forEach(video => {
     const label = video.kind === 'build' ? 'Build' : 'Recenzie';
     const clone = video.scope === 'clone' ? ' pe clonă; nu este recenzie a originalului' : '';
-    lines.push('', `${label}${clone}: ${video.title}`, video.url);
+    lines.push('', `${label}${clone}: ${cleanText(video.title, 160)}`);
   });
+  lines.push(...liquidMatchLines(liquidMatches));
   lines.push(
     '',
-    ...atomizerPurchaseLines(atom),
-    `Fișa atomizorului: ${atomizerUrl(atom)}`,
+    `Fișa completă, cu materialele video și sursele verificate: ${atomizerUrl(atom)}`,
     '',
+    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
     'Conținut informativ destinat exclusiv adulților 18+.',
-    '#RTAMTL #ReviewRTA #BuildRTA #Smokee'
+    '#GhidRTAMTL #ReviewRTA #BuildRTA #Smokee'
   );
   return lines.join('\n');
 }
@@ -713,7 +678,7 @@ function planUpdates(catalog, feed, state, options = {}) {
     : 0;
   const limit = Math.min(
     Math.max(1, Number(options.maxPosts || DEFAULT_MAX_POSTS)),
-    Math.max(0, 4 - alreadyPublished)
+    Math.max(0, DEFAULT_DAILY_POSTS - alreadyPublished)
   );
   if (limit === 0) return [];
   const atoms = uniqueAtomizers(catalog);
@@ -737,7 +702,6 @@ function planUpdates(catalog, feed, state, options = {}) {
       link: atomizerUrl(atom),
       image: atomizerImage(atom, atomVideos),
       imageCandidates: atomizerImageCandidates(atom, atomVideos),
-      atomizerProduct: atomizerProduct(atom),
       message: atomizerMessage(atom, atomVideos, liquidMatches),
       liquidMatches,
       signature: recommendationSignature(atom),
@@ -761,7 +725,6 @@ function planUpdates(catalog, feed, state, options = {}) {
       link: atomizerUrl(atom),
       image: atomizerImage(atom, atomVideos),
       imageCandidates: atomizerImageCandidates(atom, atomVideos),
-      atomizerProduct: atomizerProduct(atom),
       message: recommendationMessage(atom, liquidMatches),
       liquidMatches,
       signature,
@@ -779,16 +742,18 @@ function planUpdates(catalog, feed, state, options = {}) {
   Array.from(unseenBySlug.entries()).sort(([a], [b]) => a.localeCompare(b)).forEach(([slug, modelVideos]) => {
     const atom = atomsBySlug.get(slug);
     const chosen = modelVideos.slice(0, 2);
+    const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
+    if (liquidMatches.length !== 3) return;
     events.push({
       type: 'review',
       key: `review:${slug}:${chosen.map(video => video.videoId).join(',')}`,
       slug,
       name: atom.name,
-      link: chosen[0].url,
+      link: atomizerUrl(atom),
       image: atomizerImage(atom, chosen),
       imageCandidates: atomizerImageCandidates(atom, chosen),
-      atomizerProduct: atomizerProduct(atom),
-      message: reviewMessage(atom, chosen),
+      message: reviewMessage(atom, chosen, liquidMatches),
+      liquidMatches,
       signature: recommendationSignature(atom),
       videoIds: chosen.map(video => video.videoId)
     });
@@ -814,8 +779,7 @@ function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
     name: event.name,
     postId,
     publishedAt: timestamp,
-    albumVersion: event.liquidMatches ? 'rta-plus-3-liquids-v1' : '',
-    atomizerProduct: event.atomizerProduct || null,
+    formatVersion: 'educational-single-photo-v1',
     liquids: liquidStateItems(event.liquidMatches)
   });
   state.history = state.history.slice(0, 200);
@@ -828,7 +792,7 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
   const publishedToday = Number.isFinite(Number(options.dailyPublished))
     ? Math.max(0, Number(options.dailyPublished))
     : campaignPublishedToday;
-  const dailyRemaining = Math.max(0, 4 - publishedToday);
+  const dailyRemaining = Math.max(0, DEFAULT_DAILY_POSTS - publishedToday);
   const limit = Math.min(Math.max(1, Number(options.maxPosts || 1)), dailyRemaining);
   if (limit === 0) return [];
   const videos = reviewEntries(feed);
@@ -861,7 +825,6 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
       link: atomizerUrl(candidate.atom),
       image: candidate.image,
       imageCandidates: candidate.imageCandidates,
-      atomizerProduct: atomizerProduct(candidate.atom),
       message: editorialAtomizerMessage(candidate.atom, candidate.atomVideos, liquidMatches),
       liquidMatches,
       videoIds: candidate.atomVideos.map(video => video.videoId),
@@ -880,10 +843,9 @@ function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()
     name: event.name,
     publishedAt: timestamp,
     image: event.image,
-    source: 'facebook-api',
+    source: 'facebook-api-educational',
     postId,
-    albumVersion: 'rta-plus-3-liquids-v1',
-    atomizerProduct: event.atomizerProduct || null,
+    formatVersion: 'educational-single-photo-v1',
     liquids: liquidStateItems(event.liquidMatches)
   };
   state.history.unshift({
@@ -891,8 +853,7 @@ function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()
     name: event.name,
     publishedAt: timestamp,
     postId,
-    albumVersion: 'rta-plus-3-liquids-v1',
-    atomizerProduct: event.atomizerProduct || null,
+    formatVersion: 'educational-single-photo-v1',
     liquids: liquidStateItems(event.liquidMatches)
   });
   state.history = state.history.slice(0, 200);
@@ -1036,90 +997,6 @@ async function waitForPublicImage(url) {
   throw new Error(`Fotografia produsului nu este disponibilă (${lastStatus || 'network'}): ${url}`);
 }
 
-function stockFromProductHtml(html, fallback = null) {
-  const source = String(html || '');
-  const stockParagraph = source.match(/<p\b[^>]*class=["'][^"']*\bstock\b[^"']*["'][^>]*>[\s\S]*?<\/p>/i);
-  if (stockParagraph) {
-    if (/\b(?:outofstock|out-of-stock)\b|stoc\s+epuizat/i.test(stockParagraph[0])) return false;
-    if (/\b(?:instock|in-stock)\b|\bîn\s+stoc\b/i.test(stockParagraph[0])) return true;
-  }
-  const schemaAvailability = source.match(/"availability"\s*:\s*"https?:\\?\/\\?\/schema\.org\\?\/(InStock|OutOfStock)"/i);
-  if (schemaAvailability) return /^instock$/i.test(schemaAvailability[1]);
-  const bodyClass = source.match(/<body\b[^>]*class=["']([^"']+)["']/i);
-  if (bodyClass && /\boutofstock\b/i.test(bodyClass[1])) return false;
-  if (bodyClass && /\binstock\b/i.test(bodyClass[1])) return true;
-  return typeof fallback === 'boolean' ? fallback : null;
-}
-
-async function currentSmokeeStock(product) {
-  if (!product || !/^https:\/\/smokee\.ro\/product\//i.test(String(product.url || ''))) {
-    return product && typeof product.stock === 'boolean' ? product.stock : null;
-  }
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8000);
-  try {
-    const response = await fetch(product.url, {
-      method: 'GET',
-      redirect: 'follow',
-      cache: 'no-store',
-      signal: controller.signal,
-      headers: { 'user-agent': 'Ghid-RTA-MTL-Facebook/1.0' }
-    });
-    if (!response.ok) return typeof product.stock === 'boolean' ? product.stock : null;
-    return stockFromProductHtml(await response.text(), product.stock);
-  } catch (error) {
-    return typeof product.stock === 'boolean' ? product.stock : null;
-  } finally {
-    clearTimeout(timer);
-  }
-}
-
-function applyAtomizerStockToMessage(event, stock) {
-  if (!event || stock !== false || !event.atomizerProduct || !event.atomizerProduct.url) return;
-  const purchaseLine = `Preț, stoc și cumpărare pe Smokee: ${event.atomizerProduct.url}`;
-  const unavailableLine = `Pentru comenzi sunați la ${SMOKEE_ORDER_PHONE}.`;
-  if (!event.message.includes(`${purchaseLine}\n${unavailableLine}`)) {
-    event.message = event.message.replace(purchaseLine, `${purchaseLine}\n${unavailableLine}`);
-  }
-}
-
-function albumPhotoEntries(event) {
-  const atomizerCaption = [
-    event.name,
-    event.atomizerProduct && event.atomizerProduct.url
-      ? `Preț, stoc și cumpărare: ${event.atomizerProduct.url}`
-      : `Fișă tehnică: ${event.link}`
-  ].join('\n');
-  const photos = [{ type: 'atomizer', image: event.image, caption: atomizerCaption }];
-  [].concat(event.liquidMatches || []).slice(0, 3).forEach(match => {
-    const lines = [
-      cleanText(match.title, 150),
-      `Descriere: ${cleanText(match.reason, 200)}`,
-      `Profil de potrivire: ${cleanText(match.profile, 120)}`,
-      `Preț, stoc și cumpărare: ${match.url}`
-    ];
-    if (match.stock === false) lines.push(`Pentru comenzi sunați la ${SMOKEE_ORDER_PHONE}.`);
-    photos.push({ type: 'liquid', image: match.image, caption: lines.join('\n') });
-  });
-  return photos;
-}
-
-function multiPhotoFeedBody(message, mediaIds, token) {
-  const body = new URLSearchParams({ message, access_token: token });
-  mediaIds.forEach((id, index) => {
-    body.set(`attached_media[${index}]`, JSON.stringify({ media_fbid: id }));
-  });
-  return body;
-}
-
-async function deleteFacebookObject(objectId) {
-  const params = new URLSearchParams({ access_token: accessToken });
-  const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(objectId)}?${params}`, {
-    method: 'DELETE'
-  }, 1);
-  if (payload.success !== true) throw new Error(`Meta did not confirm deletion for ${objectId}.`);
-}
-
 async function selectPublicAtomizerImage(event) {
   const candidates = Array.from(new Set([].concat(event.imageCandidates || [], event.image).filter(Boolean)));
   let lastImageError;
@@ -1138,64 +1015,10 @@ async function prepareEventForPublish(event) {
   await waitForPublicLink(event.link);
   if (!event.image) return event;
   event.image = await selectPublicAtomizerImage(event);
-  if (event.atomizerProduct && event.atomizerProduct.url) {
-    event.atomizerProduct.stock = await currentSmokeeStock(event.atomizerProduct);
-    applyAtomizerStockToMessage(event, event.atomizerProduct.stock);
-  }
-  if (Array.isArray(event.liquidMatches) && event.liquidMatches.length) {
-    if (event.liquidMatches.length !== 3) {
-      throw new Error(`Albumul pentru ${event.name} nu are exact trei lichide.`);
-    }
-    const liquidImages = event.liquidMatches.map(match => String(match.image || '').trim());
-    if (new Set([event.image].concat(liquidImages)).size !== 4) {
-      throw new Error(`Albumul pentru ${event.name} nu are patru fotografii distincte.`);
-    }
-    for (const match of event.liquidMatches) {
-      if (!/^https:\/\/smokee\.ro\/product\//i.test(String(match.url || ''))) {
-        throw new Error(`Linkul Smokee lipsește pentru lichidul ${match.title}.`);
-      }
-      await waitForPublicImage(match.image);
-    }
-    event.albumPhotos = albumPhotoEntries(event);
-  }
   return event;
 }
 
 async function publishPreparedEvent(event) {
-  if (event.albumPhotos && event.albumPhotos.length === 4) {
-    const mediaIds = [];
-    try {
-      for (const photoEntry of event.albumPhotos) {
-        const photoBody = new URLSearchParams({
-          url: photoEntry.image,
-          caption: photoEntry.caption,
-          published: 'false',
-          access_token: accessToken
-        });
-        const photo = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/photos`, {
-          method: 'POST',
-          headers: { 'content-type': 'application/x-www-form-urlencoded' },
-          body: photoBody
-        });
-        const mediaId = String(photo.id || '').trim();
-        if (!mediaId) throw new Error(`Meta did not return a media ID for ${event.name}.`);
-        mediaIds.push(mediaId);
-      }
-      const body = multiPhotoFeedBody(event.message, mediaIds, accessToken);
-      const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
-        method: 'POST',
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        body
-      });
-      if (!payload.id) throw new Error(`Meta did not return an album post ID for ${event.name}.`);
-      return payload.id;
-    } catch (error) {
-      for (const mediaId of mediaIds) {
-        try { await deleteFacebookObject(mediaId); } catch (cleanupError) { /* best effort */ }
-      }
-      throw error;
-    }
-  }
   if (event.image) {
     const photoBody = new URLSearchParams({
       url: event.image,
@@ -1245,7 +1068,6 @@ function editorialEventForAtom(atom, catalog, feed) {
     link: atomizerUrl(atom),
     image: atomizerImage(atom, atomVideos),
     imageCandidates: atomizerImageCandidates(atom, atomVideos),
-    atomizerProduct: atomizerProduct(atom),
     message: editorialAtomizerMessage(atom, atomVideos, liquidMatches),
     liquidMatches,
     videoIds: atomVideos.map(video => video.videoId),
@@ -1253,137 +1075,7 @@ function editorialEventForAtom(atom, catalog, feed) {
   };
 }
 
-async function recentPublishedPagePosts() {
-  const params = new URLSearchParams({
-    fields: 'id,message,created_time,permalink_url,full_picture',
-    limit: '100',
-    since: String(Math.floor((Date.now() - 48 * 60 * 60 * 1000) / 1000)),
-    access_token: accessToken
-  });
-  const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/published_posts?${params}`);
-  return Array.isArray(payload.data) ? payload.data : [];
-}
-
-function closestPostByTime(entry, posts, usedIds, targetDate) {
-  const entryTime = new Date(entry.publishedAt).getTime();
-  const candidates = posts.filter(post => {
-    return post && post.id && !usedIds.has(post.id) && dateInRomania(post.created_time) === targetDate;
-  }).map(post => ({
-    post,
-    distance: Math.abs(new Date(post.created_time).getTime() - entryTime)
-  })).sort((a, b) => a.distance - b.distance);
-  if (!candidates.length || candidates[0].distance > 2 * 60 * 60 * 1000) return null;
-  return candidates[0].post;
-}
-
-function resolveCampaignPostIds(entries, posts, targetDate) {
-  const usedIds = new Set();
-  return entries.map(entry => {
-    if (entry.postId) {
-      usedIds.add(entry.postId);
-      return { entry, postId: entry.postId };
-    }
-    const name = normalizeMatchText(entry.name);
-    let candidate = posts.filter(post => {
-      return post && post.id && !usedIds.has(post.id) && dateInRomania(post.created_time) === targetDate &&
-        normalizeMatchText(post.message).includes(name);
-    }).sort((a, b) => {
-      const entryTime = new Date(entry.publishedAt).getTime();
-      return Math.abs(new Date(a.created_time).getTime() - entryTime) - Math.abs(new Date(b.created_time).getTime() - entryTime);
-    })[0];
-    if (!candidate) candidate = closestPostByTime(entry, posts, usedIds, targetDate);
-    if (!candidate) throw new Error(`Postarea existentă nu a putut fi identificată sigur pentru ${entry.name}.`);
-    usedIds.add(candidate.id);
-    return { entry, postId: candidate.id };
-  });
-}
-
-function applyRepairedCampaignPost(state, event, postId, timestamp = nowIso()) {
-  const previous = state.postedAtomizers[event.slug] || {};
-  state.updatedAt = timestamp;
-  state.pageId = pageId || state.pageId || '';
-  state.postedAtomizers[event.slug] = {
-    ...previous,
-    name: event.name,
-    publishedAt: timestamp,
-    originalPublishedAt: previous.originalPublishedAt || previous.publishedAt || timestamp,
-    repairedAt: timestamp,
-    albumVersion: 'rta-plus-3-liquids-v1',
-    image: event.image,
-    source: 'facebook-api-repaired',
-    postId,
-    atomizerProduct: event.atomizerProduct || null,
-    liquids: liquidStateItems(event.liquidMatches)
-  };
-  const historyIndex = state.history.findIndex(item => item.slug === event.slug);
-  const historyItem = {
-    ...(historyIndex >= 0 ? state.history[historyIndex] : {}),
-    slug: event.slug,
-    name: event.name,
-    publishedAt: timestamp,
-    repairedAt: timestamp,
-    albumVersion: 'rta-plus-3-liquids-v1',
-    postId,
-    atomizerProduct: event.atomizerProduct || null,
-    liquids: liquidStateItems(event.liquidMatches)
-  };
-  if (historyIndex >= 0) state.history.splice(historyIndex, 1);
-  state.history.unshift(historyItem);
-  state.history = state.history.slice(0, 200);
-}
-
-async function repairTodayCampaignPosts(options = {}) {
-  if (!pageId || !accessToken) {
-    throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
-  }
-  const targetDate = todayInRomania();
-  const catalog = loadCatalog(ROOT);
-  const feed = readJson(REVIEW_PATH, { schemaVersion: 1, models: {} });
-  const state = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
-  const entries = Object.entries(state.postedAtomizers).map(([slug, item]) => ({ slug, ...item }))
-    .filter(item => dateInRomania(item.publishedAt) === targetDate && item.albumVersion !== 'rta-plus-3-liquids-v1')
-    .sort((a, b) => String(a.publishedAt).localeCompare(String(b.publishedAt)));
-  if (!entries.length) {
-    console.log(`Facebook repair: today's posts already use the complete four-photo format.`);
-    return;
-  }
-  await verifyFacebookPage();
-  const posts = await recentPublishedPagePosts();
-  const resolved = resolveCampaignPostIds(entries, posts, targetDate);
-  const atomsBySlug = new Map(uniqueAtomizers(catalog).map(atom => [slugify(atom.name), atom]));
-  const prepared = [];
-  for (const resolvedEntry of resolved) {
-    const atom = atomsBySlug.get(resolvedEntry.entry.slug);
-    if (!atom) throw new Error(`Atomizorul ${resolvedEntry.entry.name} nu mai există în catalog.`);
-    const event = editorialEventForAtom(atom, catalog, feed);
-    await prepareEventForPublish(event);
-    prepared.push({ ...resolvedEntry, event });
-  }
-
-  if (options.checkOnly) {
-    prepared.forEach(item => console.log(`Facebook repair ready: ${item.event.name} (${item.postId}) -> four-photo album.`));
-    return;
-  }
-
-  for (const item of prepared) {
-    const replacementId = await publishPreparedEvent(item.event);
-    try {
-      await deleteFacebookObject(item.postId);
-    } catch (error) {
-      try { await deleteFacebookObject(replacementId); } catch (rollbackError) { /* best effort */ }
-      throw new Error(`Postarea veche pentru ${item.event.name} nu a putut fi înlocuită: ${error.message}`);
-    }
-    applyRepairedCampaignPost(state, item.event, replacementId);
-    writeJsonAtomic(CAMPAIGN_STATE_PATH, state);
-    console.log(`Facebook repaired today's post: ${item.event.name} (${replacementId}).`);
-  }
-}
-
 async function main() {
-  if (repairToday || checkRepairToday) {
-    await repairTodayCampaignPosts({ checkOnly: checkRepairToday });
-    return;
-  }
   if (verifyPublishCapabilityOnly) {
     await verifyFacebookPublishCapability();
     return;
@@ -1511,9 +1203,7 @@ module.exports = {
   atomizerImage,
   atomizerImageCandidates,
   atomizerMessage,
-  atomizerProduct,
   atomizerUrl,
-  albumPhotoEntries,
   baselineState,
   editorialAtomizerMessage,
   dateInRomania,
@@ -1522,7 +1212,6 @@ module.exports = {
   facebookPostsOnDate,
   inferAtomRoles,
   liquidMatchLines,
-  multiPhotoFeedBody,
   normalizeCampaignState,
   planEditorialPosts,
   planUpdates,
@@ -1531,8 +1220,6 @@ module.exports = {
   recommendationSignature,
   reviewEntries,
   reviewMessage,
-  smokeeProductUrl,
-  stockFromProductHtml,
   topLiquidMatchesForAtom,
   uniqueAtomizers,
   validateState

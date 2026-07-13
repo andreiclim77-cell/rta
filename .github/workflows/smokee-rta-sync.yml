@@ -124,7 +124,7 @@ jobs:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
-        run: node tools/facebook-publisher.js --publish --max-posts 4
+        run: node tools/facebook-publisher.js --publish --max-posts 2
 
       - name: Commit Facebook publish state
         if: always() && steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0'

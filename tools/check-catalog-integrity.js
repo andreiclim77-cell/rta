@@ -97,7 +97,7 @@ check(/var NEWS_WINDOW_DAYS=7;[\s\S]*days>=0&&days<NEWS_WINDOW_DAYS/.test(source
 check(/cron: ['"]0,20 3 \* \* \*['"]/.test(workflow), 'EEST 06:00/06:20 schedule is missing');
 check(/cron: ['"]0,20 4 \* \* \*['"]/.test(workflow), 'EET 06:00/06:20 schedule is missing');
 check(/facebook-publisher\.js --pending-count/.test(workflow), 'Facebook update detection is missing from the catalog workflow');
-check(/facebook-publisher\.js --publish --max-posts 4/.test(workflow), 'Facebook publisher is missing from the catalog workflow');
+check(/facebook-publisher\.js --publish --max-posts 2/.test(workflow), 'Facebook publisher is missing from the catalog workflow');
 check(/FACEBOOK_PAGE_ACCESS_TOKEN: \$\{\{ secrets\.FACEBOOK_PAGE_ACCESS_TOKEN \}\}/.test(workflow), 'Facebook Page token is not read from GitHub Secrets');
 check(!/FACEBOOK_PAGE_ACCESS_TOKEN\s*=\s*['"][^'"]+['"]/.test(facebookPublisher), 'Facebook Page token must not be stored in source code');
 check(/Europe\/Bucharest/.test(workflow), 'Bucharest timezone gate is missing');
