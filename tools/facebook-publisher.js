@@ -229,6 +229,19 @@ function normalizeCampaignState(value) {
   return state;
 }
 
+function facebookPostsOnDate(campaignState, publishState, targetDate = todayInRomania()) {
+  const posts = new Set();
+  Object.entries(campaignState && campaignState.postedAtomizers || {}).forEach(([slug, item]) => {
+    if (dateInRomania(item && item.publishedAt) !== targetDate) return;
+    posts.add(String(item.postId || `editorial:${slug}:${item.publishedAt}`));
+  });
+  (publishState && Array.isArray(publishState.history) ? publishState.history : []).forEach(item => {
+    if (dateInRomania(item && item.publishedAt) !== targetDate) return;
+    posts.add(String(item.postId || `update:${item.key || item.name}:${item.publishedAt}`));
+  });
+  return posts.size;
+}
+
 function validateState(state) {
   const errors = [];
   if (!state || state.schemaVersion !== 1) errors.push('invalid schemaVersion');
@@ -353,7 +366,14 @@ function reviewMessage(atom, videos) {
 }
 
 function planUpdates(catalog, feed, state, options = {}) {
-  const limit = Math.max(1, Number(options.maxPosts || DEFAULT_MAX_POSTS));
+  const alreadyPublished = Number.isFinite(Number(options.dailyPublished))
+    ? Math.max(0, Number(options.dailyPublished))
+    : 0;
+  const limit = Math.min(
+    Math.max(1, Number(options.maxPosts || DEFAULT_MAX_POSTS)),
+    Math.max(0, 4 - alreadyPublished)
+  );
+  if (limit === 0) return [];
   const atoms = uniqueAtomizers(catalog);
   const atomsBySlug = new Map(atoms.map(atom => [slugify(atom.name), atom]));
   const videos = reviewEntries(feed);
@@ -444,9 +464,10 @@ function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
 function planEditorialPosts(catalog, feed, campaignState, options = {}) {
   const state = normalizeCampaignState(campaignState);
   const targetDate = String(options.today || todayInRomania());
-  const publishedToday = Object.values(state.postedAtomizers)
-    .filter(item => dateInRomania(item && item.publishedAt) === targetDate)
-    .length;
+  const campaignPublishedToday = facebookPostsOnDate(state, emptyState(), targetDate);
+  const publishedToday = Number.isFinite(Number(options.dailyPublished))
+    ? Math.max(0, Number(options.dailyPublished))
+    : campaignPublishedToday;
   const dailyRemaining = Math.max(0, 4 - publishedToday);
   const limit = Math.min(Math.max(1, Number(options.maxPosts || 1)), dailyRemaining);
   if (limit === 0) return [];
@@ -702,7 +723,9 @@ async function main() {
     const catalog = loadCatalog(ROOT);
     const feed = readJson(REVIEW_PATH, { schemaVersion: 1, models: {} });
     let campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
-    const events = planEditorialPosts(catalog, feed, campaignState, { maxPosts });
+    const publishState = readJson(STATE_PATH, emptyState());
+    const dailyPublished = facebookPostsOnDate(campaignState, publishState);
+    const events = planEditorialPosts(catalog, feed, campaignState, { maxPosts, dailyPublished });
 
     if (editorialUnpostedCountOnly) {
       const remaining = uniqueAtomizers(catalog).filter(atom => !campaignState.postedAtomizers[slugify(atom.name)]).length;
@@ -752,7 +775,9 @@ async function main() {
 
   const errors = validateState(state);
   if (errors.length) throw new Error(errors.join('\n'));
-  const events = planUpdates(catalog, feed, state, { maxPosts });
+  const campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
+  const dailyPublished = facebookPostsOnDate(campaignState, state);
+  const events = planUpdates(catalog, feed, state, { maxPosts, dailyPublished });
 
   if (pendingCountOnly) {
     process.stdout.write(String(events.length));
@@ -808,6 +833,7 @@ module.exports = {
   dateInRomania,
   emptyCampaignState,
   emptyState,
+  facebookPostsOnDate,
   normalizeCampaignState,
   planEditorialPosts,
   planUpdates,

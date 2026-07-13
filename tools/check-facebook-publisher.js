@@ -10,6 +10,8 @@ const {
   baselineState,
   dateInRomania,
   emptyCampaignState,
+  emptyState,
+  facebookPostsOnDate,
   planEditorialPosts,
   planUpdates,
   recommendationSignature,
@@ -93,6 +95,11 @@ delete reviewState.seenVideos.abc123DEF45;
 const reviewPlan = planUpdates(catalog, feed, reviewState);
 assert.strictEqual(reviewPlan[0].type, 'review');
 assert(reviewPlan[0].message.includes('Test Alpha RTA review'));
+assert.strictEqual(
+  planUpdates(catalog, feed, reviewState, { maxPosts: 4, dailyPublished: 4 }).length,
+  0,
+  'catalog updates must share the four-post daily ceiling'
+);
 
 const applied = clone(newAtomState);
 applyPublishedEvent(applied, newAtomPlan[0], '122_test', '2026-07-13T01:00:00.000Z');
@@ -127,6 +134,15 @@ assert.strictEqual(
   0,
   'editorial publishing must stop after four posts in the Romanian calendar day'
 );
+assert.strictEqual(facebookPostsOnDate(dailyLimitedState, emptyState(), '2026-07-13'), 4);
+const sharedPublishState = emptyState();
+sharedPublishState.history.push({
+  key: 'review:test',
+  name: 'Test review',
+  postId: 'page_post_1',
+  publishedAt: '2026-07-13T04:00:00.000Z'
+});
+assert.strictEqual(facebookPostsOnDate(dailyLimitedState, sharedPublishState, '2026-07-13'), 5);
 
 const exactVideoFallback = atomizerImage({
   name: 'Test Gamma RTA',
