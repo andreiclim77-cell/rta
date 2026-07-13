@@ -93,6 +93,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh api --method PUT "repos/${{ github.repository }}/actions/workflows/facebook-editorial-series.yml/disable"
 
-      - name: Report models waiting for verified images
+      - name: Report queued editorial models
         if: steps.window.outputs.run == 'true' && steps.pending.outputs.count == '0' && steps.pending.outputs.remaining != '0'
-        run: echo "${{ steps.pending.outputs.remaining }} atomizer(s) remain queued until a verified product image becomes available."
+        run: echo "${{ steps.pending.outputs.remaining }} atomizer(s) remain queued; the Romanian daily limit may already be complete."

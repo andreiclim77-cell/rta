@@ -46,17 +46,23 @@ function nowIso() {
   return new Date().toISOString();
 }
 
-function todayInRomania() {
+function dateInRomania(value = new Date()) {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) return '';
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Europe/Bucharest',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit'
-  }).formatToParts(new Date()).reduce((acc, part) => {
+  }).formatToParts(date).reduce((acc, part) => {
     acc[part.type] = part.value;
     return acc;
   }, {});
   return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function todayInRomania() {
+  return dateInRomania(new Date());
 }
 
 function readJson(file, fallback) {
@@ -436,8 +442,14 @@ function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
 }
 
 function planEditorialPosts(catalog, feed, campaignState, options = {}) {
-  const limit = Math.max(1, Number(options.maxPosts || 1));
   const state = normalizeCampaignState(campaignState);
+  const targetDate = String(options.today || todayInRomania());
+  const publishedToday = Object.values(state.postedAtomizers)
+    .filter(item => dateInRomania(item && item.publishedAt) === targetDate)
+    .length;
+  const dailyRemaining = Math.max(0, 4 - publishedToday);
+  const limit = Math.min(Math.max(1, Number(options.maxPosts || 1)), dailyRemaining);
+  if (limit === 0) return [];
   const videos = reviewEntries(feed);
   return uniqueAtomizers(catalog)
     .filter(atom => !state.postedAtomizers[slugify(atom.name)])
@@ -709,7 +721,7 @@ async function main() {
       throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
     }
     if (!events.length) {
-      console.log('Facebook editorial series is complete or waiting for a verified product image.');
+      console.log('Facebook editorial series is complete, the daily limit is reached, or a verified product image is pending.');
       return;
     }
 
@@ -793,6 +805,7 @@ module.exports = {
   atomizerUrl,
   baselineState,
   editorialAtomizerMessage,
+  dateInRomania,
   emptyCampaignState,
   emptyState,
   normalizeCampaignState,

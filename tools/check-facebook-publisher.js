@@ -8,6 +8,7 @@ const {
   atomizerImageCandidates,
   atomizerUrl,
   baselineState,
+  dateInRomania,
   emptyCampaignState,
   planEditorialPosts,
   planUpdates,
@@ -112,6 +113,20 @@ assert(editorialPlan[0].message.includes('Fișă RTA MTL'));
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.pace, 'four-posts-per-day');
+assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
+
+const dailyLimitedState = emptyCampaignState();
+for (let index = 0; index < 4; index += 1) {
+  dailyLimitedState.postedAtomizers[`manual-${index}`] = {
+    name: `Manual ${index}`,
+    publishedAt: `2026-07-13T0${index}:00:00.000Z`
+  };
+}
+assert.strictEqual(
+  planEditorialPosts(catalog, feed, dailyLimitedState, { maxPosts: 1, today: '2026-07-13' }).length,
+  0,
+  'editorial publishing must stop after four posts in the Romanian calendar day'
+);
 
 const exactVideoFallback = atomizerImage({
   name: 'Test Gamma RTA',
