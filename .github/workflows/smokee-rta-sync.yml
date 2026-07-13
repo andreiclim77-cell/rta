@@ -87,6 +87,7 @@ jobs:
         run: |
           node tools/validate-app-js.js
           node tools/check-catalog-integrity.js
+          node tools/check-validation-queue.js
           node tools/check-youtube-review-data.js
           node tools/check-facebook-publisher.js
           node tools/facebook-publisher.js --check

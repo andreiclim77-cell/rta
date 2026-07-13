@@ -26,11 +26,19 @@ const ORIGIN = 'https://ghid-rta-smokee-sync-backup.ghid-rta-smokee.workers.dev'
   });
   if (rejected.status !== 404) failures.push(`event endpoint accepted an untrusted origin: ${rejected.status}`);
 
+  const metrics = await fetch(`${ORIGIN}/__rta-metrics?days=7`, {
+    headers: { origin: 'https://ghid-rta.ro' }
+  });
+  const metricsData = metrics.ok ? await metrics.json() : null;
+  if (!metrics.ok || !metricsData || metricsData.schemaVersion !== 1 || !Array.isArray(metricsData.daily)) {
+    failures.push(`aggregated metrics endpoint failed: ${metrics.status}`);
+  }
+
   if (failures.length) {
     console.error(failures.map(item => `- ${item}`).join('\n'));
     process.exit(1);
   }
-  console.log('Cloudflare Worker: sync health, image cache and anonymous event endpoint passed.');
+  console.log('Cloudflare Worker: sync health, image cache, anonymous events and aggregated metrics passed.');
 })().catch(error => {
   console.error(error);
   process.exit(1);

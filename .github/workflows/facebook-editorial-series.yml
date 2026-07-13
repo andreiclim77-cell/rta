@@ -1,0 +1,98 @@
+name: Facebook RTA editorial series
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Four posts/day in Romania: 09:05, 12:35, 16:35 and 20:35.
+    # Both UTC offsets cover EEST and EET; the first step keeps only the valid local hour.
+    - cron: "5 6,7 * * *"
+    - cron: "35 9,10 * * *"
+    - cron: "35 13,14 * * *"
+    - cron: "35 17,18 * * *"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: facebook-rta-editorial-series
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Confirm Bucharest editorial window
+        id: window
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "run=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          hour="$(TZ=Europe/Bucharest date +%H)"
+          case "$hour" in
+            09|12|16|20) echo "run=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "run=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Check out repository
+        if: steps.window.outputs.run == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        if: steps.window.outputs.run == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate editorial publisher
+        if: steps.window.outputs.run == 'true'
+        run: |
+          node --check tools/facebook-publisher.js
+          node tools/check-facebook-publisher.js
+          node tools/facebook-publisher.js --check-editorial --max-posts 1
+
+      - name: Detect remaining editorial posts
+        if: steps.window.outputs.run == 'true'
+        id: pending
+        shell: bash
+        run: |
+          echo "count=$(node tools/facebook-publisher.js --editorial-pending-count --max-posts 1)" >> "$GITHUB_OUTPUT"
+          echo "remaining=$(node tools/facebook-publisher.js --editorial-unposted-count)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish one verified atomizer
+        if: steps.window.outputs.run == 'true' && steps.pending.outputs.count != '0'
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/facebook-publisher.js --publish-editorial --max-posts 1
+
+      - name: Commit editorial state
+        if: steps.window.outputs.run == 'true' && steps.pending.outputs.count != '0'
+        shell: bash
+        run: |
+          if git diff --quiet -- data/facebook-campaign-state.json; then
+            echo "No editorial state change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/facebook-campaign-state.json
+          git commit -m "Record Facebook editorial post"
+          git pull --rebase
+          git push
+
+      - name: Stop completed editorial series
+        if: steps.window.outputs.run == 'true' && steps.pending.outputs.remaining == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method PUT "repos/${{ github.repository }}/actions/workflows/facebook-editorial-series.yml/disable"
+
+      - name: Report models waiting for verified images
+        if: steps.window.outputs.run == 'true' && steps.pending.outputs.count == '0' && steps.pending.outputs.remaining != '0'
+        run: echo "${{ steps.pending.outputs.remaining }} atomizer(s) remain queued until a verified product image becomes available."

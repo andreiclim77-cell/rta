@@ -4,6 +4,7 @@ const DEFAULT_WORKFLOW = "smokee-rta-sync.yml";
 const DEFAULT_REF = "main";
 const SMOKEE_MEDIA_PREFIX = "/media/smokee/";
 const ANALYTICS_PATH = "/__rta-event";
+const METRICS_PATH = "/__rta-metrics";
 function envValue(env, key, fallback) {
   return env && env[key] ? String(env[key]) : fallback;
 }
@@ -23,7 +24,7 @@ function analyticsCors(request) {
   const allowed = /^https:\/\/(?:www\.)?ghid-rta\.ro$/i.test(origin);
   return {
     "access-control-allow-origin": allowed ? origin : "https://ghid-rta.ro",
-    "access-control-allow-methods": "POST, OPTIONS",
+    "access-control-allow-methods": "GET, POST, OPTIONS",
     "access-control-allow-headers": "content-type",
     "access-control-max-age": "86400",
     vary: "Origin"
@@ -34,7 +35,115 @@ function analyticsValue(value, limit = 80) {
   return String(value == null ? "" : value).replace(/[\r\n\t]/g, " ").slice(0, limit);
 }
 
-async function recordAnalytics(request, env) {
+function metricDate(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Europe/Bucharest",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(date).reduce((acc, part) => {
+    acc[part.type] = part.value;
+    return acc;
+  }, {});
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function incrementMetric(map, key, limit = 40) {
+  const clean = analyticsValue(key || "unknown", 64) || "unknown";
+  if (!Object.prototype.hasOwnProperty.call(map, clean) && Object.keys(map).length >= limit) {
+    map.other = (map.other || 0) + 1;
+    return;
+  }
+  map[clean] = (map[clean] || 0) + 1;
+}
+
+async function updateMetricSummary(payload, request, env) {
+  if (!env.RTA_METRICS) return;
+  const date = metricDate();
+  const key = `metrics:${date}`;
+  const current = await env.RTA_METRICS.get(key, "json") || {
+    schemaVersion: 1,
+    date,
+    updatedAt: "",
+    events: {},
+    routes: {},
+    tools: {},
+    devices: {},
+    languages: {},
+    countries: {}
+  };
+  const event = analyticsValue(payload.event, 32);
+  incrementMetric(current.events, event, 20);
+  if (payload.route) incrementMetric(current.routes, payload.route, 50);
+  if (payload.tool) incrementMetric(current.tools, payload.tool, 40);
+  if (payload.device) incrementMetric(current.devices, payload.device, 10);
+  if (payload.language) incrementMetric(current.languages, payload.language, 10);
+  incrementMetric(current.countries, request.cf && request.cf.country || "unknown", 40);
+  current.updatedAt = new Date().toISOString();
+  await env.RTA_METRICS.put(key, JSON.stringify(current), { expirationTtl: 60 * 60 * 24 * 400 });
+}
+
+function mergeMetricMap(target, source) {
+  Object.entries(source || {}).forEach(([key, value]) => {
+    target[key] = (target[key] || 0) + Number(value || 0);
+  });
+}
+
+function sortedMetricRows(map, limit = 12) {
+  return Object.entries(map || {})
+    .map(([name, value]) => ({ name, value: Number(value || 0) }))
+    .sort((a, b) => b.value - a.value || a.name.localeCompare(b.name))
+    .slice(0, limit);
+}
+
+async function readMetricSummary(request, env) {
+  const headers = analyticsCors(request);
+  if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
+  if (request.method !== "GET" || !env.RTA_METRICS) return jsonResponse({ ok: false }, 404);
+  const url = new URL(request.url);
+  const days = Math.min(90, Math.max(7, Number(url.searchParams.get("days") || 30)));
+  const dates = [];
+  for (let offset = days - 1; offset >= 0; offset -= 1) {
+    dates.push(metricDate(new Date(Date.now() - offset * 86400000)));
+  }
+  const rows = await Promise.all(dates.map(date => env.RTA_METRICS.get(`metrics:${date}`, "json")));
+  const totals = { events: {}, routes: {}, tools: {}, devices: {}, languages: {}, countries: {} };
+  const daily = dates.map((date, index) => {
+    const row = rows[index] || {};
+    Object.keys(totals).forEach(key => mergeMetricMap(totals[key], row[key]));
+    return {
+      date,
+      pageViews: Number(row.events && row.events.page_view || 0),
+      toolOpens: Number(row.events && row.events.tool_open || 0),
+      searches: Number(row.events && row.events.search_submit || 0),
+      smokeeClicks: Number(row.events && row.events.smokee_click || 0)
+    };
+  });
+  return new Response(JSON.stringify({
+    schemaVersion: 1,
+    generatedAt: new Date().toISOString(),
+    days,
+    totals: {
+      pageViews: Number(totals.events.page_view || 0),
+      toolOpens: Number(totals.events.tool_open || 0),
+      toolCompletions: Number(totals.events.tool_complete || 0),
+      searches: Number(totals.events.search_submit || 0),
+      smokeeClicks: Number(totals.events.smokee_click || 0),
+      clientErrors: Number(totals.events.client_error || 0)
+    },
+    routes: sortedMetricRows(totals.routes),
+    tools: sortedMetricRows(totals.tools),
+    devices: sortedMetricRows(totals.devices, 6),
+    languages: sortedMetricRows(totals.languages, 6),
+    countries: sortedMetricRows(totals.countries, 10),
+    daily
+  }), {
+    status: 200,
+    headers: { ...headers, "content-type": "application/json; charset=utf-8", "cache-control": "public, max-age=60" }
+  });
+}
+
+async function recordAnalytics(request, env, context) {
   const headers = analyticsCors(request);
   if (request.method === "OPTIONS") return new Response(null, { status: 204, headers });
   const origin = request.headers.get("origin") || "";
@@ -67,6 +176,9 @@ async function recordAnalytics(request, env) {
       doubles: [1, Number.isFinite(Number(payload.value)) ? Number(payload.value) : 0],
       indexes: [event]
     });
+  }
+  if (context && env.RTA_METRICS) {
+    context.waitUntil(updateMetricSummary(payload, request, env).catch(error => console.log("rta_metric_summary_error", String(error))));
   }
   console.log("rta_event", JSON.stringify({
     event,
@@ -222,7 +334,8 @@ export default {
 
   async fetch(request, env, context) {
     const url = new URL(request.url);
-    if (url.pathname === ANALYTICS_PATH) return recordAnalytics(request, env);
+    if (url.pathname === ANALYTICS_PATH) return recordAnalytics(request, env, context);
+    if (url.pathname === METRICS_PATH) return readMetricSummary(request, env);
     if (url.pathname.startsWith(SMOKEE_MEDIA_PREFIX)) {
       try {
         return await cachedSmokeeMedia(request, url, context);

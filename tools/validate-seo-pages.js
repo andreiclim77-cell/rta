@@ -31,7 +31,8 @@ const legacyPages = [
   'wizard-smokee.html',
   'rta-mtl-smokee.html',
   'legislativ-vape.html',
-  'smokee-link-kit.html'
+  'smokee-link-kit.html',
+  'audienta.html'
 ];
 
 function htmlFilesUnder(folder) {

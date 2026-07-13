@@ -26,6 +26,8 @@ Endpointul manual `/trigger` raspunde doar daca exista `TRIGGER_TOKEN` si reques
 - Workflow-ul GitHub face sincronizarea RTA, consumabile si lichide direct pe GitHub.
 - Imaginile din `wp-content/uploads` sunt servite prin Cloudflare, cu cache de sapte zile si rezerva stale.
 - Evenimentele anonime de utilizare ale ghidului ajung in logurile Worker-ului; nu sunt trimise nume, emailuri sau identificatori de utilizator. Pentru rapoarte agregate, bindingul Analytics Engine poate fi activat ulterior din contul Cloudflare.
+- Agregarile anonime pe zile sunt pastrate in KV si publicate prin `GET /__rta-metrics?days=30` pentru panoul de audienta al ghidului.
+- Panoul nu afiseaza si nu stocheaza IP-uri, nume, emailuri sau identificatori individuali.
 
 ## Secrete necesare
 

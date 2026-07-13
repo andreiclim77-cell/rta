@@ -2,9 +2,12 @@
 
 const assert = require('assert');
 const {
+  applyEditorialPublished,
   applyPublishedEvent,
   atomizerUrl,
   baselineState,
+  emptyCampaignState,
+  planEditorialPosts,
   planUpdates,
   recommendationSignature,
   validateState
@@ -94,4 +97,18 @@ assert(applied.seenAtomizers['test-beta-rta']);
 assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 
-console.log('Facebook publisher: baseline, deduplication, recommendation and review checks passed.');
+const campaignState = emptyCampaignState();
+campaignState.postedAtomizers['test-alpha-rta'] = {
+  name: 'Test Alpha RTA',
+  publishedAt: '2026-07-13T01:00:00.000Z'
+};
+const editorialPlan = planEditorialPosts(catalog, feed, campaignState, { maxPosts: 1 });
+assert.strictEqual(editorialPlan.length, 1);
+assert.strictEqual(editorialPlan[0].name, 'Test Beta RTA');
+assert.strictEqual(editorialPlan[0].image, 'https://images.example/test-beta.jpg');
+assert(editorialPlan[0].message.includes('Fișă RTA MTL'));
+const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
+assert.strictEqual(editorialApplied.pace, 'four-posts-per-day');
+
+console.log('Facebook publisher: baseline, editorial series, deduplication, recommendation and review checks passed.');

@@ -308,7 +308,7 @@ header:before{content:"";display:block;height:3px;background:linear-gradient(90d
 .head-tools{display:flex;gap:10px;align-items:center;justify-content:flex-end}
 .tool-pill{border:1px solid #2f2f2f;background:#080808;color:#fff;border-radius:999px;padding:8px 11px;font-size:13px;font-weight:800;white-space:nowrap}
 .tool-pill:hover{border-color:#ff7a1a;color:#ffb66f}
-.visit-counter{display:inline-flex;align-items:center;min-height:30px;border:1px solid #2f2f2f;background:#080808;border-radius:999px;padding:5px 8px;white-space:nowrap;overflow:hidden}
+.visit-counter{display:inline-flex;align-items:center;min-height:30px;border:1px solid #2f2f2f;background:#080808;border-radius:999px;padding:5px 8px;white-space:nowrap;overflow:hidden;text-decoration:none}
 .visit-counter img{display:block;height:20px;min-width:58px;max-width:120px}
 .visit-counter img:not([src]){display:none}
 .counter-fallback{display:none;color:#f1f1f1;font-size:12px;font-weight:800}
@@ -1989,10 +1989,10 @@ function rtaEarlyAccept(){
       </div>
     </div>
     <div class="head-tools">
-      <span class="visit-counter" title="Contor public de vizite">
-        <img id="visitCounter" data-src="https://visitor-badge.laobi.icu/badge?page_id=ghid-rta-mtl-smokee&left_text=Vizite&left_color=%23111111&right_color=%23ff7a1a" alt="Vizite" referrerpolicy="no-referrer" loading="lazy">
-        <span class="counter-fallback">Vizite</span>
-      </span>
+      <a class="visit-counter" href="/audienta.html" title="Aggregated audience and documentation progress">
+        <img id="visitCounter" data-src="https://visitor-badge.laobi.icu/badge?page_id=ghid-rta-mtl-smokee&left_text=Visits&left_color=%23111111&right_color=%23ff7a1a" alt="Visits" referrerpolicy="no-referrer" loading="lazy">
+        <span class="counter-fallback">Visits</span>
+      </a>
     </div>
     <nav class="navlinks" aria-label="Navigatie principala">
       <button class="navbtn active" data-tab="home">Home</button>

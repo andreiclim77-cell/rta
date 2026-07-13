@@ -7,6 +7,7 @@ const { loadCatalog, publicAtomName, slugify } = require('./catalog-data');
 
 const ROOT = path.resolve(__dirname, '..');
 const STATE_PATH = path.join(ROOT, 'data', 'facebook-publish-state.json');
+const CAMPAIGN_STATE_PATH = path.join(ROOT, 'data', 'facebook-campaign-state.json');
 const REVIEW_PATH = path.join(ROOT, 'data', 'youtube-reviews.json');
 const SITE = 'https://ghid-rta.ro';
 const RECOMMENDATIONS_URL = `${SITE}/recomandari-rta-mtl.html`;
@@ -21,6 +22,10 @@ const pendingCountOnly = args.includes('--pending-count');
 const verifyCredentialsOnly = args.includes('--verify-credentials');
 const diagnoseCredentialsOnly = args.includes('--diagnose-credentials');
 const verifyPublishCapabilityOnly = args.includes('--verify-publish-capability');
+const publishEditorial = args.includes('--publish-editorial');
+const editorialPendingCountOnly = args.includes('--editorial-pending-count');
+const editorialUnpostedCountOnly = args.includes('--editorial-unposted-count');
+const checkEditorialOnly = args.includes('--check-editorial');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -158,6 +163,32 @@ function baselineState(catalog, feed, timestamp = nowIso()) {
   return state;
 }
 
+function emptyCampaignState() {
+  return {
+    schemaVersion: 1,
+    startedAt: nowIso(),
+    updatedAt: '',
+    pace: 'four-posts-per-day',
+    pageId: '',
+    postedAtomizers: {},
+    history: []
+  };
+}
+
+function normalizeCampaignState(value) {
+  const state = value && typeof value === 'object' ? value : emptyCampaignState();
+  state.schemaVersion = 1;
+  state.startedAt = state.startedAt || nowIso();
+  state.updatedAt = state.updatedAt || '';
+  state.pace = 'four-posts-per-day';
+  state.pageId = state.pageId || '';
+  state.postedAtomizers = state.postedAtomizers && typeof state.postedAtomizers === 'object'
+    ? state.postedAtomizers
+    : {};
+  state.history = Array.isArray(state.history) ? state.history : [];
+  return state;
+}
+
 function validateState(state) {
   const errors = [];
   if (!state || state.schemaVersion !== 1) errors.push('invalid schemaVersion');
@@ -209,6 +240,29 @@ function atomizerMessage(atom, videos) {
     '',
     `Fișă, surse și potriviri: ${atomizerUrl(atom)}`,
     `Recomandări: ${RECOMMENDATIONS_URL}`,
+    '',
+    'Conținut informativ destinat exclusiv adulților 18+.',
+    '#RTAMTL #AtomizoareRTA #BuildRTA #Smokee'
+  );
+  return lines.join('\n');
+}
+
+function editorialAtomizerMessage(atom, videos) {
+  const profile = cleanText(atom.classes || atom.dna, 280);
+  const build = topBuild(atom);
+  const lines = [
+    `Fișă RTA MTL: ${atom.name}`,
+    '',
+    'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'
+  ];
+  if (profile) lines.push('', `Potrivire aromatică: ${profile}`);
+  if (build) lines.push(`Build de pornire: ${build}`);
+  const videoLines = directVideoLines(videos);
+  if (videoLines.length) lines.push('', ...videoLines);
+  lines.push(
+    '',
+    `Fișă, surse și potriviri: ${atomizerUrl(atom)}`,
+    `Ghid interactiv: ${SITE}/`,
     '',
     'Conținut informativ destinat exclusiv adulților 18+.',
     '#RTAMTL #AtomizoareRTA #BuildRTA #Smokee'
@@ -343,6 +397,53 @@ function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
   state.history = state.history.slice(0, 200);
 }
 
+function planEditorialPosts(catalog, feed, campaignState, options = {}) {
+  const limit = Math.max(1, Number(options.maxPosts || 1));
+  const state = normalizeCampaignState(campaignState);
+  const videos = reviewEntries(feed);
+  return uniqueAtomizers(catalog)
+    .filter(atom => !state.postedAtomizers[slugify(atom.name)])
+    .map(atom => {
+      const slug = slugify(atom.name);
+      const atomVideos = videosForAtom(videos, slug);
+      return {
+        type: 'editorial',
+        key: `editorial:${slug}`,
+        slug,
+        name: atom.name,
+        link: atomizerUrl(atom),
+        image: atomizerImage(atom),
+        message: editorialAtomizerMessage(atom, atomVideos),
+        videoIds: atomVideos.map(video => video.videoId),
+        videoCount: atomVideos.length
+      };
+    })
+    .filter(event => Boolean(event.image))
+    .sort((a, b) => b.videoCount - a.videoCount || a.name.localeCompare(b.name))
+    .slice(0, limit);
+}
+
+function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()) {
+  const state = normalizeCampaignState(stateValue);
+  state.updatedAt = timestamp;
+  state.pageId = pageId || state.pageId || '';
+  state.postedAtomizers[event.slug] = {
+    name: event.name,
+    publishedAt: timestamp,
+    image: event.image,
+    source: 'facebook-api',
+    postId
+  };
+  state.history.unshift({
+    slug: event.slug,
+    name: event.name,
+    publishedAt: timestamp,
+    postId
+  });
+  state.history = state.history.slice(0, 200);
+  return state;
+}
+
 function retryableStatus(status) {
   return status === 429 || status >= 500;
 }
@@ -462,9 +563,27 @@ async function waitForPublicLink(url) {
   throw new Error(`Pagina publică nu este încă disponibilă (${lastStatus || 'network'}): ${url}`);
 }
 
+async function waitForPublicImage(url) {
+  if (!/^https:\/\//i.test(url)) throw new Error('Fotografia atomizorului lipsește.');
+  let lastStatus = 0;
+  for (let attempt = 0; attempt < 4; attempt += 1) {
+    try {
+      const response = await fetch(url, { method: 'GET', redirect: 'follow', cache: 'no-store' });
+      lastStatus = response.status;
+      const type = response.headers.get('content-type') || '';
+      if (response.ok && /^image\//i.test(type)) return;
+    } catch (error) {
+      lastStatus = 0;
+    }
+    await new Promise(resolve => setTimeout(resolve, 5000));
+  }
+  throw new Error(`Fotografia atomizorului nu este disponibilă (${lastStatus || 'network'}): ${url}`);
+}
+
 async function publishEvent(event) {
   await waitForPublicLink(event.link);
   if (event.image) {
+    await waitForPublicImage(event.image);
     const photoBody = new URLSearchParams({
       url: event.image,
       caption: event.message,
@@ -511,6 +630,44 @@ async function main() {
     }
     const page = await verifyFacebookPage();
     console.log(`Facebook credentials valid for Page: ${page.name || page.id}.`);
+    return;
+  }
+
+  if (publishEditorial || editorialPendingCountOnly || editorialUnpostedCountOnly || checkEditorialOnly) {
+    const catalog = loadCatalog(ROOT);
+    const feed = readJson(REVIEW_PATH, { schemaVersion: 1, models: {} });
+    let campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
+    const events = planEditorialPosts(catalog, feed, campaignState, { maxPosts });
+
+    if (editorialUnpostedCountOnly) {
+      const remaining = uniqueAtomizers(catalog).filter(atom => !campaignState.postedAtomizers[slugify(atom.name)]).length;
+      process.stdout.write(String(remaining));
+      return;
+    }
+    if (editorialPendingCountOnly) {
+      process.stdout.write(String(events.length));
+      return;
+    }
+    if (checkEditorialOnly) {
+      console.log(`Facebook editorial state valid; ${events.length} eligible post(s), limit ${maxPosts}.`);
+      return;
+    }
+    if (!pageId || !accessToken) {
+      throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
+    }
+    if (!events.length) {
+      console.log('Facebook editorial series is complete or waiting for a verified product image.');
+      return;
+    }
+
+    const page = await verifyFacebookPage();
+    console.log(`Facebook editorial publisher connected to Page: ${page.name || page.id}.`);
+    for (const event of events) {
+      const postId = await publishEvent(event);
+      campaignState = applyEditorialPublished(campaignState, event, postId);
+      writeJsonAtomic(CAMPAIGN_STATE_PATH, campaignState);
+      console.log(`Facebook editorial post published: ${event.name} (${postId}).`);
+    }
     return;
   }
 
@@ -575,12 +732,17 @@ async function main() {
 }
 
 module.exports = {
+  applyEditorialPublished,
   applyPublishedEvent,
   atomizerImage,
   atomizerMessage,
   atomizerUrl,
   baselineState,
+  editorialAtomizerMessage,
+  emptyCampaignState,
   emptyState,
+  normalizeCampaignState,
+  planEditorialPosts,
   planUpdates,
   recommendationMessage,
   recommendationSignature,

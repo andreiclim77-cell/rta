@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Audiență Ghid RTA MTL - utilizare anonimă și progres</title>
+  <meta name="description" content="Panou agregat pentru utilizarea Ghidului RTA MTL: vizualizări, instrumente accesate, căutări, clickuri Smokee și progresul documentării atomizoarelor.">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="theme-color" content="#080808">
+  <link rel="canonical" href="https://ghid-rta.ro/audienta.html">
+  <link rel="alternate" hreflang="ro-RO" href="https://ghid-rta.ro/audienta.html">
+  <link rel="alternate" hreflang="en" href="https://ghid-rta.ro/audienta.html?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://ghid-rta.ro/audienta.html">
+  <link rel="icon" href="/assets/favicon-192.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Ghid RTA MTL - Smokee">
+  <meta property="og:title" content="Audiență Ghid RTA MTL">
+  <meta property="og:description" content="Utilizare agregată, fără identificatori individuali, și progresul documentării RTA MTL.">
+  <meta property="og:url" content="https://ghid-rta.ro/audienta.html">
+  <meta property="og:image" content="https://ghid-rta.ro/assets/facebook-cover-ghid-rta-smokee.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Audiență Ghid RTA MTL">
+  <meta name="twitter:description" content="Utilizare agregată și progresul documentării RTA MTL.">
+  <meta name="twitter:image" content="https://ghid-rta.ro/assets/facebook-cover-ghid-rta-smokee.png">
+  <link rel="stylesheet" href="/assets/seo-pages.css">
+  <link rel="stylesheet" href="/assets/audience.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Audiență Ghid RTA MTL","description":"Utilizare agregată și progresul documentării RTA MTL.","url":"https://ghid-rta.ro/audienta.html","inLanguage":["ro-RO","en"]}</script>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="/"><img src="/assets/smokee-logo-official.png" alt="Smokee"><b>Ghid RTA MTL</b></a>
+      <nav class="top-actions" aria-label="Navigare">
+        <button class="pill language active" type="button" data-lang="ro">RO</button>
+        <button class="pill language" type="button" data-lang="en">EN</button>
+        <a class="pill hot" href="/" data-copy="back">Înapoi în ghid</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="audience-page">
+    <section class="audience-hero">
+      <div>
+        <p class="kicker" data-copy="kicker">Date agregate</p>
+        <h1 data-copy="title">Audiența ghidului</h1>
+        <p class="lead" data-copy="intro">O imagine clară a utilizării ghidului și a progresului documentării, fără profiluri individuale.</p>
+      </div>
+      <div class="period-control" role="group" aria-label="Perioadă">
+        <button type="button" data-days="7">7</button>
+        <button type="button" data-days="30" class="active">30</button>
+        <button type="button" data-days="90">90</button>
+        <span data-copy="days">zile</span>
+      </div>
+    </section>
+
+    <section class="metric-strip" aria-label="Indicatori principali">
+      <article class="metric-tile"><span data-copy="views">Vizualizări</span><strong id="metricViews">--</strong></article>
+      <article class="metric-tile"><span data-copy="tools">Instrumente deschise</span><strong id="metricTools">--</strong></article>
+      <article class="metric-tile"><span data-copy="completed">Rezultate finalizate</span><strong id="metricCompleted">--</strong></article>
+      <article class="metric-tile"><span data-copy="searches">Căutări</span><strong id="metricSearches">--</strong></article>
+      <article class="metric-tile"><span data-copy="smokee">Accesări Smokee</span><strong id="metricSmokee">--</strong></article>
+      <article class="metric-tile quality"><span data-copy="documented">RTA comparabile</span><strong id="metricValidated">--</strong></article>
+    </section>
+
+    <section class="audience-band">
+      <div class="section-heading">
+        <p class="kicker" data-copy="evolutionKicker">Evoluție</p>
+        <h2 data-copy="evolution">Vizualizări zilnice</h2>
+      </div>
+      <div class="daily-chart" id="dailyChart" aria-label="Grafic vizualizări zilnice"></div>
+    </section>
+
+    <section class="audience-columns">
+      <div class="ranking-panel">
+        <p class="kicker" data-copy="toolsKicker">Interacțiune</p>
+        <h2 data-copy="popularTools">Instrumente accesate</h2>
+        <div class="ranking" id="toolRanking"></div>
+      </div>
+      <div class="ranking-panel">
+        <p class="kicker" data-copy="routesKicker">Navigare</p>
+        <h2 data-copy="popularRoutes">Zone accesate</h2>
+        <div class="ranking" id="routeRanking"></div>
+      </div>
+    </section>
+
+    <section class="validation-band">
+      <div>
+        <p class="kicker" data-copy="qualityKicker">Controlul documentării</p>
+        <h2 data-copy="qualityTitle">Acoperire tehnică RTA</h2>
+        <p data-copy="qualityIntro">Modelele intră în comparații complete numai când au suficiente repere despre surse, build și arhitectură.</p>
+      </div>
+      <div class="validation-meter" aria-label="Progres documentare">
+        <div><span id="validationBar"></span></div>
+        <strong id="validationSummary">--</strong>
+        <small id="validationQueue">--</small>
+      </div>
+    </section>
+
+    <section class="privacy-note">
+      <b data-copy="privacyTitle">Date fără identificare individuală</b>
+      <p data-copy="privacyText">Sunt numărate evenimente agregate precum deschiderea unui instrument sau accesarea unui link. Nu sunt colectate nume, emailuri, conturi sau istoricul individual al utilizatorilor.</p>
+      <span id="lastUpdated">--</span>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="wrap"><span>Ghid informativ 18+ pentru RTA MTL.</span><a href="/">ghid-rta.ro</a></div></footer>
+  <script src="/assets/audience.js" defer></script>
+</body>
+</html>

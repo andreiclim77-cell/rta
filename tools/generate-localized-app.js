@@ -29,6 +29,10 @@ html = html
   .replace(/<meta name="twitter:title" content="[^"]*"\s*\/>/, '<meta name="twitter:title" content="MTL RTA Guide - Smokee" />')
   .replace(/<meta name="twitter:description" content="[^"]*"\s*\/>/, '<meta name="twitter:description" content="MTL RTA recommendations for NET and tobacco liquids, atomizers, wires, builds and temperature control." />')
   .replace('<meta name="twitter:url" content="https://ghid-rta.ro/" />', '<meta name="twitter:url" content="https://ghid-rta.ro/en/" />')
+  .replace('title="Audiență agregată și progres documentare"', 'title="Aggregated audience and documentation progress"')
+  .replace('left_text=Vizite', 'left_text=Visits')
+  .replace('alt="Vizite"', 'alt="Visits"')
+  .replace('<span class="counter-fallback">Vizite</span>', '<span class="counter-fallback">Visits</span>')
   .replace('https://mystic-profile-online-full-test-cmln.onrender.com/?lang=ro', 'https://mystic-profile-online-full-test-cmln.onrender.com/?lang=en')
   .replace(/("url"\s*:\s*)"https:\/\/ghid-rta\.ro\/"/g, '$1"https://ghid-rta.ro/en/"')
   .replace(/("inLanguage"\s*:\s*)"ro-RO"/g, '$1"en"');
