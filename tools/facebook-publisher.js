@@ -3,7 +3,13 @@
 const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
-const { loadCatalog, publicAtomName, slugify } = require('./catalog-data');
+const {
+  allSources,
+  loadCatalog,
+  publicAtomName,
+  slugify,
+  sourceUrl
+} = require('./catalog-data');
 
 const ROOT = path.resolve(__dirname, '..');
 const STATE_PATH = path.join(ROOT, 'data', 'facebook-publish-state.json');
@@ -84,9 +90,37 @@ function atomizerUrl(atom) {
   return fs.existsSync(localPage) ? `${SITE}/atomizoare/${slug}/` : `${SITE}/atomizoare/`;
 }
 
-function atomizerImage(atom) {
+function youtubeVideoId(value) {
+  const raw = String(value || '').trim();
+  if (!/^https?:\/\//i.test(raw)) return '';
+  try {
+    const url = new URL(raw);
+    const host = url.hostname.toLowerCase().replace(/^www\./, '');
+    let id = '';
+    if (host === 'youtu.be') id = url.pathname.split('/').filter(Boolean)[0] || '';
+    if (host === 'youtube.com' || host.endsWith('.youtube.com')) {
+      if (url.pathname === '/watch') id = url.searchParams.get('v') || '';
+      if (/^\/(?:embed|shorts)\//i.test(url.pathname)) id = url.pathname.split('/').filter(Boolean)[1] || '';
+    }
+    return /^[A-Za-z0-9_-]{6,}$/.test(id) ? id : '';
+  } catch (error) {
+    return '';
+  }
+}
+
+function atomizerImageCandidates(atom, videos = []) {
   const image = String(atom && atom.image || '').trim();
-  return /^https:\/\//i.test(image) ? image : '';
+  const candidates = /^https:\/\//i.test(image) ? [image] : [];
+  const videoIds = [].concat(videos || [])
+    .map(video => youtubeVideoId(video && (video.url || video.videoId)))
+    .concat(allSources(atom || {}).map(source => youtubeVideoId(sourceUrl(source))))
+    .filter(Boolean);
+  videoIds.forEach(videoId => candidates.push(`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`));
+  return Array.from(new Set(candidates));
+}
+
+function atomizerImage(atom, videos = []) {
+  return atomizerImageCandidates(atom, videos)[0] || '';
 }
 
 function recommendationSignature(atom) {
@@ -331,7 +365,8 @@ function planUpdates(catalog, feed, state, options = {}) {
       slug,
       name: atom.name,
       link: atomizerUrl(atom),
-      image: atomizerImage(atom),
+      image: atomizerImage(atom, atomVideos),
+      imageCandidates: atomizerImageCandidates(atom, atomVideos),
       message: atomizerMessage(atom, atomVideos),
       signature: recommendationSignature(atom),
       videoIds: atomVideos.map(video => video.videoId)
@@ -343,13 +378,15 @@ function planUpdates(catalog, feed, state, options = {}) {
     if (newSlugs.has(slug) || !state.seenAtomizers[slug]) return;
     const signature = recommendationSignature(atom);
     if (state.recommendationSignatures[slug] === signature) return;
+    const atomVideos = videosForAtom(videos, slug);
     events.push({
       type: 'recommendation',
       key: `recommendation:${slug}:${signature}`,
       slug,
       name: atom.name,
       link: atomizerUrl(atom),
-      image: atomizerImage(atom),
+      image: atomizerImage(atom, atomVideos),
+      imageCandidates: atomizerImageCandidates(atom, atomVideos),
       message: recommendationMessage(atom),
       signature,
       videoIds: []
@@ -372,7 +409,8 @@ function planUpdates(catalog, feed, state, options = {}) {
       slug,
       name: atom.name,
       link: chosen[0].url,
-      image: atomizerImage(atom),
+      image: atomizerImage(atom, chosen),
+      imageCandidates: atomizerImageCandidates(atom, chosen),
       message: reviewMessage(atom, chosen),
       signature: recommendationSignature(atom),
       videoIds: chosen.map(video => video.videoId)
@@ -412,7 +450,8 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
         slug,
         name: atom.name,
         link: atomizerUrl(atom),
-        image: atomizerImage(atom),
+        image: atomizerImage(atom, atomVideos),
+        imageCandidates: atomizerImageCandidates(atom, atomVideos),
         message: editorialAtomizerMessage(atom, atomVideos),
         videoIds: atomVideos.map(video => video.videoId),
         videoCount: atomVideos.length
@@ -572,6 +611,7 @@ async function waitForPublicImage(url) {
       lastStatus = response.status;
       const type = response.headers.get('content-type') || '';
       if (response.ok && /^image\//i.test(type)) return;
+      if (response.status >= 400 && response.status < 500 && response.status !== 429) break;
     } catch (error) {
       lastStatus = 0;
     }
@@ -583,9 +623,22 @@ async function waitForPublicImage(url) {
 async function publishEvent(event) {
   await waitForPublicLink(event.link);
   if (event.image) {
-    await waitForPublicImage(event.image);
+    const candidates = Array.from(new Set([].concat(event.imageCandidates || [], event.image).filter(Boolean)));
+    let selectedImage = '';
+    let lastImageError;
+    for (const candidate of candidates) {
+      try {
+        await waitForPublicImage(candidate);
+        selectedImage = candidate;
+        break;
+      } catch (error) {
+        lastImageError = error;
+      }
+    }
+    if (!selectedImage) throw lastImageError || new Error(`Fotografia atomizorului lipsește: ${event.name}`);
+    event.image = selectedImage;
     const photoBody = new URLSearchParams({
-      url: event.image,
+      url: selectedImage,
       caption: event.message,
       published: 'true',
       access_token: accessToken
@@ -735,6 +788,7 @@ module.exports = {
   applyEditorialPublished,
   applyPublishedEvent,
   atomizerImage,
+  atomizerImageCandidates,
   atomizerMessage,
   atomizerUrl,
   baselineState,

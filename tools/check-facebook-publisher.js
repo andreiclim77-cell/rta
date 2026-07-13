@@ -4,6 +4,8 @@ const assert = require('assert');
 const {
   applyEditorialPublished,
   applyPublishedEvent,
+  atomizerImage,
+  atomizerImageCandidates,
   atomizerUrl,
   baselineState,
   emptyCampaignState,
@@ -110,5 +112,30 @@ assert(editorialPlan[0].message.includes('Fișă RTA MTL'));
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.pace, 'four-posts-per-day');
+
+const exactVideoFallback = atomizerImage({
+  name: 'Test Gamma RTA',
+  image: '',
+  sources: [{ URL: 'https://www.youtube.com/watch?v=vid123Exact' }]
+});
+assert.strictEqual(exactVideoFallback, 'https://i.ytimg.com/vi/vid123Exact/hqdefault.jpg');
+assert.deepStrictEqual(
+  atomizerImageCandidates({
+    name: 'Test Multi-source RTA',
+    sources: [
+      { URL: 'https://www.youtube.com/watch?v=first123Vid' },
+      { URL: 'https://youtu.be/second456Vid' }
+    ]
+  }),
+  [
+    'https://i.ytimg.com/vi/first123Vid/hqdefault.jpg',
+    'https://i.ytimg.com/vi/second456Vid/hqdefault.jpg'
+  ]
+);
+assert.strictEqual(
+  atomizerImage({ name: 'Test Search RTA', sources: [{ URL: 'https://www.youtube.com/results?search_query=test+rta' }] }),
+  '',
+  'YouTube search pages must never be used as product images'
+);
 
 console.log('Facebook publisher: baseline, editorial series, deduplication, recommendation and review checks passed.');
