@@ -59,6 +59,7 @@ function incrementMetric(map, key, limit = 40) {
 
 async function updateMetricSummary(payload, request, env) {
   if (!env.RTA_METRICS) return;
+  if (analyticsValue(payload.device, 16) === "automation" || analyticsValue(payload.route, 64) === "worker-check") return;
   const date = metricDate();
   const key = `metrics:${date}`;
   const current = await env.RTA_METRICS.get(key, "json") || {
