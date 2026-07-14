@@ -4,6 +4,7 @@ const assert = require('assert');
 const {
   applyEditorialPublished,
   applyPublishedEvent,
+  assertEventLiquidTriplet,
   atomizerImage,
   atomizerImageCandidates,
   atomizerUrl,
@@ -12,6 +13,7 @@ const {
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
+  historyEntryMessage,
   liquidMatchLines,
   planEditorialPosts,
   planUpdates,
@@ -167,10 +169,14 @@ assert.strictEqual(newAtomPlan[0].name, 'Test Beta RTA');
 assert.strictEqual(newAtomPlan[0].image, 'https://images.example/test-beta.jpg');
 assert(newAtomPlan[0].message.includes('materialele pe clone sunt marcate distinct'));
 assert(newAtomPlan[0].message.includes('3 lichide analizate'));
+assert(newAtomPlan[0].message.includes('Sunt incluse exact 3 lichide asociate'));
+assert(newAtomPlan[0].message.indexOf('Sunt incluse exact 3 lichide asociate') < newAtomPlan[0].message.indexOf('3 lichide analizate'));
 assert(!newAtomPlan[0].message.includes('smokee.ro/product'));
 assert(!newAtomPlan[0].message.includes('Pentru comenzi'));
 assert(!/preț|stoc|cumpărare/i.test(newAtomPlan[0].message));
 assert.strictEqual(newAtomPlan[0].liquidMatches.length, 3);
+assert.doesNotThrow(() => assertEventLiquidTriplet(newAtomPlan[0]));
+assert.throws(() => assertEventLiquidTriplet({ ...newAtomPlan[0], liquidMatches: newAtomPlan[0].liquidMatches.slice(0, 2) }), /exact trei lichide/);
 newAtomPlan[0].liquidMatches.forEach(match => {
   assert(newAtomPlan[0].message.includes(match.title));
   assert(newAtomPlan[0].message.includes(match.profile));
@@ -207,7 +213,8 @@ assert(applied.seenAtomizers['test-beta-rta']);
 assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
-assert.strictEqual(applied.history[0].formatVersion, 'educational-single-photo-v1');
+assert.strictEqual(applied.history[0].formatVersion, 'educational-single-photo-v2');
+assert.strictEqual(applied.history[0].messageVersion, 'three-liquids-after-expand-v2');
 
 const campaignState = emptyCampaignState();
 campaignState.postedAtomizers['test-alpha-rta'] = {
@@ -224,7 +231,8 @@ assert.strictEqual(editorialPlan[0].liquidMatches.length, 3);
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-single-photo-v1');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-single-photo-v2');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-liquids-after-expand-v2');
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 
@@ -275,6 +283,16 @@ assert.strictEqual(
   'YouTube search pages must never be used as product images'
 );
 
+const refreshedReview = historyEntryMessage({
+  key: 'review:test-alpha-rta:abc123DEF45',
+  type: 'review',
+  name: 'Test Alpha RTA'
+}, catalog, feed);
+assert.strictEqual(refreshedReview.liquidMatches.length, 3);
+assert(refreshedReview.message.includes('Sunt incluse exact 3 lichide asociate'));
+assert(refreshedReview.liquidMatches.every(match => refreshedReview.message.includes(match.title)));
+assert(!/smokee\.ro\/product|preț|stoc|cumpărare|pentru comenzi/i.test(refreshedReview.message));
+
 const liveCatalog = loadCatalog();
 const livePairingFailures = uniqueAtomizers(liveCatalog).filter(atom => {
   const matches = topLiquidMatchesForAtom(atom, liveCatalog, 3);
@@ -296,7 +314,9 @@ const liveEditorialPreview = planEditorialPosts(liveCatalog, { schemaVersion: 1,
 assert(liveEditorialPreview.length > 0, 'the live editorial catalog must produce publishable previews');
 liveEditorialPreview.forEach(event => {
   assert.strictEqual(event.liquidMatches.length, 3);
+  assert.doesNotThrow(() => assertEventLiquidTriplet(event));
   assert(event.message.includes('3 lichide analizate'));
+  assert(event.message.includes('Sunt incluse exact 3 lichide asociate'));
   assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023/i.test(event.message));
   assert(!/smokee\.ro\/product|youtube\.com|youtu\.be/i.test(event.message));
   assert.strictEqual((event.message.match(/https:\/\//g) || []).length, 1);
