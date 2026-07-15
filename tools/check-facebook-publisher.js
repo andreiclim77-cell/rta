@@ -190,7 +190,7 @@ assert(newAtomPlan[0].message.includes('3 lichide analizate'));
 assert(newAtomPlan[0].message.includes('Sunt incluse exact 3 lichide asociate'));
 assert(newAtomPlan[0].message.includes('Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.'));
 assert(newAtomPlan[0].message.includes('Recomandat a se consuma fără nicotină.'));
-assert(newAtomPlan[0].message.startsWith('┏━ 𝗥𝗘𝗚𝗨𝗟𝗜 𝗗𝗘 𝗕𝗔𝗭𝗔'));
+assert(newAtomPlan[0].message.startsWith('┏━ 𝗢𝗥𝗜𝗘𝗡𝗧𝗔𝗥𝗘 𝗜𝗠𝗣𝗢𝗥𝗧𝗔𝗡𝗧𝗔'));
 assert(newAtomPlan[0].message.includes('┃ 1. 𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘 • 𝗠𝗔𝗜 𝗣𝗨𝗧𝗜𝗡 𝗡𝗢𝗖𝗜𝗩𝗔'));
 assert(newAtomPlan[0].message.includes('┗ 2. 𝗥𝗘𝗖𝗢𝗠𝗔𝗡𝗗𝗔𝗧 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔'));
 assert.strictEqual(newAtomPlan[0].message.split('\n')[2], '┗ 2. 𝗥𝗘𝗖𝗢𝗠𝗔𝗡𝗗𝗔𝗧 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔');
@@ -264,7 +264,7 @@ assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
 assert.strictEqual(applied.history[0].formatVersion, 'educational-four-photo-v4-zero-nicotine');
-assert.strictEqual(applied.history[0].messageVersion, 'three-zero-nicotine-liquid-gallery-v8-cessation-rules');
+assert.strictEqual(applied.history[0].messageVersion, 'three-zero-nicotine-liquid-gallery-v9-important-guidance');
 assert.strictEqual(needsLiquidGalleryRepair(applied.history[0]), false);
 assert.strictEqual(needsLiquidGalleryRepair({ postId: 'legacy', formatVersion: 'educational-single-photo-v2' }), true);
 
@@ -284,7 +284,7 @@ const editorialApplied = applyEditorialPublished(clone(campaignState), editorial
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-four-photo-v4-zero-nicotine');
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-zero-nicotine-liquid-gallery-v8-cessation-rules');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-zero-nicotine-liquid-gallery-v9-important-guidance');
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 

@@ -21,10 +21,10 @@ const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const LIQUID_TEASER = 'Sunt incluse exact 3 lichide asociate; denumirile și explicațiile apar în textul extins.';
 const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v4-zero-nicotine';
-const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v8-cessation-rules';
+const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v9-important-guidance';
 const ADULT_SMOKER_NOTICE = 'Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.';
 const NICOTINE_FREE_NOTICE = 'Recomandat a se consuma fără nicotină.';
-const NOTICE_FRAME_TOP = '┏━ 𝗥𝗘𝗚𝗨𝗟𝗜 𝗗𝗘 𝗕𝗔𝗭𝗔';
+const NOTICE_FRAME_TOP = '┏━ 𝗢𝗥𝗜𝗘𝗡𝗧𝗔𝗥𝗘 𝗜𝗠𝗣𝗢𝗥𝗧𝗔𝗡𝗧𝗔';
 const ADULT_SMOKER_EMPHASIS = '𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘 • 𝗠𝗔𝗜 𝗣𝗨𝗧𝗜𝗡 𝗡𝗢𝗖𝗜𝗩𝗔';
 const NICOTINE_FREE_EMPHASIS = '𝗥𝗘𝗖𝗢𝗠𝗔𝗡𝗗𝗔𝗧 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔';
 

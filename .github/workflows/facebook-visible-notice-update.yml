@@ -51,7 +51,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/facebook-publish-state.json data/facebook-campaign-state.json
-          git commit -m "Record updated Facebook base rules"
+          git commit -m "Record updated Facebook guidance"
           git pull --rebase origin main
           git push origin HEAD:main
 
