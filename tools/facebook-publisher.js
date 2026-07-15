@@ -21,9 +21,13 @@ const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const LIQUID_TEASER = 'Sunt incluse exact 3 lichide asociate; denumirile și explicațiile apar în textul extins.';
 const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v4-zero-nicotine';
-const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v4';
+const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v5-visible-banner';
 const ADULT_SMOKER_NOTICE = 'Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.';
 const NICOTINE_FREE_NOTICE = 'Produsele prezentate nu conțin nicotină.';
+const NOTICE_FRAME_TOP = '┏━ 𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗥𝗘 𝗘𝗦𝗘𝗡𝗧𝗜𝗔𝗟𝗔';
+const NOTICE_FRAME_BOTTOM = '┗━━━━━━━━━━━━━━━━━━━━━━';
+const ADULT_SMOKER_EMPHASIS = '𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗙𝗨𝗠𝗔𝗧𝗢𝗥𝗜 𝗔𝗗𝗨𝗟𝗧𝗜';
+const NICOTINE_FREE_EMPHASIS = '𝗟𝗜𝗖𝗛𝗜𝗗𝗘 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔';
 
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
@@ -399,9 +403,6 @@ function liquidMatchLines(matches) {
   const selected = matches.slice(0, 3);
   const lines = [
     '',
-    ADULT_SMOKER_NOTICE,
-    NICOTINE_FREE_NOTICE,
-    '',
     `3 lichide analizate: ${selected.map(match => cleanText(match.title, 90)).join(' • ')}`,
     '',
     'Detalierea potrivirilor:'
@@ -415,6 +416,18 @@ function liquidMatchLines(matches) {
     );
   });
   return lines;
+}
+
+function noticeBannerLines() {
+  return [
+    NOTICE_FRAME_TOP,
+    `┃ ${ADULT_SMOKER_EMPHASIS}`,
+    `┃ ${ADULT_SMOKER_NOTICE}`,
+    `┃ ${NICOTINE_FREE_EMPHASIS}`,
+    `┃ ${NICOTINE_FREE_NOTICE}`,
+    NOTICE_FRAME_BOTTOM,
+    ''
+  ];
 }
 
 function liquidStateItems(matches) {
@@ -614,7 +627,7 @@ function directVideoLines(videos) {
 function atomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 260);
   const build = topBuild(atom);
-  const lines = [`Nou în Ghid RTA MTL: ${atom.name}`, '', LIQUID_TEASER, '', 'Modelul a fost introdus în biblioteca RTA și în recomandările în care profilul lichidului, arhitectura atomizorului și buildul sunt compatibile.'];
+  const lines = [...noticeBannerLines(), `Nou în Ghid RTA MTL: ${atom.name}`, '', LIQUID_TEASER, '', 'Modelul a fost introdus în biblioteca RTA și în recomandările în care profilul lichidului, arhitectura atomizorului și buildul sunt compatibile.'];
   if (profile) lines.push('', `Potrivire inițială: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
@@ -634,7 +647,7 @@ function atomizerMessage(atom, videos, liquidMatches = []) {
 function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
-  const lines = [`Fișă RTA MTL: ${atom.name}`, '', LIQUID_TEASER, '', 'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'];
+  const lines = [...noticeBannerLines(), `Fișă RTA MTL: ${atom.name}`, '', LIQUID_TEASER, '', 'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'];
   if (profile) lines.push('', `Potrivire aromatică: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
@@ -654,7 +667,7 @@ function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
 function recommendationMessage(atom, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
-  const lines = [`Recomandare actualizată: ${atom.name}`, '', LIQUID_TEASER, '', 'Potrivirea a fost recalibrată după profilul lichidului, arhitectura atomizorului și comportamentul buildului.'];
+  const lines = [...noticeBannerLines(), `Recomandare actualizată: ${atom.name}`, '', LIQUID_TEASER, '', 'Potrivirea a fost recalibrată după profilul lichidului, arhitectura atomizorului și comportamentul buildului.'];
   if (profile) lines.push('', `Profil: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
@@ -670,7 +683,7 @@ function recommendationMessage(atom, liquidMatches = []) {
 }
 
 function reviewMessage(atom, videos, liquidMatches = []) {
-  const lines = [`Review nou verificat: ${atom.name}`, '', LIQUID_TEASER, '', 'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'];
+  const lines = [...noticeBannerLines(), `Review nou verificat: ${atom.name}`, '', LIQUID_TEASER, '', 'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'];
   videos.slice(0, 2).forEach(video => {
     const label = video.kind === 'build' ? 'Build' : 'Recenzie';
     const clone = video.scope === 'clone' ? ' pe clonă; nu este recenzie a originalului' : '';
@@ -1040,7 +1053,12 @@ function assertEventLiquidTriplet(event) {
   if (event.liquidMatches.some(match => !isNicotineFreeFacebookLiquid(match))) {
     throw new Error(`Una dintre potrivirile pentru ${event.name} nu este confirmată ca aromă sau longfill fără nicotină.`);
   }
-  if (!String(event.message || '').includes(ADULT_SMOKER_NOTICE) || !String(event.message || '').includes(NICOTINE_FREE_NOTICE)) {
+  const message = String(event.message || '');
+  if (!message.startsWith(NOTICE_FRAME_TOP) ||
+      !message.includes(ADULT_SMOKER_EMPHASIS) ||
+      !message.includes(ADULT_SMOKER_NOTICE) ||
+      !message.includes(NICOTINE_FREE_EMPHASIS) ||
+      !message.includes(NICOTINE_FREE_NOTICE)) {
     throw new Error(`Avertizările pentru fumători adulți și lipsa nicotinei lipsesc din postarea pentru ${event.name}.`);
   }
   const images = [event.image].concat(event.liquidMatches.map(match => String(match.image || '').trim()));
@@ -1396,7 +1414,8 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
     return;
   }
   for (const candidate of candidates) {
-    await prepareEventForPublish(candidate.event);
+    if (candidate.replace) await prepareEventForPublish(candidate.event);
+    else assertEventLiquidTriplet(candidate.event);
   }
   if (options.checkOnly) {
     candidates.forEach(candidate => {
@@ -1653,6 +1672,7 @@ module.exports = {
   historyEntryMessage,
   historyEntryEvent,
   liquidMatchLines,
+  noticeBannerLines,
   multiPhotoFeedBody,
   needsLiquidGalleryRepair,
   normalizeCampaignState,
