@@ -30,7 +30,6 @@ jobs:
         run: |
           node --check tools/facebook-publisher.js
           node tools/check-facebook-publisher.js
-          node tools/facebook-publisher.js --check-repair-zero-nicotine-galleries
 
       - name: Repair existing Facebook galleries
         id: repair

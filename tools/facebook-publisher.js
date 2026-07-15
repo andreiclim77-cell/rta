@@ -887,7 +887,10 @@ async function fetchJson(url, options = {}, attempts = 3) {
   let lastError;
   for (let attempt = 0; attempt < attempts; attempt += 1) {
     try {
-      const response = await fetch(url, options);
+      const requestOptions = options.signal
+        ? options
+        : { ...options, signal: AbortSignal.timeout(60000) };
+      const response = await fetch(url, requestOptions);
       const text = await response.text();
       let payload = {};
       try { payload = text ? JSON.parse(text) : {}; } catch (error) { payload = { message: text }; }
@@ -987,7 +990,12 @@ async function waitForPublicLink(url) {
   let lastStatus = 0;
   for (let attempt = 0; attempt < 6; attempt += 1) {
     try {
-      const response = await fetch(url, { method: 'HEAD', redirect: 'follow', cache: 'no-store' });
+      const response = await fetch(url, {
+        method: 'HEAD',
+        redirect: 'follow',
+        cache: 'no-store',
+        signal: AbortSignal.timeout(12000)
+      });
       lastStatus = response.status;
       if (response.ok) return;
     } catch (error) {
@@ -1003,7 +1011,12 @@ async function waitForPublicImage(url) {
   let lastStatus = 0;
   for (let attempt = 0; attempt < 4; attempt += 1) {
     try {
-      const response = await fetch(url, { method: 'GET', redirect: 'follow', cache: 'no-store' });
+      const response = await fetch(url, {
+        method: 'GET',
+        redirect: 'follow',
+        cache: 'no-store',
+        signal: AbortSignal.timeout(15000)
+      });
       lastStatus = response.status;
       const type = response.headers.get('content-type') || '';
       if (response.ok && /^image\//i.test(type)) return;
