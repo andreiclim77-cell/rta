@@ -16,6 +16,7 @@ const {
   facebookPostsOnDate,
   historyEntryMessage,
   historyEntryEvent,
+  isNicotineFreeFacebookLiquid,
   liquidMatchLines,
   multiPhotoFeedBody,
   needsLiquidGalleryRepair,
@@ -101,16 +102,16 @@ const catalog = {
   liquids: {
     generated: '2026-07-13',
     net: [
-      { title: 'NET Virginia Bright', tag: 'NET simplu Virginia', url: 'https://smokee.ro/product/net-virginia-bright/', image: 'https://images.example/net-virginia.jpg', stock: true },
-      { title: 'NET Oriental Layers', tag: 'NET complex Oriental', url: 'https://smokee.ro/product/net-oriental-layers/', image: 'https://images.example/net-oriental.jpg', stock: true },
-      { title: 'NET Kentucky Latakia', tag: 'NET complex Kentucky', url: 'https://smokee.ro/product/net-kentucky-latakia/', image: 'https://images.example/net-kentucky.jpg', stock: true },
-      { title: 'NET Virginia indisponibil', tag: 'NET simplu Virginia', url: 'https://smokee.ro/product/net-virginia-indisponibil/', image: 'https://images.example/net-oos.jpg', stock: false }
+      { title: 'Aroma NET Virginia Bright', tag: 'NET simplu Virginia', url: 'https://smokee.ro/product/aroma-net-virginia-bright/', image: 'https://images.example/net-virginia.jpg', stock: true },
+      { title: 'Aroma NET Oriental Layers', tag: 'NET complex Oriental', url: 'https://smokee.ro/product/aroma-net-oriental-layers/', image: 'https://images.example/net-oriental.jpg', stock: true },
+      { title: 'Aroma NET Kentucky Latakia', tag: 'NET complex Kentucky', url: 'https://smokee.ro/product/aroma-net-kentucky-latakia/', image: 'https://images.example/net-kentucky.jpg', stock: true },
+      { title: 'Aroma NET Virginia indisponibil', tag: 'NET simplu Virginia', url: 'https://smokee.ro/product/aroma-net-virginia-indisponibil/', image: 'https://images.example/net-oos.jpg', stock: false }
     ],
     tutun: [
-      { title: 'Tutun Rolling Sec', tag: 'TUTUN simplu', url: 'https://smokee.ro/product/tutun-rolling-sec/', image: 'https://images.example/rolling.jpg', stock: true },
-      { title: 'Tutun Kentucky Heritage', tag: 'TUTUN complex Kentucky', url: 'https://smokee.ro/product/tutun-kentucky-heritage/', image: 'https://images.example/kentucky.jpg', stock: true },
-      { title: 'Tutun Latakia Reserve', tag: 'TUTUN complex Latakia', url: 'https://smokee.ro/product/tutun-latakia-reserve/', image: 'https://images.example/latakia.jpg', stock: true },
-      { title: 'Tutun Cigar Robust', tag: 'TUTUN complex Cigar', url: 'https://smokee.ro/product/tutun-cigar-robust/', image: 'https://images.example/cigar.jpg', stock: true }
+      { title: 'Longfill Tutun Rolling Sec', tag: 'TUTUN simplu', url: 'https://smokee.ro/product/longfill-tutun-rolling-sec/', image: 'https://images.example/rolling.jpg', stock: true },
+      { title: 'Longfill Tutun Kentucky Heritage', tag: 'TUTUN complex Kentucky', url: 'https://smokee.ro/product/longfill-tutun-kentucky-heritage/', image: 'https://images.example/kentucky.jpg', stock: true },
+      { title: 'Longfill Tutun Latakia Reserve', tag: 'TUTUN complex Latakia', url: 'https://smokee.ro/product/longfill-tutun-latakia-reserve/', image: 'https://images.example/latakia.jpg', stock: true },
+      { title: 'Longfill Tutun Cigar Robust', tag: 'TUTUN complex Cigar', url: 'https://smokee.ro/product/longfill-tutun-cigar-robust/', image: 'https://images.example/cigar.jpg', stock: true }
     ]
   }
 };
@@ -151,6 +152,18 @@ assert.strictEqual(new Set(betaLiquidMatches.map(item => item.image)).size, 3, '
 assert(alphaLiquidMatches.every(item => item.stock !== false), 'out-of-stock liquids must not be recommended while stocked matches exist');
 assert(betaLiquidMatches.every(item => item.stock !== false), 'out-of-stock liquids must not be recommended while stocked matches exist');
 assert(!alphaLiquidMatches.some(item => item.url.includes('indisponibil')));
+assert.strictEqual(isNicotineFreeFacebookLiquid({
+  title: 'Aroma BlendFeel SOLO X100 10ml 18mg - Oriental',
+  url: 'https://smokee.ro/product/aroma-blendfeel-solo-x100-10ml-18mg-oriental/'
+}), false, 'products marked with nicotine concentration must never enter Facebook pairings');
+assert.strictEqual(isNicotineFreeFacebookLiquid({
+  title: 'Aroma concentrată 10ml',
+  url: 'https://smokee.ro/product/aroma-concentrata-10ml/'
+}), true, 'a clearly identified concentrate may be used regardless of bottle volume');
+assert.strictEqual(isNicotineFreeFacebookLiquid({
+  title: 'Lichid gata preparat 10ml',
+  url: 'https://smokee.ro/product/lichid-gata-10ml/'
+}), false, 'ready-to-vape 10ml liquids must not enter Facebook pairings');
 const fallbackCatalog = clone(catalog);
 fallbackCatalog.liquids.net = [catalog.liquids.net[0], catalog.liquids.net[1], catalog.liquids.net[3]];
 fallbackCatalog.liquids.tutun = [];
@@ -174,6 +187,8 @@ assert.strictEqual(newAtomPlan[0].image, 'https://images.example/test-beta.jpg')
 assert(newAtomPlan[0].message.includes('materialele pe clone sunt marcate distinct'));
 assert(newAtomPlan[0].message.includes('3 lichide analizate'));
 assert(newAtomPlan[0].message.includes('Sunt incluse exact 3 lichide asociate'));
+assert(newAtomPlan[0].message.includes('Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.'));
+assert(newAtomPlan[0].message.includes('Produsele prezentate nu conțin nicotină.'));
 assert(newAtomPlan[0].message.indexOf('Sunt incluse exact 3 lichide asociate') < newAtomPlan[0].message.indexOf('3 lichide analizate'));
 assert(!newAtomPlan[0].message.includes('smokee.ro/product'));
 assert(!newAtomPlan[0].message.includes('Pentru comenzi'));
@@ -196,6 +211,10 @@ assert.strictEqual(new Set(alphaAlbum.map(item => item.image)).size, 4);
 alphaAlbum.forEach(item => {
   assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023|smokee\.ro\/product/i.test(item.caption));
   assert(item.caption.includes('18+'));
+});
+alphaAlbum.slice(1).forEach(item => {
+  assert(item.caption.includes('Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.'));
+  assert(item.caption.includes('Produsul prezentat nu conține nicotină.'));
 });
 const albumBody = multiPhotoFeedBody('Mesaj', ['media-1', 'media-2', 'media-3', 'media-4'], 'token-test');
 assert.strictEqual(albumBody.get('message'), 'Mesaj');
@@ -236,8 +255,8 @@ assert(applied.seenAtomizers['test-beta-rta']);
 assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
-assert.strictEqual(applied.history[0].formatVersion, 'educational-four-photo-v3');
-assert.strictEqual(applied.history[0].messageVersion, 'three-liquid-gallery-v3');
+assert.strictEqual(applied.history[0].formatVersion, 'educational-four-photo-v4-zero-nicotine');
+assert.strictEqual(applied.history[0].messageVersion, 'three-zero-nicotine-liquid-gallery-v4');
 assert.strictEqual(needsLiquidGalleryRepair(applied.history[0]), false);
 assert.strictEqual(needsLiquidGalleryRepair({ postId: 'legacy', formatVersion: 'educational-single-photo-v2' }), true);
 
@@ -256,8 +275,8 @@ assert.strictEqual(editorialPlan[0].liquidMatches.length, 3);
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-four-photo-v3');
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-liquid-gallery-v3');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-four-photo-v4-zero-nicotine');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-zero-nicotine-liquid-gallery-v4');
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 
@@ -330,7 +349,8 @@ const livePairingFailures = uniqueAtomizers(liveCatalog).filter(atom => {
   const matches = topLiquidMatchesForAtom(atom, liveCatalog, 3);
   return matches.length !== 3 || new Set(matches.map(item => item.url)).size !== 3 ||
     new Set(matches.map(item => item.image)).size !== 3 ||
-    matches.some(item => !/^https:\/\/smokee\.ro\/product\//i.test(item.url) || !/^https:\/\//i.test(item.image));
+    matches.some(item => !/^https:\/\/smokee\.ro\/product\//i.test(item.url) || !/^https:\/\//i.test(item.image) ||
+      !isNicotineFreeFacebookLiquid(item));
 });
 assert.deepStrictEqual(
   livePairingFailures.map(atom => atom.name),
@@ -349,6 +369,7 @@ liveEditorialPreview.forEach(event => {
   assert.doesNotThrow(() => assertEventLiquidTriplet(event));
   assert(event.message.includes('3 lichide analizate'));
   assert(event.message.includes('Sunt incluse exact 3 lichide asociate'));
+  assert(event.message.includes('Produsele prezentate nu conțin nicotină.'));
   assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023/i.test(event.message));
   assert(!/smokee\.ro\/product|youtube\.com|youtu\.be/i.test(event.message));
   assert.strictEqual((event.message.match(/https:\/\//g) || []).length, 1);
@@ -362,4 +383,4 @@ liveEditorialPreview.forEach(event => {
   });
 });
 
-console.log('Facebook publisher: four-photo educational galleries, two-post daily limit, triangulated three-liquid pairing, deduplication, recommendation and review checks passed.');
+console.log('Facebook publisher: four-photo zero-nicotine galleries, two-post daily limit, triangulated three-liquid pairing, deduplication, recommendation and review checks passed.');

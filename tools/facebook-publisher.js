@@ -20,8 +20,10 @@ const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const LIQUID_TEASER = 'Sunt incluse exact 3 lichide asociate; denumirile și explicațiile apar în textul extins.';
-const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v3';
-const FACEBOOK_MESSAGE_VERSION = 'three-liquid-gallery-v3';
+const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v4-zero-nicotine';
+const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v4';
+const ADULT_SMOKER_NOTICE = 'Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.';
+const NICOTINE_FREE_NOTICE = 'Produsele prezentate nu conțin nicotină.';
 
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
@@ -67,6 +69,8 @@ const repairTodayLiquids = args.includes('--repair-today-liquids');
 const checkRepairTodayLiquids = args.includes('--check-repair-today-liquids');
 const repairMissingLiquidGalleries = args.includes('--repair-missing-liquid-galleries');
 const checkRepairMissingLiquidGalleries = args.includes('--check-repair-missing-liquid-galleries');
+const repairZeroNicotineGalleries = args.includes('--repair-zero-nicotine-galleries');
+const checkRepairZeroNicotineGalleries = args.includes('--check-repair-zero-nicotine-galleries');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -279,6 +283,15 @@ function liquidCatalogItems(catalog) {
   }));
 }
 
+function isNicotineFreeFacebookLiquid(item) {
+  const title = String(item && item.title || '').trim();
+  const url = String(item && item.url || '').trim();
+  const text = `${title} ${url}`;
+  const isConcentrateOrLongfill = /\barom(?:a|ă|e)\b|\blong\s*fill\b|\blongfill\b/i.test(text);
+  const hasNicotineMarker = /\b\d+(?:[.,]\d+)?\s*mg(?:\s*\/\s*ml)?\b|\bnicotin(?:ă|a|e|ei)?\b|\bnicotine\b|\bnic\s*-?\s*shot\b|\bnicshot\b|\bbooster\s+nicotin/i.test(text);
+  return isConcentrateOrLongfill && !hasNicotineMarker;
+}
+
 function liquidSubtype(item) {
   const text = normalizeMatchText([item && item.tag, item && item.title].join(' '));
   if (/\bcomplex\b/.test(text)) return 'complex';
@@ -336,7 +349,8 @@ function topLiquidMatchesForAtom(atom, catalog, limit = 3) {
   });
   const products = liquidCatalogItems(catalog).filter(entry => {
     const item = entry.item || {};
-    return item.title && /^https:\/\/smokee\.ro\/product\//i.test(String(item.url || ''));
+    return item.title && /^https:\/\/smokee\.ro\/product\//i.test(String(item.url || '')) &&
+      isNicotineFreeFacebookLiquid(item);
   });
   if (!profiles.length || !products.length) return [];
 
@@ -357,6 +371,7 @@ function topLiquidMatchesForAtom(atom, catalog, limit = 3) {
       profile: profileName(best.profileMatch.match.profile),
       profileGroup: profileGroup(best.profileMatch.match.profile),
       reason: liquidMatchReason(best.profileMatch.match, best.details),
+      nicotineFree: true,
       score: best.details.score
     };
   }).filter(item => /^https:\/\//i.test(item.image))
@@ -384,6 +399,9 @@ function liquidMatchLines(matches) {
   const selected = matches.slice(0, 3);
   const lines = [
     '',
+    ADULT_SMOKER_NOTICE,
+    NICOTINE_FREE_NOTICE,
+    '',
     `3 lichide analizate: ${selected.map(match => cleanText(match.title, 90)).join(' • ')}`,
     '',
     'Detalierea potrivirilor:'
@@ -406,7 +424,8 @@ function liquidStateItems(matches) {
     profile: cleanText(match.profile, 120),
     url: String(match.url || '').trim(),
     image: String(match.image || '').trim(),
-    stock: match.stock !== false
+    stock: match.stock !== false,
+    nicotineFree: true
   }));
 }
 
@@ -1005,6 +1024,12 @@ function assertEventLiquidTriplet(event) {
   if (event.liquidMatches.some(match => !cleanText(match.title, 150) || !cleanText(match.profile, 120) || !cleanText(match.reason, 200))) {
     throw new Error(`Una dintre cele trei potriviri de lichid este incompletă pentru ${event.name}.`);
   }
+  if (event.liquidMatches.some(match => !isNicotineFreeFacebookLiquid(match))) {
+    throw new Error(`Una dintre potrivirile pentru ${event.name} nu este confirmată ca aromă sau longfill fără nicotină.`);
+  }
+  if (!String(event.message || '').includes(ADULT_SMOKER_NOTICE) || !String(event.message || '').includes(NICOTINE_FREE_NOTICE)) {
+    throw new Error(`Avertizările pentru fumători adulți și lipsa nicotinei lipsesc din postarea pentru ${event.name}.`);
+  }
   const images = [event.image].concat(event.liquidMatches.map(match => String(match.image || '').trim()));
   if (images.some(image => !/^https:\/\//i.test(image))) {
     throw new Error(`Una dintre cele patru fotografii lipsește pentru ${event.name}.`);
@@ -1035,6 +1060,8 @@ function educationalAlbumPhotoEntries(event) {
         `Profil aromatic: ${cleanText(match.profile, 120)}`,
         `Motivul potrivirii: ${cleanText(match.reason, 200)}`,
         'Potrivire orientativă rezultată din triangularea profilului aromatic, atomizorului și buildului.',
+        ADULT_SMOKER_NOTICE,
+        'Produsul prezentat nu conține nicotină.',
         'Conținut informativ destinat exclusiv adulților 18+.'
       ].join('\n')
     });
@@ -1197,9 +1224,10 @@ function needsLiquidGalleryRepair(entry) {
   return Boolean(entry && entry.postId && entry.formatVersion !== FACEBOOK_FORMAT_VERSION);
 }
 
-function applyRepairedHistoryPost(state, entry, event, oldPostId, replacementId, timestamp = nowIso()) {
+function applyRepairedHistoryPost(state, entry, event, oldPostId, replacementId, timestamp = nowIso(), options = {}) {
   entry.originalPublishedAt = entry.originalPublishedAt || entry.publishedAt || timestamp;
-  entry.galleryUpdatedAt = timestamp;
+  if (options.replaced !== false) entry.galleryUpdatedAt = timestamp;
+  entry.noticeUpdatedAt = timestamp;
   entry.postId = replacementId;
   entry.formatVersion = FACEBOOK_FORMAT_VERSION;
   entry.messageVersion = FACEBOOK_MESSAGE_VERSION;
@@ -1254,6 +1282,163 @@ async function repairMissingLiquidGalleryPosts(options = {}) {
   }
 }
 
+function liquidSelectionChanged(previousMatches, currentMatches) {
+  const keys = matches => [].concat(matches || []).map(match => {
+    return String(match && (match.url || match.title) || '').trim().toLowerCase();
+  }).filter(Boolean).sort();
+  const previous = keys(previousMatches);
+  const current = keys(currentMatches);
+  return previous.length !== 3 || current.length !== 3 || previous.some((value, index) => value !== current[index]);
+}
+
+async function updateFacebookPostMessage(postId, message) {
+  const body = new URLSearchParams({ message, access_token: accessToken });
+  const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(postId)}`, {
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body
+  }, 1);
+  if (payload.success !== true) throw new Error(`Meta did not confirm the text update for ${postId}.`);
+}
+
+function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, postId, replaced, timestamp = nowIso()) {
+  const state = normalizeCampaignState(stateValue);
+  const previous = state.postedAtomizers[slug] || {};
+  const publishedAt = previous.publishedAt || timestamp;
+  const updated = {
+    ...previous,
+    name: event.name,
+    publishedAt,
+    originalPublishedAt: previous.originalPublishedAt || publishedAt,
+    postId,
+    image: event.image,
+    source: replaced ? 'facebook-api-zero-nicotine-repaired' : (previous.source || 'facebook-api-educational'),
+    formatVersion: FACEBOOK_FORMAT_VERSION,
+    messageVersion: FACEBOOK_MESSAGE_VERSION,
+    albumVersion: 'rta-plus-3-zero-nicotine-liquids-v2',
+    noticeUpdatedAt: timestamp,
+    noticePlacement: replaced ? 'post-and-photo-captions' : 'post-message',
+    liquids: liquidStateItems(event.liquidMatches)
+  };
+  if (replaced) updated.galleryUpdatedAt = timestamp;
+  state.postedAtomizers[slug] = updated;
+  const historyIndex = state.history.findIndex(item => item && item.slug === slug);
+  const historyItem = {
+    ...(historyIndex >= 0 ? state.history[historyIndex] : {}),
+    slug,
+    name: event.name,
+    publishedAt,
+    originalPublishedAt: previous.originalPublishedAt || publishedAt,
+    postId,
+    image: event.image,
+    formatVersion: FACEBOOK_FORMAT_VERSION,
+    messageVersion: FACEBOOK_MESSAGE_VERSION,
+    albumVersion: 'rta-plus-3-zero-nicotine-liquids-v2',
+    noticeUpdatedAt: timestamp,
+    noticePlacement: replaced ? 'post-and-photo-captions' : 'post-message',
+    liquids: liquidStateItems(event.liquidMatches)
+  };
+  if (replaced) historyItem.galleryUpdatedAt = timestamp;
+  if (historyIndex >= 0) state.history.splice(historyIndex, 1);
+  state.history.unshift(historyItem);
+  state.history = state.history.slice(0, 200);
+  state.updatedAt = timestamp;
+  state.pageId = pageId || state.pageId || '';
+  return state;
+}
+
+function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState) {
+  const atomsBySlug = new Map(uniqueAtomizers(catalog).map(atom => [slugify(atom.name), atom]));
+  const candidates = [];
+  const seenPostIds = new Set();
+  Object.entries(campaignState.postedAtomizers || {}).forEach(([slug, entry]) => {
+    if (!entry || !entry.postId || seenPostIds.has(entry.postId)) return;
+    const atom = atomsBySlug.get(slug);
+    if (!atom) throw new Error(`Atomizorul ${entry.name || slug} nu mai există în catalog.`);
+    const event = editorialEventForAtom(atom, catalog, feed);
+    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches);
+    if (!replace && entry.formatVersion === FACEBOOK_FORMAT_VERSION && entry.messageVersion === FACEBOOK_MESSAGE_VERSION) return;
+    seenPostIds.add(entry.postId);
+    candidates.push({ scope: 'campaign', slug, entry, event, oldPostId: entry.postId, replace, publishedAt: entry.publishedAt });
+  });
+  [].concat(publishState.history || []).forEach(entry => {
+    if (!entry || !entry.postId || seenPostIds.has(entry.postId)) return;
+    const event = historyEntryEvent(entry, catalog, feed);
+    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches);
+    if (!replace && entry.formatVersion === FACEBOOK_FORMAT_VERSION && entry.messageVersion === FACEBOOK_MESSAGE_VERSION) return;
+    seenPostIds.add(entry.postId);
+    candidates.push({ scope: 'publish', slug: event.slug, entry, event, oldPostId: entry.postId, replace, publishedAt: entry.publishedAt });
+  });
+  return candidates.sort((a, b) => String(a.publishedAt || '').localeCompare(String(b.publishedAt || '')));
+}
+
+async function repairZeroNicotineGalleryPosts(options = {}) {
+  const catalog = loadCatalog(ROOT);
+  const feed = readJson(REVIEW_PATH, { schemaVersion: 1, models: {} });
+  let campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
+  const publishState = readJson(STATE_PATH, emptyState());
+  const candidates = zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState);
+  if (!candidates.length) {
+    console.log('Facebook zero-nicotine repair: every recorded gallery already follows the current rule.');
+    return;
+  }
+  for (const candidate of candidates) {
+    await prepareEventForPublish(candidate.event);
+  }
+  if (options.checkOnly) {
+    candidates.forEach(candidate => {
+      const operation = candidate.replace ? 'replace gallery' : 'update notice';
+      console.log(`Facebook zero-nicotine repair ready: ${candidate.event.name} -> ${operation}.`);
+    });
+    return;
+  }
+  if (!pageId || !accessToken) {
+    throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
+  }
+  await verifyFacebookPage();
+  for (const candidate of candidates) {
+    let postId = candidate.oldPostId;
+    if (candidate.replace) {
+      postId = await publishPreparedEvent(candidate.event);
+      try {
+        await deleteFacebookObject(candidate.oldPostId);
+      } catch (error) {
+        try { await deleteFacebookObject(postId); } catch (rollbackError) { /* best effort */ }
+        throw new Error(`Postarea veche pentru ${candidate.event.name} nu a putut fi înlocuită: ${error.message}`);
+      }
+    } else {
+      await updateFacebookPostMessage(candidate.oldPostId, candidate.event.message);
+    }
+    const timestamp = nowIso();
+    if (candidate.scope === 'campaign') {
+      campaignState = applyCampaignZeroNicotineUpdate(
+        campaignState,
+        candidate.slug,
+        candidate.event,
+        candidate.oldPostId,
+        postId,
+        candidate.replace,
+        timestamp
+      );
+      writeJsonAtomic(CAMPAIGN_STATE_PATH, campaignState);
+    } else {
+      applyRepairedHistoryPost(
+        publishState,
+        candidate.entry,
+        candidate.event,
+        candidate.oldPostId,
+        postId,
+        timestamp,
+        { replaced: candidate.replace }
+      );
+      candidate.entry.albumVersion = 'rta-plus-3-zero-nicotine-liquids-v2';
+      candidate.entry.noticePlacement = candidate.replace ? 'post-and-photo-captions' : 'post-message';
+      writeJsonAtomic(STATE_PATH, publishState);
+    }
+    console.log(`Facebook zero-nicotine ${candidate.replace ? 'gallery replaced' : 'notice updated'}: ${candidate.event.name} (${postId}).`);
+  }
+}
+
 async function refreshTodayLiquidMessages(options = {}) {
   const targetDate = todayInRomania();
   const catalog = loadCatalog(ROOT);
@@ -1302,6 +1487,10 @@ async function refreshTodayLiquidMessages(options = {}) {
 }
 
 async function main() {
+  if (repairZeroNicotineGalleries || checkRepairZeroNicotineGalleries) {
+    await repairZeroNicotineGalleryPosts({ checkOnly: checkRepairZeroNicotineGalleries });
+    return;
+  }
   if (repairMissingLiquidGalleries || checkRepairMissingLiquidGalleries) {
     await repairMissingLiquidGalleryPosts({ checkOnly: checkRepairMissingLiquidGalleries });
     return;
@@ -1447,6 +1636,7 @@ module.exports = {
   emptyState,
   facebookPostsOnDate,
   inferAtomRoles,
+  isNicotineFreeFacebookLiquid,
   historyEntryMessage,
   historyEntryEvent,
   liquidMatchLines,
