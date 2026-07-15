@@ -1,0 +1,62 @@
+name: Facebook repair missing liquid galleries
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: facebook-rta-gallery-repair
+  cancel-in-progress: false
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate Facebook gallery logic
+        run: |
+          node --check tools/facebook-publisher.js
+          node tools/check-facebook-publisher.js
+          node tools/facebook-publisher.js --check-repair-missing-liquid-galleries
+
+      - name: Replace incomplete posts with four-photo galleries
+        id: repair
+        continue-on-error: true
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+        run: node tools/facebook-publisher.js --repair-missing-liquid-galleries
+
+      - name: Record every completed replacement
+        if: always()
+        shell: bash
+        run: |
+          if git diff --quiet -- data/facebook-publish-state.json; then
+            echo "No Facebook state change to record."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/facebook-publish-state.json
+          git commit -m "Record Facebook liquid galleries"
+          git pull --rebase origin main
+          git push origin HEAD:main
+
+      - name: Report an incomplete repair
+        if: steps.repair.outcome == 'failure'
+        run: |
+          echo "At least one Facebook post could not be replaced. Completed replacements were preserved in state."
+          exit 1

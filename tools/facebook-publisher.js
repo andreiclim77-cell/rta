@@ -20,6 +20,8 @@ const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const LIQUID_TEASER = 'Sunt incluse exact 3 lichide asociate; denumirile și explicațiile apar în textul extins.';
+const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v3';
+const FACEBOOK_MESSAGE_VERSION = 'three-liquid-gallery-v3';
 
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
@@ -63,6 +65,8 @@ const editorialUnpostedCountOnly = args.includes('--editorial-unposted-count');
 const checkEditorialOnly = args.includes('--check-editorial');
 const repairTodayLiquids = args.includes('--repair-today-liquids');
 const checkRepairTodayLiquids = args.includes('--check-repair-today-liquids');
+const repairMissingLiquidGalleries = args.includes('--repair-missing-liquid-galleries');
+const checkRepairMissingLiquidGalleries = args.includes('--check-repair-missing-liquid-galleries');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -772,8 +776,8 @@ function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
     name: event.name,
     postId,
     publishedAt: timestamp,
-    formatVersion: 'educational-single-photo-v2',
-    messageVersion: 'three-liquids-after-expand-v2',
+    formatVersion: FACEBOOK_FORMAT_VERSION,
+    messageVersion: FACEBOOK_MESSAGE_VERSION,
     liquids: liquidStateItems(event.liquidMatches)
   });
   state.history = state.history.slice(0, 200);
@@ -839,8 +843,8 @@ function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()
     image: event.image,
     source: 'facebook-api-educational',
     postId,
-    formatVersion: 'educational-single-photo-v2',
-    messageVersion: 'three-liquids-after-expand-v2',
+    formatVersion: FACEBOOK_FORMAT_VERSION,
+    messageVersion: FACEBOOK_MESSAGE_VERSION,
     liquids: liquidStateItems(event.liquidMatches)
   };
   state.history.unshift({
@@ -848,8 +852,8 @@ function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()
     name: event.name,
     publishedAt: timestamp,
     postId,
-    formatVersion: 'educational-single-photo-v2',
-    messageVersion: 'three-liquids-after-expand-v2',
+    formatVersion: FACEBOOK_FORMAT_VERSION,
+    messageVersion: FACEBOOK_MESSAGE_VERSION,
     liquids: liquidStateItems(event.liquidMatches)
   });
   state.history = state.history.slice(0, 200);
@@ -1001,6 +1005,57 @@ function assertEventLiquidTriplet(event) {
   if (event.liquidMatches.some(match => !cleanText(match.title, 150) || !cleanText(match.profile, 120) || !cleanText(match.reason, 200))) {
     throw new Error(`Una dintre cele trei potriviri de lichid este incompletă pentru ${event.name}.`);
   }
+  const images = [event.image].concat(event.liquidMatches.map(match => String(match.image || '').trim()));
+  if (images.some(image => !/^https:\/\//i.test(image))) {
+    throw new Error(`Una dintre cele patru fotografii lipsește pentru ${event.name}.`);
+  }
+  if (new Set(images).size !== 4) {
+    throw new Error(`Galeria pentru ${event.name} trebuie să conțină patru fotografii distincte.`);
+  }
+}
+
+function educationalAlbumPhotoEntries(event) {
+  assertEventLiquidTriplet(event);
+  const photos = [{
+    type: 'atomizer',
+    image: event.image,
+    caption: [
+      cleanText(event.name, 160),
+      'Atomizor analizat în cadrul Ghid RTA MTL.',
+      'Conținut informativ destinat exclusiv adulților 18+.'
+    ].join('\n')
+  }];
+  event.liquidMatches.forEach((match, index) => {
+    photos.push({
+      type: 'liquid',
+      image: match.image,
+      caption: [
+        `${index + 1}. ${cleanText(match.title, 150)}`,
+        `Categorie aromatică: ${cleanText(match.tag || match.profile, 100)}`,
+        `Profil aromatic: ${cleanText(match.profile, 120)}`,
+        `Motivul potrivirii: ${cleanText(match.reason, 200)}`,
+        'Potrivire orientativă rezultată din triangularea profilului aromatic, atomizorului și buildului.',
+        'Conținut informativ destinat exclusiv adulților 18+.'
+      ].join('\n')
+    });
+  });
+  return photos;
+}
+
+function multiPhotoFeedBody(message, mediaIds, token) {
+  const body = new URLSearchParams({ message, access_token: token });
+  mediaIds.forEach((id, index) => {
+    body.set(`attached_media[${index}]`, JSON.stringify({ media_fbid: id }));
+  });
+  return body;
+}
+
+async function deleteFacebookObject(objectId) {
+  const params = new URLSearchParams({ access_token: accessToken });
+  const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(objectId)}?${params}`, {
+    method: 'DELETE'
+  }, 1);
+  if (payload.success !== true) throw new Error(`Meta did not confirm deletion for ${objectId}.`);
 }
 
 async function selectPublicAtomizerImage(event) {
@@ -1021,38 +1076,49 @@ async function prepareEventForPublish(event) {
   await waitForPublicLink(event.link);
   event.image = await selectPublicAtomizerImage(event);
   assertEventLiquidTriplet(event);
+  for (const match of event.liquidMatches) {
+    await waitForPublicImage(match.image);
+  }
+  event.albumPhotos = educationalAlbumPhotoEntries(event);
   return event;
 }
 
 async function publishPreparedEvent(event) {
-  if (event.image) {
-    const photoBody = new URLSearchParams({
-      url: event.image,
-      caption: event.message,
-      published: 'true',
-      access_token: accessToken
-    });
-    const photo = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/photos`, {
+  if (!Array.isArray(event.albumPhotos) || event.albumPhotos.length !== 4) {
+    throw new Error(`Postarea pentru ${event.name} nu poate fi publicată fără galeria completă.`);
+  }
+  const mediaIds = [];
+  try {
+    for (const photoEntry of event.albumPhotos) {
+      const photoBody = new URLSearchParams({
+        url: photoEntry.image,
+        caption: photoEntry.caption,
+        published: 'false',
+        access_token: accessToken
+      });
+      const photo = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/photos`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        body: photoBody
+      });
+      const mediaId = String(photo.id || '').trim();
+      if (!mediaId) throw new Error(`Meta did not return a media ID for ${event.name}.`);
+      mediaIds.push(mediaId);
+    }
+    const body = multiPhotoFeedBody(event.message, mediaIds, accessToken);
+    const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
       method: 'POST',
       headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      body: photoBody
+      body
     });
-    const photoPostId = photo.post_id || photo.id;
-    if (!photoPostId) throw new Error(`Meta did not return a photo post ID for ${event.name}`);
-    return photoPostId;
+    if (!payload.id) throw new Error(`Meta did not return an album post ID for ${event.name}.`);
+    return payload.id;
+  } catch (error) {
+    for (const mediaId of mediaIds) {
+      try { await deleteFacebookObject(mediaId); } catch (cleanupError) { /* best effort */ }
+    }
+    throw error;
   }
-  const body = new URLSearchParams({
-    message: event.message,
-    link: event.link,
-    access_token: accessToken
-  });
-  const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
-    method: 'POST',
-    headers: { 'content-type': 'application/x-www-form-urlencoded' },
-    body
-  });
-  if (!payload.id) throw new Error(`Meta did not return a post ID for ${event.name}`);
-  return payload.id;
 }
 
 async function publishEvent(event) {
@@ -1107,7 +1173,85 @@ function historyEntryMessage(entry, catalog, feed) {
   if (/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023|smokee\.ro\/product/i.test(message)) {
     throw new Error(`Textul Facebook conține formulări comerciale pentru ${atom.name}.`);
   }
-  return { atom, liquidMatches, message };
+  return { atom, liquidMatches, message, slug, videos };
+}
+
+function historyEntryEvent(entry, catalog, feed) {
+  const details = historyEntryMessage(entry, catalog, feed);
+  return {
+    type: entry.type || 'atomizer',
+    key: entry.key || `atomizer:${details.slug}`,
+    slug: details.slug,
+    name: details.atom.name,
+    link: atomizerUrl(details.atom),
+    image: atomizerImage(details.atom, details.videos),
+    imageCandidates: atomizerImageCandidates(details.atom, details.videos),
+    message: details.message,
+    liquidMatches: details.liquidMatches,
+    signature: recommendationSignature(details.atom),
+    videoIds: details.videos.map(video => video.videoId)
+  };
+}
+
+function needsLiquidGalleryRepair(entry) {
+  return Boolean(entry && entry.postId && entry.formatVersion !== FACEBOOK_FORMAT_VERSION);
+}
+
+function applyRepairedHistoryPost(state, entry, event, oldPostId, replacementId, timestamp = nowIso()) {
+  entry.originalPublishedAt = entry.originalPublishedAt || entry.publishedAt || timestamp;
+  entry.galleryUpdatedAt = timestamp;
+  entry.postId = replacementId;
+  entry.formatVersion = FACEBOOK_FORMAT_VERSION;
+  entry.messageVersion = FACEBOOK_MESSAGE_VERSION;
+  entry.liquids = liquidStateItems(event.liquidMatches);
+  entry.image = event.image;
+  Object.values(state.seenAtomizers || {}).forEach(item => {
+    if (item && item.postId === oldPostId) item.postId = replacementId;
+  });
+  Object.values(state.seenVideos || {}).forEach(item => {
+    if (item && item.postId === oldPostId) item.postId = replacementId;
+  });
+  state.updatedAt = timestamp;
+}
+
+async function repairMissingLiquidGalleryPosts(options = {}) {
+  const catalog = loadCatalog(ROOT);
+  const feed = readJson(REVIEW_PATH, { schemaVersion: 1, models: {} });
+  const state = readJson(STATE_PATH, emptyState());
+  const entries = state.history.filter(needsLiquidGalleryRepair)
+    .sort((a, b) => String(a.publishedAt || '').localeCompare(String(b.publishedAt || '')));
+  if (!entries.length) {
+    console.log('Facebook gallery repair: every recorded atomizer post already has three liquid photographs.');
+    return;
+  }
+  const prepared = [];
+  for (const entry of entries) {
+    const event = historyEntryEvent(entry, catalog, feed);
+    await prepareEventForPublish(event);
+    prepared.push({ entry, event, oldPostId: entry.postId });
+  }
+  if (options.checkOnly) {
+    prepared.forEach(item => {
+      console.log(`Facebook gallery repair ready: ${item.event.name} -> atomizer + 3 triangulated liquids.`);
+    });
+    return;
+  }
+  if (!pageId || !accessToken) {
+    throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
+  }
+  await verifyFacebookPage();
+  for (const item of prepared) {
+    const replacementId = await publishPreparedEvent(item.event);
+    try {
+      await deleteFacebookObject(item.oldPostId);
+    } catch (error) {
+      try { await deleteFacebookObject(replacementId); } catch (rollbackError) { /* best effort */ }
+      throw new Error(`Postarea veche pentru ${item.event.name} nu a putut fi înlocuită: ${error.message}`);
+    }
+    applyRepairedHistoryPost(state, item.entry, item.event, item.oldPostId, replacementId);
+    writeJsonAtomic(STATE_PATH, state);
+    console.log(`Facebook gallery repaired: ${item.event.name} (${replacementId}).`);
+  }
 }
 
 async function refreshTodayLiquidMessages(options = {}) {
@@ -1144,8 +1288,12 @@ async function refreshTodayLiquidMessages(options = {}) {
     }, 1);
     if (payload.success !== true) throw new Error(`Meta did not confirm the text update for ${update.atom.name}.`);
     const timestamp = nowIso();
-    update.entry.formatVersion = 'educational-single-photo-v2';
-    update.entry.messageVersion = 'three-liquids-after-expand-v2';
+    if (update.entry.formatVersion !== FACEBOOK_FORMAT_VERSION) {
+      update.entry.formatVersion = 'educational-single-photo-v2';
+    }
+    update.entry.messageVersion = update.entry.formatVersion === FACEBOOK_FORMAT_VERSION
+      ? FACEBOOK_MESSAGE_VERSION
+      : 'three-liquids-after-expand-v2';
     update.entry.messageUpdatedAt = timestamp;
     state.updatedAt = timestamp;
     writeJsonAtomic(STATE_PATH, state);
@@ -1154,6 +1302,10 @@ async function refreshTodayLiquidMessages(options = {}) {
 }
 
 async function main() {
+  if (repairMissingLiquidGalleries || checkRepairMissingLiquidGalleries) {
+    await repairMissingLiquidGalleryPosts({ checkOnly: checkRepairMissingLiquidGalleries });
+    return;
+  }
   if (repairTodayLiquids || checkRepairTodayLiquids) {
     await refreshTodayLiquidMessages({ checkOnly: checkRepairTodayLiquids });
     return;
@@ -1290,12 +1442,16 @@ module.exports = {
   baselineState,
   editorialAtomizerMessage,
   dateInRomania,
+  educationalAlbumPhotoEntries,
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
   inferAtomRoles,
   historyEntryMessage,
+  historyEntryEvent,
   liquidMatchLines,
+  multiPhotoFeedBody,
+  needsLiquidGalleryRepair,
   normalizeCampaignState,
   planEditorialPosts,
   planUpdates,

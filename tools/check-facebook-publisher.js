@@ -10,11 +10,15 @@ const {
   atomizerUrl,
   baselineState,
   dateInRomania,
+  educationalAlbumPhotoEntries,
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
   historyEntryMessage,
+  historyEntryEvent,
   liquidMatchLines,
+  multiPhotoFeedBody,
+  needsLiquidGalleryRepair,
   planEditorialPosts,
   planUpdates,
   recommendationSignature,
@@ -177,6 +181,25 @@ assert(!/preț|stoc|cumpărare/i.test(newAtomPlan[0].message));
 assert.strictEqual(newAtomPlan[0].liquidMatches.length, 3);
 assert.doesNotThrow(() => assertEventLiquidTriplet(newAtomPlan[0]));
 assert.throws(() => assertEventLiquidTriplet({ ...newAtomPlan[0], liquidMatches: newAtomPlan[0].liquidMatches.slice(0, 2) }), /exact trei lichide/);
+assert.throws(() => assertEventLiquidTriplet({
+  ...newAtomPlan[0],
+  liquidMatches: newAtomPlan[0].liquidMatches.map((match, index) => ({
+    ...match,
+    image: index === 0 ? newAtomPlan[0].image : match.image
+  }))
+}), /patru fotografii distincte/);
+const alphaAlbum = educationalAlbumPhotoEntries(newAtomPlan[0]);
+assert.strictEqual(alphaAlbum.length, 4, 'each Facebook gallery must contain one atomizer and three liquid photos');
+assert.strictEqual(alphaAlbum[0].type, 'atomizer');
+assert.deepStrictEqual(alphaAlbum.slice(1).map(item => item.type), ['liquid', 'liquid', 'liquid']);
+assert.strictEqual(new Set(alphaAlbum.map(item => item.image)).size, 4);
+alphaAlbum.forEach(item => {
+  assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023|smokee\.ro\/product/i.test(item.caption));
+  assert(item.caption.includes('18+'));
+});
+const albumBody = multiPhotoFeedBody('Mesaj', ['media-1', 'media-2', 'media-3', 'media-4'], 'token-test');
+assert.strictEqual(albumBody.get('message'), 'Mesaj');
+assert.deepStrictEqual(JSON.parse(albumBody.get('attached_media[3]')), { media_fbid: 'media-4' });
 newAtomPlan[0].liquidMatches.forEach(match => {
   assert(newAtomPlan[0].message.includes(match.title));
   assert(newAtomPlan[0].message.includes(match.profile));
@@ -213,8 +236,10 @@ assert(applied.seenAtomizers['test-beta-rta']);
 assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
-assert.strictEqual(applied.history[0].formatVersion, 'educational-single-photo-v2');
-assert.strictEqual(applied.history[0].messageVersion, 'three-liquids-after-expand-v2');
+assert.strictEqual(applied.history[0].formatVersion, 'educational-four-photo-v3');
+assert.strictEqual(applied.history[0].messageVersion, 'three-liquid-gallery-v3');
+assert.strictEqual(needsLiquidGalleryRepair(applied.history[0]), false);
+assert.strictEqual(needsLiquidGalleryRepair({ postId: 'legacy', formatVersion: 'educational-single-photo-v2' }), true);
 
 const campaignState = emptyCampaignState();
 campaignState.postedAtomizers['test-alpha-rta'] = {
@@ -231,8 +256,8 @@ assert.strictEqual(editorialPlan[0].liquidMatches.length, 3);
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-single-photo-v2');
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-liquids-after-expand-v2');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-four-photo-v3');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-liquid-gallery-v3');
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 
@@ -292,6 +317,13 @@ assert.strictEqual(refreshedReview.liquidMatches.length, 3);
 assert(refreshedReview.message.includes('Sunt incluse exact 3 lichide asociate'));
 assert(refreshedReview.liquidMatches.every(match => refreshedReview.message.includes(match.title)));
 assert(!/smokee\.ro\/product|preț|stoc|cumpărare|pentru comenzi/i.test(refreshedReview.message));
+const refreshedEvent = historyEntryEvent({
+  key: 'review:test-alpha-rta:abc123DEF45',
+  type: 'review',
+  name: 'Test Alpha RTA'
+}, catalog, feed);
+assert.strictEqual(refreshedEvent.liquidMatches.length, 3);
+assert.strictEqual(educationalAlbumPhotoEntries(refreshedEvent).length, 4);
 
 const liveCatalog = loadCatalog();
 const livePairingFailures = uniqueAtomizers(liveCatalog).filter(atom => {
@@ -321,6 +353,13 @@ liveEditorialPreview.forEach(event => {
   assert(!/smokee\.ro\/product|youtube\.com|youtu\.be/i.test(event.message));
   assert.strictEqual((event.message.match(/https:\/\//g) || []).length, 1);
   assert(!/[ÃÂÄÈ]/.test(event.message), `mojibake detected in Facebook message for ${event.name}`);
+  const photos = educationalAlbumPhotoEntries(event);
+  assert.strictEqual(photos.length, 4);
+  assert.strictEqual(new Set(photos.map(photo => photo.image)).size, 4);
+  photos.forEach(photo => {
+    assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023|smokee\.ro\/product/i.test(photo.caption));
+    assert(!/[ÃÂÄÈ]/.test(photo.caption), `mojibake detected in Facebook photo caption for ${event.name}`);
+  });
 });
 
-console.log('Facebook publisher: educational format, two-post daily limit, three-liquid pairing, deduplication, recommendation and review checks passed.');
+console.log('Facebook publisher: four-photo educational galleries, two-post daily limit, triangulated three-liquid pairing, deduplication, recommendation and review checks passed.');
