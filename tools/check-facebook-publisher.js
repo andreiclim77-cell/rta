@@ -191,10 +191,9 @@ assert(newAtomPlan[0].message.includes('Sunt incluse exact 3 lichide asociate'))
 assert(newAtomPlan[0].message.includes('Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.'));
 assert(newAtomPlan[0].message.includes('Produsele prezentate nu conțin nicotină.'));
 assert(newAtomPlan[0].message.startsWith('┏━ 𝗥𝗘𝗚𝗨𝗟𝗜 𝗗𝗘 𝗕𝗔𝗭𝗔'));
-assert(newAtomPlan[0].message.includes('┃ 1. 𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗙𝗨𝗠𝗔𝗧𝗢𝗥𝗜 𝗔𝗗𝗨𝗟𝗧𝗜'));
-assert(newAtomPlan[0].message.includes('┃ 2. 𝗟𝗜𝗖𝗛𝗜𝗗𝗘 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔'));
-assert(newAtomPlan[0].message.includes('𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗙𝗨𝗠𝗔𝗧𝗢𝗥𝗜 𝗔𝗗𝗨𝗟𝗧𝗜'));
-assert(newAtomPlan[0].message.includes('𝗟𝗜𝗖𝗛𝗜𝗗𝗘 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔'));
+assert(newAtomPlan[0].message.includes('┃ 1. 𝗗𝗢𝗔𝗥 𝗙𝗨𝗠𝗔𝗧𝗢𝗥𝗜 • 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘'));
+assert(newAtomPlan[0].message.includes('┗ 2. 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔'));
+assert.strictEqual(newAtomPlan[0].message.split('\n')[2], '┗ 2. 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔');
 assert(newAtomPlan[0].message.indexOf('Produsele prezentate nu conțin nicotină.') < newAtomPlan[0].message.indexOf('Nou în Ghid RTA MTL'));
 assert.strictEqual((newAtomPlan[0].message.match(/Produsele prezentate nu conțin nicotină\./g) || []).length, 1);
 assert.strictEqual(noticeBannerLines().length, 7);
@@ -265,7 +264,7 @@ assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
 assert.strictEqual(applied.history[0].formatVersion, 'educational-four-photo-v4-zero-nicotine');
-assert.strictEqual(applied.history[0].messageVersion, 'three-zero-nicotine-liquid-gallery-v6-page-rules');
+assert.strictEqual(applied.history[0].messageVersion, 'three-zero-nicotine-liquid-gallery-v7-three-line-rules');
 assert.strictEqual(needsLiquidGalleryRepair(applied.history[0]), false);
 assert.strictEqual(needsLiquidGalleryRepair({ postId: 'legacy', formatVersion: 'educational-single-photo-v2' }), true);
 
@@ -285,7 +284,7 @@ const editorialApplied = applyEditorialPublished(clone(campaignState), editorial
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-four-photo-v4-zero-nicotine');
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-zero-nicotine-liquid-gallery-v6-page-rules');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-zero-nicotine-liquid-gallery-v7-three-line-rules');
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 

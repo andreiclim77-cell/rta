@@ -21,13 +21,12 @@ const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const LIQUID_TEASER = 'Sunt incluse exact 3 lichide asociate; denumirile și explicațiile apar în textul extins.';
 const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v4-zero-nicotine';
-const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v6-page-rules';
+const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v7-three-line-rules';
 const ADULT_SMOKER_NOTICE = 'Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.';
 const NICOTINE_FREE_NOTICE = 'Produsele prezentate nu conțin nicotină.';
 const NOTICE_FRAME_TOP = '┏━ 𝗥𝗘𝗚𝗨𝗟𝗜 𝗗𝗘 𝗕𝗔𝗭𝗔';
-const NOTICE_FRAME_BOTTOM = '┗━━━━━━━━━━━━━━━━━━━━━━';
-const ADULT_SMOKER_EMPHASIS = '𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗙𝗨𝗠𝗔𝗧𝗢𝗥𝗜 𝗔𝗗𝗨𝗟𝗧𝗜';
-const NICOTINE_FREE_EMPHASIS = '𝗟𝗜𝗖𝗛𝗜𝗗𝗘 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔';
+const ADULT_SMOKER_EMPHASIS = '𝗗𝗢𝗔𝗥 𝗙𝗨𝗠𝗔𝗧𝗢𝗥𝗜 • 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘';
+const NICOTINE_FREE_EMPHASIS = '𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔';
 
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
@@ -422,10 +421,10 @@ function noticeBannerLines() {
   return [
     NOTICE_FRAME_TOP,
     `┃ 1. ${ADULT_SMOKER_EMPHASIS}`,
-    `┃ ${ADULT_SMOKER_NOTICE}`,
-    `┃ 2. ${NICOTINE_FREE_EMPHASIS}`,
-    `┃ ${NICOTINE_FREE_NOTICE}`,
-    NOTICE_FRAME_BOTTOM,
+    `┗ 2. ${NICOTINE_FREE_EMPHASIS}`,
+    '',
+    ADULT_SMOKER_NOTICE,
+    NICOTINE_FREE_NOTICE,
     ''
   ];
 }
