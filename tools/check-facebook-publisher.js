@@ -188,14 +188,14 @@ assert.strictEqual(newAtomPlan[0].image, 'https://images.example/test-beta.jpg')
 assert(newAtomPlan[0].message.includes('materialele pe clone sunt marcate distinct'));
 assert(newAtomPlan[0].message.includes('3 lichide analizate'));
 assert(newAtomPlan[0].message.includes('Sunt incluse exact 3 lichide asociate'));
-assert(newAtomPlan[0].message.includes('Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.'));
-assert(newAtomPlan[0].message.includes('Produsele prezentate nu conțin nicotină.'));
+assert(newAtomPlan[0].message.includes('Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.'));
+assert(newAtomPlan[0].message.includes('Recomandat a se consuma fără nicotină.'));
 assert(newAtomPlan[0].message.startsWith('┏━ 𝗥𝗘𝗚𝗨𝗟𝗜 𝗗𝗘 𝗕𝗔𝗭𝗔'));
-assert(newAtomPlan[0].message.includes('┃ 1. 𝗗𝗢𝗔𝗥 𝗙𝗨𝗠𝗔𝗧𝗢𝗥𝗜 • 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘'));
-assert(newAtomPlan[0].message.includes('┗ 2. 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔'));
-assert.strictEqual(newAtomPlan[0].message.split('\n')[2], '┗ 2. 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔');
-assert(newAtomPlan[0].message.indexOf('Produsele prezentate nu conțin nicotină.') < newAtomPlan[0].message.indexOf('Nou în Ghid RTA MTL'));
-assert.strictEqual((newAtomPlan[0].message.match(/Produsele prezentate nu conțin nicotină\./g) || []).length, 1);
+assert(newAtomPlan[0].message.includes('┃ 1. 𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘 • 𝗠𝗔𝗜 𝗣𝗨𝗧𝗜𝗡 𝗡𝗢𝗖𝗜𝗩𝗔'));
+assert(newAtomPlan[0].message.includes('┗ 2. 𝗥𝗘𝗖𝗢𝗠𝗔𝗡𝗗𝗔𝗧 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔'));
+assert.strictEqual(newAtomPlan[0].message.split('\n')[2], '┗ 2. 𝗥𝗘𝗖𝗢𝗠𝗔𝗡𝗗𝗔𝗧 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔');
+assert(newAtomPlan[0].message.indexOf('Recomandat a se consuma fără nicotină.') < newAtomPlan[0].message.indexOf('Nou în Ghid RTA MTL'));
+assert.strictEqual((newAtomPlan[0].message.match(/Recomandat a se consuma fără nicotină\./g) || []).length, 1);
 assert.strictEqual(noticeBannerLines().length, 7);
 assert(newAtomPlan[0].message.indexOf('Sunt incluse exact 3 lichide asociate') < newAtomPlan[0].message.indexOf('3 lichide analizate'));
 assert(!newAtomPlan[0].message.includes('smokee.ro/product'));
@@ -221,8 +221,8 @@ alphaAlbum.forEach(item => {
   assert(item.caption.includes('18+'));
 });
 alphaAlbum.slice(1).forEach(item => {
-  assert(item.caption.includes('Destinat exclusiv fumătorilor adulți care urmăresc renunțarea la fumat.'));
-  assert(item.caption.includes('Produsul prezentat nu conține nicotină.'));
+  assert(item.caption.includes('Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.'));
+  assert(item.caption.includes('Recomandat a se consuma fără nicotină.'));
 });
 const albumBody = multiPhotoFeedBody('Mesaj', ['media-1', 'media-2', 'media-3', 'media-4'], 'token-test');
 assert.strictEqual(albumBody.get('message'), 'Mesaj');
@@ -264,7 +264,7 @@ assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
 assert.strictEqual(applied.history[0].formatVersion, 'educational-four-photo-v4-zero-nicotine');
-assert.strictEqual(applied.history[0].messageVersion, 'three-zero-nicotine-liquid-gallery-v7-three-line-rules');
+assert.strictEqual(applied.history[0].messageVersion, 'three-zero-nicotine-liquid-gallery-v8-cessation-rules');
 assert.strictEqual(needsLiquidGalleryRepair(applied.history[0]), false);
 assert.strictEqual(needsLiquidGalleryRepair({ postId: 'legacy', formatVersion: 'educational-single-photo-v2' }), true);
 
@@ -284,7 +284,7 @@ const editorialApplied = applyEditorialPublished(clone(campaignState), editorial
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-four-photo-v4-zero-nicotine');
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-zero-nicotine-liquid-gallery-v7-three-line-rules');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-zero-nicotine-liquid-gallery-v8-cessation-rules');
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 
@@ -377,7 +377,7 @@ liveEditorialPreview.forEach(event => {
   assert.doesNotThrow(() => assertEventLiquidTriplet(event));
   assert(event.message.includes('3 lichide analizate'));
   assert(event.message.includes('Sunt incluse exact 3 lichide asociate'));
-  assert(event.message.includes('Produsele prezentate nu conțin nicotină.'));
+  assert(event.message.includes('Recomandat a se consuma fără nicotină.'));
   assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023/i.test(event.message));
   assert(!/smokee\.ro\/product|youtube\.com|youtu\.be/i.test(event.message));
   assert.strictEqual((event.message.match(/https:\/\//g) || []).length, 1);
