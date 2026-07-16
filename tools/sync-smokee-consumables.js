@@ -10,6 +10,7 @@ const END_MARKER = '/* AUTO-SMOKEE-CONSUMABLES-END */';
 const CATEGORY_PER_PAGE = 100;
 const CATEGORY_PAGE_LIMIT = 6;
 const FETCH_TIMEOUT_MS = 9000;
+const FETCH_CONCURRENCY = 3;
 const NEWS_START_DATE = '2026-07-06';
 
 const args = process.argv.slice(2);
@@ -368,10 +369,30 @@ async function fetchAllCategoryProducts(categoryId) {
   return pages.flat();
 }
 
+async function fetchInBatches(tasks, concurrency = FETCH_CONCURRENCY) {
+  const results = new Array(tasks.length);
+  let cursor = 0;
+
+  async function worker() {
+    while (cursor < tasks.length) {
+      const index = cursor;
+      cursor += 1;
+      results[index] = await tasks[index]().catch(() => []);
+    }
+  }
+
+  const workerCount = Math.min(Math.max(1, concurrency), tasks.length);
+  await Promise.all(Array.from({ length: workerCount }, () => worker()));
+  return results;
+}
+
 async function fetchGroup(group) {
-  const searchCalls = group.terms.map(term => fetchStoreProducts(term).catch(() => []));
-  const categoryCalls = (group.categoryIds || []).map(categoryId => fetchAllCategoryProducts(categoryId).catch(() => []));
-  const chunks = await Promise.all(searchCalls.concat(categoryCalls));
+  const terms = Array.from(new Set(group.terms || []));
+  const categoryIds = Array.from(new Set(group.categoryIds || []));
+  const tasks = terms
+    .map(term => () => fetchStoreProducts(term))
+    .concat(categoryIds.map(categoryId => () => fetchAllCategoryProducts(categoryId)));
+  const chunks = await fetchInBatches(tasks);
   return enrichPublishedDates(uniqueItems(chunks.flat().map(product => normalizeProduct(product, group.id)), group.id));
 }
 

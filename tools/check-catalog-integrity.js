@@ -86,6 +86,7 @@ allItems(catalog.liquids).concat(allItems(catalog.consumables)).forEach(({ group
 const source = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 const workflow = fs.readFileSync(path.join(ROOT, '.github', 'workflows', 'smokee-rta-sync.yml'), 'utf8');
 const facebookPublisher = fs.readFileSync(path.join(ROOT, 'tools', 'facebook-publisher.js'), 'utf8');
+const consumableSync = fs.readFileSync(path.join(ROOT, 'tools', 'sync-smokee-consumables.js'), 'utf8');
 const liquidSync = fs.readFileSync(path.join(ROOT, 'tools', 'sync-smokee-liquids.js'), 'utf8');
 check(/var NEWS_WINDOW_DAYS=7;/.test(source), 'Noutati rolling window is no longer seven days');
 check(/var SMOKEE_BROWSER_LIVE_SYNC=false;/.test(source), 'browser-side Smokee polling must stay disabled');
@@ -102,9 +103,14 @@ check(/FACEBOOK_PAGE_ACCESS_TOKEN: \$\{\{ secrets\.FACEBOOK_PAGE_ACCESS_TOKEN \}
 check(!/FACEBOOK_PAGE_ACCESS_TOKEN\s*=\s*['"][^'"]+['"]/.test(facebookPublisher), 'Facebook Page token must not be stored in source code');
 check(/Europe\/Bucharest/.test(workflow), 'Bucharest timezone gate is missing');
 check(!/https:\/\/(?:www\.)?smokee\.ro\/wp-content\/uploads\//i.test(source), 'direct Smokee image URLs bypass the Cloudflare cache');
+check(/const FETCH_CONCURRENCY = 3;/.test(consumableSync), 'consumables sync request limit changed');
+check(/const chunks = await fetchInBatches\(tasks\);/.test(consumableSync), 'consumables sync no longer uses controlled request batches');
 check(/const products = await fetchAllCategoryProducts\(\);/.test(liquidSync), 'liquid category is no longer fetched in one shared pass');
 check(/sourceComplete \? dated : mergeWithExisting\(dated, existing\.items\)/.test(liquidSync), 'partial liquid sync no longer preserves the last-known-good catalog');
 check(!/slice\(0,\s*140\)/.test(liquidSync), 'legacy 140-liquid cap returned');
+
+const componentItems = catalog.consumables.components || [];
+check(componentItems.some(item => /arcana mods.*510 pvc protective discs/i.test(String(item && item.title || ''))), 'Arcana 510 protective discs are missing from components');
 
 const validationPath = path.join(ROOT, 'data', 'atomizer-validation.json');
 check(fs.existsSync(validationPath), 'atomizer validation registry is missing');
