@@ -21,9 +21,10 @@ const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const LIQUID_TEASER = 'Sunt incluse exact 3 lichide asociate; denumirile și explicațiile apar în textul extins.';
 const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v4-zero-nicotine';
-const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v9-important-guidance';
+const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v10-atomizer-name-first';
 const ADULT_SMOKER_NOTICE = 'Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.';
 const NICOTINE_FREE_NOTICE = 'Recomandat a se consuma fără nicotină.';
+const ATOMIZER_TITLE_FRAME = '━━ 𝗔𝗧𝗢𝗠𝗜𝗭𝗢𝗥 𝗥𝗧𝗔 𝗠𝗧𝗟 ━━';
 const NOTICE_FRAME_TOP = '┏━ 𝗢𝗥𝗜𝗘𝗡𝗧𝗔𝗥𝗘 𝗜𝗠𝗣𝗢𝗥𝗧𝗔𝗡𝗧𝗔';
 const ADULT_SMOKER_EMPHASIS = '𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘 • 𝗠𝗔𝗜 𝗣𝗨𝗧𝗜𝗡 𝗡𝗢𝗖𝗜𝗩𝗔';
 const NICOTINE_FREE_EMPHASIS = '𝗥𝗘𝗖𝗢𝗠𝗔𝗡𝗗𝗔𝗧 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔';
@@ -429,6 +430,14 @@ function noticeBannerLines() {
   ];
 }
 
+function atomizerHeadingLines(atom) {
+  return [
+    ATOMIZER_TITLE_FRAME,
+    cleanText(atom && atom.name, 160),
+    ''
+  ];
+}
+
 function liquidStateItems(matches) {
   return [].concat(matches || []).slice(0, 3).map(match => ({
     title: cleanText(match.title, 150),
@@ -626,7 +635,7 @@ function directVideoLines(videos) {
 function atomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 260);
   const build = topBuild(atom);
-  const lines = [...noticeBannerLines(), `Nou în Ghid RTA MTL: ${atom.name}`, '', LIQUID_TEASER, '', 'Modelul a fost introdus în biblioteca RTA și în recomandările în care profilul lichidului, arhitectura atomizorului și buildul sunt compatibile.'];
+  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Nou în Ghid RTA MTL', '', LIQUID_TEASER, '', 'Modelul a fost introdus în biblioteca RTA și în recomandările în care profilul lichidului, arhitectura atomizorului și buildul sunt compatibile.'];
   if (profile) lines.push('', `Potrivire inițială: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
@@ -646,7 +655,7 @@ function atomizerMessage(atom, videos, liquidMatches = []) {
 function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
-  const lines = [...noticeBannerLines(), `Fișă RTA MTL: ${atom.name}`, '', LIQUID_TEASER, '', 'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'];
+  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Fișă RTA MTL', '', LIQUID_TEASER, '', 'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'];
   if (profile) lines.push('', `Potrivire aromatică: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
@@ -666,7 +675,7 @@ function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
 function recommendationMessage(atom, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
-  const lines = [...noticeBannerLines(), `Recomandare actualizată: ${atom.name}`, '', LIQUID_TEASER, '', 'Potrivirea a fost recalibrată după profilul lichidului, arhitectura atomizorului și comportamentul buildului.'];
+  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Recomandare actualizată', '', LIQUID_TEASER, '', 'Potrivirea a fost recalibrată după profilul lichidului, arhitectura atomizorului și comportamentul buildului.'];
   if (profile) lines.push('', `Profil: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
@@ -682,7 +691,7 @@ function recommendationMessage(atom, liquidMatches = []) {
 }
 
 function reviewMessage(atom, videos, liquidMatches = []) {
-  const lines = [...noticeBannerLines(), `Review nou verificat: ${atom.name}`, '', LIQUID_TEASER, '', 'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'];
+  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Review nou verificat', '', LIQUID_TEASER, '', 'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'];
   videos.slice(0, 2).forEach(video => {
     const label = video.kind === 'build' ? 'Build' : 'Recenzie';
     const clone = video.scope === 'clone' ? ' pe clonă; nu este recenzie a originalului' : '';
@@ -1053,7 +1062,8 @@ function assertEventLiquidTriplet(event) {
     throw new Error(`Una dintre potrivirile pentru ${event.name} nu este confirmată ca aromă sau longfill fără nicotină.`);
   }
   const message = String(event.message || '');
-  if (!message.startsWith(NOTICE_FRAME_TOP) ||
+  if (!message.startsWith(`${ATOMIZER_TITLE_FRAME}\n${cleanText(event.name, 160)}\n`) ||
+      !message.includes(NOTICE_FRAME_TOP) ||
       !message.includes(ADULT_SMOKER_EMPHASIS) ||
       !message.includes(ADULT_SMOKER_NOTICE) ||
       !message.includes(NICOTINE_FREE_EMPHASIS) ||
@@ -1075,6 +1085,7 @@ function educationalAlbumPhotoEntries(event) {
     type: 'atomizer',
     image: event.image,
     caption: [
+      ATOMIZER_TITLE_FRAME,
       cleanText(event.name, 160),
       'Atomizor analizat în cadrul Ghid RTA MTL.',
       'Conținut informativ destinat exclusiv adulților 18+.'

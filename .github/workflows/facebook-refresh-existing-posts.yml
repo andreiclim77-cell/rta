@@ -1,0 +1,53 @@
+name: Facebook refresh existing post titles
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: facebook-refresh-existing-posts
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate Facebook publisher
+        run: |
+          node --check tools/facebook-publisher.js
+          node tools/check-facebook-publisher.js
+          node tools/facebook-publisher.js --check-repair-zero-nicotine-galleries
+
+      - name: Refresh existing Facebook posts
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/facebook-publisher.js --repair-zero-nicotine-galleries
+
+      - name: Commit refreshed Facebook state
+        shell: bash
+        run: |
+          if git diff --quiet -- data/facebook-campaign-state.json data/facebook-publish-state.json; then
+            echo "No Facebook state changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/facebook-campaign-state.json data/facebook-publish-state.json
+          git commit -m "Record Facebook post title refresh"
+          git pull --rebase
+          git push
