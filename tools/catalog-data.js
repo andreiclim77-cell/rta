@@ -211,6 +211,7 @@ function youtubeSourceFromRecord(atomName, video, fallbackDate) {
     Atomizor: atomName,
     'Titlu / identificare review YouTube': `${kind} YouTube verificat${clone ? ' pe clona' : ''} - ${video.title}`,
     URL: video.url,
+    'Vizualizari YouTube': Math.max(0, Number(video.viewCount || 0)),
     Observatie: clone
       ? `Exemplu realizat pe clona; nu este recenzie a originalului.${checked ? ` Identificat la ${checked}.` : ''}`
       : `Titlul identifica direct modelul.${checked ? ` Identificat la ${checked}.` : ''}`
@@ -231,9 +232,19 @@ function mergeYouTubeReviewFeed(atomizers, root) {
     const atom = byName.get(catalogNameKey(entry.name));
     if (!atom) return;
     const existing = new Set(allSources(atom).map(sourceUrl).filter(Boolean));
-    const additions = (entry.videos || []).filter(video => video.url && !existing.has(video.url)).map(video => {
+    const additions = [];
+    (entry.videos || []).filter(video => video.url).forEach(video => {
+      const source = youtubeSourceFromRecord(publicAtomName(atom.name), video, String(feed.generatedAt || '').slice(0, 10));
+      let updated = false;
+      [atom.sources, atom.Surse, atom.youtube].filter(Array.isArray).forEach(list => {
+        list.forEach(item => {
+          if (sourceUrl(item) !== video.url) return;
+          Object.assign(item, source);
+          updated = true;
+        });
+      });
+      if (!updated && !existing.has(video.url)) additions.push(source);
       existing.add(video.url);
-      return youtubeSourceFromRecord(publicAtomName(atom.name), video, String(feed.generatedAt || '').slice(0, 10));
     });
     if (additions.length) atom.youtube = additions.concat(atom.youtube || []);
   });

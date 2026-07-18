@@ -75,6 +75,8 @@ const repairMissingLiquidGalleries = args.includes('--repair-missing-liquid-gall
 const checkRepairMissingLiquidGalleries = args.includes('--check-repair-missing-liquid-galleries');
 const repairZeroNicotineGalleries = args.includes('--repair-zero-nicotine-galleries');
 const checkRepairZeroNicotineGalleries = args.includes('--check-repair-zero-nicotine-galleries');
+const dedupePosts = args.includes('--dedupe-posts');
+const checkDedupePosts = args.includes('--check-dedupe-posts');
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -528,6 +530,7 @@ function reviewEntries(feed) {
         url: video.url,
         kind: video.kind === 'build' ? 'build' : 'review',
         scope: video.scope === 'clone' ? 'clone' : 'original',
+        viewCount: Math.max(0, Number(video.viewCount || 0)),
         firstSeenAt: video.firstSeenAt || ''
       });
     });
@@ -602,6 +605,73 @@ function facebookPostsOnDate(campaignState, publishState, targetDate = todayInRo
   return posts.size;
 }
 
+function canonicalAtomizerSlug(value) {
+  return slugify(publicAtomName(value));
+}
+
+function historyAtomizerSlug(entry) {
+  if (entry && entry.name) return canonicalAtomizerSlug(entry.name);
+  const match = String(entry && entry.key || '').match(/^(?:atomizer|recommendation|review):([^:]+)/);
+  return canonicalAtomizerSlug(match ? match[1] : '');
+}
+
+function postedAtomizerSlugs(campaignState, publishState) {
+  const slugs = new Set();
+  Object.entries(campaignState && campaignState.postedAtomizers || {}).forEach(([slug, entry]) => {
+    const canonical = canonicalAtomizerSlug(entry && entry.name || slug);
+    if (canonical) slugs.add(canonical);
+  });
+  [].concat(publishState && publishState.history || []).forEach(entry => {
+    if (!entry || !entry.postId) return;
+    const canonical = historyAtomizerSlug(entry);
+    if (canonical) slugs.add(canonical);
+  });
+  return slugs;
+}
+
+function duplicateFacebookPostGroups(campaignState, publishState) {
+  const records = [];
+  Object.entries(campaignState && campaignState.postedAtomizers || {}).forEach(([slug, entry]) => {
+    if (!entry || !entry.postId) return;
+    records.push({
+      scope: 'campaign',
+      slug,
+      name: entry.name || slug,
+      postId: entry.postId,
+      publishedAt: entry.publishedAt || ''
+    });
+  });
+  [].concat(publishState && publishState.history || []).forEach(entry => {
+    if (!entry || !entry.postId) return;
+    records.push({
+      scope: 'publish',
+      entry,
+      slug: historyAtomizerSlug(entry),
+      name: entry.name || historyAtomizerSlug(entry),
+      postId: entry.postId,
+      publishedAt: entry.publishedAt || ''
+    });
+  });
+
+  const grouped = new Map();
+  records.forEach(record => {
+    const canonical = canonicalAtomizerSlug(record.name || record.slug);
+    if (!canonical) return;
+    if (!grouped.has(canonical)) grouped.set(canonical, []);
+    grouped.get(canonical).push(record);
+  });
+  return Array.from(grouped.entries())
+    .map(([canonical, recordsForModel]) => {
+      const uniquePosts = Array.from(new Map(recordsForModel.map(record => [record.postId, record])).values());
+      return {
+        canonical,
+        records: uniquePosts.sort((a, b) => String(a.publishedAt).localeCompare(String(b.publishedAt)))
+      };
+    })
+    .filter(group => group.records.length > 1)
+    .sort((a, b) => a.canonical.localeCompare(b.canonical));
+}
+
 function validateState(state) {
   const errors = [];
   if (!state || state.schemaVersion !== 1) errors.push('invalid schemaVersion');
@@ -621,7 +691,13 @@ function topBuild(atom) {
 }
 
 function videosForAtom(feedVideos, slug) {
-  return feedVideos.filter(video => video.slug === slug);
+  return feedVideos.filter(video => video.slug === slug).sort((a, b) => {
+    const scopeDifference = Number(a.scope === 'clone') - Number(b.scope === 'clone');
+    if (scopeDifference) return scopeDifference;
+    const kindDifference = Number(a.kind === 'build') - Number(b.kind === 'build');
+    if (kindDifference) return kindDifference;
+    return Number(b.viewCount || 0) - Number(a.viewCount || 0) || a.videoId.localeCompare(b.videoId);
+  });
 }
 
 function directVideoLines(videos) {
@@ -719,15 +795,13 @@ function planUpdates(catalog, feed, state, options = {}) {
   );
   if (limit === 0) return [];
   const atoms = uniqueAtomizers(catalog);
-  const atomsBySlug = new Map(atoms.map(atom => [slugify(atom.name), atom]));
   const videos = reviewEntries(feed);
   const events = [];
-  const newSlugs = new Set();
+  const blockedModelSlugs = new Set([].concat(options.blockedModelSlugs || []).map(canonicalAtomizerSlug));
 
   atoms.forEach(atom => {
     const slug = slugify(atom.name);
-    if (state.seenAtomizers[slug]) return;
-    newSlugs.add(slug);
+    if (state.seenAtomizers[slug] || blockedModelSlugs.has(canonicalAtomizerSlug(atom.name))) return;
     const atomVideos = videosForAtom(videos, slug);
     const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
     if (liquidMatches.length < 3) return;
@@ -745,59 +819,7 @@ function planUpdates(catalog, feed, state, options = {}) {
       videoIds: atomVideos.map(video => video.videoId)
     });
   });
-
-  atoms.forEach(atom => {
-    const slug = slugify(atom.name);
-    if (newSlugs.has(slug) || !state.seenAtomizers[slug]) return;
-    const signature = recommendationSignature(atom);
-    if (state.recommendationSignatures[slug] === signature) return;
-    const atomVideos = videosForAtom(videos, slug);
-    const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
-    if (liquidMatches.length < 3) return;
-    events.push({
-      type: 'recommendation',
-      key: `recommendation:${slug}:${signature}`,
-      slug,
-      name: atom.name,
-      link: atomizerUrl(atom),
-      image: atomizerImage(atom, atomVideos),
-      imageCandidates: atomizerImageCandidates(atom, atomVideos),
-      message: recommendationMessage(atom, liquidMatches),
-      liquidMatches,
-      signature,
-      videoIds: []
-    });
-  });
-
-  const unseenBySlug = new Map();
-  videos.forEach(video => {
-    if (newSlugs.has(video.slug) || state.seenVideos[video.videoId]) return;
-    if (!atomsBySlug.has(video.slug)) return;
-    if (!unseenBySlug.has(video.slug)) unseenBySlug.set(video.slug, []);
-    unseenBySlug.get(video.slug).push(video);
-  });
-  Array.from(unseenBySlug.entries()).sort(([a], [b]) => a.localeCompare(b)).forEach(([slug, modelVideos]) => {
-    const atom = atomsBySlug.get(slug);
-    const chosen = modelVideos.slice(0, 2);
-    const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
-    if (liquidMatches.length !== 3) return;
-    events.push({
-      type: 'review',
-      key: `review:${slug}:${chosen.map(video => video.videoId).join(',')}`,
-      slug,
-      name: atom.name,
-      link: atomizerUrl(atom),
-      image: atomizerImage(atom, chosen),
-      imageCandidates: atomizerImageCandidates(atom, chosen),
-      message: reviewMessage(atom, chosen, liquidMatches),
-      liquidMatches,
-      signature: recommendationSignature(atom),
-      videoIds: chosen.map(video => video.videoId)
-    });
-  });
-
-  const priority = { atomizer: 0, recommendation: 1, review: 2 };
-  return events.sort((a, b) => priority[a.type] - priority[b.type] || a.name.localeCompare(b.name)).slice(0, limit);
+  return events.sort((a, b) => a.name.localeCompare(b.name)).slice(0, limit);
 }
 
 function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
@@ -834,8 +856,9 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
   const limit = Math.min(Math.max(1, Number(options.maxPosts || 1)), dailyRemaining);
   if (limit === 0) return [];
   const videos = reviewEntries(feed);
+  const blockedModelSlugs = new Set([].concat(options.blockedModelSlugs || []).map(canonicalAtomizerSlug));
   const candidates = uniqueAtomizers(catalog)
-    .filter(atom => !state.postedAtomizers[slugify(atom.name)])
+    .filter(atom => !state.postedAtomizers[slugify(atom.name)] && !blockedModelSlugs.has(canonicalAtomizerSlug(atom.name)))
     .map(atom => {
       const slug = slugify(atom.name);
       const atomVideos = videosForAtom(videos, slug);
@@ -1124,6 +1147,55 @@ async function deleteFacebookObject(objectId) {
     method: 'DELETE'
   }, 1);
   if (payload.success !== true) throw new Error(`Meta did not confirm deletion for ${objectId}.`);
+}
+
+function removeDuplicateRecord(campaignState, publishState, record, keptPostId) {
+  if (record.scope === 'campaign') {
+    delete campaignState.postedAtomizers[record.slug];
+    campaignState.history = campaignState.history.filter(entry => entry && entry.postId !== record.postId);
+    campaignState.updatedAt = nowIso();
+  } else {
+    publishState.history = publishState.history.filter(entry => entry && entry.postId !== record.postId);
+    Object.values(publishState.seenAtomizers || {}).forEach(entry => {
+      if (entry && entry.postId === record.postId) entry.postId = keptPostId;
+    });
+    Object.values(publishState.seenVideos || {}).forEach(entry => {
+      if (entry && entry.postId === record.postId) entry.postId = keptPostId;
+    });
+    publishState.updatedAt = nowIso();
+  }
+}
+
+async function dedupeFacebookPosts(options = {}) {
+  let campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
+  let publishState = readJson(STATE_PATH, emptyState());
+  const groups = duplicateFacebookPostGroups(campaignState, publishState);
+  if (!groups.length) {
+    console.log('Facebook deduplication: every atomizer has one post.');
+    return { groups: 0, removed: 0 };
+  }
+  groups.forEach(group => {
+    const kept = group.records[0];
+    console.log(`Facebook duplicate group: ${group.canonical}; keep ${kept.postId}; remove ${group.records.slice(1).map(record => record.postId).join(', ')}.`);
+  });
+  if (options.checkOnly) return { groups: groups.length, removed: 0 };
+  if (!pageId || !accessToken) {
+    throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
+  }
+  await verifyFacebookPage();
+  let removed = 0;
+  for (const group of groups) {
+    const kept = group.records[0];
+    for (const duplicate of group.records.slice(1)) {
+      await deleteFacebookObject(duplicate.postId);
+      removeDuplicateRecord(campaignState, publishState, duplicate, kept.postId);
+      writeJsonAtomic(CAMPAIGN_STATE_PATH, campaignState);
+      writeJsonAtomic(STATE_PATH, publishState);
+      removed += 1;
+      console.log(`Facebook duplicate removed: ${duplicate.name} (${duplicate.postId}); retained ${kept.postId}.`);
+    }
+  }
+  return { groups: groups.length, removed };
 }
 
 async function selectPublicAtomizerImage(event) {
@@ -1529,6 +1601,10 @@ async function refreshTodayLiquidMessages(options = {}) {
 }
 
 async function main() {
+  if (dedupePosts || checkDedupePosts) {
+    await dedupeFacebookPosts({ checkOnly: checkDedupePosts });
+    return;
+  }
   if (repairZeroNicotineGalleries || checkRepairZeroNicotineGalleries) {
     await repairZeroNicotineGalleryPosts({ checkOnly: checkRepairZeroNicotineGalleries });
     return;
@@ -1566,10 +1642,15 @@ async function main() {
     let campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
     const publishState = readJson(STATE_PATH, emptyState());
     const dailyPublished = facebookPostsOnDate(campaignState, publishState);
-    const events = planEditorialPosts(catalog, feed, campaignState, { maxPosts, dailyPublished });
+    const blockedModelSlugs = postedAtomizerSlugs(campaignState, publishState);
+    const events = planEditorialPosts(catalog, feed, campaignState, {
+      maxPosts,
+      dailyPublished,
+      blockedModelSlugs: Array.from(blockedModelSlugs)
+    });
 
     if (editorialUnpostedCountOnly) {
-      const remaining = uniqueAtomizers(catalog).filter(atom => !campaignState.postedAtomizers[slugify(atom.name)]).length;
+      const remaining = uniqueAtomizers(catalog).filter(atom => !blockedModelSlugs.has(canonicalAtomizerSlug(atom.name))).length;
       process.stdout.write(String(remaining));
       return;
     }
@@ -1618,7 +1699,11 @@ async function main() {
   if (errors.length) throw new Error(errors.join('\n'));
   const campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
   const dailyPublished = facebookPostsOnDate(campaignState, state);
-  const events = planUpdates(catalog, feed, state, { maxPosts, dailyPublished });
+  const events = planUpdates(catalog, feed, state, {
+    maxPosts,
+    dailyPublished,
+    blockedModelSlugs: Array.from(postedAtomizerSlugs(campaignState, state))
+  });
 
   if (pendingCountOnly) {
     process.stdout.write(String(events.length));
@@ -1641,7 +1726,7 @@ async function main() {
   }
 
   if (!events.length) {
-    console.log('Facebook publisher: no new atomizers, reviews or recommendation changes.');
+    console.log('Facebook publisher: no new atomizers. Review and source updates remain attached to the existing model post.');
     return;
   }
 
@@ -1671,6 +1756,8 @@ module.exports = {
   atomizerMessage,
   atomizerUrl,
   baselineState,
+  canonicalAtomizerSlug,
+  duplicateFacebookPostGroups,
   editorialAtomizerMessage,
   dateInRomania,
   educationalAlbumPhotoEntries,
@@ -1688,6 +1775,7 @@ module.exports = {
   normalizeCampaignState,
   planEditorialPosts,
   planUpdates,
+  postedAtomizerSlugs,
   profileMatchesForAtom,
   recommendationMessage,
   recommendationSignature,

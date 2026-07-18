@@ -13,7 +13,7 @@ const PUBLIC_CONCURRENCY = 1;
 const API_CONCURRENCY = 3;
 const MIN_VIDEO_SECONDS = 75;
 const MAX_PER_KIND = 2;
-const PUBLIC_TARGET_BATCH = 5;
+const PUBLIC_TARGET_BATCH = 16;
 const DISCOVERY_QUERIES = [
   'MTL RTA review',
   'MTL RTA build',
@@ -214,6 +214,22 @@ function durationSeconds(value) {
   return parts.reduce((total, part) => total * 60 + part, 0);
 }
 
+function parseViewCount(value) {
+  const text = String(value || '').toLowerCase().replace(/\u00a0/g, ' ').trim();
+  const match = text.match(/([\d.,]+)\s*([kmb])?/i);
+  if (!match) return 0;
+  const suffix = String(match[2] || '').toLowerCase();
+  let amount;
+  if (suffix) {
+    amount = Number(match[1].replace(/,/g, '.'));
+  } else {
+    amount = Number(match[1].replace(/[^\d]/g, ''));
+  }
+  if (!Number.isFinite(amount)) return 0;
+  const multiplier = suffix === 'k' ? 1000 : suffix === 'm' ? 1000000 : suffix === 'b' ? 1000000000 : 1;
+  return Math.max(0, Math.round(amount * multiplier));
+}
+
 function assignedJson(html, marker) {
   const markerIndex = html.indexOf(marker);
   if (markerIndex < 0) return null;
@@ -264,6 +280,7 @@ function parseYouTubeSearch(html) {
         title: runsText(video.title),
         channel: runsText(video.ownerText || video.shortBylineText),
         publishedText: runsText(video.publishedTimeText),
+        viewCount: parseViewCount(runsText(video.viewCountText || video.shortViewCountText)),
         durationSeconds: durationSeconds(runsText(video.lengthText)),
         live: Boolean(video.upcomingEventData || video.badges && video.badges.some(badge => /live/i.test(runsText(badge.metadataBadgeRenderer && badge.metadataBadgeRenderer.label))))
       });
@@ -301,15 +318,23 @@ function selectVideos(modelName, videos, previous) {
       scope: isClone(video.title) ? 'clone' : 'original',
       channel: video.channel || old.channel || '',
       publishedText: video.publishedText || old.publishedText || '',
+      viewCount: Math.max(0, Number(video.viewCount || old.viewCount || 0)),
       firstSeenAt: old.firstSeenAt || today,
       lastSeenAt: today
     };
   });
 
-  const combined = selected.concat((previous || []).filter(old => exactModelMatch(modelName, old.title) && !selected.some(video => video.videoId === old.videoId)));
+  const byId = new Map();
+  (previous || []).filter(old => exactModelMatch(modelName, old.title)).forEach(video => byId.set(video.videoId, video));
+  selected.forEach(video => byId.set(video.videoId, Object.assign({}, byId.get(video.videoId) || {}, video)));
+  const combined = Array.from(byId.values());
   const output = [];
   ['review', 'build'].forEach(kind => {
-    combined.filter(video => video.kind === kind).slice(0, MAX_PER_KIND).forEach(video => output.push(video));
+    const candidates = combined.filter(video => video.kind === kind);
+    const originals = candidates.filter(video => video.scope !== 'clone');
+    const pool = originals.length ? originals : candidates;
+    pool.sort((a, b) => Number(b.viewCount || 0) - Number(a.viewCount || 0) || String(a.firstSeenAt || '').localeCompare(String(b.firstSeenAt || '')) || a.videoId.localeCompare(b.videoId));
+    pool.slice(0, MAX_PER_KIND).forEach(video => output.push(video));
   });
   return output;
 }
@@ -329,22 +354,36 @@ async function fetchWithTimeout(url, options = {}) {
 async function searchWithApi(modelName) {
   const query = `${modelName} RTA review build`;
   const params = new URLSearchParams({
-    part: 'snippet', type: 'video', maxResults: '20', order: 'date', q: query, key: apiKey
+    part: 'snippet', type: 'video', maxResults: '20', order: 'viewCount', q: query, key: apiKey
   });
   const response = await fetchWithTimeout(`https://www.googleapis.com/youtube/v3/search?${params}`);
   const data = await response.json();
-  return (data.items || []).map(item => ({
+  const searchItems = (data.items || []).filter(item => item.id && item.id.videoId);
+  const ids = searchItems.map(item => item.id.videoId);
+  let statistics = new Map();
+  if (ids.length) {
+    const detailsParams = new URLSearchParams({
+      part: 'statistics',
+      id: ids.join(','),
+      key: apiKey
+    });
+    const detailsResponse = await fetchWithTimeout(`https://www.googleapis.com/youtube/v3/videos?${detailsParams}`);
+    const details = await detailsResponse.json();
+    statistics = new Map((details.items || []).map(item => [item.id, Math.max(0, Number(item.statistics && item.statistics.viewCount || 0))]));
+  }
+  return searchItems.map(item => ({
     videoId: item.id && item.id.videoId || '',
     title: item.snippet && item.snippet.title || '',
     channel: item.snippet && item.snippet.channelTitle || '',
     publishedText: item.snippet && item.snippet.publishedAt || '',
+    viewCount: statistics.get(item.id.videoId) || 0,
     durationSeconds: 0,
     live: item.snippet && item.snippet.liveBroadcastContent && item.snippet.liveBroadcastContent !== 'none'
   })).filter(video => video.videoId);
 }
 
 async function searchPublicQuery(query) {
-  const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&sp=CAI%253D&hl=en&gl=US`;
+  const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&hl=en&gl=US`;
   const response = await fetchWithTimeout(url, {
     headers: {
       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
@@ -373,6 +412,7 @@ function validateFeed(feed) {
       if (!/^[A-Za-z0-9_-]{11}$/.test(video.videoId || '')) errors.push(`${entry.name}: invalid video id`);
       if (video.url !== `https://www.youtube.com/watch?v=${video.videoId}`) errors.push(`${entry.name}: invalid direct URL`);
       if (!['review', 'build'].includes(video.kind)) errors.push(`${entry.name}: invalid video kind`);
+      if (video.viewCount != null && (!Number.isFinite(Number(video.viewCount)) || Number(video.viewCount) < 0)) errors.push(`${entry.name}: invalid view count`);
       if (!exactModelMatch(entry.name, video.title)) errors.push(`${entry.name}: title does not identify the exact model: ${video.title}`);
     });
   });
@@ -529,6 +569,7 @@ async function main() {
 module.exports = {
   exactModelMatch,
   identityTokens,
+  parseViewCount,
   parseYouTubeSearch,
   selectVideos,
   validateFeed,

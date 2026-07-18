@@ -9,7 +9,9 @@ const {
   atomizerImageCandidates,
   atomizerUrl,
   baselineState,
+  canonicalAtomizerSlug,
   dateInRomania,
+  duplicateFacebookPostGroups,
   educationalAlbumPhotoEntries,
   emptyCampaignState,
   emptyState,
@@ -23,6 +25,7 @@ const {
   needsLiquidGalleryRepair,
   planEditorialPosts,
   planUpdates,
+  postedAtomizerSlugs,
   recommendationSignature,
   topLiquidMatchesForAtom,
   uniqueAtomizers,
@@ -242,15 +245,12 @@ assert.strictEqual(
 const recommendationState = clone(baseline);
 recommendationState.recommendationSignatures['test-alpha-rta'] = 'outdated';
 const recommendationPlan = planUpdates(catalog, feed, recommendationState);
-assert.strictEqual(recommendationPlan[0].type, 'recommendation');
-assert.strictEqual(recommendationPlan[0].signature, recommendationSignature(atomA));
-assert.strictEqual(recommendationPlan[0].liquidMatches.length, 3);
+assert.strictEqual(recommendationPlan.length, 0, 'recommendation changes must update the model page without duplicating its Facebook post');
 
 const reviewState = clone(baseline);
 delete reviewState.seenVideos.abc123DEF45;
 const reviewPlan = planUpdates(catalog, feed, reviewState);
-assert.strictEqual(reviewPlan[0].type, 'review');
-assert(reviewPlan[0].message.includes('Test Alpha RTA review'));
+assert.strictEqual(reviewPlan.length, 0, 'new reviews must update the model sources without duplicating its Facebook post');
 assert.strictEqual(
   planUpdates(catalog, feed, reviewState, { maxPosts: 2, dailyPublished: 2 }).length,
   0,
@@ -310,6 +310,46 @@ sharedPublishState.history.push({
   publishedAt: '2026-07-13T04:00:00.000Z'
 });
 assert.strictEqual(facebookPostsOnDate(dailyLimitedState, sharedPublishState, '2026-07-13'), 3);
+
+const crossCampaignState = emptyCampaignState();
+crossCampaignState.postedAtomizers['test-alpha-rta-black'] = {
+  name: 'Test Alpha RTA - Black',
+  postId: 'campaign_alpha',
+  publishedAt: '2026-07-13T01:00:00.000Z'
+};
+const crossPublishState = emptyState();
+crossPublishState.history.push({
+  key: 'review:test-beta-rta:xyz987ZYX65',
+  name: 'Test Beta RTA',
+  postId: 'publish_beta',
+  publishedAt: '2026-07-13T02:00:00.000Z'
+});
+const postedSlugs = postedAtomizerSlugs(crossCampaignState, crossPublishState);
+assert(postedSlugs.has(canonicalAtomizerSlug('Test Alpha RTA')));
+assert(postedSlugs.has(canonicalAtomizerSlug('Test Beta RTA')));
+assert.strictEqual(planEditorialPosts(catalog, feed, crossCampaignState, {
+  maxPosts: 2,
+  dailyPublished: 0,
+  blockedModelSlugs: Array.from(postedSlugs),
+  today: '2099-01-01'
+}).length, 0, 'editorial posts must not repeat models already published by catalog updates');
+
+const duplicateCampaign = emptyCampaignState();
+duplicateCampaign.postedAtomizers['test-alpha-rta'] = {
+  name: 'Test Alpha RTA',
+  postId: 'post_alpha_old',
+  publishedAt: '2026-07-13T01:00:00.000Z'
+};
+const duplicatePublish = emptyState();
+duplicatePublish.history.push({
+  key: 'review:test-alpha-rta:abc123DEF45',
+  name: 'Test Alpha RTA - Black',
+  postId: 'post_alpha_new',
+  publishedAt: '2026-07-14T01:00:00.000Z'
+});
+const duplicateGroups = duplicateFacebookPostGroups(duplicateCampaign, duplicatePublish);
+assert.strictEqual(duplicateGroups.length, 1);
+assert.strictEqual(duplicateGroups[0].records[0].postId, 'post_alpha_old');
 
 const exactVideoFallback = atomizerImage({
   name: 'Test Gamma RTA',
