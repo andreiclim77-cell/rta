@@ -503,7 +503,9 @@ async function main() {
     const bChecked = models[slugify(b.name)] && models[slugify(b.name)].checkedAt || '';
     return aChecked.localeCompare(bChecked) || a.name.localeCompare(b.name);
   });
-  let names = apiKey ? allNames : targetModels.slice(0, PUBLIC_TARGET_BATCH).map(entry => entry.name);
+  let names = apiKey
+    ? allNames
+    : targetModels.slice(0, limit || PUBLIC_TARGET_BATCH).map(entry => entry.name);
   if (limit) names = names.slice(0, limit);
 
   let cursor = 0;
