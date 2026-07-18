@@ -18,6 +18,7 @@ const {
   facebookPostsOnDate,
   historyEntryMessage,
   historyEntryEvent,
+  isRealAtomizerImage,
   isNicotineFreeFacebookLiquid,
   liquidMatchLines,
   noticeBannerLines,
@@ -26,6 +27,7 @@ const {
   planEditorialPosts,
   planUpdates,
   postedAtomizerSlugs,
+  principalVideo,
   recommendationSignature,
   topLiquidMatchesForAtom,
   uniqueAtomizers,
@@ -235,7 +237,8 @@ newAtomPlan[0].liquidMatches.forEach(match => {
   assert(newAtomPlan[0].message.includes(match.profile));
   assert(!newAtomPlan[0].message.includes(match.url));
 });
-assert.strictEqual((newAtomPlan[0].message.match(/https:\/\//g) || []).length, 1, 'a future Facebook post must contain one guide link');
+assert.strictEqual((newAtomPlan[0].message.match(/https:\/\//g) || []).length, 2, 'a future Facebook post must contain the guide and principal video links');
+assert(newAtomPlan[0].message.includes('https://www.youtube.com/watch?v=xyz987ZYX65'));
 assert.strictEqual(newAtomPlan[0].link, 'https://ghid-rta.ro/atomizoare/');
 assert.strictEqual(
   atomizerUrl({ name: 'Ambition Mods Amazier MTL RTA' }),
@@ -356,7 +359,7 @@ const exactVideoFallback = atomizerImage({
   image: '',
   sources: [{ URL: 'https://www.youtube.com/watch?v=vid123Exact' }]
 });
-assert.strictEqual(exactVideoFallback, 'https://i.ytimg.com/vi/vid123Exact/hqdefault.jpg');
+assert.strictEqual(exactVideoFallback, '', 'YouTube thumbnails must never replace a real product photo');
 assert.deepStrictEqual(
   atomizerImageCandidates({
     name: 'Test Multi-source RTA',
@@ -365,11 +368,15 @@ assert.deepStrictEqual(
       { URL: 'https://youtu.be/second456Vid' }
     ]
   }),
-  [
-    'https://i.ytimg.com/vi/first123Vid/hqdefault.jpg',
-    'https://i.ytimg.com/vi/second456Vid/hqdefault.jpg'
-  ]
+  []
 );
+assert.strictEqual(isRealAtomizerImage('https://images.example/product.jpg'), true);
+assert.strictEqual(isRealAtomizerImage('https://i.ytimg.com/vi/first123Vid/hqdefault.jpg'), false);
+assert.strictEqual(principalVideo([
+  { videoId: 'build123', url: 'https://www.youtube.com/watch?v=build123', kind: 'build', scope: 'original', viewCount: 100000 },
+  { videoId: 'review50', url: 'https://www.youtube.com/watch?v=review50', kind: 'review', scope: 'original', viewCount: 50000 },
+  { videoId: 'clone200', url: 'https://www.youtube.com/watch?v=clone200', kind: 'review', scope: 'clone', viewCount: 200000 }
+]).videoId, 'review50', 'the most viewed exact original review must be the principal video');
 assert.strictEqual(
   atomizerImage({ name: 'Test Search RTA', sources: [{ URL: 'https://www.youtube.com/results?search_query=test+rta' }] }),
   '',

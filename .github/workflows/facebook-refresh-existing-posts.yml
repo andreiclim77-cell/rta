@@ -2,6 +2,11 @@ name: Facebook refresh existing post titles
 
 on:
   workflow_dispatch:
+    inputs:
+      model:
+        description: Optional atomizer slug to refresh
+        required: false
+        default: ''
 
 permissions:
   contents: write
@@ -26,17 +31,20 @@ jobs:
           node-version: 22
 
       - name: Validate Facebook publisher
+        env:
+          TARGET_MODEL: ${{ inputs.model }}
         run: |
           node --check tools/facebook-publisher.js
           node tools/check-facebook-publisher.js
-          node tools/facebook-publisher.js --check-repair-zero-nicotine-galleries
+          node tools/facebook-publisher.js --check-repair-zero-nicotine-galleries --model "$TARGET_MODEL"
 
       - name: Refresh existing Facebook posts
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
-        run: node tools/facebook-publisher.js --repair-zero-nicotine-galleries
+          TARGET_MODEL: ${{ inputs.model }}
+        run: node tools/facebook-publisher.js --repair-zero-nicotine-galleries --model "$TARGET_MODEL"
 
       - name: Commit refreshed Facebook state
         shell: bash

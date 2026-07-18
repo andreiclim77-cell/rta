@@ -4,11 +4,9 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 const {
-  allSources,
   loadCatalog,
   publicAtomName,
-  slugify,
-  sourceUrl
+  slugify
 } = require('./catalog-data');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -77,6 +75,7 @@ const repairZeroNicotineGalleries = args.includes('--repair-zero-nicotine-galler
 const checkRepairZeroNicotineGalleries = args.includes('--check-repair-zero-nicotine-galleries');
 const dedupePosts = args.includes('--dedupe-posts');
 const checkDedupePosts = args.includes('--check-dedupe-posts');
+const repairModel = String(valueAfter('--model') || '').trim();
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
@@ -476,15 +475,21 @@ function youtubeVideoId(value) {
   }
 }
 
-function atomizerImageCandidates(atom, videos = []) {
+function isRealAtomizerImage(value) {
+  const image = String(value || '').trim();
+  if (!/^https:\/\//i.test(image)) return false;
+  try {
+    const host = new URL(image).hostname.toLowerCase().replace(/^www\./, '');
+    return host !== 'youtube.com' && !host.endsWith('.youtube.com') &&
+      host !== 'youtu.be' && host !== 'i.ytimg.com' && !host.endsWith('.ytimg.com');
+  } catch (error) {
+    return false;
+  }
+}
+
+function atomizerImageCandidates(atom) {
   const image = String(atom && atom.image || '').trim();
-  const candidates = /^https:\/\//i.test(image) ? [image] : [];
-  const videoIds = [].concat(videos || [])
-    .map(video => youtubeVideoId(video && (video.url || video.videoId)))
-    .concat(allSources(atom || {}).map(source => youtubeVideoId(sourceUrl(source))))
-    .filter(Boolean);
-  videoIds.forEach(videoId => candidates.push(`https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`));
-  return Array.from(new Set(candidates));
+  return isRealAtomizerImage(image) ? [image] : [];
 }
 
 function atomizerImage(atom, videos = []) {
@@ -690,21 +695,42 @@ function topBuild(atom) {
   return `${wire || 'Build de pornire'}${detail ? ` — ${detail}` : ''}`;
 }
 
+function videoPriority(video) {
+  const clonePenalty = video && video.scope === 'clone' ? 2 : 0;
+  const buildPenalty = video && video.kind === 'build' ? 1 : 0;
+  return clonePenalty + buildPenalty;
+}
+
+function compareVideos(a, b) {
+  return videoPriority(a) - videoPriority(b) ||
+    Number(b && b.viewCount || 0) - Number(a && a.viewCount || 0) ||
+    String(a && a.videoId || '').localeCompare(String(b && b.videoId || ''));
+}
+
 function videosForAtom(feedVideos, slug) {
-  return feedVideos.filter(video => video.slug === slug).sort((a, b) => {
-    const scopeDifference = Number(a.scope === 'clone') - Number(b.scope === 'clone');
-    if (scopeDifference) return scopeDifference;
-    const kindDifference = Number(a.kind === 'build') - Number(b.kind === 'build');
-    if (kindDifference) return kindDifference;
-    return Number(b.viewCount || 0) - Number(a.viewCount || 0) || a.videoId.localeCompare(b.videoId);
-  });
+  return feedVideos.filter(video => video.slug === slug).sort(compareVideos);
+}
+
+function principalVideo(videos) {
+  return [].concat(videos || [])
+    .filter(video => video && youtubeVideoId(video.url))
+    .sort(compareVideos)[0] || null;
 }
 
 function directVideoLines(videos) {
   if (!Array.isArray(videos) || !videos.length) return [];
+  const principal = principalVideo(videos);
+  if (!principal) return [];
   const hasClone = videos.some(video => video.scope === 'clone');
+  const label = principal.kind === 'build' ? 'Build video principal' : 'Recenzie video principala';
+  const clone = principal.scope === 'clone' ? ' (material realizat pe clona; nu este recenzia originalului)' : '';
+  const views = Number(principal.viewCount || 0) > 0
+    ? `, ${new Intl.NumberFormat('ro-RO').format(Number(principal.viewCount))} vizualizari verificate`
+    : '';
   return [
-    `Recenziile și buildurile video verificate sunt disponibile în fișa completă${hasClone ? '; materialele pe clone sunt marcate distinct' : ''}.`
+    `${label}${clone}${views}: ${cleanText(principal.title, 160)}`,
+    principal.url,
+    `Recenziile si buildurile video verificate sunt disponibile in fisa completa${hasClone ? '; materialele pe clone sunt marcate distinct' : ''}.`
   ];
 }
 
@@ -804,14 +830,15 @@ function planUpdates(catalog, feed, state, options = {}) {
     if (state.seenAtomizers[slug] || blockedModelSlugs.has(canonicalAtomizerSlug(atom.name))) return;
     const atomVideos = videosForAtom(videos, slug);
     const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
-    if (liquidMatches.length < 3) return;
+    const image = atomizerImage(atom, atomVideos);
+    if (liquidMatches.length < 3 || !image) return;
     events.push({
       type: 'atomizer',
       key: `atomizer:${slug}`,
       slug,
       name: atom.name,
       link: atomizerUrl(atom),
-      image: atomizerImage(atom, atomVideos),
+      image,
       imageCandidates: atomizerImageCandidates(atom, atomVideos),
       message: atomizerMessage(atom, atomVideos, liquidMatches),
       liquidMatches,
@@ -1199,7 +1226,7 @@ async function dedupeFacebookPosts(options = {}) {
 }
 
 async function selectPublicAtomizerImage(event) {
-  const candidates = Array.from(new Set([].concat(event.imageCandidates || [], event.image).filter(Boolean)));
+  const candidates = Array.from(new Set([].concat(event.imageCandidates || [], event.image).filter(isRealAtomizerImage)));
   let lastImageError;
   for (const candidate of candidates) {
     try {
@@ -1469,7 +1496,8 @@ function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState
     const atom = atomsBySlug.get(slug);
     if (!atom) throw new Error(`Atomizorul ${entry.name || slug} nu mai există în catalog.`);
     const event = editorialEventForAtom(atom, catalog, feed);
-    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches);
+    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
+      (isRealAtomizerImage(event.image) && String(entry.image || '') !== event.image);
     if (!replace && entry.formatVersion === FACEBOOK_FORMAT_VERSION && entry.messageVersion === FACEBOOK_MESSAGE_VERSION) return;
     seenPostIds.add(entry.postId);
     candidates.push({ scope: 'campaign', slug, entry, event, oldPostId: entry.postId, replace, publishedAt: entry.publishedAt });
@@ -1477,7 +1505,8 @@ function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState
   [].concat(publishState.history || []).forEach(entry => {
     if (!entry || !entry.postId || seenPostIds.has(entry.postId)) return;
     const event = historyEntryEvent(entry, catalog, feed);
-    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches);
+    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
+      (isRealAtomizerImage(event.image) && String(entry.image || '') !== event.image);
     if (!replace && entry.formatVersion === FACEBOOK_FORMAT_VERSION && entry.messageVersion === FACEBOOK_MESSAGE_VERSION) return;
     seenPostIds.add(entry.postId);
     candidates.push({ scope: 'publish', slug: event.slug, entry, event, oldPostId: entry.postId, replace, publishedAt: entry.publishedAt });
@@ -1490,7 +1519,9 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
   const feed = readJson(REVIEW_PATH, { schemaVersion: 1, models: {} });
   let campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
   const publishState = readJson(STATE_PATH, emptyState());
-  const candidates = zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState);
+  const requestedModel = canonicalAtomizerSlug(options.model || '');
+  const candidates = zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState)
+    .filter(candidate => !requestedModel || canonicalAtomizerSlug(candidate.event.name) === requestedModel);
   if (!candidates.length) {
     console.log('Facebook zero-nicotine repair: every recorded gallery already follows the current rule.');
     return;
@@ -1606,7 +1637,7 @@ async function main() {
     return;
   }
   if (repairZeroNicotineGalleries || checkRepairZeroNicotineGalleries) {
-    await repairZeroNicotineGalleryPosts({ checkOnly: checkRepairZeroNicotineGalleries });
+    await repairZeroNicotineGalleryPosts({ checkOnly: checkRepairZeroNicotineGalleries, model: repairModel });
     return;
   }
   if (repairMissingLiquidGalleries || checkRepairMissingLiquidGalleries) {
@@ -1768,6 +1799,7 @@ module.exports = {
   isNicotineFreeFacebookLiquid,
   historyEntryMessage,
   historyEntryEvent,
+  isRealAtomizerImage,
   liquidMatchLines,
   noticeBannerLines,
   multiPhotoFeedBody,
@@ -1775,6 +1807,7 @@ module.exports = {
   normalizeCampaignState,
   planEditorialPosts,
   planUpdates,
+  principalVideo,
   postedAtomizerSlugs,
   profileMatchesForAtom,
   recommendationMessage,
