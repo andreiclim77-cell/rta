@@ -91,7 +91,7 @@ async function updateMetricSummary(payload, request, env) {
   incrementMetric(current.countries, request.cf && request.cf.country || "unknown", 40);
   if (event === "page_view" && payload.visitor) {
     current.visitors = current.visitors || {};
-    const visitorHash = await analyticsDigest(`${metricDate()}|${payload.visitor}`);
+    const visitorHash = await analyticsDigest(payload.visitor);
     if (visitorHash) current.visitors[visitorHash] = 1;
   }
   current.updatedAt = new Date().toISOString();
