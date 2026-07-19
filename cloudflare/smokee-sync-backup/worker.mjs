@@ -35,6 +35,14 @@ function analyticsValue(value, limit = 80) {
   return String(value == null ? "" : value).replace(/[\r\n\t]/g, " ").slice(0, limit);
 }
 
+async function analyticsDigest(value) {
+  const text = analyticsValue(value, 120);
+  if (!text) return "";
+  const bytes = new TextEncoder().encode(text);
+  const buffer = await crypto.subtle.digest("SHA-256", bytes);
+  return Array.from(new Uint8Array(buffer)).map(byte => byte.toString(16).padStart(2, "0")).join("").slice(0, 24);
+}
+
 function metricDate(date = new Date()) {
   const parts = new Intl.DateTimeFormat("en-CA", {
     timeZone: "Europe/Bucharest",
@@ -71,7 +79,8 @@ async function updateMetricSummary(payload, request, env) {
     tools: {},
     devices: {},
     languages: {},
-    countries: {}
+    countries: {},
+    visitors: {}
   };
   const event = analyticsValue(payload.event, 32);
   incrementMetric(current.events, event, 20);
@@ -80,6 +89,11 @@ async function updateMetricSummary(payload, request, env) {
   if (payload.device) incrementMetric(current.devices, payload.device, 10);
   if (payload.language) incrementMetric(current.languages, payload.language, 10);
   incrementMetric(current.countries, request.cf && request.cf.country || "unknown", 40);
+  if (event === "page_view" && payload.visitor) {
+    current.visitors = current.visitors || {};
+    const visitorHash = await analyticsDigest(`${metricDate()}|${payload.visitor}`);
+    if (visitorHash) current.visitors[visitorHash] = 1;
+  }
   current.updatedAt = new Date().toISOString();
   await env.RTA_METRICS.put(key, JSON.stringify(current), { expirationTtl: 60 * 60 * 24 * 400 });
 }
@@ -108,13 +122,14 @@ async function readMetricSummary(request, env) {
     dates.push(metricDate(new Date(Date.now() - offset * 86400000)));
   }
   const rows = await Promise.all(dates.map(date => env.RTA_METRICS.get(`metrics:${date}`, "json")));
-  const totals = { events: {}, routes: {}, tools: {}, devices: {}, languages: {}, countries: {} };
+  const totals = { events: {}, routes: {}, tools: {}, devices: {}, languages: {}, countries: {}, visitors: {} };
   const daily = dates.map((date, index) => {
     const row = rows[index] || {};
     Object.keys(totals).forEach(key => mergeMetricMap(totals[key], row[key]));
     return {
       date,
       pageViews: Number(row.events && row.events.page_view || 0),
+      uniqueVisitors: Object.keys(row.visitors || {}).length,
       toolOpens: Number(row.events && row.events.tool_open || 0),
       searches: Number(row.events && row.events.search_submit || 0),
       smokeeClicks: Number(row.events && row.events.smokee_click || 0)
@@ -126,6 +141,7 @@ async function readMetricSummary(request, env) {
     days,
     totals: {
       pageViews: Number(totals.events.page_view || 0),
+      uniqueVisitors: Object.keys(totals.visitors || {}).length,
       toolOpens: Number(totals.events.tool_open || 0),
       toolCompletions: Number(totals.events.tool_complete || 0),
       searches: Number(totals.events.search_submit || 0),

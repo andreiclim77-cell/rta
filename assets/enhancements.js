@@ -240,6 +240,18 @@
   function initMetrics(){
     var session={};
     var endpoint='https://ghid-rta-smokee-sync-backup.ghid-rta-smokee.workers.dev/__rta-event';
+    function visitorId(){
+      var key='rtaAnonymousVisitor';
+      try{
+        var existing=localStorage.getItem(key);
+        if(existing&&/^[a-z0-9-]{16,80}$/i.test(existing))return existing;
+        var value=(crypto&&crypto.randomUUID)?crypto.randomUUID():String(Date.now().toString(36)+Math.random().toString(36).slice(2)+Math.random().toString(36).slice(2));
+        localStorage.setItem(key,value);
+        return value
+      }catch(e){
+        return 'session-'+String(Date.now().toString(36)+Math.random().toString(36).slice(2))
+      }
+    }
     function sendMetric(payload){
       if(!/^(?:www\.)?ghid-rta\.ro$/i.test(location.hostname))return;
       try{fetch(endpoint,{method:'POST',mode:'cors',credentials:'omit',keepalive:true,headers:{'content-type':'application/json'},body:JSON.stringify(payload)}).catch(function(){})}catch(e){}
@@ -251,6 +263,7 @@
       window.__rtaMetrics=session;
       window.dataLayer=window.dataLayer||[];
       var payload=Object.assign({event:eventName,language:window.__rtaLang||'ro',route:(location.hash||'#home').slice(1)||'home'},data||{});
+      if(eventName==='page_view')payload.visitor=visitorId();
       window.dataLayer.push(payload);
       sendMetric(payload);
       document.dispatchEvent(new CustomEvent('rta:metric',{detail:{event:eventName,data:data||{}}}))

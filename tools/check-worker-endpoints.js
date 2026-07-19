@@ -19,6 +19,13 @@ const ORIGIN = 'https://ghid-rta-smokee-sync-backup.ghid-rta-smokee.workers.dev'
   });
   if (analytics.status !== 204) failures.push(`anonymous event endpoint failed: ${analytics.status}`);
 
+  const visitorEvent = await fetch(`${ORIGIN}/__rta-event`, {
+    method: 'POST',
+    headers: { origin: 'https://ghid-rta.ro', 'content-type': 'application/json' },
+    body: JSON.stringify({ event: 'page_view', language: 'ro', route: 'worker-visitor-check', device: 'automation', visitor: 'worker-visitor-check' })
+  });
+  if (visitorEvent.status !== 204) failures.push(`unique visitor event endpoint failed: ${visitorEvent.status}`);
+
   const rejected = await fetch(`${ORIGIN}/__rta-event`, {
     method: 'POST',
     headers: { origin: 'https://example.com', 'content-type': 'application/json' },
@@ -32,6 +39,9 @@ const ORIGIN = 'https://ghid-rta-smokee-sync-backup.ghid-rta-smokee.workers.dev'
   const metricsData = metrics.ok ? await metrics.json() : null;
   if (!metrics.ok || !metricsData || metricsData.schemaVersion !== 1 || !Array.isArray(metricsData.daily)) {
     failures.push(`aggregated metrics endpoint failed: ${metrics.status}`);
+  }
+  if (!metricsData || !metricsData.totals || typeof metricsData.totals.uniqueVisitors !== 'number') {
+    failures.push('aggregated metrics endpoint does not expose unique visitors');
   }
 
   if (failures.length) {
