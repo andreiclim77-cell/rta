@@ -8,7 +8,7 @@
 .period-control span{padding:0 7px;font-size:12px;font-weight:900;color:#ddd}
 .metric-strip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:10px;margin-top:14px}
 .metric-tile{display:grid;align-content:space-between;min-height:112px;padding:14px;border:1px solid #e2d8ca;border-radius:7px;background:linear-gradient(180deg,#fff,#fff9f2);box-shadow:0 4px 0 rgba(0,0,0,.05),0 18px 36px rgba(0,0,0,.09)}
-.metric-tile span{font-size:12px;font-weight:850;color:#685848}.metric-tile strong{font-size:31px;line-height:1}.metric-tile.unique{border-color:#ffd28a;background:linear-gradient(180deg,#fffdf7,#fff1d7)}.metric-tile.quality{border-color:#aaddec;background:linear-gradient(180deg,#f7fdff,#eafaff)}
+.metric-tile span{font-size:12px;font-weight:850;color:#685848}.metric-tile strong{font-size:31px;line-height:1}.metric-tile small{font-size:10px;font-weight:900;color:#86632a}.metric-tile.unique{border-color:#ffd28a;background:linear-gradient(180deg,#fffdf7,#fff1d7)}.metric-tile.quality{border-color:#aaddec;background:linear-gradient(180deg,#f7fdff,#eafaff)}
 .audience-band{margin-top:18px;padding:22px 0;border-top:1px solid #eadfce}
 .daily-chart{display:grid;grid-template-columns:repeat(var(--days,30),minmax(5px,1fr));align-items:end;gap:4px;height:220px;padding:18px 12px 26px;border:1px solid #2b2b2b;border-radius:8px;background:linear-gradient(180deg,#111,#17120e);box-shadow:0 6px 0 rgba(0,0,0,.1),0 26px 54px rgba(0,0,0,.18)}
 .daily-chart.empty{display:grid;grid-template-columns:1fr;place-items:center;color:#d9d9d9;text-align:center}.daily-chart.empty p{max-width:520px;margin:0;color:#d9d9d9}
