@@ -1556,6 +1556,8 @@ function applyRepairedHistoryPost(state, entry, event, oldPostId, replacementId,
   entry.postId = replacementId;
   entry.formatVersion = FACEBOOK_FORMAT_VERSION;
   entry.messageVersion = FACEBOOK_MESSAGE_VERSION;
+  entry.albumVersion = FACEBOOK_ALBUM_VERSION;
+  entry.noticePlacement = options.replaced === false ? 'post-message' : 'post-and-atomizer-photo';
   entry.liquids = liquidStateItems(event.liquidMatches);
   entry.image = event.image;
   Object.values(state.seenAtomizers || {}).forEach(item => {
