@@ -81,6 +81,8 @@ const repairLegacyPostGalleries = args.includes('--repair-legacy-post-galleries'
 const checkRepairLegacyPostGalleries = args.includes('--check-repair-legacy-post-galleries');
 const dedupePosts = args.includes('--dedupe-posts');
 const checkDedupePosts = args.includes('--check-dedupe-posts');
+const repairVisibility = args.includes('--repair-visibility');
+const checkVisibility = args.includes('--check-visibility');
 const repairModel = String(valueAfter('--model') || '').trim();
 const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
@@ -1310,6 +1312,44 @@ async function verifyFacebookPage() {
   return payload;
 }
 
+function facebookVisibilityResult(payload = {}) {
+  const privacyValue = String(payload && payload.privacy && payload.privacy.value || '').trim().toUpperCase();
+  const published = payload.is_published !== false;
+  const hidden = payload.is_hidden === true;
+  const publicAudience = !privacyValue || privacyValue === 'EVERYONE' || privacyValue === 'PUBLIC';
+  return {
+    hidden,
+    isPublic: published && !hidden && publicAudience,
+    permalink: String(payload.permalink_url || '').trim(),
+    privacyValue: privacyValue || 'PAGE_DEFAULT',
+    published
+  };
+}
+
+async function inspectFacebookPostVisibility(postId) {
+  const base = `https://graph.facebook.com/${graphVersion}/${encodeURIComponent(postId)}`;
+  const read = async fields => {
+    const params = new URLSearchParams({ fields, access_token: accessToken });
+    return fetchJson(`${base}?${params}`, {}, 1);
+  };
+  let payload;
+  try {
+    payload = await read('id,is_published,is_hidden,permalink_url,privacy');
+  } catch (error) {
+    payload = await read('id,is_published,is_hidden,permalink_url');
+  }
+  return { payload, ...facebookVisibilityResult(payload) };
+}
+
+async function verifyFacebookPostPublic(postId) {
+  const visibility = await inspectFacebookPostVisibility(postId);
+  if (!visibility.isPublic) {
+    throw new Error(`Meta a creat postarea ${postId} cu audienta ${visibility.privacyValue}, published=${visibility.published}, hidden=${visibility.hidden}.`);
+  }
+  console.log(`Facebook public visibility confirmed: ${postId} (${visibility.privacyValue})${visibility.permalink ? ` ${visibility.permalink}` : ''}.`);
+  return visibility;
+}
+
 async function diagnoseFacebookCredentials() {
   if (!pageId || !accessToken) {
     throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
@@ -1633,6 +1673,12 @@ async function publishPreparedEvent(event) {
       }
     }
     if (!payload.id) throw new Error(`Meta did not return an album post ID for ${event.name}.`);
+    try {
+      await verifyFacebookPostPublic(payload.id);
+    } catch (error) {
+      try { await deleteFacebookObject(payload.id); } catch (cleanupError) { /* best effort */ }
+      throw error;
+    }
     return payload.id;
   } catch (error) {
     for (const mediaId of mediaIds) {
@@ -1869,7 +1915,7 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
   return state;
 }
 
-function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState) {
+function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState, options = {}) {
   const atomsBySlug = new Map(uniqueAtomizers(catalog).map(atom => [slugify(atom.name), atom]));
   const records = [];
   const seenPostIds = new Set();
@@ -1896,7 +1942,7 @@ function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState
       ? editorialEventForAtom(atom, catalog, feed, { mod, modsFeed })
       : historyEntryEvent(record.entry, catalog, feed, { mod, modsFeed });
     const entry = record.entry;
-    const replace = entry.formatVersion !== FACEBOOK_FORMAT_VERSION ||
+    const replace = options.forceReplace === true || entry.formatVersion !== FACEBOOK_FORMAT_VERSION ||
       entry.messageVersion !== FACEBOOK_MESSAGE_VERSION ||
       liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
       modSelectionChanged(entry.mod, event.mod) ||
@@ -1912,8 +1958,11 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
   let campaignState = normalizeCampaignState(readJson(CAMPAIGN_STATE_PATH, emptyCampaignState()));
   const publishState = readJson(STATE_PATH, emptyState());
   const requestedModel = canonicalAtomizerSlug(options.model || '');
-  const candidates = zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState)
-    .filter(candidate => !requestedModel || canonicalAtomizerSlug(candidate.event.name) === requestedModel);
+  const candidates = zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState, {
+    forceReplace: options.forceReplace === true
+  })
+    .filter(candidate => !requestedModel || canonicalAtomizerSlug(candidate.event.name) === requestedModel)
+    .slice(0, Number.isFinite(Number(options.maxPosts)) ? Math.max(1, Number(options.maxPosts)) : Number.POSITIVE_INFINITY);
   if (!candidates.length) {
     console.log('Facebook zero-nicotine repair: every recorded gallery already follows the current rule.');
     return;
@@ -2055,6 +2104,15 @@ async function refreshTodayLiquidMessages(options = {}) {
 async function main() {
   if (dedupePosts || checkDedupePosts) {
     await dedupeFacebookPosts({ checkOnly: checkDedupePosts });
+    return;
+  }
+  if (repairVisibility || checkVisibility) {
+    await repairZeroNicotineGalleryPosts({
+      checkOnly: checkVisibility,
+      forceReplace: true,
+      maxPosts,
+      model: repairModel
+    });
     return;
   }
   if (repairLegacyPostGalleries || checkRepairLegacyPostGalleries) {
@@ -2223,6 +2281,7 @@ module.exports = {
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
+  facebookVisibilityResult,
   inferAtomRoles,
   isNicotineFreeFacebookLiquid,
   historyEntryMessage,

@@ -17,6 +17,7 @@ const {
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
+  facebookVisibilityResult,
   historyEntryMessage,
   historyEntryEvent,
   highEndModCandidates,
@@ -42,6 +43,11 @@ const { loadCatalog } = require('./catalog-data');
 function clone(value) {
   return JSON.parse(JSON.stringify(value));
 }
+
+assert.strictEqual(facebookVisibilityResult({ is_published: true, is_hidden: false, privacy: { value: 'EVERYONE' } }).isPublic, true);
+assert.strictEqual(facebookVisibilityResult({ is_published: true, is_hidden: false, privacy: { value: 'SELF' } }).isPublic, false);
+assert.strictEqual(facebookVisibilityResult({ is_published: false, is_hidden: false, privacy: { value: 'EVERYONE' } }).isPublic, false);
+assert.strictEqual(facebookVisibilityResult({ is_published: true, is_hidden: true, privacy: { value: 'EVERYONE' } }).isPublic, false);
 
 const atomA = {
   name: 'Test Alpha RTA',
