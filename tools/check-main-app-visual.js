@@ -1,3 +1,5 @@
+const fs = require("fs");
+const os = require("os");
 const path = require("path");
 
 const dependencyNodeModules =
@@ -49,6 +51,8 @@ async function checkOverflow(page) {
     executablePath: require("fs").existsSync(chromePath) ? chromePath : undefined,
   });
   const failures = [];
+  const youtubeHeaderDir = path.join(os.tmpdir(), "ghid-rta-youtube-header");
+  fs.mkdirSync(youtubeHeaderDir, { recursive: true });
 
   for (const viewport of viewports) {
     const page = await browser.newPage({ viewport });
@@ -86,6 +90,36 @@ async function checkOverflow(page) {
       await accept.click();
       await page.waitForFunction(() => !document.body.classList.contains("app-preparing"), { timeout: 45000 });
     }
+
+    const socialHeader = await page.evaluate(() => {
+      const search = document.querySelector(".site-search");
+      const youtube = document.querySelector(".youtube-head-link");
+      const facebook = document.querySelector(".facebook-head-link");
+      const rect = (element) => {
+        const box = element?.getBoundingClientRect();
+        return box
+          ? { left: box.left, right: box.right, top: box.top, bottom: box.bottom }
+          : null;
+      };
+      return {
+        search: rect(search),
+        youtube: rect(youtube),
+        facebook: rect(facebook),
+      };
+    });
+    if (
+      !socialHeader.search ||
+      !socialHeader.youtube ||
+      !socialHeader.facebook ||
+      socialHeader.youtube.left < socialHeader.search.left ||
+      socialHeader.youtube.right > socialHeader.search.right + 1 ||
+      socialHeader.facebook.right > socialHeader.search.right + 1
+    ) {
+      failures.push({ viewport: viewport.name, socialHeader });
+    }
+    await page.locator("header").screenshot({
+      path: path.join(youtubeHeaderDir, `${viewport.name}.png`),
+    });
 
     await page.waitForSelector(".supplier-showcase", { timeout: 12000 });
     const homeResult = await page.evaluate(() => {
