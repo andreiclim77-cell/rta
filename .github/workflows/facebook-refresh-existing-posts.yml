@@ -1,4 +1,4 @@
-name: Facebook migrate existing posts to one photo
+name: Facebook add high-end mods to existing posts
 
 on:
   workflow_dispatch:
@@ -59,7 +59,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/facebook-campaign-state.json data/facebook-publish-state.json
-          git commit -m "Record Facebook single-photo migration"
+          git commit -m "Record Facebook high-end mod migration"
           git pull --rebase
           git push
 

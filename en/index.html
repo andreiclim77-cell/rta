@@ -1269,16 +1269,16 @@ var I18N_EXACT={
   'Moduri RTA':'RTA Mods',
   'Moduri pentru atomizoare RTA':'Mods for RTA atomizers',
   'Selectie Smokee':'Smokee selection',
-  'Cele mai recente cinci modele standalone din categoria Mod-uri Smokee, fara dubluri de culoare, cu fotografie, descriere si recenzia YouTube verificata cu cea mai mare audienta.':'The five latest standalone models from the Smokee Mods category, without color duplicates, with photo, description and the most-viewed verified YouTube review.',
+  'Cinci moduri standalone pentru setup-uri RTA, prezentate cu fotografie, specificatii esentiale, acces la produs si recenzie video.':'Five standalone mods for RTA setups, presented with a photo, essential specifications, product access and a video review.',
   '5 modele recente':'5 recent models',
   'conector 510':'510 connector',
   'actualizare zilnica':'daily update',
   'Catalog Smokee':'Smokee catalog',
-  'Fotografia, descrierea, pretul si disponibilitatea provin din pagina produsului. Variantele de culoare ale aceluiasi model sunt grupate.':'Photo, description, price and availability come from the product page. Color variants of the same model are grouped.',
+  'Specificatii utile, pret, disponibilitate si acces rapid la fiecare model.':'Useful specifications, price, availability and quick access to each model.',
   'Vezi categoria Mod-uri':'View Mods category',
   'Pentru mai multe variante consultati smokee.ro':'For more options, visit smokee.ro',
   'Moduri standalone recente':'Recent standalone mods',
-  'Modele noi din categoria Mod-uri Smokee, grupate fara dubluri de culoare si pastrate sapte zile de la publicare.':'New models from the Smokee Mods category, grouped without color duplicates and kept for seven days after publication.',
+  'Modele recente pentru setup-uri RTA, cu fotografie, detalii si recenzie video.':'Recent models for RTA setups, with a photo, details and a video review.',
   'foto / review':'photo / review',
   'Nu exista moduri noi in ultimele 7 zile.':'There are no new mods in the last 7 days.',
   'Cele mai recente cinci modele raman disponibile in sectiunea Moduri RTA.':'The five latest models remain available in the RTA Mods section.',
@@ -2516,13 +2516,13 @@ function rtaEarlyAccept(){
       <div>
         <p class="kicker">Selectie Smokee</p>
         <h2>Moduri pentru atomizoare RTA</h2>
-        <p class="lead">Cele mai recente cinci modele standalone din categoria Mod-uri Smokee, fara dubluri de culoare, cu fotografie, descriere si recenzia YouTube verificata cu cea mai mare audienta.</p>
+        <p class="lead">Cinci moduri standalone pentru setup-uri RTA, prezentate cu fotografie, specificatii esentiale, acces la produs si recenzie video.</p>
         <div class="chips"><span class="chip warn">5 modele recente</span><span class="chip cold">conector 510</span><span class="chip good">actualizare zilnica</span></div>
       </div>
       <div class="consumables-contact">
         <div>
           <b>Catalog Smokee</b>
-          <p>Fotografia, descrierea, pretul si disponibilitatea provin din pagina produsului. Variantele de culoare ale aceluiasi model sunt grupate.</p>
+          <p>Specificatii utile, pret, disponibilitate si acces rapid la fiecare model.</p>
           <div class="source-actions"><a class="mini-link" target="_blank" rel="noreferrer" href="https://smokee.ro/product-category/mod-uri/">Vezi categoria Mod-uri</a></div>
         </div>
       </div>
@@ -3086,7 +3086,7 @@ function rtaEarlyAccept(){
         <div class="registry-grid" id="registryList"></div>
       </div>
       <div class="registry-zone" id="registryModZone">
-        <div class="registry-zone-head"><div><p class="kicker">Moduri RTA</p><h3>Moduri standalone recente</h3><p>Modele noi din categoria Mod-uri Smokee, grupate fara dubluri de culoare si pastrate sapte zile de la publicare.</p></div><span class="chip warn">foto / review</span></div>
+        <div class="registry-zone-head"><div><p class="kicker">Moduri RTA</p><h3>Moduri standalone recente</h3><p>Modele recente pentru setup-uri RTA, cu fotografie, detalii si recenzie video.</p></div><span class="chip warn">foto / review</span></div>
         <div class="registry-grid" id="registryModList"></div>
       </div>
       <div class="registry-zone" id="registryWireZone">
@@ -4169,7 +4169,7 @@ function youtubePreviewHtml(url,title,badge,meta,claim){var id=youtubeId(url);if
 function sourceLineHtml(a,s){var url=sourceUrl(s);var claim=sourceClaim(s);var id=youtubeId(url);if(id){var q=sourceQuality(a,s);return youtubePreviewHtml(url,publicAtomText(sourceTitle(s)),q.label,sourceLabel(s)+' - '+cleanHost(url),claim?publicAtomText(claim):'')}return '<a class="source-line" target="_blank" rel="noreferrer" href="'+esc(url)+'">'+qualityChipHtml(a,s)+'<b>'+esc(publicAtomText(sourceTitle(s)))+'</b><small>'+esc(sourceLabel(s)+' - '+cleanHost(url))+'</small>'+(claim?'<em>'+esc(publicAtomText(claim))+'</em>':'')+'</a>'}
 function modDescription(item){if(window.__rtaLang!=='en')return item.description||'Mod standalone cu filet 510 pentru configuratii RTA.';var text=String(item.description||'');var details=[];var power=text.match(/(?:pana la|de pana la|ofera pana la)\s*(\d+)\s*W/i)||text.match(/\b(\d+)\s*W\b/i);var battery=text.match(/\b(18[356]00|21[7]00)\b/g);var chipset=text.match(/chipset(?:ul)?\s+([A-Za-z0-9 .+-]+)/i);if(power)details.push('up to '+power[1]+' W');if(battery&&battery.length)details.push('battery '+Array.from(new Set(battery)).join('/'));if(chipset)details.push('chipset '+chipset[1].split(/[,.]/)[0].trim());return 'Standalone 510 mod for rebuildable RTA setups'+(details.length?', '+details.join(', '):'')+'. Specifications, price and availability are checked on Smokee.'}
 function modReviewMeta(review){var english=window.__rtaLang==='en';var parts=[];if(review&&review.channel)parts.push(review.channel);if(review&&review.viewCount)parts.push(Number(review.viewCount).toLocaleString(english?'en-US':'ro-RO')+(english?' views':' vizualizari'));return parts.join(' - ')||(english?'Verified YouTube review':'Recenzie YouTube verificata')}
-function modReviewHtml(item){var review=item&&item.review;var english=window.__rtaLang==='en';if(review&&youtubeId(review.url))return youtubePreviewHtml(review.url,review.title,english?'Top review':'Recenzie principala',modReviewMeta(review),english?'Selected from exact-model results, prioritizing audience size.':'Selectata dintre rezultatele modelului exact, cu prioritate pentru audienta.');var search='https://www.youtube.com/results?search_query='+encodeURIComponent((item.title||'')+' vape mod review');return '<a class="mod-review-empty" target="_blank" rel="noreferrer" href="'+esc(search)+'">'+esc(english?'An exact-model review is being checked. Open YouTube search.':'Recenzia modelului exact este in verificare. Deschide cautarea YouTube.')+'</a>'}
+function modReviewHtml(item){var review=item&&item.review;var english=window.__rtaLang==='en';if(review&&youtubeId(review.url))return youtubePreviewHtml(review.url,review.title,english?'Video review':'Recenzie video',modReviewMeta(review),english?'Video review for the presented model.':'Recenzie video pentru modelul prezentat.');var search='https://www.youtube.com/results?search_query='+encodeURIComponent((item.title||'')+' vape mod review');return '<a class="mod-review-empty" target="_blank" rel="noreferrer" href="'+esc(search)+'">'+esc(english?'Video review coming soon.':'Recenzie video disponibila in curand.')+'</a>'}
 function modStockPill(item){var english=window.__rtaLang==='en';if(item.stock===true)return '<span class="stock-pill in">'+(english?'In stock':'In stoc')+'</span>';if(item.stock===false)return '<span class="stock-pill out">'+(english?'Check availability':'Verifica stocul')+'</span>';return '<span class="stock-pill">'+(english?'Stock on Smokee':'Stoc pe Smokee')+'</span>'}
 function modCardHtml(item){var english=window.__rtaLang==='en';var published=item.publishedAt?registryDateLabel(item.publishedAt):(english?'recent':'recent');return '<article class="card mod-card"><a class="mod-media" target="_blank" rel="noreferrer" href="'+esc(item.url)+'">'+imageWithFallback(item.image,item.title)+'</a><div class="mod-copy"><div><span class="chip warn">'+esc(english?'Recent model':'Model recent')+'</span><h3>'+esc(item.title)+'</h3></div><p>'+esc(modDescription(item))+'</p><div class="mod-meta">'+modStockPill(item)+(item.price?'<span class="stock-pill link">'+esc(item.price)+'</span>':'')+'<span class="stock-pill">'+esc(published)+'</span></div><div class="mod-actions"><a class="mini-link" target="_blank" rel="noreferrer" href="'+esc(item.url)+'">'+esc(english?'View on Smokee':'Vezi pe Smokee')+'</a><details class="mod-more"><summary>'+esc(english?'See more':'Vezi mai mult')+'</summary><div class="mod-more-body"><p>'+esc(modDescription(item))+'</p>'+modReviewHtml(item)+'</div></details></div></div></article>'}
 function renderMods(){var box=$('modsGrid');if(!box)return;var items=Array.isArray(SMOKEE_MODS&&SMOKEE_MODS.items)?SMOKEE_MODS.items.slice(0,5):[];box.innerHTML=items.length?items.map(modCardHtml).join(''):'<article class="card span-12"><h3>Catalog temporar indisponibil</h3><p class="muted">Ultima lista valida va reaparea dupa urmatoarea sincronizare.</p></article>'}

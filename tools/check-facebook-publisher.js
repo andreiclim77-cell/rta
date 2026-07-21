@@ -18,6 +18,7 @@ const {
   facebookPostsOnDate,
   historyEntryMessage,
   historyEntryEvent,
+  highEndModForAtom,
   isRealAtomizerImage,
   isNicotineFreeFacebookLiquid,
   liquidMatchLines,
@@ -190,6 +191,10 @@ const newAtomPlan = planUpdates(catalog, feed, newAtomState);
 assert.strictEqual(newAtomPlan[0].type, 'atomizer');
 assert.strictEqual(newAtomPlan[0].name, 'Test Beta RTA');
 assert.strictEqual(newAtomPlan[0].image, 'https://images.example/test-beta.jpg');
+assert(newAtomPlan[0].mod, 'each atomizer must receive a high-end mod');
+assert(newAtomPlan[0].message.includes(`Mod high-end: ${newAtomPlan[0].mod.title}`));
+assert(newAtomPlan[0].message.includes(newAtomPlan[0].mod.url));
+assert(newAtomPlan[0].message.includes(newAtomPlan[0].mod.review.url));
 assert(newAtomPlan[0].message.includes('materialele pe clone sunt marcate distinct'));
 assert(newAtomPlan[0].message.includes('3 lichide analizate'));
 assert(newAtomPlan[0].message.includes('Cele 3 lichide sunt alese prin triangulare'));
@@ -218,9 +223,10 @@ assert.throws(() => assertEventLiquidTriplet({
   image: ''
 }), /Fotografia atomizorului lipsește/);
 const alphaAlbum = educationalAlbumPhotoEntries(newAtomPlan[0]);
-assert.strictEqual(alphaAlbum.length, 1, 'each Facebook gallery must contain only one atomizer photo');
+assert.strictEqual(alphaAlbum.length, 2, 'each Facebook gallery must contain the atomizer and its high-end mod');
 assert.strictEqual(alphaAlbum[0].type, 'atomizer');
-assert.strictEqual(new Set(alphaAlbum.map(item => item.image)).size, 1);
+assert.strictEqual(alphaAlbum[1].type, 'mod');
+assert.strictEqual(new Set(alphaAlbum.map(item => item.image)).size, 2);
 alphaAlbum.forEach(item => {
   assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023|smokee\.ro\/product/i.test(item.caption));
   assert(item.caption.includes('18+'));
@@ -234,7 +240,7 @@ newAtomPlan[0].liquidMatches.forEach(match => {
   assert(newAtomPlan[0].message.includes(match.profile));
   assert(newAtomPlan[0].message.includes(match.url));
 });
-assert.strictEqual((newAtomPlan[0].message.match(/https:\/\//g) || []).length, 6, 'a future Facebook post must contain three liquid links, source, guide and principal video links');
+assert.strictEqual((newAtomPlan[0].message.match(/https:\/\//g) || []).length, 8, 'a future Facebook post must contain liquid, source, guide, atomizer review, mod and mod review links');
 assert(newAtomPlan[0].message.includes('https://www.youtube.com/watch?v=xyz987ZYX65'));
 assert.strictEqual(newAtomPlan[0].link, 'https://ghid-rta.ro/atomizoare/');
 assert.strictEqual(
@@ -263,8 +269,9 @@ assert(applied.seenAtomizers['test-beta-rta']);
 assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
-assert.strictEqual(applied.history[0].formatVersion, 'educational-single-atomizer-photo-v2-zero-nicotine');
-assert.strictEqual(applied.history[0].messageVersion, 'three-linked-liquids-v11-atomizer-name-first');
+assert.strictEqual(applied.history[0].formatVersion, 'educational-atomizer-high-end-mod-v3-zero-nicotine');
+assert.strictEqual(applied.history[0].messageVersion, 'three-linked-liquids-high-end-mod-v12');
+assert.strictEqual(applied.history[0].mod.title, newAtomPlan[0].mod.title);
 assert.strictEqual(needsLiquidGalleryRepair(applied.history[0]), false);
 assert.strictEqual(needsLiquidGalleryRepair({ postId: 'legacy', formatVersion: 'educational-single-photo-v2' }), true);
 
@@ -284,8 +291,9 @@ assert.strictEqual(editorialPlan[0].liquidMatches.length, 3);
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-single-atomizer-photo-v2-zero-nicotine');
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-linked-liquids-v11-atomizer-name-first');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-atomizer-high-end-mod-v3-zero-nicotine');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-linked-liquids-high-end-mod-v12');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].mod.title, editorialPlan[0].mod.title);
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
 
@@ -396,7 +404,7 @@ const refreshedEvent = historyEntryEvent({
   name: 'Test Alpha RTA'
 }, catalog, feed);
 assert.strictEqual(refreshedEvent.liquidMatches.length, 3);
-assert.strictEqual(educationalAlbumPhotoEntries(refreshedEvent).length, 1);
+assert.strictEqual(educationalAlbumPhotoEntries(refreshedEvent).length, 2);
 
 const liveCatalog = loadCatalog();
 const livePairingFailures = uniqueAtomizers(liveCatalog).filter(atom => {
@@ -429,12 +437,13 @@ liveEditorialPreview.forEach(event => {
   assert((event.message.match(/https:\/\//g) || []).length >= 4);
   assert(!/[ÃÂÄÈ]/.test(event.message), `mojibake detected in Facebook message for ${event.name}`);
   const photos = educationalAlbumPhotoEntries(event);
-  assert.strictEqual(photos.length, 1);
-  assert.strictEqual(new Set(photos.map(photo => photo.image)).size, 1);
+  assert.strictEqual(photos.length, 2);
+  assert.strictEqual(new Set(photos.map(photo => photo.image)).size, 2);
   photos.forEach(photo => {
     assert(!/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023|smokee\.ro\/product/i.test(photo.caption));
     assert(!/[ÃÂÄÈ]/.test(photo.caption), `mojibake detected in Facebook photo caption for ${event.name}`);
   });
 });
 
-console.log('Facebook publisher: one atomizer photo, three linked zero-nicotine liquids, two-post daily limit, triangulation, deduplication, recommendation and review checks passed.');
+assert(highEndModForAtom(atomA), 'a compatible high-end mod must be available for every atomizer');
+console.log('Facebook publisher: atomizer and high-end mod photos, mod review, three linked zero-nicotine liquids, daily limit, triangulation and deduplication checks passed.');
