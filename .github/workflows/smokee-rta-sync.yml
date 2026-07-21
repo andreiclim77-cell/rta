@@ -124,7 +124,7 @@ jobs:
           echo "Facebook pending posts: $pending"
 
       - name: Publish real Facebook Page updates
-        if: steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0'
+        if: steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0' && vars.FACEBOOK_AUTOPUBLISH_ENABLED == 'true'
         id: facebook_publish
         continue-on-error: true
         env:
@@ -134,7 +134,7 @@ jobs:
         run: node tools/facebook-publisher.js --publish --max-posts 2
 
       - name: Commit Facebook publish state
-        if: always() && steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0'
+        if: always() && steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0' && vars.FACEBOOK_AUTOPUBLISH_ENABLED == 'true'
         shell: bash
         run: |
           if git diff --quiet -- data/facebook-publish-state.json; then

@@ -17,6 +17,7 @@ concurrency:
 
 jobs:
   publish:
+    if: vars.FACEBOOK_AUTOPUBLISH_ENABLED == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:

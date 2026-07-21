@@ -12,6 +12,10 @@ const END_MARKER = '/* AUTO-SMOKEE-MODS-END */';
 const CATEGORY_ID = 75;
 const CATEGORY_URL = 'https://smokee.ro/product-category/mod-uri/';
 const IMAGE_PROXY_ORIGIN = 'https://ghid-rta-smokee-sync-backup.ghid-rta-smokee.workers.dev';
+const FACEBOOK_IMAGE_OVERRIDES = new Map([
+  ['arcana mods arcana box dna 60 c', 'https://ghid-rta.ro/assets/facebook-arcana-box-dna60c.png'],
+  ['arcana mods arcana box', 'https://ghid-rta.ro/assets/facebook-arcana-box.png']
+]);
 const MAX_VISIBLE = 5;
 const NEWS_WINDOW_DAYS = 7;
 const FETCH_TIMEOUT_MS = 12000;
@@ -149,6 +153,10 @@ function familyKey(value) {
     .trim();
   if (key === 'pipeline box by arcana mods') return 'arcana mods arcana box';
   return key;
+}
+
+function facebookCompatibleImage(itemFamilyKey, fallback) {
+  return FACEBOOK_IMAGE_OVERRIDES.get(itemFamilyKey) || fallback;
 }
 
 function productImage(product) {
@@ -423,7 +431,7 @@ function normalizeProduct(product) {
     familyKey: familyKey(product.name),
     title: familyName(product.name),
     url: cleanUrl(product.permalink),
-    image: productImage(product),
+    image: facebookCompatibleImage(familyKey(product.name), productImage(product)),
     description: productDescription(product),
     price: productPrice(product),
     stock: product.is_in_stock === true ? true : (product.is_in_stock === false ? false : null),
