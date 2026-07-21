@@ -28,6 +28,7 @@ const legacyPages = [
   'diagnostic-gust-rta-mtl.html',
   'calculator-lichide-vape.html',
   'consumabile-rta-smokee.html',
+  'moduri-rta-smokee.html',
   'wizard-smokee.html',
   'rta-mtl-smokee.html',
   'legislativ-vape.html',

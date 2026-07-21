@@ -64,6 +64,12 @@ jobs:
         if: steps.sync_window.outputs.run_sync == 'true'
         run: node tools/sync-smokee-liquids.js --write
 
+      - name: Check Smokee RTA mods and reviews
+        if: steps.sync_window.outputs.run_sync == 'true'
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+        run: node tools/sync-smokee-mods.js --write
+
       - name: Route product images through Cloudflare cache
         if: steps.sync_window.outputs.run_sync == 'true'
         run: node tools/rewrite-smokee-images.js --write
@@ -89,6 +95,7 @@ jobs:
           node tools/check-catalog-integrity.js
           node tools/check-validation-queue.js
           node tools/check-youtube-review-data.js
+          node tools/check-smokee-mods.js
           node tools/check-facebook-publisher.js
           node tools/facebook-publisher.js --check
           node tools/validate-seo-pages.js
