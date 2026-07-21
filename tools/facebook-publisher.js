@@ -1527,7 +1527,7 @@ function educationalAlbumPhotoEntries(event) {
 }
 
 function multiPhotoFeedBody(message, mediaIds, token) {
-  return buildPageFeedBody(message, mediaIds, token, { forcePublic: true });
+  return buildPageFeedBody(message, mediaIds, token);
 }
 
 function buildPageFeedBody(message, mediaIds, token, options = {}) {
@@ -1654,7 +1654,7 @@ async function publishPreparedEvent(event) {
     }
     let payload;
     try {
-      const body = buildPageFeedBody(event.message, mediaIds, accessToken, { forcePublicAudience: true });
+      const body = buildPageFeedBody(event.message, mediaIds, accessToken);
       payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
         method: 'POST',
         headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -1662,7 +1662,7 @@ async function publishPreparedEvent(event) {
       });
     } catch (error) {
       if (isAudiencePrivacyError(error)) {
-        const body = buildPageFeedBody(event.message, mediaIds, accessToken, { forcePublicAudience: false });
+        const body = buildPageFeedBody(event.message, mediaIds, accessToken, { forcePublicAudience: true });
         payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
           method: 'POST',
           headers: { 'content-type': 'application/x-www-form-urlencoded' },
