@@ -42,6 +42,8 @@ const pages = [
   "legislativ-vape.html",
   "smokee-link-kit.html",
   "audienta.html",
+  "politica-confidentialitate/index.html",
+  "stergere-date/index.html",
   "atomizoare/index.html",
   "atomizoare/dvarw-mtl-fl/index.html",
   "atomizoare/taifun-gtr/index.html",
@@ -103,7 +105,7 @@ const viewports = [
         `${viewport.name} ${file}: scroll ${result.scrollWidth}/${result.clientWidth}, offenders ${result.offenders.length}`
       );
       if (hasOverflow) failures.push({ viewport: viewport.name, file, result });
-      if (file === "atomizoare/dvarw-mtl-fl/index.html" || file === "lichide/net-kentucky-latakia/index.html" || file === "audienta.html") {
+      if (file === "atomizoare/dvarw-mtl-fl/index.html" || file === "lichide/net-kentucky-latakia/index.html" || file === "audienta.html" || file === "politica-confidentialitate/index.html" || file === "stergere-date/index.html") {
         await page.screenshot({ path: path.join(output, `${viewport.name}-${file.replace(/[\\/]/g, "-")}.png`), fullPage: true });
       }
     }

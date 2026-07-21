@@ -33,7 +33,9 @@ const legacyPages = [
   'rta-mtl-smokee.html',
   'legislativ-vape.html',
   'smokee-link-kit.html',
-  'audienta.html'
+  'audienta.html',
+  'politica-confidentialitate/index.html',
+  'stergere-date/index.html'
 ];
 
 function htmlFilesUnder(folder) {
