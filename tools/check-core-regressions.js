@@ -146,6 +146,13 @@ async function enterApp(page, route = '/') {
       },
       newsWindow: [0, 6, 7, 8].map(days => ({ days, active: isNewsDate(daysAgo(days)) })),
       registryDates: registryEntries().concat(registryLiquidEntries(liquidCatalogState), consumableRegistryEntries(consumableState, 'wires'), consumableRegistryEntries(consumableState, 'accessories')).map(entry => entry.date),
+      registryCounts: {
+        rta: registryEntries().length,
+        mods: registryModEntries().length,
+        liquids: registryLiquidEntries(liquidCatalogState).length,
+        wires: consumableRegistryEntries(consumableState, 'wires').length,
+        accessories: consumableRegistryEntries(consumableState, 'accessories').length
+      },
       setupCounts: setupCountsNow,
       setupKinds: Array.from(new Set(setupItems.map(item => item.kind))),
       setupProducts: setupItems.map(item => ({ title: item.title, kind: item.kind, url: item.url })),
@@ -188,6 +195,7 @@ async function enterApp(page, route = '/') {
   check(Boolean(result.diagnostic.tc), 'TC diagnosis returned no result');
   check(result.newsWindow[0].active && result.newsWindow[1].active && !result.newsWindow[2].active && !result.newsWindow[3].active, 'Noutati is not a rolling seven-day window');
   check(result.registryDates.every(date => date && isFinite(Date.parse(date))), 'Noutati contains an invalid publication date');
+  check(Object.values(result.registryCounts).every(count => count === 5), `Noutati does not retain five products per category: ${JSON.stringify(result.registryCounts)}`);
   check(result.setupCounts.rta >= 20 && result.setupCounts.liquids >= 100 && result.setupCounts.wires >= 5 && result.setupCounts.cotton >= 1, `Wizard fallback catalog is incomplete: ${JSON.stringify(result.setupCounts)}`);
   check(['rta', 'liquids', 'wires', 'cotton'].every(kind => result.setupKinds.includes(kind)), `Wizard suggestions are missing a product group: ${result.setupKinds.join(', ')}`);
   check(result.setupProducts.every(item => /^https:\/\/(?:www\.)?smokee\.ro\/product\//i.test(item.url)), 'Wizard contains a non-Smokee product URL');

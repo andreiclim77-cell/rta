@@ -130,20 +130,25 @@ function imageUrl(product) {
   return '';
 }
 
-const COLOR_SUFFIX = /\s+-\s+(?:black|full black|black silver|silver|carbon black|matte black|dark grey|anthrazit|green black|blue black|red|blue|green|grey|gray|gunmetal|gold|purple|pink|white|orange|brown)(?:\s+edition)?\s*$/i;
+const COLOR_SUFFIX = /\s+(?:-\s*)?(?:black|full|full black|black silver|black ss|silver|carbon black|matte black|dark grey|dark gray|dark gray\s*\/\s*anthracite|anthrazit|green black|blue black|clear blue|clear black gold|red|blue|green|grey|gray|gunmetal|gun metal|gold|purple|pink|white|orange|brown|black ash|afzelia|maslin|măslin|murdered out|classic|classic black|wine red|laguna dragon)(?:\s+edition)?\s*$/i;
+const HIGH_END_PATTERN = /\b(?:dna\s*60\s*c?|dna\s*80\s*c|dicodes|bf\s*60|n\s*80|telli|khonsu|ennequadro|early bird|arcana|pipeline|fakirs|centenary|vape systems|vsmosfet|parsons|morer|k\s*1\s*am\s*60|sentinel sbs|paramour sbs)\b/;
 
 function familyName(value) {
   let name = decodeEntities(value).replace(/\s+/g, ' ').trim();
+  name = name.replace(/\s+-\s+resigilat\s*$/i, '').trim();
+  name = name.replace(/\s+-\s+(?:editie|ediție)\s+limitata\s*$/i, '').trim();
   while (COLOR_SUFFIX.test(name)) name = name.replace(COLOR_SUFFIX, '').trim();
   name = name.replace(/^mod\s+(?=(?:arcana|lost|voopoo|vaporesso|geekvape|aspire|ambition|dicodes|pipeline|dovpo|sxmini|yihi)\b)/i, '');
   return name;
 }
 
 function familyKey(value) {
-  return norm(familyName(value))
+  const key = norm(familyName(value))
     .replace(/\b(?:limited|edition|version)\b/g, ' ')
     .replace(/\s+/g, ' ')
     .trim();
+  if (key === 'pipeline box by arcana mods') return 'arcana mods arcana box';
+  return key;
 }
 
 function productImage(product) {
@@ -154,7 +159,7 @@ function isStandaloneMod(product) {
   const title = norm(product.name || '');
   const categoryMatch = (product.categories || []).some(category => Number(category.id) === CATEGORY_ID || category.slug === 'mod-uri');
   if (!categoryMatch || !/smokee\.ro\/product\//i.test(product.permalink || '')) return false;
-  if (/\b(?:kit|pod|aio kit|starter|disposable|unica folosinta|atomizor|clearomizor|cartus|cartridge|acumulator|battery|husa|sleeve|charger|incarcator)\b/.test(title)) return false;
+  if (/\b(?:kit|pod|aio kit|starter|disposable|unica folosinta|atomizor|clearomizor|cartus|cartridge|acumulator|battery|husa|sleeve|charger|incarcator|top cover|cover|capac|componenta|piesa)\b/.test(title)) return false;
   return /\b(?:mod|box|sbs|side by side|tube|mosfet|dicodes|pipeline|dna)\b/.test(title);
 }
 
@@ -170,6 +175,11 @@ function productDescription(product) {
     text = `${clipped.replace(/\s+\S*$/, '')}...`;
   }
   return text;
+}
+
+function isHighEndMod(item) {
+  const text = norm([item && item.title, item && item.description].filter(Boolean).join(' '));
+  return HIGH_END_PATTERN.test(text);
 }
 
 function productPrice(product) {
@@ -201,21 +211,28 @@ async function fetchJson(url) {
 }
 
 async function fetchText(url) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
-  try {
-    const response = await fetch(url, {
-      signal: controller.signal,
-      headers: {
-        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/138 Safari/537.36',
-        'accept-language': 'en-US,en;q=0.8'
-      }
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
-    return response.text();
-  } finally {
-    clearTimeout(timer);
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), FETCH_TIMEOUT_MS);
+    try {
+      const response = await fetch(url, {
+        signal: controller.signal,
+        headers: {
+          'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/138 Safari/537.36',
+          'accept-language': 'en-US,en;q=0.8'
+        }
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status} for ${url}`);
+      return response.text();
+    } catch (error) {
+      lastError = error;
+      if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 1200 * (attempt + 1)));
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  throw lastError || new Error(`Unable to fetch ${url}`);
 }
 
 async function loadProducts() {
@@ -249,15 +266,67 @@ const REVIEW_STOP = new Set([
   'pipeline', 'device', 'edition', 'tube', 'w', 'mm'
 ]);
 
+const REVIEW_QUERY_ALIASES = [
+  [/\barcana\s+mods\s+arcana\s+sbs\s+dna\s*60\s*c?\b/, 'Arcana SBS DNA60C mod'],
+  [/\barcana\s+mods\s+arcana\s+sbs\b/, 'Pipeline Box SBS Arcana Mods'],
+  [/\barcana\s+mods\s+arcana\s+box\s+dna\s*60\s*c?\b/, 'Pipeline Box DNA60 Arcana Mods'],
+  [/\barcana\s+mods\s+arcana\s+box\b/, 'Arcana Box ARC1 mod'],
+  [/\bpipeline\s+box\b/, 'Pipeline Box Arcana Mods'],
+  [/\btelli.*\bqueen\s+iii\b/, 'Telli Queen III DNA60C'],
+  [/\btelli.*\bking\s+v\s*2\b/, 'Telli King V2 DNA60'],
+  [/\bkhonsu.*\beclipse.*\bplus\b/, 'Khonsu Eclipse DNA60C Plus'],
+  [/\bkhonsu.*\beclipse\b/, 'Khonsu Eclipse DNA60C'],
+  [/\bdicodes.*\bdani\s+box\s+micro\s+21700\b/, 'Dicodes Dani Micro 21700'],
+  [/\bdicodes.*\bdani\s+box\s+micro\b/, 'Dicodes Dani Micro 80W'],
+  [/\bdicodes.*\bdani\s+extreme\s+v\s*3\b/, 'Dicodes Dani Extreme V3'],
+  [/\bearly\s+bird.*\bharrier\s+n\s*80\b/, 'Earlybird Harrier N80'],
+  [/\bearly\s+bird.*\bharrier\b/, 'Earlybird Harrier DNA60C'],
+  [/\bennequadro.*\bflexy\b/, 'Ennequadro Flexy DNA60'],
+  [/\bfakirs.*\billusia\b/, 'Fakirs Illusia BF60'],
+  [/\bcentenary.*\bminister\b/, 'Centenary Minister mech mod'],
+  [/\bmechvape.*\bparamour\b/, 'Mechvape Paramour DNA80C'],
+  [/\bambition.*\bk\s*1\s+am\s*60\b/, 'Ambition Mods K1 AM60'],
+  [/\bcthulhu.*\bsentinel\b/, 'Cthulhu Sentinel DNA60C'],
+  [/\bparsons\b/, 'Parsons SBS DNA80C Vaperz Cloud']
+];
+
 function reviewTokens(value) {
   return Array.from(new Set(norm(value).split(' ').filter(token => token && !REVIEW_STOP.has(token))));
 }
 
 function reviewMatches(model, title) {
+  const modelText = norm(model);
+  const titleText = norm(title);
+  if (!modelText || !titleText) return false;
+  const has = token => new RegExp(`(?:^| )${token}(?: |$)`).test(titleText);
+  const any = (...tokens) => tokens.some(has);
+  const all = (...tokens) => tokens.every(has);
+  if (/\b(?:rta|rdta|atomizer|atomizor)\b/.test(titleText)) return false;
+  if (/\bqueen\s+iii\b/.test(modelText) && !(has('queen') && any('iii', '3'))) return false;
+  if (/\bking\s+v\s*2\b/.test(modelText) && !(has('king') && any('v2', '2'))) return false;
+  if (/\beclipse\b/.test(modelText) && !has('eclipse')) return false;
+  if (/\beclipse.*\bplus\b/.test(modelText) && !has('plus')) return false;
+  if (/\bdani\s+box\s+micro\b/.test(modelText) && !(has('dani') && has('micro'))) return false;
+  if (/\bdani\s+box\s+micro\s+21700\b/.test(modelText) && !has('21700')) return false;
+  if (/\bdani\s+extreme\b/.test(modelText) && !(has('dani') && has('extreme'))) return false;
+  if (/\bharrier\b/.test(modelText) && !has('harrier')) return false;
+  if (/\bflexy\b/.test(modelText) && !has('flexy')) return false;
+  if (/\billusia\b/.test(modelText) && !has('illusia')) return false;
+  if (/\bminister\b/.test(modelText) && !has('minister')) return false;
+  if (/\bparamour\b/.test(modelText) && !has('paramour')) return false;
+  if (/\bsentinel\b/.test(modelText) && !has('sentinel')) return false;
+  if (/\bparsons\b/.test(modelText) && !has('parsons')) return false;
+  if (/\bmorer\b/.test(modelText) && !has('morer')) return false;
+  if (/\bvsmosfet\b/.test(modelText) && !has('vsmosfet')) return false;
+  if (/\barcana\s+mods\s+arcana\s+sbs\b/.test(modelText) && !has('sbs')) return false;
+  if (/\barcana\s+mods\s+arcana\s+box\b/.test(modelText) && !(has('box') && any('arcana', 'pipeline'))) return false;
+  if (/\barcana\s+mods\s+arcana\s+(?:sbs|box)\b/.test(modelText) && !/\bdna\s*60\s*c?\b/.test(modelText) && (has('dna60') || all('dna', '60'))) return false;
+  if (/\bpipeline\s+box\b/.test(modelText) && !all('pipeline', 'box')) return false;
+  if (/\bdna\s*60\s*c?\b/.test(modelText) && !(has('dna60') || all('dna', '60'))) return false;
   const target = reviewTokens(model);
-  const actual = new Set(norm(title).split(' '));
+  const actual = new Set(titleText.split(' '));
   if (!target.length) return false;
-  for (const modifier of ['pro', 'mini', 'nano', 'plus']) {
+  for (const modifier of ['pro', 'mini', 'micro', 'nano', 'plus', 'queen', 'king', 'eclipse', 'harrier', 'flexy', 'minister', 'illusia', 'extreme', 'paramour', 'sentinel', 'parsons', 'morer', 'vsmosfet']) {
     if (target.includes(modifier) && !actual.has(modifier)) return false;
   }
   const identityNumbers = target.filter(token => /^\d{2,3}$/.test(token) && !['185', '186', '217'].includes(token));
@@ -268,13 +337,26 @@ function reviewMatches(model, title) {
   return hits >= Math.min(2, target.length);
 }
 
+function reviewSearchQueries(model) {
+  const modelText = norm(model);
+  const aliases = REVIEW_QUERY_ALIASES
+    .filter(([pattern]) => pattern.test(modelText))
+    .map(([, query]) => query);
+  return Array.from(new Set(aliases.concat(`${model} vape mod review`))).slice(0, 2);
+}
+
 async function youtubeApiReview(model) {
-  const search = new URLSearchParams({
-    part: 'snippet', type: 'video', maxResults: '25', order: 'viewCount', q: `${model} vape mod review`, key: apiKey
-  });
-  const found = await fetchJson(`https://www.googleapis.com/youtube/v3/search?${search}`);
-  const rows = (found.items || []).filter(item => item.id && item.id.videoId && reviewMatches(model, item.snippet && item.snippet.title || ''));
+  let rows = [];
+  for (const query of reviewSearchQueries(model)) {
+    const search = new URLSearchParams({
+      part: 'snippet', type: 'video', maxResults: '25', order: 'viewCount', q: query, key: apiKey
+    });
+    const found = await fetchJson(`https://www.googleapis.com/youtube/v3/search?${search}`);
+    rows = rows.concat((found.items || []).filter(item => item.id && item.id.videoId && reviewMatches(model, item.snippet && item.snippet.title || '')));
+    if (rows.length) break;
+  }
   if (!rows.length) return null;
+  rows = Array.from(new Map(rows.map(item => [item.id.videoId, item])).values());
   const ids = rows.map(item => item.id.videoId);
   const details = new URLSearchParams({ part: 'statistics,contentDetails', id: ids.join(','), key: apiKey });
   const detailRows = await fetchJson(`https://www.googleapis.com/youtube/v3/videos?${details}`);
@@ -293,18 +375,24 @@ async function youtubeApiReview(model) {
 }
 
 async function youtubePublicReview(model) {
-  const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(`${model} vape mod review`)}&hl=en&gl=US`;
-  const videos = parseYouTubeSearch(await fetchText(url));
+  let videos = [];
+  for (const query of reviewSearchQueries(model)) {
+    const url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}&hl=en&gl=US`;
+    videos = videos.concat(parseYouTubeSearch(await fetchText(url)));
+    if (videos.some(video => reviewMatches(model, video.title))) break;
+  }
+  videos = Array.from(new Map(videos.map(video => [video.videoId, video])).values());
   return videos.filter(video => reviewMatches(model, video.title) && !video.live && (!video.durationSeconds || video.durationSeconds >= 75))
     .sort((a, b) => Number(b.viewCount || 0) - Number(a.viewCount || 0))[0] || null;
 }
 
 async function bestReview(model, previous) {
   const today = todayInRomania();
-  if (previous && previous.videoId && previous.checkedAt === today && reviewMatches(model, previous.title)) return previous;
+  const validPrevious = previous && previous.videoId && reviewMatches(model, previous.title) ? previous : null;
+  if (validPrevious && validPrevious.checkedAt === today) return validPrevious;
   try {
     const video = apiKey ? await youtubeApiReview(model) : await youtubePublicReview(model);
-    if (!video) return previous || null;
+    if (!video) return validPrevious;
     return {
       videoId: video.videoId,
       title: video.title,
@@ -317,7 +405,7 @@ async function bestReview(model, previous) {
     };
   } catch (error) {
     console.warn(`Smokee mods: review lookup failed for ${model}: ${error.message}`);
-    return previous || null;
+    return validPrevious;
   }
 }
 
@@ -325,7 +413,7 @@ function readPrevious() {
   try {
     return JSON.parse(fs.readFileSync(DATA_PATH, 'utf8'));
   } catch (error) {
-    return { schemaVersion: 1, items: [], recentItems: [] };
+    return { schemaVersion: 1, items: [], catalogItems: [], highEndItems: [], recentItems: [] };
   }
 }
 
@@ -360,21 +448,35 @@ function dedupeFamilies(products) {
 async function buildFeed(products, previous) {
   const today = todayInRomania();
   const families = dedupeFamilies(products);
-  const priorByFamily = new Map([].concat(previous.items || [], previous.recentItems || []).map(item => [item.familyKey, item]));
+  const highEnd = families.filter(isHighEndMod);
+  const priorByFamily = new Map([].concat(
+    previous.items || [],
+    previous.catalogItems || [],
+    previous.highEndItems || [],
+    previous.recentItems || []
+  ).map(item => [item.familyKey, item]));
   const visible = families.slice(0, MAX_VISIBLE);
   const recent = families.filter(item => {
     const age = daysSince(item.publishedAt, today);
     return age >= 0 && age < NEWS_WINDOW_DAYS;
   });
   const reviewTargets = new Map();
-  visible.concat(recent).forEach(item => reviewTargets.set(item.familyKey, item));
+  visible.concat(recent, highEnd).forEach(item => reviewTargets.set(item.familyKey, item));
   for (const item of reviewTargets.values()) {
     const old = priorByFamily.get(item.familyKey);
     item.review = await bestReview(item.title, old && old.review);
     delete item.sourceOrder;
     await new Promise(resolve => setTimeout(resolve, apiKey ? 90 : 450));
   }
-  const byKey = new Map(Array.from(reviewTargets.values()).map(item => [item.familyKey, item]));
+  const finalized = families.map(item => {
+    const reviewed = reviewTargets.get(item.familyKey);
+    const previousItem = priorByFamily.get(item.familyKey);
+    const result = reviewed || { ...item, review: previousItem && previousItem.review || null };
+    result.highEnd = isHighEndMod(result);
+    delete result.sourceOrder;
+    return result;
+  });
+  const byKey = new Map(finalized.map(item => [item.familyKey, item]));
   return {
     schemaVersion: 1,
     generatedAt: new Date().toISOString(),
@@ -382,6 +484,8 @@ async function buildFeed(products, previous) {
     categoryUrl: CATEGORY_URL,
     source: 'Smokee Mod-uri',
     items: visible.map(item => byKey.get(item.familyKey)),
+    catalogItems: finalized,
+    highEndItems: highEnd.map(item => byKey.get(item.familyKey)),
     recentItems: recent.map(item => byKey.get(item.familyKey))
   };
 }
@@ -408,6 +512,16 @@ function validateFeed(feed) {
     keys.add(item.familyKey);
     if (item.review && !/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(item.review.url || '')) errors.push(`invalid review URL: ${item.title}`);
   });
+  if (!Array.isArray(feed.catalogItems) || feed.catalogItems.length < feed.items.length) errors.push('full mod catalog is missing');
+  if (!Array.isArray(feed.highEndItems) || !feed.highEndItems.length) errors.push('high-end mod catalog is missing');
+  const highEndKeys = new Set();
+  (feed.highEndItems || []).forEach(item => {
+    if (!item.title || !item.url || !item.image || !item.description || item.highEnd !== true) errors.push(`incomplete high-end item: ${item.title || item.url || 'unknown'}`);
+    if (!/^https:\/\/smokee\.ro\/product\//.test(item.url || '')) errors.push(`invalid high-end product URL: ${item.url}`);
+    if (highEndKeys.has(item.familyKey)) errors.push(`duplicate high-end family: ${item.title}`);
+    highEndKeys.add(item.familyKey);
+    if (item.review && !/^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/.test(item.review.url || '')) errors.push(`invalid high-end review URL: ${item.title}`);
+  });
   return errors;
 }
 
@@ -426,7 +540,7 @@ async function main() {
   const feed = await buildFeed(products, previous);
   const errors = validateFeed(feed);
   if (errors.length) throw new Error(errors.join('\n'));
-  console.log(`Smokee mods: ${products.length} products scanned, ${feed.items.length} latest unique models, ${feed.recentItems.length} new in the last ${NEWS_WINDOW_DAYS} days.`);
+  console.log(`Smokee mods: ${products.length} products scanned, ${feed.catalogItems.length} unique families, ${feed.highEndItems.length} high-end, ${feed.items.length} latest visible, ${feed.recentItems.length} new in the last ${NEWS_WINDOW_DAYS} days.`);
   feed.items.forEach(item => console.log(`- ${item.title} | ${item.publishedAt || 'date unavailable'} | ${item.review ? `${item.review.viewCount} YouTube views` : 'review pending'}`));
   if (!write || dryRun) return;
   const html = fs.readFileSync(INDEX_PATH, 'utf8');
@@ -435,7 +549,7 @@ async function main() {
   fs.writeFileSync(INDEX_PATH, replaceIndexBlock(html, feed), 'utf8');
 }
 
-module.exports = { dedupeFamilies, familyKey, familyName, reviewMatches, validateFeed };
+module.exports = { dedupeFamilies, familyKey, familyName, isHighEndMod, reviewMatches, validateFeed };
 
 if (require.main === module) {
   main().catch(error => {

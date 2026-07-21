@@ -14,6 +14,8 @@ const STORE_PAGE_LIMIT = 8;
 const STORE_SEARCH_TERMS = ['RTA', 'atomizor RTA', 'MTL RTA'];
 const FETCH_TIMEOUT_MS = 9000;
 const NEWS_START_DATE = '2026-07-06';
+const LATEST_START_MARKER = '/* AUTO-SMOKEE-RTA-LATEST-START */';
+const LATEST_END_MARKER = '/* AUTO-SMOKEE-RTA-LATEST-END */';
 const START_MARKER = '/* AUTO-SMOKEE-RTA-START */';
 const END_MARKER = '/* AUTO-SMOKEE-RTA-END */';
 
@@ -621,6 +623,33 @@ function entryFor(product, pageHtml) {
   return lines.join('\n');
 }
 
+function latestEntry(product) {
+  return `{title:${jsString(displayName(product.title))},url:${jsString(cleanUrl(product.url))},image:${jsString(product.image || '')},publishedAt:${jsString(dateKey(product.productDate))}}`;
+}
+
+function latestRtaProducts(products) {
+  const seen = new Set();
+  return products
+    .filter(product => isRtaCandidate(product) && dateKey(product.productDate))
+    .sort((a, b) => String(b.productDate).localeCompare(String(a.productDate)))
+    .filter(product => {
+      const key = canonicalName(displayName(product.title));
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .slice(0, 5);
+}
+
+function replaceLatestBlock(html, products) {
+  const start = html.indexOf(LATEST_START_MARKER);
+  const end = html.indexOf(LATEST_END_MARKER);
+  if (start < 0 || end < 0 || end <= start) throw new Error('Smokee RTA latest markers were not found in index.html');
+  const before = html.slice(0, start + LATEST_START_MARKER.length);
+  const after = html.slice(end);
+  return `${before}\n${products.map(latestEntry).join(',\n')}\n  ${after}`;
+}
+
 function insertEntries(html, entries) {
   const start = html.indexOf(START_MARKER);
   const end = html.indexOf(END_MARKER);
@@ -653,6 +682,8 @@ async function main() {
     const existing = byUrl.get(product.url);
     byUrl.set(product.url, existing ? { ...existing, ...product, newOnSmokee: existing.newOnSmokee || product.newOnSmokee } : product);
   }
+  const latestProducts = latestRtaProducts(storeProducts);
+  let updatedHtml = latestProducts.length === 5 ? replaceLatestBlock(html, latestProducts) : html;
 
   const potentialProducts = [];
   for (const product of byUrl.values()) {
@@ -666,6 +697,7 @@ async function main() {
 
   if (!potentialProducts.length) {
     console.log(`Smokee sync: ${products.length} products scanned, no new RTA entries.`);
+    if (write && !dryRun && updatedHtml !== html) fs.writeFileSync(INDEX_PATH, updatedHtml, 'utf8');
     return;
   }
 
@@ -685,10 +717,11 @@ async function main() {
 
   if (!newProducts.length) {
     console.log(`Smokee sync: ${products.length} products scanned, no new RTA entries.`);
+    if (write && !dryRun && updatedHtml !== html) fs.writeFileSync(INDEX_PATH, updatedHtml, 'utf8');
     return;
   }
 
-  const updated = insertEntries(html, entries);
+  const updated = insertEntries(updatedHtml, entries);
   console.log(`Smokee sync: ${newProducts.length} new RTA entr${newProducts.length === 1 ? 'y' : 'ies'} prepared.`);
   newProducts.forEach(product => console.log(`- ${displayName(product.title)} | ${product.url}`));
 

@@ -400,7 +400,8 @@ function itemBlock(item) {
   const stock = item.stock === true ? 'true' : (item.stock === false ? 'false' : 'null');
   const model = item.model ? `,model:${jsString(item.model)}` : '';
   const addedAt = item.addedAt ? `,addedAt:${jsString(item.addedAt)}` : '';
-  return `{title:${jsString(item.title)},url:${jsString(item.url)},image:${jsString(item.image)},tag:${jsString(item.tag)},stock:${stock}${model}${addedAt}}`;
+  const productDate = item.productDate ? `,productDate:${jsString(item.productDate)}` : '';
+  return `{title:${jsString(item.title)},url:${jsString(item.url)},image:${jsString(item.image)},tag:${jsString(item.tag)},stock:${stock}${model}${addedAt}${productDate}}`;
 }
 
 function dataBlock(data) {
@@ -445,6 +446,7 @@ function existingConsumableInfo(html, groupId) {
     if (!url) continue;
     info.seen.add(url);
     const date = item.match(/addedAt:'(\d{4}-\d{2}-\d{2})'/);
+    const productDate = item.match(/productDate:'(\d{4}-\d{2}-\d{2})'/);
     if (date) info.addedAt.set(url, date[1]);
     const title = item.match(/title:'((?:\\'|[^'])*)'/);
     const image = item.match(/image:'((?:\\'|[^'])*)'/);
@@ -460,6 +462,7 @@ function existingConsumableInfo(html, groupId) {
     };
     if (model) parsed.model = unjsString(model[1]);
     if (date) parsed.addedAt = date[1];
+    if (productDate) parsed.productDate = productDate[1];
     if (parsed.title) info.items.push(parsed);
   }
   info.initialized = info.seen.size > 0;

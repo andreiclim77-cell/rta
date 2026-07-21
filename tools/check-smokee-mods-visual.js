@@ -63,7 +63,7 @@ async function auditViewport(browser, viewport) {
     youtube: document.querySelectorAll('#registryModList .youtube-source').length,
     overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth
   }));
-  if (!registry.jump || registry.cards < 1 || registry.overflow > 2) throw new Error(`${viewport.width}px: mods news registry failed`);
+  if (!registry.jump || registry.cards !== 5 || registry.overflow > 2) throw new Error(`${viewport.width}px: mods news registry failed`);
 
   await page.goto(`${baseUrl}/#atomizers`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => !document.body.classList.contains('app-preparing'), { timeout: 20000 });

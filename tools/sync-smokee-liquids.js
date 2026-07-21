@@ -296,7 +296,8 @@ async function fetchAllCategoryProducts() {
 function itemBlock(item) {
   const stock = item.stock === true ? 'true' : (item.stock === false ? 'false' : 'null');
   const addedAt = item.addedAt ? `,addedAt:${jsString(item.addedAt)}` : '';
-  return `{title:${jsString(item.title)},url:${jsString(item.url)},image:${jsString(item.image)},tag:${jsString(item.tag)},stock:${stock}${addedAt}}`;
+  const productDate = item.productDate ? `,productDate:${jsString(item.productDate)}` : '';
+  return `{title:${jsString(item.title)},url:${jsString(item.url)},image:${jsString(item.image)},tag:${jsString(item.tag)},stock:${stock}${addedAt}${productDate}}`;
 }
 
 function dataBlock(data) {
@@ -341,6 +342,7 @@ function existingLiquidInfo(html, groupId) {
     if (!url) continue;
     info.seen.add(url);
     const date = item.match(/addedAt:'(\d{4}-\d{2}-\d{2})'/);
+    const productDate = item.match(/productDate:'(\d{4}-\d{2}-\d{2})'/);
     if (date) info.addedAt.set(url, date[1]);
     const title = item.match(/title:'((?:\\'|[^'])*)'/);
     const image = item.match(/image:'((?:\\'|[^'])*)'/);
@@ -354,6 +356,7 @@ function existingLiquidInfo(html, groupId) {
       stock: stock ? (stock[1] === 'true' ? true : (stock[1] === 'false' ? false : null)) : null
     };
     if (date) parsed.addedAt = date[1];
+    if (productDate) parsed.productDate = productDate[1];
     if (parsed.title) info.items.push(parsed);
   }
   info.initialized = info.seen.size > 0;

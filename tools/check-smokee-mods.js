@@ -33,6 +33,11 @@ if (start >= 0 && end > start) {
 
 const familyKeys = new Set((feed.items || []).map(item => item.familyKey));
 if (familyKeys.size !== (feed.items || []).length) errors.push('visible mod list contains duplicate families');
+const catalogKeys = new Set((feed.catalogItems || []).map(item => item.familyKey));
+if (catalogKeys.size !== (feed.catalogItems || []).length) errors.push('full mod catalog contains duplicate families');
+const highEndKeys = new Set((feed.highEndItems || []).map(item => item.familyKey));
+if (highEndKeys.size !== (feed.highEndItems || []).length) errors.push('high-end mod list contains duplicate families');
+if ((feed.highEndItems || []).some(item => item.highEnd !== true)) errors.push('high-end mod list contains an unclassified item');
 for (const item of feed.recentItems || []) {
   if (!item.publishedAt) errors.push(`recent mod is missing publication date: ${item.title}`);
 }
@@ -43,4 +48,5 @@ if (errors.length) {
 }
 
 const reviewed = feed.items.filter(item => item.review).length;
-console.log(`Smokee mods valid: ${feed.items.length} visible families, ${feed.recentItems.length} recent, ${reviewed} exact YouTube review(s).`);
+const reviewedHighEnd = feed.highEndItems.filter(item => item.review).length;
+console.log(`Smokee mods valid: ${feed.items.length} visible, ${feed.catalogItems.length} catalog families, ${feed.highEndItems.length} high-end (${reviewedHighEnd} reviewed), ${feed.recentItems.length} recent, ${reviewed} visible exact YouTube review(s).`);

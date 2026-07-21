@@ -10,6 +10,7 @@ const {
   atomizerUrl,
   baselineState,
   canonicalAtomizerSlug,
+  createHighEndModRotation,
   dateInRomania,
   duplicateFacebookPostGroups,
   educationalAlbumPhotoEntries,
@@ -18,12 +19,14 @@ const {
   facebookPostsOnDate,
   historyEntryMessage,
   historyEntryEvent,
+  highEndModCandidates,
   highEndModForAtom,
   isRealAtomizerImage,
   isNicotineFreeFacebookLiquid,
   liquidMatchLines,
   noticeBannerLines,
   multiPhotoFeedBody,
+  modFamilyKey,
   needsLiquidGalleryRepair,
   planEditorialPosts,
   planUpdates,
@@ -148,6 +151,35 @@ const feed = {
   }
 };
 
+const rotationModsFeed = {
+  schemaVersion: 1,
+  highEndItems: ['Arcana Alpha', 'Dicodes Beta', 'Telli Gamma', 'Khonsu Delta'].map((title, index) => ({
+    familyKey: title.toLowerCase().replace(/\s+/g, '-'),
+    title,
+    url: `https://smokee.ro/product/test-high-end-${index + 1}/`,
+    image: `https://images.example/high-end-${index + 1}.jpg`,
+    highEnd: true,
+    review: {
+      title: `${title} review`,
+      url: `https://www.youtube.com/watch?v=modVideo00${index + 1}`
+    }
+  }))
+};
+assert.strictEqual(highEndModCandidates(rotationModsFeed).length, 4);
+const cleanRotation = createHighEndModRotation(rotationModsFeed, emptyCampaignState(), emptyState(), { reset: true });
+const firstRotation = [atomA, atomB, atomA, atomB].map(atom => cleanRotation.pick(atom));
+assert.strictEqual(new Set(firstRotation.map(modFamilyKey)).size, 4, 'a high-end mod must not repeat before the catalog cycle is exhausted');
+assert(highEndModCandidates(rotationModsFeed).some(item => modFamilyKey(item) === modFamilyKey(cleanRotation.pick(atomA))), 'a mod may repeat only after every high-end family was used');
+
+const twoPostRotation = planUpdates(catalog, feed, emptyState(), {
+  maxPosts: 2,
+  dailyPublished: 0,
+  modsFeed: rotationModsFeed,
+  campaignState: emptyCampaignState()
+});
+assert.strictEqual(twoPostRotation.length, 2);
+assert.strictEqual(new Set(twoPostRotation.map(event => modFamilyKey(event.mod))).size, 2, 'the two daily atomizers must receive different high-end mods');
+
 const alphaLiquidMatches = topLiquidMatchesForAtom(atomA, catalog, 3);
 const betaLiquidMatches = topLiquidMatchesForAtom(atomB, catalog, 3);
 assert.strictEqual(alphaLiquidMatches.length, 3, 'each atomizer post must receive three liquid matches');
@@ -240,7 +272,8 @@ newAtomPlan[0].liquidMatches.forEach(match => {
   assert(newAtomPlan[0].message.includes(match.profile));
   assert(newAtomPlan[0].message.includes(match.url));
 });
-assert.strictEqual((newAtomPlan[0].message.match(/https:\/\//g) || []).length, 8, 'a future Facebook post must contain liquid, source, guide, atomizer review, mod and mod review links');
+assert.strictEqual((newAtomPlan[0].message.match(/https:\/\//g) || []).length, 9, 'a future Facebook post must contain liquid, source, guide, reviews and the Smokee Facebook link');
+assert(newAtomPlan[0].message.includes('https://www.facebook.com/www.smokee.ro/'));
 assert(newAtomPlan[0].message.includes('https://www.youtube.com/watch?v=xyz987ZYX65'));
 assert.strictEqual(newAtomPlan[0].link, 'https://ghid-rta.ro/atomizoare/');
 assert.strictEqual(
@@ -269,8 +302,8 @@ assert(applied.seenAtomizers['test-beta-rta']);
 assert(applied.seenVideos.xyz987ZYX65);
 assert.strictEqual(applied.history[0].postId, '122_test');
 assert.strictEqual(applied.history[0].liquids.length, 3);
-assert.strictEqual(applied.history[0].formatVersion, 'educational-atomizer-high-end-mod-v3-zero-nicotine');
-assert.strictEqual(applied.history[0].messageVersion, 'three-linked-liquids-high-end-mod-v12');
+assert.strictEqual(applied.history[0].formatVersion, 'educational-atomizer-high-end-mod-v4-unique-rotation');
+assert.strictEqual(applied.history[0].messageVersion, 'three-linked-liquids-high-end-mod-v13-unique-rotation');
 assert.strictEqual(applied.history[0].mod.title, newAtomPlan[0].mod.title);
 assert.strictEqual(needsLiquidGalleryRepair(applied.history[0]), false);
 assert.strictEqual(needsLiquidGalleryRepair({ postId: 'legacy', formatVersion: 'educational-single-photo-v2' }), true);
@@ -291,8 +324,8 @@ assert.strictEqual(editorialPlan[0].liquidMatches.length, 3);
 const editorialApplied = applyEditorialPublished(clone(campaignState), editorialPlan[0], '122_editorial', '2026-07-13T02:00:00.000Z');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].postId, '122_editorial');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].liquids.length, 3);
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-atomizer-high-end-mod-v3-zero-nicotine');
-assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-linked-liquids-high-end-mod-v12');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].formatVersion, 'educational-atomizer-high-end-mod-v4-unique-rotation');
+assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].messageVersion, 'three-linked-liquids-high-end-mod-v13-unique-rotation');
 assert.strictEqual(editorialApplied.postedAtomizers['test-beta-rta'].mod.title, editorialPlan[0].mod.title);
 assert.strictEqual(editorialApplied.pace, 'two-posts-per-day');
 assert.strictEqual(dateInRomania('2026-07-12T22:01:25.586Z'), '2026-07-13');
