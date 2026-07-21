@@ -1952,46 +1952,56 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
     throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
   }
   await verifyFacebookPage();
+  const failed = [];
   for (const candidate of prepared) {
-    let postId = candidate.oldPostId;
-    if (candidate.replace) {
-      postId = await publishPreparedEvent(candidate.event);
-      try {
-        await deleteFacebookObject(candidate.oldPostId);
-      } catch (error) {
-        try { await deleteFacebookObject(postId); } catch (rollbackError) { /* best effort */ }
-        throw new Error(`Postarea veche pentru ${candidate.event.name} nu a putut fi înlocuită: ${error.message}`);
+    try {
+      let postId = candidate.oldPostId;
+      if (candidate.replace) {
+        postId = await publishPreparedEvent(candidate.event);
+        try {
+          await deleteFacebookObject(candidate.oldPostId);
+        } catch (error) {
+          try { await deleteFacebookObject(postId); } catch (rollbackError) { /* best effort */ }
+          throw new Error(`Postarea veche pentru ${candidate.event.name} nu a putut fi înlocuită: ${error.message}`);
+        }
+      } else {
+        await updateFacebookPostMessage(candidate.oldPostId, candidate.event.message);
       }
-    } else {
-      await updateFacebookPostMessage(candidate.oldPostId, candidate.event.message);
+      const timestamp = nowIso();
+      if (candidate.scope === 'campaign') {
+        campaignState = applyCampaignZeroNicotineUpdate(
+          campaignState,
+          candidate.slug,
+          candidate.event,
+          candidate.oldPostId,
+          postId,
+          candidate.replace,
+          timestamp
+        );
+        writeJsonAtomic(CAMPAIGN_STATE_PATH, campaignState);
+      } else {
+        applyRepairedHistoryPost(
+          publishState,
+          candidate.entry,
+          candidate.event,
+          candidate.oldPostId,
+          postId,
+          timestamp,
+          { replaced: candidate.replace }
+        );
+        candidate.entry.albumVersion = FACEBOOK_ALBUM_VERSION;
+        candidate.entry.noticePlacement = candidate.replace ? 'post-and-two-photos' : 'post-message';
+        writeJsonAtomic(STATE_PATH, publishState);
+      }
+      console.log(`Facebook zero-nicotine ${candidate.replace ? 'gallery replaced' : 'notice updated'}: ${candidate.event.name} (${postId}).`);
+    } catch (error) {
+      failed.push({ name: candidate.event.name, message: error.message || String(error) });
+      console.log(`Facebook zero-nicotine repair deferred: ${candidate.event.name}: ${error.message || String(error)}`);
     }
-    const timestamp = nowIso();
-    if (candidate.scope === 'campaign') {
-      campaignState = applyCampaignZeroNicotineUpdate(
-        campaignState,
-        candidate.slug,
-        candidate.event,
-        candidate.oldPostId,
-        postId,
-        candidate.replace,
-        timestamp
-      );
-      writeJsonAtomic(CAMPAIGN_STATE_PATH, campaignState);
-    } else {
-      applyRepairedHistoryPost(
-        publishState,
-        candidate.entry,
-        candidate.event,
-        candidate.oldPostId,
-        postId,
-        timestamp,
-        { replaced: candidate.replace }
-      );
-      candidate.entry.albumVersion = FACEBOOK_ALBUM_VERSION;
-      candidate.entry.noticePlacement = candidate.replace ? 'post-and-two-photos' : 'post-message';
-      writeJsonAtomic(STATE_PATH, publishState);
-    }
-    console.log(`Facebook zero-nicotine ${candidate.replace ? 'gallery replaced' : 'notice updated'}: ${candidate.event.name} (${postId}).`);
+    await new Promise(resolve => setTimeout(resolve, 4000));
+  }
+  if (failed.length) {
+    throw new Error(`Facebook migration deferred ${failed.length} post(s): ${failed.map(item => item.name).join(', ')}`);
   }
 }
 
