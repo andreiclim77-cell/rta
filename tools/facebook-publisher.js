@@ -6,6 +6,7 @@ const path = require('path');
 const {
   loadCatalog,
   publicAtomName,
+  sourceUrl,
   slugify
 } = require('./catalog-data');
 
@@ -17,9 +18,10 @@ const SITE = 'https://ghid-rta.ro';
 const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
-const LIQUID_TEASER = 'Sunt incluse exact 3 lichide asociate; denumirile și explicațiile apar în textul extins.';
-const FACEBOOK_FORMAT_VERSION = 'educational-four-photo-v4-zero-nicotine';
-const FACEBOOK_MESSAGE_VERSION = 'three-zero-nicotine-liquid-gallery-v10-atomizer-name-first';
+const LIQUID_TEASER = 'Cele 3 lichide sunt alese prin triangulare; explicațiile complete apar în textul extins.';
+const FACEBOOK_FORMAT_VERSION = 'educational-single-atomizer-photo-v2-zero-nicotine';
+const FACEBOOK_MESSAGE_VERSION = 'three-linked-liquids-v11-atomizer-name-first';
+const FACEBOOK_ALBUM_VERSION = 'single-atomizer-photo-three-linked-liquids-v1';
 const ADULT_SMOKER_NOTICE = 'Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.';
 const NICOTINE_FREE_NOTICE = 'Recomandat a se consuma fără nicotină.';
 const ATOMIZER_TITLE_FRAME = '━━ 𝗔𝗧𝗢𝗠𝗜𝗭𝗢𝗥 𝗥𝗧𝗔 𝗠𝗧𝗟 ━━';
@@ -73,6 +75,8 @@ const repairMissingLiquidGalleries = args.includes('--repair-missing-liquid-gall
 const checkRepairMissingLiquidGalleries = args.includes('--check-repair-missing-liquid-galleries');
 const repairZeroNicotineGalleries = args.includes('--repair-zero-nicotine-galleries');
 const checkRepairZeroNicotineGalleries = args.includes('--check-repair-zero-nicotine-galleries');
+const repairLegacyPostGalleries = args.includes('--repair-legacy-post-galleries');
+const checkRepairLegacyPostGalleries = args.includes('--check-repair-legacy-post-galleries');
 const dedupePosts = args.includes('--dedupe-posts');
 const checkDedupePosts = args.includes('--check-dedupe-posts');
 const repairModel = String(valueAfter('--model') || '').trim();
@@ -419,6 +423,18 @@ function liquidMatchLines(matches) {
   return lines;
 }
 
+function liquidHeadlineLines(matches) {
+  if (!Array.isArray(matches) || !matches.length) return [];
+  const selected = matches.slice(0, 3);
+  const lines = ['3 lichide recomandate prin triangulare:'];
+  selected.forEach((match, index) => {
+    lines.push(`${index + 1}. ${cleanText(match.title, 110)}`);
+    if (/^https:\/\//i.test(String(match.url || '').trim())) lines.push(String(match.url).trim());
+  });
+  lines.push('');
+  return lines;
+}
+
 function noticeBannerLines() {
   return [
     NOTICE_FRAME_TOP,
@@ -487,13 +503,129 @@ function isRealAtomizerImage(value) {
   }
 }
 
-function atomizerImageCandidates(atom) {
-  const image = String(atom && atom.image || '').trim();
-  return isRealAtomizerImage(image) ? [image] : [];
+function isVerifiedReviewThumbnail(value) {
+  const image = String(value || '').trim();
+  if (!/^https:\/\//i.test(image)) return false;
+  try {
+    const url = new URL(image);
+    const host = url.hostname.toLowerCase().replace(/^www\./, '');
+    return (host === 'i.ytimg.com' || host === 'img.youtube.com') &&
+      /^\/vi\/[A-Za-z0-9_-]{6,}\/(?:hqdefault|maxresdefault|sddefault)\.(?:jpg|webp)$/i.test(url.pathname);
+  } catch (error) {
+    return false;
+  }
 }
 
-function atomizerImage(atom, videos = []) {
-  return atomizerImageCandidates(atom, videos)[0] || '';
+function isPublishableAtomizerImage(value) {
+  return isRealAtomizerImage(value) || isVerifiedReviewThumbnail(value);
+}
+
+function isLikelyAtomizerImageSource(value) {
+  const image = String(value || '').trim();
+  if (!isRealAtomizerImage(image)) return false;
+  const lower = image.toLowerCase();
+  return !(
+    lower.includes('google.com/search') ||
+    lower.includes('google.com/url?') ||
+    lower.includes('youtube.com/results') ||
+    /youtu\.be\//.test(lower) ||
+    /youtube\.com\/(?:watch|embed|shorts)\//.test(lower) ||
+    /smokee\.ro\/product\//.test(lower) ||
+    lower.includes('/?s=')
+  );
+}
+
+function atomizerImageCandidates(atom) {
+  const candidates = []
+    .concat(atom && atom.image || '')
+    .concat(extractAtomizerLocalImages(atom))
+    .concat(
+      atom && atom.imageUrl,
+      atom && atom.image_url,
+      atom && atom.Image,
+      atom && atom.cover,
+      atom && atom.coverImage,
+      atom && atom.thumbnail,
+      atom && atom.imageVariants,
+      atom && atom.media
+    )
+    .filter(Boolean)
+    .map(value => String(value).trim())
+    .filter(isLikelyAtomizerImageSource)
+    .filter(value => !/^https:\/\/i\.ytimg\.com\//i.test(value));
+  return Array.from(new Set(candidates)).filter(Boolean);
+}
+
+function atomizerSourceUrl(atom) {
+  const candidates = [].concat(atom && atom.sources || [], atom && atom.Surse || [])
+    .map(source => ({
+      url: typeof source === 'string' ? String(source).trim() : String(sourceUrl(source) || '').trim(),
+      type: normalizeMatchText(source && typeof source === 'object'
+        ? (source['Tip sursa'] || source.type || source.tip || '')
+        : '')
+    }))
+    .filter(item => /^https?:\/\//i.test(item.url))
+    .filter(item => !/google\.com\/search|youtube\.com|youtu\.be|ghid-rta\.ro/i.test(item.url));
+  const score = item => {
+    if (/smokee\.ro\/product\//i.test(item.url)) return 0;
+    if (/official|manufacturer|producator|product|produs/i.test(item.type)) return 1;
+    if (/review|forum|community/i.test(item.type)) return 3;
+    return 2;
+  };
+  return candidates.sort((a, b) => score(a) - score(b))[0]?.url || '';
+}
+
+function atomizerSourceLines(atom) {
+  const url = atomizerSourceUrl(atom);
+  return url ? ['', `Sursa modelului: ${url}`] : [];
+}
+
+function atomizerYouTubeFallbackCandidates(atom, videos = []) {
+  const ids = new Set();
+  [].concat(atom && atom.youtube || []).forEach(source => {
+    const id = youtubeVideoId(source && source.URL);
+    if (id) ids.add(id);
+  });
+  [].concat(videos || []).forEach(video => {
+    const id = youtubeVideoId(video && video.url || video && video.URL);
+    if (id) ids.add(id);
+  });
+  return Array.from(ids).map(id => `https://img.youtube.com/vi/${id}/hqdefault.jpg`);
+}
+
+function atomizerImage(atom, videos = [], options = {}) {
+  const candidates = atomizerImageCandidates(atom);
+  if (candidates.length) return candidates[0];
+  if (!options.fallbackToVideos) return '';
+  return atomizerYouTubeFallbackCandidates(atom, videos)[0] || '';
+}
+
+function extractAtomizerLocalImages(atom) {
+  const slug = slugify(publicAtomName(atom && atom.name || ''));
+  const localPage = path.join(ROOT, 'atomizoare', slug, 'index.html');
+  if (!slug || !fs.existsSync(localPage)) return [];
+  const html = fs.readFileSync(localPage, 'utf8');
+  const candidates = [];
+  const fromMeta = [
+    html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["'][^>]*>/i),
+    html.match(/<meta[^>]+name=["']twitter:image["'][^>]+content=["']([^"']+)["'][^>]*>/i)
+  ];
+  fromMeta.forEach(match => {
+    if (match && match[1]) candidates.push(match[1]);
+  });
+  const figure = html.match(/<figure[^>]+class=["'][^"']*product-detail-media[^"']*["'][^>]*>\s*<[^>]+class=["'][^"']*[^"']*["'][^>]*>\s*<img[^>]+src=["']([^"']+)["'][^>]*>/i);
+  if (figure && figure[1]) candidates.push(figure[1]);
+  const ld = html.match(/\"image\"\s*:\s*\"([^\"]+)\"/i);
+  if (ld && ld[1]) candidates.push(ld[1]);
+  const pageUrl = atomizerUrl(atom);
+  return candidates.map(candidate => {
+    const value = String(candidate || '').trim();
+    if (!value) return '';
+    if (/^https?:\/\//i.test(value)) return value;
+    if (/^\/\//.test(value)) return `https:${value}`;
+    if (/^\//.test(value) && /^https:\/\//i.test(pageUrl)) return `${pageUrl.replace(/\/$/, '')}${value}`;
+    return '';
+  }).filter(Boolean);
 }
 
 function recommendationSignature(atom) {
@@ -737,10 +869,20 @@ function directVideoLines(videos) {
 function atomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 260);
   const build = topBuild(atom);
-  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Nou în Ghid RTA MTL', '', LIQUID_TEASER, '', 'Modelul a fost introdus în biblioteca RTA și în recomandările în care profilul lichidului, arhitectura atomizorului și buildul sunt compatibile.'];
+  const lines = [
+    ...atomizerHeadingLines(atom),
+    ...liquidHeadlineLines(liquidMatches),
+    ...noticeBannerLines(),
+    'Nou în Ghid RTA MTL',
+    '',
+    LIQUID_TEASER,
+    '',
+    'Modelul a fost introdus în biblioteca RTA și în recomandările în care profilul lichidului, arhitectura atomizorului și buildul sunt compatibile.'
+  ];
   if (profile) lines.push('', `Potrivire inițială: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
+  lines.push(...atomizerSourceLines(atom));
   const videoLines = directVideoLines(videos);
   if (videoLines.length) lines.push('', ...videoLines);
   lines.push(
@@ -757,10 +899,20 @@ function atomizerMessage(atom, videos, liquidMatches = []) {
 function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
-  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Fișă RTA MTL', '', LIQUID_TEASER, '', 'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'];
+  const lines = [
+    ...atomizerHeadingLines(atom),
+    ...liquidHeadlineLines(liquidMatches),
+    ...noticeBannerLines(),
+    'Fișă RTA MTL',
+    '',
+    LIQUID_TEASER,
+    '',
+    'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'
+  ];
   if (profile) lines.push('', `Potrivire aromatică: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
+  lines.push(...atomizerSourceLines(atom));
   const videoLines = directVideoLines(videos);
   if (videoLines.length) lines.push('', ...videoLines);
   lines.push(
@@ -777,10 +929,20 @@ function editorialAtomizerMessage(atom, videos, liquidMatches = []) {
 function recommendationMessage(atom, liquidMatches = []) {
   const profile = cleanText(atom.classes || atom.dna, 280);
   const build = topBuild(atom);
-  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Recomandare actualizată', '', LIQUID_TEASER, '', 'Potrivirea a fost recalibrată după profilul lichidului, arhitectura atomizorului și comportamentul buildului.'];
+  const lines = [
+    ...atomizerHeadingLines(atom),
+    ...liquidHeadlineLines(liquidMatches),
+    ...noticeBannerLines(),
+    'Recomandare actualizată',
+    '',
+    LIQUID_TEASER,
+    '',
+    'Potrivirea a fost recalibrată după profilul lichidului, arhitectura atomizorului și comportamentul buildului.'
+  ];
   if (profile) lines.push('', `Profil: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
   lines.push(...liquidMatchLines(liquidMatches));
+  lines.push(...atomizerSourceLines(atom));
   lines.push(
     '',
     `Fișa completă, cu surse și potriviri: ${atomizerUrl(atom)}`,
@@ -793,13 +955,23 @@ function recommendationMessage(atom, liquidMatches = []) {
 }
 
 function reviewMessage(atom, videos, liquidMatches = []) {
-  const lines = [...atomizerHeadingLines(atom), ...noticeBannerLines(), 'Review nou verificat', '', LIQUID_TEASER, '', 'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'];
+  const lines = [
+    ...atomizerHeadingLines(atom),
+    ...liquidHeadlineLines(liquidMatches),
+    ...noticeBannerLines(),
+    'Review nou verificat',
+    '',
+    LIQUID_TEASER,
+    '',
+    'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'
+  ];
   videos.slice(0, 2).forEach(video => {
     const label = video.kind === 'build' ? 'Build' : 'Recenzie';
     const clone = video.scope === 'clone' ? ' pe clonă; nu este recenzie a originalului' : '';
     lines.push('', `${label}${clone}: ${cleanText(video.title, 160)}`);
   });
   lines.push(...liquidMatchLines(liquidMatches));
+  lines.push(...atomizerSourceLines(atom));
   lines.push(
     '',
     `Fișa completă, cu materialele video și sursele verificate: ${atomizerUrl(atom)}`,
@@ -830,7 +1002,7 @@ function planUpdates(catalog, feed, state, options = {}) {
     if (state.seenAtomizers[slug] || blockedModelSlugs.has(canonicalAtomizerSlug(atom.name))) return;
     const atomVideos = videosForAtom(videos, slug);
     const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
-    const image = atomizerImage(atom, atomVideos);
+    const image = atomizerImage(atom, atomVideos, { fallbackToVideos: true });
     if (liquidMatches.length < 3 || !image) return;
     events.push({
       type: 'atomizer',
@@ -893,7 +1065,7 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
         atom,
         slug,
         atomVideos,
-        image: atomizerImage(atom, atomVideos),
+        image: atomizerImage(atom, atomVideos, { fallbackToVideos: true }),
         imageCandidates: atomizerImageCandidates(atom, atomVideos),
         videoCount: atomVideos.length
       };
@@ -1120,13 +1292,15 @@ function assertEventLiquidTriplet(event) {
       !message.includes(NICOTINE_FREE_NOTICE)) {
     throw new Error(`Avertizările pentru fumători adulți și lipsa nicotinei lipsesc din postarea pentru ${event.name}.`);
   }
-  const images = [event.image].concat(event.liquidMatches.map(match => String(match.image || '').trim()));
-  if (images.some(image => !/^https:\/\//i.test(image))) {
-    throw new Error(`Una dintre cele patru fotografii lipsește pentru ${event.name}.`);
+  if (!/^https:\/\//i.test(event.image)) {
+    throw new Error(`Fotografia atomizorului lipsește pentru ${event.name}.`);
   }
-  if (new Set(images).size !== 4) {
-    throw new Error(`Galeria pentru ${event.name} trebuie să conțină patru fotografii distincte.`);
-  }
+  event.liquidMatches.forEach(match => {
+    const url = String(match.url || '').trim();
+    if (!/^https:\/\//i.test(url) || !message.includes(url)) {
+      throw new Error(`Linkul lichidului ${match.title} lipsește din postarea pentru ${event.name}.`);
+    }
+  });
 }
 
 function educationalAlbumPhotoEntries(event) {
@@ -1141,31 +1315,31 @@ function educationalAlbumPhotoEntries(event) {
       'Conținut informativ destinat exclusiv adulților 18+.'
     ].join('\n')
   }];
-  event.liquidMatches.forEach((match, index) => {
-    photos.push({
-      type: 'liquid',
-      image: match.image,
-      caption: [
-        `${index + 1}. ${cleanText(match.title, 150)}`,
-        `Categorie aromatică: ${cleanText(match.tag || match.profile, 100)}`,
-        `Profil aromatic: ${cleanText(match.profile, 120)}`,
-        `Motivul potrivirii: ${cleanText(match.reason, 200)}`,
-        'Potrivire orientativă rezultată din triangularea profilului aromatic, atomizorului și buildului.',
-        ADULT_SMOKER_NOTICE,
-        NICOTINE_FREE_NOTICE,
-        'Conținut informativ destinat exclusiv adulților 18+.'
-      ].join('\n')
-    });
-  });
   return photos;
 }
 
 function multiPhotoFeedBody(message, mediaIds, token) {
-  const body = new URLSearchParams({ message, access_token: token });
+  return buildPageFeedBody(message, mediaIds, token, { forcePublic: true });
+}
+
+function buildPageFeedBody(message, mediaIds, token, options = {}) {
+  const body = new URLSearchParams({
+    message,
+    published: 'true',
+    access_token: token
+  });
   mediaIds.forEach((id, index) => {
     body.set(`attached_media[${index}]`, JSON.stringify({ media_fbid: id }));
   });
+  if (options.forcePublicAudience) {
+    body.set('privacy', JSON.stringify({ value: 'EVERYONE' }));
+  }
   return body;
+}
+
+function isAudiencePrivacyError(error) {
+  const message = String(error && error.message || '').toLowerCase();
+  return message.includes('privacy') || message.includes('audience');
 }
 
 async function deleteFacebookObject(objectId) {
@@ -1226,7 +1400,7 @@ async function dedupeFacebookPosts(options = {}) {
 }
 
 async function selectPublicAtomizerImage(event) {
-  const candidates = Array.from(new Set([].concat(event.imageCandidates || [], event.image).filter(isRealAtomizerImage)));
+  const candidates = Array.from(new Set([].concat(event.imageCandidates || [], event.image).filter(isPublishableAtomizerImage)));
   let lastImageError;
   for (const candidate of candidates) {
     try {
@@ -1243,16 +1417,13 @@ async function prepareEventForPublish(event) {
   await waitForPublicLink(event.link);
   event.image = await selectPublicAtomizerImage(event);
   assertEventLiquidTriplet(event);
-  for (const match of event.liquidMatches) {
-    await waitForPublicImage(match.image);
-  }
   event.albumPhotos = educationalAlbumPhotoEntries(event);
   return event;
 }
 
 async function publishPreparedEvent(event) {
-  if (!Array.isArray(event.albumPhotos) || event.albumPhotos.length !== 4) {
-    throw new Error(`Postarea pentru ${event.name} nu poate fi publicată fără galeria completă.`);
+  if (!Array.isArray(event.albumPhotos) || event.albumPhotos.length !== 1) {
+    throw new Error(`Postarea pentru ${event.name} nu poate fi publicată fără fotografia atomizorului.`);
   }
   const mediaIds = [];
   try {
@@ -1272,12 +1443,26 @@ async function publishPreparedEvent(event) {
       if (!mediaId) throw new Error(`Meta did not return a media ID for ${event.name}.`);
       mediaIds.push(mediaId);
     }
-    const body = multiPhotoFeedBody(event.message, mediaIds, accessToken);
-    const payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
-      method: 'POST',
-      headers: { 'content-type': 'application/x-www-form-urlencoded' },
-      body
-    });
+    let payload;
+    try {
+      const body = buildPageFeedBody(event.message, mediaIds, accessToken, { forcePublicAudience: true });
+      payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
+        method: 'POST',
+        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        body
+      });
+    } catch (error) {
+      if (isAudiencePrivacyError(error)) {
+        const body = buildPageFeedBody(event.message, mediaIds, accessToken, { forcePublicAudience: false });
+        payload = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/feed`, {
+          method: 'POST',
+          headers: { 'content-type': 'application/x-www-form-urlencoded' },
+          body
+        });
+      } else {
+        throw error;
+      }
+    }
     if (!payload.id) throw new Error(`Meta did not return an album post ID for ${event.name}.`);
     return payload.id;
   } catch (error) {
@@ -1337,7 +1522,7 @@ function historyEntryMessage(entry, catalog, feed) {
   if (!message.includes(LIQUID_TEASER) || !liquidMatches.every(match => message.includes(match.title))) {
     throw new Error(`Textul Facebook nu afișează toate cele trei lichide pentru ${atom.name}.`);
   }
-  if (/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023|smokee\.ro\/product/i.test(message)) {
+  if (/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023/i.test(message)) {
     throw new Error(`Textul Facebook conține formulări comerciale pentru ${atom.name}.`);
   }
   return { atom, liquidMatches, message, slug, videos };
@@ -1351,7 +1536,7 @@ function historyEntryEvent(entry, catalog, feed) {
     slug: details.slug,
     name: details.atom.name,
     link: atomizerUrl(details.atom),
-    image: atomizerImage(details.atom, details.videos),
+    image: atomizerImage(details.atom, details.videos, { fallbackToVideos: true }),
     imageCandidates: atomizerImageCandidates(details.atom, details.videos),
     message: details.message,
     liquidMatches: details.liquidMatches,
@@ -1389,18 +1574,35 @@ async function repairMissingLiquidGalleryPosts(options = {}) {
   const entries = state.history.filter(needsLiquidGalleryRepair)
     .sort((a, b) => String(a.publishedAt || '').localeCompare(String(b.publishedAt || '')));
   if (!entries.length) {
-    console.log('Facebook gallery repair: every recorded atomizer post already has three liquid photographs.');
+    console.log('Facebook post repair: every recorded atomizer post already uses one atomizer photograph.');
     return;
   }
   const prepared = [];
+  const skipped = [];
   for (const entry of entries) {
-    const event = historyEntryEvent(entry, catalog, feed);
-    await prepareEventForPublish(event);
-    prepared.push({ entry, event, oldPostId: entry.postId });
+    try {
+      const event = historyEntryEvent(entry, catalog, feed);
+      await prepareEventForPublish(event);
+      prepared.push({ entry, event, oldPostId: entry.postId });
+    } catch (error) {
+      skipped.push({ entry, error: error.message || String(error) });
+      console.log(`Facebook gallery repair skip: ${entry.name || entry.key || entry.postId || 'unknown'} nu poate fi reparat acum: ${error.message || String(error)}`);
+    }
+  }
+  if (!prepared.length) {
+    if (skipped.length) {
+      console.log('Facebook gallery repair: toate intrările eligibile nu au putut fi reparate acum.');
+    } else {
+      console.log('Facebook gallery repair: nu există postări pentru reparație.');
+    }
+    return;
   }
   if (options.checkOnly) {
     prepared.forEach(item => {
-      console.log(`Facebook gallery repair ready: ${item.event.name} -> atomizer + 3 triangulated liquids.`);
+      console.log(`Facebook post repair ready: ${item.event.name} -> one atomizer photo + 3 linked liquids.`);
+    });
+    skipped.forEach(item => {
+      console.log(`Facebook gallery repair pending: ${item.entry.name || item.entry.key || item.entry.postId || 'model necunoscut'} a rămas nerezolvat.`);
     });
     return;
   }
@@ -1418,7 +1620,7 @@ async function repairMissingLiquidGalleryPosts(options = {}) {
     }
     applyRepairedHistoryPost(state, item.entry, item.event, item.oldPostId, replacementId);
     writeJsonAtomic(STATE_PATH, state);
-    console.log(`Facebook gallery repaired: ${item.event.name} (${replacementId}).`);
+    console.log(`Facebook post repaired: ${item.event.name} (${replacementId}).`);
   }
 }
 
@@ -1455,9 +1657,9 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
     source: replaced ? 'facebook-api-zero-nicotine-repaired' : (previous.source || 'facebook-api-educational'),
     formatVersion: FACEBOOK_FORMAT_VERSION,
     messageVersion: FACEBOOK_MESSAGE_VERSION,
-    albumVersion: 'rta-plus-3-zero-nicotine-liquids-v2',
+    albumVersion: FACEBOOK_ALBUM_VERSION,
     noticeUpdatedAt: timestamp,
-    noticePlacement: replaced ? 'post-and-photo-captions' : 'post-message',
+    noticePlacement: replaced ? 'post-and-atomizer-photo' : 'post-message',
     liquids: liquidStateItems(event.liquidMatches)
   };
   if (replaced) updated.galleryUpdatedAt = timestamp;
@@ -1473,9 +1675,9 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
     image: event.image,
     formatVersion: FACEBOOK_FORMAT_VERSION,
     messageVersion: FACEBOOK_MESSAGE_VERSION,
-    albumVersion: 'rta-plus-3-zero-nicotine-liquids-v2',
+    albumVersion: FACEBOOK_ALBUM_VERSION,
     noticeUpdatedAt: timestamp,
-    noticePlacement: replaced ? 'post-and-photo-captions' : 'post-message',
+    noticePlacement: replaced ? 'post-and-atomizer-photo' : 'post-message',
     liquids: liquidStateItems(event.liquidMatches)
   };
   if (replaced) historyItem.galleryUpdatedAt = timestamp;
@@ -1496,7 +1698,9 @@ function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState
     const atom = atomsBySlug.get(slug);
     if (!atom) throw new Error(`Atomizorul ${entry.name || slug} nu mai există în catalog.`);
     const event = editorialEventForAtom(atom, catalog, feed);
-    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
+    const replace = entry.formatVersion !== FACEBOOK_FORMAT_VERSION ||
+      entry.messageVersion !== FACEBOOK_MESSAGE_VERSION ||
+      liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
       (isRealAtomizerImage(event.image) && String(entry.image || '') !== event.image);
     if (!replace && entry.formatVersion === FACEBOOK_FORMAT_VERSION && entry.messageVersion === FACEBOOK_MESSAGE_VERSION) return;
     seenPostIds.add(entry.postId);
@@ -1505,7 +1709,9 @@ function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState
   [].concat(publishState.history || []).forEach(entry => {
     if (!entry || !entry.postId || seenPostIds.has(entry.postId)) return;
     const event = historyEntryEvent(entry, catalog, feed);
-    const replace = liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
+    const replace = entry.formatVersion !== FACEBOOK_FORMAT_VERSION ||
+      entry.messageVersion !== FACEBOOK_MESSAGE_VERSION ||
+      liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
       (isRealAtomizerImage(event.image) && String(entry.image || '') !== event.image);
     if (!replace && entry.formatVersion === FACEBOOK_FORMAT_VERSION && entry.messageVersion === FACEBOOK_MESSAGE_VERSION) return;
     seenPostIds.add(entry.postId);
@@ -1526,22 +1732,41 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
     console.log('Facebook zero-nicotine repair: every recorded gallery already follows the current rule.');
     return;
   }
+  const prepared = [];
+  const skipped = [];
   for (const candidate of candidates) {
-    if (candidate.replace) await prepareEventForPublish(candidate.event);
-    else assertEventLiquidTriplet(candidate.event);
+    try {
+      if (candidate.replace) await prepareEventForPublish(candidate.event);
+      else assertEventLiquidTriplet(candidate.event);
+      prepared.push(candidate);
+    } catch (error) {
+      skipped.push({ candidate, error: error.message || String(error) });
+      console.log(`Facebook zero-nicotine repair skip: ${candidate.event.name} nu poate fi reparat acum: ${error.message || String(error)}`);
+    }
   }
   if (options.checkOnly) {
-    candidates.forEach(candidate => {
+    prepared.forEach(candidate => {
       const operation = candidate.replace ? 'replace gallery' : 'update notice';
       console.log(`Facebook zero-nicotine repair ready: ${candidate.event.name} -> ${operation}.`);
     });
+    skipped.forEach(item => {
+      const candidate = item.candidate;
+      console.log(`Facebook zero-nicotine repair pending: ${candidate.event.name} a rămas nerezolvat.`);
+    });
+    if (!prepared.length && skipped.length) {
+      console.log('Facebook zero-nicotine repair: toate intrările eligibile nu au putut fi reparate acum.');
+    }
+    return;
+  }
+  if (!prepared.length) {
+    console.log('Facebook zero-nicotine repair: toate intrările eligibile nu au putut fi reparate acum.');
     return;
   }
   if (!pageId || !accessToken) {
     throw new Error('FACEBOOK_PAGE_ID and FACEBOOK_PAGE_ACCESS_TOKEN must be configured.');
   }
   await verifyFacebookPage();
-  for (const candidate of candidates) {
+  for (const candidate of prepared) {
     let postId = candidate.oldPostId;
     if (candidate.replace) {
       postId = await publishPreparedEvent(candidate.event);
@@ -1576,8 +1801,8 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
         timestamp,
         { replaced: candidate.replace }
       );
-      candidate.entry.albumVersion = 'rta-plus-3-zero-nicotine-liquids-v2';
-      candidate.entry.noticePlacement = candidate.replace ? 'post-and-photo-captions' : 'post-message';
+      candidate.entry.albumVersion = FACEBOOK_ALBUM_VERSION;
+      candidate.entry.noticePlacement = candidate.replace ? 'post-and-atomizer-photo' : 'post-message';
       writeJsonAtomic(STATE_PATH, publishState);
     }
     console.log(`Facebook zero-nicotine ${candidate.replace ? 'gallery replaced' : 'notice updated'}: ${candidate.event.name} (${postId}).`);
@@ -1634,6 +1859,11 @@ async function refreshTodayLiquidMessages(options = {}) {
 async function main() {
   if (dedupePosts || checkDedupePosts) {
     await dedupeFacebookPosts({ checkOnly: checkDedupePosts });
+    return;
+  }
+  if (repairLegacyPostGalleries || checkRepairLegacyPostGalleries) {
+    await repairMissingLiquidGalleryPosts({ checkOnly: checkRepairLegacyPostGalleries });
+    await repairZeroNicotineGalleryPosts({ checkOnly: checkRepairLegacyPostGalleries, model: repairModel });
     return;
   }
   if (repairZeroNicotineGalleries || checkRepairZeroNicotineGalleries) {
