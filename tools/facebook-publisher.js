@@ -24,12 +24,12 @@ const GUIDE_FIT_LINE = 'Pentru a se potrivi cu buildul si lichidul consultati gh
 const FACEBOOK_FORMAT_VERSION = 'educational-atomizer-high-end-mod-v5-guide-fit-only';
 const FACEBOOK_MESSAGE_VERSION = 'atomizer-mod-guide-fit-v1';
 const FACEBOOK_ALBUM_VERSION = 'atomizer-mod-photos-guide-fit-v1';
-const ADULT_SMOKER_NOTICE = 'Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.';
-const NICOTINE_FREE_NOTICE = 'Recomandat a se consuma fără nicotină.';
-const ATOMIZER_TITLE_FRAME = '━━ 𝗔𝗧𝗢𝗠𝗜𝗭𝗢𝗥 𝗥𝗧𝗔 𝗠𝗧𝗟 ━━';
-const NOTICE_FRAME_TOP = '┏━ 𝗢𝗥𝗜𝗘𝗡𝗧𝗔𝗥𝗘 𝗜𝗠𝗣𝗢𝗥𝗧𝗔𝗡𝗧𝗔';
-const ADULT_SMOKER_EMPHASIS = '𝗗𝗢𝗔𝗥 𝗣𝗘𝗡𝗧𝗥𝗨 𝗥𝗘𝗡𝗨𝗡𝗧𝗔𝗥𝗘 • 𝗠𝗔𝗜 𝗣𝗨𝗧𝗜𝗡 𝗡𝗢𝗖𝗜𝗩𝗔';
-const NICOTINE_FREE_EMPHASIS = '𝗥𝗘𝗖𝗢𝗠𝗔𝗡𝗗𝗔𝗧 𝗙𝗔𝗥𝗔 𝗡𝗜𝗖𝗢𝗧𝗜𝗡𝗔';
+const ADULT_SMOKER_NOTICE = 'Material informativ pentru adulti 18+. Vapatul nu este lipsit de riscuri.';
+const NICOTINE_FREE_NOTICE = 'Pentru decizii de setup, consulta ghidul complet.';
+const ATOMIZER_TITLE_FRAME = '-- ATOMIZOR RTA MTL --';
+const NOTICE_FRAME_TOP = 'ORIENTARE INFORMATIVA';
+const ADULT_SMOKER_EMPHASIS = 'Material informativ pentru adulti 18+';
+const NICOTINE_FREE_EMPHASIS = 'Consultare tehnica in ghid';
 
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
@@ -577,42 +577,18 @@ function topLiquidMatchesForAtom(atom, catalog, limit = 3) {
 }
 
 function liquidMatchLines(matches) {
-  if (!Array.isArray(matches) || !matches.length) return [];
-  const selected = matches.slice(0, 3);
-  const lines = [
-    '',
-    `3 lichide analizate: ${selected.map(match => cleanText(match.title, 90)).join(' • ')}`,
-    '',
-    'Detalierea potrivirilor:'
-  ];
-  selected.forEach((match, index) => {
-    lines.push(
-      `${index + 1}. ${cleanText(match.title, 130)}`,
-      `Categorie aromatică: ${cleanText(match.tag || match.profile, 100)}`,
-      `Profil aromatic: ${cleanText(match.profile, 110)}`,
-      `Comportament estimat: ${cleanText(match.reason, 180)}`
-    );
-  });
-  return lines;
+  return [];
 }
 
 function liquidHeadlineLines(matches) {
-  if (!Array.isArray(matches) || !matches.length) return [];
-  const selected = matches.slice(0, 3);
-  const lines = ['3 lichide recomandate prin triangulare:'];
-  selected.forEach((match, index) => {
-    lines.push(`${index + 1}. ${cleanText(match.title, 110)}`);
-    if (/^https:\/\//i.test(String(match.url || '').trim())) lines.push(String(match.url).trim());
-  });
-  lines.push('');
-  return lines;
+  return [];
 }
 
 function noticeBannerLines() {
   return [
     NOTICE_FRAME_TOP,
-    `┃ 1. ${ADULT_SMOKER_EMPHASIS}`,
-    `┗ 2. ${NICOTINE_FREE_EMPHASIS}`,
+    `1. ${ADULT_SMOKER_EMPHASIS}`,
+    `2. ${NICOTINE_FREE_EMPHASIS}`,
     '',
     ADULT_SMOKER_NOTICE,
     NICOTINE_FREE_NOTICE,
@@ -1066,9 +1042,9 @@ function atomizerMessage(atom, videos, liquidMatches = [], mod = null) {
     GUIDE_FIT_LINE,
     '',
     ...noticeBannerLines(),
-    'Nou in Ghid RTA MTL',
+    'Fisa noua in Ghid RTA MTL',
     '',
-    'Modelul a fost introdus in biblioteca RTA si in recomandarile ghidului.'
+    'Modelul a fost introdus in biblioteca RTA a ghidului.'
   ];
   if (profile) lines.push('', `Profil orientativ: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
@@ -1078,10 +1054,10 @@ function atomizerMessage(atom, videos, liquidMatches = [], mod = null) {
   lines.push(...modDetailLines(mod));
   lines.push(
     '',
-    `Fișa completă, cu surse, recenzii și potriviri: ${atomizerUrl(atom)}`,
+    `Fisa completa, cu surse si recenzii: ${atomizerUrl(atom)}`,
     '',
-    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
-    'Conținut informativ destinat exclusiv adulților 18+.',
+    'Analiza tehnica orientativa pentru adulti 18+.',
+    'Material informativ pentru documentare.',
     '#GhidRTAMTL #AtomizoareRTA #BuildRTA #Smokee'
   );
   return lines.join('\n');
@@ -1108,10 +1084,10 @@ function editorialAtomizerMessage(atom, videos, liquidMatches = [], mod = null) 
   lines.push(...modDetailLines(mod));
   lines.push(
     '',
-    `Fișa completă, cu surse, recenzii și potriviri: ${atomizerUrl(atom)}`,
+    `Fisa completa, cu surse si recenzii: ${atomizerUrl(atom)}`,
     '',
-    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
-    'Conținut informativ destinat exclusiv adulților 18+.',
+    'Analiza tehnica orientativa pentru adulti 18+.',
+    'Material informativ pentru documentare.',
     '#GhidRTAMTL #AtomizoareRTA #BuildRTA #Smokee'
   );
   return lines.join('\n');
@@ -1126,9 +1102,9 @@ function recommendationMessage(atom, liquidMatches = [], mod = null) {
     GUIDE_FIT_LINE,
     '',
     ...noticeBannerLines(),
-    'Recomandare actualizata',
+    'Fisa actualizata',
     '',
-    'Potrivirea completa se consulta in ghid, unde atomizorul este evaluat impreuna cu buildul si profilul de lichid.'
+    'Evaluarea completa se consulta in ghid, unde atomizorul este analizat impreuna cu buildul si profilul ales.'
   ];
   if (profile) lines.push('', `Profil: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
@@ -1136,11 +1112,11 @@ function recommendationMessage(atom, liquidMatches = [], mod = null) {
   lines.push(...modDetailLines(mod));
   lines.push(
     '',
-    `Fișa completă, cu surse și potriviri: ${atomizerUrl(atom)}`,
+    `Fisa completa, cu surse si recenzii: ${atomizerUrl(atom)}`,
     '',
-    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
-    'Conținut informativ destinat exclusiv adulților 18+.',
-    '#GhidRTAMTL #RecomandariRTA #BuildRTA #Smokee'
+    'Analiza tehnica orientativa pentru adulti 18+.',
+    'Material informativ pentru documentare.',
+    '#GhidRTAMTL #BuildRTA #Smokee'
   );
   return lines.join('\n');
 }
@@ -1158,17 +1134,17 @@ function reviewMessage(atom, videos, liquidMatches = [], mod = null) {
   ];
   videos.slice(0, 2).forEach(video => {
     const label = video.kind === 'build' ? 'Build' : 'Recenzie';
-    const clone = video.scope === 'clone' ? ' pe clonă; nu este recenzie a originalului' : '';
+    const clone = video.scope === 'clone' ? ' pe clona; nu este recenzie a originalului' : '';
     lines.push('', `${label}${clone}: ${cleanText(video.title, 160)}`);
   });
   lines.push(...atomizerSourceLines(atom));
   lines.push(...modDetailLines(mod));
   lines.push(
     '',
-    `Fișa completă, cu materialele video și sursele verificate: ${atomizerUrl(atom)}`,
+    `Fisa completa, cu materialele video si sursele verificate: ${atomizerUrl(atom)}`,
     '',
-    'Analiză tehnică orientativă; nu reprezintă ofertă comercială.',
-    'Conținut informativ destinat exclusiv adulților 18+.',
+    'Analiza tehnica orientativa pentru adulti 18+.',
+    'Material informativ pentru documentare.',
     '#GhidRTAMTL #ReviewRTA #BuildRTA #Smokee'
   );
   return lines.join('\n');
@@ -1565,9 +1541,9 @@ function educationalAlbumPhotoEntries(event) {
     caption: [
       ATOMIZER_TITLE_FRAME,
       cleanText(event.name, 160),
-      'Atomizor analizat în cadrul Ghid RTA MTL.',
+      'Atomizor analizat in cadrul Ghid RTA MTL.',
       GUIDE_FIT_LINE,
-      'Conținut informativ destinat exclusiv adulților 18+.'
+      'Material informativ pentru documentare.'
     ].join('\n')
   }, {
     type: 'mod',
@@ -1578,7 +1554,7 @@ function educationalAlbumPhotoEntries(event) {
       'Mod prezentat pentru setup-ul RTA.',
       'Recenzia video este disponibila in textul postarii.',
       GUIDE_FIT_LINE,
-      'Continut informativ destinat exclusiv adultilor 18+.'
+      'Material informativ pentru documentare.'
     ].join('\n')
   }];
   return photos;
