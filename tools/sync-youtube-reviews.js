@@ -171,11 +171,20 @@ function safeSingleCoreOccurrence(modelName, videoTitle) {
   }));
 }
 
+function hasVapeContext(videoTitle) {
+  return /\b(?:rta|mta|mtl|rdl|atomizer|atomizor|atomizzatore|tank|vape|vaping|svapo|svapare|rigenerazione|rigenerare|wick|wicking|coil|rebuild)\b/i.test(videoTitle);
+}
+
 function exactModelMatch(modelName, videoTitle) {
   if (/\b(?:rda|rdta)\b/i.test(videoTitle) && !/\b(?:rda|rdta)\b/i.test(modelName)) return false;
   const titleTokens = new Set(identityTokens(videoTitle).concat(normalize(videoTitle).split(' ')));
   const groups = identityGroups(modelName);
-  if (!groups.some(group => group.every(token => titleTokens.has(token)))) return false;
+  const matchedGroups = groups.filter(group => group.every(token => titleTokens.has(token)));
+  if (!matchedGroups.length) return false;
+  if (matchedGroups.some(group => group.length === 1) && !hasVapeContext(videoTitle)) {
+    const sharedIdentity = identityTokens(modelName).filter(token => titleTokens.has(token));
+    if (sharedIdentity.length < 2) return false;
+  }
 
   const expectedVersions = versionTokens(modelName);
   const titleVersions = versionTokens(videoTitle);
