@@ -13,6 +13,7 @@ const {
   emptyState,
   historyEntryMessage,
   highEndModCandidates,
+  noticeBannerLines,
   modFamilyKey,
   planEditorialPosts,
   planUpdates,
@@ -119,6 +120,7 @@ assert.strictEqual(new Set(plan.map(event => event.familyKey)).size, 2, 'editori
 plan.forEach(event => {
   assert.strictEqual(event.liquidMatches.length, 0);
   assert(event.message.includes('Pentru a se potrivi cu buildul si lichidul consultati ghid-rta.ro: https://ghid-rta.ro/'));
+  noticeBannerLines().filter(Boolean).forEach(line => assert(event.message.includes(line), `missing notice line: ${line}`));
   assert(!/3 lichide|triangulare|lichide analizate|lichide recomandate/i.test(event.message));
   assert.doesNotThrow(() => assertEventLiquidTriplet(event));
   assert.strictEqual(educationalAlbumPhotoEntries(event).length, 2);
@@ -126,7 +128,7 @@ plan.forEach(event => {
 
 let appliedCampaign = applyEditorialPublished(emptyCampaignState(), plan[0], 'page_post_1', '2026-07-13T05:00:00.000Z');
 assert.strictEqual(appliedCampaign.postedAtomizers[plan[0].slug].liquids.length, 0);
-assert.strictEqual(appliedCampaign.postedAtomizers[plan[0].slug].messageVersion, 'atomizer-mod-guide-fit-v1');
+assert.strictEqual(appliedCampaign.postedAtomizers[plan[0].slug].messageVersion, 'atomizer-mod-guide-fit-v2');
 assert(postedAtomizerSlugs(appliedCampaign, emptyState()).has(plan[0].familyKey));
 
 const publishPlan = planUpdates(catalog, feed, emptyState(), {

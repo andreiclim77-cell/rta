@@ -21,15 +21,14 @@ const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const GUIDE_FIT_LINE = 'Pentru a se potrivi cu buildul si lichidul consultati ghid-rta.ro: https://ghid-rta.ro/';
-const FACEBOOK_FORMAT_VERSION = 'educational-atomizer-high-end-mod-v5-guide-fit-only';
-const FACEBOOK_MESSAGE_VERSION = 'atomizer-mod-guide-fit-v1';
-const FACEBOOK_ALBUM_VERSION = 'atomizer-mod-photos-guide-fit-v1';
-const ADULT_SMOKER_NOTICE = 'Material informativ pentru adulti 18+. Vapatul nu este lipsit de riscuri.';
-const NICOTINE_FREE_NOTICE = 'Pentru decizii de setup, consulta ghidul complet.';
+const FACEBOOK_FORMAT_VERSION = 'educational-atomizer-high-end-mod-v6-guide-fit-only';
+const FACEBOOK_MESSAGE_VERSION = 'atomizer-mod-guide-fit-v2';
+const FACEBOOK_ALBUM_VERSION = 'atomizer-mod-photos-guide-fit-v2';
 const ATOMIZER_TITLE_FRAME = '-- ATOMIZOR RTA MTL --';
-const NOTICE_FRAME_TOP = 'ORIENTARE INFORMATIVA';
-const ADULT_SMOKER_EMPHASIS = 'Material informativ pentru adulti 18+';
-const NICOTINE_FREE_EMPHASIS = 'Consultare tehnica in ghid';
+const NOTICE_FRAME_TOP = boldText('ORIENTARE IMPORTANTA');
+const ADULT_SMOKER_EMPHASIS = boldText('DOAR PENTRU A RENUNTA LA FUMAT, FIIND MAI PUTIN NOCIVA');
+const NICOTINE_FREE_EMPHASIS = boldText('RECOMANDAT FARA NICOTINA');
+const CLEAN_LIQUIDS_EMPHASIS = boldText('FOLOSITI LICHIDE CURATE, DE PROVENIENTA RECUNOSCUTA, PREMIUM');
 
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
@@ -88,6 +87,19 @@ const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POS
 const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
 const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
 const graphVersion = String(process.env.FACEBOOK_GRAPH_VERSION || DEFAULT_GRAPH_VERSION).trim();
+
+function boldText(value) {
+  const upperStart = 0x1d5d4;
+  const lowerStart = 0x1d5ee;
+  const digitStart = 0x1d7ec;
+  return String(value || '').split('').map(char => {
+    const code = char.charCodeAt(0);
+    if (code >= 65 && code <= 90) return String.fromCodePoint(upperStart + code - 65);
+    if (code >= 97 && code <= 122) return String.fromCodePoint(lowerStart + code - 97);
+    if (code >= 48 && code <= 57) return String.fromCodePoint(digitStart + code - 48);
+    return char;
+  }).join('');
+}
 
 function valueAfter(flag) {
   const index = args.indexOf(flag);
@@ -587,11 +599,9 @@ function liquidHeadlineLines(matches) {
 function noticeBannerLines() {
   return [
     NOTICE_FRAME_TOP,
-    `1. ${ADULT_SMOKER_EMPHASIS}`,
-    `2. ${NICOTINE_FREE_EMPHASIS}`,
-    '',
-    ADULT_SMOKER_NOTICE,
-    NICOTINE_FREE_NOTICE,
+    `\u2503 1. ${ADULT_SMOKER_EMPHASIS}`,
+    `\u2503 2. ${NICOTINE_FREE_EMPHASIS}`,
+    `\u2517 3. ${CLEAN_LIQUIDS_EMPHASIS}`,
     ''
   ];
 }
@@ -1510,9 +1520,8 @@ function assertEventLiquidTriplet(event) {
       !message.includes(GUIDE_FIT_LINE) ||
       !message.includes(NOTICE_FRAME_TOP) ||
       !message.includes(ADULT_SMOKER_EMPHASIS) ||
-      !message.includes(ADULT_SMOKER_NOTICE) ||
       !message.includes(NICOTINE_FREE_EMPHASIS) ||
-      !message.includes(NICOTINE_FREE_NOTICE)) {
+      !message.includes(CLEAN_LIQUIDS_EMPHASIS)) {
     throw new Error(`Avertizările pentru fumători adulți și lipsa nicotinei lipsesc din postarea pentru ${event.name}.`);
   }
   if (!/^https:\/\//i.test(event.image)) {
