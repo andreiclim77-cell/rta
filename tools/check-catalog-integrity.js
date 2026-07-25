@@ -101,7 +101,7 @@ check(/facebook-publisher\.js --pending-count/.test(workflow), 'Facebook update 
 check(/facebook-publisher\.js --publish --max-posts 2/.test(workflow), 'Facebook publisher is missing from the catalog workflow');
 check(/FACEBOOK_PAGE_ACCESS_TOKEN: \$\{\{ secrets\.FACEBOOK_PAGE_ACCESS_TOKEN \}\}/.test(workflow), 'Facebook Page token is not read from GitHub Secrets');
 check(!/FACEBOOK_PAGE_ACCESS_TOKEN\s*=\s*['"][^'"]+['"]/.test(facebookPublisher), 'Facebook Page token must not be stored in source code');
-check(/Europe\/Bucharest/.test(workflow), 'Bucharest timezone gate is missing');
+check(/GitHub may start scheduled jobs late/.test(workflow), 'scheduled sync must tolerate delayed GitHub cron starts');
 check(!/https:\/\/(?:www\.)?smokee\.ro\/wp-content\/uploads\//i.test(source), 'direct Smokee image URLs bypass the Cloudflare cache');
 check(/const FETCH_CONCURRENCY = 3;/.test(consumableSync), 'consumables sync request limit changed');
 check(/const chunks = await fetchInBatches\(tasks\);/.test(consumableSync), 'consumables sync no longer uses controlled request batches');
