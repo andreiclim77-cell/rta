@@ -20,10 +20,10 @@ const SMOKEE_FACEBOOK_URL = 'https://www.facebook.com/www.smokee.ro/';
 const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
-const LIQUID_TEASER = 'Cele 3 lichide sunt alese prin triangulare; explicațiile complete apar în textul extins.';
-const FACEBOOK_FORMAT_VERSION = 'educational-atomizer-high-end-mod-v4-unique-rotation';
-const FACEBOOK_MESSAGE_VERSION = 'three-linked-liquids-high-end-mod-v13-unique-rotation';
-const FACEBOOK_ALBUM_VERSION = 'atomizer-mod-photos-three-linked-liquids-v3-unique-rotation';
+const GUIDE_FIT_LINE = 'Pentru a se potrivi cu buildul si lichidul consultati ghid-rta.ro: https://ghid-rta.ro/';
+const FACEBOOK_FORMAT_VERSION = 'educational-atomizer-high-end-mod-v5-guide-fit-only';
+const FACEBOOK_MESSAGE_VERSION = 'atomizer-mod-guide-fit-v1';
+const FACEBOOK_ALBUM_VERSION = 'atomizer-mod-photos-guide-fit-v1';
 const ADULT_SMOKER_NOTICE = 'Doar pentru a renunța la fumat, fiind o variantă mai puțin nocivă decât continuarea fumatului, dar nu lipsită de riscuri.';
 const NICOTINE_FREE_NOTICE = 'Recomandat a se consuma fără nicotină.';
 const ATOMIZER_TITLE_FRAME = '━━ 𝗔𝗧𝗢𝗠𝗜𝗭𝗢𝗥 𝗥𝗧𝗔 𝗠𝗧𝗟 ━━';
@@ -152,8 +152,43 @@ function normalizeMatchText(value) {
     .trim();
 }
 
+function canonicalFamilyText(value) {
+  return normalizeMatchText(value)
+    .replace(/\b(?:atomizor|atomizer|rta|mtl|dl|rdl|by|the|mods?|mod)\b/g, ' ')
+    .replace(/\b(?:stainless|steel|ss|black|full|matte|silver|dlc|gunmetal|gun|metal|dark|grey|gray|green|blue|red|gold|purple|pink|white|orange|brown|polished|finish|bundle|nano|standard|set|top|refill|edition|limited|resigilat)\b/g, ' ')
+    .replace(/\b\d+(?:[.,]\d+)?\s*(?:ml|mm|w|mah)\b/g, ' ')
+    .replace(/\b(?:18650|18500|21700|18350)\b/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function canonicalAtomizerFamilyKey(value) {
+  const text = canonicalFamilyText(publicAtomName(value));
+  if (!text) return '';
+  if (/\bprime\s+minister\b/.test(text)) return text.includes('freehand') ? 'prime minister freehand' : 'prime minister';
+  if (/\bminister\b/.test(text)) return 'minister';
+  if (/\bbishop\b/.test(text)) return 'bishop';
+  if (/\bblaze\b/.test(text)) return 'blaze';
+  if (/\bby\s*ka\s*v?\s*11\b|\bbyka\s*v?\s*11\b/.test(text)) return 'by ka v11';
+  if (/\bby\s*ka\s*v?\s*7\b|\bbyka\s*v?\s*7\b/.test(text)) return 'by ka v7';
+  if (/\bby\s*ka\s*v?\s*8\b|\bbyka\s*v?\s*8\b/.test(text)) return 'by ka v8';
+  return slugify(text);
+}
+
 function modFamilyKey(item) {
-  return normalizeMatchText(item && (item.familyKey || item.title));
+  const text = canonicalFamilyText(item && (item.familyKey || item.title));
+  if (/\bkhonsu\b.*\beclipse\b/.test(text)) return 'khonsu eclipse';
+  if (/\bmood\b.*\bv\s*2\b/.test(text)) return 'mood v2';
+  if (/\btelli\b.*\bqueen\s*iii\b/.test(text)) return 'telli queen iii';
+  if (/\btelli\b.*\bking\s*v\s*2\b/.test(text)) return 'telli king v2';
+  if (/\barcana\b.*\bsbs\b.*\bdna\s*60\b/.test(text)) return 'arcana sbs dna60';
+  if (/\barcana\b.*\bsbs\b/.test(text)) return 'arcana sbs';
+  if (/\barcana\b.*\bbox\b.*\bdna\s*60\b/.test(text)) return 'arcana box dna60';
+  if (/\barcana\b.*\bbox\b/.test(text)) return 'arcana box';
+  if (/\bambition\b.*\bmorer\b/.test(text)) return 'ambition morer sbs';
+  if (/\bvsmosfet\b/.test(text)) return 'vsmosfet tube';
+  if (/\bminister\b/.test(text)) return 'centenary minister mod';
+  return text;
 }
 
 function highEndModCandidates(modsFeed = readJson(MODS_PATH, { items: [] })) {
@@ -167,12 +202,38 @@ function highEndModCandidates(modsFeed = readJson(MODS_PATH, { items: [] })) {
     const key = modFamilyKey(item);
     const reviewUrl = String(item && item.review && item.review.url || '');
     if (!key || seen.has(key)) return false;
-    seen.add(key);
-    return item && item.highEnd !== false &&
+    const valid = item && item.highEnd !== false &&
       /^https:\/\/smokee\.ro\/product\//i.test(String(item && item.url || '')) &&
       /^https:\/\//i.test(String(item && item.image || '')) &&
-      /^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/i.test(reviewUrl);
+      /^https:\/\/www\.youtube\.com\/watch\?v=[A-Za-z0-9_-]{11}$/i.test(reviewUrl) &&
+      modReviewLooksRelevant(item);
+    if (valid) seen.add(key);
+    return valid;
   });
+}
+
+function modReviewLooksRelevant(item) {
+  const key = modFamilyKey(item);
+  const title = normalizeMatchText(item && item.review && item.review.title || '');
+  if (!key || !title) return false;
+  const exactRules = [
+    ['khonsu eclipse', ['khonsu', 'eclipse']],
+    ['mood v2', ['mood']],
+    ['telli queen iii', ['queen']],
+    ['telli king v2', ['king']],
+    ['arcana sbs dna60', ['arcana', 'sbs']],
+    ['arcana sbs', ['arcana', 'sbs']],
+    ['arcana box dna60', ['arcana', 'box']],
+    ['arcana box', ['arcana', 'box']],
+    ['ambition morer sbs', ['morer']],
+    ['vsmosfet tube', ['vsmosfet']],
+    ['centenary minister mod', ['minister']]
+  ];
+  const matchedRule = exactRules.find(([ruleKey]) => key === ruleKey);
+  if (matchedRule) return matchedRule[1].every(token => title.includes(token));
+  const keyTokens = key.split(' ').filter(token => token.length >= 4 && !['mods', 'high', 'end', 'tube', 'sbs', 'dna60', 'dna80'].includes(token));
+  if (!keyTokens.length) return true;
+  return keyTokens.some(token => title.includes(token));
 }
 
 function highEndModForAtom(atom, modsFeed, options = {}) {
@@ -867,12 +928,12 @@ function historyAtomizerSlug(entry) {
 function postedAtomizerSlugs(campaignState, publishState) {
   const slugs = new Set();
   Object.entries(campaignState && campaignState.postedAtomizers || {}).forEach(([slug, entry]) => {
-    const canonical = canonicalAtomizerSlug(entry && entry.name || slug);
+    const canonical = canonicalAtomizerFamilyKey(entry && entry.name || slug) || canonicalAtomizerSlug(entry && entry.name || slug);
     if (canonical) slugs.add(canonical);
   });
   [].concat(publishState && publishState.history || []).forEach(entry => {
     if (!entry || !entry.postId) return;
-    const canonical = historyAtomizerSlug(entry);
+    const canonical = canonicalAtomizerFamilyKey(entry.name || historyAtomizerSlug(entry)) || historyAtomizerSlug(entry);
     if (canonical) slugs.add(canonical);
   });
   return slugs;
@@ -886,6 +947,7 @@ function duplicateFacebookPostGroups(campaignState, publishState) {
       scope: 'campaign',
       slug,
       name: entry.name || slug,
+      familyKey: entry.familyKey || '',
       postId: entry.postId,
       publishedAt: entry.publishedAt || ''
     });
@@ -897,6 +959,7 @@ function duplicateFacebookPostGroups(campaignState, publishState) {
       entry,
       slug: historyAtomizerSlug(entry),
       name: entry.name || historyAtomizerSlug(entry),
+      familyKey: entry.familyKey || '',
       postId: entry.postId,
       publishedAt: entry.publishedAt || ''
     });
@@ -904,7 +967,7 @@ function duplicateFacebookPostGroups(campaignState, publishState) {
 
   const grouped = new Map();
   records.forEach(record => {
-    const canonical = canonicalAtomizerSlug(record.name || record.slug);
+    const canonical = record.familyKey || canonicalAtomizerFamilyKey(record.name || record.slug) || canonicalAtomizerSlug(record.name || record.slug);
     if (!canonical) return;
     if (!grouped.has(canonical)) grouped.set(canonical, []);
     grouped.get(canonical).push(record);
@@ -1000,17 +1063,15 @@ function atomizerMessage(atom, videos, liquidMatches = [], mod = null) {
   const lines = [
     ...atomizerHeadingLines(atom),
     ...modHeadlineLines(mod),
-    ...liquidHeadlineLines(liquidMatches),
+    GUIDE_FIT_LINE,
+    '',
     ...noticeBannerLines(),
-    'Nou în Ghid RTA MTL',
+    'Nou in Ghid RTA MTL',
     '',
-    LIQUID_TEASER,
-    '',
-    'Modelul a fost introdus în biblioteca RTA și în recomandările în care profilul lichidului, arhitectura atomizorului și buildul sunt compatibile.'
+    'Modelul a fost introdus in biblioteca RTA si in recomandarile ghidului.'
   ];
-  if (profile) lines.push('', `Potrivire inițială: ${profile}`);
+  if (profile) lines.push('', `Profil orientativ: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
-  lines.push(...liquidMatchLines(liquidMatches));
   lines.push(...atomizerSourceLines(atom));
   const videoLines = directVideoLines(videos);
   if (videoLines.length) lines.push('', ...videoLines);
@@ -1032,17 +1093,15 @@ function editorialAtomizerMessage(atom, videos, liquidMatches = [], mod = null) 
   const lines = [
     ...atomizerHeadingLines(atom),
     ...modHeadlineLines(mod),
-    ...liquidHeadlineLines(liquidMatches),
+    GUIDE_FIT_LINE,
+    '',
     ...noticeBannerLines(),
-    'Fișă RTA MTL',
+    'Fisa RTA MTL',
     '',
-    LIQUID_TEASER,
-    '',
-    'Profilul aromatic, arhitectura atomizorului și buildul de pornire sunt prezentate împreună pentru o evaluare coerentă.'
+    'Arhitectura atomizorului, buildul de pornire si modul prezentat sunt orientative pentru setup-uri RTA MTL.'
   ];
-  if (profile) lines.push('', `Potrivire aromatică: ${profile}`);
+  if (profile) lines.push('', `Profil orientativ: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
-  lines.push(...liquidMatchLines(liquidMatches));
   lines.push(...atomizerSourceLines(atom));
   const videoLines = directVideoLines(videos);
   if (videoLines.length) lines.push('', ...videoLines);
@@ -1064,17 +1123,15 @@ function recommendationMessage(atom, liquidMatches = [], mod = null) {
   const lines = [
     ...atomizerHeadingLines(atom),
     ...modHeadlineLines(mod),
-    ...liquidHeadlineLines(liquidMatches),
+    GUIDE_FIT_LINE,
+    '',
     ...noticeBannerLines(),
-    'Recomandare actualizată',
+    'Recomandare actualizata',
     '',
-    LIQUID_TEASER,
-    '',
-    'Potrivirea a fost recalibrată după profilul lichidului, arhitectura atomizorului și comportamentul buildului.'
+    'Potrivirea completa se consulta in ghid, unde atomizorul este evaluat impreuna cu buildul si profilul de lichid.'
   ];
   if (profile) lines.push('', `Profil: ${profile}`);
   if (build) lines.push(`Build de pornire: ${build}`);
-  lines.push(...liquidMatchLines(liquidMatches));
   lines.push(...atomizerSourceLines(atom));
   lines.push(...modDetailLines(mod));
   lines.push(
@@ -1092,20 +1149,18 @@ function reviewMessage(atom, videos, liquidMatches = [], mod = null) {
   const lines = [
     ...atomizerHeadingLines(atom),
     ...modHeadlineLines(mod),
-    ...liquidHeadlineLines(liquidMatches),
+    GUIDE_FIT_LINE,
+    '',
     ...noticeBannerLines(),
     'Review nou verificat',
     '',
-    LIQUID_TEASER,
-    '',
-    'Materialele identificate se referă direct la model; exemplele realizate pe clone sunt marcate distinct în fișa completă.'
+    'Materialele identificate se refera direct la model; exemplele realizate pe clone sunt marcate distinct in fisa completa.'
   ];
   videos.slice(0, 2).forEach(video => {
     const label = video.kind === 'build' ? 'Build' : 'Recenzie';
     const clone = video.scope === 'clone' ? ' pe clonă; nu este recenzie a originalului' : '';
     lines.push('', `${label}${clone}: ${cleanText(video.title, 160)}`);
   });
-  lines.push(...liquidMatchLines(liquidMatches));
   lines.push(...atomizerSourceLines(atom));
   lines.push(...modDetailLines(mod));
   lines.push(
@@ -1133,28 +1188,30 @@ function planUpdates(catalog, feed, state, options = {}) {
   const modsFeed = options.modsFeed || readJson(MODS_PATH, { items: [] });
   const modRotation = createHighEndModRotation(modsFeed, options.campaignState, state);
   const events = [];
-  const blockedModelSlugs = new Set([].concat(options.blockedModelSlugs || []).map(canonicalAtomizerSlug));
+  const blockedModelSlugs = new Set([].concat(options.blockedModelSlugs || []).map(item => canonicalAtomizerFamilyKey(item) || canonicalAtomizerSlug(item)));
+  const alreadyPostedFamilies = postedAtomizerSlugs(options.campaignState || emptyCampaignState(), state);
 
   for (const atom of atoms.slice().sort((a, b) => a.name.localeCompare(b.name))) {
     if (events.length >= limit) break;
     const slug = slugify(atom.name);
-    if (state.seenAtomizers[slug] || blockedModelSlugs.has(canonicalAtomizerSlug(atom.name))) continue;
+    const familyKey = canonicalAtomizerFamilyKey(atom.name) || canonicalAtomizerSlug(atom.name);
+    if (state.seenAtomizers[slug] || blockedModelSlugs.has(familyKey) || alreadyPostedFamilies.has(familyKey)) continue;
     const atomVideos = videosForAtom(videos, slug);
-    const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
     const image = atomizerImage(atom, atomVideos, { fallbackToVideos: true });
-    if (liquidMatches.length < 3 || !image) continue;
+    if (!image) continue;
     const mod = modRotation.pick(atom);
     if (!mod) continue;
     events.push({
       type: 'atomizer',
       key: `atomizer:${slug}`,
       slug,
+      familyKey,
       name: atom.name,
       link: atomizerUrl(atom),
       image,
       imageCandidates: atomizerImageCandidates(atom, atomVideos),
-      message: atomizerMessage(atom, atomVideos, liquidMatches, mod),
-      liquidMatches,
+      message: atomizerMessage(atom, atomVideos, [], mod),
+      liquidMatches: [],
       mod,
       signature: recommendationSignature(atom),
       videoIds: atomVideos.map(video => video.videoId)
@@ -1177,11 +1234,12 @@ function applyPublishedEvent(state, event, postId, timestamp = nowIso()) {
     key: event.key,
     type: event.type,
     name: event.name,
+    familyKey: event.familyKey || canonicalAtomizerFamilyKey(event.name),
     postId,
     publishedAt: timestamp,
     formatVersion: FACEBOOK_FORMAT_VERSION,
     messageVersion: FACEBOOK_MESSAGE_VERSION,
-    liquids: liquidStateItems(event.liquidMatches),
+    liquids: [],
     mod: modStateItem(event.mod)
   });
   state.history = state.history.slice(0, 200);
@@ -1200,9 +1258,13 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
   const videos = reviewEntries(feed);
   const modsFeed = options.modsFeed || readJson(MODS_PATH, { items: [] });
   const modRotation = createHighEndModRotation(modsFeed, state, options.publishState);
-  const blockedModelSlugs = new Set([].concat(options.blockedModelSlugs || []).map(canonicalAtomizerSlug));
+  const blockedModelSlugs = new Set([].concat(options.blockedModelSlugs || []).map(item => canonicalAtomizerFamilyKey(item) || canonicalAtomizerSlug(item)));
+  const alreadyPostedFamilies = postedAtomizerSlugs(state, options.publishState || emptyState());
   const candidates = uniqueAtomizers(catalog)
-    .filter(atom => !state.postedAtomizers[slugify(atom.name)] && !blockedModelSlugs.has(canonicalAtomizerSlug(atom.name)))
+    .filter(atom => {
+      const familyKey = canonicalAtomizerFamilyKey(atom.name) || canonicalAtomizerSlug(atom.name);
+      return !state.postedAtomizers[slugify(atom.name)] && !blockedModelSlugs.has(familyKey) && !alreadyPostedFamilies.has(familyKey);
+    })
     .map(atom => {
       const slug = slugify(atom.name);
       const atomVideos = videosForAtom(videos, slug);
@@ -1219,21 +1281,24 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
     .sort((a, b) => b.videoCount - a.videoCount || a.atom.name.localeCompare(b.atom.name));
 
   const events = [];
+  const plannedFamilies = new Set();
   for (const candidate of candidates) {
-    const liquidMatches = topLiquidMatchesForAtom(candidate.atom, catalog, 3);
-    if (liquidMatches.length !== 3) continue;
+    const familyKey = canonicalAtomizerFamilyKey(candidate.atom.name) || canonicalAtomizerSlug(candidate.atom.name);
+    if (plannedFamilies.has(familyKey)) continue;
     const mod = modRotation.pick(candidate.atom);
     if (!mod) continue;
+    plannedFamilies.add(familyKey);
     events.push({
       type: 'editorial',
       key: `editorial:${candidate.slug}`,
       slug: candidate.slug,
+      familyKey,
       name: candidate.atom.name,
       link: atomizerUrl(candidate.atom),
       image: candidate.image,
       imageCandidates: candidate.imageCandidates,
-      message: editorialAtomizerMessage(candidate.atom, candidate.atomVideos, liquidMatches, mod),
-      liquidMatches,
+      message: editorialAtomizerMessage(candidate.atom, candidate.atomVideos, [], mod),
+      liquidMatches: [],
       mod,
       videoIds: candidate.atomVideos.map(video => video.videoId),
       videoCount: candidate.videoCount
@@ -1249,23 +1314,25 @@ function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()
   state.pageId = pageId || state.pageId || '';
   state.postedAtomizers[event.slug] = {
     name: event.name,
+    familyKey: event.familyKey || canonicalAtomizerFamilyKey(event.name),
     publishedAt: timestamp,
     image: event.image,
     source: 'facebook-api-educational',
     postId,
     formatVersion: FACEBOOK_FORMAT_VERSION,
     messageVersion: FACEBOOK_MESSAGE_VERSION,
-    liquids: liquidStateItems(event.liquidMatches),
+    liquids: [],
     mod: modStateItem(event.mod)
   };
   state.history.unshift({
     slug: event.slug,
     name: event.name,
+    familyKey: event.familyKey || canonicalAtomizerFamilyKey(event.name),
     publishedAt: timestamp,
     postId,
     formatVersion: FACEBOOK_FORMAT_VERSION,
     messageVersion: FACEBOOK_MESSAGE_VERSION,
-    liquids: liquidStateItems(event.liquidMatches),
+    liquids: [],
     mod: modStateItem(event.mod)
   });
   state.history = state.history.slice(0, 200);
@@ -1462,17 +1529,9 @@ async function waitForPublicImage(url) {
 
 function assertEventLiquidTriplet(event) {
   if (!event || !event.image) throw new Error(`Fotografia atomizorului lipsește: ${event && event.name || 'model necunoscut'}.`);
-  if (!Array.isArray(event.liquidMatches) || event.liquidMatches.length !== 3) {
-    throw new Error(`Postarea pentru ${event.name} trebuie să includă exact trei lichide.`);
-  }
-  if (event.liquidMatches.some(match => !cleanText(match.title, 150) || !cleanText(match.profile, 120) || !cleanText(match.reason, 200))) {
-    throw new Error(`Una dintre cele trei potriviri de lichid este incompletă pentru ${event.name}.`);
-  }
-  if (event.liquidMatches.some(match => !isNicotineFreeFacebookLiquid(match))) {
-    throw new Error(`Una dintre potrivirile pentru ${event.name} nu este confirmată ca aromă sau longfill fără nicotină.`);
-  }
   const message = String(event.message || '');
   if (!message.startsWith(`${ATOMIZER_TITLE_FRAME}\n${cleanText(event.name, 160)}\n`) ||
+      !message.includes(GUIDE_FIT_LINE) ||
       !message.includes(NOTICE_FRAME_TOP) ||
       !message.includes(ADULT_SMOKER_EMPHASIS) ||
       !message.includes(ADULT_SMOKER_NOTICE) ||
@@ -1493,12 +1552,9 @@ function assertEventLiquidTriplet(event) {
   if (!message.includes(mod.title) || !message.includes(mod.url) || !message.includes(reviewUrl)) {
     throw new Error(`Modul high-end nu este prezentat complet pentru ${event.name}.`);
   }
-  event.liquidMatches.forEach(match => {
-    const url = String(match.url || '').trim();
-    if (!/^https:\/\//i.test(url) || !message.includes(url)) {
-      throw new Error(`Linkul lichidului ${match.title} lipsește din postarea pentru ${event.name}.`);
-    }
-  });
+  if (/3 lichide|triangulare|liquid|lichid recomandat|lichide analizate/i.test(message.replace(GUIDE_FIT_LINE, ''))) {
+    throw new Error(`Postarea Facebook pentru ${event.name} nu trebuie sa includa lichide.`);
+  }
 }
 
 function educationalAlbumPhotoEntries(event) {
@@ -1510,6 +1566,7 @@ function educationalAlbumPhotoEntries(event) {
       ATOMIZER_TITLE_FRAME,
       cleanText(event.name, 160),
       'Atomizor analizat în cadrul Ghid RTA MTL.',
+      GUIDE_FIT_LINE,
       'Conținut informativ destinat exclusiv adulților 18+.'
     ].join('\n')
   }, {
@@ -1520,6 +1577,7 @@ function educationalAlbumPhotoEntries(event) {
       cleanText(event.mod.title, 160),
       'Mod prezentat pentru setup-ul RTA.',
       'Recenzia video este disponibila in textul postarii.',
+      GUIDE_FIT_LINE,
       'Continut informativ destinat exclusiv adultilor 18+.'
     ].join('\n')
   }];
@@ -1695,11 +1753,7 @@ async function publishEvent(event) {
 function editorialEventForAtom(atom, catalog, feed, options = {}) {
   const slug = slugify(atom.name);
   const atomVideos = videosForAtom(reviewEntries(feed), slug);
-  const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
   const mod = options.mod || highEndModForAtom(atom, options.modsFeed);
-  if (liquidMatches.length !== 3) {
-    throw new Error(`Nu există trei lichide verificabile pentru ${atom.name}.`);
-  }
   if (!mod) throw new Error(`Nu exista un mod high-end complet pentru ${atom.name}.`);
   return {
     type: 'editorial',
@@ -1709,8 +1763,8 @@ function editorialEventForAtom(atom, catalog, feed, options = {}) {
     link: atomizerUrl(atom),
     image: atomizerImage(atom, atomVideos),
     imageCandidates: atomizerImageCandidates(atom, atomVideos),
-    message: editorialAtomizerMessage(atom, atomVideos, liquidMatches, mod),
-    liquidMatches,
+    message: editorialAtomizerMessage(atom, atomVideos, [], mod),
+    liquidMatches: [],
     mod,
     videoIds: atomVideos.map(video => video.videoId),
     videoCount: atomVideos.length
@@ -1723,8 +1777,6 @@ function historyEntryMessage(entry, catalog, feed, options = {}) {
   const slug = keyParts[1] || slugify(entry && entry.name);
   const atom = atomsBySlug.get(slug);
   if (!atom) throw new Error(`Atomizorul ${entry && entry.name || slug} nu mai există în catalog.`);
-  const liquidMatches = topLiquidMatchesForAtom(atom, catalog, 3);
-  if (liquidMatches.length !== 3) throw new Error(`Nu există exact trei lichide pentru ${atom.name}.`);
   const feedVideos = reviewEntries(feed);
   const requestedVideoIds = keyParts.slice(2).join(':').split(',').filter(Boolean);
   const exactVideos = requestedVideoIds.length
@@ -1735,17 +1787,17 @@ function historyEntryMessage(entry, catalog, feed, options = {}) {
   if (!mod) throw new Error(`Nu exista un mod high-end complet pentru ${atom.name}.`);
 
   let message = '';
-  if (entry.type === 'review') message = reviewMessage(atom, videos, liquidMatches, mod);
-  else if (entry.type === 'recommendation') message = recommendationMessage(atom, liquidMatches, mod);
-  else message = atomizerMessage(atom, videos, liquidMatches, mod);
+  if (entry.type === 'review') message = reviewMessage(atom, videos, [], mod);
+  else if (entry.type === 'recommendation') message = recommendationMessage(atom, [], mod);
+  else message = atomizerMessage(atom, videos, [], mod);
 
-  if (!message.includes(LIQUID_TEASER) || !liquidMatches.every(match => message.includes(match.title))) {
-    throw new Error(`Textul Facebook nu afișează toate cele trei lichide pentru ${atom.name}.`);
+  if (!message.includes(GUIDE_FIT_LINE)) {
+    throw new Error(`Textul Facebook nu trimite catre ghid pentru ${atom.name}.`);
   }
   if (/preț|stoc|cumpărare|pentru comenzi|0736\s*018\s*023/i.test(message)) {
     throw new Error(`Textul Facebook conține formulări comerciale pentru ${atom.name}.`);
   }
-  return { atom, liquidMatches, message, slug, videos, mod };
+  return { atom, liquidMatches: [], message, slug, videos, mod };
 }
 
 function historyEntryEvent(entry, catalog, feed, options = {}) {
@@ -1779,7 +1831,7 @@ function applyRepairedHistoryPost(state, entry, event, oldPostId, replacementId,
   entry.messageVersion = FACEBOOK_MESSAGE_VERSION;
   entry.albumVersion = FACEBOOK_ALBUM_VERSION;
   entry.noticePlacement = options.replaced === false ? 'post-message' : 'post-and-two-photos';
-  entry.liquids = liquidStateItems(event.liquidMatches);
+  entry.liquids = [];
   entry.mod = modStateItem(event.mod);
   entry.image = event.image;
   Object.values(state.seenAtomizers || {}).forEach(item => {
@@ -1884,7 +1936,7 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
     albumVersion: FACEBOOK_ALBUM_VERSION,
     noticeUpdatedAt: timestamp,
     noticePlacement: replaced ? 'post-and-two-photos' : 'post-message',
-    liquids: liquidStateItems(event.liquidMatches),
+    liquids: [],
     mod: modStateItem(event.mod)
   };
   if (replaced) updated.galleryUpdatedAt = timestamp;
@@ -1903,7 +1955,7 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
     albumVersion: FACEBOOK_ALBUM_VERSION,
     noticeUpdatedAt: timestamp,
     noticePlacement: replaced ? 'post-and-two-photos' : 'post-message',
-    liquids: liquidStateItems(event.liquidMatches),
+    liquids: [],
     mod: modStateItem(event.mod)
   };
   if (replaced) historyItem.galleryUpdatedAt = timestamp;
@@ -1944,7 +1996,7 @@ function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState
     const entry = record.entry;
     const replace = options.forceReplace === true || entry.formatVersion !== FACEBOOK_FORMAT_VERSION ||
       entry.messageVersion !== FACEBOOK_MESSAGE_VERSION ||
-      liquidSelectionChanged(entry.liquids, event.liquidMatches) ||
+      Array.isArray(entry.liquids) && entry.liquids.length > 0 ||
       modSelectionChanged(entry.mod, event.mod) ||
       (isRealAtomizerImage(event.image) && String(entry.image || '') !== event.image);
     if (!replace && entry.formatVersion === FACEBOOK_FORMAT_VERSION && entry.messageVersion === FACEBOOK_MESSAGE_VERSION) return null;
@@ -2272,6 +2324,7 @@ module.exports = {
   atomizerMessage,
   atomizerUrl,
   baselineState,
+  canonicalAtomizerFamilyKey,
   canonicalAtomizerSlug,
   createHighEndModRotation,
   duplicateFacebookPostGroups,

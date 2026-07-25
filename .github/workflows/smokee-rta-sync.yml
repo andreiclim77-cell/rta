@@ -24,20 +24,11 @@ jobs:
         id: sync_window
         shell: bash
         run: |
-          if [ "${{ github.event_name }}" != "schedule" ]; then
-            echo "run_sync=true" >> "$GITHUB_OUTPUT"
-            echo "Manual run allowed."
-            exit 0
-          fi
-
-          local_time="$(TZ=Europe/Bucharest date +%H:%M)"
-          local_hour="${local_time%:*}"
-          if [ "$local_hour" = "06" ]; then
-            echo "run_sync=true" >> "$GITHUB_OUTPUT"
-            echo "Scheduled run allowed at Bucharest time $local_time."
+          echo "run_sync=true" >> "$GITHUB_OUTPUT"
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            echo "Scheduled sync allowed. GitHub may start scheduled jobs late; the intended 06:00/06:20 catalog sync still runs."
           else
-            echo "run_sync=false" >> "$GITHUB_OUTPUT"
-            echo "Skipped outside Bucharest 06:00-06:59 window. Current Bucharest time: $local_time."
+            echo "Manual run allowed."
           fi
 
       - name: Checkout
