@@ -124,7 +124,7 @@ async function enter(page, route) {
     if (home.duplicateIds.length) failures.push(`${viewport.name}: duplicate IDs ${home.duplicateIds.join(', ')}`);
     if (home.emptyActions.length) failures.push(`${viewport.name}: unnamed actions ${home.emptyActions.join(' | ')}`);
     if (home.missingAlt) failures.push(`${viewport.name}: ${home.missingAlt} images have no alt text`);
-    if (home.categoryIcons !== 12 || !home.categoryIconAltValid) failures.push(`${viewport.name}: category icon system is incomplete or inaccessible`);
+    if (home.categoryIcons !== 13 || !home.categoryIconAltValid) failures.push(`${viewport.name}: category icon system is incomplete or inaccessible`);
     if (home.footerGroups !== 3 || home.footerLinks < 20) failures.push(`${viewport.name}: grouped footer is incomplete`);
     if (!home.facebookHeaderVisible || !/facebook\.com\/people\/Ghid-RTA-MTL-Smokee/.test(home.facebookHeaderHref)) failures.push(`${viewport.name}: Facebook page link is missing from the header`);
     if (!home.facebookHeaderRect || home.facebookHeaderRect.width < 24 || home.facebookHeaderRect.left < 0 || home.facebookHeaderRect.right > home.viewportWidth + 1) failures.push(`${viewport.name}: Facebook header link is clipped`);
