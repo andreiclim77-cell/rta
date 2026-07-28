@@ -957,6 +957,287 @@ header:before{
   .shop-hero:before{display:none}
 }
 
+/* Chromatic guidance: Smokee orange for exploration, emerald for action. */
+.navbtn[data-tab="home"],
+.navbtn[data-tab="setupList"],
+.navbtn[data-tab="mods"],
+.navbtn[data-tab="liquids"],
+.navbtn[data-tab="guides"],
+.navbtn[data-tab="registry"]{color:#ffc08b}
+.navbtn[data-tab="recommender"],
+.navbtn[data-tab="diagnostic"],
+.navbtn[data-tab="atomizers"],
+.navbtn[data-tab="wires"],
+.navbtn[data-tab="consumables"],
+.navbtn[data-tab="sources"]{color:#9df5bb}
+.navbtn[data-tab]:hover{color:#fff}
+.navbtn[data-tab].active{color:#041109}
+
+.category-link:nth-child(odd){color:#a8f7c2}
+.category-link:nth-child(even){color:#ffc394}
+.category-link:nth-child(odd) .cat-mark{
+  border-color:rgba(57,229,127,.28);
+  background:linear-gradient(145deg,rgba(57,229,127,.17),#0e1512 72%);
+}
+.category-link:nth-child(even) .cat-mark{
+  border-color:rgba(255,122,26,.30);
+  background:linear-gradient(145deg,rgba(255,122,26,.17),#15110e 72%);
+}
+.category-link:nth-child(odd) .cat-icon{
+  filter:invert(83%) sepia(29%) saturate(783%) hue-rotate(84deg) brightness(105%);
+}
+.category-link:nth-child(even) .cat-icon{
+  filter:invert(75%) sepia(64%) saturate(1039%) hue-rotate(326deg) brightness(105%);
+}
+.category-link:hover{color:#fff}
+
+.kicker{color:#d85d09}
+.shop-hero .kicker,.journey-hub .kicker,.supplier-showcase .kicker,.guide-hub .kicker,
+.page-premium-hero .kicker,.compare-hero .kicker,.guide-page-hero .kicker,
+.diagnostic-hero .kicker,.consumables-hero .kicker,.tc-hero .kicker,.mix-hero .kicker,.law-hero .kicker{
+  color:#ff9a50;
+}
+.journey-head .chip,.supplier-note,.guide-hub-head .chip{
+  border-color:rgba(57,229,127,.32);
+  background:rgba(57,229,127,.10);
+  color:#aef7c7;
+}
+
+.hero-actions .btn.secondary:nth-child(even){
+  border-color:rgba(255,122,26,.42);
+  color:#ffc08d;
+  background:linear-gradient(145deg,rgba(255,122,26,.13),rgba(255,255,255,.045));
+}
+.hero-actions .btn.secondary:nth-child(odd){
+  border-color:rgba(57,229,127,.38);
+  color:#a6f7c1;
+  background:linear-gradient(145deg,rgba(57,229,127,.12),rgba(255,255,255,.04));
+}
+.hero-actions .btn.secondary:hover{color:#fff;border-color:rgba(255,255,255,.36)}
+
+.journey-card:nth-child(odd) b{color:#aaf5c3}
+.journey-card:nth-child(even) b{color:#ffc18f}
+.journey-card:nth-child(even) .journey-mark{
+  border-color:rgba(255,122,26,.38);
+  background:rgba(255,122,26,.11);
+  color:#ffbd88;
+}
+.journey-card:hover b,.journey-card:focus-visible b{color:#fff}
+
+#home .shop-metrics .metric:nth-child(odd) h3,
+#home .shop-metrics .metric:nth-child(odd) b{color:#087d48}
+#home .shop-metrics .metric:nth-child(even) h3,
+#home .shop-metrics .metric:nth-child(even) b{color:#c45108}
+#home .shop-metrics .metric:nth-child(odd) strong{color:#087d48}
+#home .shop-metrics .metric:nth-child(even) strong{color:#c45108}
+#home .shop-metrics .metric:nth-child(odd):after{
+  background:linear-gradient(90deg,transparent,var(--tech-emerald),transparent);
+}
+#home .shop-metrics .metric:nth-child(even):after{
+  background:linear-gradient(90deg,transparent,var(--tech-orange),transparent);
+}
+
+.guide-link:nth-child(odd) b,.supplier-group-title b{color:#a9f5c2}
+.guide-link:nth-child(even) b{color:#ffc08d}
+.guide-link:hover b{color:#fff}
+.supplier-group:nth-child(even) .supplier-group-title b{color:#ffc080}
+
+.btn.secondary,.btn.ghost{
+  border-color:rgba(255,122,26,.48);
+  color:#bd4d05;
+}
+.btn.secondary:hover,.btn.ghost:hover{
+  border-color:var(--tech-emerald);
+  background:#eafff1;
+  color:#087c47;
+}
+.mini-link{
+  border-color:rgba(255,122,26,.58);
+  color:#be4c05;
+  background:linear-gradient(180deg,#fffdf9,#fff4e9);
+}
+.mini-link:hover{
+  border-color:rgba(57,229,127,.72);
+  background:linear-gradient(180deg,#f5fff8,#e7fff0);
+  color:#077b46;
+}
+.problem-btn,.rolebtn,.tag-choice,.setup-option,.liquid-subfilters button{
+  color:#9e4309;
+  border-color:rgba(255,122,26,.38);
+}
+.problem-btn:nth-child(even),.rolebtn:nth-child(even),.tag-choice:nth-child(even),
+.setup-option:nth-child(even),.liquid-subfilters button:nth-child(even){
+  color:#087a47;
+  border-color:rgba(57,229,127,.38);
+}
+.problem-btn:hover,.rolebtn:hover,.tag-choice:hover,.setup-option:hover,.liquid-subfilters button:hover{
+  color:#07110b;
+  border-color:var(--tech-emerald);
+  background:#e7fff0;
+}
+.problem-btn.active,.rolebtn.active,.tag-choice.active,.setup-option.active,.liquid-subfilters button.active{
+  color:#06120b;
+}
+
+.panel-title h2:after,.page-head h2:after{
+  content:"";
+  display:block;
+  width:54px;
+  height:3px;
+  margin-top:8px;
+  border-radius:3px;
+  background:linear-gradient(90deg,var(--tech-orange),var(--tech-emerald));
+}
+.chip.good{color:#087544;border-color:rgba(57,229,127,.42);background:#e8fff0}
+.chip.warn{color:#a94305;border-color:rgba(255,122,26,.42);background:#fff0e5}
+.chip.cold{color:#08764c;border-color:rgba(57,229,127,.36);background:#eafff3}
+.source-actions a:nth-child(odd),.source-actions button:nth-child(odd){color:#b94805}
+.source-actions a:nth-child(even),.source-actions button:nth-child(even){color:#087746}
+.source-actions a:hover,.source-actions button:hover{color:#07110b}
+
+/* Restrained deep-3D finish for controls and colored labels. */
+.navbtn[data-tab]{
+  border-bottom-color:rgba(0,0,0,.74);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.13) inset,
+    0 -2px 0 rgba(0,0,0,.32) inset,
+    0 3px 0 rgba(0,0,0,.58),
+    0 11px 22px rgba(0,0,0,.28);
+  text-shadow:0 1px 0 #000,0 2px 7px rgba(0,0,0,.72);
+}
+.navbtn[data-tab]:hover{
+  transform:translateY(-1px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.16) inset,
+    0 -2px 0 rgba(0,0,0,.28) inset,
+    0 4px 0 rgba(0,0,0,.60),
+    0 15px 28px rgba(0,0,0,.32),
+    0 0 0 3px rgba(57,229,127,.06);
+}
+.navbtn[data-tab].active{
+  border-bottom-color:#0c7d48;
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.58) inset,
+    0 -3px 0 rgba(5,96,54,.34) inset,
+    0 4px 0 #087843,
+    0 16px 30px rgba(18,172,88,.24);
+  text-shadow:0 1px 0 rgba(255,255,255,.50);
+}
+.navbtn[data-tab]:active{
+  transform:translateY(2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.35) inset,
+    0 -2px 0 rgba(5,96,54,.26) inset,
+    0 1px 0 #087843,
+    0 8px 16px rgba(0,0,0,.24);
+}
+
+.hero-actions .btn,.btn,.mini-link,.problem-btn,.rolebtn,.tag-choice,.setup-option,.liquid-subfilters button{
+  border-bottom-color:rgba(0,0,0,.26);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.72) inset,
+    0 -2px 0 rgba(0,0,0,.09) inset,
+    0 3px 0 rgba(35,39,37,.28),
+    0 12px 24px rgba(24,31,28,.16);
+  text-shadow:0 1px 0 rgba(255,255,255,.58);
+}
+.hero-actions .btn{
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.55) inset,
+    0 -3px 0 rgba(0,0,0,.18) inset,
+    0 4px 0 rgba(0,0,0,.42),
+    0 16px 30px rgba(0,0,0,.25);
+}
+.hero-actions .btn.secondary{
+  text-shadow:0 1px 0 #000,0 2px 8px rgba(0,0,0,.55);
+}
+.btn:hover,.mini-link:hover,.problem-btn:hover,.rolebtn:hover,.tag-choice:hover,.setup-option:hover,.liquid-subfilters button:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 2px 0 rgba(255,255,255,.78) inset,
+    0 -2px 0 rgba(0,0,0,.08) inset,
+    0 4px 0 rgba(20,87,53,.28),
+    0 16px 28px rgba(21,63,42,.18);
+}
+.btn:active,.mini-link:active,.problem-btn:active,.rolebtn:active,.tag-choice:active,.setup-option:active,.liquid-subfilters button:active{
+  transform:translateY(2px);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.48) inset,
+    0 -1px 0 rgba(0,0,0,.08) inset,
+    0 1px 0 rgba(31,38,35,.24),
+    0 7px 14px rgba(22,30,27,.14);
+}
+
+.category-link{
+  text-shadow:0 1px 0 #000,0 3px 9px rgba(0,0,0,.55);
+}
+.category-link .cat-mark{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.14) inset,
+    0 -2px 0 rgba(0,0,0,.24) inset,
+    0 3px 0 rgba(0,0,0,.36),
+    0 9px 17px rgba(0,0,0,.25);
+}
+.journey-card{
+  border-bottom-color:rgba(0,0,0,.82);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.11) inset,
+    0 -3px 0 rgba(0,0,0,.28) inset,
+    0 4px 0 rgba(0,0,0,.58),
+    0 20px 42px rgba(0,0,0,.32);
+}
+.journey-card b{
+  text-shadow:0 1px 0 #000,0 3px 10px rgba(0,0,0,.66);
+}
+.journey-mark,.supplier-mark,.step-badge{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.48) inset,
+    0 -2px 0 rgba(0,0,0,.15) inset,
+    0 3px 0 rgba(0,0,0,.32),
+    0 12px 24px rgba(0,0,0,.24);
+}
+.guide-link b,.supplier-group-title b,.kicker{
+  text-shadow:0 1px 0 rgba(255,255,255,.08),0 3px 9px rgba(0,0,0,.30);
+}
+#home .shop-metrics .metric strong{
+  text-shadow:0 1px 0 #fff,0 3px 10px rgba(15,89,51,.16);
+}
+#home .shop-metrics .metric:nth-child(even) strong{
+  text-shadow:0 1px 0 #fff,0 3px 10px rgba(196,81,8,.16);
+}
+
+@media(max-width:640px){
+  .navbtn[data-tab="home"],
+  .navbtn[data-tab="setupList"],
+  .navbtn[data-tab="mods"],
+  .navbtn[data-tab="liquids"],
+  .navbtn[data-tab="guides"],
+  .navbtn[data-tab="registry"]{color:#ffc08b}
+  .navbtn[data-tab="recommender"],
+  .navbtn[data-tab="diagnostic"],
+  .navbtn[data-tab="atomizers"],
+  .navbtn[data-tab="wires"],
+  .navbtn[data-tab="consumables"],
+  .navbtn[data-tab="sources"]{color:#9df5bb}
+  .navbtn[data-tab].active{color:#041109}
+  .category-link:nth-child(odd){color:#a8f7c2}
+  .category-link:nth-child(even){color:#ffc394}
+  .navbtn[data-tab]{
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.12) inset,
+      0 -2px 0 rgba(0,0,0,.28) inset,
+      0 2px 0 rgba(0,0,0,.50),
+      0 8px 16px rgba(0,0,0,.24);
+  }
+  .navbtn[data-tab].active{
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.54) inset,
+      0 -2px 0 rgba(5,96,54,.30) inset,
+      0 3px 0 #087843,
+      0 11px 22px rgba(18,172,88,.20);
+  }
+}
+
 /* Functional signature: recommendation triangle and atomizer aromatic DNA. */
 .triangulation-signature{
   position:relative;
