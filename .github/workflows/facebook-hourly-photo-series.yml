@@ -1,0 +1,67 @@
+name: Facebook hourly photo series
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 * * * *"
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: facebook-hourly-photo-series
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate series
+        run: node tools/facebook-hourly-photos.js --check
+
+      - name: Detect remaining photos
+        id: before
+        shell: bash
+        run: echo "remaining=$(node tools/facebook-hourly-photos.js --remaining)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish next photo
+        if: steps.before.outputs.remaining != '0'
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/facebook-hourly-photos.js --publish-next
+
+      - name: Commit photo state
+        if: steps.before.outputs.remaining != '0'
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/facebook-hourly-photo-state.json
+          git commit -m "Record hourly Facebook photo"
+          git pull --rebase
+          git push
+
+      - name: Detect remaining photos after publish
+        id: after
+        shell: bash
+        run: echo "remaining=$(node tools/facebook-hourly-photos.js --remaining)" >> "$GITHUB_OUTPUT"
+
+      - name: Stop completed photo series
+        if: steps.after.outputs.remaining == '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method PUT "repos/${{ github.repository }}/actions/workflows/facebook-hourly-photo-series.yml/disable"
