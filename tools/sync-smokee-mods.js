@@ -533,21 +533,35 @@ function validateFeed(feed) {
   return errors;
 }
 
+function canUseLastKnownGood(feed) {
+  return validateFeed(feed).length === 0;
+}
+
 async function main() {
   const previous = readPrevious();
   let products;
   try {
     products = await loadProducts();
   } catch (error) {
-    if (previous.items && previous.items.length === MAX_VISIBLE) {
+    if (canUseLastKnownGood(previous)) {
       console.warn(`Smokee mods unavailable; keeping last valid catalog: ${error.message}`);
       return;
     }
     throw error;
   }
+  if (!products.length && canUseLastKnownGood(previous)) {
+    console.warn('Smokee mods source returned no products; keeping the last valid catalog.');
+    return;
+  }
   const feed = await buildFeed(products, previous);
   const errors = validateFeed(feed);
-  if (errors.length) throw new Error(errors.join('\n'));
+  if (errors.length) {
+    if (canUseLastKnownGood(previous)) {
+      console.warn(`Smokee mods response is incomplete; keeping the last valid catalog: ${errors.join('; ')}`);
+      return;
+    }
+    throw new Error(errors.join('\n'));
+  }
   console.log(`Smokee mods: ${products.length} products scanned, ${feed.catalogItems.length} unique families, ${feed.highEndItems.length} high-end, ${feed.items.length} latest visible, ${feed.recentItems.length} new in the last ${NEWS_WINDOW_DAYS} days.`);
   feed.items.forEach(item => console.log(`- ${item.title} | ${item.publishedAt || 'date unavailable'} | ${item.review ? `${item.review.viewCount} YouTube views` : 'review pending'}`));
   if (!write || dryRun) return;
@@ -557,7 +571,7 @@ async function main() {
   fs.writeFileSync(INDEX_PATH, replaceIndexBlock(html, feed), 'utf8');
 }
 
-module.exports = { dedupeFamilies, familyKey, familyName, isHighEndMod, reviewMatches, validateFeed };
+module.exports = { canUseLastKnownGood, dedupeFamilies, familyKey, familyName, isHighEndMod, reviewMatches, validateFeed };
 
 if (require.main === module) {
   main().catch(error => {
