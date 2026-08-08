@@ -3,9 +3,8 @@ name: Facebook RTA editorial series
 on:
   workflow_dispatch:
   schedule:
-    # Two posts/day. The publisher enforces the Romania daily limit even when GitHub starts late.
+    # One educational product/day. The publisher enforces the Romania daily limit even when GitHub starts late.
     - cron: "5 7 * * *"
-    - cron: "5 16 * * *"
 
 permissions:
   contents: write
@@ -44,7 +43,7 @@ jobs:
           echo "count=$(node tools/facebook-publisher.js --editorial-pending-count --max-posts 1)" >> "$GITHUB_OUTPUT"
           echo "remaining=$(node tools/facebook-publisher.js --editorial-unposted-count)" >> "$GITHUB_OUTPUT"
 
-      - name: Publish one verified atomizer
+      - name: Publish one verified RTA product
         if: steps.pending.outputs.count != '0'
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
@@ -75,4 +74,4 @@ jobs:
 
       - name: Report queued editorial models
         if: steps.pending.outputs.count == '0' && steps.pending.outputs.remaining != '0'
-        run: echo "${{ steps.pending.outputs.remaining }} atomizer(s) remain queued; the Romanian daily limit may already be complete."
+        run: echo "${{ steps.pending.outputs.remaining }} RTA product(s) remain queued; the Romanian daily limit may already be complete."

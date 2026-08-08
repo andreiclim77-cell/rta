@@ -6,26 +6,26 @@ const {
   applyPublishedEvent,
   assertEventLiquidTriplet,
   canonicalAtomizerFamilyKey,
-  createHighEndModRotation,
   duplicateFacebookPostGroups,
   educationalAlbumPhotoEntries,
   emptyCampaignState,
   emptyState,
+  facebookPostsOnDate,
   historyEntryMessage,
-  highEndModCandidates,
-  noticeBannerLines,
+  modCatalogCandidates,
   modFamilyKey,
   planEditorialPosts,
   planUpdates,
-  postedAtomizerSlugs
+  postedAtomizerSlugs,
+  postedModFamilyKeys
 } = require('./facebook-publisher');
 
 const atomA = {
   name: 'Centenary Mods Minister MTL RTA 20mm 4.5ml Black',
   image: 'https://images.example/minister.jpg',
   addedAt: '2026-07-12',
-  classes: 'Tutun, NET, camera compacta.',
-  dna: 'Airflow MTL si camera concentrata.',
+  classes: 'Camera compacta si airflow MTL.',
+  dna: 'Configuratie orientata spre precizie.',
   sources: [{ URL: 'https://smokee.ro/product/centenary-mods-minister-mtl-rta-20mm-4-5ml/' }],
   builds: [{ wire: 'SS316L 30 GA', build: 'diam 2,0 mm / 6 spire' }]
 };
@@ -34,8 +34,8 @@ const atomB = {
   name: 'Chephren RTA by Khonsu Tech',
   image: 'https://images.example/chephren.jpg',
   addedAt: '2026-07-13',
-  classes: 'NET complex si tutun robust.',
-  dna: 'Camera rotunda si airflow precis.',
+  classes: 'Camera rotunda si airflow precis.',
+  dna: 'Configuratie MTL reconstructibila.',
   sources: [{ URL: 'https://smokee.ro/product/chephren-rta-by-khonsu-tech/' }],
   builds: [{ wire: 'K1 28 GA', build: 'diam 2,5 mm / 6 spire' }]
 };
@@ -76,77 +76,94 @@ const feed = {
 
 const modsFeed = {
   schemaVersion: 1,
-  highEndItems: [
-    ['Khonsu Eclipse DNA60C Black Ash', 'https://smokee.ro/product/mod-khonsu-tech-eclipse-dna60c-plus-black-ash/', 'khonsu1.jpg', 'Khonsu Eclipse DNA60C review', 'modVideo001'],
-    ['Khonsu Eclipse DNA60C Afzelia', 'https://smokee.ro/product/mod-khonsu-tech-eclipse-dna60c-afzelia/', 'khonsu2.jpg', 'Khonsu Eclipse DNA60C review', 'modVideo002'],
-    ['Telli Queen III Juma DNA60C', 'https://smokee.ro/product/tellis-mod-queen-iii-juma-dna60c-laguna-dragon/', 'queen.jpg', 'Telli Queen III review', 'modVideo003'],
-    ['Arcana Mods Arcana SBS DNA60C', 'https://smokee.ro/product/mod-arcana-mods-arcana-sbs-dna60c-dlc/', 'arcana.jpg', 'Arcana SBS DNA60C review', 'modVideo004']
-  ].map(([title, url, image, reviewTitle, videoId]) => ({
-    familyKey: title,
-    title,
-    url,
-    image: `https://images.example/${image}`,
-    highEnd: true,
-    review: {
-      title: reviewTitle,
-      url: `https://www.youtube.com/watch?v=${videoId}`
+  catalogItems: [
+    {
+      title: 'MechVape x Nitrous Pocket SBS Black',
+      url: 'https://smokee.ro/product/mechvape-x-nitrous-pocket-sbs-black/',
+      image: 'https://images.example/nitrous-black.jpg',
+      publishedAt: '2026-07-15'
+    },
+    {
+      title: 'MechVape x Nitrous Pocket SBS Silver',
+      url: 'https://smokee.ro/product/mechvape-x-nitrous-pocket-sbs-silver/',
+      image: 'https://images.example/nitrous-silver.jpg',
+      publishedAt: '2026-07-14'
+    },
+    {
+      title: 'Mod MechVape Paramour V2 SBS',
+      url: 'https://smokee.ro/product/mod-mechvape-paramour-v2-sbs/',
+      image: 'https://images.example/paramour.jpg',
+      publishedAt: '2026-07-13'
     }
-  }))
+  ]
 };
+
+function assertSafeSingleProduct(event) {
+  assert.doesNotThrow(() => assertEventLiquidTriplet(event));
+  assert.strictEqual(educationalAlbumPhotoEntries(event).length, 1, 'each post must have one product photo');
+  assert(event.message.includes('Redarea corecta si coerenta a gustului depinde de triangularea'));
+  assert(event.message.includes('Pentru modul de utilizare, configurare si detalii, consultati: https://ghid-rta.ro/'));
+  assert(event.message.includes('Documentatie tehnica destinata adultilor 18+.'));
+  assert.strictEqual((event.message.match(/https?:\/\/[^\s]+/g) || []).length, 1, 'message must contain one link');
+  assert(!/smokee\.ro|youtube\.com|youtu\.be|pret|stoc|comenzi|high-end|premium|nicotin/i.test(event.message));
+}
 
 assert.strictEqual(canonicalAtomizerFamilyKey('Centenary Mods Minister MTL RTA 20mm 4.5ml Black'), 'minister');
 assert.strictEqual(canonicalAtomizerFamilyKey('Centenary Mods Minister MTL RTA 20mm 4.5ml Nano'), 'minister');
-assert.strictEqual(modFamilyKey({ familyKey: 'Mod Khonsu Tech Eclipse DNA60C Plus Black Ash' }), 'khonsu eclipse');
-assert.strictEqual(modFamilyKey({ familyKey: 'Mod Khonsu Tech Eclipse DNA60C Afzelia' }), 'khonsu eclipse');
+assert.strictEqual(modFamilyKey({ title: 'MechVape x Nitrous Pocket SBS Black' }), 'nitrous pocket');
+assert.strictEqual(modFamilyKey({ title: 'MechVape x Nitrous Pocket SBS Silver' }), 'nitrous pocket');
+assert.strictEqual(modCatalogCandidates(modsFeed).length, 2, 'color variants must collapse into one mod family');
 
-const modCandidates = highEndModCandidates(modsFeed);
-assert.strictEqual(new Set(modCandidates.map(modFamilyKey)).size, modCandidates.length, 'high-end mod families must be unique after normalization');
+const dayOne = planEditorialPosts(catalog, feed, emptyCampaignState(), {
+  maxPosts: 9,
+  today: '2026-07-13',
+  modsFeed,
+  publishState: emptyState(),
+  dailyPublished: 0
+});
+assert.strictEqual(dayOne.length, 1, 'the publisher must enforce one post per day');
+assert.strictEqual(dayOne[0].productType, 'atomizer', 'the series starts with an atomizer');
+assertSafeSingleProduct(dayOne[0]);
 
-const rotation = createHighEndModRotation(modsFeed, emptyCampaignState(), emptyState(), { reset: true });
-const first = rotation.pick(atomA);
-const second = rotation.pick(atomB);
-assert(first && second);
-assert.notStrictEqual(modFamilyKey(first), modFamilyKey(second), 'daily mod rotation must not repeat a high-end family while alternatives exist');
-
-const campaignState = emptyCampaignState();
-const plan = planEditorialPosts(catalog, feed, campaignState, {
-  maxPosts: 2,
+let campaign = applyEditorialPublished(emptyCampaignState(), dayOne[0], 'page_post_1', '2026-07-13T05:00:00.000Z');
+assert.strictEqual(facebookPostsOnDate(campaign, emptyState(), '2026-07-13'), 1);
+assert(postedAtomizerSlugs(campaign, emptyState()).has(dayOne[0].familyKey));
+assert.strictEqual(planEditorialPosts(catalog, feed, campaign, {
+  maxPosts: 9,
   today: '2026-07-13',
   modsFeed,
   publishState: emptyState()
-});
-assert.strictEqual(plan.length, 2);
-assert.strictEqual(new Set(plan.map(event => event.familyKey)).size, 2, 'editorial plan must not repeat atomizer families');
-plan.forEach(event => {
-  assert.strictEqual(event.liquidMatches.length, 0);
-  assert(event.message.includes('Pentru a se potrivi cu buildul si lichidul consultati ghid-rta.ro: https://ghid-rta.ro/'));
-  noticeBannerLines().filter(Boolean).forEach(line => assert(event.message.includes(line), `missing notice line: ${line}`));
-  assert(!/3 lichide|triangulare|lichide analizate|lichide recomandate/i.test(event.message));
-  assert.doesNotThrow(() => assertEventLiquidTriplet(event));
-  assert.strictEqual(educationalAlbumPhotoEntries(event).length, 2);
-});
+}).length, 0, 'a second post on the same day must be blocked');
 
-let appliedCampaign = applyEditorialPublished(emptyCampaignState(), plan[0], 'page_post_1', '2026-07-13T05:00:00.000Z');
-assert.strictEqual(appliedCampaign.postedAtomizers[plan[0].slug].liquids.length, 0);
-assert.strictEqual(appliedCampaign.postedAtomizers[plan[0].slug].messageVersion, 'atomizer-mod-guide-fit-v2');
-assert(postedAtomizerSlugs(appliedCampaign, emptyState()).has(plan[0].familyKey));
+const dayTwo = planEditorialPosts(catalog, feed, campaign, {
+  maxPosts: 9,
+  today: '2026-07-14',
+  modsFeed,
+  publishState: emptyState(),
+  dailyPublished: 0
+});
+assert.strictEqual(dayTwo.length, 1);
+assert.strictEqual(dayTwo[0].productType, 'mod', 'the series must alternate to a mod');
+assertSafeSingleProduct(dayTwo[0]);
+campaign = applyEditorialPublished(campaign, dayTwo[0], 'page_post_2', '2026-07-14T05:00:00.000Z');
+assert(postedModFamilyKeys(campaign, emptyState()).has(dayTwo[0].familyKey));
+assert.strictEqual(campaign.postedMods[dayTwo[0].familyKey].messageVersion, 'single-product-guide-triangulation-v3');
 
-const publishPlan = planUpdates(catalog, feed, emptyState(), {
-  maxPosts: 2,
+const updateState = emptyState();
+updateState.seenAtomizers[dayOne[0].slug] = { seenAt: '2026-07-13T05:00:00.000Z' };
+updateState.seenMods[dayTwo[0].familyKey] = { seenAt: '2026-07-14T05:00:00.000Z' };
+const updatePlan = planUpdates(catalog, feed, updateState, {
+  maxPosts: 8,
   dailyPublished: 0,
   modsFeed,
-  campaignState: appliedCampaign
+  campaignState: campaign
 });
-assert(!publishPlan.some(event => event.familyKey === plan[0].familyKey), 'catalog updates must respect already posted editorial families');
-publishPlan.forEach(event => {
-  assert.strictEqual(event.liquidMatches.length, 0);
-  assert.doesNotThrow(() => assertEventLiquidTriplet(event));
-});
-
-const publishState = emptyState();
-const event = publishPlan[0] || plan[1];
-applyPublishedEvent(publishState, event, 'page_post_2', '2026-07-13T06:00:00.000Z');
-assert.strictEqual(publishState.history[0].liquids.length, 0);
+assert(updatePlan.length <= 1, 'catalog updates must also respect the daily cap');
+updatePlan.forEach(assertSafeSingleProduct);
+if (updatePlan[0]) {
+  applyPublishedEvent(updateState, updatePlan[0], 'page_post_3', '2026-07-15T05:00:00.000Z');
+  assert.strictEqual(updateState.history[0].mod, null);
+}
 
 const duplicateState = emptyCampaignState();
 duplicateState.postedAtomizers['minister-mtl'] = {
@@ -155,29 +172,15 @@ duplicateState.postedAtomizers['minister-mtl'] = {
   postId: 'keep',
   publishedAt: '2026-07-13T05:00:00.000Z'
 };
-duplicateState.history = [{
-  slug: 'minister-mtl',
-  name: 'Centenary Mods Minister MTL RTA 20mm 4.5ml',
-  familyKey: 'minister',
-  postId: 'keep',
-  publishedAt: '2026-07-13T05:00:00.000Z'
-}, {
-  slug: 'minister-mtl-nano',
-  name: 'Centenary Mods Minister MTL RTA 20mm 4.5ml Nano',
-  familyKey: 'minister',
-  postId: 'remove',
-  publishedAt: '2026-07-13T06:00:00.000Z'
-}];
 duplicateState.postedAtomizers['minister-mtl-nano'] = {
   name: 'Centenary Mods Minister MTL RTA 20mm 4.5ml Nano',
   familyKey: 'minister',
   postId: 'remove',
-  publishedAt: '2026-07-13T06:00:00.000Z'
+  publishedAt: '2026-07-14T05:00:00.000Z'
 };
 assert.strictEqual(duplicateFacebookPostGroups(duplicateState, emptyState()).length, 1);
 
-const details = historyEntryMessage({ key: `atomizer:${event.slug}`, name: event.name, type: event.type }, catalog, feed, { modsFeed });
-assert(details.message.includes('https://ghid-rta.ro/'));
-assert.strictEqual(details.liquidMatches.length, 0);
+const details = historyEntryMessage({ key: `atomizer:${dayOne[0].slug}`, name: dayOne[0].name, type: 'atomizer' }, catalog, feed);
+assertSafeSingleProduct({ productType: 'atomizer', name: details.atom.name, image: details.atom.image, message: details.message });
 
-console.log('Facebook publisher checks passed: no liquid content, unique atomizer families, unique mod rotation, two-photo posts and guide-fit link.');
+console.log('Facebook publisher checks passed: one educational product/day, one real photo, one guide link, alternating atomizer/mod families, no commercial copy.');
