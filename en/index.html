@@ -447,6 +447,19 @@ h3{font-size:18px;margin-bottom:8px;letter-spacing:0}
 .lead{font-size:18px;color:#444;max-width:760px}
 .muted{color:var(--muted)}
 .shop-layout{display:grid;grid-template-columns:270px minmax(0,1fr);gap:20px;align-items:start;margin-bottom:22px}
+.power-reference{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;margin:0 0 16px;padding:15px 17px;border:1px solid #171717;border-radius:7px;background:linear-gradient(118deg,#090b0d 0%,#17140e 48%,#092a25 100%);color:#fff;box-shadow:0 5px 0 rgba(0,0,0,.24),0 24px 58px rgba(0,0,0,.24),0 1px 0 rgba(255,255,255,.13) inset;overflow:hidden}
+.power-reference:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,#ff7a1a,#f3c86a 46%,#55d17a);opacity:.95}
+.power-reference-icon{display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(255,255,255,.28);border-radius:7px;background:linear-gradient(145deg,#ff9a4c,#ff7a1a 52%,#9c3b00);box-shadow:0 4px 0 #3f1800,0 12px 26px rgba(255,122,26,.28),0 1px 0 rgba(255,255,255,.65) inset}
+.power-reference-icon img{width:25px;height:25px;filter:brightness(0) invert(1)}
+.power-reference-copy{min-width:0}
+.power-reference-copy h2{margin:0 0 4px;color:#fff;font-size:18px;line-height:1.15;text-shadow:0 2px 0 rgba(0,0,0,.75),0 8px 20px rgba(0,0,0,.34)}
+.power-reference-copy p{margin:0;color:#e9eef0;font-size:13px;line-height:1.46}
+.power-reference-specs{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:7px;max-width:330px}
+.power-reference-specs span{display:inline-flex;align-items:center;min-height:31px;padding:6px 9px;border:1px solid rgba(255,255,255,.20);border-radius:6px;background:rgba(255,255,255,.08);color:#f7faf8;font-size:11px;font-weight:900;white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.34),0 1px 0 rgba(255,255,255,.14) inset}
+.power-reference-specs span:first-child{border-color:rgba(255,170,91,.48);color:#ffc27e}
+.power-reference-specs span:last-child{border-color:rgba(85,209,122,.45);color:#91e7aa}
+@media(max-width:900px){.power-reference{grid-template-columns:auto minmax(0,1fr)}.power-reference-specs{grid-column:2;justify-content:flex-start;max-width:none}}
+@media(max-width:640px){.power-reference{grid-template-columns:42px minmax(0,1fr);gap:10px;padding:12px;margin-bottom:10px}.power-reference-icon{width:42px;height:42px}.power-reference-icon img{width:22px;height:22px}.power-reference-copy h2{font-size:16px}.power-reference-copy p{font-size:12px;line-height:1.42}.power-reference-specs{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}.power-reference-specs span{justify-content:center;min-height:30px;padding:5px 4px;font-size:10px;text-align:center;white-space:normal}}
 .category-panel{background:#fff;border:1px solid #d7d7d7;box-shadow:0 8px 20px rgba(0,0,0,.08)}
 .category-panel h2{margin:0;padding:18px 12px;background:linear-gradient(180deg,#d20f99,#5d3d45);color:#fff;text-align:center;font-family:Georgia,serif;font-size:19px;text-transform:uppercase;letter-spacing:0}
 .category-list{display:flex;flex-direction:column}
@@ -1219,6 +1232,11 @@ var I18N_META={
   }
 };
 var I18N_EXACT={
+  'Referinta pentru alimentarea modului':'Mod power reference',
+  'Recomandarile sunt calibrate pentru moduri alimentate de celule 18650 sau mai mari (20700 / 21700), autentice, in stare buna, cu rata de descarcare continua adecvata si livrare stabila a puterii. O celula mai mica ori cu performanta inferioara impune recalibrarea buildului - material, grosime, diametru, spire, rezistenta si putere - apoi reevaluarea potrivirii cu lichidul. Limitele producatorului celulei si ale modului nu se depasesc.':'Recommendations are calibrated for mods powered by genuine 18650 or larger cells (20700 / 21700), in good condition, with an adequate continuous discharge rating and stable power delivery. A smaller or lower-performance cell requires the build to be recalibrated - material, gauge, diameter, wraps, resistance and power - followed by a reassessment of the liquid pairing. The cell and mod manufacturer limits must never be exceeded.',
+  '18650 / 20700 / 21700':'18650 / 20700 / 21700',
+  'CDR adecvat':'Adequate CDR',
+  'Livrare stabila':'Stable delivery',
   'Acces exclusiv persoanelor majore':'Adults only access',
   'Acest site contine informatii despre tigari electronice, atomizoare RTA, lichide si produse destinate exclusiv persoanelor care au implinit varsta de 18 ani.':'This site contains information about electronic cigarettes, RTA atomizers, liquids and products intended exclusively for people aged 18 or over.',
   'Produsele care contin nicotina pot crea dependenta si nu sunt recomandate minorilor, nefumatorilor, femeilor insarcinate sau care alapteaza.':'Products containing nicotine can be addictive and are not recommended for minors, non-smokers, pregnant women or breastfeeding women.',
@@ -2105,6 +2123,16 @@ function rtaEarlyAccept(){
     <span class="mystic-orbit-copy"><span class="mystic-orbit-prompt">4 fun u can press</span><b class="mystic-orbit-e" aria-hidden="true">Eth</b></span>
   </a>
   <section id="home" class="section active">
+    <aside class="power-reference" aria-labelledby="powerReferenceTitle">
+      <span class="power-reference-icon" aria-hidden="true"><img src="/assets/icons/battery-charging.svg" alt=""></span>
+      <div class="power-reference-copy">
+        <h2 id="powerReferenceTitle">Referinta pentru alimentarea modului</h2>
+        <p>Recomandarile sunt calibrate pentru moduri alimentate de celule 18650 sau mai mari (20700 / 21700), autentice, in stare buna, cu rata de descarcare continua adecvata si livrare stabila a puterii. O celula mai mica ori cu performanta inferioara impune recalibrarea buildului - material, grosime, diametru, spire, rezistenta si putere - apoi reevaluarea potrivirii cu lichidul. Limitele producatorului celulei si ale modului nu se depasesc.</p>
+      </div>
+      <div class="power-reference-specs" aria-label="Conditii de referinta">
+        <span>18650 / 20700 / 21700</span><span>CDR adecvat</span><span>Livrare stabila</span>
+      </div>
+    </aside>
     <div class="shop-layout">
       <aside class="category-panel" aria-label="Categorii ghid">
         <h2>Categorii</h2>
