@@ -102,7 +102,8 @@ function assertSafeSingleProduct(event) {
   assert.doesNotThrow(() => assertEventLiquidTriplet(event));
   assert.strictEqual(educationalAlbumPhotoEntries(event).length, 1, 'each post must have one product photo');
   assert(event.message.includes('Redarea corecta si coerenta a gustului depinde de triangularea'));
-  assert(event.message.includes('Pentru modul de utilizare, configurare si detalii, consultati: https://ghid-rta.ro/'));
+  assert.strictEqual(event.message.split('\n')[2], 'https://ghid-rta.ro/', 'guide link must be visible before See more');
+  assert(event.message.includes('Pentru modul de utilizare, configurare si detalii, consultati ghidul.'));
   assert(event.message.includes('Documentatie tehnica destinata adultilor 18+.'));
   assert.strictEqual((event.message.match(/https?:\/\/[^\s]+/g) || []).length, 1, 'message must contain one link');
   assert(!/smokee\.ro|youtube\.com|youtu\.be|pret|stoc|comenzi|high-end|premium|nicotin/i.test(event.message));

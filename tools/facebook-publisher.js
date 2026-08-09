@@ -19,7 +19,8 @@ const SITE = 'https://ghid-rta.ro';
 const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_POSTS = 1;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
-const GUIDE_FIT_LINE = 'Pentru modul de utilizare, configurare si detalii, consultati: https://ghid-rta.ro/';
+const GUIDE_FIT_LINE = 'https://ghid-rta.ro/';
+const GUIDE_CONTEXT_LINE = 'Pentru modul de utilizare, configurare si detalii, consultati ghidul.';
 const TRIANGULATION_LINE = 'Redarea corecta si coerenta a gustului depinde de triangularea dintre profilul lichidului, arhitectura atomizorului si caracteristicile buildului.';
 const ADULT_TECHNICAL_LINE = 'Documentatie tehnica destinata adultilor 18+.';
 const FACEBOOK_FORMAT_VERSION = 'educational-single-product-v7';
@@ -1096,12 +1097,13 @@ function safeAtomizerMessage(atom) {
   return [
     ATOMIZER_TITLE_FRAME,
     cleanText(atom && atom.name, 160),
+    GUIDE_FIT_LINE,
     '',
     'Model RTA MTL documentat prin arhitectura camerei de evaporare, airflow si deck.',
     '',
     TRIANGULATION_LINE,
     '',
-    GUIDE_FIT_LINE,
+    GUIDE_CONTEXT_LINE,
     '',
     ADULT_TECHNICAL_LINE
   ].join('\n');
@@ -1111,12 +1113,13 @@ function modMessage(mod) {
   return [
     MOD_TITLE_FRAME,
     cleanText(mod && mod.title, 160),
+    GUIDE_FIT_LINE,
     '',
     'Mod pentru configuratii RTA, documentat prin alimentare, stabilitatea livrarii si compatibilitatea cu atomizorul.',
     '',
     TRIANGULATION_LINE,
     '',
-    GUIDE_FIT_LINE,
+    GUIDE_CONTEXT_LINE,
     '',
     ADULT_TECHNICAL_LINE
   ].join('\n');
