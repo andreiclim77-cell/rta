@@ -1940,12 +1940,12 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
     originalPublishedAt: previous.originalPublishedAt || publishedAt,
     postId,
     image: event.image,
-    source: replaced ? 'facebook-api-zero-nicotine-repaired' : (previous.source || 'facebook-api-educational'),
+    source: replaced ? 'facebook-api-exact-product-photo-repaired' : (previous.source || 'facebook-api-educational'),
     formatVersion: FACEBOOK_FORMAT_VERSION,
     messageVersion: FACEBOOK_MESSAGE_VERSION,
     albumVersion: FACEBOOK_ALBUM_VERSION,
     noticeUpdatedAt: timestamp,
-    noticePlacement: replaced ? 'post-and-two-photos' : 'post-message',
+    noticePlacement: replaced ? 'post-and-one-photo' : 'post-message',
     liquids: [],
     mod: modStateItem(event.mod)
   };
@@ -1964,7 +1964,7 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
     messageVersion: FACEBOOK_MESSAGE_VERSION,
     albumVersion: FACEBOOK_ALBUM_VERSION,
     noticeUpdatedAt: timestamp,
-    noticePlacement: replaced ? 'post-and-two-photos' : 'post-message',
+    noticePlacement: replaced ? 'post-and-one-photo' : 'post-message',
     liquids: [],
     mod: modStateItem(event.mod)
   };
