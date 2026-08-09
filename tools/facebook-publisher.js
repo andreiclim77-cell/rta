@@ -23,15 +23,11 @@ const GUIDE_FIT_LINE = 'https://ghid-rta.ro/';
 const GUIDE_CONTEXT_LINE = 'Pentru modul de utilizare, configurare si detalii, consultati ghidul.';
 const TRIANGULATION_LINE = 'Redarea corecta si coerenta a gustului depinde de triangularea dintre profilul lichidului, arhitectura atomizorului si caracteristicile buildului.';
 const ADULT_TECHNICAL_LINE = 'Documentatie tehnica destinata adultilor 18+.';
-const FACEBOOK_FORMAT_VERSION = 'educational-editorial-photo-v8';
-const FACEBOOK_MESSAGE_VERSION = 'documented-model-guide-triangulation-v4';
-const FACEBOOK_ALBUM_VERSION = 'original-editorial-photo-v4';
+const FACEBOOK_FORMAT_VERSION = 'educational-exact-product-photo-v9';
+const FACEBOOK_MESSAGE_VERSION = 'visible-guide-exact-model-v5';
+const FACEBOOK_ALBUM_VERSION = 'branded-exact-product-photo-v5';
 const ATOMIZER_TITLE_FRAME = 'FISA DOCUMENTATA IN GHID';
 const MOD_TITLE_FRAME = 'FISA DOCUMENTATA IN GHID';
-const EDITORIAL_IMAGE_BASE = `${SITE}/assets/facebook/hourly-2026-07-30`;
-const EDITORIAL_IMAGES = Array.from({ length: 7 }, (_, index) =>
-  `${EDITORIAL_IMAGE_BASE}/photo-${String(index + 1).padStart(2, '0')}.png`
-);
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
   body: ['body', 'corp', 'hit', 'latakia', 'kentucky', 'cigar', 'dark', 'fire', 'burley', 'asylum', 'muted', 'dvarw cl', 'prime minister'],
@@ -209,10 +205,6 @@ function modFamilyKey(item) {
   return text;
 }
 
-function editorialImageForKey(value) {
-  const digest = crypto.createHash('sha256').update(String(value || 'ghid-rta')).digest();
-  return EDITORIAL_IMAGES[digest[0] % EDITORIAL_IMAGES.length];
-}
 function highEndModCandidates(modsFeed = readJson(MODS_PATH, { items: [] })) {
   const explicit = Array.isArray(modsFeed && modsFeed.highEndItems) ? modsFeed.highEndItems : null;
   const source = explicit || [].concat(modsFeed && modsFeed.items || []).filter(item => {
@@ -1118,9 +1110,9 @@ function directVideoLines(videos) {
 
 function safeAtomizerMessage(atom) {
   return [
+    GUIDE_FIT_LINE,
     ATOMIZER_TITLE_FRAME,
     cleanText(atom && atom.name, 160),
-    GUIDE_FIT_LINE,
     '',
     'Camera de evaporare, alimentarea, geometria airflowului si buildul trebuie evaluate impreuna.',
     '',
@@ -1134,9 +1126,9 @@ function safeAtomizerMessage(atom) {
 
 function modMessage(mod) {
   return [
+    GUIDE_FIT_LINE,
     MOD_TITLE_FRAME,
     cleanText(mod && mod.title, 160),
-    GUIDE_FIT_LINE,
     '',
     'Stabilitatea alimentarii, atomizorul si buildul trebuie evaluate impreuna.',
     '',
@@ -1170,7 +1162,7 @@ function atomizerProductEvent(atom, feedVideos, type = 'atomizer') {
   const imageCandidates = atomizerImageCandidates(atom);
   const productImage = imageCandidates[0] || '';
   if (!productImage) return null;
-  const image = editorialImageForKey(familyKey || slug);
+  const image = productImage;
   return {
     type,
     productType: 'atomizer',
@@ -1180,7 +1172,7 @@ function atomizerProductEvent(atom, feedVideos, type = 'atomizer') {
     name: atom.name,
     link: `${SITE}/`,
     image,
-    imageCandidates: [image],
+    imageCandidates,
     productImage,
     message: type === 'editorial' ? editorialAtomizerMessage(atom) : atomizerMessage(atom),
     liquidMatches: [],
@@ -1196,7 +1188,7 @@ function modProductEvent(mod, type = 'mod') {
   const familyKey = modFamilyKey(mod);
   const productImage = String(mod && mod.image || '').trim();
   if (!familyKey || !/^https:\/\//i.test(productImage)) return null;
-  const image = editorialImageForKey(familyKey);
+  const image = productImage;
   return {
     type: 'mod',
     productType: 'mod',
@@ -1532,7 +1524,7 @@ function assertEventLiquidTriplet(event) {
   if (!/^https:\/\//i.test(String(event.image || ''))) throw new Error(`Fotografia produsului nu este publica pentru ${event.name}.`);
   const message = String(event.message || '');
   const expectedFrame = eventProductType(event) === 'mod' ? MOD_TITLE_FRAME : ATOMIZER_TITLE_FRAME;
-  if (!message.startsWith(`${expectedFrame}\n${cleanText(event.name, 160)}\n`) ||
+  if (!message.startsWith(`${GUIDE_FIT_LINE}\n${expectedFrame}\n${cleanText(event.name, 160)}\n`) ||
       !message.includes(TRIANGULATION_LINE) ||
       !message.includes(GUIDE_FIT_LINE) ||
       !message.includes(ADULT_TECHNICAL_LINE)) {
@@ -1549,7 +1541,7 @@ function assertEventLiquidTriplet(event) {
 function educationalAlbumPhotoEntries(event) {
   assertEventLiquidTriplet(event);
   return [{
-    type: 'editorial',
+    type: 'verified-product',
     image: event.image,
     caption: [
       'GHID RTA MTL',
@@ -1558,6 +1550,80 @@ function educationalAlbumPhotoEntries(event) {
       'Material informativ pentru adulti 18+.'
     ].join('\n')
   }];
+}
+
+function escapeSvgText(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function productPhotoOverlaySvg(event, width = 1200, height = 1200) {
+  const name = cleanText(event && event.name, 72);
+  const safeName = escapeSvgText(name);
+  const modelFontSize = Math.max(23, Math.min(36, Math.floor((width - 150) / Math.max(1, name.length * 0.57))));
+  const topY = Math.round(height * 0.035);
+  const bottomY = height - Math.round(height * 0.105);
+  return Buffer.from(`
+    <svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg">
+      <rect x="38" y="${topY}" width="470" height="94" rx="18" fill="#07100c" fill-opacity="0.94" stroke="#70f0a2" stroke-width="2"/>
+      <text x="73" y="${topY + 65}" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#000000" opacity="0.85">ghid-rta.ro</text>
+      <text x="69" y="${topY + 61}" font-family="Arial, Helvetica, sans-serif" font-size="44" font-weight="800" fill="#8dffc0">ghid-rta.ro</text>
+      <rect x="38" y="${bottomY}" width="${width - 76}" height="86" rx="16" fill="#07100c" fill-opacity="0.90" stroke="#ff9d42" stroke-width="2"/>
+      <text x="70" y="${bottomY + 57}" font-family="Arial, Helvetica, sans-serif" font-size="${modelFontSize}" font-weight="700" fill="#000000" opacity="0.85">${safeName}</text>
+      <text x="67" y="${bottomY + 53}" font-family="Arial, Helvetica, sans-serif" font-size="${modelFontSize}" font-weight="700" fill="#ffffff">${safeName}</text>
+    </svg>
+  `);
+}
+
+async function fetchProductImageBuffer(url) {
+  let lastError;
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    try {
+      const response = await fetch(url, {
+        redirect: 'follow',
+        cache: 'no-store',
+        signal: AbortSignal.timeout(30000)
+      });
+      const type = response.headers.get('content-type') || '';
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!/^image\/(?:jpeg|png|webp|avif)/i.test(type)) throw new Error(`tip media ${type || 'necunoscut'}`);
+      const bytes = Buffer.from(await response.arrayBuffer());
+      if (!bytes.length || bytes.length > 20 * 1024 * 1024) throw new Error(`dimensiune imagine ${bytes.length}`);
+      return bytes;
+    } catch (error) {
+      lastError = error;
+      if (attempt < 2) await new Promise(resolve => setTimeout(resolve, 1500 * (attempt + 1)));
+    }
+  }
+  throw new Error(`Fotografia exacta nu poate fi descarcata de la ${url}: ${lastError && lastError.message || 'eroare necunoscuta'}`);
+}
+
+async function brandedProductImageBuffer(event) {
+  let sharp;
+  try {
+    sharp = require('sharp');
+  } catch (error) {
+    throw new Error('Procesarea fotografiei necesita dependenta Sharp instalata.');
+  }
+  const source = await fetchProductImageBuffer(event.image);
+  const width = 1200;
+  const height = 1200;
+  const base = await sharp(source, { failOn: 'error' })
+    .rotate()
+    .resize(width, height, {
+      fit: 'contain',
+      background: { r: 242, g: 244, b: 243, alpha: 1 }
+    })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  return sharp(base)
+    .composite([{ input: productPhotoOverlaySvg(event, width, height), top: 0, left: 0 }])
+    .png({ compressionLevel: 9 })
+    .toBuffer();
 }
 function multiPhotoFeedBody(message, mediaIds, token) {
   return buildPageFeedBody(message, mediaIds, token);
@@ -1658,26 +1724,39 @@ async function prepareEventForPublish(event) {
   await waitForPublicLink(`${SITE}/`);
   event.link = `${SITE}/`;
   event.image = await selectPublicAtomizerImage(event);
+  if (String(event.image) !== String(event.productImage)) {
+    throw new Error(`Fotografia selectata nu corespunde imaginii principale verificate pentru ${event.name}.`);
+  }
   assertEventLiquidTriplet(event);
   event.albumPhotos = educationalAlbumPhotoEntries(event);
+  event.albumPhotos[0].sourceBuffer = await brandedProductImageBuffer(event);
+  event.albumPhotos[0].filename = `${event.slug || slugify(event.name)}-ghid-rta.png`;
   return event;
 }
 async function publishPreparedEvent(event) {
   if (!Array.isArray(event.albumPhotos) || event.albumPhotos.length !== 1) {
-    throw new Error(`Postarea pentru ${event.name} necesita exact o fotografie editoriala originala.`);
+    throw new Error(`Postarea pentru ${event.name} necesita exact fotografia verificata a produsului.`);
   }
   const mediaIds = [];
   try {
     for (const photoEntry of event.albumPhotos) {
-      const photoBody = new URLSearchParams({
-        url: photoEntry.image,
-        caption: photoEntry.caption,
-        published: 'false',
-        access_token: accessToken
-      });
+      const photoBody = photoEntry.sourceBuffer
+        ? (() => {
+            const form = new FormData();
+            form.set('source', new Blob([photoEntry.sourceBuffer], { type: 'image/png' }), photoEntry.filename || 'ghid-rta.png');
+            form.set('caption', photoEntry.caption);
+            form.set('published', 'false');
+            form.set('access_token', accessToken);
+            return form;
+          })()
+        : new URLSearchParams({
+            url: photoEntry.image,
+            caption: photoEntry.caption,
+            published: 'false',
+            access_token: accessToken
+          });
       const photo = await fetchJson(`https://graph.facebook.com/${graphVersion}/${encodeURIComponent(pageId)}/photos`, {
         method: 'POST',
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
         body: photoBody
       });
       const mediaId = String(photo.id || '').trim();
@@ -2262,6 +2341,7 @@ module.exports = {
   atomizerMessage,
   atomizerUrl,
   baselineState,
+  brandedProductImageBuffer,
   canonicalAtomizerFamilyKey,
   canonicalAtomizerSlug,
   createHighEndModRotation,
@@ -2269,7 +2349,7 @@ module.exports = {
   editorialAtomizerMessage,
   dateInRomania,
   educationalAlbumPhotoEntries,
-  editorialImageForKey,
+  productPhotoOverlaySvg,
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,

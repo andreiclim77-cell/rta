@@ -31,6 +31,9 @@ jobs:
         with:
           node-version: 22
 
+      - name: Install image processor
+        run: npm ci
+
       - name: Validate Facebook publisher
         env:
           TARGET_MODEL: ${{ inputs.model }}

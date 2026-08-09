@@ -51,6 +51,10 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install Facebook image processor
+        if: steps.sync_window.outputs.run_sync == 'true'
+        run: npm ci
+
       - name: Check Smokee RTA products
         if: steps.sync_window.outputs.run_sync == 'true'
         run: node tools/sync-smokee-rta.js --write

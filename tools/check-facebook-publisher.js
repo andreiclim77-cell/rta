@@ -8,7 +8,6 @@ const {
   canonicalAtomizerFamilyKey,
   duplicateFacebookPostGroups,
   educationalAlbumPhotoEntries,
-  editorialImageForKey,
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
@@ -18,7 +17,8 @@ const {
   planEditorialPosts,
   planUpdates,
   postedAtomizerSlugs,
-  postedModFamilyKeys
+  postedModFamilyKeys,
+  productPhotoOverlaySvg
 } = require('./facebook-publisher');
 
 const atomA = {
@@ -102,12 +102,16 @@ const modsFeed = {
 function assertSafeSingleProduct(event) {
   assert.doesNotThrow(() => assertEventLiquidTriplet(event));
   const photoEntries = educationalAlbumPhotoEntries(event);
-  assert.strictEqual(photoEntries.length, 1, 'each post must have one editorial photo');
-  assert.match(event.image, /^https:\/\/ghid-rta\.ro\/assets\/facebook\/hourly-2026-07-30\/photo-0[1-7]\.png$/);
+  assert.strictEqual(photoEntries.length, 1, 'each post must have one exact product photo');
+  assert.match(event.image, /^https:\/\/images\.example\//);
   assert.strictEqual(photoEntries[0].image, event.image);
-  assert(!/images\.example/.test(photoEntries[0].image), 'catalog product photography must not be published to Facebook');
+  assert.strictEqual(event.productImage, event.image, 'published photo must be the product image bound to the model');
+  assert.strictEqual(photoEntries[0].type, 'verified-product');
+  const overlay = productPhotoOverlaySvg(event).toString('utf8');
+  assert(overlay.includes('ghid-rta.ro'), 'photo overlay must include the real guide domain');
+  assert(overlay.includes(event.name.replace(/&/g, '&amp;')), 'photo overlay must identify the exact model');
   assert(event.message.includes('Redarea corecta si coerenta a gustului depinde de triangularea'));
-  assert.strictEqual(event.message.split('\n')[2], 'https://ghid-rta.ro/', 'guide link must be visible before See more');
+  assert.strictEqual(event.message.split('\n')[0], 'https://ghid-rta.ro/', 'guide link must be the first visible line before See more');
   assert(event.message.includes('Pentru modul de utilizare, configurare si detalii, consultati ghidul.'));
   assert(event.message.includes('Documentatie tehnica destinata adultilor 18+.'));
   assert.strictEqual((event.message.match(/https?:\/\/[^\s]+/g) || []).length, 1, 'message must contain one link');
@@ -158,7 +162,7 @@ assert.strictEqual(dayTwo.length, 2);
 assert(dayTwo.some(event => event.productType === 'atomizer'));
 assert(dayTwo.some(event => event.productType === 'mod'));
 dayTwo.forEach(assertSafeSingleProduct);
-assert.strictEqual(campaign.postedMods[dayOneMod.familyKey].messageVersion, 'documented-model-guide-triangulation-v4');
+assert.strictEqual(campaign.postedMods[dayOneMod.familyKey].messageVersion, 'visible-guide-exact-model-v5');
 
 const updateState = emptyState();
 updateState.seenAtomizers[dayOneAtom.slug] = { seenAt: '2026-07-13T05:00:00.000Z' };
@@ -192,6 +196,12 @@ duplicateState.postedAtomizers['minister-mtl-nano'] = {
 assert.strictEqual(duplicateFacebookPostGroups(duplicateState, emptyState()).length, 1);
 
 const details = historyEntryMessage({ key: `atomizer:${dayOneAtom.slug}`, name: dayOneAtom.name, type: 'atomizer' }, catalog, feed);
-assertSafeSingleProduct({ productType: 'atomizer', name: details.atom.name, image: editorialImageForKey(details.slug), message: details.message });
+assertSafeSingleProduct({
+  productType: 'atomizer',
+  name: details.atom.name,
+  image: details.atom.image,
+  productImage: details.atom.image,
+  message: details.message
+});
 
-console.log('Facebook publisher checks passed: one atomizer and one mod/day, original editorial photos with ghid-rta.ro, one guide link, no commercial copy.');
+console.log('Facebook publisher checks passed: one atomizer and one mod/day, exact model photos branded ghid-rta.ro, visible guide link, no commercial copy.');
