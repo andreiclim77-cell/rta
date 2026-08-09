@@ -3,7 +3,7 @@ name: Facebook RTA editorial series
 on:
   workflow_dispatch:
   schedule:
-    # One educational product/day. The publisher enforces the Romania daily limit even when GitHub starts late.
+    # One atomizer and one mod/day. The publisher enforces the Romania daily limit even when GitHub starts late.
     - cron: "5 7 * * *"
 
 permissions:
@@ -34,22 +34,22 @@ jobs:
         run: |
           node --check tools/facebook-publisher.js
           node tools/check-facebook-publisher.js
-          node tools/facebook-publisher.js --check-editorial --max-posts 1
+          node tools/facebook-publisher.js --check-editorial --max-posts 2
 
       - name: Detect remaining editorial posts
         id: pending
         shell: bash
         run: |
-          echo "count=$(node tools/facebook-publisher.js --editorial-pending-count --max-posts 1)" >> "$GITHUB_OUTPUT"
+          echo "count=$(node tools/facebook-publisher.js --editorial-pending-count --max-posts 2)" >> "$GITHUB_OUTPUT"
           echo "remaining=$(node tools/facebook-publisher.js --editorial-unposted-count)" >> "$GITHUB_OUTPUT"
 
-      - name: Publish one verified RTA product
+      - name: Publish one verified atomizer and one verified mod
         if: steps.pending.outputs.count != '0'
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
-        run: node tools/facebook-publisher.js --publish-editorial --max-posts 1
+        run: node tools/facebook-publisher.js --publish-editorial --max-posts 2
 
       - name: Commit editorial state
         if: steps.pending.outputs.count != '0'

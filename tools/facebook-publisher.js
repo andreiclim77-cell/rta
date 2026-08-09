@@ -17,17 +17,21 @@ const REVIEW_PATH = path.join(ROOT, 'data', 'youtube-reviews.json');
 const MODS_PATH = path.join(ROOT, 'data', 'smokee-mods.json');
 const SITE = 'https://ghid-rta.ro';
 const DEFAULT_GRAPH_VERSION = 'v25.0';
-const DEFAULT_DAILY_POSTS = 1;
+const DEFAULT_DAILY_POSTS = 2;
 const DEFAULT_MAX_POSTS = DEFAULT_DAILY_POSTS;
 const GUIDE_FIT_LINE = 'https://ghid-rta.ro/';
 const GUIDE_CONTEXT_LINE = 'Pentru modul de utilizare, configurare si detalii, consultati ghidul.';
 const TRIANGULATION_LINE = 'Redarea corecta si coerenta a gustului depinde de triangularea dintre profilul lichidului, arhitectura atomizorului si caracteristicile buildului.';
 const ADULT_TECHNICAL_LINE = 'Documentatie tehnica destinata adultilor 18+.';
-const FACEBOOK_FORMAT_VERSION = 'educational-single-product-v7';
-const FACEBOOK_MESSAGE_VERSION = 'single-product-guide-triangulation-v3';
-const FACEBOOK_ALBUM_VERSION = 'single-product-photo-v3';
-const ATOMIZER_TITLE_FRAME = 'FISA TEHNICA RTA MTL';
-const MOD_TITLE_FRAME = 'REPER TEHNIC MOD RTA';
+const FACEBOOK_FORMAT_VERSION = 'educational-editorial-photo-v8';
+const FACEBOOK_MESSAGE_VERSION = 'documented-model-guide-triangulation-v4';
+const FACEBOOK_ALBUM_VERSION = 'original-editorial-photo-v4';
+const ATOMIZER_TITLE_FRAME = 'FISA DOCUMENTATA IN GHID';
+const MOD_TITLE_FRAME = 'FISA DOCUMENTATA IN GHID';
+const EDITORIAL_IMAGE_BASE = `${SITE}/assets/facebook/hourly-2026-07-30`;
+const EDITORIAL_IMAGES = Array.from({ length: 7 }, (_, index) =>
+  `${EDITORIAL_IMAGE_BASE}/photo-${String(index + 1).padStart(2, '0')}.png`
+);
 const ATOM_ROLE_RULES = {
   clarity: ['clar', 'analytic', 'analitic', 'virginia', 'oriental', 'cigarette', 'rolling', 'bright', 'luminos', 'uscat', 'dry', 'dvarw mtl fl', 'kayfun lite', 'spica', 'fev vs', '415'],
   body: ['body', 'corp', 'hit', 'latakia', 'kentucky', 'cigar', 'dark', 'fire', 'burley', 'asylum', 'muted', 'dvarw cl', 'prime minister'],
@@ -203,6 +207,11 @@ function modFamilyKey(item) {
   if (/\bvsmosfet\b/.test(text)) return 'vsmosfet tube';
   if (/\bminister\b/.test(text)) return 'centenary minister mod';
   return text;
+}
+
+function editorialImageForKey(value) {
+  const digest = crypto.createHash('sha256').update(String(value || 'ghid-rta')).digest();
+  return EDITORIAL_IMAGES[digest[0] % EDITORIAL_IMAGES.length];
 }
 function highEndModCandidates(modsFeed = readJson(MODS_PATH, { items: [] })) {
   const explicit = Array.isArray(modsFeed && modsFeed.highEndItems) ? modsFeed.highEndItems : null;
@@ -935,7 +944,7 @@ function normalizeCampaignState(value) {
   state.schemaVersion = 1;
   state.startedAt = state.startedAt || nowIso();
   state.updatedAt = state.updatedAt || '';
-  state.pace = 'one-post-per-day';
+  state.pace = 'one-atomizer-one-mod-per-day';
   state.pageId = state.pageId || '';
   state.postedAtomizers = state.postedAtomizers && typeof state.postedAtomizers === 'object' ? state.postedAtomizers : {};
   state.postedMods = state.postedMods && typeof state.postedMods === 'object' ? state.postedMods : {};
@@ -966,6 +975,20 @@ function facebookPostsOnDate(campaignState, publishState, targetDate = todayInRo
   [].concat(campaignState && campaignState.history || []).forEach(item => add('campaign', item && (item.key || item.slug || item.name), item));
   [].concat(publishState && publishState.history || []).forEach(item => add('update', item && (item.key || item.name), item));
   return posts.size;
+}
+
+function facebookProductTypesOnDate(campaignState, publishState, targetDate = todayInRomania()) {
+  const posts = new Map();
+  const add = (scope, key, item, fallbackType) => {
+    if (dateInRomania(item && item.publishedAt) !== targetDate) return;
+    const postId = String(item.postId || `${scope}:${key}:${item.publishedAt}`);
+    posts.set(postId, eventProductType(item) || fallbackType);
+  };
+  Object.entries(campaignState && campaignState.postedAtomizers || {}).forEach(([slug, item]) => add('atomizer', slug, item, 'atomizer'));
+  Object.entries(campaignState && campaignState.postedMods || {}).forEach(([key, item]) => add('mod', key, item, 'mod'));
+  [].concat(campaignState && campaignState.history || []).forEach(item => add('campaign', item && (item.key || item.slug || item.name), item, 'atomizer'));
+  [].concat(publishState && publishState.history || []).forEach(item => add('update', item && (item.key || item.name), item, 'atomizer'));
+  return new Set(posts.values());
 }
 function canonicalAtomizerSlug(value) {
   return slugify(publicAtomName(value));
@@ -1099,7 +1122,7 @@ function safeAtomizerMessage(atom) {
     cleanText(atom && atom.name, 160),
     GUIDE_FIT_LINE,
     '',
-    'Model RTA MTL documentat prin arhitectura camerei de evaporare, airflow si deck.',
+    'Camera de evaporare, alimentarea, geometria airflowului si buildul trebuie evaluate impreuna.',
     '',
     TRIANGULATION_LINE,
     '',
@@ -1115,7 +1138,7 @@ function modMessage(mod) {
     cleanText(mod && mod.title, 160),
     GUIDE_FIT_LINE,
     '',
-    'Mod pentru configuratii RTA, documentat prin alimentare, stabilitatea livrarii si compatibilitatea cu atomizorul.',
+    'Stabilitatea alimentarii, atomizorul si buildul trebuie evaluate impreuna.',
     '',
     TRIANGULATION_LINE,
     '',
@@ -1145,8 +1168,9 @@ function atomizerProductEvent(atom, feedVideos, type = 'atomizer') {
   const slug = slugify(atom.name);
   const familyKey = canonicalAtomizerFamilyKey(atom.name) || canonicalAtomizerSlug(atom.name);
   const imageCandidates = atomizerImageCandidates(atom);
-  const image = imageCandidates[0] || '';
-  if (!image) return null;
+  const productImage = imageCandidates[0] || '';
+  if (!productImage) return null;
+  const image = editorialImageForKey(familyKey || slug);
   return {
     type,
     productType: 'atomizer',
@@ -1156,7 +1180,8 @@ function atomizerProductEvent(atom, feedVideos, type = 'atomizer') {
     name: atom.name,
     link: `${SITE}/`,
     image,
-    imageCandidates,
+    imageCandidates: [image],
+    productImage,
     message: type === 'editorial' ? editorialAtomizerMessage(atom) : atomizerMessage(atom),
     liquidMatches: [],
     mod: null,
@@ -1169,7 +1194,9 @@ function atomizerProductEvent(atom, feedVideos, type = 'atomizer') {
 
 function modProductEvent(mod, type = 'mod') {
   const familyKey = modFamilyKey(mod);
-  if (!familyKey || !/^https:\/\//i.test(String(mod && mod.image || ''))) return null;
+  const productImage = String(mod && mod.image || '').trim();
+  if (!familyKey || !/^https:\/\//i.test(productImage)) return null;
+  const image = editorialImageForKey(familyKey);
   return {
     type: 'mod',
     productType: 'mod',
@@ -1178,8 +1205,9 @@ function modProductEvent(mod, type = 'mod') {
     familyKey,
     name: cleanText(mod.title, 160),
     link: `${SITE}/`,
-    image: String(mod.image).trim(),
-    imageCandidates: [String(mod.image).trim()],
+    image,
+    imageCandidates: [image],
+    productImage,
     message: modMessage(mod),
     liquidMatches: [],
     mod: null,
@@ -1255,7 +1283,9 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
   const targetDate = String(options.today || todayInRomania());
   const campaignPublishedToday = facebookPostsOnDate(state, options.publishState || emptyState(), targetDate);
   const publishedToday = Number.isFinite(Number(options.dailyPublished)) ? Math.max(0, Number(options.dailyPublished)) : campaignPublishedToday;
-  if (publishedToday >= DEFAULT_DAILY_POSTS) return [];
+  const requestedPosts = Math.min(DEFAULT_DAILY_POSTS, Math.max(1, Number(options.maxPosts || DEFAULT_MAX_POSTS)));
+  const remainingSlots = Math.min(requestedPosts, Math.max(0, DEFAULT_DAILY_POSTS - publishedToday));
+  if (remainingSlots === 0) return [];
 
   const videos = reviewEntries(feed);
   const modsFeed = options.modsFeed || readJson(MODS_PATH, { items: [] });
@@ -1278,12 +1308,11 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
     .filter(Boolean)
     .sort((a, b) => String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')) || a.name.localeCompare(b.name));
 
-  const lastType = lastPublishedProductType(state, options.publishState || emptyState());
-  const preferredType = lastType === 'atomizer' ? 'mod' : 'atomizer';
-  const preferred = preferredType === 'mod' ? modEvents : atomEvents;
-  const fallback = preferredType === 'mod' ? atomEvents : modEvents;
-  const event = preferred[0] || fallback[0] || null;
-  return event ? [event] : [];
+  const publishedTypes = facebookProductTypesOnDate(state, options.publishState || emptyState(), targetDate);
+  const events = [];
+  if (!publishedTypes.has('atomizer') && atomEvents[0]) events.push(atomEvents[0]);
+  if (!publishedTypes.has('mod') && modEvents[0]) events.push(modEvents[0]);
+  return events.slice(0, remainingSlots);
 }
 
 function applyEditorialPublished(stateValue, event, postId, timestamp = nowIso()) {
@@ -1519,14 +1548,14 @@ function assertEventLiquidTriplet(event) {
 
 function educationalAlbumPhotoEntries(event) {
   assertEventLiquidTriplet(event);
-  const frame = eventProductType(event) === 'mod' ? MOD_TITLE_FRAME : ATOMIZER_TITLE_FRAME;
   return [{
-    type: eventProductType(event),
+    type: 'editorial',
     image: event.image,
     caption: [
-      frame,
-      cleanText(event.name, 160),
-      'Documentatie tehnica pentru adulti 18+.'
+      'GHID RTA MTL',
+      'Documentatie tehnica si orientare pentru configurare.',
+      GUIDE_FIT_LINE,
+      'Material informativ pentru adulti 18+.'
     ].join('\n')
   }];
 }
@@ -1635,7 +1664,7 @@ async function prepareEventForPublish(event) {
 }
 async function publishPreparedEvent(event) {
   if (!Array.isArray(event.albumPhotos) || event.albumPhotos.length !== 1) {
-    throw new Error(`Postarea pentru ${event.name} necesita exact o fotografie reala a produsului.`);
+    throw new Error(`Postarea pentru ${event.name} necesita exact o fotografie editoriala originala.`);
   }
   const mediaIds = [];
   try {
@@ -2240,9 +2269,11 @@ module.exports = {
   editorialAtomizerMessage,
   dateInRomania,
   educationalAlbumPhotoEntries,
+  editorialImageForKey,
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
+  facebookProductTypesOnDate,
   facebookVisibilityResult,
   inferAtomRoles,
   isNicotineFreeFacebookLiquid,

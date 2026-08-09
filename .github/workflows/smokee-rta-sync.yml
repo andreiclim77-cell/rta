@@ -24,12 +24,20 @@ jobs:
         id: sync_window
         shell: bash
         run: |
-          echo "run_sync=true" >> "$GITHUB_OUTPUT"
+          # GitHub may start scheduled jobs late, so validate the intended cron expression instead of the actual start minute.
+          run_sync=true
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            echo "Scheduled sync allowed. GitHub may start scheduled jobs late; the intended 06:00/06:20 catalog sync still runs."
+            bucharest_offset="$(TZ=Europe/Bucharest date +%z)"
+            scheduled_cron="${{ github.event.schedule }}"
+            if { [ "$bucharest_offset" = "+0300" ] && [ "$scheduled_cron" != "0,20 3 * * *" ]; } ||
+               { [ "$bucharest_offset" = "+0200" ] && [ "$scheduled_cron" != "0,20 4 * * *" ]; }; then
+              run_sync=false
+            fi
+            echo "Bucharest offset $bucharest_offset; schedule $scheduled_cron; run_sync=$run_sync."
           else
             echo "Manual run allowed."
           fi
+          echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
 
       - name: Checkout
         if: steps.sync_window.outputs.run_sync == 'true'

@@ -8,6 +8,7 @@ const {
   canonicalAtomizerFamilyKey,
   duplicateFacebookPostGroups,
   educationalAlbumPhotoEntries,
+  editorialImageForKey,
   emptyCampaignState,
   emptyState,
   facebookPostsOnDate,
@@ -100,7 +101,11 @@ const modsFeed = {
 
 function assertSafeSingleProduct(event) {
   assert.doesNotThrow(() => assertEventLiquidTriplet(event));
-  assert.strictEqual(educationalAlbumPhotoEntries(event).length, 1, 'each post must have one product photo');
+  const photoEntries = educationalAlbumPhotoEntries(event);
+  assert.strictEqual(photoEntries.length, 1, 'each post must have one editorial photo');
+  assert.match(event.image, /^https:\/\/ghid-rta\.ro\/assets\/facebook\/hourly-2026-07-30\/photo-0[1-7]\.png$/);
+  assert.strictEqual(photoEntries[0].image, event.image);
+  assert(!/images\.example/.test(photoEntries[0].image), 'catalog product photography must not be published to Facebook');
   assert(event.message.includes('Redarea corecta si coerenta a gustului depinde de triangularea'));
   assert.strictEqual(event.message.split('\n')[2], 'https://ghid-rta.ro/', 'guide link must be visible before See more');
   assert(event.message.includes('Pentru modul de utilizare, configurare si detalii, consultati ghidul.'));
@@ -122,19 +127,25 @@ const dayOne = planEditorialPosts(catalog, feed, emptyCampaignState(), {
   publishState: emptyState(),
   dailyPublished: 0
 });
-assert.strictEqual(dayOne.length, 1, 'the publisher must enforce one post per day');
-assert.strictEqual(dayOne[0].productType, 'atomizer', 'the series starts with an atomizer');
-assertSafeSingleProduct(dayOne[0]);
+assert.strictEqual(dayOne.length, 2, 'the publisher must prepare one atomizer and one mod per day');
+const dayOneAtom = dayOne.find(event => event.productType === 'atomizer');
+const dayOneMod = dayOne.find(event => event.productType === 'mod');
+assert(dayOneAtom, 'the daily pair must include an atomizer');
+assert(dayOneMod, 'the daily pair must include a mod');
+assertSafeSingleProduct(dayOneAtom);
+assertSafeSingleProduct(dayOneMod);
 
-let campaign = applyEditorialPublished(emptyCampaignState(), dayOne[0], 'page_post_1', '2026-07-13T05:00:00.000Z');
-assert.strictEqual(facebookPostsOnDate(campaign, emptyState(), '2026-07-13'), 1);
-assert(postedAtomizerSlugs(campaign, emptyState()).has(dayOne[0].familyKey));
+let campaign = applyEditorialPublished(emptyCampaignState(), dayOneAtom, 'page_post_1', '2026-07-13T05:00:00.000Z');
+campaign = applyEditorialPublished(campaign, dayOneMod, 'page_post_2', '2026-07-13T05:01:00.000Z');
+assert.strictEqual(facebookPostsOnDate(campaign, emptyState(), '2026-07-13'), 2);
+assert(postedAtomizerSlugs(campaign, emptyState()).has(dayOneAtom.familyKey));
+assert(postedModFamilyKeys(campaign, emptyState()).has(dayOneMod.familyKey));
 assert.strictEqual(planEditorialPosts(catalog, feed, campaign, {
   maxPosts: 9,
   today: '2026-07-13',
   modsFeed,
   publishState: emptyState()
-}).length, 0, 'a second post on the same day must be blocked');
+}).length, 0, 'a second atomizer/mod pair on the same day must be blocked');
 
 const dayTwo = planEditorialPosts(catalog, feed, campaign, {
   maxPosts: 9,
@@ -143,23 +154,22 @@ const dayTwo = planEditorialPosts(catalog, feed, campaign, {
   publishState: emptyState(),
   dailyPublished: 0
 });
-assert.strictEqual(dayTwo.length, 1);
-assert.strictEqual(dayTwo[0].productType, 'mod', 'the series must alternate to a mod');
-assertSafeSingleProduct(dayTwo[0]);
-campaign = applyEditorialPublished(campaign, dayTwo[0], 'page_post_2', '2026-07-14T05:00:00.000Z');
-assert(postedModFamilyKeys(campaign, emptyState()).has(dayTwo[0].familyKey));
-assert.strictEqual(campaign.postedMods[dayTwo[0].familyKey].messageVersion, 'single-product-guide-triangulation-v3');
+assert.strictEqual(dayTwo.length, 2);
+assert(dayTwo.some(event => event.productType === 'atomizer'));
+assert(dayTwo.some(event => event.productType === 'mod'));
+dayTwo.forEach(assertSafeSingleProduct);
+assert.strictEqual(campaign.postedMods[dayOneMod.familyKey].messageVersion, 'documented-model-guide-triangulation-v4');
 
 const updateState = emptyState();
-updateState.seenAtomizers[dayOne[0].slug] = { seenAt: '2026-07-13T05:00:00.000Z' };
-updateState.seenMods[dayTwo[0].familyKey] = { seenAt: '2026-07-14T05:00:00.000Z' };
+updateState.seenAtomizers[dayOneAtom.slug] = { seenAt: '2026-07-13T05:00:00.000Z' };
+updateState.seenMods[dayOneMod.familyKey] = { seenAt: '2026-07-13T05:01:00.000Z' };
 const updatePlan = planUpdates(catalog, feed, updateState, {
   maxPosts: 8,
   dailyPublished: 0,
   modsFeed,
   campaignState: campaign
 });
-assert(updatePlan.length <= 1, 'catalog updates must also respect the daily cap');
+assert(updatePlan.length <= 2, 'catalog updates must also respect the daily cap');
 updatePlan.forEach(assertSafeSingleProduct);
 if (updatePlan[0]) {
   applyPublishedEvent(updateState, updatePlan[0], 'page_post_3', '2026-07-15T05:00:00.000Z');
@@ -181,7 +191,7 @@ duplicateState.postedAtomizers['minister-mtl-nano'] = {
 };
 assert.strictEqual(duplicateFacebookPostGroups(duplicateState, emptyState()).length, 1);
 
-const details = historyEntryMessage({ key: `atomizer:${dayOne[0].slug}`, name: dayOne[0].name, type: 'atomizer' }, catalog, feed);
-assertSafeSingleProduct({ productType: 'atomizer', name: details.atom.name, image: details.atom.image, message: details.message });
+const details = historyEntryMessage({ key: `atomizer:${dayOneAtom.slug}`, name: dayOneAtom.name, type: 'atomizer' }, catalog, feed);
+assertSafeSingleProduct({ productType: 'atomizer', name: details.atom.name, image: editorialImageForKey(details.slug), message: details.message });
 
-console.log('Facebook publisher checks passed: one educational product/day, one real photo, one guide link, alternating atomizer/mod families, no commercial copy.');
+console.log('Facebook publisher checks passed: one atomizer and one mod/day, original editorial photos with ghid-rta.ro, one guide link, no commercial copy.');
