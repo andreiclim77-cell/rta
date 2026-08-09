@@ -1,0 +1,110 @@
+name: Instagram mirror from Facebook
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Verify the connection or publish one queued item
+        required: true
+        default: verify
+        type: choice
+        options:
+          - verify
+          - mirror
+  workflow_run:
+    workflows:
+      - Facebook RTA editorial series
+      - Smokee Catalog Sync
+    types:
+      - completed
+  schedule:
+    # Four spaced attempts/day. The script publishes at most one item/run and four/day.
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: instagram-facebook-mirror
+  cancel-in-progress: false
+
+jobs:
+  mirror:
+    if: >-
+      (github.event_name == 'workflow_dispatch') ||
+      (vars.INSTAGRAM_AUTOPUBLISH_ENABLED == 'true' &&
+       (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 14
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install image processor
+        run: npm ci
+
+      - name: Validate Instagram mirror
+        run: |
+          node --check tools/instagram-publisher.js
+          node tools/check-instagram-publisher.js
+          node tools/instagram-publisher.js --check --max-posts 1 --daily-limit 4
+
+      - name: Verify connected professional Instagram account
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/instagram-publisher.js --verify-connection
+
+      - name: Prepare one exact product photo
+        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/instagram-publisher.js --prepare --max-posts 1 --daily-limit 4
+
+      - name: Commit prepared public image
+        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        shell: bash
+        run: |
+          if git diff --quiet -- data/instagram-publish-state.json assets/instagram; then
+            echo "No Instagram image preparation change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/instagram-publish-state.json assets/instagram
+          git commit -m "Prepare Instagram mirror image"
+          git pull --rebase
+          git push
+
+      - name: Publish prepared Instagram item
+        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/instagram-publisher.js --publish-prepared --max-posts 1 --daily-limit 4
+
+      - name: Commit Instagram publish receipt
+        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        shell: bash
+        run: |
+          if git diff --quiet -- data/instagram-publish-state.json; then
+            echo "No Instagram publish receipt change."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/instagram-publish-state.json
+          git commit -m "Record Instagram mirror post"
+          git pull --rebase
+          git push

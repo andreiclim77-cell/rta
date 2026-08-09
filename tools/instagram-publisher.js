@@ -1,0 +1,637 @@
+#!/usr/bin/env node
+
+const crypto = require('crypto');
+const fs = require('fs');
+const path = require('path');
+const {
+  loadCatalog,
+  slugify
+} = require('./catalog-data');
+const {
+  atomizerImageCandidates,
+  brandedProductImageBuffer,
+  canonicalAtomizerFamilyKey,
+  canonicalAtomizerSlug,
+  dateInRomania,
+  modCatalogCandidates,
+  modFamilyKey,
+  uniqueAtomizers
+} = require('./facebook-publisher');
+
+const ROOT = path.resolve(__dirname, '..');
+const CAMPAIGN_STATE_PATH = path.join(ROOT, 'data', 'facebook-campaign-state.json');
+const FACEBOOK_STATE_PATH = path.join(ROOT, 'data', 'facebook-publish-state.json');
+const INSTAGRAM_STATE_PATH = path.join(ROOT, 'data', 'instagram-publish-state.json');
+const MODS_PATH = path.join(ROOT, 'data', 'smokee-mods.json');
+const ASSET_DIR = path.join(ROOT, 'assets', 'instagram');
+const SITE = 'https://ghid-rta.ro';
+const DEFAULT_GRAPH_VERSION = 'v25.0';
+const DEFAULT_DAILY_LIMIT = 4;
+const DEFAULT_MAX_POSTS = 1;
+const MIRROR_FORMAT_VERSION = 'instagram-exact-product-photo-v1';
+
+const args = process.argv.slice(2);
+const checkOnly = args.includes('--check');
+const verifyConnectionOnly = args.includes('--verify-connection');
+const prepareOnly = args.includes('--prepare');
+const publishPreparedOnly = args.includes('--publish-prepared');
+const pendingCountOnly = args.includes('--pending-count');
+const maxPosts = Math.max(1, Number(valueAfter('--max-posts') || DEFAULT_MAX_POSTS));
+const dailyLimit = Math.max(1, Number(valueAfter('--daily-limit') || DEFAULT_DAILY_LIMIT));
+const pageId = String(process.env.FACEBOOK_PAGE_ID || '').trim();
+const accessToken = String(process.env.FACEBOOK_PAGE_ACCESS_TOKEN || '').trim();
+const graphVersion = String(process.env.FACEBOOK_GRAPH_VERSION || DEFAULT_GRAPH_VERSION).trim();
+
+function valueAfter(flag) {
+  const index = args.indexOf(flag);
+  return index >= 0 ? args[index + 1] : '';
+}
+
+function nowIso() {
+  return new Date().toISOString();
+}
+
+function readJson(filePath, fallback) {
+  try {
+    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+  } catch (error) {
+    if (error.code === 'ENOENT') return fallback;
+    throw error;
+  }
+}
+
+function writeJsonAtomic(filePath, value) {
+  const temporary = `${filePath}.${process.pid}.tmp`;
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+  fs.writeFileSync(temporary, `${JSON.stringify(value, null, 2)}\n`, 'utf8');
+  fs.renameSync(temporary, filePath);
+}
+
+function emptyInstagramState() {
+  return {
+    schemaVersion: 1,
+    startedAt: '',
+    updatedAt: '',
+    pageId: '',
+    instagramUserId: '',
+    username: '',
+    dailyLimit: DEFAULT_DAILY_LIMIT,
+    queue: [],
+    mirroredFacebookPosts: {},
+    mirroredFamilies: {},
+    history: []
+  };
+}
+
+function normalizeInstagramState(value) {
+  const state = value && typeof value === 'object' ? value : emptyInstagramState();
+  state.schemaVersion = 1;
+  state.startedAt = String(state.startedAt || '');
+  state.updatedAt = String(state.updatedAt || '');
+  state.pageId = String(state.pageId || '');
+  state.instagramUserId = String(state.instagramUserId || '');
+  state.username = String(state.username || '');
+  state.dailyLimit = Math.max(1, Number(state.dailyLimit || DEFAULT_DAILY_LIMIT));
+  state.queue = Array.isArray(state.queue) ? state.queue : [];
+  state.mirroredFacebookPosts = state.mirroredFacebookPosts && typeof state.mirroredFacebookPosts === 'object'
+    ? state.mirroredFacebookPosts
+    : {};
+  state.mirroredFamilies = state.mirroredFamilies && typeof state.mirroredFamilies === 'object'
+    ? state.mirroredFamilies
+    : {};
+  state.history = Array.isArray(state.history) ? state.history : [];
+  return state;
+}
+
+function recordProductType(entry) {
+  const type = String(entry && (entry.productType || entry.type) || '').toLowerCase();
+  if (type === 'mod' || String(entry && entry.key || '').startsWith('mod:')) return 'mod';
+  return 'atomizer';
+}
+
+function recordFamilyKey(entry) {
+  const type = recordProductType(entry);
+  if (type === 'mod') {
+    return modFamilyKey({ familyKey: entry && entry.familyKey, title: entry && entry.name }) || slugify(entry && entry.name);
+  }
+  return canonicalAtomizerFamilyKey(entry && (entry.familyKey || entry.name || entry.slug))
+    || canonicalAtomizerSlug(entry && (entry.name || entry.slug));
+}
+
+function recordIdentity(entry) {
+  return `${recordProductType(entry)}:${recordFamilyKey(entry)}`;
+}
+
+function normalizeFacebookRecord(entry, source) {
+  const postId = String(entry && entry.postId || '').trim();
+  const name = String(entry && entry.name || '').trim();
+  const familyKey = recordFamilyKey(entry);
+  if (!postId || !name || !familyKey) return null;
+  return {
+    source,
+    sourcePostId: postId,
+    sourcePublishedAt: String(entry.publishedAt || entry.originalPublishedAt || ''),
+    productType: recordProductType(entry),
+    familyKey,
+    slug: String(entry.slug || '').trim(),
+    key: String(entry.key || '').trim(),
+    name
+  };
+}
+
+function collectFacebookRecords(campaignState, facebookState) {
+  const records = [];
+  [].concat(campaignState && campaignState.history || []).forEach(entry => {
+    const normalized = normalizeFacebookRecord(entry, 'facebook-campaign-state');
+    if (normalized) records.push(normalized);
+  });
+  [].concat(facebookState && facebookState.history || []).forEach(entry => {
+    const normalized = normalizeFacebookRecord(entry, 'facebook-publish-state');
+    if (normalized) records.push(normalized);
+  });
+  records.sort((a, b) => String(b.sourcePublishedAt).localeCompare(String(a.sourcePublishedAt)) || a.name.localeCompare(b.name));
+
+  const newestByIdentity = new Map();
+  for (const record of records) {
+    const identity = recordIdentity(record);
+    if (!newestByIdentity.has(identity)) newestByIdentity.set(identity, record);
+  }
+  return Array.from(newestByIdentity.values());
+}
+
+function exactAtomizerForRecord(record, catalog) {
+  const atoms = uniqueAtomizers(catalog);
+  const keySlug = String(record.key || '').split(':')[1] || '';
+  const targetSlugs = new Set([
+    record.slug,
+    keySlug,
+    canonicalAtomizerSlug(record.name)
+  ].filter(Boolean).map(canonicalAtomizerSlug));
+  const exact = atoms.filter(atom => targetSlugs.has(canonicalAtomizerSlug(atom.name)));
+  if (exact.length === 1) return exact[0];
+
+  const targetFamily = record.familyKey || canonicalAtomizerFamilyKey(record.name);
+  const familyMatches = atoms.filter(atom => canonicalAtomizerFamilyKey(atom.name) === targetFamily);
+  return familyMatches.length === 1 ? familyMatches[0] : null;
+}
+
+function exactModForRecord(record, modsFeed) {
+  const mods = modCatalogCandidates(modsFeed);
+  const targetFamily = record.familyKey || modFamilyKey({ title: record.name });
+  const familyMatches = mods.filter(mod => modFamilyKey(mod) === targetFamily);
+  if (familyMatches.length === 1) return familyMatches[0];
+  const targetSlug = slugify(record.name);
+  const titleMatches = mods.filter(mod => slugify(mod.title) === targetSlug);
+  return titleMatches.length === 1 ? titleMatches[0] : null;
+}
+
+function resolveEventForRecord(record, catalog, modsFeed) {
+  if (record.productType === 'mod') {
+    const mod = exactModForRecord(record, modsFeed);
+    const image = String(mod && mod.image || '').trim();
+    return {
+      type: 'mod',
+      productType: 'mod',
+      familyKey: mod ? modFamilyKey(mod) : record.familyKey,
+      slug: slugify(mod ? modFamilyKey(mod) : record.familyKey),
+      name: String(mod && mod.title || record.name).trim(),
+      image,
+      productImage: image,
+      requiresFacebookAttachment: !/^https:\/\//i.test(image)
+    };
+  }
+
+  const atom = exactAtomizerForRecord(record, catalog);
+  const image = atom ? atomizerImageCandidates(atom)[0] || '' : '';
+  return {
+    type: 'atomizer',
+    productType: 'atomizer',
+    familyKey: atom ? canonicalAtomizerFamilyKey(atom.name) : record.familyKey,
+    slug: atom ? canonicalAtomizerSlug(atom.name) : canonicalAtomizerSlug(record.name),
+    name: atom ? atom.name : record.name,
+    image,
+    productImage: image,
+    requiresFacebookAttachment: !/^https:\/\//i.test(image)
+  };
+}
+
+function instagramCaption(event) {
+  const subjectLine = event.productType === 'mod'
+    ? 'Stabilitatea alimentarii, atomizorul si buildul trebuie evaluate impreuna.'
+    : 'Camera de evaporare, alimentarea, geometria airflowului si buildul trebuie evaluate impreuna.';
+  return [
+    `${SITE}/`,
+    'FISA DOCUMENTATA IN GHID',
+    event.name,
+    '',
+    subjectLine,
+    '',
+    'Redarea coerenta a gustului depinde de potrivirea profilului lichidului, arhitecturii atomizorului si caracteristicilor buildului.',
+    '',
+    'Pentru modul de utilizare, configurare si detalii, consultati ghidul.',
+    '',
+    'Documentatie tehnica destinata adultilor 18+.',
+    '',
+    '#GhidRTA #RTAMTL #RTA #MTL #BuildRTA'
+  ].join('\n');
+}
+
+function instagramAltText(event) {
+  return `Fotografie documentara a produsului ${event.name}, prezentat in ghid-rta.ro.`.slice(0, 1000);
+}
+
+function publishedTodayCount(state, timestamp = nowIso()) {
+  const targetDate = dateInRomania(timestamp);
+  return state.history.filter(entry => dateInRomania(entry.publishedAt) === targetDate).length;
+}
+
+function planInstagramMirrors(campaignState, facebookState, instagramState, catalog, modsFeed, options = {}) {
+  const limit = Math.max(0, Number(options.maxPosts || DEFAULT_MAX_POSTS));
+  const allowed = Math.max(0, Number(options.dailyLimit || instagramState.dailyLimit || DEFAULT_DAILY_LIMIT)
+    - publishedTodayCount(instagramState, options.now || nowIso()));
+  if (!limit || !allowed) return { candidates: [], skipped: [] };
+
+  const queuedFamilies = new Set(instagramState.queue.map(item => item.identity));
+  const records = collectFacebookRecords(campaignState, facebookState);
+  const candidates = [];
+  const skipped = [];
+  for (const record of records) {
+    const identity = recordIdentity(record);
+    if (instagramState.mirroredFacebookPosts[record.sourcePostId]) continue;
+    if (instagramState.mirroredFamilies[identity]) continue;
+    if (queuedFamilies.has(identity)) continue;
+    try {
+      const event = resolveEventForRecord(record, catalog, modsFeed);
+      candidates.push({ record, event, identity });
+      if (candidates.length >= Math.min(limit, allowed)) break;
+    } catch (error) {
+      skipped.push({ sourcePostId: record.sourcePostId, name: record.name, reason: error.message });
+    }
+  }
+  return { candidates, skipped };
+}
+
+function assetFileName(candidate) {
+  const digest = crypto.createHash('sha256').update(candidate.record.sourcePostId).digest('hex').slice(0, 10);
+  return `${candidate.event.productType}-${candidate.event.slug}-${digest}.jpg`;
+}
+
+async function prepareCandidate(candidate, state, timestamp = nowIso()) {
+  let sharp;
+  try {
+    sharp = require('sharp');
+  } catch (error) {
+    throw new Error('Pregatirea fotografiei Instagram necesita dependenta Sharp instalata.');
+  }
+  fs.mkdirSync(ASSET_DIR, { recursive: true });
+  const fileName = assetFileName(candidate);
+  const absolutePath = path.join(ASSET_DIR, fileName);
+  if (candidate.event.requiresFacebookAttachment) {
+    candidate.event.image = await facebookPostPrimaryImage(candidate.record.sourcePostId);
+    candidate.event.productImage = candidate.event.image;
+    const source = await fetchImageBuffer(candidate.event.image);
+    await sharp(source, { failOn: 'error' })
+      .rotate()
+      .resize(1200, 1200, {
+        fit: 'contain',
+        background: { r: 242, g: 244, b: 243, alpha: 1 }
+      })
+      .flatten({ background: '#f2f4f3' })
+      .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
+      .toFile(absolutePath);
+  } else {
+    const png = await brandedProductImageBuffer(candidate.event);
+    await sharp(png)
+      .flatten({ background: '#f2f4f3' })
+      .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
+      .toFile(absolutePath);
+  }
+
+  const item = {
+    sourcePostId: candidate.record.sourcePostId,
+    sourcePublishedAt: candidate.record.sourcePublishedAt,
+    sourceState: candidate.record.source,
+    identity: candidate.identity,
+    productType: candidate.event.productType,
+    familyKey: candidate.event.familyKey,
+    slug: candidate.event.slug,
+    name: candidate.event.name,
+    sourceImage: candidate.event.image,
+    assetPath: `assets/instagram/${fileName}`,
+    imageUrl: `${SITE}/assets/instagram/${encodeURIComponent(fileName)}`,
+    caption: instagramCaption(candidate.event),
+    altText: instagramAltText(candidate.event),
+    formatVersion: MIRROR_FORMAT_VERSION,
+    preparedAt: timestamp
+  };
+  state.queue.push(item);
+  state.updatedAt = timestamp;
+  state.dailyLimit = dailyLimit;
+  if (!state.startedAt) state.startedAt = timestamp;
+  return item;
+}
+
+function validateInstagramState(state) {
+  const errors = [];
+  const queuedPosts = new Set();
+  const queuedFamilies = new Set();
+  for (const item of state.queue) {
+    if (!item.sourcePostId || !item.identity || !item.name || !item.imageUrl) errors.push('Coada Instagram contine o intrare incompleta.');
+    if (!/\.jpg$/i.test(item.imageUrl)) errors.push(`Imaginea Instagram pentru ${item.name || 'produs'} nu este JPEG.`);
+    if (queuedPosts.has(item.sourcePostId)) errors.push(`Postarea Facebook ${item.sourcePostId} este dublata in coada Instagram.`);
+    if (queuedFamilies.has(item.identity)) errors.push(`Modelul ${item.identity} este dublat in coada Instagram.`);
+    queuedPosts.add(item.sourcePostId);
+    queuedFamilies.add(item.identity);
+  }
+  return Array.from(new Set(errors));
+}
+
+async function graphRequest(endpoint, options = {}) {
+  const url = new URL(`https://graph.facebook.com/${graphVersion}/${String(endpoint).replace(/^\//, '')}`);
+  if (options.query) Object.entries(options.query).forEach(([key, value]) => url.searchParams.set(key, value));
+  const response = await fetch(url, {
+    method: options.method || 'GET',
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      ...(options.body ? { 'Content-Type': 'application/x-www-form-urlencoded' } : {})
+    },
+    body: options.body ? new URLSearchParams(options.body) : undefined,
+    signal: AbortSignal.timeout(options.timeout || 45000)
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok || data.error) {
+    const graphError = data.error || {};
+    const code = graphError.code ? ` cod ${graphError.code}` : '';
+    const subcode = graphError.error_subcode ? `/${graphError.error_subcode}` : '';
+    throw new Error(`Meta Graph API${code}${subcode}: ${graphError.message || `HTTP ${response.status}`}`);
+  }
+  return data;
+}
+
+function attachmentImageUrls(attachment) {
+  const urls = [];
+  const add = value => {
+    const url = String(value || '').trim();
+    if (/^https:\/\//i.test(url) && !urls.includes(url)) urls.push(url);
+  };
+  const visit = item => {
+    if (!item || typeof item !== 'object') return;
+    add(item.media && item.media.image && item.media.image.src);
+    add(item.media && item.media.source);
+    add(item.url);
+    [].concat(item.subattachments && item.subattachments.data || []).forEach(visit);
+  };
+  visit(attachment);
+  return urls;
+}
+
+async function facebookPostPrimaryImage(postId) {
+  if (!accessToken) throw new Error(`Fotografia istorica pentru ${postId} necesita tokenul Meta.`);
+  const post = await graphRequest(postId, {
+    query: { fields: 'attachments{media,target,url,subattachments{media,target,url}}' }
+  });
+  const candidates = [].concat(post.attachments && post.attachments.data || []).flatMap(attachmentImageUrls);
+  if (!candidates.length) throw new Error(`Postarea Facebook ${postId} nu mai expune o fotografie publica prin API.`);
+  return candidates[0];
+}
+
+async function fetchImageBuffer(url) {
+  const response = await fetch(url, {
+    redirect: 'follow',
+    cache: 'no-store',
+    signal: AbortSignal.timeout(30000)
+  });
+  const type = String(response.headers.get('content-type') || '');
+  if (!response.ok) throw new Error(`Fotografia Facebook raspunde HTTP ${response.status}.`);
+  if (!/^image\/(?:jpeg|png|webp|avif)/i.test(type)) throw new Error(`Fotografia Facebook are tipul media ${type || 'necunoscut'}.`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (!bytes.length || bytes.length > 20 * 1024 * 1024) throw new Error(`Fotografia Facebook are dimensiunea neacceptata ${bytes.length}.`);
+  return bytes;
+}
+
+async function verifyInstagramConnection() {
+  if (!pageId || !accessToken) {
+    throw new Error('FACEBOOK_PAGE_ID si FACEBOOK_PAGE_ACCESS_TOKEN sunt necesare pentru conexiunea Instagram.');
+  }
+  const page = await graphRequest(pageId, {
+    query: { fields: 'id,name,instagram_business_account{id,username,account_type,media_count,followers_count}' }
+  });
+  const accountId = String(page.instagram_business_account && page.instagram_business_account.id || '').trim();
+  if (!accountId) {
+    throw new Error('Pagina Facebook nu expune un cont Instagram Business sau Creator conectat tokenului curent.');
+  }
+  const account = await graphRequest(accountId, {
+    query: { fields: 'id,username,account_type,media_count,followers_count' }
+  });
+  const publishingLimit = await graphRequest(`${accountId}/content_publishing_limit`, {
+    query: { fields: 'config,quota_usage' }
+  });
+  return {
+    pageId: String(page.id || pageId),
+    pageName: String(page.name || ''),
+    id: accountId,
+    username: String(account.username || page.instagram_business_account.username || ''),
+    accountType: String(account.account_type || page.instagram_business_account.account_type || ''),
+    mediaCount: Number(account.media_count || 0),
+    followersCount: Number(account.followers_count || 0),
+    publishingLimit: publishingLimit.data && publishingLimit.data[0] || null
+  };
+}
+
+async function waitForPublicJpeg(url) {
+  let lastError;
+  for (let attempt = 0; attempt < 36; attempt += 1) {
+    try {
+      const response = await fetch(`${url}?v=${Date.now()}`, {
+        redirect: 'follow',
+        cache: 'no-store',
+        signal: AbortSignal.timeout(15000)
+      });
+      const type = String(response.headers.get('content-type') || '');
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      if (!/^image\/jpeg/i.test(type)) throw new Error(`tip media ${type || 'necunoscut'}`);
+      const bytes = Buffer.from(await response.arrayBuffer());
+      if (bytes.length < 10000) throw new Error(`imagine incompleta (${bytes.length} bytes)`);
+      return;
+    } catch (error) {
+      lastError = error;
+      if (attempt < 35) await new Promise(resolve => setTimeout(resolve, 5000));
+    }
+  }
+  throw new Error(`Imaginea Instagram nu a devenit publica: ${lastError && lastError.message || 'eroare necunoscuta'}`);
+}
+
+function captionMatchesQueueItem(caption, item) {
+  const normalized = String(caption || '').toLowerCase();
+  return normalized.includes('ghid-rta.ro') && normalized.includes(String(item.name || '').toLowerCase());
+}
+
+async function recentInstagramMedia(accountId) {
+  const response = await graphRequest(`${accountId}/media`, {
+    query: { fields: 'id,caption,permalink,timestamp,media_type', limit: '100' }
+  });
+  return Array.isArray(response.data) ? response.data : [];
+}
+
+async function waitForContainer(containerId) {
+  for (let attempt = 0; attempt < 6; attempt += 1) {
+    const status = await graphRequest(containerId, { query: { fields: 'status_code,status' } });
+    const code = String(status.status_code || '').toUpperCase();
+    if (code === 'FINISHED' || code === 'PUBLISHED') return code;
+    if (code === 'ERROR' || code === 'EXPIRED') throw new Error(`Containerul Instagram ${containerId} are status ${code}.`);
+    if (attempt < 5) await new Promise(resolve => setTimeout(resolve, 60000));
+  }
+  throw new Error(`Containerul Instagram ${containerId} nu a devenit pregatit in 5 minute.`);
+}
+
+function applyInstagramPublished(state, item, media, account, timestamp = nowIso(), source = 'instagram-content-publishing-api') {
+  const record = {
+    sourcePostId: item.sourcePostId,
+    sourcePublishedAt: item.sourcePublishedAt,
+    identity: item.identity,
+    productType: item.productType,
+    familyKey: item.familyKey,
+    slug: item.slug,
+    name: item.name,
+    imageUrl: item.imageUrl,
+    instagramMediaId: String(media.id || ''),
+    permalink: String(media.permalink || ''),
+    publishedAt: String(media.timestamp || timestamp),
+    source,
+    formatVersion: item.formatVersion || MIRROR_FORMAT_VERSION
+  };
+  state.queue = state.queue.filter(entry => entry.sourcePostId !== item.sourcePostId);
+  state.mirroredFacebookPosts[item.sourcePostId] = record;
+  state.mirroredFamilies[item.identity] = record;
+  state.history.unshift(record);
+  state.history = state.history.slice(0, 500);
+  state.updatedAt = timestamp;
+  state.pageId = account.pageId || state.pageId;
+  state.instagramUserId = account.id || state.instagramUserId;
+  state.username = account.username || state.username;
+  state.dailyLimit = dailyLimit;
+  if (!state.startedAt) state.startedAt = timestamp;
+  return record;
+}
+
+async function publishPrepared(state) {
+  if (!state.queue.length) {
+    console.log('Instagram mirror: nu exista nicio fotografie pregatita.');
+    return [];
+  }
+  const account = await verifyInstagramConnection();
+  const recent = await recentInstagramMedia(account.id);
+  const published = [];
+  const allowed = Math.max(0, dailyLimit - publishedTodayCount(state));
+  for (const item of state.queue.slice(0, Math.min(maxPosts, allowed))) {
+    await waitForPublicJpeg(item.imageUrl);
+    const existing = recent.find(media => captionMatchesQueueItem(media.caption, item));
+    if (existing) {
+      const record = applyInstagramPublished(state, item, existing, account, nowIso(), 'instagram-existing-media-detected');
+      published.push(record);
+      writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
+      console.log(`Instagram mirror already existed: ${item.name} (${existing.id}).`);
+      continue;
+    }
+
+    const container = await graphRequest(`${account.id}/media`, {
+      method: 'POST',
+      body: {
+        image_url: item.imageUrl,
+        caption: item.caption,
+        alt_text: item.altText
+      }
+    });
+    await waitForContainer(container.id);
+    const result = await graphRequest(`${account.id}/media_publish`, {
+      method: 'POST',
+      body: { creation_id: container.id }
+    });
+    const media = await graphRequest(result.id, {
+      query: { fields: 'id,caption,permalink,timestamp,media_type' }
+    });
+    const record = applyInstagramPublished(state, item, media, account);
+    published.push(record);
+    writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
+    console.log(`Instagram published ${item.productType}: ${item.name} (${media.id}).`);
+  }
+  return published;
+}
+
+async function main() {
+  const catalog = loadCatalog(ROOT);
+  const campaignState = readJson(CAMPAIGN_STATE_PATH, { history: [] });
+  const facebookState = readJson(FACEBOOK_STATE_PATH, { history: [] });
+  const modsFeed = readJson(MODS_PATH, { items: [] });
+  const state = normalizeInstagramState(readJson(INSTAGRAM_STATE_PATH, emptyInstagramState()));
+  const errors = validateInstagramState(state);
+  if (errors.length) throw new Error(errors.join('\n'));
+
+  if (verifyConnectionOnly) {
+    const account = await verifyInstagramConnection();
+    console.log(`Instagram connected: @${account.username || account.id} (${account.accountType || 'professional'}), Page ${account.pageName || account.pageId}.`);
+    return;
+  }
+
+  const plan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
+    maxPosts,
+    dailyLimit
+  });
+  if (pendingCountOnly) {
+    process.stdout.write(String(plan.candidates.length + state.queue.length));
+    return;
+  }
+  if (checkOnly) {
+    console.log(`Instagram mirror state valid; ${plan.candidates.length} candidate(s), ${state.queue.length} prepared, ${plan.skipped.length} skipped safely.`);
+    return;
+  }
+  if (prepareOnly) {
+    if (state.queue.length) {
+      console.log(`Instagram mirror: ${state.queue.length} fotografie pregatita asteapta publicarea.`);
+      return;
+    }
+    if (!plan.candidates.length) {
+      console.log('Instagram mirror: nu exista postari Facebook eligibile si neverificate.');
+      return;
+    }
+    for (const candidate of plan.candidates.slice(0, maxPosts)) {
+      const item = await prepareCandidate(candidate, state);
+      console.log(`Instagram prepared ${item.productType}: ${item.name} (${item.assetPath}).`);
+    }
+    writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
+    return;
+  }
+  if (publishPreparedOnly) {
+    await publishPrepared(state);
+    return;
+  }
+
+  console.log(JSON.stringify({
+    prepared: state.queue.map(item => ({ name: item.name, imageUrl: item.imageUrl })),
+    candidates: plan.candidates.map(item => ({ name: item.event.name, productType: item.event.productType, sourcePostId: item.record.sourcePostId })),
+    skipped: plan.skipped
+  }, null, 2));
+}
+
+module.exports = {
+  applyInstagramPublished,
+  captionMatchesQueueItem,
+  collectFacebookRecords,
+  emptyInstagramState,
+  instagramAltText,
+  instagramCaption,
+  normalizeInstagramState,
+  planInstagramMirrors,
+  publishedTodayCount,
+  recordIdentity,
+  recordProductType,
+  resolveEventForRecord,
+  validateInstagramState
+};
+
+if (require.main === module) {
+  main().catch(error => {
+    console.error(error.stack || error.message);
+    process.exit(1);
+  });
+}

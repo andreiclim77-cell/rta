@@ -40,8 +40,9 @@ jobs:
           node --check data/youtube-reviews.js
           node --check tools/sync-smokee-mods.js
           node --check tools/facebook-publisher.js
+          node --check tools/instagram-publisher.js
           node --check cloudflare/smokee-sync-backup/worker.mjs
-          node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/instagram-publish-state.json','utf8'))"
       - name: Validate catalog and public pages
         run: |
           node tools/rewrite-smokee-images.js
@@ -50,6 +51,7 @@ jobs:
           node tools/check-smokee-mods.js
           node tools/check-smokee-mod-fallback.js
           node tools/check-facebook-publisher.js
+          node tools/check-instagram-publisher.js
           node tools/check-validation-queue.js
           node tools/facebook-publisher.js --check
           node tools/validate-seo-pages.js
