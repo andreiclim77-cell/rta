@@ -1979,6 +1979,7 @@ function applyCampaignZeroNicotineUpdate(stateValue, slug, event, oldPostId, pos
 
 function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState, options = {}) {
   const atomsBySlug = new Map(uniqueAtomizers(catalog).map(atom => [slugify(atom.name), atom]));
+  const requestedModel = canonicalAtomizerSlug(options.model || '');
   const records = [];
   const seenPostIds = new Set();
   Object.entries(campaignState.postedAtomizers || {}).forEach(([slug, entry]) => {
@@ -1995,7 +1996,10 @@ function zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState
   });
   const modsFeed = readJson(MODS_PATH, { items: [] });
   const rotation = createHighEndModRotation(modsFeed, emptyCampaignState(), emptyState(), { reset: true });
-  return records.sort((a, b) => String(a.publishedAt || '').localeCompare(String(b.publishedAt || ''))).map(record => {
+  return records
+    .filter(record => !requestedModel || canonicalAtomizerSlug(record.entry && record.entry.name || record.slug) === requestedModel)
+    .sort((a, b) => String(a.publishedAt || '').localeCompare(String(b.publishedAt || '')))
+    .map(record => {
     const atom = atomsBySlug.get(record.slug);
     if (!atom) throw new Error(`Atomizorul ${record.entry.name || record.slug} nu mai există în catalog.`);
     const mod = rotation.pick(atom);
@@ -2021,7 +2025,8 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
   const publishState = readJson(STATE_PATH, emptyState());
   const requestedModel = canonicalAtomizerSlug(options.model || '');
   const candidates = zeroNicotineRepairCandidates(catalog, feed, campaignState, publishState, {
-    forceReplace: options.forceReplace === true
+    forceReplace: options.forceReplace === true,
+    model: options.model
   })
     .filter(candidate => !requestedModel || canonicalAtomizerSlug(candidate.event.name) === requestedModel)
     .slice(0, Number.isFinite(Number(options.maxPosts)) ? Math.max(1, Number(options.maxPosts)) : Number.POSITIVE_INFINITY);
@@ -2044,7 +2049,7 @@ async function repairZeroNicotineGalleryPosts(options = {}) {
   if (options.checkOnly) {
     prepared.forEach(candidate => {
       const operation = candidate.replace ? 'replace gallery' : 'update notice';
-      console.log(`Facebook zero-nicotine repair ready: ${candidate.event.name} -> ${operation} -> ${candidate.event.mod.title}.`);
+      console.log(`Facebook post repair ready: ${candidate.event.name} -> ${operation} -> exact product photo.`);
     });
     skipped.forEach(item => {
       const candidate = item.candidate;
