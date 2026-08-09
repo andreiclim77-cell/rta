@@ -14,9 +14,22 @@ const {
 
 const ROOT = path.resolve(__dirname, '..');
 const SITE = 'https://ghid-rta.ro';
+const FACEBOOK = 'https://www.facebook.com/people/Ghid-RTA-MTL-Smokee/61591714687854/';
+const YOUTUBE = 'https://www.youtube.com/channel/UC1qvsV0iLsWRXJDdkgMAe7w';
 const TODAY = new Intl.DateTimeFormat('en-CA', {
   timeZone: 'Europe/Bucharest', year: 'numeric', month: '2-digit', day: '2-digit'
 }).format(new Date());
+
+function publisher() {
+  return {
+    '@type': 'Organization',
+    '@id': `${SITE}/#organization`,
+    name: 'Ghid RTA MTL - Smokee',
+    url: `${SITE}/`,
+    logo: { '@type': 'ImageObject', url: `${SITE}/assets/favicon-512.png` },
+    sameAs: [FACEBOOK, YOUTUBE]
+  };
+}
 
 function esc(value) {
   return String(value == null ? '' : value)
@@ -83,6 +96,8 @@ function pageHead({ title, description, canonical, image, type = 'article', json
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="theme-color" content="#080808">
   <link rel="canonical" href="${esc(canonical)}">
+  <link rel="me" href="${FACEBOOK}">
+  <link rel="me" href="${YOUTUBE}">
   <link rel="alternate" hreflang="ro-RO" href="${esc(canonical)}">
   <link rel="alternate" hreflang="x-default" href="${esc(canonical)}">
   <link rel="icon" href="/assets/favicon-192.png">
@@ -93,10 +108,14 @@ function pageHead({ title, description, canonical, image, type = 'article', json
   <meta property="og:description" content="${esc(description)}">
   <meta property="og:url" content="${esc(canonical)}">
   <meta property="og:image" content="${esc(safeImage)}">
+  <meta property="og:image:secure_url" content="${esc(safeImage)}">
+  <meta property="og:image:alt" content="${esc(title)}">
+  <meta property="article:modified_time" content="${TODAY}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${esc(title)}">
   <meta name="twitter:description" content="${esc(description)}">
   <meta name="twitter:image" content="${esc(safeImage)}">
+  <meta name="twitter:image:alt" content="${esc(title)}">
   <link rel="stylesheet" href="/assets/seo-pages.css">
   <link rel="stylesheet" href="/assets/enhancements.css">
   <script type="application/ld+json">${JSON.stringify(jsonLd).replace(/</g, '\\u003c')}</script>
@@ -108,7 +127,7 @@ function topBar() {
 }
 
 function footer() {
-  return `<footer class="footer"><div class="wrap"><span>Ghid informativ 18+ pentru RTA MTL.</span><span><a href="/">Home</a> · <a href="/atomizoare/">Atomizoare</a> · <a href="/lichide/clase/">Clase lichide</a> · <a href="/#methodology">Metodologie</a></span></div></footer>`;
+  return `<footer class="footer"><div class="wrap"><span>Ghid informativ 18+ pentru RTA MTL.</span><span><a href="/">Home</a> · <a href="/atomizoare/">Atomizoare</a> · <a href="/lichide/clase/">Clase lichide</a> · <a href="/#methodology">Metodologie</a> · <a href="${FACEBOOK}" target="_blank" rel="noopener noreferrer">Facebook</a> · <a href="${YOUTUBE}" target="_blank" rel="noopener noreferrer">YouTube</a></span></div></footer>`;
 }
 
 function atomPage(atom) {
@@ -125,6 +144,7 @@ function atomPage(atom) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@graph': [
+      publisher(),
       {
         '@type': 'TechArticle',
         headline: `${name} - profil RTA MTL`,
@@ -133,7 +153,10 @@ function atomPage(atom) {
         image,
         inLanguage: 'ro-RO',
         dateModified: TODAY,
-        author: { '@type': 'Organization', name: 'Ghid RTA MTL - Smokee', url: SITE },
+        author: { '@id': `${SITE}/#organization` },
+        publisher: { '@id': `${SITE}/#organization` },
+        isAccessibleForFree: true,
+        audience: { '@type': 'PeopleAudience', suggestedMinAge: 18 },
         about: ['RTA MTL', name, 'lichide NET', 'sarme RTA', 'build MTL']
       },
       {
@@ -195,16 +218,23 @@ function liquidClusterPage(cluster, profiles, generatedAtomSlugs) {
   };
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: `${cluster.title} pentru RTA MTL`,
-    description: cluster.description,
-    url: canonical,
-    inLanguage: 'ro-RO',
-    dateModified: TODAY,
-    mainEntity: {
-      '@type': 'ItemList',
-      itemListElement: matches.slice(0, 12).map((profile, index) => ({ '@type': 'ListItem', position: index + 1, name: profile.name }))
-    }
+    '@graph': [
+      publisher(),
+      {
+        '@type': 'CollectionPage',
+        name: `${cluster.title} pentru RTA MTL`,
+        description: cluster.description,
+        url: canonical,
+        inLanguage: 'ro-RO',
+        dateModified: TODAY,
+        isAccessibleForFree: true,
+        publisher: { '@id': `${SITE}/#organization` },
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: matches.slice(0, 12).map((profile, index) => ({ '@type': 'ListItem', position: index + 1, name: profile.name }))
+        }
+      }
+    ]
   };
   return `${pageHead({ title: `${cluster.title} pentru RTA MTL - atomizoare și sârme`, description: cluster.description, canonical, image: `${SITE}/assets/rta-hero-background.png`, jsonLd })}
 <body>
@@ -225,7 +255,7 @@ ${footer()}
 function atomIndexPage(atoms) {
   const canonical = `${SITE}/atomizoare/`;
   const description = `${atoms.length} de profiluri RTA MTL documentate cu builduri, potriviri pentru NET și TUTUN, surse și acces la comparator.`;
-  const jsonLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Atomizoare RTA MTL documentate', description, url: canonical, mainEntity: { '@type': 'ItemList', itemListElement: atoms.slice(0, 60).map((atom, index) => ({ '@type': 'ListItem', position: index + 1, name: publicAtomName(atom.name), url: `${SITE}/atomizoare/${slugify(publicAtomName(atom.name))}/` })) } };
+  const jsonLd = { '@context': 'https://schema.org', '@graph': [publisher(), { '@type': 'CollectionPage', name: 'Atomizoare RTA MTL documentate', description, url: canonical, dateModified: TODAY, isAccessibleForFree: true, publisher: { '@id': `${SITE}/#organization` }, mainEntity: { '@type': 'ItemList', itemListElement: atoms.slice(0, 60).map((atom, index) => ({ '@type': 'ListItem', position: index + 1, name: publicAtomName(atom.name), url: `${SITE}/atomizoare/${slugify(publicAtomName(atom.name))}/` })) } }] };
   return `${pageHead({ title: 'Atomizoare RTA MTL documentate - builduri și surse', description, canonical, image: `${SITE}/assets/rta-hero-background.png`, jsonLd })}
 <body>${topBar()}<main class="wrap catalog-detail"><section class="hero"><p class="kicker">Bibliotecă RTA MTL</p><h1>Atomizoare documentate</h1><p class="lead">Pagini individuale pentru modelele cu date suficiente despre potrivire, builduri și surse.</p><div class="actions"><a class="btn" href="/#comparator">Comparator RTA</a><a class="btn secondary" href="/#atomizers">Catalog interactiv</a></div></section><section class="catalog-section"><div class="catalog-directory">${atoms.map(atom => `<a class="directory-item" href="/atomizoare/${esc(slugify(publicAtomName(atom.name)))}/"><b>${esc(publicAtomName(atom.name))}</b><span>${esc(cleanText(atom.classes || 'RTA MTL pentru tutun și NET').slice(0, 105))}</span></a>`).join('')}</div></section></main>${footer()}</body></html>\n`;
 }
@@ -233,7 +263,7 @@ function atomIndexPage(atoms) {
 function liquidIndexPage() {
   const canonical = `${SITE}/lichide/clase/`;
   const description = 'Clase de lichide NET și TUTUN pentru alegerea atomizorului RTA MTL și a sârmei potrivite.';
-  const jsonLd = { '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Clase lichide NET și TUTUN', description, url: canonical, mainEntity: { '@type': 'ItemList', itemListElement: LIQUID_CLUSTERS.map((cluster, index) => ({ '@type': 'ListItem', position: index + 1, name: cluster.title, url: `${SITE}/lichide/${cluster.slug}/` })) } };
+  const jsonLd = { '@context': 'https://schema.org', '@graph': [publisher(), { '@type': 'CollectionPage', name: 'Clase lichide NET și TUTUN', description, url: canonical, dateModified: TODAY, isAccessibleForFree: true, publisher: { '@id': `${SITE}/#organization` }, mainEntity: { '@type': 'ItemList', itemListElement: LIQUID_CLUSTERS.map((cluster, index) => ({ '@type': 'ListItem', position: index + 1, name: cluster.title, url: `${SITE}/lichide/${cluster.slug}/` })) } }] };
   return `${pageHead({ title: 'Clase lichide NET și TUTUN pentru RTA MTL', description, canonical, image: `${SITE}/assets/rta-hero-background.png`, jsonLd })}<body>${topBar()}<main class="wrap catalog-detail"><section class="hero"><p class="kicker">NET și TUTUN</p><h1>Clase aromatice pentru RTA MTL</h1><p class="lead">Profilurile sunt grupate după frunza de tutun, complexitate și intenția de gust.</p><div class="actions"><a class="btn" href="/#recommender">Recomandare</a><a class="btn secondary" href="/#profiles">Taxonomia completă</a></div></section><section class="catalog-section"><div class="grid">${LIQUID_CLUSTERS.map(cluster => `<article class="card wide"><span class="chip">Clasă aromatică</span><h2>${esc(cluster.title)}</h2><p>${esc(cluster.description)}</p><a class="btn secondary" href="/lichide/${esc(cluster.slug)}/">Deschide ghidul</a></article>`).join('')}</div></section></main>${footer()}</body></html>\n`;
 }
 
@@ -252,8 +282,28 @@ function updateGeneratedBlock(filePath, startMarker, endMarker, content, beforeT
   fs.writeFileSync(filePath, source, 'utf8');
 }
 
-function sitemapEntry(url, priority, image) {
-  return `  <url>\n    <loc>${xml(url)}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>${image ? `\n    <image:image><image:loc>${xml(image)}</image:loc></image:image>` : ''}\n  </url>`;
+function sitemapEntry(url, priority, image, imageTitle) {
+  const imageBlock = image
+    ? `\n    <image:image>\n      <image:loc>${xml(image)}</image:loc>\n      <image:title>${xml(imageTitle || 'Ghid RTA MTL')}</image:title>\n      <image:caption>${xml(`${imageTitle || 'RTA MTL'} - profil, builduri si surse`)}</image:caption>\n    </image:image>`
+    : '';
+  return `  <url>\n    <loc>${xml(url)}</loc>\n    <lastmod>${TODAY}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>${priority}</priority>${imageBlock}\n  </url>`;
+}
+
+function refreshPrimarySeo() {
+  const indexPath = path.join(ROOT, 'index.html');
+  let html = fs.readFileSync(indexPath, 'utf8');
+  html = html
+    .replace(/(<meta property="og:updated_time" content=")[^"]+(" \/>)/, `$1${TODAY}T00:00:00Z$2`)
+    .replace(/("dateModified"\s*:\s*")\d{4}-\d{2}-\d{2}("\s*)/g, `$1${TODAY}$2`);
+  fs.writeFileSync(indexPath, html, 'utf8');
+
+  const sitemapPath = path.join(ROOT, 'sitemap.xml');
+  let sitemap = fs.readFileSync(sitemapPath, 'utf8');
+  sitemap = sitemap.replace(
+    /(<loc>https:\/\/ghid-rta\.ro\/<\/loc>\s*<lastmod>)\d{4}-\d{2}-\d{2}(<\/lastmod>)/,
+    `$1${TODAY}$2`
+  );
+  fs.writeFileSync(sitemapPath, sitemap, 'utf8');
 }
 
 function main() {
@@ -268,11 +318,12 @@ function main() {
   const urls = [
     sitemapEntry(`${SITE}/en/`, '0.95'),
     sitemapEntry(`${SITE}/atomizoare/`, '0.94'),
-    ...atoms.map(atom => sitemapEntry(`${SITE}/atomizoare/${slugify(publicAtomName(atom.name))}/`, '0.78', atomPageImage(atom))),
+    ...atoms.map(atom => sitemapEntry(`${SITE}/atomizoare/${slugify(publicAtomName(atom.name))}/`, '0.78', atomPageImage(atom), publicAtomName(atom.name))),
     sitemapEntry(`${SITE}/lichide/clase/`, '0.91'),
     ...LIQUID_CLUSTERS.map(cluster => sitemapEntry(`${SITE}/lichide/${cluster.slug}/`, '0.82'))
   ];
   updateGeneratedBlock(path.join(ROOT, 'sitemap.xml'), '<!-- GENERATED-CATALOG-START -->', '<!-- GENERATED-CATALOG-END -->', urls.join('\n'), '</urlset>');
+  refreshPrimarySeo();
 
   const llmLines = [
     '- English application: https://ghid-rta.ro/en/',

@@ -86,6 +86,13 @@ for (const file of pages) {
     check(html.includes('assets/seo-pages.css'), `${file}: missing shared SEO CSS`);
   }
 
+  if (file.startsWith('atomizoare/') || file.startsWith('lichide/')) {
+    check(html.includes('<link rel="me" href="https://www.facebook.com/people/Ghid-RTA-MTL-Smokee/61591714687854/">'), `${file}: missing Facebook identity link`);
+    check(html.includes('<link rel="me" href="https://www.youtube.com/channel/UC1qvsV0iLsWRXJDdkgMAe7w">'), `${file}: missing YouTube identity link`);
+    check(html.includes('property="og:image:alt"'), `${file}: missing Open Graph image description`);
+    check(html.includes('name="twitter:image:alt"'), `${file}: missing social image description`);
+  }
+
   const canonicalMatch = html.match(/<link\s+rel=["']canonical["']\s+href=["']([^"']+)/i);
   if (canonicalMatch) {
     const canonical = canonicalMatch[1];
@@ -129,6 +136,19 @@ const sitemap = fs.readFileSync(path.join(ROOT, 'sitemap.xml'), 'utf8');
 const sitemapUrls = [...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => match[1]);
 check(sitemapUrls.length === new Set(sitemapUrls).size, 'sitemap.xml contains duplicate URLs');
 for (const canonical of canonicalOwners.keys()) check(sitemapUrls.includes(canonical), `sitemap.xml: missing ${canonical}`);
+
+const homeUpdated = rootHtml.match(/<meta property="og:updated_time" content="(\d{4}-\d{2}-\d{2})T/i);
+const homeModified = rootHtml.match(/"dateModified"\s*:\s*"(\d{4}-\d{2}-\d{2})"/);
+const homeSitemap = sitemap.match(/<loc>https:\/\/ghid-rta\.ro\/<\/loc>\s*<lastmod>(\d{4}-\d{2}-\d{2})<\/lastmod>/);
+check(Boolean(homeUpdated), 'index.html: missing parseable og:updated_time');
+check(Boolean(homeModified), 'index.html: missing parseable dateModified');
+check(Boolean(homeSitemap), 'sitemap.xml: missing root lastmod');
+if (homeUpdated && homeModified && homeSitemap) {
+  check(homeUpdated[1] === homeModified[1], 'index.html: social and schema freshness dates differ');
+  check(homeUpdated[1] === homeSitemap[1], 'sitemap.xml: root lastmod differs from page freshness');
+}
+check(rootHtml.includes('"@id": "https://ghid-rta.ro/#organization"'), 'index.html: missing guide organization identity');
+check(rootHtml.includes('https://www.facebook.com/people/Ghid-RTA-MTL-Smokee/61591714687854/'), 'index.html: missing Facebook identity link');
 
 if (failures.length) {
   console.error(failures.map(item => `- ${item}`).join('\n'));
