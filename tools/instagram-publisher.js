@@ -608,7 +608,7 @@ async function discoverManualFacebookRecords(knownPostIds) {
     if (!posts.length || !nextAfter || nextAfter === after) break;
     after = nextAfter;
   }
-  return records;
+  return Array.from(new Map(records.map(record => [record.sourcePostId, record])).values());
 }
 
 function mergeManualFacebookRecords(state, records) {
