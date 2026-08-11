@@ -21,6 +21,7 @@ const {
 const ROOT = path.resolve(__dirname, '..');
 const CAMPAIGN_STATE_PATH = path.join(ROOT, 'data', 'facebook-campaign-state.json');
 const FACEBOOK_STATE_PATH = path.join(ROOT, 'data', 'facebook-publish-state.json');
+const FACEBOOK_PHOTO_STATE_PATH = path.join(ROOT, 'data', 'facebook-hourly-photo-state.json');
 const INSTAGRAM_STATE_PATH = path.join(ROOT, 'data', 'instagram-publish-state.json');
 const MODS_PATH = path.join(ROOT, 'data', 'smokee-mods.json');
 const ASSET_DIR = path.join(ROOT, 'assets', 'instagram');
@@ -129,12 +130,14 @@ function syncBackfillSummary(state, records, timestamp = nowIso()) {
 
 function recordProductType(entry) {
   const type = String(entry && (entry.productType || entry.type) || '').toLowerCase();
+  if (type === 'editorial') return 'editorial';
   if (type === 'mod' || String(entry && entry.key || '').startsWith('mod:')) return 'mod';
   return 'atomizer';
 }
 
 function recordFamilyKey(entry) {
   const type = recordProductType(entry);
+  if (type === 'editorial') return slugify(entry && (entry.familyKey || entry.key || entry.name));
   if (type === 'mod') {
     return modFamilyKey({ familyKey: entry && entry.familyKey, title: entry && entry.name }) || slugify(entry && entry.name);
   }
@@ -159,11 +162,12 @@ function normalizeFacebookRecord(entry, source) {
     familyKey,
     slug: String(entry.slug || '').trim(),
     key: String(entry.key || '').trim(),
-    name
+    name,
+    image: String(entry.image || '').trim()
   };
 }
 
-function collectFacebookRecords(campaignState, facebookState) {
+function collectFacebookRecords(campaignState, facebookState, photoState) {
   const records = [];
   [].concat(campaignState && campaignState.history || []).forEach(entry => {
     const normalized = normalizeFacebookRecord(entry, 'facebook-campaign-state');
@@ -171,6 +175,16 @@ function collectFacebookRecords(campaignState, facebookState) {
   });
   [].concat(facebookState && facebookState.history || []).forEach(entry => {
     const normalized = normalizeFacebookRecord(entry, 'facebook-publish-state');
+    if (normalized) records.push(normalized);
+  });
+  [].concat(photoState && photoState.history || []).forEach((entry, index) => {
+    const normalized = normalizeFacebookRecord({
+      ...entry,
+      type: 'editorial',
+      familyKey: entry && entry.key,
+      slug: entry && entry.key,
+      name: `Cadru RTA MTL ${String(index + 1).padStart(2, '0')}`
+    }, 'facebook-hourly-photo-state');
     if (normalized) records.push(normalized);
   });
   records.sort((a, b) => String(b.sourcePublishedAt).localeCompare(String(a.sourcePublishedAt)) || a.name.localeCompare(b.name));
@@ -210,6 +224,19 @@ function exactModForRecord(record, modsFeed) {
 }
 
 function resolveEventForRecord(record, catalog, modsFeed) {
+  if (record.productType === 'editorial') {
+    return {
+      type: 'editorial',
+      productType: 'editorial',
+      familyKey: record.familyKey,
+      slug: record.slug || record.familyKey,
+      name: record.name,
+      image: record.image,
+      productImage: record.image,
+      preserveBranding: true,
+      requiresFacebookAttachment: !/^https:\/\//i.test(record.image)
+    };
+  }
   if (record.productType === 'mod') {
     const mod = exactModForRecord(record, modsFeed);
     const image = String(mod && mod.image || '').trim();
@@ -240,9 +267,11 @@ function resolveEventForRecord(record, catalog, modsFeed) {
 }
 
 function instagramCaption(event) {
-  const subjectLine = event.productType === 'mod'
-    ? 'Stabilitatea alimentarii, atomizorul si buildul trebuie evaluate impreuna.'
-    : 'Camera de evaporare, alimentarea, geometria airflowului si buildul trebuie evaluate impreuna.';
+  const subjectLine = event.productType === 'editorial'
+    ? 'Un cadru dedicat configuratiilor RTA MTL si documentatiei tehnice pentru adulti.'
+    : event.productType === 'mod'
+      ? 'Stabilitatea alimentarii, atomizorul si buildul trebuie evaluate impreuna.'
+      : 'Camera de evaporare, alimentarea, geometria airflowului si buildul trebuie evaluate impreuna.';
   return [
     `${SITE}/`,
     'FISA DOCUMENTATA IN GHID',
@@ -276,7 +305,7 @@ function planInstagramMirrors(campaignState, facebookState, instagramState, cata
   if (!limit || !allowed) return { candidates: [], skipped: [] };
 
   const queuedFamilies = new Set(instagramState.queue.map(item => item.identity));
-  const records = collectFacebookRecords(campaignState, facebookState);
+  const records = collectFacebookRecords(campaignState, facebookState, options.photoState);
   const candidates = [];
   const skipped = [];
   for (const record of records) {
@@ -314,11 +343,25 @@ async function prepareCandidate(candidate, state, timestamp = nowIso()) {
     candidate.event.image = await facebookPostPrimaryImage(candidate.record.sourcePostId);
     candidate.event.productImage = candidate.event.image;
   }
-  const png = await brandedProductImageBuffer(candidate.event);
-  await sharp(png)
-    .flatten({ background: '#f2f4f3' })
-    .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
-    .toFile(absolutePath);
+  if (candidate.event.preserveBranding) {
+    const relativePath = decodeURIComponent(new URL(candidate.event.image).pathname).replace(/^\/+/, '');
+    const sourcePath = path.join(ROOT, relativePath);
+    await sharp(sourcePath, { failOn: 'error' })
+      .rotate()
+      .resize(1200, 1200, {
+        fit: 'contain',
+        background: { r: 242, g: 244, b: 243, alpha: 1 }
+      })
+      .flatten({ background: '#f2f4f3' })
+      .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
+      .toFile(absolutePath);
+  } else {
+    const png = await brandedProductImageBuffer(candidate.event);
+    await sharp(png)
+      .flatten({ background: '#f2f4f3' })
+      .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
+      .toFile(absolutePath);
+  }
 
   const item = {
     sourcePostId: candidate.record.sourcePostId,
@@ -560,9 +603,10 @@ async function main() {
   const catalog = loadCatalog(ROOT);
   const campaignState = readJson(CAMPAIGN_STATE_PATH, { history: [] });
   const facebookState = readJson(FACEBOOK_STATE_PATH, { history: [] });
+  const photoState = readJson(FACEBOOK_PHOTO_STATE_PATH, { history: [] });
   const modsFeed = readJson(MODS_PATH, { items: [] });
   const state = normalizeInstagramState(readJson(INSTAGRAM_STATE_PATH, emptyInstagramState()));
-  const facebookRecords = collectFacebookRecords(campaignState, facebookState);
+  const facebookRecords = collectFacebookRecords(campaignState, facebookState, photoState);
   const errors = validateInstagramState(state);
   if (errors.length) throw new Error(errors.join('\n'));
 
@@ -574,7 +618,8 @@ async function main() {
 
   const plan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
     maxPosts,
-    dailyLimit
+    dailyLimit,
+    photoState
   });
   if (pendingCountOnly) {
     process.stdout.write(String(plan.candidates.length + state.queue.length));
