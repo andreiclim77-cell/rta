@@ -414,14 +414,14 @@ async function verifyInstagramConnection() {
     throw new Error('FACEBOOK_PAGE_ID si FACEBOOK_PAGE_ACCESS_TOKEN sunt necesare pentru conexiunea Instagram.');
   }
   const page = await graphRequest(pageId, {
-    query: { fields: 'id,name,instagram_business_account{id,username,account_type,media_count,followers_count}' }
+    query: { fields: 'id,name,instagram_business_account{id,username}' }
   });
   const accountId = String(page.instagram_business_account && page.instagram_business_account.id || '').trim();
   if (!accountId) {
     throw new Error('Pagina Facebook nu expune un cont Instagram Business sau Creator conectat tokenului curent.');
   }
   const account = await graphRequest(accountId, {
-    query: { fields: 'id,username,account_type,media_count,followers_count' }
+    query: { fields: 'id,username,media_count,followers_count' }
   });
   const publishingLimit = await graphRequest(`${accountId}/content_publishing_limit`, {
     query: { fields: 'config,quota_usage' }
@@ -431,7 +431,6 @@ async function verifyInstagramConnection() {
     pageName: String(page.name || ''),
     id: accountId,
     username: String(account.username || page.instagram_business_account.username || ''),
-    accountType: String(account.account_type || page.instagram_business_account.account_type || ''),
     mediaCount: Number(account.media_count || 0),
     followersCount: Number(account.followers_count || 0),
     publishingLimit: publishingLimit.data && publishingLimit.data[0] || null
@@ -569,7 +568,7 @@ async function main() {
 
   if (verifyConnectionOnly) {
     const account = await verifyInstagramConnection();
-    console.log(`Instagram connected: @${account.username || account.id} (${account.accountType || 'professional'}), Page ${account.pageName || account.pageId}.`);
+    console.log(`Instagram connected: @${account.username || account.id}, Page ${account.pageName || account.pageId}.`);
     return;
   }
 

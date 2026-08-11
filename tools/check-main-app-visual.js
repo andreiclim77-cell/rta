@@ -94,6 +94,7 @@ async function checkOverflow(page) {
     const socialHeader = await page.evaluate(() => {
       const search = document.querySelector(".site-search");
       const youtube = document.querySelector(".youtube-head-link");
+      const instagram = document.querySelector(".instagram-head-link");
       const facebook = document.querySelector(".facebook-head-link");
       const rect = (element) => {
         const box = element?.getBoundingClientRect();
@@ -104,15 +105,20 @@ async function checkOverflow(page) {
       return {
         search: rect(search),
         youtube: rect(youtube),
+        instagram: rect(instagram),
         facebook: rect(facebook),
       };
     });
     if (
       !socialHeader.search ||
       !socialHeader.youtube ||
+      !socialHeader.instagram ||
       !socialHeader.facebook ||
       socialHeader.youtube.left < socialHeader.search.left ||
       socialHeader.youtube.right > socialHeader.search.right + 1 ||
+      socialHeader.instagram.left < socialHeader.youtube.right ||
+      socialHeader.instagram.right > socialHeader.search.right + 1 ||
+      socialHeader.facebook.left < socialHeader.instagram.right ||
       socialHeader.facebook.right > socialHeader.search.right + 1
     ) {
       failures.push({ viewport: viewport.name, socialHeader });
