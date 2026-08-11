@@ -12,6 +12,7 @@ const {
   normalizeInstagramState,
   planInstagramMirrors,
   recordIdentity,
+  syncBackfillSummary,
   validateInstagramState
 } = require('./instagram-publisher');
 
@@ -26,6 +27,9 @@ const state = normalizeInstagramState(emptyInstagramState());
 const records = collectFacebookRecords(campaignState, facebookState);
 assert(records.length > 0, 'Facebook history should expose mirrorable product records');
 assert.strictEqual(new Set(records.map(recordIdentity)).size, records.length, 'Facebook records must be deduplicated by product family');
+const backfill = syncBackfillSummary(state, records, '2026-08-11T08:00:00.000Z');
+assert.strictEqual(backfill.total, records.length, 'Backfill summary must include every unique Facebook product family');
+assert.strictEqual(backfill.remaining, records.length, 'Fresh Instagram state must retain the complete Facebook backfill');
 
 const plan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
   maxPosts: 500,

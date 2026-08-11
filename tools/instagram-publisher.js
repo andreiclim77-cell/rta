@@ -76,6 +76,12 @@ function emptyInstagramState() {
     instagramUserId: '',
     username: '',
     dailyLimit: DEFAULT_DAILY_LIMIT,
+    backfill: {
+      total: 0,
+      completed: 0,
+      remaining: 0,
+      updatedAt: ''
+    },
     queue: [],
     mirroredFacebookPosts: {},
     mirroredFamilies: {},
@@ -92,6 +98,9 @@ function normalizeInstagramState(value) {
   state.instagramUserId = String(state.instagramUserId || '');
   state.username = String(state.username || '');
   state.dailyLimit = Math.max(1, Number(state.dailyLimit || DEFAULT_DAILY_LIMIT));
+  state.backfill = state.backfill && typeof state.backfill === 'object'
+    ? state.backfill
+    : { total: 0, completed: 0, remaining: 0, updatedAt: '' };
   state.queue = Array.isArray(state.queue) ? state.queue : [];
   state.mirroredFacebookPosts = state.mirroredFacebookPosts && typeof state.mirroredFacebookPosts === 'object'
     ? state.mirroredFacebookPosts
@@ -101,6 +110,21 @@ function normalizeInstagramState(value) {
     : {};
   state.history = Array.isArray(state.history) ? state.history : [];
   return state;
+}
+
+function syncBackfillSummary(state, records, timestamp = nowIso()) {
+  const remaining = records.filter(record => {
+    const identity = recordIdentity(record);
+    return !state.mirroredFacebookPosts[record.sourcePostId] && !state.mirroredFamilies[identity];
+  }).length;
+  state.backfill = {
+    total: records.length,
+    completed: records.length - remaining,
+    remaining,
+    updatedAt: timestamp
+  };
+  state.updatedAt = timestamp;
+  return state.backfill;
 }
 
 function recordProductType(entry) {
@@ -289,23 +313,12 @@ async function prepareCandidate(candidate, state, timestamp = nowIso()) {
   if (candidate.event.requiresFacebookAttachment) {
     candidate.event.image = await facebookPostPrimaryImage(candidate.record.sourcePostId);
     candidate.event.productImage = candidate.event.image;
-    const source = await fetchImageBuffer(candidate.event.image);
-    await sharp(source, { failOn: 'error' })
-      .rotate()
-      .resize(1200, 1200, {
-        fit: 'contain',
-        background: { r: 242, g: 244, b: 243, alpha: 1 }
-      })
-      .flatten({ background: '#f2f4f3' })
-      .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
-      .toFile(absolutePath);
-  } else {
-    const png = await brandedProductImageBuffer(candidate.event);
-    await sharp(png)
-      .flatten({ background: '#f2f4f3' })
-      .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
-      .toFile(absolutePath);
   }
+  const png = await brandedProductImageBuffer(candidate.event);
+  await sharp(png)
+    .flatten({ background: '#f2f4f3' })
+    .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
+    .toFile(absolutePath);
 
   const item = {
     sourcePostId: candidate.record.sourcePostId,
@@ -393,20 +406,6 @@ async function facebookPostPrimaryImage(postId) {
   const candidates = [].concat(post.attachments && post.attachments.data || []).flatMap(attachmentImageUrls);
   if (!candidates.length) throw new Error(`Postarea Facebook ${postId} nu mai expune o fotografie publica prin API.`);
   return candidates[0];
-}
-
-async function fetchImageBuffer(url) {
-  const response = await fetch(url, {
-    redirect: 'follow',
-    cache: 'no-store',
-    signal: AbortSignal.timeout(30000)
-  });
-  const type = String(response.headers.get('content-type') || '');
-  if (!response.ok) throw new Error(`Fotografia Facebook raspunde HTTP ${response.status}.`);
-  if (!/^image\/(?:jpeg|png|webp|avif)/i.test(type)) throw new Error(`Fotografia Facebook are tipul media ${type || 'necunoscut'}.`);
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (!bytes.length || bytes.length > 20 * 1024 * 1024) throw new Error(`Fotografia Facebook are dimensiunea neacceptata ${bytes.length}.`);
-  return bytes;
 }
 
 async function verifyInstagramConnection() {
@@ -563,6 +562,7 @@ async function main() {
   const facebookState = readJson(FACEBOOK_STATE_PATH, { history: [] });
   const modsFeed = readJson(MODS_PATH, { items: [] });
   const state = normalizeInstagramState(readJson(INSTAGRAM_STATE_PATH, emptyInstagramState()));
+  const facebookRecords = collectFacebookRecords(campaignState, facebookState);
   const errors = validateInstagramState(state);
   if (errors.length) throw new Error(errors.join('\n'));
 
@@ -585,8 +585,10 @@ async function main() {
     return;
   }
   if (prepareOnly) {
+    syncBackfillSummary(state, facebookRecords);
     if (state.queue.length) {
       console.log(`Instagram mirror: ${state.queue.length} fotografie pregatita asteapta publicarea.`);
+      writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
       return;
     }
     if (!plan.candidates.length) {
@@ -602,6 +604,8 @@ async function main() {
   }
   if (publishPreparedOnly) {
     await publishPrepared(state);
+    syncBackfillSummary(state, facebookRecords);
+    writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
     return;
   }
 
@@ -625,6 +629,7 @@ module.exports = {
   recordIdentity,
   recordProductType,
   resolveEventForRecord,
+  syncBackfillSummary,
   validateInstagramState
 };
 
