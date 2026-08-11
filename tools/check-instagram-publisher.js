@@ -9,6 +9,8 @@ const {
   collectFacebookRecords,
   emptyInstagramState,
   instagramCaption,
+  manualFacebookRecord,
+  mergeManualFacebookRecords,
   normalizeInstagramState,
   planInstagramMirrors,
   recordIdentity,
@@ -45,6 +47,38 @@ assert(plan.candidates.some(candidate => candidate.event.productType === 'atomiz
 assert(plan.candidates.some(candidate => candidate.event.productType === 'mod'), 'Instagram plan needs mods');
 assert(plan.candidates.some(candidate => candidate.event.productType === 'editorial'), 'Instagram plan needs the historical RTA photo series');
 assert(plan.candidates.every(candidate => candidate.event.image || candidate.event.requiresFacebookAttachment), 'Each planned item needs a verified catalog image or its original Facebook attachment');
+
+const manualOne = manualFacebookRecord({
+  id: '1221839447687298_manual_1',
+  message: 'Text manual pastrat exact.\nA doua linie.',
+  created_time: '2026-08-11T12:00:00+0000',
+  is_published: true,
+  attachments: { data: [{ media: { image: { src: 'https://example.com/manual-1.jpg' } } }] }
+});
+const manualTwo = manualFacebookRecord({
+  id: '1221839447687298_manual_2',
+  message: 'Text manual pastrat exact.\nA doua linie.',
+  created_time: '2026-08-11T12:05:00+0000',
+  attachments: { data: [{
+    subattachments: { data: [
+      { media: { image: { src: 'https://example.com/manual-2a.jpg' } } },
+      { media: { image: { src: 'https://example.com/manual-2b.jpg' } } }
+    ] }
+  }] }
+});
+assert(manualOne && manualTwo, 'Manual Facebook photo posts must be recognized');
+assert.strictEqual(manualTwo.images.length, 2, 'Manual Facebook carousels must retain every photo');
+mergeManualFacebookRecords(state, [manualOne, manualTwo]);
+const manualPlan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
+  maxPosts: 500,
+  dailyLimit: 500,
+  photoState,
+  manualRecords: Object.values(state.manualFacebookRecords),
+  now: '2026-08-11T12:10:00.000Z'
+});
+const manualCandidates = manualPlan.candidates.filter(candidate => candidate.event.productType === 'manual');
+assert.strictEqual(manualCandidates.length, 2, 'Manual posts must be deduplicated only by Facebook post ID, even when captions repeat');
+assert.strictEqual(instagramCaption(manualCandidates[0].event), manualCandidates[0].record.message, 'Manual Facebook text must be preserved exactly on Instagram');
 
 const first = plan.candidates[0];
 const caption = instagramCaption(first.event);

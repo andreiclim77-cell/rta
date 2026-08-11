@@ -30,6 +30,9 @@ const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_LIMIT = 4;
 const DEFAULT_MAX_POSTS = 1;
 const MIRROR_FORMAT_VERSION = 'instagram-exact-product-photo-v1';
+const MANUAL_SOURCE = 'facebook-page-api-manual';
+const MANUAL_POSTS_PER_PAGE = 100;
+const MAX_MANUAL_PAGES = 100;
 
 const args = process.argv.slice(2);
 const checkOnly = args.includes('--check');
@@ -84,6 +87,7 @@ function emptyInstagramState() {
       updatedAt: ''
     },
     queue: [],
+    manualFacebookRecords: {},
     mirroredFacebookPosts: {},
     mirroredFamilies: {},
     history: []
@@ -103,6 +107,9 @@ function normalizeInstagramState(value) {
     ? state.backfill
     : { total: 0, completed: 0, remaining: 0, updatedAt: '' };
   state.queue = Array.isArray(state.queue) ? state.queue : [];
+  state.manualFacebookRecords = state.manualFacebookRecords && typeof state.manualFacebookRecords === 'object'
+    ? state.manualFacebookRecords
+    : {};
   state.mirroredFacebookPosts = state.mirroredFacebookPosts && typeof state.mirroredFacebookPosts === 'object'
     ? state.mirroredFacebookPosts
     : {};
@@ -130,6 +137,7 @@ function syncBackfillSummary(state, records, timestamp = nowIso()) {
 
 function recordProductType(entry) {
   const type = String(entry && (entry.productType || entry.type) || '').toLowerCase();
+  if (type === 'manual') return 'manual';
   if (type === 'editorial') return 'editorial';
   if (type === 'mod' || String(entry && entry.key || '').startsWith('mod:')) return 'mod';
   return 'atomizer';
@@ -137,6 +145,7 @@ function recordProductType(entry) {
 
 function recordFamilyKey(entry) {
   const type = recordProductType(entry);
+  if (type === 'manual') return slugify(entry && (entry.sourcePostId || entry.postId || entry.familyKey || entry.key));
   if (type === 'editorial') return slugify(entry && (entry.familyKey || entry.key || entry.name));
   if (type === 'mod') {
     return modFamilyKey({ familyKey: entry && entry.familyKey, title: entry && entry.name }) || slugify(entry && entry.name);
@@ -163,11 +172,13 @@ function normalizeFacebookRecord(entry, source) {
     slug: String(entry.slug || '').trim(),
     key: String(entry.key || '').trim(),
     name,
-    image: String(entry.image || '').trim()
+    image: String(entry.image || '').trim(),
+    images: [].concat(entry.images || []).map(value => String(value || '').trim()).filter(Boolean),
+    message: String(entry.message || '')
   };
 }
 
-function collectFacebookRecords(campaignState, facebookState, photoState) {
+function collectFacebookRecords(campaignState, facebookState, photoState, manualRecords = []) {
   const records = [];
   [].concat(campaignState && campaignState.history || []).forEach(entry => {
     const normalized = normalizeFacebookRecord(entry, 'facebook-campaign-state');
@@ -185,6 +196,10 @@ function collectFacebookRecords(campaignState, facebookState, photoState) {
       slug: entry && entry.key,
       name: `Cadru RTA MTL ${String(index + 1).padStart(2, '0')}`
     }, 'facebook-hourly-photo-state');
+    if (normalized) records.push(normalized);
+  });
+  [].concat(manualRecords || []).forEach(entry => {
+    const normalized = normalizeFacebookRecord(entry, MANUAL_SOURCE);
     if (normalized) records.push(normalized);
   });
   records.sort((a, b) => String(b.sourcePublishedAt).localeCompare(String(a.sourcePublishedAt)) || a.name.localeCompare(b.name));
@@ -224,6 +239,18 @@ function exactModForRecord(record, modsFeed) {
 }
 
 function resolveEventForRecord(record, catalog, modsFeed) {
+  if (record.productType === 'manual') {
+    return {
+      type: 'manual',
+      productType: 'manual',
+      familyKey: record.familyKey,
+      slug: record.familyKey,
+      name: record.name,
+      message: record.message,
+      images: record.images,
+      preserveOriginal: true
+    };
+  }
   if (record.productType === 'editorial') {
     return {
       type: 'editorial',
@@ -267,6 +294,9 @@ function resolveEventForRecord(record, catalog, modsFeed) {
 }
 
 function instagramCaption(event) {
+  if (event.productType === 'manual') {
+    return String(event.message || '').slice(0, 2200);
+  }
   const subjectLine = event.productType === 'editorial'
     ? 'Un cadru dedicat configuratiilor RTA MTL si documentatiei tehnice pentru adulti.'
     : event.productType === 'mod'
@@ -305,13 +335,13 @@ function planInstagramMirrors(campaignState, facebookState, instagramState, cata
   if (!limit || !allowed) return { candidates: [], skipped: [] };
 
   const queuedFamilies = new Set(instagramState.queue.map(item => item.identity));
-  const records = collectFacebookRecords(campaignState, facebookState, options.photoState);
+  const records = collectFacebookRecords(campaignState, facebookState, options.photoState, options.manualRecords);
   const candidates = [];
   const skipped = [];
   for (const record of records) {
     const identity = recordIdentity(record);
     if (instagramState.mirroredFacebookPosts[record.sourcePostId]) continue;
-    if (instagramState.mirroredFamilies[identity]) continue;
+    if (record.productType !== 'manual' && instagramState.mirroredFamilies[identity]) continue;
     if (queuedFamilies.has(identity)) continue;
     try {
       const event = resolveEventForRecord(record, catalog, modsFeed);
@@ -324,9 +354,21 @@ function planInstagramMirrors(campaignState, facebookState, instagramState, cata
   return { candidates, skipped };
 }
 
-function assetFileName(candidate) {
+function assetFileName(candidate, index = 0, total = 1) {
   const digest = crypto.createHash('sha256').update(candidate.record.sourcePostId).digest('hex').slice(0, 10);
-  return `${candidate.event.productType}-${candidate.event.slug}-${digest}.jpg`;
+  const suffix = total > 1 ? `-${index + 1}` : '';
+  return `${candidate.event.productType}-${candidate.event.slug}-${digest}${suffix}.jpg`;
+}
+
+async function remoteImageBuffer(url) {
+  const response = await fetch(url, {
+    redirect: 'follow',
+    signal: AbortSignal.timeout(30000)
+  });
+  if (!response.ok) throw new Error(`Fotografia Facebook nu poate fi citita: HTTP ${response.status}.`);
+  const bytes = Buffer.from(await response.arrayBuffer());
+  if (bytes.length < 5000) throw new Error('Fotografia Facebook este incompleta.');
+  return bytes;
 }
 
 async function prepareCandidate(candidate, state, timestamp = nowIso()) {
@@ -337,6 +379,53 @@ async function prepareCandidate(candidate, state, timestamp = nowIso()) {
     throw new Error('Pregatirea fotografiei Instagram necesita dependenta Sharp instalata.');
   }
   fs.mkdirSync(ASSET_DIR, { recursive: true });
+  if (candidate.event.productType === 'manual') {
+    const sourceImages = candidate.event.images.length
+      ? candidate.event.images
+      : await facebookPostImageUrls(candidate.record.sourcePostId);
+    const selectedImages = sourceImages.slice(0, 10);
+    if (!selectedImages.length) throw new Error(`Postarea Facebook ${candidate.record.sourcePostId} nu contine fotografii.`);
+    const fileNames = [];
+    for (let index = 0; index < selectedImages.length; index += 1) {
+      const fileName = assetFileName(candidate, index, selectedImages.length);
+      const bytes = await remoteImageBuffer(selectedImages[index]);
+      await sharp(bytes, { failOn: 'error' })
+        .rotate()
+        .resize(1080, 1350, {
+          fit: 'contain',
+          background: { r: 242, g: 244, b: 243, alpha: 1 }
+        })
+        .flatten({ background: '#f2f4f3' })
+        .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
+        .toFile(path.join(ASSET_DIR, fileName));
+      fileNames.push(fileName);
+    }
+    const imageUrls = fileNames.map(fileName => `${SITE}/assets/instagram/${encodeURIComponent(fileName)}`);
+    const item = {
+      sourcePostId: candidate.record.sourcePostId,
+      sourcePublishedAt: candidate.record.sourcePublishedAt,
+      sourceState: candidate.record.source,
+      identity: candidate.identity,
+      productType: candidate.event.productType,
+      familyKey: candidate.event.familyKey,
+      slug: candidate.event.slug,
+      name: candidate.event.name,
+      sourceImages: selectedImages,
+      assetPaths: fileNames.map(fileName => `assets/instagram/${fileName}`),
+      imageUrls,
+      imageUrl: imageUrls[0],
+      caption: instagramCaption(candidate.event),
+      altText: instagramAltText(candidate.event),
+      formatVersion: MIRROR_FORMAT_VERSION,
+      preparedAt: timestamp
+    };
+    state.queue.push(item);
+    state.updatedAt = timestamp;
+    state.dailyLimit = dailyLimit;
+    if (!state.startedAt) state.startedAt = timestamp;
+    return item;
+  }
+
   const fileName = assetFileName(candidate);
   const absolutePath = path.join(ASSET_DIR, fileName);
   if (candidate.event.requiresFacebookAttachment) {
@@ -393,7 +482,8 @@ function validateInstagramState(state) {
   const queuedFamilies = new Set();
   for (const item of state.queue) {
     if (!item.sourcePostId || !item.identity || !item.name || !item.imageUrl) errors.push('Coada Instagram contine o intrare incompleta.');
-    if (!/\.jpg$/i.test(item.imageUrl)) errors.push(`Imaginea Instagram pentru ${item.name || 'produs'} nu este JPEG.`);
+    const imageUrls = Array.isArray(item.imageUrls) && item.imageUrls.length ? item.imageUrls : [item.imageUrl];
+    if (imageUrls.some(url => !/\.jpg$/i.test(url))) errors.push(`Imaginea Instagram pentru ${item.name || 'produs'} nu este JPEG.`);
     if (queuedPosts.has(item.sourcePostId)) errors.push(`Postarea Facebook ${item.sourcePostId} este dublata in coada Instagram.`);
     if (queuedFamilies.has(item.identity)) errors.push(`Modelul ${item.identity} este dublat in coada Instagram.`);
     queuedPosts.add(item.sourcePostId);
@@ -441,14 +531,93 @@ function attachmentImageUrls(attachment) {
   return urls;
 }
 
+function attachmentPhotoUrls(attachment) {
+  const urls = [];
+  const add = value => {
+    const url = String(value || '').trim();
+    if (/^https:\/\//i.test(url) && !urls.includes(url)) urls.push(url);
+  };
+  const visit = item => {
+    if (!item || typeof item !== 'object') return;
+    add(item.media && item.media.image && item.media.image.src);
+    [].concat(item.subattachments && item.subattachments.data || []).forEach(visit);
+  };
+  visit(attachment);
+  return urls;
+}
+
 async function facebookPostPrimaryImage(postId) {
+  const candidates = await facebookPostImageUrls(postId);
+  return candidates[0];
+}
+
+async function facebookPostImageUrls(postId) {
   if (!accessToken) throw new Error(`Fotografia istorica pentru ${postId} necesita tokenul Meta.`);
   const post = await graphRequest(postId, {
     query: { fields: 'attachments{media,target,url,subattachments{media,target,url}}' }
   });
-  const candidates = [].concat(post.attachments && post.attachments.data || []).flatMap(attachmentImageUrls);
+  const candidates = [].concat(post.attachments && post.attachments.data || []).flatMap(attachmentPhotoUrls);
   if (!candidates.length) throw new Error(`Postarea Facebook ${postId} nu mai expune o fotografie publica prin API.`);
-  return candidates[0];
+  return candidates.slice(0, 10);
+}
+
+function manualPostName(post) {
+  const firstLine = String(post && post.message || '').split(/\r?\n/).map(value => value.trim()).find(Boolean);
+  if (firstLine) return firstLine.slice(0, 90);
+  const date = String(post && post.created_time || '').slice(0, 10);
+  return `Postare Facebook ${date || String(post && post.id || '').slice(-8)}`;
+}
+
+function manualFacebookRecord(post) {
+  const images = [].concat(post && post.attachments && post.attachments.data || []).flatMap(attachmentPhotoUrls);
+  const postId = String(post && post.id || '').trim();
+  if (!postId || !images.length) return null;
+  return {
+    postId,
+    sourcePostId: postId,
+    publishedAt: String(post.created_time || ''),
+    type: 'manual',
+    productType: 'manual',
+    familyKey: `manual-${postId}`,
+    key: `manual:${postId}`,
+    slug: `manual-${postId}`,
+    name: manualPostName(post),
+    message: String(post.message || ''),
+    images: images.slice(0, 10),
+    source: MANUAL_SOURCE
+  };
+}
+
+async function discoverManualFacebookRecords(knownPostIds) {
+  if (!pageId || !accessToken) return [];
+  const records = [];
+  let after = '';
+  for (let page = 0; page < MAX_MANUAL_PAGES; page += 1) {
+    const query = {
+      fields: 'id,message,created_time,is_published,attachments{media_type,media,target,url,subattachments{media_type,media,target,url}}',
+      limit: String(MANUAL_POSTS_PER_PAGE)
+    };
+    if (after) query.after = after;
+    const response = await graphRequest(`${pageId}/posts`, { query });
+    const posts = [].concat(response.data || []);
+    records.push(...posts
+      .filter(post => post.is_published !== false && !knownPostIds.has(String(post.id || '')))
+      .map(manualFacebookRecord)
+      .filter(Boolean));
+    const nextAfter = String(response.paging && response.paging.cursors && response.paging.cursors.after || '');
+    if (!posts.length || !nextAfter || nextAfter === after) break;
+    after = nextAfter;
+  }
+  return records;
+}
+
+function mergeManualFacebookRecords(state, records) {
+  for (const record of records) state.manualFacebookRecords[record.sourcePostId] = record;
+  const newest = Object.values(state.manualFacebookRecords)
+    .sort((a, b) => String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')))
+    .slice(0, MANUAL_POSTS_PER_PAGE * MAX_MANUAL_PAGES);
+  state.manualFacebookRecords = Object.fromEntries(newest.map(record => [record.sourcePostId, record]));
+  return newest;
 }
 
 async function verifyInstagramConnection() {
@@ -503,6 +672,7 @@ async function waitForPublicJpeg(url) {
 }
 
 function captionMatchesQueueItem(caption, item) {
+  if (item.productType === 'manual') return String(caption || '').trim() === String(item.caption || '').trim();
   const normalized = String(caption || '').toLowerCase();
   return normalized.includes('ghid-rta.ro') && normalized.includes(String(item.name || '').toLowerCase());
 }
@@ -535,6 +705,7 @@ function applyInstagramPublished(state, item, media, account, timestamp = nowIso
     slug: item.slug,
     name: item.name,
     imageUrl: item.imageUrl,
+    imageUrls: Array.isArray(item.imageUrls) ? item.imageUrls : [item.imageUrl],
     instagramMediaId: String(media.id || ''),
     permalink: String(media.permalink || ''),
     publishedAt: String(media.timestamp || timestamp),
@@ -565,7 +736,8 @@ async function publishPrepared(state) {
   const published = [];
   const allowed = Math.max(0, dailyLimit - publishedTodayCount(state));
   for (const item of state.queue.slice(0, Math.min(maxPosts, allowed))) {
-    await waitForPublicJpeg(item.imageUrl);
+    const imageUrls = Array.isArray(item.imageUrls) && item.imageUrls.length ? item.imageUrls : [item.imageUrl];
+    for (const imageUrl of imageUrls) await waitForPublicJpeg(imageUrl);
     const existing = recent.find(media => captionMatchesQueueItem(media.caption, item));
     if (existing) {
       const record = applyInstagramPublished(state, item, existing, account, nowIso(), 'instagram-existing-media-detected');
@@ -575,14 +747,39 @@ async function publishPrepared(state) {
       continue;
     }
 
-    const container = await graphRequest(`${account.id}/media`, {
-      method: 'POST',
-      body: {
-        image_url: item.imageUrl,
-        caption: item.caption,
-        alt_text: item.altText
+    let container;
+    if (imageUrls.length > 1) {
+      const children = [];
+      for (const imageUrl of imageUrls) {
+        const child = await graphRequest(`${account.id}/media`, {
+          method: 'POST',
+          body: {
+            image_url: imageUrl,
+            is_carousel_item: 'true',
+            alt_text: item.altText
+          }
+        });
+        await waitForContainer(child.id);
+        children.push(child.id);
       }
-    });
+      container = await graphRequest(`${account.id}/media`, {
+        method: 'POST',
+        body: {
+          media_type: 'CAROUSEL',
+          children: children.join(','),
+          caption: item.caption
+        }
+      });
+    } else {
+      container = await graphRequest(`${account.id}/media`, {
+        method: 'POST',
+        body: {
+          image_url: imageUrls[0],
+          caption: item.caption,
+          alt_text: item.altText
+        }
+      });
+    }
     await waitForContainer(container.id);
     const result = await graphRequest(`${account.id}/media_publish`, {
       method: 'POST',
@@ -606,7 +803,21 @@ async function main() {
   const photoState = readJson(FACEBOOK_PHOTO_STATE_PATH, { history: [] });
   const modsFeed = readJson(MODS_PATH, { items: [] });
   const state = normalizeInstagramState(readJson(INSTAGRAM_STATE_PATH, emptyInstagramState()));
-  const facebookRecords = collectFacebookRecords(campaignState, facebookState, photoState);
+  const localFacebookRecords = collectFacebookRecords(campaignState, facebookState, photoState);
+  if (prepareOnly || pendingCountOnly) {
+    const knownPostIds = new Set([
+      ...localFacebookRecords.map(record => record.sourcePostId),
+      ...Object.keys(state.mirroredFacebookPosts),
+      ...Object.keys(state.manualFacebookRecords)
+    ]);
+    const discovered = await discoverManualFacebookRecords(knownPostIds);
+    if (discovered.length) {
+      mergeManualFacebookRecords(state, discovered);
+      console.log(`Instagram mirror: ${discovered.length} postari Facebook manuale noi detectate.`);
+    }
+  }
+  const manualRecords = Object.values(state.manualFacebookRecords);
+  const facebookRecords = collectFacebookRecords(campaignState, facebookState, photoState, manualRecords);
   const errors = validateInstagramState(state);
   if (errors.length) throw new Error(errors.join('\n'));
 
@@ -619,7 +830,8 @@ async function main() {
   const plan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
     maxPosts,
     dailyLimit,
-    photoState
+    photoState,
+    manualRecords
   });
   if (pendingCountOnly) {
     process.stdout.write(String(plan.candidates.length + state.queue.length));
@@ -638,6 +850,7 @@ async function main() {
     }
     if (!plan.candidates.length) {
       console.log('Instagram mirror: nu exista postari Facebook eligibile si neverificate.');
+      writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
       return;
     }
     for (const candidate of plan.candidates.slice(0, maxPosts)) {
@@ -668,6 +881,8 @@ module.exports = {
   emptyInstagramState,
   instagramAltText,
   instagramCaption,
+  manualFacebookRecord,
+  mergeManualFacebookRecords,
   normalizeInstagramState,
   planInstagramMirrors,
   publishedTodayCount,

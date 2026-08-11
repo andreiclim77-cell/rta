@@ -18,8 +18,8 @@ on:
     types:
       - completed
   schedule:
-    # Four spaced attempts/day. The script publishes at most one item/run and four/day.
-    - cron: "17 */6 * * *"
+    # Check hourly for manual Page posts; publishing remains capped at four/day.
+    - cron: "17 * * * *"
 
 permissions:
   contents: write
