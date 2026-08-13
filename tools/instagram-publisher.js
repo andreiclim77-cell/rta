@@ -676,9 +676,15 @@ function postContainsVideo(post) {
 }
 
 function purgeGeneratedFacebookReelRecords(state, generatedIds) {
+  const sourcePostIds = Object.keys(state && state.manualFacebookRecords || {})
+    .filter(sourcePostId => isGeneratedFacebookReelPost(sourcePostId, generatedIds));
+  return purgeManualFacebookRecordIds(state, sourcePostIds);
+}
+
+function purgeManualFacebookRecordIds(state, sourcePostIds) {
   const removed = new Set();
-  for (const sourcePostId of Object.keys(state && state.manualFacebookRecords || {})) {
-    if (!isGeneratedFacebookReelPost(sourcePostId, generatedIds)) continue;
+  for (const sourcePostId of [].concat(sourcePostIds || []).map(value => String(value || '')).filter(Boolean)) {
+    if (!state.manualFacebookRecords[sourcePostId]) continue;
     delete state.manualFacebookRecords[sourcePostId];
     removed.add(sourcePostId);
   }
@@ -731,8 +737,9 @@ function manualFacebookRecord(post, generatedIds = new Set()) {
 }
 
 async function discoverManualFacebookRecords(knownPostIds, generatedIds = new Set()) {
-  if (!pageId || !accessToken) return [];
+  if (!pageId || !accessToken) return { records: [], excludedPostIds: [] };
   const records = [];
+  const excludedPostIds = new Set();
   let after = '';
   for (let page = 0; page < MAX_MANUAL_PAGES; page += 1) {
     const query = {
@@ -742,15 +749,25 @@ async function discoverManualFacebookRecords(knownPostIds, generatedIds = new Se
     if (after) query.after = after;
     const response = await graphRequest(`${pageId}/posts`, { query });
     const posts = [].concat(response.data || []);
-    records.push(...posts
-      .filter(post => post.is_published !== false && !knownPostIds.has(String(post.id || '')))
-      .map(post => manualFacebookRecord(post, generatedIds))
-      .filter(Boolean));
+    for (const post of posts) {
+      const postId = String(post && post.id || '').trim();
+      if (!postId || post.is_published === false) continue;
+      if (postContainsVideo(post) || isGeneratedFacebookReelPost(postId, generatedIds)) {
+        excludedPostIds.add(postId);
+        continue;
+      }
+      if (knownPostIds.has(postId)) continue;
+      const record = manualFacebookRecord(post, generatedIds);
+      if (record) records.push(record);
+    }
     const nextAfter = String(response.paging && response.paging.cursors && response.paging.cursors.after || '');
     if (!posts.length || !nextAfter || nextAfter === after) break;
     after = nextAfter;
   }
-  return Array.from(new Map(records.map(record => [record.sourcePostId, record])).values());
+  return {
+    records: Array.from(new Map(records.map(record => [record.sourcePostId, record])).values()),
+    excludedPostIds: Array.from(excludedPostIds)
+  };
 }
 
 function mergeManualFacebookRecords(state, records) {
@@ -955,7 +972,12 @@ async function main() {
       ...Object.keys(state.mirroredFacebookPosts),
       ...Object.keys(state.manualFacebookRecords)
     ]);
-    const discovered = await discoverManualFacebookRecords(knownPostIds, generatedReelPostIds);
+    const discovery = await discoverManualFacebookRecords(knownPostIds, generatedReelPostIds);
+    const discovered = discovery.records;
+    const purgedVideoRecords = purgeManualFacebookRecordIds(state, discovery.excludedPostIds);
+    if (purgedVideoRecords) {
+      console.log(`Instagram mirror: ${purgedVideoRecords} inregistrari video vechi eliminate din coada foto.`);
+    }
     if (discovered.length) {
       mergeManualFacebookRecords(state, discovered);
       console.log(`Instagram mirror: ${discovered.length} postari Facebook manuale noi detectate.`);
@@ -1037,6 +1059,7 @@ module.exports = {
   planInstagramMirrors,
   postContainsVideo,
   purgeGeneratedFacebookReelRecords,
+  purgeManualFacebookRecordIds,
   publishedTodayCount,
   recordIdentity,
   recordProductType,

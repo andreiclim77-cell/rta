@@ -19,6 +19,7 @@ const {
   planInstagramMirrors,
   postContainsVideo,
   purgeGeneratedFacebookReelRecords,
+  purgeManualFacebookRecordIds,
   recordIdentity,
   syncBackfillSummary,
   validateInstagramState
@@ -122,6 +123,19 @@ const persistedEchoState = normalizeInstagramState({
 });
 assert.strictEqual(purgeGeneratedFacebookReelRecords(persistedEchoState, generatedIds), 1, 'Persisted generated Reel records must be purged');
 assert.strictEqual(Object.keys(persistedEchoState.manualFacebookRecords).length, 0, 'Generated Reel records must not survive in the manual queue');
+const persistedVideoWrapper = normalizeInstagramState({
+  ...emptyInstagramState(),
+  manualFacebookRecords: {
+    '1221839447687298_video_wrapper': {
+      sourcePostId: '1221839447687298_video_wrapper',
+      productType: 'manual',
+      images: ['https://example.com/video-wrapper-thumbnail.jpg']
+    }
+  },
+  queue: [{ sourcePostId: '1221839447687298_video_wrapper' }]
+});
+assert.strictEqual(purgeManualFacebookRecordIds(persistedVideoWrapper, ['1221839447687298_video_wrapper']), 1, 'A video wrapper rediscovered through Page metadata must be purged');
+assert.strictEqual(persistedVideoWrapper.queue.length, 0, 'A purged video wrapper must leave the Instagram preparation queue');
 const reelEchoState = normalizeInstagramState({
   ...emptyInstagramState(),
   manualFacebookRecords: { reel_post: { sourcePostId: 'reel_post' } },
