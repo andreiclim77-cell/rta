@@ -23,6 +23,7 @@ const CAMPAIGN_STATE_PATH = path.join(ROOT, 'data', 'facebook-campaign-state.jso
 const FACEBOOK_STATE_PATH = path.join(ROOT, 'data', 'facebook-publish-state.json');
 const FACEBOOK_PHOTO_STATE_PATH = path.join(ROOT, 'data', 'facebook-hourly-photo-state.json');
 const INSTAGRAM_STATE_PATH = path.join(ROOT, 'data', 'instagram-publish-state.json');
+const SOCIAL_REELS_STATE_PATH = path.join(ROOT, 'data', 'social-reels-state.json');
 const MODS_PATH = path.join(ROOT, 'data', 'smokee-mods.json');
 const ASSET_DIR = path.join(ROOT, 'assets', 'instagram');
 const SITE = 'https://ghid-rta.ro';
@@ -641,6 +642,52 @@ function attachmentPhotoUrls(attachment) {
   return urls;
 }
 
+function facebookPostObjectId(value) {
+  return String(value || '').trim().split('_').filter(Boolean).pop() || '';
+}
+
+function generatedFacebookReelPostIds(reelsState) {
+  const ids = new Set();
+  const add = value => {
+    const id = facebookPostObjectId(value);
+    if (id) ids.add(id);
+  };
+  Object.values(reelsState && reelsState.facebookReels || {}).forEach(record => add(record && record.id));
+  [].concat(reelsState && reelsState.history || []).forEach(record => add(record && record.facebook && record.facebook.id));
+  return ids;
+}
+
+function isGeneratedFacebookReelPost(postId, generatedIds) {
+  return Boolean(generatedIds && generatedIds.has(facebookPostObjectId(postId)));
+}
+
+function postContainsVideo(post) {
+  if (!post || typeof post !== 'object') return false;
+  if (/video|reel/i.test(String(post.status_type || ''))) return true;
+  if (/\/(?:reel|videos?)\//i.test(String(post.permalink_url || ''))) return true;
+  const inspect = item => {
+    if (!item || typeof item !== 'object') return false;
+    const mediaType = String(item.media_type || item.type || '').toLowerCase();
+    const targetUrl = String(item.target && item.target.url || item.url || '');
+    if (/video|reel/.test(mediaType) || /\/(?:reel|videos?)\//i.test(targetUrl)) return true;
+    return [].concat(item.subattachments && item.subattachments.data || []).some(inspect);
+  };
+  return [].concat(post.attachments && post.attachments.data || []).some(inspect);
+}
+
+function purgeGeneratedFacebookReelRecords(state, generatedIds) {
+  const removed = new Set();
+  for (const sourcePostId of Object.keys(state && state.manualFacebookRecords || {})) {
+    if (!isGeneratedFacebookReelPost(sourcePostId, generatedIds)) continue;
+    delete state.manualFacebookRecords[sourcePostId];
+    removed.add(sourcePostId);
+  }
+  if (removed.size && Array.isArray(state.queue)) {
+    state.queue = state.queue.filter(item => !removed.has(String(item && item.sourcePostId || '')));
+  }
+  return removed.size;
+}
+
 async function facebookPostPrimaryImage(postId) {
   const candidates = await facebookPostImageUrls(postId);
   return candidates[0];
@@ -663,10 +710,10 @@ function manualPostName(post) {
   return `Postare Facebook ${date || String(post && post.id || '').slice(-8)}`;
 }
 
-function manualFacebookRecord(post) {
+function manualFacebookRecord(post, generatedIds = new Set()) {
   const images = [].concat(post && post.attachments && post.attachments.data || []).flatMap(attachmentPhotoUrls);
   const postId = String(post && post.id || '').trim();
-  if (!postId || !images.length) return null;
+  if (!postId || !images.length || postContainsVideo(post) || isGeneratedFacebookReelPost(postId, generatedIds)) return null;
   return {
     postId,
     sourcePostId: postId,
@@ -683,13 +730,13 @@ function manualFacebookRecord(post) {
   };
 }
 
-async function discoverManualFacebookRecords(knownPostIds) {
+async function discoverManualFacebookRecords(knownPostIds, generatedIds = new Set()) {
   if (!pageId || !accessToken) return [];
   const records = [];
   let after = '';
   for (let page = 0; page < MAX_MANUAL_PAGES; page += 1) {
     const query = {
-      fields: 'id,message,created_time,is_published,attachments{media_type,media,target,url,subattachments{media_type,media,target,url}}',
+      fields: 'id,message,created_time,is_published,permalink_url,status_type,attachments{media_type,type,media,target,url,subattachments{media_type,type,media,target,url}}',
       limit: String(MANUAL_POSTS_PER_PAGE)
     };
     if (after) query.after = after;
@@ -697,7 +744,7 @@ async function discoverManualFacebookRecords(knownPostIds) {
     const posts = [].concat(response.data || []);
     records.push(...posts
       .filter(post => post.is_published !== false && !knownPostIds.has(String(post.id || '')))
-      .map(manualFacebookRecord)
+      .map(post => manualFacebookRecord(post, generatedIds))
       .filter(Boolean));
     const nextAfter = String(response.paging && response.paging.cursors && response.paging.cursors.after || '');
     if (!posts.length || !nextAfter || nextAfter === after) break;
@@ -898,6 +945,9 @@ async function main() {
   const photoState = readJson(FACEBOOK_PHOTO_STATE_PATH, { history: [] });
   const modsFeed = readJson(MODS_PATH, { items: [] });
   const state = normalizeInstagramState(readJson(INSTAGRAM_STATE_PATH, emptyInstagramState()));
+  const reelsState = readJson(SOCIAL_REELS_STATE_PATH, { facebookReels: {}, history: [] });
+  const generatedReelPostIds = generatedFacebookReelPostIds(reelsState);
+  purgeGeneratedFacebookReelRecords(state, generatedReelPostIds);
   const localFacebookRecords = collectFacebookRecords(campaignState, facebookState, photoState);
   if (prepareOnly || pendingCountOnly) {
     const knownPostIds = new Set([
@@ -905,13 +955,14 @@ async function main() {
       ...Object.keys(state.mirroredFacebookPosts),
       ...Object.keys(state.manualFacebookRecords)
     ]);
-    const discovered = await discoverManualFacebookRecords(knownPostIds);
+    const discovered = await discoverManualFacebookRecords(knownPostIds, generatedReelPostIds);
     if (discovered.length) {
       mergeManualFacebookRecords(state, discovered);
       console.log(`Instagram mirror: ${discovered.length} postari Facebook manuale noi detectate.`);
     }
   }
-  const manualRecords = Object.values(state.manualFacebookRecords);
+  const manualRecords = Object.values(state.manualFacebookRecords)
+    .filter(record => !isGeneratedFacebookReelPost(record && record.sourcePostId, generatedReelPostIds));
   const facebookRecords = collectFacebookRecords(campaignState, facebookState, photoState, manualRecords);
   const errors = validateInstagramState(state);
   if (errors.length) throw new Error(errors.join('\n'));
@@ -975,13 +1026,17 @@ module.exports = {
   collectFacebookRecords,
   dedupeManualFacebookRecords,
   emptyInstagramState,
+  generatedFacebookReelPostIds,
   instagramAltText,
   instagramCaption,
+  isGeneratedFacebookReelPost,
   manualFacebookRecord,
   manualContentFingerprint,
   mergeManualFacebookRecords,
   normalizeInstagramState,
   planInstagramMirrors,
+  postContainsVideo,
+  purgeGeneratedFacebookReelRecords,
   publishedTodayCount,
   recordIdentity,
   recordProductType,

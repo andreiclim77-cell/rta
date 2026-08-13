@@ -27,6 +27,12 @@ plan = planReels(records, state, { maxPosts: 4, dailyLimit: 4, now: '2026-08-11T
 assert.deepStrictEqual(plan.map(record => record.sourcePostId), ['page_2', 'page_3'], 'Queued source must not be planned twice');
 assert.strictEqual(sourcesStartedToday(state, '2026-08-11T09:00:00Z'), 1, 'Romania daily pacing must count source starts');
 
+state.sourceStarts.page_2 = '2026-08-11T07:20:00Z';
+state.sourceStarts.page_3 = '2026-08-11T07:25:00Z';
+state.sourceStarts.page_4 = '2026-08-11T07:30:00Z';
+plan = planReels(records, state, { maxPosts: 1, dailyLimit: 4, now: '2026-08-11T09:00:00Z' });
+assert.deepStrictEqual(plan, [], 'The Reel daily limit must produce zero candidates, not one extra Reel');
+
 state.facebookReels.page_1 = { id: 'fb_reel_1', verifiedStatus: 'PUBLISHED' };
 assert.strictEqual(completedOnBothPlatforms(state, 'page_1'), false, 'Facebook success alone must not mark the pair complete');
 assert.strictEqual(finishQueueItemIfComplete(state, state.queue[0]), false, 'Partial platform success must remain queued');

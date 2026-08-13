@@ -20,6 +20,7 @@ for (const [name, source] of Object.entries({ instagram, reels, editorial, smoke
 assert(instagram.includes('cron: "17 * * * *"'), 'Instagram manual-post discovery is not scheduled hourly');
 assert(!/\n\s+schedule:\s*[\s\S]*cron:/.test(reels.split('permissions:')[0]), 'Reels has a redundant independent schedule');
 assert(reels.includes('Instagram mirror from Facebook'), 'Reels is not chained after the Instagram mirror');
+assert(reels.includes("github.event.workflow_run.event != 'workflow_dispatch'"), 'A manual Instagram verification can still trigger an automatic Reel run');
 assert(health.match(/cron:/g)?.length === 1, 'Meta token health should run once per day');
 assert(!health.includes('if: failure()'), 'Meta token health still converts an expired token into a failed scheduled run');
 assert(health.includes('if (!existing)'), 'Meta token health can still add repeated issue comments');

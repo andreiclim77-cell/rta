@@ -8,7 +8,9 @@ const { spawnSync } = require('child_process');
 const { loadCatalog, slugify } = require('./catalog-data');
 const {
   collectFacebookRecords,
+  generatedFacebookReelPostIds,
   instagramCaption,
+  isGeneratedFacebookReelPost,
   resolveEventForRecord
 } = require('./instagram-publisher');
 const { dateInRomania } = require('./facebook-publisher');
@@ -105,12 +107,14 @@ function planReels(records, state, options = {}) {
   const limit = Math.max(0, Number(options.maxPosts || DEFAULT_MAX_POSTS));
   const remainingToday = Math.max(0, Number(options.dailyLimit || state.dailyLimit || DEFAULT_DAILY_LIMIT)
     - sourcesStartedToday(state, options.now || nowIso()));
+  const targetCount = Math.min(limit, remainingToday);
+  if (targetCount <= 0) return [];
   const queued = new Set(state.queue.map(item => item.sourcePostId));
   const candidates = [];
   for (const record of records) {
     if (completedOnBothPlatforms(state, record.sourcePostId) || queued.has(record.sourcePostId)) continue;
     candidates.push(record);
-    if (candidates.length >= Math.min(limit, remainingToday)) break;
+    if (candidates.length >= targetCount) break;
   }
   return candidates;
 }
@@ -473,7 +477,9 @@ async function main() {
   const instagramState = readJson(INSTAGRAM_STATE_PATH, { manualFacebookRecords: {}, mirroredFacebookPosts: {} });
   const modsFeed = readJson(MODS_PATH, { items: [] });
   const state = normalizeReelsState(readJson(REELS_STATE_PATH, emptyReelsState()));
-  const manualRecords = Object.values(instagramState.manualFacebookRecords || {});
+  const generatedReelPostIds = generatedFacebookReelPostIds(state);
+  const manualRecords = Object.values(instagramState.manualFacebookRecords || {})
+    .filter(record => !isGeneratedFacebookReelPost(record && record.sourcePostId, generatedReelPostIds));
   const records = collectFacebookRecords(campaignState, facebookState, photoState, manualRecords);
   const errors = validateReelsState(state);
   if (errors.length) throw new Error(errors.join('\n'));

@@ -9,12 +9,16 @@ const {
   collectFacebookRecords,
   dedupeManualFacebookRecords,
   emptyInstagramState,
+  generatedFacebookReelPostIds,
   instagramCaption,
+  isGeneratedFacebookReelPost,
   manualFacebookRecord,
   manualContentFingerprint,
   mergeManualFacebookRecords,
   normalizeInstagramState,
   planInstagramMirrors,
+  postContainsVideo,
+  purgeGeneratedFacebookReelRecords,
   recordIdentity,
   syncBackfillSummary,
   validateInstagramState
@@ -91,6 +95,33 @@ const generatedReel = manualFacebookRecord({
   }] }
 });
 assert.strictEqual(generatedReel, null, 'A generated Facebook Reel thumbnail must not re-enter the Instagram photo queue');
+const metadataOnlyReel = manualFacebookRecord({
+  id: '1221839447687298_987654321',
+  message: 'Reel cu miniatura foto.',
+  created_time: '2026-08-11T12:07:00+0000',
+  status_type: 'added_video',
+  permalink_url: 'https://www.facebook.com/reel/987654321/',
+  attachments: { data: [{ media: { image: { src: 'https://example.com/video-thumbnail.jpg' } } }] }
+});
+assert.strictEqual(metadataOnlyReel, null, 'A Facebook Reel identified by post metadata must not enter the photo queue');
+assert.strictEqual(postContainsVideo({ status_type: 'added_video' }), true, 'Facebook video status must be recognized without attachment metadata');
+const generatedIds = generatedFacebookReelPostIds({
+  facebookReels: { source: { id: '987654321' } },
+  history: [{ facebook: { id: '123456789' } }]
+});
+assert(isGeneratedFacebookReelPost('1221839447687298_987654321', generatedIds), 'A generated Facebook Reel ID must be excluded deterministically');
+const persistedEchoState = normalizeInstagramState({
+  ...emptyInstagramState(),
+  manualFacebookRecords: {
+    '1221839447687298_987654321': {
+      sourcePostId: '1221839447687298_987654321',
+      productType: 'manual',
+      images: ['https://example.com/video-thumbnail.jpg']
+    }
+  }
+});
+assert.strictEqual(purgeGeneratedFacebookReelRecords(persistedEchoState, generatedIds), 1, 'Persisted generated Reel records must be purged');
+assert.strictEqual(Object.keys(persistedEchoState.manualFacebookRecords).length, 0, 'Generated Reel records must not survive in the manual queue');
 const reelEchoState = normalizeInstagramState({
   ...emptyInstagramState(),
   manualFacebookRecords: { reel_post: { sourcePostId: 'reel_post' } },
