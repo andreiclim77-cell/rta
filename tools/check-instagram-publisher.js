@@ -7,9 +7,11 @@ const { loadCatalog } = require('./catalog-data');
 const {
   applyInstagramPublished,
   collectFacebookRecords,
+  dedupeManualFacebookRecords,
   emptyInstagramState,
   instagramCaption,
   manualFacebookRecord,
+  manualContentFingerprint,
   mergeManualFacebookRecords,
   normalizeInstagramState,
   planInstagramMirrors,
@@ -66,8 +68,18 @@ const manualTwo = manualFacebookRecord({
     ] }
   }] }
 });
+const manualOneReshare = manualFacebookRecord({
+  id: '1221839447687298_manual_1_reshare',
+  message: '',
+  created_time: '2026-08-11T12:03:00+0000',
+  attachments: { data: [{ media: { image: { src: 'https://example.com/manual-1.jpg?size=large' } } }] }
+});
 assert(manualOne && manualTwo, 'Manual Facebook photo posts must be recognized');
 assert.strictEqual(manualTwo.images.length, 2, 'Manual Facebook carousels must retain every photo');
+assert.strictEqual(manualContentFingerprint(manualOne), manualContentFingerprint(manualOneReshare), 'Facebook CDN query parameters must not create a new manual-content identity');
+const deduplicatedManual = dedupeManualFacebookRecords([manualOneReshare, manualOne, manualTwo]);
+assert.strictEqual(deduplicatedManual.length, 2, 'A manual reshare of the same photos must be collapsed');
+assert.strictEqual(deduplicatedManual.find(record => record.sourcePostId === manualOne.sourcePostId).message, manualOne.message, 'The original manual post with text must win over an empty reshare');
 const generatedReel = manualFacebookRecord({
   id: '1221839447687298_generated_reel',
   message: 'https://ghid-rta.ro/\nFISA DOCUMENTATA IN GHID',
@@ -97,7 +109,7 @@ const reelEchoState = normalizeInstagramState({
 assert(!reelEchoState.manualFacebookRecords.reel_post, 'A previously stored Reel echo must be removed during state normalization');
 assert(!reelEchoState.mirroredFacebookPosts.reel_post, 'A Reel echo must not consume Instagram publication history');
 assert.strictEqual(reelEchoState.history.length, 0, 'A Reel echo must not consume the daily publication limit');
-mergeManualFacebookRecords(state, [manualOne, manualTwo]);
+mergeManualFacebookRecords(state, [manualOne, manualOneReshare, manualTwo]);
 const manualPlan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
   maxPosts: 500,
   dailyLimit: 500,
@@ -106,8 +118,20 @@ const manualPlan = planInstagramMirrors(campaignState, facebookState, state, cat
   now: '2026-08-11T12:10:00.000Z'
 });
 const manualCandidates = manualPlan.candidates.filter(candidate => candidate.event.productType === 'manual');
-assert.strictEqual(manualCandidates.length, 2, 'Manual posts must be deduplicated only by Facebook post ID, even when captions repeat');
+assert.strictEqual(manualCandidates.length, 2, 'Manual Facebook reshares must be deduplicated by photo content');
 assert.strictEqual(instagramCaption(manualCandidates[0].event), manualCandidates[0].record.message, 'Manual Facebook text must be preserved exactly on Instagram');
+
+const manualDuplicateOfAutomatic = collectFacebookRecords({
+  history: [{
+    postId: 'automatic_1',
+    publishedAt: '2026-08-11T11:55:00+0000',
+    productType: 'atomizer',
+    familyKey: 'automatic-test',
+    name: 'Automatic Test RTA',
+    image: manualOne.images[0]
+  }]
+}, { history: [] }, { history: [] }, [manualOne]);
+assert.strictEqual(manualDuplicateOfAutomatic.length, 2, 'A manual duplicate of an automatic post must remain allowed');
 
 const first = plan.candidates[0];
 const caption = instagramCaption(first.event);

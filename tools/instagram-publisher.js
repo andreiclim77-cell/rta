@@ -183,6 +183,72 @@ function recordIdentity(entry) {
   return `${recordProductType(entry)}:${recordFamilyKey(entry)}`;
 }
 
+function canonicalManualMediaUrl(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return '';
+  try {
+    const parsed = new URL(raw);
+    const nested = parsed.searchParams.get('url');
+    if (nested && nested !== raw) return canonicalManualMediaUrl(nested);
+    const pathName = decodeURIComponent(parsed.pathname).replace(/\/+$/, '').toLowerCase();
+    const fileName = pathName.split('/').filter(Boolean).pop() || pathName;
+    return fileName || `${parsed.hostname.toLowerCase()}${pathName}`;
+  } catch (error) {
+    return raw.split(/[?#]/, 1)[0].replace(/\/+$/, '').toLowerCase();
+  }
+}
+
+function manualContentFingerprint(entry) {
+  if (recordProductType(entry) !== 'manual') return '';
+  const images = Array.from(new Set([].concat(entry && entry.images || [], entry && entry.image || '')
+    .map(canonicalManualMediaUrl)
+    .filter(Boolean)))
+    .sort();
+  if (!images.length) return '';
+  return crypto.createHash('sha256').update(images.join('\n')).digest('hex');
+}
+
+function preferredManualRecord(first, second) {
+  const score = record => {
+    const message = String(record && record.message || '').trim();
+    const genericName = /^Postare Facebook\b/i.test(String(record && record.name || ''));
+    return (message ? 2 : 0) + (genericName ? 0 : 1);
+  };
+  const firstScore = score(first);
+  const secondScore = score(second);
+  if (firstScore !== secondScore) return firstScore > secondScore ? first : second;
+  const firstTime = String(first && first.sourcePublishedAt || first && first.publishedAt || '');
+  const secondTime = String(second && second.sourcePublishedAt || second && second.publishedAt || '');
+  if (firstTime !== secondTime) return firstTime < secondTime ? first : second;
+  return String(first && first.sourcePostId || '').localeCompare(String(second && second.sourcePostId || '')) <= 0
+    ? first
+    : second;
+}
+
+function dedupeManualFacebookRecords(records) {
+  const output = [];
+  const positionByFingerprint = new Map();
+  for (const record of [].concat(records || [])) {
+    if (recordProductType(record) !== 'manual') {
+      output.push(record);
+      continue;
+    }
+    const fingerprint = manualContentFingerprint(record);
+    if (!fingerprint) {
+      output.push(record);
+      continue;
+    }
+    if (!positionByFingerprint.has(fingerprint)) {
+      positionByFingerprint.set(fingerprint, output.length);
+      output.push(record);
+      continue;
+    }
+    const index = positionByFingerprint.get(fingerprint);
+    output[index] = preferredManualRecord(output[index], record);
+  }
+  return output;
+}
+
 function normalizeFacebookRecord(entry, source) {
   const postId = String(entry && entry.postId || '').trim();
   const name = String(entry && entry.name || '').trim();
@@ -227,10 +293,11 @@ function collectFacebookRecords(campaignState, facebookState, photoState, manual
     const normalized = normalizeFacebookRecord(entry, MANUAL_SOURCE);
     if (normalized) records.push(normalized);
   });
-  records.sort((a, b) => String(b.sourcePublishedAt).localeCompare(String(a.sourcePublishedAt)) || a.name.localeCompare(b.name));
+  const contentDeduplicated = dedupeManualFacebookRecords(records);
+  contentDeduplicated.sort((a, b) => String(b.sourcePublishedAt).localeCompare(String(a.sourcePublishedAt)) || a.name.localeCompare(b.name));
 
   const newestByIdentity = new Map();
-  for (const record of records) {
+  for (const record of contentDeduplicated) {
     const identity = recordIdentity(record);
     if (!newestByIdentity.has(identity)) newestByIdentity.set(identity, record);
   }
@@ -906,10 +973,12 @@ module.exports = {
   applyInstagramPublished,
   captionMatchesQueueItem,
   collectFacebookRecords,
+  dedupeManualFacebookRecords,
   emptyInstagramState,
   instagramAltText,
   instagramCaption,
   manualFacebookRecord,
+  manualContentFingerprint,
   mergeManualFacebookRecords,
   normalizeInstagramState,
   planInstagramMirrors,

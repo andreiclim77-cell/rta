@@ -195,6 +195,22 @@ duplicateState.postedAtomizers['minister-mtl-nano'] = {
 };
 assert.strictEqual(duplicateFacebookPostGroups(duplicateState, emptyState()).length, 1);
 
+duplicateState.postedMods['queen-iii-black'] = {
+  name: "Telli's Mod QUEEN III Juma DNA60C Black",
+  familyKey: 'telli queen iii',
+  postId: 'keep-mod',
+  publishedAt: '2026-07-13T06:00:00.000Z'
+};
+duplicateState.postedMods['queen-iii-white'] = {
+  name: "Telli's Mod QUEEN III Juma DNA60C White",
+  familyKey: 'telli queen iii',
+  postId: 'remove-mod',
+  publishedAt: '2026-07-14T06:00:00.000Z'
+};
+const duplicateProductGroups = duplicateFacebookPostGroups(duplicateState, emptyState());
+assert.strictEqual(duplicateProductGroups.length, 2, 'Automatic atomizer and mod variants must both be deduplicated by family');
+assert(duplicateProductGroups.some(group => group.canonical === 'mod:telli queen iii'), 'Mod duplicate family must be detected');
+
 const details = historyEntryMessage({ key: `atomizer:${dayOneAtom.slug}`, name: dayOneAtom.name, type: 'atomizer' }, catalog, feed);
 assertSafeSingleProduct({
   productType: 'atomizer',

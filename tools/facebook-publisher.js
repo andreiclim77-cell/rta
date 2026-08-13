@@ -1012,6 +1012,19 @@ function duplicateFacebookPostGroups(campaignState, publishState) {
     if (!entry || !entry.postId) return;
     records.push({
       scope: 'campaign',
+      productType: 'atomizer',
+      slug,
+      name: entry.name || slug,
+      familyKey: entry.familyKey || '',
+      postId: entry.postId,
+      publishedAt: entry.publishedAt || ''
+    });
+  });
+  Object.entries(campaignState && campaignState.postedMods || {}).forEach(([slug, entry]) => {
+    if (!entry || !entry.postId) return;
+    records.push({
+      scope: 'campaign',
+      productType: 'mod',
       slug,
       name: entry.name || slug,
       familyKey: entry.familyKey || '',
@@ -1020,9 +1033,10 @@ function duplicateFacebookPostGroups(campaignState, publishState) {
     });
   });
   [].concat(publishState && publishState.history || []).forEach(entry => {
-    if (!entry || !entry.postId || eventProductType(entry) === 'mod') return;
+    if (!entry || !entry.postId) return;
     records.push({
       scope: 'publish',
+      productType: eventProductType(entry),
       entry,
       slug: historyAtomizerSlug(entry),
       name: entry.name || historyAtomizerSlug(entry),
@@ -1034,7 +1048,10 @@ function duplicateFacebookPostGroups(campaignState, publishState) {
 
   const grouped = new Map();
   records.forEach(record => {
-    const canonical = record.familyKey || canonicalAtomizerFamilyKey(record.name || record.slug) || canonicalAtomizerSlug(record.name || record.slug);
+    const family = record.productType === 'mod'
+      ? modFamilyKey({ familyKey: record.familyKey, title: record.name || record.slug })
+      : record.familyKey || canonicalAtomizerFamilyKey(record.name || record.slug) || canonicalAtomizerSlug(record.name || record.slug);
+    const canonical = family ? `${record.productType}:${family}` : '';
     if (!canonical) return;
     if (!grouped.has(canonical)) grouped.set(canonical, []);
     grouped.get(canonical).push(record);
@@ -1659,7 +1676,8 @@ async function deleteFacebookObject(objectId) {
 
 function removeDuplicateRecord(campaignState, publishState, record, keptPostId) {
   if (record.scope === 'campaign') {
-    delete campaignState.postedAtomizers[record.slug];
+    if (record.productType === 'mod') delete campaignState.postedMods[record.slug];
+    else delete campaignState.postedAtomizers[record.slug];
     campaignState.history = campaignState.history.filter(entry => entry && entry.postId !== record.postId);
     campaignState.updatedAt = nowIso();
   } else {
@@ -1679,7 +1697,7 @@ async function dedupeFacebookPosts(options = {}) {
   let publishState = readJson(STATE_PATH, emptyState());
   const groups = duplicateFacebookPostGroups(campaignState, publishState);
   if (!groups.length) {
-    console.log('Facebook deduplication: every atomizer has one post.');
+    console.log('Facebook deduplication: every automatic atomizer and mod has one post.');
     return { groups: 0, removed: 0 };
   }
   groups.forEach(group => {
