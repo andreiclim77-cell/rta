@@ -68,6 +68,35 @@ const manualTwo = manualFacebookRecord({
 });
 assert(manualOne && manualTwo, 'Manual Facebook photo posts must be recognized');
 assert.strictEqual(manualTwo.images.length, 2, 'Manual Facebook carousels must retain every photo');
+const generatedReel = manualFacebookRecord({
+  id: '1221839447687298_generated_reel',
+  message: 'https://ghid-rta.ro/\nFISA DOCUMENTATA IN GHID',
+  created_time: '2026-08-11T12:06:00+0000',
+  attachments: { data: [{
+    media_type: 'video_autoplay',
+    target: { url: 'https://www.facebook.com/reel/123456789/' },
+    media: { image: { src: 'https://example.com/reel-thumbnail.jpg' } }
+  }] }
+});
+assert.strictEqual(generatedReel, null, 'A generated Facebook Reel thumbnail must not re-enter the Instagram photo queue');
+const reelEchoState = normalizeInstagramState({
+  ...emptyInstagramState(),
+  manualFacebookRecords: { reel_post: { sourcePostId: 'reel_post' } },
+  mirroredFacebookPosts: {
+    reel_post: {
+      sourcePostId: 'reel_post',
+      productType: 'manual',
+      identity: 'manual:reel-post',
+      source: 'instagram-existing-media-detected',
+      permalink: 'https://www.instagram.com/reel/example/'
+    }
+  },
+  mirroredFamilies: { 'manual:reel-post': { sourcePostId: 'reel_post' } },
+  history: [{ sourcePostId: 'reel_post' }]
+});
+assert(!reelEchoState.manualFacebookRecords.reel_post, 'A previously stored Reel echo must be removed during state normalization');
+assert(!reelEchoState.mirroredFacebookPosts.reel_post, 'A Reel echo must not consume Instagram publication history');
+assert.strictEqual(reelEchoState.history.length, 0, 'A Reel echo must not consume the daily publication limit');
 mergeManualFacebookRecords(state, [manualOne, manualTwo]);
 const manualPlan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
   maxPosts: 500,

@@ -94,6 +94,30 @@ function emptyInstagramState() {
   };
 }
 
+function pruneGeneratedReelEchoes(state) {
+  const echoIds = Object.entries(state.mirroredFacebookPosts || {})
+    .filter(([, record]) => record
+      && record.productType === 'manual'
+      && record.source === 'instagram-existing-media-detected'
+      && /instagram\.com\/reel\//i.test(String(record.permalink || '')))
+    .map(([sourcePostId]) => sourcePostId);
+  for (const sourcePostId of echoIds) {
+    const record = state.mirroredFacebookPosts[sourcePostId];
+    if (record && state.mirroredFamilies[record.identity]
+      && state.mirroredFamilies[record.identity].sourcePostId === sourcePostId) {
+      delete state.mirroredFamilies[record.identity];
+    }
+    delete state.mirroredFacebookPosts[sourcePostId];
+    delete state.manualFacebookRecords[sourcePostId];
+  }
+  if (echoIds.length) {
+    const echoes = new Set(echoIds);
+    state.queue = state.queue.filter(item => !echoes.has(item.sourcePostId));
+    state.history = state.history.filter(item => !echoes.has(item.sourcePostId));
+  }
+  return echoIds.length;
+}
+
 function normalizeInstagramState(value) {
   const state = value && typeof value === 'object' ? value : emptyInstagramState();
   state.schemaVersion = 1;
@@ -117,6 +141,7 @@ function normalizeInstagramState(value) {
     ? state.mirroredFamilies
     : {};
   state.history = Array.isArray(state.history) ? state.history : [];
+  pruneGeneratedReelEchoes(state);
   return state;
 }
 
@@ -539,6 +564,9 @@ function attachmentPhotoUrls(attachment) {
   };
   const visit = item => {
     if (!item || typeof item !== 'object') return;
+    const mediaType = String(item.media_type || '').toLowerCase();
+    const targetUrl = String(item.target && item.target.url || item.url || '');
+    if (/video|reel/.test(mediaType) || /\/(?:reel|videos?)\//i.test(targetUrl)) return;
     add(item.media && item.media.image && item.media.image.src);
     [].concat(item.subattachments && item.subattachments.data || []).forEach(visit);
   };
