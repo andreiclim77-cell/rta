@@ -16,9 +16,6 @@ on:
       - Instagram mirror from Facebook
     types:
       - completed
-  schedule:
-    # Four source posts/day at most; each source creates one Facebook and one Instagram Reel.
-    - cron: "37 * * * *"
 
 permissions:
   contents: write
@@ -58,10 +55,27 @@ jobs:
       - name: Validate Reel automation
         run: |
           node --check tools/social-reels-publisher.js
+          node --check tools/meta-token-gate.js
+          node tools/check-meta-token-gate.js
           node tools/check-social-reels-publisher.js
           node tools/social-reels-publisher.js --check --max-posts 1 --daily-limit 4
 
+      - name: Check Meta connection without changing publication state
+        id: meta
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/meta-token-gate.js --require-instagram
+
+      - name: Fail an explicit verification when Meta is unavailable
+        if: github.event_name == 'workflow_dispatch' && inputs.mode == 'verify' && steps.meta.outputs.ready != 'true'
+        run: |
+          echo "Meta verification failed: ${{ steps.meta.outputs.reason }}" >&2
+          exit 1
+
       - name: Verify Facebook Page and Instagram professional account
+        if: steps.meta.outputs.ready == 'true'
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -69,7 +83,7 @@ jobs:
         run: node tools/social-reels-publisher.js --verify-connection
 
       - name: Prepare one vertical Reel
-        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        if: steps.meta.outputs.ready == 'true' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -77,7 +91,7 @@ jobs:
         run: node tools/social-reels-publisher.js --prepare --max-posts 1 --daily-limit 4
 
       - name: Commit prepared public Reel
-        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        if: steps.meta.outputs.ready == 'true' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
         shell: bash
         run: |
           if git diff --quiet -- data/social-reels-state.json assets/social-reels; then
@@ -92,7 +106,7 @@ jobs:
           git push
 
       - name: Publish Reel pair and verify platform receipts
-        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        if: steps.meta.outputs.ready == 'true' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -100,7 +114,7 @@ jobs:
         run: node tools/social-reels-publisher.js --publish-prepared --max-posts 1 --daily-limit 4
 
       - name: Commit Reel publication receipts
-        if: github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror'
+        if: steps.meta.outputs.ready == 'true' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
         shell: bash
         run: |
           if git diff --quiet -- data/social-reels-state.json; then

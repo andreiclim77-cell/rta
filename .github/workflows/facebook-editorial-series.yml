@@ -46,8 +46,17 @@ jobs:
           echo "count=$(node tools/facebook-publisher.js --editorial-pending-count --max-posts 2)" >> "$GITHUB_OUTPUT"
           echo "remaining=$(node tools/facebook-publisher.js --editorial-unposted-count)" >> "$GITHUB_OUTPUT"
 
-      - name: Publish one verified atomizer and one verified mod
+      - name: Check Meta connection without changing publication state
         if: steps.pending.outputs.count != '0'
+        id: meta
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/meta-token-gate.js
+
+      - name: Publish one verified atomizer and one verified mod
+        if: steps.pending.outputs.count != '0' && steps.meta.outputs.ready == 'true'
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -55,7 +64,7 @@ jobs:
         run: node tools/facebook-publisher.js --publish-editorial --max-posts 2
 
       - name: Commit editorial state
-        if: steps.pending.outputs.count != '0'
+        if: steps.pending.outputs.count != '0' && steps.meta.outputs.ready == 'true'
         shell: bash
         run: |
           if git diff --quiet -- data/facebook-campaign-state.json; then

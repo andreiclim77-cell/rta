@@ -42,6 +42,8 @@ jobs:
           node --check tools/facebook-publisher.js
           node --check tools/instagram-publisher.js
           node --check tools/social-reels-publisher.js
+          node --check tools/meta-token-gate.js
+          node --check tools/check-social-workflows.js
           node --check cloudflare/smokee-sync-backup/worker.mjs
           node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/instagram-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/social-reels-state.json','utf8'))"
       - name: Validate catalog and public pages
@@ -54,6 +56,8 @@ jobs:
           node tools/check-facebook-publisher.js
           node tools/check-instagram-publisher.js
           node tools/check-social-reels-publisher.js
+          node tools/check-meta-token-gate.js
+          node tools/check-social-workflows.js
           node tools/check-validation-queue.js
           node tools/facebook-publisher.js --check
           node tools/validate-seo-pages.js

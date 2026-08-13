@@ -127,8 +127,17 @@ jobs:
           echo "count=$pending" >> "$GITHUB_OUTPUT"
           echo "Facebook pending posts: $pending"
 
-      - name: Publish real Facebook Page updates
+      - name: Check Meta connection without changing publication state
         if: steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0' && vars.FACEBOOK_AUTOPUBLISH_ENABLED == 'true'
+        id: meta
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
+        run: node tools/meta-token-gate.js
+
+      - name: Publish real Facebook Page updates
+        if: steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0' && vars.FACEBOOK_AUTOPUBLISH_ENABLED == 'true' && steps.meta.outputs.ready == 'true'
         id: facebook_publish
         continue-on-error: true
         env:
@@ -138,7 +147,7 @@ jobs:
         run: node tools/facebook-publisher.js --publish --max-posts 1
 
       - name: Commit Facebook publish state
-        if: always() && steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0' && vars.FACEBOOK_AUTOPUBLISH_ENABLED == 'true'
+        if: always() && steps.sync_window.outputs.run_sync == 'true' && steps.facebook_updates.outputs.count != '0' && vars.FACEBOOK_AUTOPUBLISH_ENABLED == 'true' && steps.meta.outputs.ready == 'true'
         shell: bash
         run: |
           if git diff --quiet -- data/facebook-publish-state.json; then
@@ -153,7 +162,7 @@ jobs:
           fi
 
       - name: Report Facebook publishing failure
-        if: steps.facebook_publish.outcome == 'failure'
+        if: steps.meta.outputs.ready == 'true' && steps.facebook_publish.outcome == 'failure'
         shell: bash
         run: |
           echo "Facebook publishing failed after preserving every successful post ID." >&2
