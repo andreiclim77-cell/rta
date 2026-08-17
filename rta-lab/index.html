@@ -1,0 +1,27 @@
+<!doctype html><html lang="ro"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07090d"><meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="googlebot" content="noindex,nofollow,noarchive,nosnippet">
+<meta name="application-name" content="RTA Build Lab"><meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="RTA Build Lab">
+<title>RTA MTL Build Lab</title><link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icon.svg" type="image/svg+xml" sizes="any"><link rel="apple-touch-icon" href="./icon.svg">
+<link rel="stylesheet" href="./styles.css"></head><body>
+<div class="top"><div class="topin"><div class="logo"></div><div class="brand"><h1>RTA MTL Build Lab</h1><div>400 TOBACCO / NET · PERSONAL</div></div></div></div>
+<main class="wrap">
+<section class="hero"><div class="eyebrow">PERSONAL RTA ENGINE</div><h2>Lichid → atomizor → TOP 4 builduri.</h2>
+<p>400 de repere tobacco/NET plus profil liber. Motorul folosește clasamentul tău, geometria airflow-ului și regula coil footprint ↔ airflow footprint.</p>
+<div class="badges"><span class="badge green">● instalabil · offline</span><span class="badge gold">K1 27/28 = 5 · K1 29 = 6</span><span class="badge">NiFe30 = 7 · SS30 = 8</span></div></section>
+<div class="steps"><div id="step1" class="step on"><b>1</b>Lichid</div><div id="step2" class="step"><b>2</b>Atomizor</div><div id="step3" class="step"><b>3</b>TOP 4 builduri</div></div>
+<section class="panel"><div class="ptitle"><div class="num">1</div><div><h3>Alege lichidul</h3><p>Poți alege din catalog sau folosi direct un profil scris de tine.</p></div></div>
+<div class="categories"><button class="cat active" data-cat="Tutun simplu">Tutun simplu<small>100 repere</small></button><button class="cat" data-cat="Tutun complex">Tutun complex<small>100 repere</small></button><button class="cat" data-cat="NET simplu">NET simplu<small>100 repere</small></button><button class="cat" data-cat="NET complex">NET complex<small>100 repere</small></button></div>
+<label>Filtru / profil liber</label><div class="row2"><input id="search" type="search" placeholder="Ex.: Latakia, VaPer, Cuban + bourbon…"><div id="count" class="count">100 / 100</div></div>
+<button id="freeBtn" class="freeprofile" type="button" disabled>Folosește textul ca profil liber</button><div class="freehint">Ex.: scrii „Latakia” și apeși butonul; nu trebuie să alegi un produs concret.</div>
+<label>Lichid / aromă / extract</label><select id="liq"></select><div id="liqInfo" class="info hidden"></div>
+<label>Prioritatea ta în redare</label><div class="objective"><button class="active" data-obj="complete">Completitudine</button><button data-obj="tobacco">Tobacco-first</button><button data-obj="layers">Stratificare</button><button data-obj="th">TH</button><button data-obj="body">Corp</button><button data-obj="smooth">Smooth</button></div></section>
+<section class="panel"><div class="ptitle"><div class="num">2</div><div><h3>Alege atomizorul</h3><p>Derulatorul se reordonează automat după lichid și obiectiv.</p></div></div><select id="atom" disabled><option>— alege mai întâi lichidul —</option></select><div id="air" class="air hidden"><div id="airvis" class="airvis"></div><div id="ameta" class="ameta"></div></div></section>
+<section class="panel"><div class="ptitle"><div class="num">3</div><div><h3>TOP 4 sârme + builduri</h3><p>Rezultatul folosește lichidul, atomizorul, airflow-ul și regulile actuale.</p></div></div><div id="builds" class="builds"><div class="empty">Alege lichidul și atomizorul. TOP 4 apar automat.</div></div><div class="legend">Catalogul include e-liquids, arome/concentrate și extracte consacrate; motorul folosește profilul aromatic pentru pairing.</div></section>
+<div class="footer">RTA MTL Build Lab · personal · noindex</div></main>
+<script src="./data/core.js"></script><script src="./data/liquids-1.js"></script><script src="./data/liquids-2.js"></script><script src="./data/liquids-3.js"></script><script src="./data/liquids-4.js"></script><script src="./app.js"></script>
+</body></html>
