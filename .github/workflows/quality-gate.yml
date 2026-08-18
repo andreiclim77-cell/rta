@@ -14,6 +14,7 @@ on:
       - "en/**"
       - "data/**"
       - "tools/**"
+      - "rta-lab/**"
       - "sw.js"
       - "site.webmanifest"
       - "site-en.webmanifest"
@@ -45,6 +46,10 @@ jobs:
           node --check tools/meta-token-gate.js
           node --check tools/check-social-workflows.js
           node --check cloudflare/smokee-sync-backup/worker.mjs
+          node --check rta-lab/app.js
+          node --check rta-lab/lab-update.js
+          node --check rta-lab/sw.js
+          for file in rta-lab/data/*.js; do node --check "$file"; done
           node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/instagram-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/social-reels-state.json','utf8'))"
       - name: Validate catalog and public pages
         run: |
