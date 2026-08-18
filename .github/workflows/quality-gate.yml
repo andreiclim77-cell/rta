@@ -47,6 +47,7 @@ jobs:
           node --check tools/check-social-workflows.js
           node --check cloudflare/smokee-sync-backup/worker.mjs
           node --check rta-lab/engine.js
+          node --check rta-lab/bootstrap.js
           node --check rta-lab/sw.js
           for file in rta-lab/data/*.js; do node --check "$file"; done
           test ! -e rta-lab/app.js
@@ -64,6 +65,7 @@ jobs:
           }
           const index = fs.readFileSync('rta-lab/index.html', 'utf8');
           if (!index.includes('engine.js')) throw new Error('RTA Lab index does not load engine.js');
+          if (!index.includes('bootstrap.js')) throw new Error('RTA Lab index does not load bootstrap.js');
           if (index.includes('app.js') || index.includes('lab-update.js')) throw new Error('Obsolete Lab engines are still referenced');
           if (/K1 27|SS316L|Clapton/.test(index)) throw new Error('Obsolete wire cards are still present in Lab UI');
           NODE
