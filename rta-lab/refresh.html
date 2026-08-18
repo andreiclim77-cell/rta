@@ -13,7 +13,7 @@
 <body>
   <main class="card">
     <h1>Actualizare RTA Build Lab</h1>
-    <p id="status">Șterg versiunea veche și încarc motorul V8…</p>
+    <p id="status">Șterg versiunea veche și încarc motorul V9 cu 620 de lichide…</p>
   </main>
   <script>
     (async () => {
@@ -32,8 +32,8 @@
             .map(key => caches.delete(key)));
         }
         status.className = 'ok';
-        status.textContent = 'Cache curățat. Se deschide versiunea V8…';
-        setTimeout(() => location.replace('./?v=8&reset=' + Date.now()), 350);
+        status.textContent = 'Cache curățat. Se deschide versiunea V9 cu Hall of Fame…';
+        setTimeout(() => location.replace('./?v=9&reset=' + Date.now()), 350);
       } catch (error) {
         status.className = 'err';
         status.textContent = 'Nu am putut curăța automat cache-ul. Șterge datele site-ului ghid-rta.ro și redeschide Lab-ul.';
