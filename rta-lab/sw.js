@@ -1,4 +1,4 @@
-const CACHE="rta-lab-v3-search-500-20260818";
+const CACHE="rta-lab-v4-wire-guide-20260818";
 const ASSETS=[
   "./","./index.html","./styles.css","./lab-update.css","./app.js","./lab-update.js","./manifest.webmanifest","./icon-192.png",
   "./data/core.js","./data/atoms-1.js","./data/atoms-2.js","./data/atoms-3.js","./data/wires.js",
