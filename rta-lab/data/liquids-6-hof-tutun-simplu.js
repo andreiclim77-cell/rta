@@ -1,0 +1,22 @@
+window.RTA_LIQUIDS=(window.RTA_LIQUIDS||[]).concat([
+{"class":"Tutun simplu","brand":"Pod Salt Origin","name":"True Tobacco","line":"Hall of Fame · Origin","profile":"tutun autentic, uscat și ușor pământos, cu final curat","tags":["simple","dry","dark"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"Pod Salt Origin","name":"Virginia Gold","line":"Hall of Fame · Origin","profile":"Virginia auriu, luminos, fin și discret dulce natural","tags":["simple","bright"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"V4 Vapour","name":"UK Cigarette","line":"Hall of Fame · Tobacco","profile":"profil de țigară britanică, sec, direct și cigarette-like","tags":["simple","dry"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"V4 Vapour","name":"Virginia","line":"Hall of Fame · Tobacco","profile":"Virginia blond, fân, lumină și dulceață naturală moderată","tags":["simple","bright"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"V4 Vapour","name":"USA","line":"Hall of Fame · Tobacco","profile":"American tobacco blend, robust, sec și ușor nucos","tags":["simple","dry","burley","oriental"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"V4 Vapour","name":"Rollie","line":"Hall of Fame · Tobacco","profile":"rolling tobacco direct, uscat și ușor aspru","tags":["simple","dry","rolling"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"V4 Vapour","name":"Silver & Gold","line":"Hall of Fame · Tobacco","profile":"tutun blond curat, moale și echilibrat","tags":["simple","bright"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"Naked 100","name":"American Patriots","line":"Hall of Fame · Tobacco","profile":"tutun american bogat și pământos, cu dulceață foarte discretă","tags":["simple","dry","dark"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"Naked 100","name":"Euro Gold","line":"Hall of Fame · Tobacco","profile":"tutun european light, fin, cu final discret nucos și dulce","tags":["simple","bright","nuts"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"Twist","name":"Tobacco Gold","line":"Hall of Fame · Tobacco","profile":"tutun auriu neted, curat și ușor dulce natural","tags":["simple","bright"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"Hayati Pro Max","name":"Tobacco","line":"Hall of Fame · Tobacco","profile":"tutun bogat, smooth și rotund, orientat spre all-day","tags":["simple","dark"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"Element","name":"Tobacco","line":"Hall of Fame · MTL Series","profile":"tutun pur, bogat și smooth, cu hit clasic MTL","tags":["simple","dry"],"kind":"e-liquid"},
+{"class":"Tutun simplu","brand":"Inawera","name":"Tobacco Symphony","line":"Hall of Fame · Tobacco","profile":"tutun aromatic dulce-condimentat, cu fundal nucos","tags":["simple","nuts","layers"],"kind":"aromă sintetică"},
+{"class":"Tutun simplu","brand":"Inawera","name":"Virginia","line":"Hall of Fame · Tobacco","profile":"Virginia blond, fân și dulceață naturală discretă","tags":["simple","bright"],"kind":"aromă sintetică"},
+{"class":"Tutun simplu","brand":"Inawera","name":"Burley Tobacco","line":"Hall of Fame · Tobacco","profile":"Burley sec, nucos și ușor pământos","tags":["simple","burley","dry"],"kind":"aromă sintetică"},
+{"class":"Tutun simplu","brand":"Inawera","name":"S’Camel","line":"Hall of Fame · Tobacco","profile":"tutun de țigară sec, oriental și ușor condimentat","tags":["simple","dry","oriental"],"kind":"aromă sintetică"},
+{"class":"Tutun simplu","brand":"Inawera","name":"Desert Ship","line":"Hall of Fame · Tobacco","profile":"tutun sec, ușor nucos și oriental","tags":["simple","dry","oriental"],"kind":"aromă sintetică"},
+{"class":"Tutun simplu","brand":"Inawera","name":"Dark Tobacco","line":"Hall of Fame · Tobacco","profile":"tutun dark, robust, lemnos și puțin aspru","tags":["simple","dark","dry"],"kind":"aromă sintetică"},
+{"class":"Tutun simplu","brand":"Inawera","name":"Cuban Cigar","line":"Hall of Fame · Tobacco","profile":"trabuc cubanez, lemn, piele și corp dark","tags":["simple","cigar","dark"],"kind":"aromă sintetică"},
+{"class":"Tutun simplu","brand":"Inawera","name":"Tobacco Oriental","line":"Hall of Fame · Tobacco","profile":"tutun oriental floral, uscat și condimentat","tags":["simple","oriental","dry"],"kind":"aromă sintetică"}
+]);
