@@ -1,4 +1,4 @@
-/* RTA Lab — motor restrâns la K1 28 GA, K1 29 GA și NiFe30 */
+/* RTA Lab V8 — motor restrâns la K1 28 GA, K1 29 GA și NiFe30 */
 .categories .cat.all{grid-column:1/-1;text-align:center;min-height:50px}
 .note.extrap{border-color:rgba(107,216,234,.27);background:rgba(107,216,234,.075);color:#c6f2f7}
 .note.context{border-color:rgba(114,217,158,.23);background:rgba(114,217,158,.055);color:#c8f2d8}
@@ -39,6 +39,19 @@
 .geometry-grid span b{color:#fff0c7}
 .geometry-rule p{margin:7px 0 0!important;color:#9fabb6!important;font-size:7.5px!important;line-height:1.45!important}
 
+.explorer-panel{border-color:rgba(107,216,234,.22);background:radial-gradient(520px 160px at 100% 0,rgba(107,216,234,.08),transparent 72%),var(--panel)}
+.explorer-panel>.ptitle .num{background:linear-gradient(145deg,rgba(107,216,234,.23),rgba(107,216,234,.06));border-color:rgba(107,216,234,.30);color:#c7f1f6}
+.explorer-result{margin-top:10px}
+.explorer-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:12px;border-radius:14px;border:1px solid rgba(107,216,234,.18);background:rgba(107,216,234,.045)}
+.explorer-head h4{margin:3px 0 0;color:#f5f8fa;font-size:12px}
+.explorer-kicker{color:#89dce7;font-size:6.5px;font-weight:950;letter-spacing:.55px}
+.explorer-air{margin:9px 1px 0;color:#aeb9c3;font-size:8px;line-height:1.5}
+.explorer-builds{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+.explorer-build{margin:0}
+.explorer-build.baseline-build{border-color:rgba(227,186,97,.30)}
+.explorer-tip{margin-top:9px;padding:9px 10px;border-radius:11px;border:1px solid rgba(114,217,158,.16);background:rgba(114,217,158,.04);color:#afc4b7;font-size:7.5px;line-height:1.5}
+.explorer-tip b{color:#c9edd5}
+
 @media(min-width:700px){
   .categories{grid-template-columns:repeat(4,1fr)}
   .categories .cat.all{grid-column:1/-1}
@@ -46,9 +59,12 @@
   .geometry-grid{grid-template-columns:repeat(3,1fr)}
   .geometry-grid span{display:block;text-align:center}
   .geometry-grid span b{display:block;margin-bottom:3px}
+  .explorer-builds{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:520px){
   .wire-guide>summary{display:block;position:relative;padding-right:34px}
   .wire-guide>summary small{text-align:left;margin-top:4px;max-width:none}
   .wire-guide>summary:after{position:absolute;right:12px;top:12px}
+  .explorer-head{display:block}
+  .explorer-head .pill{display:inline-flex;margin-top:8px}
 }
