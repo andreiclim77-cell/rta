@@ -1,6 +1,7 @@
-const ATOMS = window.RTA_CORE.atoms;
-const WIRES = window.RTA_CORE.wires.filter(wire => ["k128", "k129", "nife30"].includes(wire.id));
-const LIQUIDS = window.RTA_LIQUIDS;
+const ATOMS = window.RTA_CORE.atoms || [];
+const ACTIVE_WIRE_IDS = ["k128", "k129", "k1clap", "ssclap", "nife30"];
+const WIRES = (window.RTA_CORE.wires || []).filter(wire => ACTIVE_WIRE_IDS.includes(wire.id));
+const LIQUIDS = window.RTA_LIQUIDS || [];
 
 const ALL = "ALL";
 const CATEGORY_ORDER = ["Tutun simplu", "Tutun complex", "NET simplu", "NET complex"];
@@ -18,35 +19,56 @@ const escapeHtml = value => String(value ?? "")
   .replace(/'/g, "&#039;");
 
 /*
- * Matricea finală airflow → footprint, V8.
- * K1 round, Ø2,5 mm, coil contact:
- * - K1 28 GA rămâne peste tot la 5 spire: alternativa watt cu mai mult corp/mouthfeel.
- * - K1 29 GA are 5 spire pe jeturile clar concentrate și 6 spire pe geometriile mai late.
+ * Matrice airflow → round-wire, V10.
+ * - K1 28 GA rămâne peste tot la 5 spire.
+ * - K1 29 GA primește 5 spire pe jeturile concentrate și 6 pe geometriile late.
+ * - Ambele Claptonuri sunt fixe la 5 spire, Ø2,5 mm.
  * - NiFe30 rămâne la 7 spire.
  */
 const BUILD_RULES = {
-  "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa watt mai plină și mai densă." },
+  "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa round-wire mai plină." },
   "kprime":   { k128: 5, k129: 5, reason: "Bottom-air direct și concentrat; ambele round-wire-uri funcționează optim cu footprint compact." },
   "gtone":    { k128: 5, k129: 5, reason: "Air-pin unic, vertical și foarte apropiat de coil; 5 spire concentrează eficient jetul." },
   "dvarwcl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock, jetul este compact; 5 spire sunt alegerea optimizată pentru ambele gauge-uri." },
-  "muted":    { k128: 5, k129: 6, reason: "Triple-air spală o zonă mai lată: 29/6 acoperă jeturile, iar 28/5 oferă alternativa watt cu mai mult mouthfeel." },
+  "muted":    { k128: 5, k129: 6, reason: "Triple-air spală o zonă mai lată: 29/6 acoperă jeturile, iar 28/5 oferă round-wire cu mai mult mouthfeel." },
   "gtr":      { k128: 5, k129: 6, reason: "Cele două jeturi oblice cer 29/6 pentru acoperire; 28/5 păstrează un footprint apropiat, cu mai mult corp." },
   "dvarwfl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock 1×1,2 mm, jetul este concentrat; 5 spire sunt aproape optim." },
-  "diplomat": { k128: 5, k129: 6, reason: "Diverterul multipunct este lat: 29/6 favorizează acoperirea, iar 28/5 este alternativa watt mai densă." },
+  "diplomat": { k128: 5, k129: 6, reason: "Diverterul multipunct este lat: 29/6 favorizează acoperirea, iar 28/5 este alternativa round-wire mai densă." },
   "kx":       { k128: 5, k129: 5, reason: "Aerokon restricționează direct sub coil; 5 spire păstrează footprint-ul compact și eficient." },
   "klp":      { k128: 5, k129: 5, reason: "Validat practic: 29/5 maximizează hitul, iar 28/5 păstrează hitul cu mai mult mouthfeel." },
-  "asylum":   { k128: 5, k129: 6, reason: "Geometria dublă/ovală justifică 29/6 pentru acoperire; 28/5 rămâne alternativa watt cu corp mai mare." },
+  "asylum":   { k128: 5, k129: 6, reason: "Geometria dublă/ovală justifică 29/6 pentru acoperire; 28/5 rămâne alternativa round-wire cu corp mai mare." },
   "pmfree":   { k128: 5, k129: 6, reason: "Diverterul 32×0,9 mm este foarte lat: 29/6 oferă acoperire, iar 28/5 aduce corp și mouthfeel." },
-  "pmstd":    { k128: 5, k129: 6, reason: "Aceeași bază multipunct ca Freehand: 29/6 pentru acoperire, 28/5 pentru alternativa watt mai plină." },
+  "pmstd":    { k128: 5, k129: 6, reason: "Aceeași bază multipunct ca Freehand: 29/6 pentru acoperire, 28/5 pentru alternativa round-wire mai plină." },
   "byka":     { k128: 5, k129: 5, reason: "Air-pipe unic și jet concentrat; 5 spire sunt aproape optim pentru pinurile MTL uzuale." },
-  "chariot":  { k128: 5, k129: 6, reason: "29/6 folosește mai bine zona de airflow, iar 28/5 este alternativa watt mai rapidă, plină și cu mouthfeel." },
+  "chariot":  { k128: 5, k129: 6, reason: "29/6 folosește mai bine zona de airflow, iar 28/5 este alternativa round-wire mai rapidă și mai plină." },
   "kv3":      { k128: 5, k129: 6, reason: "28 GA atinge footprint-ul util cu 5 spire; firul mai subțire de 29 GA cere 6 pentru o lungime axială apropiată." },
-  "minister": { k128: 5, k129: 6, reason: "Diverterul lat cere 29/6 pentru acoperire; 28/5 limitează masa în camera mică și rămâne alternativa watt." }
+  "minister": { k128: 5, k129: 6, reason: "Diverterul lat cere 29/6 pentru acoperire; 28/5 limitează masa în camera mică." }
 };
 
 const CONTACT_WIDTH_MM = {
   k128: { 5: "1,61" },
   k129: { 5: "1,43", 6: "1,72" }
+};
+
+/* Compatibilitatea Claptonului cu platforma. Scorul intră în recomandare; nota apare în Explorer. */
+const CLAPTON_PLATFORM = {
+  "415":      { k1clap: 0.90, ssclap: 0.55 },
+  "kprime":   { k1clap: 0.20, ssclap: 0.35 },
+  "gtone":    { k1clap: -0.80, ssclap: -0.60 },
+  "dvarwcl":  { k1clap: 0.65, ssclap: 0.50 },
+  "muted":    { k1clap: 0.90, ssclap: 0.10 },
+  "gtr":      { k1clap: 0.45, ssclap: 0.95 },
+  "dvarwfl":  { k1clap: 0.10, ssclap: 1.05 },
+  "diplomat": { k1clap: 0.75, ssclap: 0.85 },
+  "kx":       { k1clap: -0.20, ssclap: 0.50 },
+  "klp":      { k1clap: -0.70, ssclap: -0.55 },
+  "asylum":   { k1clap: 0.90, ssclap: 0.90 },
+  "pmfree":   { k1clap: 0.85, ssclap: 0.50 },
+  "pmstd":    { k1clap: 0.80, ssclap: 0.40 },
+  "byka":     { k1clap: 0.15, ssclap: 0.90 },
+  "chariot":  { k1clap: 1.30, ssclap: -0.40 },
+  "kv3":      { k1clap: -0.80, ssclap: -0.65 },
+  "minister": { k1clap: 0.35, ssclap: -0.55 }
 };
 
 const AX = {
@@ -63,10 +85,10 @@ const AX = {
   pipe: ["pipe", "cavendish"],
   citrus: ["citrus", "citrice", "portocala", "lamaie", "grapefruit", "aciditate"],
   alcohol: ["rum", "rom", "bourbon", "whisky", "alcool"],
-  nuts: ["nut", "nuci", "alune", "migdale", "hazelnut", "pecan"],
-  coffeeCocoa: ["coffee", "cafea", "espresso", "cocoa", "cacao", "chocolate"],
-  sweet: ["sweet", "dulce", "honey", "miere", "vanilla", "vanilie", "caramel", "cream", "crema", "custard", "cavendish", "cherry", "cireasa", "cocos"],
-  layers: ["complex", "blend", "mixture", "english", "balkan", "organic", "aromat", "flavored", "reserve", "barrique", "citrus", "rum", "bourbon", "whisky", "nuci", "cafea", "cacao", "vanilie"]
+  nuts: ["nut", "nuci", "alune", "migdale", "hazelnut", "pecan", "fistic", "pistachio"],
+  coffeeCocoa: ["coffee", "cafea", "espresso", "cocoa", "cacao", "chocolate", "ciocolata"],
+  sweet: ["sweet", "dulce", "honey", "miere", "vanilla", "vanilie", "caramel", "cream", "crema", "custard", "cavendish", "cherry", "cireasa", "cocos", "biscuit"],
+  layers: ["complex", "blend", "mixture", "english", "balkan", "organic", "aromat", "flavored", "reserve", "barrique", "citrus", "rum", "bourbon", "whisky", "nuci", "cafea", "cacao", "vanilie", "hall of fame"]
 };
 
 const state = {
@@ -140,7 +162,7 @@ function rankAtoms() {
 }
 
 function wireTrait(wire, ax, objective) {
-  const traits = wire.traits;
+  const traits = wire.traits || {};
   const keys = [];
   if (has(ax, "dry") || has(ax, "simple")) keys.push("dry", "tobacco");
   if (has(ax, "bright") || has(ax, "citrus") || has(ax, "oriental") || has(ax, "perique")) keys.push("bright", "layers");
@@ -159,6 +181,33 @@ function wireTrait(wire, ax, objective) {
     }
   });
   return count ? score / count : 4;
+}
+
+function claptonPlatformScore(atom, wireId) {
+  return (CLAPTON_PLATFORM[atom.id] && CLAPTON_PLATFORM[atom.id][wireId]) || 0;
+}
+
+function claptonPlatformText(atom, wireId) {
+  const score = claptonPlatformScore(atom, wireId);
+  const isK1 = wireId === "k1clap";
+  if (score >= 0.85) {
+    return isK1
+      ? "Platforma gestionează foarte bine masa K1 Clapton: corp, densitate și TH fără să sufoce camera."
+      : "Platforma valorifică foarte bine SS Clapton: top-notes, separare și layering, cu corp suficient.";
+  }
+  if (score >= 0.35) {
+    return isK1
+      ? "K1 Clapton este potrivit contextual, mai ales pentru profile dark, cigar, nuci, cafea sau bourbon."
+      : "SS Clapton este potrivit pentru profile luminoase, citrice, Orientale și blenduri complexe.";
+  }
+  if (score > -0.35) {
+    return isK1
+      ? "K1 Clapton este o alternativă selectivă: folosește-l când lichidul cere corp și integrare, nu pentru maximă uscăciune."
+      : "SS Clapton este o alternativă selectivă: util pentru claritate, dar poate amplifica dulceața pe unele lichide.";
+  }
+  return isK1
+    ? "Camera sau jetul concentrat pot face K1 Clapton prea cald; apare numai când lichidul câștigă clar din corp și TH."
+    : "Camera sau jetul concentrat pot face SS Clapton prea dulce ori prea cald; apare numai pentru profile care cer claritate și layering.";
 }
 
 function wireBonus(atom, wire, ax, objective, liquid) {
@@ -193,6 +242,36 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (["415", "muted", "gtr", "diplomat", "asylum", "pmfree", "pmstd", "chariot", "minister"].includes(atom.id)) bonus += 0.45;
   }
 
+  if (wire.id === "k1clap") {
+    bonus += claptonPlatformScore(atom, wire.id);
+    if (complex) bonus += 0.95;
+    if (dark) bonus += 0.85;
+    if (rich) bonus += 0.85;
+    if (has(ax, "cigar")) bonus += 0.45;
+    if (objective === "body") bonus += 1.55;
+    if (objective === "th") bonus += 0.95;
+    if (objective === "complete") bonus += 0.75;
+    if (objective === "layers") bonus += 0.45;
+    if (simple && dry && !dark) bonus -= 0.8;
+    if (bright && !dark && !rich) bonus -= 0.35;
+    if (atom.id === "chariot" && norm(liquid.name).includes("tab plus")) bonus += 4.5;
+  }
+
+  if (wire.id === "ssclap") {
+    bonus += claptonPlatformScore(atom, wire.id);
+    if (complex) bonus += 0.85;
+    if (bright) bonus += 1.0;
+    if (has(ax, "citrus") || has(ax, "oriental") || has(ax, "perique")) bonus += 0.65;
+    if (rich) bonus += 0.25;
+    if (objective === "layers") bonus += 1.45;
+    if (objective === "complete") bonus += 0.75;
+    if (objective === "smooth") bonus += 0.5;
+    if (objective === "body") bonus += 0.2;
+    if (objective === "tobacco") bonus -= 0.25;
+    if (simple && dry) bonus -= 0.85;
+    if (dark && !bright && !rich) bonus -= 0.25;
+  }
+
   if (wire.id === "nife30") {
     if (isNet) bonus += 0.9;
     if (complex) bonus += 0.8;
@@ -220,6 +299,7 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (wire.id === "nife30") bonus += 1.5;
     if (wire.id === "k129") bonus += 0.25;
   }
+
   return bonus;
 }
 
@@ -227,10 +307,13 @@ function buildRule(atom, wire) {
   if (wire.id === "nife30") {
     return { wraps: 7, reason: "NiFe30 rămâne fix la 7 spire, Ø2,5 mm, cu calibrare complet rece." };
   }
+  if (["k1clap", "ssclap"].includes(wire.id)) {
+    return { wraps: 5, reason: claptonPlatformText(atom, wire.id) };
+  }
   const atomRule = BUILD_RULES[atom.id] || {
     k128: 5,
     k129: 6,
-    reason: "Date geometrice insuficiente: 28/5 este alternativa watt, iar 29/6 este defaultul conservator pentru acoperire."
+    reason: "Date geometrice insuficiente: 28/5 este alternativa round-wire, iar 29/6 este defaultul conservator pentru acoperire."
   };
   return { wraps: atomRule[wire.id] || (wire.id === "k128" ? 5 : 6), reason: atomRule.reason };
 }
@@ -247,14 +330,26 @@ function buildOutput(atom, wire, liquid) {
   };
 
   if (wire.id === "k128" && atomRule.k129 === 6) {
-    output.status = "Alternativă watt";
+    output.status = "Alternativă round-wire";
     output.noteClass = "context";
-    output.note = "K1 28 GA / 5 spire este alternativa watt la K1 29 GA / 6 spire: mai mult corp și mouthfeel, cu mai puțină uscăciune și agresivitate.";
+    output.note = "K1 28 GA / 5 spire: mai mult corp și mouthfeel decât 29/6, cu mai puțină uscăciune și agresivitate.";
   }
   if (wire.id === "k129" && atomRule.k129 === 6) {
-    output.status = "Watt · acoperire airflow";
+    output.status = "Round-wire · acoperire airflow";
     output.noteClass = "extrap";
-    output.note = "K1 29 GA / 6 spire extinde footprint-ul pentru airflow-ul mai lat și păstrează o redare mai seacă, precisă și focusată decât 28/5.";
+    output.note = "K1 29 GA / 6 spire extinde footprint-ul pentru airflow-ul mai lat și păstrează redarea seacă, precisă și focusată.";
+  }
+  if (wire.id === "k1clap") {
+    const score = claptonPlatformScore(atom, wire.id);
+    output.status = score >= 0.8 ? "K1 Clapton recomandat" : score <= -0.5 ? "K1 Clapton contextual" : "K1 Clapton alternativ";
+    output.noteClass = score >= 0.8 ? "valid" : score <= -0.5 ? "context" : "extrap";
+    output.note = `${claptonPlatformText(atom, wire.id)} 5 spire, Ø2,5 mm; pornește din zona inferioară a wattajului și urcă în pași de 0,5 W.`;
+  }
+  if (wire.id === "ssclap") {
+    const score = claptonPlatformScore(atom, wire.id);
+    output.status = score >= 0.8 ? "SS Clapton recomandat" : score <= -0.5 ? "SS Clapton contextual" : "SS Clapton alternativ";
+    output.noteClass = score >= 0.8 ? "valid" : score <= -0.5 ? "context" : "extrap";
+    output.note = `${claptonPlatformText(atom, wire.id)} 5 spire, Ø2,5 mm; în watt pornește jos, iar TC SS se folosește numai cu rezistență stabilă și calibrare corectă.`;
   }
   if (atom.id === "klp" && wire.id === "k129") {
     output.status = "Validat";
@@ -265,6 +360,11 @@ function buildOutput(atom, wire, liquid) {
     output.status = "Validat";
     output.noteClass = "valid";
     output.note = "28/5 păstrează hit/TH foarte bun și adaugă mai mult mouthfeel și corp decât 29/5.";
+  }
+  if (atom.id === "chariot" && wire.id === "k1clap" && liquid && norm(liquid.name).includes("tab plus")) {
+    output.status = "Validat practic";
+    output.noteClass = "valid";
+    output.note = "Pe Chariot cu Cronos Tab Plus, K1 Clapton 2×30+38 / 5 spire este reperul principal pentru corp, TH și integrarea profilului.";
   }
   if (wire.id === "nife30") {
     output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
@@ -282,6 +382,9 @@ function footprintText(atom, wire, output) {
   if (wire.id === "nife30") {
     return "7 spire rămân reperul fix pentru TC; lungimea reală depinde de diametrul exact al firului NiFe30 folosit.";
   }
+  if (["k1clap", "ssclap"].includes(wire.id)) {
+    return `5 spire pe Ø2,5 mm. Claptonul are suprafață și masă mai mari decât round-wire, deci nu se compară axial 1:1 cu 28/5 sau 29/5. ${buildRule(atom, wire).reason}`;
+  }
   const wraps = Number(output.wraps);
   const width = CONTACT_WIDTH_MM[wire.id] && CONTACT_WIDTH_MM[wire.id][wraps];
   return `${wraps} spire contact ≈ ${width || "—"} mm lățime axială. ${buildRule(atom, wire).reason}`;
@@ -290,18 +393,31 @@ function footprintText(atom, wire, output) {
 function whyForLiquid(wire, ax, objective, liquid) {
   const complex = has(ax, "layers") || String(liquid.class || "").includes("complex");
   const dry = has(ax, "dry") || has(ax, "simple");
+  const dark = has(ax, "dark") || has(ax, "cigar") || has(ax, "kentucky") || has(ax, "latakia") || has(ax, "burley");
+  const bright = has(ax, "bright") || has(ax, "citrus") || has(ax, "oriental") || has(ax, "perique");
   const rich = has(ax, "pipe") || has(ax, "sweet") || has(ax, "alcohol") || has(ax, "nuts") || has(ax, "coffeeCocoa");
   const isNet = String(liquid.class || "").startsWith("NET");
 
   if (wire.id === "k129") {
     if (objective === "th") return "prioritatea este TH-ul; 29 GA concentrează energia și face vape-ul mai dur";
     if (objective === "tobacco" || dry) return "profilul cere tutun central, uscăciune și focus";
-    return "oferă cea mai precisă și directă redare dintre cele trei opțiuni";
+    return "oferă cea mai precisă și directă redare dintre round-wire-uri";
   }
   if (wire.id === "k128") {
     if (objective === "body" || rich) return "profilul cere corp, mouthfeel și legarea notelor fără a pierde caracterul de tutun";
     if (complex) return "echilibrează stratificarea cu densitatea și păstrează lichidul complet";
     return "este etalonul cel mai echilibrat între hit, corp și completitudine";
+  }
+  if (wire.id === "k1clap") {
+    if (objective === "body" || objective === "th") return "profilul câștigă din corp, densitate, mouthfeel și TH, exact zona forte a K1 Clapton";
+    if (dark || rich || has(ax, "cigar")) return "notele dark, cigar, nuci, cafea, cremă sau alcool au nevoie de masă și integrare";
+    return "Claptonul K1 leagă notele și adaugă densitate fără a elimina caracterul de tutun";
+  }
+  if (wire.id === "ssclap") {
+    if (objective === "layers") return "prioritatea este separarea straturilor și vizibilitatea top-notes-urilor";
+    if (bright) return "profilul luminos, citric, Oriental sau Perique beneficiază de viteza și claritatea SS Clapton";
+    if (complex) return "lichidul complex câștigă layering și textură cu mai multă lumină decât pe K1 Clapton";
+    return "SS Clapton adaugă corp de Clapton, dar păstrează o prezentare mai rapidă și mai luminoasă";
   }
   if (objective === "smooth") return "prioritatea este smoothness-ul și consistența termică de la un puf la altul";
   if (objective === "layers" || complex || isNet) return "profilul beneficiază de control termic, finețe și stratificare";
@@ -323,6 +439,12 @@ function comparisonText(atom, wire, output) {
   if (wire.id === "k129" && wraps === 6) {
     return "+ precizie, uscăciune și acoperire axială; − hit mai puțin concentrat decât 29/5 și corp mai mic decât 28/5.";
   }
+  if (wire.id === "k1clap") {
+    return "+ corp, densitate, mouthfeel, TH și integrare; − ramp-up mai lent, mai multă căldură și separare mai mică decât SS Clapton.";
+  }
+  if (wire.id === "ssclap") {
+    return "+ claritate, top-notes, layering și răspuns mai rapid decât K1 Clapton; − mai puțină uscăciune și poate accentua dulceața.";
+  }
   return "+ smoothness, consistență, finețe și layering; − mai puțin hit brut și necesită TCR plus calibrare la rece.";
 }
 
@@ -337,13 +459,15 @@ function airFlags(atom) {
 function geometrySummary(atom) {
   const rule = BUILD_RULES[atom.id] || { k128: 5, k129: 6, reason: "Default conservator." };
   return `<div class="geometry-rule">
-    <h5>Builduri stabilite după airflow</h5>
-    <div class="geometry-grid">
+    <h5>Builduri stabilite după airflow și masă termică</h5>
+    <div class="geometry-grid geometry-grid-five">
       <span><b>K1 28 GA</b>${rule.k128} spire · ≈ ${CONTACT_WIDTH_MM.k128[rule.k128]} mm</span>
       <span><b>K1 29 GA</b>${rule.k129} spire · ≈ ${CONTACT_WIDTH_MM.k129[rule.k129]} mm</span>
+      <span><b>K1 Clapton</b>2×30+38 · 5 spire</span>
+      <span><b>SS Clapton</b>2×30+38 · 5 spire</span>
       <span><b>NiFe30</b>7 spire · TCR 320/310</span>
     </div>
-    <p>${escapeHtml(rule.reason)}</p>
+    <p>${escapeHtml(rule.reason)} Claptonurile intră în TOP 3 numai când profilul lichidului și platforma justifică suprafața și masa suplimentare.</p>
   </div>`;
 }
 
@@ -447,7 +571,7 @@ function setCategory(category) {
   $("atom").disabled = true;
   $("atom").innerHTML = '<option>— alege mai întâi lichidul —</option>';
   $("air").classList.add("hidden");
-  $("builds").innerHTML = '<div class="empty">Alege lichidul și atomizorul. Cele 3 builduri active apar automat.</div>';
+  $("builds").innerHTML = '<div class="empty">Alege lichidul și atomizorul. TOP 3 sunt selectate inteligent din cele 5 sârme active.</div>';
   setSteps(1);
 }
 
@@ -553,7 +677,7 @@ function setObjective(value) {
 
 function renderBuilds() {
   if (!state.liquid || !state.atom) {
-    $("builds").innerHTML = '<div class="empty">Alege lichidul și atomizorul. Cele 3 builduri active apar automat.</div>';
+    $("builds").innerHTML = '<div class="empty">Alege lichidul și atomizorul. TOP 3 sunt selectate inteligent din cele 5 sârme active.</div>';
     return;
   }
 
@@ -568,10 +692,11 @@ function renderBuilds() {
     ranking.sort((left, right) => left.wire.id === "nife30" ? -1 : right.wire.id === "nife30" ? 1 : right.score - left.score);
   }
   if (atom.id === "chariot" && norm(liquid.name).includes("tab plus")) {
-    const order = { k128: 0, nife30: 1, k129: 2 };
+    const order = { k1clap: 0, k128: 1, nife30: 2, k129: 3, ssclap: 4 };
     ranking.sort((left, right) => (order[left.wire.id] ?? 99) - (order[right.wire.id] ?? 99));
   }
 
+  ranking = ranking.slice(0, 3);
   $("builds").innerHTML = ranking.map((item, index) => {
     const wire = item.wire;
     const output = buildOutput(atom, wire, liquid);
@@ -603,16 +728,22 @@ function explorerVapeText(atom, wire, output) {
   const atomRule = BUILD_RULES[atom.id] || { k129: 6 };
   if (wire.id === "k128") {
     return atomRule.k129 === 6
-      ? "Alternativa watt mai plină: mai mult corp, densitate și mouthfeel decât 29/6; mai puțină uscăciune și precizie."
+      ? "Round-wire mai plin: corp, densitate și mouthfeel; mai puțină uscăciune și precizie decât 29/6."
       : "Etalonul echilibrat: hit bun, corp curat și mouthfeel; mai puțin brutal decât 29/5.";
   }
   if (wire.id === "k129" && output.wraps === "5") {
-    return "Cea mai dură variantă watt: hit/TH maxim, ramp-up rapid, uscăciune și focus; pierde corp față de 28/5.";
+    return "Cea mai dură variantă round-wire: hit/TH maxim, ramp-up rapid, uscăciune și focus; pierde corp față de 28/5.";
   }
   if (wire.id === "k129") {
-    return "Varianta watt pentru airflow mai lat: mai seacă și mai precisă decât 28/5, cu acoperire axială mai mare; hitul este mai puțin concentrat decât la 29/5.";
+    return "Round-wire pentru airflow mai lat: mai sec și mai precis decât 28/5, cu acoperire axială mai mare; hit mai puțin concentrat decât 29/5.";
   }
-  return "Varianta TC: cea mai fină, smooth și constantă, cu layering și control termic; oferă mai puțin hit brut decât ambele K1.";
+  if (wire.id === "k1clap") {
+    return "Claptonul dens: maximum de corp, mouthfeel, integrare și TH; mai cald și mai lent, cu separare mai mică decât SS Clapton.";
+  }
+  if (wire.id === "ssclap") {
+    return "Claptonul luminos: claritate, top-notes și layering, cu răspuns mai rapid decât K1 Clapton; poate accentua dulceața.";
+  }
+  return "Varianta TC: cea mai fină, smooth și constantă, cu layering și control termic; oferă mai puțin hit brut decât K1.";
 }
 
 function renderAtomExplorer() {
@@ -620,7 +751,7 @@ function renderAtomExplorer() {
   const atom = ATOMS.find(item => item.id === id);
   const target = $("atomExplorerResult");
   if (!atom) {
-    target.innerHTML = '<div class="empty">Selectează oricare dintre atomizoarele tale pentru comparația directă a celor 3 builduri.</div>';
+    target.innerHTML = '<div class="empty">Selectează oricare dintre atomizoarele tale pentru comparația directă a celor 5 sârme.</div>';
     return;
   }
 
@@ -636,7 +767,7 @@ function renderAtomExplorer() {
 
   const cards = WIRES.map((wire, index) => {
     const output = buildOutput(atom, wire, neutralLiquid);
-    return `<article class="build explorer-build ${index === 0 ? "baseline-build" : ""}">
+    return `<article class="build explorer-build ${wire.id === "k128" ? "baseline-build" : ""}">
       <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span></div>
       <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
       <div class="why"><b>Vape pe această platformă:</b> ${escapeHtml(explorerVapeText(atom, wire, output))}</div>
@@ -651,8 +782,8 @@ function renderAtomExplorer() {
     </div>
     <p class="explorer-air"><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
     ${geometrySummary(atom)}
-    <div class="explorer-builds">${cards}</div>
-    <div class="explorer-tip"><b>Cum folosești rezultatul:</b> aici vezi ADN-ul platformei fără influența unui lichid. Pentru ordinea exactă recomandată unui lichid, folosește motorul principal de mai jos.</div>`;
+    <div class="explorer-builds explorer-builds-five">${cards}</div>
+    <div class="explorer-tip"><b>Cum folosești rezultatul:</b> aici vezi ADN-ul platformei pentru toate cele 5 sârme. În motorul principal, Claptonurile intră în TOP 3 numai când bat efectiv round-wire-ul sau NiFe30 pentru lichidul și obiectivul selectat.</div>`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
