@@ -54,18 +54,25 @@ jobs:
           test ! -e rta-lab/lab-update.js
           node - <<'NODE'
           const fs = require('fs');
+          const path = require('path');
           const vm = require('vm');
+
           const sandbox = { window: {} };
-          vm.runInNewContext(fs.readFileSync('rta-lab/data/wires.js', 'utf8'), sandbox);
+          vm.createContext(sandbox);
+          vm.runInContext(fs.readFileSync('rta-lab/data/wires.js', 'utf8'), sandbox);
           const wires = sandbox.window.RTA_WIRES || [];
           const ids = wires.map(wire => wire.id).sort();
-          const expected = ['k128', 'k129', 'nife30'];
-          if (JSON.stringify(ids) !== JSON.stringify(expected)) {
+          const expectedWires = ['k128', 'k129', 'nife30'];
+          if (JSON.stringify(ids) !== JSON.stringify(expectedWires)) {
             throw new Error(`RTA Lab wires invalid: ${JSON.stringify(ids)}`);
           }
 
           const index = fs.readFileSync('rta-lab/index.html', 'utf8');
           const engine = fs.readFileSync('rta-lab/engine.js', 'utf8');
+          const serviceWorker = fs.readFileSync('rta-lab/sw.js', 'utf8');
+          const manifest = JSON.parse(fs.readFileSync('rta-lab/manifest.webmanifest', 'utf8'));
+          const bootstrap = fs.readFileSync('rta-lab/bootstrap.js', 'utf8');
+          const refresh = fs.readFileSync('rta-lab/refresh.html', 'utf8');
           const atoms = ['atoms-1.js', 'atoms-2.js', 'atoms-3.js']
             .map(file => fs.readFileSync(`rta-lab/data/${file}`, 'utf8'))
             .join('\n');
@@ -73,7 +80,9 @@ jobs:
           if (!index.includes('engine.js')) throw new Error('RTA Lab index does not load engine.js');
           if (!index.includes('bootstrap.js')) throw new Error('RTA Lab index does not load bootstrap.js');
           if (!index.includes('atomExplorer')) throw new Error('RTA Lab atomizer explorer is missing');
-          if (!index.includes('PERSONAL RTA ENGINE · V8')) throw new Error('RTA Lab V8 marker is missing');
+          if (!index.includes('PERSONAL RTA ENGINE · V9')) throw new Error('RTA Lab V9 marker is missing');
+          if (!index.includes('620 TOBACCO / NET')) throw new Error('RTA Lab 620 catalog marker is missing');
+          if (!index.includes('120 Hall of Fame')) throw new Error('RTA Lab Hall of Fame marker is missing');
           if (index.includes('app.js') || index.includes('lab-update.js')) throw new Error('Obsolete Lab engines are still referenced');
           if (/K1 27|SS316L|Clapton/.test(index)) throw new Error('Obsolete wire cards remain in RTA Lab UI');
           if (/K1 28 GA = 6 spire/.test(atoms)) throw new Error('An atomizer still recommends K1 28 GA / 6 wraps');
@@ -84,6 +93,58 @@ jobs:
             if (Number(k128) !== 5) throw new Error(`${atom}: K1 28 GA must be 5 wraps`);
             if (![5, 6].includes(Number(k129))) throw new Error(`${atom}: K1 29 GA must be 5 or 6 wraps`);
           }
+
+          sandbox.window.RTA_LIQUIDS = [];
+          const liquidFiles = fs.readdirSync('rta-lab/data')
+            .filter(file => /^liquids-.*\.js$/.test(file))
+            .sort((a, b) => a.localeCompare(b, 'en'));
+          for (const file of liquidFiles) {
+            vm.runInContext(fs.readFileSync(path.join('rta-lab/data', file), 'utf8'), sandbox, { filename: file });
+          }
+          const liquids = sandbox.window.RTA_LIQUIDS || [];
+          const expectedCounts = {
+            'Tutun simplu': 145,
+            'Tutun complex': 155,
+            'NET simplu': 150,
+            'NET complex': 170
+          };
+          const actualCounts = Object.fromEntries(Object.keys(expectedCounts).map(key => [key, 0]));
+          for (const liquid of liquids) {
+            if (!(liquid.class in actualCounts)) throw new Error(`Unknown liquid class: ${liquid.class}`);
+            actualCounts[liquid.class] += 1;
+          }
+          if (liquids.length !== 620) throw new Error(`Expected 620 liquids; found ${liquids.length}`);
+          for (const [category, expected] of Object.entries(expectedCounts)) {
+            if (actualCounts[category] !== expected) {
+              throw new Error(`${category}: expected ${expected}; found ${actualCounts[category]}`);
+            }
+          }
+          const hallOfFame = liquids.filter(liquid => String(liquid.line || '').includes('Hall of Fame'));
+          if (hallOfFame.length !== 120) throw new Error(`Expected 120 Hall of Fame liquids; found ${hallOfFame.length}`);
+
+          const exactKeys = new Set();
+          for (const liquid of liquids) {
+            const key = [liquid.class, liquid.brand, liquid.name, liquid.line]
+              .map(value => String(value || '').trim().toLowerCase())
+              .join('|');
+            if (exactKeys.has(key)) throw new Error(`Exact duplicate liquid: ${key}`);
+            exactKeys.add(key);
+          }
+
+          const hofFiles = [
+            'liquids-6-hof-tutun-simplu.js',
+            'liquids-6-hof-tutun-complex.js',
+            'liquids-6-hof-net-simplu.js',
+            'liquids-6-hof-net-complex.js'
+          ];
+          for (const file of hofFiles) {
+            if (!index.includes(`./data/${file}?v=9`)) throw new Error(`Index does not load ${file}`);
+            if (!serviceWorker.includes(`./data/${file}?v=9`)) throw new Error(`Service worker does not cache ${file}`);
+          }
+          if (!serviceWorker.includes('rta-lab-v9-hall-of-fame-620')) throw new Error('V9 service-worker cache name is missing');
+          if (!bootstrap.includes('const VERSION = "9"')) throw new Error('Bootstrap is not on V9');
+          if (manifest.start_url !== './?v=9') throw new Error(`Manifest start_url invalid: ${manifest.start_url}`);
+          if (!refresh.includes('motorul V9 cu 620 de lichide')) throw new Error('Refresh page is not on V9');
           NODE
           node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/instagram-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/social-reels-state.json','utf8'))"
       - name: Validate catalog and public pages
