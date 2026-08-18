@@ -2,11 +2,11 @@ window.RTA_WIRES=[
   {
     "id":"k128",
     "name":"K1 28 GA round",
-    "wraps":"5–6 după airflow",
+    "wraps":"5",
     "diam":"Ø2,5 mm",
     "power":"12–13,5 W",
     "kind":"WATT",
-    "role":"etalonul de echilibru: hit bun, corp curat, mouthfeel și redare completă",
+    "role":"etalonul și alternativa watt: hit bun, corp curat, mouthfeel și redare completă",
     "traits":{"tobacco":4.8,"layers":4.0,"body":4.8,"th":4.6,"smooth":4.2,"bright":3.5,"dry":4.4,"dark":4.8,"sweet":3.7,"complete":4.7}
   },
   {
