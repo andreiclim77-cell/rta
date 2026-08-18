@@ -1,30 +1,30 @@
-const CACHE = "rta-lab-v7-network-first-three-wire-20260818";
-const FALLBACK = "./index.html?v=7";
+const CACHE = "rta-lab-v8-atom-explorer-20260818";
+const FALLBACK = "./index.html?v=8";
 const ASSETS = [
-  "./index.html?v=7",
-  "./styles.css?v=7",
-  "./lab-update.css?v=7",
-  "./engine.js?v=7",
-  "./bootstrap.js?v=7",
-  "./manifest.webmanifest?v=7",
-  "./icon-192.png?v=7",
-  "./data/core.js?v=7",
-  "./data/atoms-1.js?v=7",
-  "./data/atoms-2.js?v=7",
-  "./data/atoms-3.js?v=7",
-  "./data/wires.js?v=7",
-  "./data/liquids-1a.js?v=7",
-  "./data/liquids-1b.js?v=7",
-  "./data/liquids-2a.js?v=7",
-  "./data/liquids-2b.js?v=7",
-  "./data/liquids-3a.js?v=7",
-  "./data/liquids-3b.js?v=7",
-  "./data/liquids-4a.js?v=7",
-  "./data/liquids-4b.js?v=7",
-  "./data/liquids-5-tutun-simplu.js?v=7",
-  "./data/liquids-5-tutun-complex.js?v=7",
-  "./data/liquids-5-net-simplu.js?v=7",
-  "./data/liquids-5-net-complex.js?v=7"
+  "./index.html?v=8",
+  "./styles.css?v=8",
+  "./lab-update.css?v=8",
+  "./engine.js?v=8",
+  "./bootstrap.js?v=8",
+  "./manifest.webmanifest?v=8",
+  "./icon-192.png?v=8",
+  "./data/core.js?v=8",
+  "./data/atoms-1.js?v=8",
+  "./data/atoms-2.js?v=8",
+  "./data/atoms-3.js?v=8",
+  "./data/wires.js?v=8",
+  "./data/liquids-1a.js?v=8",
+  "./data/liquids-1b.js?v=8",
+  "./data/liquids-2a.js?v=8",
+  "./data/liquids-2b.js?v=8",
+  "./data/liquids-3a.js?v=8",
+  "./data/liquids-3b.js?v=8",
+  "./data/liquids-4a.js?v=8",
+  "./data/liquids-4b.js?v=8",
+  "./data/liquids-5-tutun-simplu.js?v=8",
+  "./data/liquids-5-tutun-complex.js?v=8",
+  "./data/liquids-5-net-simplu.js?v=8",
+  "./data/liquids-5-net-complex.js?v=8"
 ];
 
 async function putFresh(request, response) {
