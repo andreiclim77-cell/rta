@@ -1,4 +1,4 @@
-/* RTA Lab V8 — motor restrâns la K1 28 GA, K1 29 GA și NiFe30 */
+/* RTA Lab V10 — 620 lichide, 5 sârme active */
 .categories .cat.all{grid-column:1/-1;text-align:center;min-height:50px}
 .note.extrap{border-color:rgba(107,216,234,.27);background:rgba(107,216,234,.075);color:#c6f2f7}
 .note.context{border-color:rgba(114,217,158,.23);background:rgba(114,217,158,.055);color:#c8f2d8}
@@ -10,17 +10,21 @@
 .wire-guide>summary:after{content:"＋";flex:0 0 auto;color:var(--gold2);font-size:16px;line-height:1}
 .wire-guide[open]>summary:after{content:"−"}
 .wire-guide>summary span{display:block;color:#f8e4b6;font-size:11px;font-weight:950;letter-spacing:.15px}
-.wire-guide>summary small{display:block;max-width:380px;color:#9eabb7;font-size:7.5px;line-height:1.4;text-align:right;font-weight:700}
+.wire-guide>summary small{display:block;max-width:420px;color:#9eabb7;font-size:7.5px;line-height:1.4;text-align:right;font-weight:700}
 .wire-guide-intro{margin:10px 10px 0;padding:9px 10px;border-radius:12px;border:1px solid rgba(227,186,97,.18);background:rgba(227,186,97,.045);color:#cdd5dd;font-size:8px;line-height:1.52}
 .wire-grid{display:grid;grid-template-columns:1fr;gap:8px;padding:10px}
 .wire-card{padding:11px;border-radius:15px;border:1px solid rgba(255,255,255,.10);background:linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.016));box-shadow:0 8px 20px rgba(0,0,0,.20)}
 .wire-card.baseline{border-color:rgba(227,186,97,.43);background:radial-gradient(260px 100px at 0 0,rgba(227,186,97,.16),transparent 75%),linear-gradient(145deg,rgba(255,255,255,.06),rgba(255,255,255,.018))}
 .wire-card.hit{border-color:rgba(241,132,93,.32)}
+.wire-card.clapton-k1{border-color:rgba(221,163,92,.34);background:radial-gradient(250px 90px at 100% 0,rgba(221,163,92,.10),transparent 75%),linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.016))}
+.wire-card.clapton-ss{border-color:rgba(107,216,234,.30);background:radial-gradient(250px 90px at 100% 0,rgba(107,216,234,.10),transparent 75%),linear-gradient(145deg,rgba(255,255,255,.052),rgba(255,255,255,.016))}
 .wire-card.tc{border-color:rgba(114,217,158,.26)}
 .wire-head{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
 .wire-head strong{font-size:10.5px;color:#f5f7f8}
 .wire-tag{display:inline-flex;align-items:center;min-height:20px;padding:3px 6px;border-radius:999px;border:1px solid rgba(227,186,97,.27);background:rgba(227,186,97,.075);color:#f2d392;font-size:6.5px;font-weight:950;letter-spacing:.45px}
 .wire-tag.hit{border-color:rgba(241,132,93,.30);background:rgba(241,132,93,.075);color:#ffc4ae}
+.wire-tag.body{border-color:rgba(221,163,92,.30);background:rgba(221,163,92,.075);color:#f2c98f}
+.wire-tag.bright{border-color:rgba(107,216,234,.28);background:rgba(107,216,234,.07);color:#bfeef4}
 .wire-tag.tc{border-color:rgba(114,217,158,.25);background:rgba(114,217,158,.065);color:#c1efd1}
 .wire-specs{margin-top:7px;padding:7px 8px;border-radius:9px;border:1px solid rgba(255,255,255,.075);background:#090d12;color:#ffe9b5;font-size:8.5px;font-weight:800;line-height:1.55}
 .wire-card p{margin:7px 0 0;color:#bbc6d0;font-size:8px;line-height:1.48}
@@ -55,11 +59,18 @@
 @media(min-width:700px){
   .categories{grid-template-columns:repeat(4,1fr)}
   .categories .cat.all{grid-column:1/-1}
-  .wire-grid-three{grid-template-columns:repeat(3,1fr)}
+  .wire-grid-five{grid-template-columns:repeat(2,1fr)}
+  .wire-grid-five .wire-card.tc{grid-column:1/-1}
   .geometry-grid{grid-template-columns:repeat(3,1fr)}
   .geometry-grid span{display:block;text-align:center}
   .geometry-grid span b{display:block;margin-bottom:3px}
-  .explorer-builds{grid-template-columns:repeat(3,1fr)}
+  .explorer-builds-five{grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:1050px){
+  .wire-grid-five{grid-template-columns:repeat(3,1fr)}
+  .wire-grid-five .wire-card.tc{grid-column:auto}
+  .geometry-grid-five{grid-template-columns:repeat(5,1fr)}
+  .explorer-builds-five{grid-template-columns:repeat(3,1fr)}
 }
 @media(max-width:520px){
   .wire-guide>summary{display:block;position:relative;padding-right:34px}
