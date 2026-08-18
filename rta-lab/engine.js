@@ -10,34 +10,42 @@ const norm = value => String(value || "")
   .replace(/[\u0300-\u036f]/g, "")
   .toLowerCase();
 const has = (array, value) => array.includes(value);
+const escapeHtml = value => String(value ?? "")
+  .replace(/&/g, "&amp;")
+  .replace(/</g, "&lt;")
+  .replace(/>/g, "&gt;")
+  .replace(/"/g, "&quot;")
+  .replace(/'/g, "&#039;");
 
-/* Rezultatul cercetării airflow → footprint. Regula presupune coil contact,
- * K1 round, Ø2,5 mm. 5 spire sunt folosite numai unde jetul este clar sau
- * aproape optim pentru un footprint compact; 6 spire pe geometrii late,
- * multipunct, duale ori insuficient determinate. NiFe30 rămâne 7 spire.
+/*
+ * Matricea finală airflow → footprint, V8.
+ * K1 round, Ø2,5 mm, coil contact:
+ * - K1 28 GA rămâne peste tot la 5 spire: alternativa watt cu mai mult corp/mouthfeel.
+ * - K1 29 GA are 5 spire pe jeturile clar concentrate și 6 spire pe geometriile mai late.
+ * - NiFe30 rămâne la 7 spire.
  */
 const BUILD_RULES = {
-  "415":      { k128: 6, k129: 6, reason: "Trei jeturi 3×0,9 mm formează un footprint multipunct mai lat decât un jet unic." },
-  "kprime":   { k128: 5, k129: 5, reason: "Bottom-air direct și concentrat; 5 spire rămân aproape de zona energetică utilă." },
+  "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa watt mai plină și mai densă." },
+  "kprime":   { k128: 5, k129: 5, reason: "Bottom-air direct și concentrat; ambele round-wire-uri funcționează optim cu footprint compact." },
   "gtone":    { k128: 5, k129: 5, reason: "Air-pin unic, vertical și foarte apropiat de coil; 5 spire concentrează eficient jetul." },
-  "dvarwcl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock, jetul este compact; 5 spire sunt alegerea optimizată." },
-  "muted":    { k128: 6, k129: 6, reason: "În configurația uzuală triple-air, bottom + side-air spală o zonă mai lată." },
-  "gtr":      { k128: 6, k129: 6, reason: "Cele două jeturi oblice de 1,0 și 1,2 mm creează un footprint dual, mediu-lat." },
+  "dvarwcl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock, jetul este compact; 5 spire sunt alegerea optimizată pentru ambele gauge-uri." },
+  "muted":    { k128: 5, k129: 6, reason: "Triple-air spală o zonă mai lată: 29/6 acoperă jeturile, iar 28/5 oferă alternativa watt cu mai mult mouthfeel." },
+  "gtr":      { k128: 5, k129: 6, reason: "Cele două jeturi oblice cer 29/6 pentru acoperire; 28/5 păstrează un footprint apropiat, cu mai mult corp." },
   "dvarwfl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock 1×1,2 mm, jetul este concentrat; 5 spire sunt aproape optim." },
-  "diplomat": { k128: 6, k129: 6, reason: "Diverterul cu 24×0,9 mm distribuie aerul pe o zonă lată și uniformă." },
+  "diplomat": { k128: 5, k129: 6, reason: "Diverterul multipunct este lat: 29/6 favorizează acoperirea, iar 28/5 este alternativa watt mai densă." },
   "kx":       { k128: 5, k129: 5, reason: "Aerokon restricționează direct sub coil; 5 spire păstrează footprint-ul compact și eficient." },
   "klp":      { k128: 5, k129: 5, reason: "Validat practic: 29/5 maximizează hitul, iar 28/5 păstrează hitul cu mai mult mouthfeel." },
-  "asylum":   { k128: 6, k129: 6, reason: "Airpinurile pot avea geometrie dublă/ovală; 6 spire sunt alegerea geometrică prudentă." },
-  "pmfree":   { k128: 6, k129: 6, reason: "Diverterul cu 32×0,9 mm produce un footprint foarte lat și uniform." },
-  "pmstd":    { k128: 6, k129: 6, reason: "Aceeași bază multipunct 32×0,9 mm ca Freehand; bell-ul nu îngustează jetul de bază." },
+  "asylum":   { k128: 5, k129: 6, reason: "Geometria dublă/ovală justifică 29/6 pentru acoperire; 28/5 rămâne alternativa watt cu corp mai mare." },
+  "pmfree":   { k128: 5, k129: 6, reason: "Diverterul 32×0,9 mm este foarte lat: 29/6 oferă acoperire, iar 28/5 aduce corp și mouthfeel." },
+  "pmstd":    { k128: 5, k129: 6, reason: "Aceeași bază multipunct ca Freehand: 29/6 pentru acoperire, 28/5 pentru alternativa watt mai plină." },
   "byka":     { k128: 5, k129: 5, reason: "Air-pipe unic și jet concentrat; 5 spire sunt aproape optim pentru pinurile MTL uzuale." },
-  "chariot":  { k128: 6, k129: 6, reason: "Camera foarte mică și validarea practică 28/6 susțin 6 spire pentru această platformă." },
-  "kv3":      { k128: 5, k129: 6, reason: "AFC-ul intern este reglabil: 28 GA acoperă bine cu 5, iar 29 GA cere 6 pentru un footprint apropiat." },
-  "minister": { k128: 6, k129: 6, reason: "Diverterul 12/20×1 mm este lat; 6 spire echilibrează acoperirea cu volumul mic al camerei." }
+  "chariot":  { k128: 5, k129: 6, reason: "29/6 folosește mai bine zona de airflow, iar 28/5 este alternativa watt mai rapidă, plină și cu mouthfeel." },
+  "kv3":      { k128: 5, k129: 6, reason: "28 GA atinge footprint-ul util cu 5 spire; firul mai subțire de 29 GA cere 6 pentru o lungime axială apropiată." },
+  "minister": { k128: 5, k129: 6, reason: "Diverterul lat cere 29/6 pentru acoperire; 28/5 limitează masa în camera mică și rămâne alternativa watt." }
 };
 
 const CONTACT_WIDTH_MM = {
-  k128: { 5: "1,61", 6: "1,93" },
+  k128: { 5: "1,61" },
   k129: { 5: "1,43", 6: "1,72" }
 };
 
@@ -61,12 +69,12 @@ const AX = {
   layers: ["complex", "blend", "mixture", "english", "balkan", "organic", "aromat", "flavored", "reserve", "barrique", "citrus", "rum", "bourbon", "whisky", "nuci", "cafea", "cacao", "vanilie"]
 };
 
-let state = {
+const state = {
   cat: ALL,
-  liq: null,
+  liquid: null,
   atom: null,
-  obj: "complete",
-  ranking: [],
+  objective: "complete",
+  atomRanking: [],
   match: {}
 };
 
@@ -112,22 +120,22 @@ function atomScore(atom, ax, objective, liquid) {
   const average = ax.length
     ? ax.reduce((sum, key) => sum + ((atom.aff && atom.aff[key] != null) ? atom.aff[key] : 3), 0) / ax.length
     : 4;
-  const objectiveScore = (atom.objectives && atom.objectives[objective] != null) ? atom.objectives[objective] : 4;
+  const objectiveScore = atom.objectives && atom.objectives[objective] != null ? atom.objectives[objective] : 4;
   return average * 2 + objectiveScore * 1.2 + (atom.score - 9) * 0.8 + atomBonus(atom, ax, objective, liquid);
 }
 
 function rankAtoms() {
-  const ax = axes(state.liq);
+  const ax = axes(state.liquid);
   const ranking = ATOMS
-    .map(atom => ({ a: atom, s: atomScore(atom, ax, state.obj, state.liq) }))
-    .sort((left, right) => right.s - left.s);
-  const max = ranking[0].s;
-  const min = ranking[ranking.length - 1].s;
+    .map(atom => ({ atom, score: atomScore(atom, ax, state.objective, state.liquid) }))
+    .sort((left, right) => right.score - left.score);
+  const max = ranking[0].score;
+  const min = ranking[ranking.length - 1].score;
   state.match = {};
   ranking.forEach(item => {
-    state.match[item.a.id] = Math.max(70, Math.min(100, Math.round(84 + (item.s - min) / (max - min || 1) * 16)));
+    state.match[item.atom.id] = Math.max(70, Math.min(100, Math.round(84 + (item.score - min) / (max - min || 1) * 16)));
   });
-  state.ranking = ranking;
+  state.atomRanking = ranking;
   return ranking;
 }
 
@@ -220,15 +228,16 @@ function buildRule(atom, wire) {
     return { wraps: 7, reason: "NiFe30 rămâne fix la 7 spire, Ø2,5 mm, cu calibrare complet rece." };
   }
   const atomRule = BUILD_RULES[atom.id] || {
-    k128: 6,
+    k128: 5,
     k129: 6,
-    reason: "Date geometrice insuficiente; este folosit defaultul conservator de 6 spire."
+    reason: "Date geometrice insuficiente: 28/5 este alternativa watt, iar 29/6 este defaultul conservator pentru acoperire."
   };
-  return { wraps: atomRule[wire.id] || 6, reason: atomRule.reason };
+  return { wraps: atomRule[wire.id] || (wire.id === "k128" ? 5 : 6), reason: atomRule.reason };
 }
 
 function buildOutput(atom, wire, liquid) {
   const rule = buildRule(atom, wire);
+  const atomRule = BUILD_RULES[atom.id] || { k128: 5, k129: 6 };
   const output = {
     wraps: String(rule.wraps),
     power: wire.power,
@@ -237,6 +246,16 @@ function buildOutput(atom, wire, liquid) {
     note: rule.reason
   };
 
+  if (wire.id === "k128" && atomRule.k129 === 6) {
+    output.status = "Alternativă watt";
+    output.noteClass = "context";
+    output.note = "K1 28 GA / 5 spire este alternativa watt la K1 29 GA / 6 spire: mai mult corp și mouthfeel, cu mai puțină uscăciune și agresivitate.";
+  }
+  if (wire.id === "k129" && atomRule.k129 === 6) {
+    output.status = "Watt · acoperire airflow";
+    output.noteClass = "extrap";
+    output.note = "K1 29 GA / 6 spire extinde footprint-ul pentru airflow-ul mai lat și păstrează o redare mai seacă, precisă și focusată decât 28/5.";
+  }
   if (atom.id === "klp" && wire.id === "k129") {
     output.status = "Validat";
     output.noteClass = "valid";
@@ -247,16 +266,11 @@ function buildOutput(atom, wire, liquid) {
     output.noteClass = "valid";
     output.note = "28/5 păstrează hit/TH foarte bun și adaugă mai mult mouthfeel și corp decât 29/5.";
   }
-  if (atom.id === "chariot" && wire.id === "k128" && norm(liquid.name).includes("tab plus")) {
-    output.status = "Validat";
-    output.noteClass = "valid";
-    output.note = "Pe Cronos Tab Plus, K1 28 GA / 6 spire este alegerea round-wire validată practic.";
-  }
   if (wire.id === "nife30") {
-    output.note = atom.id === "kprime" && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
+    output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
       ? "Benchmark validat pe 80% trabuc / 20% cireșe. Dicodes/Resistherm TCR 320 sau Zivipf TCR 310; calibrare complet rece."
       : "7 spire. Dicodes/Resistherm TCR 320 sau Zivipf TCR 310; calibrare complet rece.";
-    if (atom.id === "kprime" && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")) {
+    if (atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")) {
       output.status = "Validat";
       output.noteClass = "valid";
     }
@@ -282,7 +296,7 @@ function whyForLiquid(wire, ax, objective, liquid) {
   if (wire.id === "k129") {
     if (objective === "th") return "prioritatea este TH-ul; 29 GA concentrează energia și face vape-ul mai dur";
     if (objective === "tobacco" || dry) return "profilul cere tutun central, uscăciune și focus";
-    return "oferă cea mai precisă și mai directă redare dintre cele trei opțiuni";
+    return "oferă cea mai precisă și directă redare dintre cele trei opțiuni";
   }
   if (wire.id === "k128") {
     if (objective === "body" || rich) return "profilul cere corp, mouthfeel și legarea notelor fără a pierde caracterul de tutun";
@@ -294,21 +308,22 @@ function whyForLiquid(wire, ax, objective, liquid) {
   return "este alternativa TC pentru consistență, finețe și protecție termică";
 }
 
-function comparisonText(wire, output) {
+function comparisonText(atom, wire, output) {
   const wraps = Number(output.wraps);
-  if (wire.id === "k128" && wraps === 5) {
+  const atomRule = BUILD_RULES[atom.id] || { k129: 6 };
+  if (wire.id === "k128") {
+    if (atomRule.k129 === 6) {
+      return "+ corp, densitate, mouthfeel și răspuns prompt; − mai puțină uscăciune, precizie și acoperire axială decât 29/6.";
+    }
     return "Etalon: echilibrul 100% între hit, corp, mouthfeel, viteză și tobacco-first.";
-  }
-  if (wire.id === "k128" && wraps === 6) {
-    return "+ acoperire, mouthfeel și completitudine; − hit mai puțin concentrat și răspuns ușor mai lent decât 28/5.";
   }
   if (wire.id === "k129" && wraps === 5) {
     return "+ hit/TH, uscăciune, viteză și focus; − corp și mouthfeel față de etalonul 28/5.";
   }
   if (wire.id === "k129" && wraps === 6) {
-    return "+ precizie și uscăciune, cu acoperire mai bună decât 29/5; − hit mai mic decât 29/5 și corp mai mic decât 28/5.";
+    return "+ precizie, uscăciune și acoperire axială; − hit mai puțin concentrat decât 29/5 și corp mai mic decât 28/5.";
   }
-  return "+ smoothness, consistență, finețe și layering; − mai puțin hit brut și necesită TCR/corecție la rece.";
+  return "+ smoothness, consistență, finețe și layering; − mai puțin hit brut și necesită TCR plus calibrare la rece.";
 }
 
 function airFlags(atom) {
@@ -320,17 +335,15 @@ function airFlags(atom) {
 }
 
 function geometrySummary(atom) {
-  const rule = BUILD_RULES[atom.id] || { k128: 6, k129: 6, reason: "Default conservator." };
-  const width28 = CONTACT_WIDTH_MM.k128[rule.k128];
-  const width29 = CONTACT_WIDTH_MM.k129[rule.k129];
+  const rule = BUILD_RULES[atom.id] || { k128: 5, k129: 6, reason: "Default conservator." };
   return `<div class="geometry-rule">
     <h5>Builduri stabilite după airflow</h5>
     <div class="geometry-grid">
-      <span><b>K1 28 GA</b>${rule.k128} spire · ≈ ${width28} mm</span>
-      <span><b>K1 29 GA</b>${rule.k129} spire · ≈ ${width29} mm</span>
+      <span><b>K1 28 GA</b>${rule.k128} spire · ≈ ${CONTACT_WIDTH_MM.k128[rule.k128]} mm</span>
+      <span><b>K1 29 GA</b>${rule.k129} spire · ≈ ${CONTACT_WIDTH_MM.k129[rule.k129]} mm</span>
       <span><b>NiFe30</b>7 spire · TCR 320/310</span>
     </div>
-    <p>${rule.reason}</p>
+    <p>${escapeHtml(rule.reason)}</p>
   </div>`;
 }
 
@@ -359,17 +372,10 @@ function matchesLiquid(liquid, query) {
 
 function inferFreeClass(text) {
   const value = ` ${norm(text)} `;
-  const isNet = [
-    " net ", " extract", "macerat", "organic", "distilat", "distillato",
-    "microfiltrat", "naturally extracted", "frunza naturala"
-  ].some(token => value.includes(token));
-  const isComplex = [
-    "blend", "mixture", "english", "balkan", "vaper", "vabur", "vaoriental", "vakentucky",
-    "ry4", "caramel", "vanilie", "vanilla", "cireasa", "cherry", "bourbon", "whisky",
-    "rum", " rom ", "cafea", "coffee", "cacao", "ciocolata", "nuci", "alune", "hazelnut",
-    "miere", "honey", "fruct", "citrus", "crema", "cream", "custard", "biscuit", "cookie",
-    " + ", " & "
-  ].some(token => value.includes(token));
+  const isNet = [" net ", " extract", "macerat", "organic", "distilat", "distillato", "microfiltrat", "naturally extracted", "frunza naturala"]
+    .some(token => value.includes(token));
+  const isComplex = ["blend", "mixture", "english", "balkan", "vaper", "vabur", "vaoriental", "vakentucky", "ry4", "caramel", "vanilie", "vanilla", "cireasa", "cherry", "bourbon", "whisky", "rum", " rom ", "cafea", "coffee", "cacao", "ciocolata", "nuci", "alune", "hazelnut", "miere", "honey", "fruct", "citrus", "crema", "cream", "custard", "biscuit", "cookie", " + ", " & "]
+    .some(token => value.includes(token));
   return `${isNet ? "NET" : "Tutun"} ${isComplex ? "complex" : "simplu"}`;
 }
 
@@ -419,7 +425,7 @@ function fillLiquids() {
 
 function setCategory(category) {
   state.cat = category;
-  state.liq = null;
+  state.liquid = null;
   state.atom = null;
 
   document.querySelectorAll(".cat").forEach(button => {
@@ -446,21 +452,21 @@ function setCategory(category) {
 }
 
 function renderLiquid() {
-  if (!state.liq) {
+  if (!state.liquid) {
     $("liqInfo").classList.add("hidden");
     return;
   }
-  const liquid = state.liq;
+  const liquid = state.liquid;
   const ax = axes(liquid);
   $("liqInfo").classList.remove("hidden");
-  $("liqInfo").innerHTML = `<h4>${liquid.brand} · ${liquid.name}</h4>
-    <p><b>${liquid.class}</b> · ${liquid.line || "—"} · ${liquid.kind || "—"}</p>
-    <p>${liquid.profile}</p>
-    <div class="pills">${ax.slice(0, 10).map(axis => `<span class="pill">${axis}</span>`).join("")}</div>`;
+  $("liqInfo").innerHTML = `<h4>${escapeHtml(liquid.brand)} · ${escapeHtml(liquid.name)}</h4>
+    <p><b>${escapeHtml(liquid.class)}</b> · ${escapeHtml(liquid.line || "—")} · ${escapeHtml(liquid.kind || "—")}</p>
+    <p>${escapeHtml(liquid.profile)}</p>
+    <div class="pills">${ax.slice(0, 10).map(axis => `<span class="pill">${escapeHtml(axis)}</span>`).join("")}</div>`;
 }
 
 function activateLiquid(liquid) {
-  state.liq = liquid;
+  state.liquid = liquid;
   state.atom = null;
   renderLiquid();
   rankAtoms();
@@ -496,10 +502,10 @@ function fillAtoms() {
   const select = $("atom");
   select.disabled = false;
   select.innerHTML = '<option value="">— alege atomizorul —</option>';
-  state.ranking.forEach((item, index) => {
+  state.atomRanking.forEach((item, index) => {
     const option = document.createElement("option");
-    option.value = item.a.id;
-    option.textContent = `#${index + 1} · ${item.a.short} · ${state.match[item.a.id]}% fit · ${item.a.score.toFixed(1)}/10`;
+    option.value = item.atom.id;
+    option.textContent = `#${index + 1} · ${item.atom.short} · ${state.match[item.atom.id]}% fit · ${item.atom.score.toFixed(1)}/10`;
     select.appendChild(option);
   });
 }
@@ -520,20 +526,20 @@ function chooseAtom() {
   $("airvis").innerHTML = '<div class="coil"></div>'
     + (flags.bottom ? '<div class="jetB"></div>' : '')
     + (flags.side ? '<div class="jetL"></div><div class="jetR"></div>' : '');
-  $("ameta").innerHTML = `<h4>${atom.short} · ${atom.score.toFixed(1)}/10</h4>
-    <div class="pills"><span class="pill cyan">${atom.airflow.system}</span><span class="pill gold">${state.match[atom.id]}% fit</span></div>
-    <p><b>Airflow:</b> ${atom.airflow.details}</p>
+  $("ameta").innerHTML = `<h4>${escapeHtml(atom.short)} · ${atom.score.toFixed(1)}/10</h4>
+    <div class="pills"><span class="pill cyan">${escapeHtml(atom.airflow.system)}</span><span class="pill gold">${state.match[atom.id]}% fit</span></div>
+    <p><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
     ${geometrySummary(atom)}`;
   renderBuilds();
   setSteps(3);
 }
 
 function setObjective(value) {
-  state.obj = value;
+  state.objective = value;
   document.querySelectorAll("[data-obj]").forEach(button => {
     button.classList.toggle("active", button.dataset.obj === value);
   });
-  if (!state.liq) return;
+  if (!state.liquid) return;
 
   const atomId = state.atom && state.atom.id;
   rankAtoms();
@@ -546,38 +552,107 @@ function setObjective(value) {
 }
 
 function renderBuilds() {
-  if (!state.liq || !state.atom) {
+  if (!state.liquid || !state.atom) {
     $("builds").innerHTML = '<div class="empty">Alege lichidul și atomizorul. Cele 3 builduri active apar automat.</div>';
     return;
   }
 
   const atom = state.atom;
-  const liquid = state.liq;
+  const liquid = state.liquid;
   const ax = axes(liquid);
   let ranking = WIRES
-    .map(wire => ({ w: wire, s: wireTrait(wire, ax, state.obj) + wireBonus(atom, wire, ax, state.obj, liquid) }))
-    .sort((left, right) => right.s - left.s);
+    .map(wire => ({ wire, score: wireTrait(wire, ax, state.objective) + wireBonus(atom, wire, ax, state.objective, liquid) }))
+    .sort((left, right) => right.score - left.score);
 
   if (atom.id === "kprime" && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")) {
-    ranking.sort((left, right) => left.w.id === "nife30" ? -1 : right.w.id === "nife30" ? 1 : right.s - left.s);
+    ranking.sort((left, right) => left.wire.id === "nife30" ? -1 : right.wire.id === "nife30" ? 1 : right.score - left.score);
   }
   if (atom.id === "chariot" && norm(liquid.name).includes("tab plus")) {
     const order = { k128: 0, nife30: 1, k129: 2 };
-    ranking.sort((left, right) => (order[left.w.id] ?? 99) - (order[right.w.id] ?? 99));
+    ranking.sort((left, right) => (order[left.wire.id] ?? 99) - (order[right.wire.id] ?? 99));
   }
 
   $("builds").innerHTML = ranking.map((item, index) => {
-    const wire = item.w;
+    const wire = item.wire;
     const output = buildOutput(atom, wire, liquid);
     return `<article class="build ${index === 0 ? "best" : ""}">
-      <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${wire.name}</span>${index === 0 ? '<span class="besttxt">RECOMANDAREA 1</span>' : ""}</div>
-      <div class="spec">${wire.diam} · ${output.wraps} spire · ${output.power}</div>
-      <div class="why"><b>De ce pentru lichid:</b> ${whyForLiquid(wire, ax, state.obj, liquid)}.</div>
-      <div class="note"><b>Față de etalonul K1 28/5:</b> ${comparisonText(wire, output)}</div>
-      <div class="note"><b>Potrivire airflow:</b> ${footprintText(atom, wire, output)}</div>
-      <div class="note ${output.noteClass}"><b>${output.status}:</b> ${output.note}</div>
+      <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span>${index === 0 ? '<span class="besttxt">RECOMANDAREA 1</span>' : ""}</div>
+      <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
+      <div class="why"><b>De ce pentru lichid:</b> ${escapeHtml(whyForLiquid(wire, ax, state.objective, liquid))}.</div>
+      <div class="note"><b>Diferență de vape:</b> ${escapeHtml(comparisonText(atom, wire, output))}</div>
+      <div class="note"><b>Potrivire airflow:</b> ${escapeHtml(footprintText(atom, wire, output))}</div>
+      <div class="note ${output.noteClass}"><b>${escapeHtml(output.status)}:</b> ${escapeHtml(output.note)}</div>
     </article>`;
   }).join("");
+}
+
+function fillAtomExplorer() {
+  const select = $("atomExplorer");
+  select.innerHTML = '<option value="">— selectează un atomizor —</option>';
+  [...ATOMS]
+    .sort((left, right) => right.score - left.score || left.short.localeCompare(right.short, "ro"))
+    .forEach(atom => {
+      const option = document.createElement("option");
+      option.value = atom.id;
+      option.textContent = `${atom.short} · ${atom.score.toFixed(1)}/10`;
+      select.appendChild(option);
+    });
+}
+
+function explorerVapeText(atom, wire, output) {
+  const atomRule = BUILD_RULES[atom.id] || { k129: 6 };
+  if (wire.id === "k128") {
+    return atomRule.k129 === 6
+      ? "Alternativa watt mai plină: mai mult corp, densitate și mouthfeel decât 29/6; mai puțină uscăciune și precizie."
+      : "Etalonul echilibrat: hit bun, corp curat și mouthfeel; mai puțin brutal decât 29/5.";
+  }
+  if (wire.id === "k129" && output.wraps === "5") {
+    return "Cea mai dură variantă watt: hit/TH maxim, ramp-up rapid, uscăciune și focus; pierde corp față de 28/5.";
+  }
+  if (wire.id === "k129") {
+    return "Varianta watt pentru airflow mai lat: mai seacă și mai precisă decât 28/5, cu acoperire axială mai mare; hitul este mai puțin concentrat decât la 29/5.";
+  }
+  return "Varianta TC: cea mai fină, smooth și constantă, cu layering și control termic; oferă mai puțin hit brut decât ambele K1.";
+}
+
+function renderAtomExplorer() {
+  const id = $("atomExplorer").value;
+  const atom = ATOMS.find(item => item.id === id);
+  const target = $("atomExplorerResult");
+  if (!atom) {
+    target.innerHTML = '<div class="empty">Selectează oricare dintre atomizoarele tale pentru comparația directă a celor 3 builduri.</div>';
+    return;
+  }
+
+  const neutralLiquid = {
+    class: "Tutun simplu",
+    brand: "Explorer",
+    name: "Profil neutru",
+    line: "comparație de platformă",
+    kind: "profil generic",
+    profile: "tutun neutru",
+    tags: ["simple"]
+  };
+
+  const cards = WIRES.map((wire, index) => {
+    const output = buildOutput(atom, wire, neutralLiquid);
+    return `<article class="build explorer-build ${index === 0 ? "baseline-build" : ""}">
+      <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span></div>
+      <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
+      <div class="why"><b>Vape pe această platformă:</b> ${escapeHtml(explorerVapeText(atom, wire, output))}</div>
+      <div class="note"><b>Airflow:</b> ${escapeHtml(footprintText(atom, wire, output))}</div>
+      <div class="note ${output.noteClass}"><b>${escapeHtml(output.status)}:</b> ${escapeHtml(output.note)}</div>
+    </article>`;
+  }).join("");
+
+  target.innerHTML = `<div class="explorer-head">
+      <div><span class="explorer-kicker">ANALIZĂ INDEPENDENTĂ DE LICHID</span><h4>${escapeHtml(atom.short)} · ${atom.score.toFixed(1)}/10</h4></div>
+      <span class="pill cyan">${escapeHtml(atom.airflow.system)}</span>
+    </div>
+    <p class="explorer-air"><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
+    ${geometrySummary(atom)}
+    <div class="explorer-builds">${cards}</div>
+    <div class="explorer-tip"><b>Cum folosești rezultatul:</b> aici vezi ADN-ul platformei fără influența unui lichid. Pentru ordinea exactă recomandată unui lichid, folosește motorul principal de mai jos.</div>`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -595,12 +670,11 @@ document.addEventListener("DOMContentLoaded", () => {
   $("freeBtn").addEventListener("click", useFreeProfile);
   $("liq").addEventListener("change", chooseLiquid);
   $("atom").addEventListener("change", chooseAtom);
+  $("atomExplorer").addEventListener("change", renderAtomExplorer);
   document.querySelectorAll("[data-obj]").forEach(button => {
     button.addEventListener("click", () => setObjective(button.dataset.obj));
   });
 
+  fillAtomExplorer();
   setCategory(ALL);
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js", { scope: "./" }).catch(() => {}));
-  }
 });
