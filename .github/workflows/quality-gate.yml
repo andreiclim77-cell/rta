@@ -14,6 +14,7 @@ on:
       - "en/**"
       - "data/**"
       - "tools/**"
+      - "rta-lab/**"
       - "sw.js"
       - "site.webmanifest"
       - "site-en.webmanifest"
@@ -61,9 +62,15 @@ jobs:
           vm.runInContext(fs.readFileSync('rta-lab/data/wires.js', 'utf8'), sandbox);
           const wires = sandbox.window.RTA_WIRES || [];
           const ids = wires.map(wire => wire.id).sort();
-          const expectedWires = ['k128', 'k129', 'nife30'];
+          const expectedWires = ['k128', 'k129', 'k1clap', 'nife30', 'ssclap'];
           if (JSON.stringify(ids) !== JSON.stringify(expectedWires)) {
             throw new Error(`RTA Lab wires invalid: ${JSON.stringify(ids)}`);
+          }
+          const byId = Object.fromEntries(wires.map(wire => [wire.id, wire]));
+          if (String(byId.k1clap.wraps) !== '5') throw new Error('K1 Clapton must use 5 wraps');
+          if (String(byId.ssclap.wraps) !== '5') throw new Error('SS Clapton must use 5 wraps');
+          if (byId.k1clap.diam !== 'Ø2,5 mm' || byId.ssclap.diam !== 'Ø2,5 mm') {
+            throw new Error('Both Claptons must use Ø2,5 mm');
           }
 
           const index = fs.readFileSync('rta-lab/index.html', 'utf8');
@@ -79,11 +86,15 @@ jobs:
           if (!index.includes('engine.js')) throw new Error('RTA Lab index does not load engine.js');
           if (!index.includes('bootstrap.js')) throw new Error('RTA Lab index does not load bootstrap.js');
           if (!index.includes('atomExplorer')) throw new Error('RTA Lab atomizer explorer is missing');
-          if (!index.includes('PERSONAL RTA ENGINE · V9')) throw new Error('RTA Lab V9 marker is missing');
+          if (!index.includes('PERSONAL RTA ENGINE · V10')) throw new Error('RTA Lab V10 marker is missing');
           if (!index.includes('620 TOBACCO / NET')) throw new Error('RTA Lab 620 catalog marker is missing');
-          if (!index.includes('120 Hall of Fame')) throw new Error('RTA Lab Hall of Fame marker is missing');
+          if (!index.includes('5 sârme active')) throw new Error('RTA Lab five-wire marker is missing');
+          if (!index.includes('K1 Clapton 2×30+38')) throw new Error('K1 Clapton card is missing');
+          if (!index.includes('SS316L Clapton 2×30+38')) throw new Error('SS Clapton card is missing');
           if (index.includes('app.js') || index.includes('lab-update.js')) throw new Error('Obsolete Lab engines are still referenced');
-          if (/K1 27|SS316L|Clapton/.test(index)) throw new Error('Obsolete wire cards remain in RTA Lab UI');
+          if (/K1 27 GA|SS316L 30 GA round|SS316L 32 GA twisted/.test(index)) {
+            throw new Error('An obsolete wire card remains in RTA Lab UI');
+          }
           if (/K1 28 GA = 6 spire/.test(atoms)) throw new Error('An atomizer still recommends K1 28 GA / 6 wraps');
 
           const rules = [...engine.matchAll(/"([^"]+)"\s*:\s*\{\s*k128:\s*(\d+),\s*k129:\s*(\d+)/g)];
@@ -92,6 +103,10 @@ jobs:
             if (Number(k128) !== 5) throw new Error(`${atom}: K1 28 GA must be 5 wraps`);
             if (![5, 6].includes(Number(k129))) throw new Error(`${atom}: K1 29 GA must be 5 or 6 wraps`);
           }
+          const claptonRules = [...engine.matchAll(/"([^"]+)"\s*:\s*\{\s*k1clap:\s*(-?\d+(?:\.\d+)?),\s*ssclap:\s*(-?\d+(?:\.\d+)?)/g)];
+          if (claptonRules.length !== 17) throw new Error(`Expected 17 Clapton platform rules; found ${claptonRules.length}`);
+          if (!engine.includes('ranking = ranking.slice(0, 3)')) throw new Error('The liquid engine must return TOP 3 from five wires');
+          if (!engine.includes('k1clap') || !engine.includes('ssclap')) throw new Error('Claptons are not integrated into the engine');
 
           sandbox.window.RTA_LIQUIDS = [];
           const liquidFiles = fs.readdirSync('rta-lab/data')
@@ -137,13 +152,13 @@ jobs:
             'liquids-6-hof-net-complex.js'
           ];
           for (const file of hofFiles) {
-            if (!index.includes(`./data/${file}?v=9`)) throw new Error(`Index does not load ${file}`);
-            if (!serviceWorker.includes(`./data/${file}?v=9`)) throw new Error(`Service worker does not cache ${file}`);
+            if (!index.includes(`./data/${file}?v=10`)) throw new Error(`Index does not load ${file}`);
+            if (!serviceWorker.includes(`./data/${file}?v=10`)) throw new Error(`Service worker does not cache ${file}`);
           }
-          if (!serviceWorker.includes('rta-lab-v9-hall-of-fame-620')) throw new Error('V9 service-worker cache name is missing');
-          if (!bootstrap.includes('const VERSION = "9"')) throw new Error('Bootstrap is not on V9');
-          if (manifest.start_url !== './?v=9') throw new Error(`Manifest start_url invalid: ${manifest.start_url}`);
-          if (!refresh.includes('motorul V9 cu 620 de lichide')) throw new Error('Refresh page is not on V9');
+          if (!serviceWorker.includes('rta-lab-v10-five-wire-clapton-620')) throw new Error('V10 service-worker cache name is missing');
+          if (!bootstrap.includes('const VERSION = "10"')) throw new Error('Bootstrap is not on V10');
+          if (manifest.start_url !== './?v=10') throw new Error(`Manifest start_url invalid: ${manifest.start_url}`);
+          if (!refresh.includes('motorul V10 cu 620 de lichide și 5 sârme active')) throw new Error('Refresh page is not on V10');
           NODE
           node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/instagram-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/social-reels-state.json','utf8'))"
       - name: Validate catalog and public pages
