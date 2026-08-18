@@ -1,12 +1,12 @@
 (() => {
-  const VERSION = "8";
+  const VERSION = "9";
   let reloading = false;
 
   async function cleanLegacyCaches() {
     if (!("caches" in window)) return;
     const keys = await caches.keys();
     await Promise.all(keys
-      .filter(key => key.startsWith("rta-lab-") && !key.includes("v8-"))
+      .filter(key => key.startsWith("rta-lab-") && !key.includes("v9-"))
       .map(key => caches.delete(key)));
   }
 
