@@ -14,6 +14,7 @@ on:
       - "en/**"
       - "data/**"
       - "tools/**"
+      - "rta-lab/**"
       - "sw.js"
       - "site.webmanifest"
       - "site-en.webmanifest"
@@ -45,6 +46,45 @@ jobs:
           node --check tools/meta-token-gate.js
           node --check tools/check-social-workflows.js
           node --check cloudflare/smokee-sync-backup/worker.mjs
+          node --check rta-lab/engine.js
+          node --check rta-lab/bootstrap.js
+          node --check rta-lab/sw.js
+          for file in rta-lab/data/*.js; do node --check "$file"; done
+          test ! -e rta-lab/app.js
+          test ! -e rta-lab/lab-update.js
+          node - <<'NODE'
+          const fs = require('fs');
+          const vm = require('vm');
+          const sandbox = { window: {} };
+          vm.runInNewContext(fs.readFileSync('rta-lab/data/wires.js', 'utf8'), sandbox);
+          const wires = sandbox.window.RTA_WIRES || [];
+          const ids = wires.map(wire => wire.id).sort();
+          const expected = ['k128', 'k129', 'nife30'];
+          if (JSON.stringify(ids) !== JSON.stringify(expected)) {
+            throw new Error(`RTA Lab wires invalid: ${JSON.stringify(ids)}`);
+          }
+
+          const index = fs.readFileSync('rta-lab/index.html', 'utf8');
+          const engine = fs.readFileSync('rta-lab/engine.js', 'utf8');
+          const atoms = ['atoms-1.js', 'atoms-2.js', 'atoms-3.js']
+            .map(file => fs.readFileSync(`rta-lab/data/${file}`, 'utf8'))
+            .join('\n');
+
+          if (!index.includes('engine.js')) throw new Error('RTA Lab index does not load engine.js');
+          if (!index.includes('bootstrap.js')) throw new Error('RTA Lab index does not load bootstrap.js');
+          if (!index.includes('atomExplorer')) throw new Error('RTA Lab atomizer explorer is missing');
+          if (!index.includes('PERSONAL RTA ENGINE · V8')) throw new Error('RTA Lab V8 marker is missing');
+          if (index.includes('app.js') || index.includes('lab-update.js')) throw new Error('Obsolete Lab engines are still referenced');
+          if (/K1 27|SS316L|Clapton/.test(index)) throw new Error('Obsolete wire cards remain in RTA Lab UI');
+          if (/K1 28 GA = 6 spire/.test(atoms)) throw new Error('An atomizer still recommends K1 28 GA / 6 wraps');
+
+          const rules = [...engine.matchAll(/"([^"]+)"\s*:\s*\{\s*k128:\s*(\d+),\s*k129:\s*(\d+)/g)];
+          if (rules.length !== 17) throw new Error(`Expected 17 airflow rules; found ${rules.length}`);
+          for (const [, atom, k128, k129] of rules) {
+            if (Number(k128) !== 5) throw new Error(`${atom}: K1 28 GA must be 5 wraps`);
+            if (![5, 6].includes(Number(k129))) throw new Error(`${atom}: K1 29 GA must be 5 or 6 wraps`);
+          }
+          NODE
           node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/instagram-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/social-reels-state.json','utf8'))"
       - name: Validate catalog and public pages
         run: |
