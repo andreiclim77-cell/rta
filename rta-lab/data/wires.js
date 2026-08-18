@@ -1,1 +1,32 @@
-window.RTA_WIRES=[{"id":"k127","name":"K1 27 GA round","wraps":"5","diam":"Ø2,5 mm","power":"12,5–14,5 W","kind":"WATT","role":"corp și densitate; pentru tutunuri foarte seci/scheletice","traits":{"tobacco":4.2,"layers":2.9,"body":5.0,"th":4.5,"smooth":3.4,"bright":2.6,"dry":4.0,"dark":5.0,"sweet":3.5,"complete":3.7}},{"id":"k128","name":"K1 28 GA round","wraps":"5","diam":"Ø2,5 mm","power":"12–13,5 W","kind":"WATT","role":"corp curat și echilibru; foarte bun pe robuste/complexe","traits":{"tobacco":4.8,"layers":3.8,"body":4.7,"th":4.5,"smooth":4.0,"bright":3.4,"dry":4.4,"dark":4.8,"sweet":3.5,"complete":4.5}},{"id":"k129","name":"K1 29 GA round","wraps":"6","diam":"Ø2,5 mm","power":"11,5–13 W","kind":"WATT","role":"tutun exact, sec, concentrat și tobacco-first","traits":{"tobacco":5.0,"layers":3.5,"body":3.5,"th":4.8,"smooth":3.8,"bright":4.0,"dry":5.0,"dark":4.1,"sweet":2.7,"complete":4.5}},{"id":"ss30","name":"SS316L 30 GA round","wraps":"8","diam":"Ø2,5 mm","power":"11–12,5 W","kind":"WATT / TC SS","role":"claritate, lumină și separare; poate subția lichidele bogate","traits":{"tobacco":3.8,"layers":4.8,"body":2.9,"th":4.2,"smooth":3.8,"bright":5.0,"dry":4.0,"dark":3.0,"sweet":2.8,"complete":4.0}},{"id":"ss32tw","name":"SS316L 32 GA twisted","wraps":"6–7","diam":"Ø2,5 mm","power":"11–12,5 W","kind":"WATT / TC SS","role":"separare + textură + corp moderat; excelent pentru layering","traits":{"tobacco":4.0,"layers":5.0,"body":4.1,"th":4.4,"smooth":4.0,"bright":4.8,"dry":3.5,"dark":3.8,"sweet":4.2,"complete":4.6}},{"id":"k1clap","name":"K1 Clapton 2×30+38","wraps":"6","diam":"Ø2,5 mm","power":"11,5–13,5 W","kind":"WATT","role":"corp, textură, densitate și TH; la tine NU este generic «tocăniță»","traits":{"tobacco":4.7,"layers":4.4,"body":5.0,"th":5.0,"smooth":4.0,"bright":3.6,"dry":3.1,"dark":4.9,"sweet":4.1,"complete":4.8}},{"id":"ssclap","name":"SS316L Clapton 2×30+38","wraps":"6","diam":"Ø2,5 mm","power":"11–13 W","kind":"WATT / TC SS","role":"Clapton mai rapid și luminos; top-notes mai evidente","traits":{"tobacco":4.2,"layers":4.9,"body":4.5,"th":4.8,"smooth":4.0,"bright":5.0,"dry":3.3,"dark":4.0,"sweet":4.0,"complete":4.7}},{"id":"nife30","name":"NiFe30","wraps":"7","diam":"Ø2,5 mm","power":"TC 225–235°C · limită 12–15 W","kind":"TC","role":"finețe, consistență și cea mai completă redare când platforma iubește TC","traits":{"tobacco":4.7,"layers":5.0,"body":4.3,"th":4.1,"smooth":5.0,"bright":4.6,"dry":4.0,"dark":4.6,"sweet":4.4,"complete":5.0}}];
+window.RTA_WIRES=[
+  {
+    "id":"k128",
+    "name":"K1 28 GA round",
+    "wraps":"5–6",
+    "diam":"Ø2,5 mm",
+    "power":"12–13,5 W",
+    "kind":"WATT",
+    "role":"etalonul de echilibru: hit bun, corp curat, mouthfeel și redare completă",
+    "traits":{"tobacco":4.8,"layers":4.0,"body":4.8,"th":4.6,"smooth":4.2,"bright":3.5,"dry":4.4,"dark":4.8,"sweet":3.7,"complete":4.7}
+  },
+  {
+    "id":"k129",
+    "name":"K1 29 GA round",
+    "wraps":"5–6",
+    "diam":"Ø2,5 mm",
+    "power":"11,5–13 W",
+    "kind":"WATT",
+    "role":"hit/TH, uscăciune, precizie, focus și tobacco-first",
+    "traits":{"tobacco":5.0,"layers":3.5,"body":3.5,"th":5.0,"smooth":3.7,"bright":4.1,"dry":5.0,"dark":4.2,"sweet":2.7,"complete":4.3}
+  },
+  {
+    "id":"nife30",
+    "name":"NiFe30",
+    "wraps":"7",
+    "diam":"Ø2,5 mm",
+    "power":"TC 225–235°C · limită 12–15 W",
+    "kind":"TC",
+    "role":"finețe, consistență termică, layering și completitudine",
+    "traits":{"tobacco":4.7,"layers":5.0,"body":4.4,"th":4.1,"smooth":5.0,"bright":4.6,"dry":4.0,"dark":4.6,"sweet":4.4,"complete":5.0}
+  }
+];
