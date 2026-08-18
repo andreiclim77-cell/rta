@@ -2,7 +2,7 @@ window.RTA_WIRES=[
   {
     "id":"k128",
     "name":"K1 28 GA round",
-    "wraps":"5–6",
+    "wraps":"5–6 după airflow",
     "diam":"Ø2,5 mm",
     "power":"12–13,5 W",
     "kind":"WATT",
@@ -12,7 +12,7 @@ window.RTA_WIRES=[
   {
     "id":"k129",
     "name":"K1 29 GA round",
-    "wraps":"5–6",
+    "wraps":"5–6 după airflow",
     "diam":"Ø2,5 mm",
     "power":"11,5–13 W",
     "kind":"WATT",
@@ -21,12 +21,12 @@ window.RTA_WIRES=[
   },
   {
     "id":"nife30",
-    "name":"NiFe30",
+    "name":"NiFe30 · TCR 320 / 310",
     "wraps":"7",
     "diam":"Ø2,5 mm",
     "power":"TC 225–235°C · limită 12–15 W",
     "kind":"TC",
-    "role":"finețe, consistență termică, layering și completitudine",
+    "role":"finețe, consistență termică, layering și completitudine; Dicodes/Resistherm TCR 320 sau Zivipf TCR 310",
     "traits":{"tobacco":4.7,"layers":5.0,"body":4.4,"th":4.1,"smooth":5.0,"bright":4.6,"dry":4.0,"dark":4.6,"sweet":4.4,"complete":5.0}
   }
 ];
