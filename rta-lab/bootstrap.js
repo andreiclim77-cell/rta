@@ -21,7 +21,7 @@
       <div class="info" style="display:block;margin-bottom:12px">
         <p><b>Într-o discuție nouă spune exact:</b> „du-te în Lab și actualizează-te!”</p>
         <p>Asistentul va citi mai întâi <code>andreiclim77-cell/rta · main · rta-lab/RTA_CONTINUITY_MASTER.md</code>, apoi validările Lab curente.</p>
-        <p><b>„salvează”</b> = persistă concluzia acceptată în arhiva canonică. <b>„completă la zi”</b> = generează și livrează arhiva completă cea mai nouă.</p>
+        <p><b>„salvează”</b> = persistă concluzia acceptată în arhiva canonică. <b>„da mi arhiva de continuitate la zi”</b> = generează și livrează arhiva completă cea mai nouă.</p>
       </div>
       <a class="freeprofile" href="./RTA_CONTINUITY_MASTER.md?v=10" download="RTA_CONTINUITY_MASTER.md" style="display:block;text-align:center;text-decoration:none;box-sizing:border-box">
         DESCARCĂ ARHIVA MASTER
