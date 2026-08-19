@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-20260818";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-continuity-20260819";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
@@ -6,6 +6,7 @@ const ASSETS = [
   "./lab-update.css?v=10",
   "./engine.js?v=10",
   "./data/tuning-415.js?v=10",
+  "./RTA_CONTINUITY_MASTER.md?v=10",
   "./bootstrap.js?v=10",
   "./manifest.webmanifest?v=10",
   "./icon-192.png?v=10",
