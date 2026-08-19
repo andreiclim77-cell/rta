@@ -5,6 +5,7 @@ const ASSETS = [
   "./styles.css?v=10",
   "./lab-update.css?v=10",
   "./engine.js?v=10",
+  "./data/tuning-415.js?v=10",
   "./bootstrap.js?v=10",
   "./manifest.webmanifest?v=10",
   "./icon-192.png?v=10",
