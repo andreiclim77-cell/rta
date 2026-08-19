@@ -7,7 +7,7 @@
 - Cale stabilă: `rta-lab/RTA_CONTINUITY_MASTER.md`
 - Trigger de reîncărcare: **„du-te în Lab și actualizează-te!”**
 - Trigger de persistență: **„salvează”**
-- Trigger de livrare a arhivei complete: **„completă la zi”**
+- Trigger de livrare a arhivei complete: **„da mi arhiva de continuitate la zi”**
 
 > REGULĂ DE OPERARE: la triggerul „du-te în Lab și actualizează-te!”, citește mai întâi acest fișier integral. Apoi citește `rta-lab/data/tuning-415.js`. Dacă arhiva indică schimbări de engine/UI sau este nevoie de verificare, citește și `rta-lab/engine.js`, `rta-lab/index.html` și fișierele menționate aici. Nu reconstrui proiectul din memorie dacă sursa canonică este accesibilă.
 
@@ -45,7 +45,6 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 1. Prime Minister Freehand: specialist NET; 28/5 = corp/layering, 29/6 = dry/frunză/tobacco-first.
 1. RTA Lab: V10, 620 repere (145 tutun simplu, 155 tutun complex, 150 NET simplu, 170 NET complex), dintre care 120 Hall of Fame.
 1. GitHub repo: andreiclim77-cell/rta; Lab în rta-lab/. Snapshot-ul curent al update-ului de ADN platformă: commit 2fd8798af3664ae7dbbd11e8e5c509f8e6410fad.
-
 # 2. Schimbarea de paradigmă: de la top global la ADN de platformă
 
 > REGULĂ MASTER NOUĂ
@@ -56,7 +55,6 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - Fiecare platformă primește: zonă de excelență, sârme native, contact/spaced, footprint, mod de alimentare termică și compromisuri.
 - Când un test practic contrazice modelul, modelul se actualizează; nu invers.
 - Când observația este generică sau modelul exact nu a fost precizat (ex. «Dvarw»), nu se inventează o diferențiere CL vs FL.
-
 # 3. Inventar activ - 41 RTA / 17 platforme
 
 | Platformă | Buc. | ADN / rol curent |
@@ -108,20 +106,17 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - K1 29 GA / Ø2,5 / 5 contact: foarte bun; mai direct, mai incisiv, tobacco-first.
 - Spaced nu este preferat: GT One își exprimă mai bine ADN-ul prin footprint compact/contact.
 - Platforma este reperul «straight»: puține trucuri, răspuns predictibil și foarte bun.
-
 ## 4.4. Taifun GTR - TC specialist
 
 - NiFe30 TC este potrivirea naturală validată pentru GTR.
 - Rol dominant: finețe, layering, smoothness și consistență termică.
 - TCR: Dicodes/Resistherm 320 sau Zivipf 310; calibrare complet rece.
 - Nu se forțează GTR în rol de hit brut dacă lichidul cere finețe și straturi.
-
 ## 4.5. Kayfun X / KX
 
 - K1 28 GA / Ø2,5 / 5 spire: extraordinar, echilibrat și natural pe platformă.
 - NiFe30 TC: de asemenea extraordinar; smoothness și consistență.
 - KX este și una dintre platformele foarte purtabile/daily, ceea ce îi crește valoarea practică.
-
 ## 4.6. Dvarw
 
 > PRECIZARE DE VALIDARE
@@ -178,7 +173,6 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - Când un build este bun dar incomplet, se testează întâi ±1 spiră sau spacing controlat, nu se schimbă simultan sârma și airflow-ul.
 - Pentru NiFe30 se precizează sârma: Dicodes/Resistherm TCR320 sau Zivipf TCR310; calibrare complet rece.
 - Tobacco-first înseamnă că toppingurile sunt integrate, nu dominante; layering-ul trebuie să existe în corp, nu în claritate sterilă.
-
 # 8. Calibrări istorice importante păstrate
 
 | Situație | Concluzie activă |
@@ -221,11 +215,12 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | rta-lab/data/atoms-1.js ... atoms-3.js | Date platforme/airflow/afinități. |
 | rta-lab/data/wires.js | Cele 5 sârme active. |
 | rta-lab/data/liquids-*.js | Catalog 620, inclusiv cele 4 fișiere Hall of Fame. |
-| rta-lab/sw.js | PWA/network-first; cache V10; include tuning-415.js. |
-| rta-lab/bootstrap.js | Bootstrap PWA V10 și curățare cache-uri vechi. |
+| rta-lab/sw.js | PWA/network-first; cache V10; include tuning-415.js și arhiva canonică RTA_CONTINUITY_MASTER.md pentru acces offline. |
+| rta-lab/bootstrap.js | Bootstrap PWA V10; injectează în Lab panoul «Arhivă de continuitate · MASTER», butonul de descărcare și instrucțiunile trigger; curăță cache-urile vechi. |
 | rta-lab/manifest.webmanifest | Manifest PWA V10. |
 | .github/workflows/quality-gate.yml | Validare JS/JSON, 620 count, 120 HOF, 17 reguli airflow, 17 reguli Clapton, PWA V10. |
 | .github/workflows/social-reels-mirror.yml | Workflow Reels; la rulări automate, HTTP 403 pe imagine sursă este tratat ca warning/skip, nu ca eșec fatal. |
+| rta-lab/RTA_CONTINUITY_MASTER.md | Sursa canonică de adevăr pentru continuitate; se citește prima la comanda «du-te în Lab și actualizează-te!» și se actualizează automat la comanda «salvează». |
 
 ## 9.3. Motorul de recomandare - regulă curentă
 
@@ -239,7 +234,6 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - Dvarw CL/FL: 28/5 primește prioritate de test, dar observația generică este marcată contextual, nu ca A/B distinct pe ambele.
 - KLP: 29/5 pentru hit/tobacco/simple-dry, 29/6 pentru variante mai complete/complexe.
 - PM Freehand: pe NET, 28/5 și 29/6 primesc prioritate ca două moduri native.
-
 ## 9.4. Commit / stare repo la snapshot
 
 | Element | Valoare |
@@ -250,6 +244,8 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | Mesaj commit | Capture platform DNA and spacing validations in RTA Lab |
 | Quality Gate | Workflow este configurat să ruleze la modificări rta-lab/**. La momentul acestui snapshot, connectorul nu expusese încă un run/status pentru commitul de mai sus. |
 | E-mail failures | Nu exista notificare nouă de RTA Guide Quality Gate failed după update la momentul verificării. Ultimul failure curent identificat era Reels/HTTP 403 și a fost tratat separat. |
+| Continuitate canonică | rta-lab/RTA_CONTINUITY_MASTER.md · cale stabilă pentru orice conversație nouă. |
+| Infrastructură buton | 184505b = arhivă canonică; cf68006 = panou/buton în bootstrap; e1ae3a1 = cache PWA pentru arhivă. |
 
 > IMPORTANT PENTRU VIITOR
 > Nu se declară «CI verde» doar pentru că nu a venit e-mail de failure. Se verifică run-ul efectiv când este disponibil. În schimb, absența unui e-mail nou poate fi menționată strict ca absență de notificare, nu ca dovadă de succes.
@@ -260,7 +256,6 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - 120 de repere au fost adăugate ca Hall of Fame în patru fișiere dedicate.
 - Quality Gate verifică numeric 620 total, distribuția pe clase, 120 Hall of Fame și duplicate exacte class+brand+name+line.
 - Atenție de continuitate: cele 120 Hall of Fame nu au fost încă auditate individual, unul câte unul, împotriva unei surse oficiale/retailer puternic. Dacă se face audit de catalog, se verifică și duplicatele semantice, nu doar cheile exacte.
-
 # 11. Elemente vechi depășite / corecții explicite
 
 | Regulă veche | Status | Înlocuire |
@@ -277,11 +272,17 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 # 12. Protocol de reluare și update viitor
 
 1. Începe prin a citi această arhivă și starea curentă a repo-ului main.
+
 2. Dacă utilizatorul raportează un nou A/B, notează exact: RTA, airflow/pin, sârmă, Ø, spire, contact/spaced, poziție, watt/TC, lichid și diferența senzorială.
+
 3. Separă «validat practic» de «extrapolat în Lab».
+
 4. Ridică în Lab doar concluziile care pot fi exprimate coerent prin scoring/build logic; nu inventa universalitate.
+
 5. Actualizează această arhivă după fiecare lot semnificativ de teste și consemnează commitul Lab care le implementează.
+
 6. După update GitHub: verifică Quality Gate și e-mailurile GitHub. Nu spune «pass» fără run efectiv.
+
 7. Continuă testarea restului atomizoarelor fără presiunea unui clasament. Caută zona de excelență și buildul nativ al fiecăruia.
 
 # 13. Protocol 3D de explicație tehnică
@@ -304,7 +305,6 @@ Principiu nou: într-un lichid tutunos complex, setup-ul optim nu trebuie doar s
 - Tobacco Core Visibility = cât de clar rămâne perceptibil nucleul de tutun într-un lichid complex fără pierderea layering-ului.
 - Pentru utilizator, un setup foarte aromat care scoate doar toppingurile, dar pierde nucleul de tutun, nu este considerat complet.
 - Setup-ul ideal păstrează simultan tobacco core, layering real, toppinguri integrate, corp/mouthfeel și evită atât claritatea sterilă, cât și «tocănița» aromatică.
-
 Status Lab: conceptul este salvat ca principiu de continuitate, dar NU este încă introdus ca scor numeric separat în engine. Ponderile vor fi stabilite numai după calibrare practică pe mai multe lichide și platforme.
 
 # 16. Protocol automat de salvare și reîncărcare
@@ -312,10 +312,9 @@ Status Lab: conceptul este salvat ca principiu de continuitate, dar NU este înc
 REGULA 1 — comanda „salvează”
 
 - Când utilizatorul și asistentul au ajuns la o concluzie suficient de solidă pentru proiect, iar utilizatorul spune explicit „salvează”, concluzia se introduce automat în arhiva canonică de continuitate din RTA Lab.
-- Nu se cere din nou confirmare și nu se așteaptă comanda „completă la zi”. „Salvează” înseamnă: persistă acum concluzia în arhiva canonică și, dacă afectează motorul, actualizează și Lab-ul.
-- Comanda „completă la zi” înseamnă: generează și livrează utilizatorului arhiva de continuitate completă, în forma cea mai nouă, folosind arhiva canonică din Lab ca sursă de adevăr.
+- Nu se cere din nou confirmare și nu se așteaptă comanda „da mi arhiva de continuitate la zi”. „Salvează” înseamnă: persistă acum concluzia în arhiva canonică și, dacă afectează motorul, actualizează și Lab-ul.
+- Comanda „da mi arhiva de continuitate la zi” înseamnă: generează și livrează utilizatorului arhiva de continuitate completă, în forma cea mai nouă, folosind arhiva canonică din Lab ca sursă de adevăr.
 - Nivelul de certitudine se păstrează: validat practic / extrapolat / ipoteză de test. Salvarea nu transformă o extrapolare în validare.
-
 REGULA 2 — comanda „du-te în Lab și actualizează-te!”
 
 - Locul canonic este repository-ul GitHub `andreiclim77-cell/rta`, branch `main`, directorul `rta-lab/`.
@@ -324,5 +323,4 @@ REGULA 2 — comanda „du-te în Lab și actualizează-te!”
 - Asistentul nu trebuie să reconstruiască proiectul din memorie și nu trebuie să ceară utilizatorului să reîncarce manual arhiva dacă GitHub este conectat și fișierul canonic poate fi citit.
 - În RTA Lab există permanent un buton de descărcare pentru `RTA_CONTINUITY_MASTER.md`, astfel încât aceeași arhivă să poată fi descărcată și încărcată manual într-o conversație nouă dacă este nevoie.
 - Textul exact „du-te în Lab și actualizează-te!” este tratat ca trigger operațional: citește arhiva canonică din calea de mai sus, sincronizează contextul cu starea repo-ului și abia apoi continuă discuția.
-
 Sursa de adevăr pentru continuitate devine fișierul canonic din Lab; DOCX-ul este livrabilul uman generat la cerere. Astfel, continuitatea nu mai depinde de un fișier local dintr-o conversație anterioară.
