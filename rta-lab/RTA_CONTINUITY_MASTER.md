@@ -36,6 +36,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 1. Spacing-ul este variabilă aromatică reală pe anumite platforme (415 și K Prime), nu un simplu detaliu de montaj.
 1. Lichid reper principal: 80% trabuc / 20% cireșe; benchmark-ul specific rămâne Kayfun Prime + NiFe30 TC.
 1. 415: 28/5 = echilibru/layering; 29/5 contact ≈12 W = dulce/concentrat; 29/5 ușor spaced ≈12 W = tobacco-first și încă concentrat; 29/6 = mai dry/tobacco, mai puțin concentrat.
+1. 415: high vaporization efficiency observată practic — rezervorul pare să se golească mai repede chiar în jur de 12 W; observația este atribuită eficienței platformei/ansamblului, nu ideii că 29 GA ar consuma universal mai mult lichid.
 1. K Prime: 29/5 ușor spaced = optim general; 29/5 contact = mai dulce; 28/5 = echilibru; NiFe30 TC = benchmark pe lichidul personal 80/20.
 1. GT One: straight; 28/5 sau 29/5 contact foarte bune; spaced nu este preferat.
 1. GTR: NiFe30 TC este potrivirea naturală pentru finețe/layering.
@@ -324,3 +325,15 @@ REGULA 2 — comanda „du-te în Lab și actualizează-te!”
 - În RTA Lab există permanent un buton de descărcare pentru `RTA_CONTINUITY_MASTER.md`, astfel încât aceeași arhivă să poată fi descărcată și încărcată manual într-o conversație nouă dacă este nevoie.
 - Textul exact „du-te în Lab și actualizează-te!” este tratat ca trigger operațional: citește arhiva canonică din calea de mai sus, sincronizează contextul cu starea repo-ului și abia apoi continuă discuția.
 Sursa de adevăr pentru continuitate devine fișierul canonic din Lab; DOCX-ul este livrabilul uman generat la cerere. Astfel, continuitatea nu mai depinde de un fișier local dintr-o conversație anterioară.
+
+# 17. 415 — High Vaporization Efficiency / consum de lichid
+
+**Validat ca observație practică de utilizare, nu ca măsurătoare gravimetrică.**
+
+- Pe 415, utilizatorul observă că rezervorul se golește vizibil mai repede decât s-ar aștepta la puterea modestă folosită; fenomenul este prezent și în zona K1 29 GA / 5 spire ușor spaced / ~12 W.
+- Nu se formulează regula greșită „29 GA consumă mai mult lichid”. Gauge-ul singur nu determină consumul de lichid.
+- Interpretarea de lucru este **High Vaporization Efficiency** a platformei 415: ansamblul coil + alimentare + airflow multipunct pare să transforme foarte eficient energia disponibilă în vaporizare efectivă.
+- Ipoteză mecanică plauzibilă: masa termică mică a 29 GA scurtează faza de ramp-up, iar alimentarea și răcirea eficiente ale 415 permit ca o proporție mare din durata pufului să fie petrecută în regim util de vaporizare, nu doar în încălzirea metalului.
+- Factor comportamental de control: un vape foarte plăcut poate induce fără să fie evident pufuri puțin mai lungi sau mai dese; de aceea consumul mai mare observat nu se atribuie exclusiv hardware-ului fără un test controlat.
+- Pentru validare cantitativă viitoare: același lichid, volum inițial comparabil, wattaj/puff-duration/count controlate și comparație 415 vs K Prime / GT One sau alt reper.
+- **Status Lab:** salvat ca trăsătură de ADN a 415. Nu introduce încă bonus/penalty în scoringul de pairing, deoarece este o caracteristică de eficiență/consum, nu un criteriu aromatic direct.
