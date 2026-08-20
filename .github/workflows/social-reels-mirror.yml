@@ -16,6 +16,9 @@ on:
       - Instagram mirror from Facebook
     types:
       - completed
+  schedule:
+    # Independent hourly fallback if the Instagram workflow event is delayed or missed.
+    - cron: "42 * * * *"
 
 permissions:
   contents: write
@@ -117,7 +120,7 @@ jobs:
         run: node tools/social-reels-publisher.js --publish-prepared --max-posts 1 --daily-limit 4
 
       - name: Commit Reel publication receipts
-        if: steps.meta.outputs.ready == 'true' && steps.prepare.outcome == 'success' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
+        if: always() && steps.meta.outputs.ready == 'true' && steps.prepare.outcome == 'success' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
         shell: bash
         run: |
           if git diff --quiet -- data/social-reels-state.json; then

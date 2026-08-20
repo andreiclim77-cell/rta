@@ -22,6 +22,7 @@ const records = [
 ];
 const state = normalizeReelsState(emptyReelsState());
 assert.deepStrictEqual(state.facebookPendingReels, {}, 'Pending Facebook uploads must always have a durable map');
+assert.deepStrictEqual(state.facebookFailedReels, {}, 'Terminal Facebook uploads must always have a durable map');
 let plan = planReels(records, state, { maxPosts: 4, dailyLimit: 4, now: '2026-08-11T09:00:00Z' });
 assert.strictEqual(plan.length, 3, 'Each distinct Facebook post ID must remain eligible, even when titles repeat');
 
@@ -30,6 +31,20 @@ state.queue.push({ sourcePostId: 'page_1', name: 'Primul RTA', videoUrl: 'https:
 plan = planReels(records, state, { maxPosts: 4, dailyLimit: 4, now: '2026-08-11T09:00:00Z' });
 assert.deepStrictEqual(plan.map(record => record.sourcePostId), ['page_2', 'page_3'], 'Queued source must not be planned twice');
 assert.strictEqual(sourcesStartedToday(state, '2026-08-11T09:00:00Z'), 1, 'Romania daily pacing must count source starts');
+
+const pendingState = normalizeReelsState(emptyReelsState());
+pendingState.facebookPendingReels.page_1 = { id: 'pending_1' };
+assert.deepStrictEqual(
+  planReels(records, pendingState, { maxPosts: 4, dailyLimit: 4, now: '2026-08-11T09:00:00Z' }).map(record => record.sourcePostId),
+  ['page_2', 'page_3'],
+  'A pending Facebook Reel must not be uploaded again or block later sources'
+);
+pendingState.facebookFailedReels.page_2 = { id: 'failed_2' };
+assert.deepStrictEqual(
+  planReels(records, pendingState, { maxPosts: 4, dailyLimit: 4, now: '2026-08-11T09:00:00Z' }).map(record => record.sourcePostId),
+  ['page_3'],
+  'A terminal Facebook Reel must remain deduplicated while later sources continue'
+);
 
 const blockedState = normalizeReelsState(emptyReelsState());
 markSourceBlocked(blockedState, 'page_1', 'HTTP 403', '2026-08-11T09:00:00.000Z');

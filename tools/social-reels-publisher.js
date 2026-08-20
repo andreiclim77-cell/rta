@@ -78,6 +78,7 @@ function emptyReelsState() {
     blockedSources: {},
     sourceStarts: {},
     facebookPendingReels: {},
+    facebookFailedReels: {},
     facebookReels: {},
     instagramReels: {},
     history: []
@@ -97,6 +98,9 @@ function normalizeReelsState(value) {
   state.sourceStarts = state.sourceStarts && typeof state.sourceStarts === 'object' ? state.sourceStarts : {};
   state.facebookPendingReels = state.facebookPendingReels && typeof state.facebookPendingReels === 'object'
     ? state.facebookPendingReels
+    : {};
+  state.facebookFailedReels = state.facebookFailedReels && typeof state.facebookFailedReels === 'object'
+    ? state.facebookFailedReels
     : {};
   state.facebookReels = state.facebookReels && typeof state.facebookReels === 'object' ? state.facebookReels : {};
   state.instagramReels = state.instagramReels && typeof state.instagramReels === 'object' ? state.instagramReels : {};
@@ -160,6 +164,7 @@ function planReels(records, state, options = {}) {
   const candidates = [];
   for (const record of records) {
     if (completedOnBothPlatforms(state, record.sourcePostId) || queued.has(record.sourcePostId)) continue;
+    if (state.facebookPendingReels[record.sourcePostId] || state.facebookFailedReels[record.sourcePostId]) continue;
     if (sourceBlockIsActive(state, record.sourcePostId, options.now || nowIso())) continue;
     candidates.push(record);
     if (candidates.length >= targetCount) break;
@@ -177,6 +182,11 @@ function validateReelsState(state) {
     if (!/\.mp4$/i.test(String(item.videoUrl || ''))) errors.push(`Reel-ul ${item.name || ''} nu este MP4.`);
     if (seen.has(item.sourcePostId)) errors.push(`Postarea ${item.sourcePostId} este dublata in coada Reel.`);
     seen.add(item.sourcePostId);
+  }
+  for (const [sourcePostId, pending] of Object.entries(state.facebookPendingReels)) {
+    if (!sourcePostId || !pending || !String(pending.id || '').trim()) {
+      errors.push('Un Reel Facebook in procesare nu are ID-ul Meta complet.');
+    }
   }
   return Array.from(new Set(errors));
 }
@@ -530,56 +540,135 @@ function finishQueueItemIfComplete(state, item, timestamp = nowIso()) {
   return true;
 }
 
+function pendingReelItem(item) {
+  if (!item || typeof item !== 'object') return null;
+  return {
+    sourcePostId: String(item.sourcePostId || ''),
+    sourcePublishedAt: String(item.sourcePublishedAt || ''),
+    productType: String(item.productType || ''),
+    name: String(item.name || ''),
+    caption: String(item.caption || ''),
+    title: String(item.title || ''),
+    videoPath: String(item.videoPath || ''),
+    videoUrl: String(item.videoUrl || ''),
+    formatVersion: String(item.formatVersion || FORMAT_VERSION)
+  };
+}
+
+async function reconcileFacebookPending(state) {
+  const resolved = [];
+  for (const [sourcePostId, pendingValue] of Object.entries(state.facebookPendingReels)) {
+    const pending = pendingValue && typeof pendingValue === 'object' ? pendingValue : {};
+    const videoId = String(pending.id || '').trim();
+    const queuedItem = state.queue.find(item => item.sourcePostId === sourcePostId);
+    const item = pending.item || queuedItem || null;
+    if (!videoId) continue;
+    const video = await graphRequest(videoId, { query: { fields: 'id,status,permalink_url,title,description' } });
+    const status = facebookReelStatus(video);
+    const timestamp = nowIso();
+    state.facebookPendingReels[sourcePostId] = {
+      ...pending,
+      id: videoId,
+      item: pendingReelItem(item),
+      checkedAt: timestamp,
+      status
+    };
+    state.updatedAt = timestamp;
+    if (status.ready) {
+      state.facebookReels[sourcePostId] = {
+        id: videoId,
+        permalink: String(video.permalink_url || ''),
+        publishedAt: timestamp,
+        verifiedStatus: 'PUBLISHED'
+      };
+      delete state.facebookPendingReels[sourcePostId];
+      if (item) finishQueueItemIfComplete(state, item, timestamp);
+      resolved.push(sourcePostId);
+      console.log(`Facebook Reel confirmat dupa procesarea Meta: ${item && item.name || sourcePostId} (${videoId}).`);
+      continue;
+    }
+    if (status.error) {
+      state.facebookFailedReels[sourcePostId] = {
+        id: videoId,
+        item: pendingReelItem(item),
+        failedAt: timestamp,
+        status
+      };
+      delete state.facebookPendingReels[sourcePostId];
+      state.queue = state.queue.filter(entry => entry.sourcePostId !== sourcePostId);
+      console.error(`Facebook Reel oprit de Meta: ${item && item.name || sourcePostId} (${videoId}). Sursa nu va fi reincarcata automat.`);
+      continue;
+    }
+    console.log(`Facebook Reel ramane in procesare la Meta: ${item && item.name || sourcePostId} (${videoId}).`);
+  }
+  writeJsonAtomic(REELS_STATE_PATH, state);
+  return resolved;
+}
+
 async function publishPrepared(state) {
-  if (!state.queue.length) {
+  if (!state.queue.length && !Object.keys(state.facebookPendingReels).length) {
     console.log('Social Reels: coada este goala.');
     return [];
   }
   const { account } = await verifyConnections();
-  const published = [];
+  const published = await reconcileFacebookPending(state);
+  if (!state.queue.length) return published;
   for (const item of state.queue.slice(0, maxPosts)) {
     await waitForPublicVideo(item.videoUrl);
     if (!state.facebookReels[item.sourcePostId]) {
       const pending = state.facebookPendingReels[item.sourcePostId] || {};
-      let video;
-      try {
-        video = await uploadFacebookReel(item, {
-          pendingVideoId: pending.id,
-          onStarted: videoId => {
+      if (!pending.id) {
+        let video;
+        try {
+          video = await uploadFacebookReel(item, {
+            onStarted: videoId => {
+              const timestamp = nowIso();
+              state.facebookPendingReels[item.sourcePostId] = {
+                id: String(videoId),
+                item: pendingReelItem(item),
+                startedAt: timestamp,
+                checkedAt: timestamp
+              };
+              state.updatedAt = timestamp;
+              writeJsonAtomic(REELS_STATE_PATH, state);
+            }
+          });
+        } catch (error) {
+          if (error && error.code === 'FACEBOOK_REEL_TERMINAL') {
             const timestamp = nowIso();
-            state.facebookPendingReels[item.sourcePostId] = {
-              id: String(videoId), startedAt: timestamp, checkedAt: timestamp
+            const current = state.facebookPendingReels[item.sourcePostId] || {};
+            state.facebookFailedReels[item.sourcePostId] = {
+              id: String(current.id || ''), item: pendingReelItem(item), failedAt: timestamp
             };
+            delete state.facebookPendingReels[item.sourcePostId];
+            state.queue = state.queue.filter(entry => entry.sourcePostId !== item.sourcePostId);
             state.updatedAt = timestamp;
             writeJsonAtomic(REELS_STATE_PATH, state);
           }
-        });
-      } catch (error) {
-        if (error && error.code === 'FACEBOOK_REEL_TERMINAL') {
-          delete state.facebookPendingReels[item.sourcePostId];
-          state.updatedAt = nowIso();
-          writeJsonAtomic(REELS_STATE_PATH, state);
+          throw error;
         }
-        throw error;
+        if (video.publishPending) {
+          const timestamp = nowIso();
+          state.facebookPendingReels[item.sourcePostId] = {
+            ...(state.facebookPendingReels[item.sourcePostId] || {}),
+            id: String(video.id || ''),
+            item: pendingReelItem(item),
+            checkedAt: timestamp,
+            status: facebookReelStatus(video)
+          };
+          state.updatedAt = timestamp;
+          writeJsonAtomic(REELS_STATE_PATH, state);
+          console.log(`Facebook Reel in procesare la Meta: ${item.name} (${video.id}). Va fi reverificat fara reincarcare.`);
+        } else {
+          delete state.facebookPendingReels[item.sourcePostId];
+          state.facebookReels[item.sourcePostId] = {
+            id: String(video.id || ''), permalink: String(video.permalink_url || ''),
+            publishedAt: nowIso(), verifiedStatus: 'PUBLISHED'
+          };
+          writeJsonAtomic(REELS_STATE_PATH, state);
+          console.log(`Facebook Reel publicat: ${item.name} (${video.id}).`);
+        }
       }
-      if (video.publishPending) {
-        const timestamp = nowIso();
-        state.facebookPendingReels[item.sourcePostId] = {
-          ...(state.facebookPendingReels[item.sourcePostId] || {}),
-          id: String(video.id || pending.id || ''), checkedAt: timestamp
-        };
-        state.updatedAt = timestamp;
-        writeJsonAtomic(REELS_STATE_PATH, state);
-        console.log(`Facebook Reel in procesare la Meta: ${item.name} (${video.id}). Va fi reverificat fara reincarcare.`);
-        continue;
-      }
-      delete state.facebookPendingReels[item.sourcePostId];
-      state.facebookReels[item.sourcePostId] = {
-        id: String(video.id || ''), permalink: String(video.permalink_url || ''),
-        publishedAt: nowIso(), verifiedStatus: 'PUBLISHED'
-      };
-      writeJsonAtomic(REELS_STATE_PATH, state);
-      console.log(`Facebook Reel publicat: ${item.name} (${video.id}).`);
     }
     if (!state.instagramReels[item.sourcePostId]) {
       const media = await uploadInstagramReel(item, account.id);
@@ -589,6 +678,14 @@ async function publishPrepared(state) {
       };
       writeJsonAtomic(REELS_STATE_PATH, state);
       console.log(`Instagram Reel publicat: ${item.name} (${media.id}).`);
+    }
+    if (state.facebookPendingReels[item.sourcePostId] && state.instagramReels[item.sourcePostId]) {
+      state.queue = state.queue.filter(entry => entry.sourcePostId !== item.sourcePostId);
+      state.updatedAt = nowIso();
+      writeJsonAtomic(REELS_STATE_PATH, state);
+      console.log(`Instagram Reel este publicat; confirmarea Facebook va continua separat pentru ${item.name}.`);
+      published.push(item.sourcePostId);
+      continue;
     }
     finishQueueItemIfComplete(state, item);
     writeJsonAtomic(REELS_STATE_PATH, state);
@@ -670,6 +767,7 @@ module.exports = {
   isSourceMediaUnavailable,
   markSourceBlocked,
   normalizeReelsState,
+  pendingReelItem,
   planReels,
   renderFrame,
   runFfmpeg,
