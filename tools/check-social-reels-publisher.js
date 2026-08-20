@@ -5,6 +5,7 @@ const {
   completedOnBothPlatforms,
   displayTitle,
   emptyReelsState,
+  facebookReelStatus,
   finishQueueItemIfComplete,
   markSourceBlocked,
   normalizeReelsState,
@@ -20,6 +21,7 @@ const records = [
   { sourcePostId: 'page_3', sourcePublishedAt: '2026-08-10T06:00:00Z', name: 'Alt mod' }
 ];
 const state = normalizeReelsState(emptyReelsState());
+assert.deepStrictEqual(state.facebookPendingReels, {}, 'Pending Facebook uploads must always have a durable map');
 let plan = planReels(records, state, { maxPosts: 4, dailyLimit: 4, now: '2026-08-11T09:00:00Z' });
 assert.strictEqual(plan.length, 3, 'Each distinct Facebook post ID must remain eligible, even when titles repeat');
 
@@ -65,5 +67,20 @@ invalid.queue = [
 ];
 assert(validateReelsState(invalid).length >= 2, 'Invalid media and duplicate source IDs must fail validation');
 assert.strictEqual(displayTitle('https://example.com Test   RTA'), 'Test RTA', 'Public title must be concise and URL-free');
+assert.strictEqual(
+  facebookReelStatus({ status: { publishing_phase: { status: 'complete' } } }).ready,
+  true,
+  'A completed Facebook publishing phase must be accepted'
+);
+assert.strictEqual(
+  facebookReelStatus({ status: { processing_phase: { status: 'in_progress' } } }).ready,
+  false,
+  'A processing Facebook Reel must remain pending'
+);
+assert.strictEqual(
+  facebookReelStatus({ status: { publishing_phase: { status: 'error' } } }).error,
+  true,
+  'A terminal Facebook publishing error must be detected'
+);
 
 console.log('Social Reels publisher checks passed: source-level dedupe, two-platform receipts, retry safety and daily pacing.');

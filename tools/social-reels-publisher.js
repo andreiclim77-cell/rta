@@ -77,6 +77,7 @@ function emptyReelsState() {
     queue: [],
     blockedSources: {},
     sourceStarts: {},
+    facebookPendingReels: {},
     facebookReels: {},
     instagramReels: {},
     history: []
@@ -94,6 +95,9 @@ function normalizeReelsState(value) {
     ? state.blockedSources
     : {};
   state.sourceStarts = state.sourceStarts && typeof state.sourceStarts === 'object' ? state.sourceStarts : {};
+  state.facebookPendingReels = state.facebookPendingReels && typeof state.facebookPendingReels === 'object'
+    ? state.facebookPendingReels
+    : {};
   state.facebookReels = state.facebookReels && typeof state.facebookReels === 'object' ? state.facebookReels : {};
   state.instagramReels = state.instagramReels && typeof state.instagramReels === 'object' ? state.instagramReels : {};
   state.history = Array.isArray(state.history) ? state.history : [];
@@ -428,35 +432,59 @@ async function verifyConnections() {
   return { page, account };
 }
 
-async function uploadFacebookReel(item) {
-  const started = await graphRequest(`${pageId}/video_reels`, { method: 'POST', body: { upload_phase: 'start' } });
-  const uploadResponse = await fetch(started.upload_url, {
-    method: 'POST',
-    headers: { Authorization: `OAuth ${accessToken}`, file_url: item.videoUrl },
-    signal: AbortSignal.timeout(120000)
-  });
-  const uploadData = await uploadResponse.json().catch(() => ({}));
-  if (!uploadResponse.ok || uploadData.success !== true) {
-    throw new Error(`Facebook Reel upload esuat: ${uploadData.error && uploadData.error.message || `HTTP ${uploadResponse.status}`}`);
+function facebookReelStatus(video) {
+  const status = video && video.status || {};
+  const phaseValue = name => String(status[name] && status[name].status || '').toLowerCase();
+  const uploading = phaseValue('uploading_phase');
+  const processing = phaseValue('processing_phase');
+  const publishing = phaseValue('publishing_phase');
+  const videoStatus = String(status.video_status || '').toLowerCase();
+  const values = [uploading, processing, publishing, videoStatus];
+  const error = values.some(value => value === 'error' || value === 'failed');
+  const ready = publishing === 'complete' || videoStatus === 'ready' || videoStatus === 'published'
+    || (Boolean(video && video.permalink_url) && processing === 'complete' && !error);
+  return { uploading, processing, publishing, videoStatus, ready, error };
+}
+
+async function uploadFacebookReel(item, options = {}) {
+  let videoId = String(options.pendingVideoId || '').trim();
+  if (!videoId) {
+    const started = await graphRequest(`${pageId}/video_reels`, { method: 'POST', body: { upload_phase: 'start' } });
+    videoId = String(started.video_id || '').trim();
+    if (!videoId) throw new Error('Facebook nu a returnat ID-ul Reel-ului inceput.');
+    const uploadResponse = await fetch(started.upload_url, {
+      method: 'POST',
+      headers: { Authorization: `OAuth ${accessToken}`, file_url: item.videoUrl },
+      signal: AbortSignal.timeout(120000)
+    });
+    const uploadData = await uploadResponse.json().catch(() => ({}));
+    if (!uploadResponse.ok || uploadData.success !== true) {
+      throw new Error(`Facebook Reel upload esuat: ${uploadData.error && uploadData.error.message || `HTTP ${uploadResponse.status}`}`);
+    }
+    await graphRequest(`${pageId}/video_reels`, {
+      method: 'POST',
+      body: {
+        video_id: videoId, upload_phase: 'finish', video_state: 'PUBLISHED',
+        description: item.caption, title: item.title
+      },
+      timeout: 120000
+    });
+    if (typeof options.onStarted === 'function') await options.onStarted(videoId);
   }
-  await graphRequest(`${pageId}/video_reels`, {
-    method: 'POST',
-    body: {
-      video_id: String(started.video_id), upload_phase: 'finish', video_state: 'PUBLISHED',
-      description: item.caption, title: item.title
-    },
-    timeout: 120000
-  });
+  let lastVideo = { id: videoId };
   for (let attempt = 0; attempt < 30; attempt += 1) {
-    const video = await graphRequest(started.video_id, { query: { fields: 'id,status,permalink_url,title,description' } });
-    const status = video.status || {};
-    const publishing = String(status.publishing_phase && status.publishing_phase.status || '').toLowerCase();
-    const videoStatus = String(status.video_status || '').toLowerCase();
-    if (publishing === 'complete' || videoStatus === 'ready' || videoStatus === 'published') return video;
-    if (publishing === 'error' || videoStatus === 'error') throw new Error(`Facebook Reel ${started.video_id} a intrat in eroare.`);
+    const video = await graphRequest(videoId, { query: { fields: 'id,status,permalink_url,title,description' } });
+    lastVideo = video;
+    const reelStatus = facebookReelStatus(video);
+    if (reelStatus.ready) return { ...video, publishPending: false };
+    if (reelStatus.error) {
+      const error = new Error(`Facebook Reel ${videoId} a intrat in eroare.`);
+      error.code = 'FACEBOOK_REEL_TERMINAL';
+      throw error;
+    }
     if (attempt < 29) await new Promise(resolve => setTimeout(resolve, 10000));
   }
-  throw new Error(`Facebook Reel ${started.video_id} nu a confirmat publicarea in 5 minute.`);
+  return { ...lastVideo, id: videoId, publishPending: true };
 }
 
 async function uploadInstagramReel(item, accountId) {
@@ -512,7 +540,40 @@ async function publishPrepared(state) {
   for (const item of state.queue.slice(0, maxPosts)) {
     await waitForPublicVideo(item.videoUrl);
     if (!state.facebookReels[item.sourcePostId]) {
-      const video = await uploadFacebookReel(item);
+      const pending = state.facebookPendingReels[item.sourcePostId] || {};
+      let video;
+      try {
+        video = await uploadFacebookReel(item, {
+          pendingVideoId: pending.id,
+          onStarted: videoId => {
+            const timestamp = nowIso();
+            state.facebookPendingReels[item.sourcePostId] = {
+              id: String(videoId), startedAt: timestamp, checkedAt: timestamp
+            };
+            state.updatedAt = timestamp;
+            writeJsonAtomic(REELS_STATE_PATH, state);
+          }
+        });
+      } catch (error) {
+        if (error && error.code === 'FACEBOOK_REEL_TERMINAL') {
+          delete state.facebookPendingReels[item.sourcePostId];
+          state.updatedAt = nowIso();
+          writeJsonAtomic(REELS_STATE_PATH, state);
+        }
+        throw error;
+      }
+      if (video.publishPending) {
+        const timestamp = nowIso();
+        state.facebookPendingReels[item.sourcePostId] = {
+          ...(state.facebookPendingReels[item.sourcePostId] || {}),
+          id: String(video.id || pending.id || ''), checkedAt: timestamp
+        };
+        state.updatedAt = timestamp;
+        writeJsonAtomic(REELS_STATE_PATH, state);
+        console.log(`Facebook Reel in procesare la Meta: ${item.name} (${video.id}). Va fi reverificat fara reincarcare.`);
+        continue;
+      }
+      delete state.facebookPendingReels[item.sourcePostId];
       state.facebookReels[item.sourcePostId] = {
         id: String(video.id || ''), permalink: String(video.permalink_url || ''),
         publishedAt: nowIso(), verifiedStatus: 'PUBLISHED'
@@ -604,6 +665,7 @@ module.exports = {
   completedOnBothPlatforms,
   displayTitle,
   emptyReelsState,
+  facebookReelStatus,
   finishQueueItemIfComplete,
   isSourceMediaUnavailable,
   markSourceBlocked,
