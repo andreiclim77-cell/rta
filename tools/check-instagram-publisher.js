@@ -7,11 +7,13 @@ const { loadCatalog } = require('./catalog-data');
 const {
   applyInstagramPublished,
   collectFacebookRecords,
+  dedupeSourceImages,
   dedupeManualFacebookRecords,
   emptyInstagramState,
   generatedFacebookReelPostIds,
   instagramCaption,
   isGeneratedFacebookReelPost,
+  markSourceBlocked,
   manualFacebookRecord,
   manualContentFingerprint,
   mergeManualFacebookRecords,
@@ -21,6 +23,7 @@ const {
   purgeGeneratedFacebookReelRecords,
   purgeManualFacebookRecordIds,
   recordIdentity,
+  sourceBlockIsActive,
   syncBackfillSummary,
   validateInstagramState
 } = require('./instagram-publisher');
@@ -79,6 +82,14 @@ const manualOneReshare = manualFacebookRecord({
   created_time: '2026-08-11T12:03:00+0000',
   attachments: { data: [{ media: { image: { src: 'https://example.com/manual-1.jpg?size=large' } } }] }
 });
+assert.deepStrictEqual(
+  dedupeSourceImages([
+    ['https://fresh.example/media/manual-1.jpg?token=new'],
+    ['https://stale.example/media/manual-1.jpg?token=old', 'https://fresh.example/media/manual-2.jpg']
+  ]),
+  ['https://fresh.example/media/manual-1.jpg?token=new', 'https://fresh.example/media/manual-2.jpg'],
+  'A fresh Graph API image URL must win over the stored CDN URL for the same photograph'
+);
 assert(manualOne && manualTwo, 'Manual Facebook photo posts must be recognized');
 assert.strictEqual(manualTwo.images.length, 2, 'Manual Facebook carousels must retain every photo');
 assert.strictEqual(manualContentFingerprint(manualOne), manualContentFingerprint(manualOneReshare), 'Facebook CDN query parameters must not create a new manual-content identity');
@@ -177,6 +188,26 @@ const manualDuplicateOfAutomatic = collectFacebookRecords({
   }]
 }, { history: [] }, { history: [] }, [manualOne]);
 assert.strictEqual(manualDuplicateOfAutomatic.length, 2, 'A manual duplicate of an automatic post must remain allowed');
+
+const blockedState = normalizeInstagramState(emptyInstagramState());
+const blockedCandidate = plan.candidates[0];
+markSourceBlocked(blockedState, blockedCandidate.record.sourcePostId, 'HTTP 403', '2026-08-11T09:00:00.000Z');
+assert(sourceBlockIsActive(blockedState, blockedCandidate.record.sourcePostId, '2026-08-11T09:30:00.000Z'), 'A failed CDN source must enter a bounded retry pause');
+const afterBlocked = planInstagramMirrors(campaignState, facebookState, blockedState, catalog, modsFeed, {
+  maxPosts: 1,
+  dailyLimit: 500,
+  photoState,
+  now: '2026-08-11T09:30:00.000Z'
+});
+assert(afterBlocked.candidates.length === 1, 'A blocked source must not stop the remaining Instagram queue');
+assert.notStrictEqual(afterBlocked.candidates[0].record.sourcePostId, blockedCandidate.record.sourcePostId, 'The next Instagram candidate must advance past an inaccessible source');
+const afterRetryWindow = planInstagramMirrors(campaignState, facebookState, blockedState, catalog, modsFeed, {
+  maxPosts: 1,
+  dailyLimit: 500,
+  photoState,
+  now: '2026-08-12T10:00:00.000Z'
+});
+assert.strictEqual(afterRetryWindow.candidates[0].record.sourcePostId, blockedCandidate.record.sourcePostId, 'A blocked source must become retryable after the cooling interval');
 
 const first = plan.candidates[0];
 const caption = instagramCaption(first.event);

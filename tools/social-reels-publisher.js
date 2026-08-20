@@ -28,6 +28,8 @@ const DEFAULT_GRAPH_VERSION = 'v25.0';
 const DEFAULT_DAILY_LIMIT = 4;
 const DEFAULT_MAX_POSTS = 1;
 const FORMAT_VERSION = 'social-reel-vertical-v1';
+const SOURCE_RETRY_MS = 24 * 60 * 60 * 1000;
+const MAX_PREPARE_ATTEMPTS = 12;
 
 const args = process.argv.slice(2);
 const checkOnly = args.includes('--check');
@@ -73,6 +75,7 @@ function emptyReelsState() {
     updatedAt: '',
     dailyLimit: DEFAULT_DAILY_LIMIT,
     queue: [],
+    blockedSources: {},
     sourceStarts: {},
     facebookReels: {},
     instagramReels: {},
@@ -87,6 +90,9 @@ function normalizeReelsState(value) {
   state.updatedAt = String(state.updatedAt || '');
   state.dailyLimit = Math.max(1, Number(state.dailyLimit || DEFAULT_DAILY_LIMIT));
   state.queue = Array.isArray(state.queue) ? state.queue : [];
+  state.blockedSources = state.blockedSources && typeof state.blockedSources === 'object'
+    ? state.blockedSources
+    : {};
   state.sourceStarts = state.sourceStarts && typeof state.sourceStarts === 'object' ? state.sourceStarts : {};
   state.facebookReels = state.facebookReels && typeof state.facebookReels === 'object' ? state.facebookReels : {};
   state.instagramReels = state.instagramReels && typeof state.instagramReels === 'object' ? state.instagramReels : {};
@@ -96,6 +102,43 @@ function normalizeReelsState(value) {
 
 function completedOnBothPlatforms(state, sourcePostId) {
   return Boolean(state.facebookReels[sourcePostId] && state.instagramReels[sourcePostId]);
+}
+
+function sourceMediaError(message) {
+  const error = new Error(message);
+  error.code = 'SOURCE_MEDIA_UNAVAILABLE';
+  return error;
+}
+
+function isSourceMediaUnavailable(error) {
+  return Boolean(error && error.code === 'SOURCE_MEDIA_UNAVAILABLE');
+}
+
+function sourceBlockIsActive(state, sourcePostId, timestamp = nowIso()) {
+  const block = state && state.blockedSources && state.blockedSources[sourcePostId];
+  if (!block) return false;
+  const retryAt = Date.parse(String(block.retryAfter || ''));
+  const now = Date.parse(String(timestamp || ''));
+  return !Number.isFinite(retryAt) || !Number.isFinite(now) || now < retryAt;
+}
+
+function markSourceBlocked(state, sourcePostId, reason, timestamp = nowIso()) {
+  const previous = state.blockedSources[sourcePostId] || {};
+  const retryAfter = new Date(Date.parse(timestamp) + SOURCE_RETRY_MS).toISOString();
+  state.blockedSources[sourcePostId] = {
+    reason: String(reason || 'Imaginea sursa nu este disponibila.').slice(0, 500),
+    blockedAt: timestamp,
+    retryAfter,
+    attempts: Math.max(0, Number(previous.attempts || 0)) + 1
+  };
+  state.updatedAt = timestamp;
+  return state.blockedSources[sourcePostId];
+}
+
+function clearSourceBlock(state, sourcePostId) {
+  if (!state.blockedSources[sourcePostId]) return false;
+  delete state.blockedSources[sourcePostId];
+  return true;
 }
 
 function sourcesStartedToday(state, timestamp = nowIso()) {
@@ -113,6 +156,7 @@ function planReels(records, state, options = {}) {
   const candidates = [];
   for (const record of records) {
     if (completedOnBothPlatforms(state, record.sourcePostId) || queued.has(record.sourcePostId)) continue;
+    if (sourceBlockIsActive(state, record.sourcePostId, options.now || nowIso())) continue;
     candidates.push(record);
     if (candidates.length >= targetCount) break;
   }
@@ -172,11 +216,16 @@ function overlaySvg(title) {
 }
 
 async function remoteImageBuffer(url) {
-  const response = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(30000) });
-  if (!response.ok) throw new Error(`Imaginea sursa nu poate fi citita: HTTP ${response.status}.`);
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (bytes.length < 5000) throw new Error('Imaginea sursa este incompleta.');
-  return bytes;
+  try {
+    const response = await fetch(url, { redirect: 'follow', signal: AbortSignal.timeout(30000) });
+    if (!response.ok) throw sourceMediaError(`Imaginea sursa nu poate fi citita: HTTP ${response.status}.`);
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (bytes.length < 5000) throw sourceMediaError('Imaginea sursa este incompleta.');
+    return bytes;
+  } catch (error) {
+    if (isSourceMediaUnavailable(error)) throw error;
+    throw sourceMediaError(`Imaginea sursa nu poate fi descarcata: ${error.message}`);
+  }
 }
 
 function attachmentImageUrls(attachment) {
@@ -239,25 +288,29 @@ async function facebookSourceImages(record, instagramState, event) {
 async function renderFrame(sourceUrl, outputPath, title) {
   const sharp = require('sharp');
   const bytes = await remoteImageBuffer(sourceUrl);
-  const background = await sharp(bytes, { failOn: 'error' })
-    .rotate()
-    .resize(1080, 1920, { fit: 'cover' })
-    .blur(28)
-    .modulate({ brightness: 0.36, saturation: 0.8 })
-    .jpeg({ quality: 86 })
-    .toBuffer();
-  const foreground = await sharp(bytes, { failOn: 'error' })
-    .rotate()
-    .resize(1000, 1450, { fit: 'contain', background: { r: 7, g: 17, b: 15, alpha: 0 } })
-    .png()
-    .toBuffer();
-  await sharp(background)
-    .composite([
-      { input: foreground, gravity: 'center' },
-      { input: overlaySvg(title), top: 0, left: 0 }
-    ])
-    .jpeg({ quality: 91, chromaSubsampling: '4:4:4', mozjpeg: true })
-    .toFile(outputPath);
+  try {
+    const background = await sharp(bytes, { failOn: 'error' })
+      .rotate()
+      .resize(1080, 1920, { fit: 'cover' })
+      .blur(28)
+      .modulate({ brightness: 0.36, saturation: 0.8 })
+      .jpeg({ quality: 86 })
+      .toBuffer();
+    const foreground = await sharp(bytes, { failOn: 'error' })
+      .rotate()
+      .resize(1000, 1450, { fit: 'contain', background: { r: 7, g: 17, b: 15, alpha: 0 } })
+      .png()
+      .toBuffer();
+    await sharp(background)
+      .composite([
+        { input: foreground, gravity: 'center' },
+        { input: overlaySvg(title), top: 0, left: 0 }
+      ])
+      .jpeg({ quality: 91, chromaSubsampling: '4:4:4', mozjpeg: true })
+      .toFile(outputPath);
+  } catch (error) {
+    throw sourceMediaError(`Imaginea sursa nu poate fi procesata: ${error.message}`);
+  }
 }
 
 function runFfmpeg(framePaths, outputPath, temporaryDirectory) {
@@ -300,12 +353,25 @@ async function prepareReel(record, event, instagramState, state, timestamp = now
   const outputPath = path.join(ASSET_DIR, fileName);
   try {
     const framePaths = [];
+    const usableImages = [];
+    let lastImageError;
     for (let index = 0; index < sourceImages.length; index += 1) {
       const framePath = path.join(temporaryDirectory, `frame-${String(index + 1).padStart(2, '0')}.jpg`);
-      await renderFrame(sourceImages[index], framePath, event.name || record.name);
-      framePaths.push(framePath);
+      try {
+        await renderFrame(sourceImages[index], framePath, event.name || record.name);
+        framePaths.push(framePath);
+        usableImages.push(sourceImages[index]);
+      } catch (error) {
+        if (!isSourceMediaUnavailable(error)) throw error;
+        lastImageError = error;
+        console.warn(`Social Reels: o imagine din ${record.sourcePostId} a fost omisa: ${error.message}`);
+      }
+    }
+    if (!framePaths.length) {
+      throw sourceMediaError(`Postarea ${record.sourcePostId} nu are nicio imagine accesibila: ${lastImageError && lastImageError.message || 'sursa indisponibila'}`);
     }
     runFfmpeg(framePaths, outputPath, temporaryDirectory);
+    sourceImages.splice(0, sourceImages.length, ...usableImages);
   } finally {
     fs.rmSync(temporaryDirectory, { recursive: true, force: true });
   }
@@ -323,6 +389,7 @@ async function prepareReel(record, event, instagramState, state, timestamp = now
     formatVersion: FORMAT_VERSION
   };
   state.queue.push(item);
+  clearSourceBlock(state, record.sourcePostId);
   state.sourceStarts[record.sourcePostId] = timestamp;
   state.updatedAt = timestamp;
   state.dailyLimit = dailyLimit;
@@ -504,10 +571,23 @@ async function main() {
       console.log('Social Reels: limita zilei este completa sau nu exista surse noi.');
       return;
     }
-    for (const record of candidates) {
-      const event = resolveEventForRecord(record, catalog, modsFeed);
-      const item = await prepareReel(record, event, instagramState, state);
-      console.log(`Social Reel pregatit: ${item.name} (${item.videoPath}).`);
+    let prepared = 0;
+    let attempts = 0;
+    while (prepared < maxPosts && attempts < MAX_PREPARE_ATTEMPTS) {
+      const currentCandidates = planReels(records, state, { maxPosts: 1, dailyLimit });
+      const record = currentCandidates[0];
+      if (!record) break;
+      attempts += 1;
+      try {
+        const event = resolveEventForRecord(record, catalog, modsFeed);
+        const item = await prepareReel(record, event, instagramState, state);
+        prepared += 1;
+        console.log(`Social Reel pregatit: ${item.name} (${item.videoPath}).`);
+      } catch (error) {
+        if (!isSourceMediaUnavailable(error)) throw error;
+        const block = markSourceBlocked(state, record.sourcePostId, error.message);
+        console.warn(`Social Reels: ${record.sourcePostId} amanata pana la ${block.retryAfter}: ${error.message}`);
+      }
     }
     writeJsonAtomic(REELS_STATE_PATH, state);
     return;
@@ -525,11 +605,14 @@ module.exports = {
   displayTitle,
   emptyReelsState,
   finishQueueItemIfComplete,
+  isSourceMediaUnavailable,
+  markSourceBlocked,
   normalizeReelsState,
   planReels,
   renderFrame,
   runFfmpeg,
   sourcesStartedToday,
+  sourceBlockIsActive,
   validateReelsState
 };
 

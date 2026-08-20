@@ -6,9 +6,11 @@ const {
   displayTitle,
   emptyReelsState,
   finishQueueItemIfComplete,
+  markSourceBlocked,
   normalizeReelsState,
   planReels,
   sourcesStartedToday,
+  sourceBlockIsActive,
   validateReelsState
 } = require('./social-reels-publisher');
 
@@ -26,6 +28,20 @@ state.queue.push({ sourcePostId: 'page_1', name: 'Primul RTA', videoUrl: 'https:
 plan = planReels(records, state, { maxPosts: 4, dailyLimit: 4, now: '2026-08-11T09:00:00Z' });
 assert.deepStrictEqual(plan.map(record => record.sourcePostId), ['page_2', 'page_3'], 'Queued source must not be planned twice');
 assert.strictEqual(sourcesStartedToday(state, '2026-08-11T09:00:00Z'), 1, 'Romania daily pacing must count source starts');
+
+const blockedState = normalizeReelsState(emptyReelsState());
+markSourceBlocked(blockedState, 'page_1', 'HTTP 403', '2026-08-11T09:00:00.000Z');
+assert(sourceBlockIsActive(blockedState, 'page_1', '2026-08-11T09:30:00.000Z'), 'A failed Reel image must enter a bounded retry pause');
+assert.deepStrictEqual(
+  planReels(records, blockedState, { maxPosts: 1, dailyLimit: 4, now: '2026-08-11T09:30:00.000Z' }).map(record => record.sourcePostId),
+  ['page_2'],
+  'A blocked Reel source must not stop the next source'
+);
+assert.deepStrictEqual(
+  planReels(records, blockedState, { maxPosts: 1, dailyLimit: 4, now: '2026-08-12T10:00:00.000Z' }).map(record => record.sourcePostId),
+  ['page_1'],
+  'A blocked Reel source must become retryable after the cooling interval'
+);
 
 state.sourceStarts.page_2 = '2026-08-11T07:20:00Z';
 state.sourceStarts.page_3 = '2026-08-11T07:25:00Z';

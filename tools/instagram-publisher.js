@@ -34,6 +34,8 @@ const MIRROR_FORMAT_VERSION = 'instagram-exact-product-photo-v1';
 const MANUAL_SOURCE = 'facebook-page-api-manual';
 const MANUAL_POSTS_PER_PAGE = 100;
 const MAX_MANUAL_PAGES = 100;
+const SOURCE_RETRY_MS = 24 * 60 * 60 * 1000;
+const MAX_PREPARE_ATTEMPTS = 12;
 
 const args = process.argv.slice(2);
 const checkOnly = args.includes('--check');
@@ -88,6 +90,7 @@ function emptyInstagramState() {
       updatedAt: ''
     },
     queue: [],
+    blockedSources: {},
     manualFacebookRecords: {},
     mirroredFacebookPosts: {},
     mirroredFamilies: {},
@@ -132,6 +135,9 @@ function normalizeInstagramState(value) {
     ? state.backfill
     : { total: 0, completed: 0, remaining: 0, updatedAt: '' };
   state.queue = Array.isArray(state.queue) ? state.queue : [];
+  state.blockedSources = state.blockedSources && typeof state.blockedSources === 'object'
+    ? state.blockedSources
+    : {};
   state.manualFacebookRecords = state.manualFacebookRecords && typeof state.manualFacebookRecords === 'object'
     ? state.manualFacebookRecords
     : {};
@@ -155,10 +161,48 @@ function syncBackfillSummary(state, records, timestamp = nowIso()) {
     total: records.length,
     completed: records.length - remaining,
     remaining,
+    blocked: records.filter(record => sourceBlockIsActive(state, record.sourcePostId, timestamp)).length,
     updatedAt: timestamp
   };
   state.updatedAt = timestamp;
   return state.backfill;
+}
+
+function sourceMediaError(message) {
+  const error = new Error(message);
+  error.code = 'SOURCE_MEDIA_UNAVAILABLE';
+  return error;
+}
+
+function isSourceMediaUnavailable(error) {
+  return Boolean(error && error.code === 'SOURCE_MEDIA_UNAVAILABLE');
+}
+
+function sourceBlockIsActive(state, sourcePostId, timestamp = nowIso()) {
+  const block = state && state.blockedSources && state.blockedSources[sourcePostId];
+  if (!block) return false;
+  const retryAt = Date.parse(String(block.retryAfter || ''));
+  const now = Date.parse(String(timestamp || ''));
+  return !Number.isFinite(retryAt) || !Number.isFinite(now) || now < retryAt;
+}
+
+function markSourceBlocked(state, sourcePostId, reason, timestamp = nowIso()) {
+  const previous = state.blockedSources[sourcePostId] || {};
+  const retryAfter = new Date(Date.parse(timestamp) + SOURCE_RETRY_MS).toISOString();
+  state.blockedSources[sourcePostId] = {
+    reason: String(reason || 'Fotografia sursa nu este disponibila.').slice(0, 500),
+    blockedAt: timestamp,
+    retryAfter,
+    attempts: Math.max(0, Number(previous.attempts || 0)) + 1
+  };
+  state.updatedAt = timestamp;
+  return state.blockedSources[sourcePostId];
+}
+
+function clearSourceBlock(state, sourcePostId) {
+  if (!state.blockedSources[sourcePostId]) return false;
+  delete state.blockedSources[sourcePostId];
+  return true;
 }
 
 function recordProductType(entry) {
@@ -436,6 +480,7 @@ function planInstagramMirrors(campaignState, facebookState, instagramState, cata
     if (instagramState.mirroredFacebookPosts[record.sourcePostId]) continue;
     if (record.productType !== 'manual' && instagramState.mirroredFamilies[identity]) continue;
     if (queuedFamilies.has(identity)) continue;
+    if (sourceBlockIsActive(instagramState, record.sourcePostId, options.now || nowIso())) continue;
     try {
       const event = resolveEventForRecord(record, catalog, modsFeed);
       candidates.push({ record, event, identity });
@@ -454,14 +499,33 @@ function assetFileName(candidate, index = 0, total = 1) {
 }
 
 async function remoteImageBuffer(url) {
-  const response = await fetch(url, {
-    redirect: 'follow',
-    signal: AbortSignal.timeout(30000)
-  });
-  if (!response.ok) throw new Error(`Fotografia Facebook nu poate fi citita: HTTP ${response.status}.`);
-  const bytes = Buffer.from(await response.arrayBuffer());
-  if (bytes.length < 5000) throw new Error('Fotografia Facebook este incompleta.');
-  return bytes;
+  try {
+    const response = await fetch(url, {
+      redirect: 'follow',
+      signal: AbortSignal.timeout(30000)
+    });
+    if (!response.ok) throw sourceMediaError(`Fotografia Facebook nu poate fi citita: HTTP ${response.status}.`);
+    const bytes = Buffer.from(await response.arrayBuffer());
+    if (bytes.length < 5000) throw sourceMediaError('Fotografia Facebook este incompleta.');
+    return bytes;
+  } catch (error) {
+    if (isSourceMediaUnavailable(error)) throw error;
+    throw sourceMediaError(`Fotografia Facebook nu poate fi descarcata: ${error.message}`);
+  }
+}
+
+function dedupeSourceImages(values) {
+  const output = [];
+  const seen = new Set();
+  for (const value of [].concat(values || []).flat(4)) {
+    const url = String(value || '').trim();
+    if (!/^https:\/\//i.test(url)) continue;
+    const identity = canonicalManualMediaUrl(url);
+    if (!identity || seen.has(identity)) continue;
+    seen.add(identity);
+    output.push(url);
+  }
+  return output;
 }
 
 async function prepareCandidate(candidate, state, timestamp = nowIso()) {
@@ -473,25 +537,40 @@ async function prepareCandidate(candidate, state, timestamp = nowIso()) {
   }
   fs.mkdirSync(ASSET_DIR, { recursive: true });
   if (candidate.event.productType === 'manual') {
-    const sourceImages = candidate.event.images.length
-      ? candidate.event.images
-      : await facebookPostImageUrls(candidate.record.sourcePostId);
+    let freshImages = [];
+    try {
+      freshImages = await facebookPostImageUrls(candidate.record.sourcePostId);
+    } catch (error) {
+      console.warn(`Instagram mirror: fotografia actuala pentru ${candidate.record.sourcePostId} nu a putut fi obtinuta prin API: ${error.message}`);
+    }
+    const sourceImages = dedupeSourceImages([freshImages, candidate.event.images]);
     const selectedImages = sourceImages.slice(0, 10);
-    if (!selectedImages.length) throw new Error(`Postarea Facebook ${candidate.record.sourcePostId} nu contine fotografii.`);
+    if (!selectedImages.length) throw sourceMediaError(`Postarea Facebook ${candidate.record.sourcePostId} nu contine fotografii disponibile.`);
     const fileNames = [];
+    const usableImages = [];
+    let lastImageError;
     for (let index = 0; index < selectedImages.length; index += 1) {
       const fileName = assetFileName(candidate, index, selectedImages.length);
-      const bytes = await remoteImageBuffer(selectedImages[index]);
-      await sharp(bytes, { failOn: 'error' })
-        .rotate()
-        .resize(1080, 1350, {
-          fit: 'contain',
-          background: { r: 242, g: 244, b: 243, alpha: 1 }
-        })
-        .flatten({ background: '#f2f4f3' })
-        .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
-        .toFile(path.join(ASSET_DIR, fileName));
-      fileNames.push(fileName);
+      try {
+        const bytes = await remoteImageBuffer(selectedImages[index]);
+        await sharp(bytes, { failOn: 'error' })
+          .rotate()
+          .resize(1080, 1350, {
+            fit: 'contain',
+            background: { r: 242, g: 244, b: 243, alpha: 1 }
+          })
+          .flatten({ background: '#f2f4f3' })
+          .jpeg({ quality: 92, chromaSubsampling: '4:4:4', mozjpeg: true })
+          .toFile(path.join(ASSET_DIR, fileName));
+        fileNames.push(fileName);
+        usableImages.push(selectedImages[index]);
+      } catch (error) {
+        lastImageError = error;
+        console.warn(`Instagram mirror: o fotografie din ${candidate.record.sourcePostId} a fost omisa: ${error.message}`);
+      }
+    }
+    if (!fileNames.length) {
+      throw sourceMediaError(`Nicio fotografie din postarea Facebook ${candidate.record.sourcePostId} nu este accesibila: ${lastImageError && lastImageError.message || 'sursa indisponibila'}`);
     }
     const imageUrls = fileNames.map(fileName => `${SITE}/assets/instagram/${encodeURIComponent(fileName)}`);
     const item = {
@@ -503,7 +582,7 @@ async function prepareCandidate(candidate, state, timestamp = nowIso()) {
       familyKey: candidate.event.familyKey,
       slug: candidate.event.slug,
       name: candidate.event.name,
-      sourceImages: selectedImages,
+      sourceImages: usableImages,
       assetPaths: fileNames.map(fileName => `assets/instagram/${fileName}`),
       imageUrls,
       imageUrl: imageUrls[0],
@@ -513,6 +592,7 @@ async function prepareCandidate(candidate, state, timestamp = nowIso()) {
       preparedAt: timestamp
     };
     state.queue.push(item);
+    clearSourceBlock(state, candidate.record.sourcePostId);
     state.updatedAt = timestamp;
     state.dailyLimit = dailyLimit;
     if (!state.startedAt) state.startedAt = timestamp;
@@ -563,6 +643,7 @@ async function prepareCandidate(candidate, state, timestamp = nowIso()) {
     preparedAt: timestamp
   };
   state.queue.push(item);
+  clearSourceBlock(state, candidate.record.sourcePostId);
   state.updatedAt = timestamp;
   state.dailyLimit = dailyLimit;
   if (!state.startedAt) state.startedAt = timestamp;
@@ -696,6 +777,7 @@ function purgeManualFacebookRecordIds(state, sourcePostIds) {
 
 async function facebookPostPrimaryImage(postId) {
   const candidates = await facebookPostImageUrls(postId);
+  if (!candidates[0]) throw sourceMediaError(`Postarea Facebook ${postId} nu mai expune o fotografie.`);
   return candidates[0];
 }
 
@@ -1021,10 +1103,29 @@ async function main() {
       writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
       return;
     }
-    for (const candidate of plan.candidates.slice(0, maxPosts)) {
-      const item = await prepareCandidate(candidate, state);
-      console.log(`Instagram prepared ${item.productType}: ${item.name} (${item.assetPath}).`);
+    let prepared = 0;
+    let attempts = 0;
+    while (prepared < maxPosts && attempts < MAX_PREPARE_ATTEMPTS) {
+      const currentPlan = planInstagramMirrors(campaignState, facebookState, state, catalog, modsFeed, {
+        maxPosts: 1,
+        dailyLimit,
+        photoState,
+        manualRecords
+      });
+      const candidate = currentPlan.candidates[0];
+      if (!candidate) break;
+      attempts += 1;
+      try {
+        const item = await prepareCandidate(candidate, state);
+        prepared += 1;
+        console.log(`Instagram prepared ${item.productType}: ${item.name} (${item.assetPath || item.assetPaths[0]}).`);
+      } catch (error) {
+        if (!isSourceMediaUnavailable(error)) throw error;
+        const block = markSourceBlocked(state, candidate.record.sourcePostId, error.message);
+        console.warn(`Instagram mirror: ${candidate.record.sourcePostId} amanata pana la ${block.retryAfter}: ${error.message}`);
+      }
     }
+    syncBackfillSummary(state, facebookRecords);
     writeJsonAtomic(INSTAGRAM_STATE_PATH, state);
     return;
   }
@@ -1049,12 +1150,14 @@ module.exports = {
   dedupeManualFacebookRecords,
   emptyInstagramState,
   generatedFacebookReelPostIds,
+  isSourceMediaUnavailable,
   instagramAltText,
   instagramCaption,
   isGeneratedFacebookReelPost,
   manualFacebookRecord,
   manualContentFingerprint,
   mergeManualFacebookRecords,
+  markSourceBlocked,
   normalizeInstagramState,
   planInstagramMirrors,
   postContainsVideo,
@@ -1064,6 +1167,8 @@ module.exports = {
   recordIdentity,
   recordProductType,
   resolveEventForRecord,
+  sourceBlockIsActive,
+  dedupeSourceImages,
   syncBackfillSummary,
   validateInstagramState
 };
