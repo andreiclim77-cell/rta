@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-personal-5wrap-20260823";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-personal-5wrap-20260823";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
