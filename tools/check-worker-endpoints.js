@@ -7,6 +7,12 @@ const ORIGIN = 'https://ghid-rta-smokee-sync-backup.ghid-rta-smokee.workers.dev'
   const health = await fetch(`${ORIGIN}/__smokee-sync-backup/health`);
   const healthData = health.ok ? await health.json() : null;
   if (!health.ok || !healthData || !healthData.ok || !/06:00.*06:20/.test(healthData.schedule || '')) failures.push(`health endpoint failed: ${health.status}`);
+  if (!healthData || !healthData.latestRun || healthData.latestRun.status !== 'completed' || healthData.latestRun.conclusion !== 'success') {
+    failures.push('health endpoint does not confirm the latest successful GitHub sync');
+  }
+  if (!healthData || !healthData.latestRun || healthData.latestRun.catalogSyncExecuted !== true) {
+    failures.push('health endpoint does not confirm that catalog synchronization actually ran');
+  }
 
   const image = await fetch(`${ORIGIN}/media/smokee/wp-content/uploads/2026/01/ambition-mods-amazier-mtl-rta-black.jpg`, { method: 'HEAD' });
   if (!image.ok || !/^image\//i.test(image.headers.get('content-type') || '')) failures.push(`image cache failed: ${image.status}`);

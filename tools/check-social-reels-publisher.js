@@ -9,6 +9,7 @@ const {
   finishQueueItemIfComplete,
   markSourceBlocked,
   normalizeReelsState,
+  pendingReelIsStale,
   planReels,
   sourcesStartedToday,
   sourceBlockIsActive,
@@ -96,6 +97,16 @@ assert.strictEqual(
   facebookReelStatus({ status: { publishing_phase: { status: 'error' } } }).error,
   true,
   'A terminal Facebook publishing error must be detected'
+);
+assert.strictEqual(
+  pendingReelIsStale({ startedAt: '2026-08-20T06:00:00Z' }, '2026-08-23T06:00:00Z'),
+  true,
+  'A Facebook Reel still processing after 72 hours must become terminal without being uploaded again'
+);
+assert.strictEqual(
+  pendingReelIsStale({ startedAt: '2026-08-20T06:00:00Z' }, '2026-08-23T05:59:59Z'),
+  false,
+  'A Facebook Reel inside the Meta processing window must remain pending'
 );
 
 console.log('Social Reels publisher checks passed: source-level dedupe, two-platform receipts, retry safety and daily pacing.');

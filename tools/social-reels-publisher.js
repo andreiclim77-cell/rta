@@ -29,6 +29,7 @@ const DEFAULT_DAILY_LIMIT = 4;
 const DEFAULT_MAX_POSTS = 1;
 const FORMAT_VERSION = 'social-reel-vertical-v1';
 const SOURCE_RETRY_MS = 24 * 60 * 60 * 1000;
+const FACEBOOK_PENDING_TIMEOUT_MS = 72 * 60 * 60 * 1000;
 const MAX_PREPARE_ATTEMPTS = 12;
 
 const args = process.argv.slice(2);
@@ -555,6 +556,13 @@ function pendingReelItem(item) {
   };
 }
 
+function pendingReelIsStale(pending, now = nowIso()) {
+  const startedAt = Date.parse(String(pending && (pending.startedAt || pending.checkedAt) || ''));
+  const checkedAt = Date.parse(String(now || ''));
+  return Number.isFinite(startedAt) && Number.isFinite(checkedAt)
+    && checkedAt - startedAt >= FACEBOOK_PENDING_TIMEOUT_MS;
+}
+
 async function reconcileFacebookPending(state) {
   const resolved = [];
   for (const [sourcePostId, pendingValue] of Object.entries(state.facebookPendingReels)) {
@@ -597,6 +605,19 @@ async function reconcileFacebookPending(state) {
       delete state.facebookPendingReels[sourcePostId];
       state.queue = state.queue.filter(entry => entry.sourcePostId !== sourcePostId);
       console.error(`Facebook Reel oprit de Meta: ${item && item.name || sourcePostId} (${videoId}). Sursa nu va fi reincarcata automat.`);
+      continue;
+    }
+    if (pendingReelIsStale(pending, timestamp)) {
+      state.facebookFailedReels[sourcePostId] = {
+        id: videoId,
+        item: pendingReelItem(item),
+        failedAt: timestamp,
+        failureReason: 'processing-timeout',
+        status
+      };
+      delete state.facebookPendingReels[sourcePostId];
+      state.queue = state.queue.filter(entry => entry.sourcePostId !== sourcePostId);
+      console.error(`Facebook Reel inchis dupa 72 de ore de procesare Meta: ${item && item.name || sourcePostId} (${videoId}). Sursa nu va fi reincarcata automat.`);
       continue;
     }
     console.log(`Facebook Reel ramane in procesare la Meta: ${item && item.name || sourcePostId} (${videoId}).`);
@@ -768,6 +789,7 @@ module.exports = {
   markSourceBlocked,
   normalizeReelsState,
   pendingReelItem,
+  pendingReelIsStale,
   planReels,
   renderFrame,
   runFfmpeg,

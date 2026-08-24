@@ -5,6 +5,7 @@ const DEFAULT_REF = "main";
 const SMOKEE_MEDIA_PREFIX = "/media/smokee/";
 const ANALYTICS_PATH = "/__rta-event";
 const METRICS_PATH = "/__rta-metrics";
+const SYNC_HEALTH_KEY = "smokee-sync:health";
 function envValue(env, key, fallback) {
   return env && env[key] ? String(env[key]) : fallback;
 }
@@ -17,6 +18,22 @@ function jsonResponse(payload, status = 200) {
       "cache-control": "no-store",
     },
   });
+}
+
+async function readSyncHealth(env) {
+  if (!env.RTA_METRICS) return null;
+  return env.RTA_METRICS.get(SYNC_HEALTH_KEY, "json");
+}
+
+async function updateSyncHealth(env, update) {
+  if (!env.RTA_METRICS) return;
+  const current = await readSyncHealth(env) || { schemaVersion: 1 };
+  await env.RTA_METRICS.put(SYNC_HEALTH_KEY, JSON.stringify({
+    ...current,
+    ...update,
+    schemaVersion: 1,
+    updatedAt: new Date().toISOString()
+  }), { expirationTtl: 60 * 60 * 24 * 120 });
 }
 
 function analyticsCors(request) {
@@ -314,6 +331,50 @@ async function hasActiveWorkflowRun(env) {
   return runs.some((run) => run && (run.status === "queued" || run.status === "in_progress"));
 }
 
+async function latestWorkflowRun(env) {
+  const { base } = workflowEndpoint(env);
+  const ref = envValue(env, "GITHUB_REF", DEFAULT_REF);
+  const response = await githubRequest(env, `${base}/runs?branch=${encodeURIComponent(ref)}&per_page=6`);
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error("GitHub latest run check failed: " + response.status + " " + body.slice(0, 400));
+  }
+  const payload = await response.json();
+  const runs = Array.isArray(payload.workflow_runs) ? payload.workflow_runs : [];
+  let run = runs.find((candidate) => candidate && candidate.status !== "completed") || null;
+  let catalogStep = null;
+
+  for (const candidate of runs) {
+    if (run && run.status !== "completed") break;
+    const jobsResponse = await githubRequest(env, `${candidate.jobs_url}?per_page=20`);
+    if (!jobsResponse.ok) continue;
+    const jobsPayload = await jobsResponse.json();
+    const steps = Array.isArray(jobsPayload.jobs)
+      ? jobsPayload.jobs.flatMap((job) => (Array.isArray(job.steps) ? job.steps : []))
+      : [];
+    const completedCatalogStep = steps.find((step) =>
+      step && step.name === "Check Smokee RTA products" && step.conclusion === "success"
+    );
+    if (completedCatalogStep) {
+      run = candidate;
+      catalogStep = completedCatalogStep;
+      break;
+    }
+  }
+
+  if (!run) return null;
+  return {
+    id: Number(run.id || 0),
+    event: String(run.event || ""),
+    status: String(run.status || ""),
+    conclusion: String(run.conclusion || ""),
+    catalogSyncExecuted: run.status !== "completed" ? null : Boolean(catalogStep),
+    createdAt: String(run.created_at || ""),
+    updatedAt: String(run.updated_at || ""),
+    url: String(run.html_url || "")
+  };
+}
+
 async function dispatchSmokeeWorkflow(env) {
   const owner = envValue(env, "GITHUB_OWNER", DEFAULT_OWNER);
   const repo = envValue(env, "GITHUB_REPO", DEFAULT_REPO);
@@ -336,17 +397,44 @@ async function dispatchSmokeeWorkflow(env) {
 
 export default {
   async scheduled(controller, env) {
+    const scheduledAt = new Date().toISOString();
     const window = bucharestSyncWindow();
     if (!window.run) {
+      await updateSyncHealth(env, { lastIgnoredAt: scheduledAt, lastIgnoredWindow: window.label });
       console.log("Skipped dispatch outside Bucharest 06:00/06:20 windows.", window);
       return;
     }
-    if (await hasActiveWorkflowRun(env)) {
-      console.log("Skipped dispatch because a Smokee workflow run is already queued or running.");
-      return;
+    try {
+      if (await hasActiveWorkflowRun(env)) {
+        await updateSyncHealth(env, {
+          lastWindowAt: scheduledAt,
+          lastWindowLabel: window.label,
+          lastWindowAction: "skipped-active-run",
+          lastSkipAt: scheduledAt,
+          lastError: ""
+        });
+        console.log("Skipped dispatch because a Smokee workflow run is already queued or running.");
+        return;
+      }
+      const result = await dispatchSmokeeWorkflow(env);
+      await updateSyncHealth(env, {
+        lastWindowAt: scheduledAt,
+        lastWindowLabel: window.label,
+        lastWindowAction: "dispatched",
+        lastDispatchAt: scheduledAt,
+        lastError: ""
+      });
+      console.log("Smokee workflow dispatched.", result);
+    } catch (error) {
+      await updateSyncHealth(env, {
+        lastWindowAt: scheduledAt,
+        lastWindowLabel: window.label,
+        lastWindowAction: "error",
+        lastErrorAt: scheduledAt,
+        lastError: String(error && error.message ? error.message : error).slice(0, 400)
+      });
+      throw error;
     }
-    const result = await dispatchSmokeeWorkflow(env);
-    console.log("Smokee workflow dispatched.", result);
   },
 
   async fetch(request, env, context) {
@@ -363,10 +451,20 @@ export default {
     const path = url.pathname.replace(/^\/__smokee-sync-backup/, "") || "/";
 
     if (path === "/health") {
+      let latestRun = null;
+      let latestRunError = "";
+      try {
+        latestRun = await latestWorkflowRun(env);
+      } catch (error) {
+        latestRunError = String(error && error.message ? error.message : error).slice(0, 400);
+      }
       return jsonResponse({
         ok: true,
         worker: "ghid-rta-smokee-sync-backup",
         schedule: "Daily at 06:00 and 06:20 Bucharest time; skips when a sync is already running",
+        sync: await readSyncHealth(env),
+        latestRun,
+        latestRunError,
       });
     }
 
