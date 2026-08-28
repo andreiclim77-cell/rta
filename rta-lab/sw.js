@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-personal-5wrap-tcmap-20260828";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-personal-5wrap-tcmap-claptonmap-20260828";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
@@ -8,6 +8,7 @@ const ASSETS = [
   "./data/tuning-415.js?v=10",
   "./data/personal-5wrap.js?v=10",
   "./data/tc-platform-map.js?v=10",
+  "./data/clapton-platform-map.js?v=10",
   "./RTA_CONTINUITY_MASTER.md?v=10",
   "./bootstrap.js?v=10",
   "./manifest.webmanifest?v=10",
