@@ -131,7 +131,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const guide = document.querySelector(".wire-guide-foot");
     if (guide) {
-      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 spire; K1 29 = <b>5 spire prior personal</b>, 6 numai când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; NiFe30 = 7. ADN-ul platformei poate depăși priorul personal.";
+      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 spire; K1 29 = <b>5 spire prior personal</b>, 6 numai când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes/Resistherm NiFe30 = <b>7 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. ADN-ul platformei poate depăși priorul personal.";
     }
   });
 })();
