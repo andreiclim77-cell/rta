@@ -41,12 +41,12 @@ window.RTA_WIRES=[
   },
   {
     "id":"nife30",
-    "name":"NiFe30 · TCR 320 / 310",
-    "wraps":"7",
+    "name":"NiFe TC · NiFe30 / NiFe52",
+    "wraps":"NiFe30 7 · NiFe52 6",
     "diam":"Ø2,5 mm",
     "power":"TC 225–235°C · limită 12–15 W",
     "kind":"TC",
-    "role":"finețe, consistență termică, layering și completitudine; Dicodes/Resistherm TCR 320 sau Zivipf TCR 310",
+    "role":"finețe, consistență termică, layering și completitudine; Dicodes/Resistherm NiFe30 TCR 320 = 7 spire; Zivipf NiFe52 TCR 310 = 6 spire",
     "traits":{"tobacco":4.7,"layers":5.0,"body":4.4,"th":4.1,"smooth":5.0,"bright":4.6,"dry":4.0,"dark":4.6,"sweet":4.4,"complete":5.0}
   }
 ];
