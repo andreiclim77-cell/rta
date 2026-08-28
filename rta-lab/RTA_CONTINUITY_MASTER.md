@@ -421,3 +421,22 @@ Această regulă este activă până când testele viitoare o rafinează sau ide
 - Pentru comparații viitoare se păstrează Ø2,5 mm ca reper comun, astfel încât aliajul și numărul de spire să rămână variabile controlabile.
 - **NiFe30 Dicodes/Resistherm = 7 spire** și **NiFe52 Zivipf = 6 spire** sunt de acum regulile de lucru de bază, până când un A/B pe o platformă anume justifică explicit o excepție.
 - NiFe52 Zivipf este salvat în continuitate ca baseline tehnic suplimentar; introducerea lui ca sârmă activă separată în scoringul Lab se face numai dacă se decide explicit ulterior.
+
+# 20. PROTOCOL DE SINCRONIZARE COMPLETĂ ARHIVĂ ↔ LAB — 28.08.2026
+
+**Status: regulă operațională permanentă.**
+
+Când se schimbă o informație tehnică relevantă și utilizatorul spune **„salvează”**, nu este suficientă modificarea arhivei de continuitate. Salvarea trebuie tratată ca o sincronizare completă a tuturor locurilor în care acea informație există sau produce efecte.
+
+Ordinea obligatorie este:
+
+1. **Arhiva canonică** — se actualizează `rta-lab/RTA_CONTINUITY_MASTER.md`.
+2. **Date / reguli / motor** — dacă schimbarea afectează builduri, sârme, scoring, excepții sau recomandări, se actualizează fișierele Lab relevante (`data/*.js`, `engine.js`, tuning-uri etc.).
+3. **Interfața vizibilă** — dacă informația este afișată în carduri, texte, reguli, legendă, Explorer sau alte zone UI, toate aparițiile vizibile se actualizează în aceeași etapă.
+4. **PWA / cache / versionare** — dacă există risc ca telefonul sau browserul să servească versiunea veche, se actualizează cache-ul/versionarea sau mecanismul necesar astfel încât noua informație să ajungă efectiv în Lab.
+5. **Verificare de consistență** — arhiva, datele, motorul și UI-ul nu trebuie să se contrazică după salvare.
+6. **Quality Gate** — după publicare se verifică run-ul efectiv. Un e-mail „Run failed” nu se ignoră: se citește cauza din job/log, se repară și se verifică următorul run până la `success`. Nu se declară verde înainte de confirmarea efectivă.
+
+Excepție: dacă informația este exclusiv documentară și nu există nicăieri în motor/UI, nu se fac modificări artificiale în Lab doar pentru a produce un commit.
+
+Această regulă extinde sensul comenzii **„salvează”**: pentru modificările tehnice care apar și în aplicație, `salvează` = **persistă + sincronizează + publică + verifică**.
