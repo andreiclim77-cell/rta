@@ -16,7 +16,7 @@
 ---
 
 > Scopul documentului
-> Document autosuficient pentru reluarea proiectului Rta în orice conversație nouă. Consolidează arhiva 16.08.2026 cu validările practice din 19.08–23.08.2026, schimbarea de paradigmă de la «clasament global» la «ADN de platformă», regulile contact/spaced, preferința personală compact-coil și starea exactă a RTA Lab.
+> Document autosuficient pentru reluarea proiectului Rta în orice conversație nouă. Consolidează arhiva 16.08.2026 cu validările practice din 19.08–28.08.2026, schimbarea de paradigmă de la «clasament global» la «ADN de platformă», regulile contact/spaced, preferința personală compact-coil și baseline-urile TC pentru NiFe30/NiFe52.
 
 Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există diferențe.
 
@@ -31,9 +31,10 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 1. Preferință senzorială: tobacco-first, Tobacco Core Visibility, detaliu, stratificare și corp/mouthfeel; fără claritate sterilă și fără «tocăniță».
 1. Principiu nou 19.08.2026: renunțăm la ideea de clasament global ca instrument de pairing. Fiecare RTA este evaluat prin zona sa de excelență.
 1. Principiu nou 23.08.2026: PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS. Utilizatorul constată repetat pe platforme diferite că round-wire K1 în 5 spire îi redă lichidul mai plăcut; 29/5 este priorul personal principal, 28/5 priorul secundar.
+1. Baseline TC 28.08.2026: **Dicodes/Resistherm NiFe30 · TCR 320 · Ø2,5 mm · 7 spire**; **Zivipf NiFe52 · TCR 310 · Ø2,5 mm · 6 spire**.
 1. Inventar activ: 41 atomizoare fizice, grupate în 17 platforme în Lab.
 1. Sârme Lab active: K1 28 GA, K1 29 GA, K1 Clapton 2×30+38, SS316L Clapton 2×30+38, NiFe30.
-1. Regulă Lab actualizată: K1 28 GA = 5 spire; K1 29 GA = 5 spire ca prior personal, 6 numai când ADN-ul platformei sau A/B-ul direct justifică; Claptonurile = 5; NiFe30 = 7.
+1. Regulă Lab actualizată: K1 28 GA = 5 spire; K1 29 GA = 5 spire ca prior personal, 6 numai când ADN-ul platformei sau A/B-ul direct justifică; Claptonurile = 5; Dicodes/Resistherm NiFe30 TCR320 = 7 spire. Zivipf NiFe52 TCR310 = 6 spire este baseline TC suplimentar salvat, fără a fi încă o a șasea sârmă activă în scoringul V10.
 1. Spacing-ul este variabilă aromatică reală pe anumite platforme (415 și K Prime), nu un simplu detaliu de montaj.
 1. Lichid reper principal: 80% trabuc / 20% cireșe; benchmark-ul specific rămâne Kayfun Prime + NiFe30 TC.
 1. 415: 28/5 = echilibru/layering; 29/5 contact ≈12 W = dulce/concentrat; 29/5 ușor spaced ≈12 W = tobacco-first și încă concentrat; 29/6 = mai dry/tobacco, mai puțin concentrat și rămâne alternativă, nu default personal.
@@ -116,7 +117,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 
 - NiFe30 TC este potrivirea naturală validată pentru GTR.
 - Rol dominant: finețe, layering, smoothness și consistență termică.
-- TCR: Dicodes/Resistherm 320 sau Zivipf 310; calibrare complet rece.
+- Baseline pentru Dicodes/Resistherm NiFe30: **TCR 320 · Ø2,5 mm · 7 spire**.
 - Priorul personal 29/5 nu trebuie să bată automat această validare de platformă.
 
 ## 4.5. Kayfun X / KX
@@ -168,7 +169,9 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | K1 29 GA round | 5 spire prior personal; 6 doar justificat | Tobacco-first, hit/TH, dry, precizie, răspuns rapid; footprint foarte sensibil. | Prior personal principal. PM Freehand + NET păstrează 29/6 validat; alte excepții cer A/B/geometrie reală. |
 | K1 Clapton 2×30+38 | 5 spire | Corp, densitate, mouthfeel, TH, integrare. | Activ în Lab; Chariot + Cronos Tab Plus validat #1 în watt; priorul 29/5 nu anulează validări directe mai bune. |
 | SS316L Clapton 2×30+38 | 5 spire | Claritate, top-notes, layering, răspuns mai rapid decât K1 Clapton. | Activ în Lab; contextual după lichid/platformă. |
-| NiFe30 TC | 7 spire | Finețe, smoothness, consistență, control termic, layering. | GTR și KX foarte puternice; K Prime benchmark specific. TCR 320/310 după sârmă. |
+| Dicodes/Resistherm NiFe30 | 7 spire · Ø2,5 mm · TCR 320 | Finețe, smoothness, consistență, control termic, layering. | Sârma NiFe activă în V10; GTR și KX foarte puternice; K Prime benchmark specific. |
+
+**Baseline TC suplimentar salvat:** Zivipf **NiFe52 · TCR 310 · Ø2,5 mm · 6 spire**. Nu este încă introdus ca a șasea sârmă activă în scoringul V10.
 
 # 7. Reguli metodologice permanente
 
@@ -181,7 +184,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - Nu se transferă automat un rezultat de pe KLP pe KX/GT One/415 chiar dacă folosesc principii similare de bottom-air.
 - Nu se transformă un rezultat specific unui lichid într-o regulă universală fără marcarea nivelului de validare.
 - Când un build este bun dar incomplet, se testează întâi ±1 spiră sau spacing controlat, nu se schimbă simultan sârma și airflow-ul.
-- Pentru NiFe30 se precizează sârma: Dicodes/Resistherm TCR320 sau Zivipf TCR310; calibrare complet rece.
+- Baseline TC pe sârmă se păstrează distinct: **Dicodes/Resistherm NiFe30 = TCR 320 / Ø2,5 / 7 spire; Zivipf NiFe52 = TCR 310 / Ø2,5 / 6 spire.**
 - Tobacco-first înseamnă că toppingurile sunt integrate, nu dominante; layering-ul trebuie să existe în corp, nu în claritate sterilă.
 
 # 8. Calibrări istorice importante păstrate
@@ -212,10 +215,11 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | NET complex | 170 |
 | Hall of Fame | 120 repere adăugate |
 | Platforme | 17 intrări de platformă / 41 atomizoare fizice |
-| Sârme active | K1 28, K1 29, K1 Clapton 2×30+38, SS316L Clapton 2×30+38, NiFe30 |
+| Sârme active | K1 28, K1 29, K1 Clapton 2×30+38, SS316L Clapton 2×30+38, Dicodes/Resistherm NiFe30 |
 | Recomandare | TOP 3 sârme din cele 5 active, după lichid + obiectiv + platformă + prior personal moderat |
 | Paradigmă | Fără clasament global absolut; atomizoarele se ordonează după potrivirea cu lichidul, iar Explorer arată ADN-ul platformei. |
 | Prior personal | K1 29/5 principal; K1 28/5 secundar; excepțiile validate de platformă prevalează. |
+| Baseline TC suplimentar | Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire; salvat ca referință tehnică, neactiv încă în scoringul V10. |
 
 ## 9.2. Fișiere Lab relevante
 
@@ -249,6 +253,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - Dvarw CL/FL: 28/5 confirmat generic; 29/5 este test prioritar personal, nu validare distinctă.
 - KLP: 29/5 devine default personal; 29/6 rămâne alternativă validată.
 - PM Freehand + NET: 29/6 rămâne excepția validată; 29/5 se testează ulterior.
+- NiFe52 Zivipf TCR310 / 6 spire este salvat ca baseline TC, dar nu schimbă încă cele 5 sârme active și TOP 3-ul V10.
 
 ## 9.4. Commit / stare repo
 
@@ -283,6 +288,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | 415 29/7 test prioritar | DEPĂȘIT | Actual: 29/5 contact/spaced și 29/6 alternativă. |
 | KLP 29/6 = singurul forever | DEPĂȘIT | Actual: 29/5 default personal; 29/6 alternativă validată. |
 | «29/6 pentru că airflow-ul e lat» | DEPĂȘIT CA DEFAULT | 29/5 se testează primul; 29/6 cere justificare geometrică sau A/B. |
+| «Zivipf TCR310 = NiFe30» | CORECTAT | Zivipf TCR310 este tratat în arhiva curentă ca **NiFe52**, baseline Ø2,5 / 6 spire. Dicodes/Resistherm NiFe30 rămâne TCR320 / Ø2,5 / 7 spire. |
 | GTR/GT One/KX NiFe30 default generic pentru toate | REFINAT | GTR = TC specialist; KX = 28/5 + NiFe30; GT One = 28/5 sau 29/5 contact. |
 | K Prime = doar NiFe30 | REFINAT | NiFe30 benchmark specific; 29/5 spaced optim round-wire, 28/5 echilibru. |
 | Dvarw CL/FL tratate la fel | INTERZIS | Rămân distincte; observațiile generice se marchează contextual. |
@@ -305,7 +311,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 
 # 14. Încheiere de continuitate
 
-Starea proiectului la 23.08.2026: colecția este modelată ca hartă de specializări, nu ierarhie liniară. Peste ADN-ul fiecărei platforme există acum un prior personal explicit: coil compact round-wire, cu K1 29/5 ca expresie principală și K1 28/5 ca versiune mai plină. Priorul nu șterge validări puternice de platformă: GTR + NiFe30, K Prime benchmark specific, PM Freehand + NET 29/6 sau Chariot + K1 Clapton pot rămâne alegerea corectă atunci când datele practice o cer.
+Starea proiectului la 28.08.2026: colecția este modelată ca hartă de specializări, nu ierarhie liniară. Peste ADN-ul fiecărei platforme există un prior personal explicit: coil compact round-wire, cu K1 29/5 ca expresie principală și K1 28/5 ca versiune mai plină. Priorul nu șterge validări puternice de platformă: GTR + NiFe30, K Prime benchmark specific, PM Freehand + NET 29/6 sau Chariot + K1 Clapton pot rămâne alegerea corectă atunci când datele practice o cer. Baseline-urile TC sunt separate explicit după aliaj: Dicodes/Resistherm NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire, ambele la Ø2,5 mm.
 
 # 15. Tobacco Core Visibility - criteriu senzorial permanent
 
@@ -396,7 +402,22 @@ Salvarea unei preferințe personale nu o transformă în validare universală.
 - KLP: 29/5 default personal; 29/6 alternativă validată.
 - PM Freehand + NET: 29/6 este protejat ca excepție validată.
 - `index.html` încarcă `personal-5wrap.js` după `tuning-415.js`.
-- `sw.js` îl include în cache-ul PWA `rta-lab-v10-personal-5wrap-20260823`.
+- `sw.js` îl include în cache-ul PWA curent care păstrează markerul V10.
 - Commituri de implementare: `974e9238f8e215a50e15fc496be8f13efac3f2dd`, `7242596479c17625490cee48ca9084839831c0b1`, `2ff282363a8e2661f071ce2eb325ad9919fd160c`.
 
 Această regulă este activă până când testele viitoare o rafinează sau identifică excepții suplimentare de platformă.
+
+# 19. BASELINE TC PE ALIAJ — 28.08.2026
+
+**Regulă canonică de sârmă + coil, independentă de orice mod/chipset:**
+
+| Sârmă | TCR | Ø coil | Spire baseline |
+| --- | ---: | ---: | ---: |
+| **Dicodes/Resistherm NiFe30** | **320** | **2,5 mm** | **7** |
+| **Zivipf NiFe52** | **310** | **2,5 mm** | **6** |
+
+- Aceste două configurații se păstrează ca baseline-uri distincte; nu se transferă automat numărul de spire de la un aliaj la celălalt.
+- Diferența de număr de spire este intenționată și ține de proprietățile electrice diferite ale celor două sârme, nu de ideea că una ar fi universal «mai stabilă» decât cealaltă.
+- Pentru comparații viitoare se păstrează Ø2,5 mm ca reper comun, astfel încât aliajul și numărul de spire să rămână variabile controlabile.
+- **NiFe30 Dicodes/Resistherm = 7 spire** și **NiFe52 Zivipf = 6 spire** sunt de acum regulile de lucru de bază, până când un A/B pe o platformă anume justifică explicit o excepție.
+- NiFe52 Zivipf este salvat în continuitate ca baseline tehnic suplimentar; introducerea lui ca sârmă activă separată în scoringul Lab se face numai dacă se decide explicit ulterior.
