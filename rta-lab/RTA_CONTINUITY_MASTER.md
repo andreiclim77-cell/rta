@@ -9,14 +9,14 @@
 - Trigger de persistență: **„salvează”**
 - Trigger de livrare a arhivei complete: **„da mi arhiva de continuitate la zi”**
 
-> REGULĂ DE OPERARE: la triggerul „du-te în Lab și actualizează-te!”, citește mai întâi acest fișier integral. Apoi citește `rta-lab/data/tuning-415.js`, `rta-lab/data/personal-5wrap.js` și `rta-lab/data/tc-platform-map.js`. Dacă arhiva indică schimbări de engine/UI sau este nevoie de verificare, citește și `rta-lab/engine.js`, `rta-lab/index.html` și fișierele menționate aici. Nu reconstrui proiectul din memorie dacă sursa canonică este accesibilă.
+> REGULĂ DE OPERARE: la triggerul „du-te în Lab și actualizează-te!”, citește mai întâi acest fișier integral. Apoi citește `rta-lab/data/tuning-415.js`, `rta-lab/data/personal-5wrap.js`, `rta-lab/data/tc-platform-map.js` și `rta-lab/data/clapton-platform-map.js`. Dacă arhiva indică schimbări de engine/UI sau este nevoie de verificare, citește și `rta-lab/engine.js`, `rta-lab/index.html` și fișierele menționate aici. Nu reconstrui proiectul din memorie dacă sursa canonică este accesibilă.
 
 > REGULĂ DE SALVARE: când utilizatorul spune „salvează” după o concluzie acceptată, actualizează acest fișier canonic imediat. Dacă acea concluzie afectează motorul, actualizează și Lab-ul. Păstrează eticheta de certitudine: validat practic / extrapolat / ipoteză.
 
 ---
 
 > Scopul documentului
-> Document autosuficient pentru reluarea proiectului Rta în orice conversație nouă. Consolidează arhiva 16.08.2026 cu validările practice din 19.08–28.08.2026, schimbarea de paradigmă de la «clasament global» la «ADN de platformă», regulile contact/spaced, preferința personală compact-coil, baseline-urile TC NiFe30/NiFe52 și harta de afinitate TC platformă–aliaj.
+> Document autosuficient pentru reluarea proiectului Rta în orice conversație nouă. Consolidează arhiva 16.08.2026 cu validările practice din 19.08–28.08.2026, schimbarea de paradigmă de la «clasament global» la «ADN de platformă», regulile contact/spaced, preferința personală compact-coil, baseline-urile TC NiFe30/NiFe52, harta de afinitate TC platformă–aliaj și perechile dedicate Clapton.
 
 Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există diferențe.
 
@@ -33,6 +33,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 1. Principiu nou 23.08.2026: PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS. Utilizatorul constată repetat pe platforme diferite că round-wire K1 în 5 spire îi redă lichidul mai plăcut; 29/5 este priorul personal principal, 28/5 priorul secundar.
 1. Baseline TC 28.08.2026: **Dicodes/Resistherm NiFe30 · TCR 320 · Ø2,5 mm · 7 spire**; **Zivipf NiFe52 · TCR 310 · Ø2,5 mm · 6 spire**.
 1. Harta TC platformă–aliaj 28.08.2026: GTR și KX → **NiFe30 Dicodes 320 / 7**; K Prime → **NiFe52 Zivipf 310 / 6** ca direcție TC curent preferată; KLP rămâne neschimbat și nu intră în această hartă.
+1. Perechi Clapton dedicate 28.08.2026: **Chariot → K1 Clapton 2×30+38 · Ø2,5 · 5 spire**; **Dvarw MTL FL → SS316L Clapton 2×30+38 · Ø2,5 · 5 spire**. Chariot + K1 Clapton are validare practică directă pe Cronos Tab Plus; Dvarw FL + SS Clapton este alegere canonică de platformă bazată pe ADN-ul curent, de confirmat A/B per lichid.
 1. Inventar activ: 41 atomizoare fizice, grupate în 17 platforme în Lab.
 1. Sârme Lab active: K1 28 GA, K1 29 GA, K1 Clapton 2×30+38, SS316L Clapton 2×30+38, familia NiFe TC într-un singur slot de scoring.
 1. Regulă Lab actualizată: K1 28 GA = 5 spire; K1 29 GA = 5 spire ca prior personal, 6 numai când ADN-ul platformei sau A/B-ul direct justifică; Claptonurile = 5; Dicodes/Resistherm NiFe30 TCR320 = 7 spire; Zivipf NiFe52 TCR310 = 6 spire. NiFe52 nu devine a șasea sârmă de scoring; este variantă distinctă în interiorul slotului NiFe TC.
@@ -44,7 +45,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 1. GT One: straight; 28/5 sau 29/5 contact foarte bune; spaced nu este preferat.
 1. GTR: Dicodes/Resistherm NiFe30 320/7 este potrivirea TC naturală pentru finețe/layering.
 1. KX: 28/5 extraordinar + Dicodes/Resistherm NiFe30 320/7 extraordinar în TC; daily/purtabil.
-1. Dvarw: 28/5 descris ca extraordinar; CL și FL rămân distincte până la A/B explicit pe fiecare.
+1. Dvarw: 28/5 descris ca extraordinar; CL și FL rămân distincte până la A/B explicit pe fiecare. Pentru Dvarw FL, SS316L Clapton/5 este acum perechea Clapton dedicată.
 1. KLP: K1 29 GA este «sârma lui»; 29/5 devine default personal, 29/6 rămâne alternativă validată mai așezată/completă. **Nu se modifică prin harta TC NiFe30/NiFe52.**
 1. Prime Minister Freehand: specialist NET; 28/5 = corp/layering, 29/6 = dry/frunză/tobacco-first. Pe PM Freehand + NET, 29/6 rămâne excepție validată până la A/B dedicat 29/5.
 1. RTA Lab: V10, 620 repere (145 tutun simplu, 155 tutun complex, 150 NET simplu, 170 NET complex), dintre care 120 Hall of Fame.
@@ -72,7 +73,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | Dvarw MTL CL 22 | 1 | Tobacco muscular; 28/5 confirmat ca direcție excelentă, separat de FL. |
 | Muted+ | 4 | Corp/mouthfeel + airflow configurabil; 29/5 devine primul test personal dacă nu există excepție validată. |
 | Taifun GTR | 5 | TC specialist; NiFe30 Dicodes 320/7; finețe, layering, smoothness. |
-| Dvarw MTL FL | 2 | Analiză/separare; 28/5 confirmat ca direcție excelentă, separat de CL. |
+| Dvarw MTL FL | 2 | Analiză/separare; 28/5 confirmat ca direcție excelentă; **SS316L Clapton 2×30+38 / 5 spire = pereche Clapton dedicată**. |
 | Diplomat v1.5 | 3 | Camerele schimbă specializarea aromatică; calibrare separată; 29/5 prior personal de test. |
 | Kayfun X / KX | 4 | 28/5 + NiFe30 Dicodes 320/7 TC; daily premium și foarte purtabil. |
 | KLP / Kayfun Lite Plus 2021 | 5 | K1 29 GA nativ; 29/5 default personal, 29/6 alternativă validată; rămâne neschimbat în actualizarea TC. |
@@ -80,7 +81,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | Prime Minister Freehand | 2 | NET specialist; 28/5 și 29/6 validate. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; păstrează calibrarea separată de Freehand; 29/5 prior personal de test. |
 | By-Ka V11 | 1 | Echilibru corp-claritate; airflow unic; 29/5 prior personal de test. |
-| Chariot RTA | 1 | Saturație/tobacco complex; K1 Clapton validat pe Cronos Tab Plus; 29/5 nu anulează validarea Clapton. |
+| Chariot RTA | 1 | Saturație/tobacco complex; **K1 Clapton 2×30+38 / 5 spire = pereche Clapton dedicată**, cu validare directă pe Cronos Tab Plus. |
 | Kayfun Mini V3 | 1 | Micro-MTL sec/concentrat; 29/5 prior personal de test. |
 | Minister MTL | 1 | Compact/warm/low-watt; 29/5 prior personal de test. |
 
@@ -134,7 +135,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 ## 4.6. Dvarw
 
 > PRECIZARE DE VALIDARE
-> Observația practică curentă a fost formulată generic pentru «Dvarw»: K1 28 GA / Ø2,5 / 5 spire este extraordinar. Pentru a evita extrapolarea falsă, Dvarw CL și Dvarw FL rămân platforme distincte. 28/5 primește prioritate de test pe ambele; noul prior personal 29/5 justifică testarea lui, dar nu se declară validat pe CL și FL până la A/B separat.
+> Observația practică curentă a fost formulată generic pentru «Dvarw»: K1 28 GA / Ø2,5 / 5 spire este extraordinar. Pentru a evita extrapolarea falsă, Dvarw CL și Dvarw FL rămân platforme distincte. 28/5 primește prioritate de test pe ambele; noul prior personal 29/5 justifică testarea lui, dar nu se declară validat pe CL și FL până la A/B separat. Pentru Dvarw FL, SS316L Clapton 2×30+38 / Ø2,5 / 5 spire este acum perechea Clapton dedicată, cu status de alegere canonică de platformă până la validare A/B directă per lichid.
 
 ## 4.7. KLP - K1 29 GA ca sârmă nativă
 
@@ -172,8 +173,8 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | --- | --- | --- | --- |
 | K1 28 GA round | 5 spire | Echilibru, corp curat, mouthfeel, completitudine. | Prior personal secundar; baseline compact pe majoritatea platformelor. |
 | K1 29 GA round | 5 spire prior personal; 6 doar justificat | Tobacco-first, hit/TH, dry, precizie, răspuns rapid; footprint foarte sensibil. | Prior personal principal. PM Freehand + NET păstrează 29/6 validat; alte excepții cer A/B/geometrie reală. |
-| K1 Clapton 2×30+38 | 5 spire | Corp, densitate, mouthfeel, TH, integrare. | Activ în Lab; Chariot + Cronos Tab Plus validat #1 în watt; priorul 29/5 nu anulează validări directe mai bune. |
-| SS316L Clapton 2×30+38 | 5 spire | Claritate, top-notes, layering, răspuns mai rapid decât K1 Clapton. | Activ în Lab; contextual după lichid/platformă. |
+| K1 Clapton 2×30+38 | 5 spire | Corp, densitate, mouthfeel, TH, integrare. | **Pereche dedicată: Chariot.** Chariot + Cronos Tab Plus validat #1 în watt; nu se universalizează automat la orice lichid. |
+| SS316L Clapton 2×30+38 | 5 spire | Claritate, top-notes, layering, răspuns mai rapid decât K1 Clapton. | **Pereche dedicată: Dvarw MTL FL.** Alegere canonică de platformă bazată pe ADN-ul actual; se rafinează prin A/B direct. |
 | NiFe TC | NiFe30 = 7; NiFe52 = 6 · Ø2,5 mm | Finețe, smoothness, consistență, control termic, layering. | Un singur slot de scoring; aliajul/coilul se selectează prin ADN de platformă. |
 
 **Baseline-urile NiFe rămân:** Dicodes/Resistherm **NiFe30 · TCR320 · Ø2,5 · 7 spire** și Zivipf **NiFe52 · TCR310 · Ø2,5 · 6 spire**.
@@ -191,6 +192,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - Când un build este bun dar incomplet, se testează întâi ±1 spiră sau spacing controlat, nu se schimbă simultan sârma și airflow-ul.
 - Baseline TC pe sârmă se păstrează distinct: **Dicodes/Resistherm NiFe30 = TCR 320 / Ø2,5 / 7 spire; Zivipf NiFe52 = TCR 310 / Ø2,5 / 6 spire.**
 - Alegerea NiFe30 vs NiFe52 se poate face per platformă fără a transforma cele două în două sloturi separate de scoring.
+- Perechile Clapton dedicate indică platforma în care fiecare Clapton își are rolul principal în colecție; nu obligă motorul să pună Clapton-ul #1 pe orice lichid incompatibil.
 - Tobacco-first înseamnă că toppingurile sunt integrate, nu dominante; layering-ul trebuie să existe în corp, nu în claritate sterilă.
 
 # 8. Calibrări istorice importante păstrate
@@ -227,20 +229,22 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | Prior personal | K1 29/5 principal; K1 28/5 secundar; excepțiile validate de platformă prevalează. |
 | NiFe baseline | NiFe30 Dicodes 320/7; NiFe52 Zivipf 310/6; ambele Ø2,5. |
 | Hartă TC platformă–aliaj | GTR/KX → NiFe30 320/7; K Prime → NiFe52 310/6; KLP neschimbat. |
+| Perechi Clapton dedicate | Chariot → K1 Clapton/5; Dvarw MTL FL → SS316L Clapton/5. |
 
 ## 9.2. Fișiere Lab relevante
 
 | Fișier | Rol |
 | --- | --- |
-| rta-lab/index.html | UI principală V10; încarcă catalogul, engine.js, tuning-415.js, personal-5wrap.js, tc-platform-map.js și bootstrap.js. |
+| rta-lab/index.html | UI principală V10; încarcă catalogul, engine.js, tuning-415.js, personal-5wrap.js, tc-platform-map.js, clapton-platform-map.js și bootstrap.js. |
 | rta-lab/engine.js | Motor principal: 17 platforme, 5 sloturi de build, scoring lichid/obiectiv, TOP 3. |
 | rta-lab/data/tuning-415.js | Validările 415 + platform DNA pentru K Prime, GT One, GTR, KX, Dvarw, KLP și PM Freehand. |
 | rta-lab/data/personal-5wrap.js | Prior personal transversal 29/5 > 28/5, cu protecție pentru excepțiile de platformă validate. |
 | rta-lab/data/tc-platform-map.js | Harta NiFe per platformă: GTR/KX = NiFe30 Dicodes 320/7; K Prime = NiFe52 Zivipf 310/6; KLP este exclus explicit și rămâne neschimbat. |
+| rta-lab/data/clapton-platform-map.js | Perechi Clapton dedicate: Chariot + K1 Clapton/5; Dvarw FL + SS316L Clapton/5; păstrează scoringul contextual pe lichid. |
 | rta-lab/data/atoms-1.js ... atoms-3.js | Date platforme/airflow/afinități. |
 | rta-lab/data/wires.js | Cele 5 sloturi active; slotul NiFe TC include ambele baseline-uri. |
 | rta-lab/data/liquids-*.js | Catalog 620, inclusiv cele 4 fișiere Hall of Fame. |
-| rta-lab/sw.js | PWA/network-first; cache V10 include tc-platform-map.js și arhiva canonică. |
+| rta-lab/sw.js | PWA/network-first; cache V10 include hărțile platformă și arhiva canonică. |
 | rta-lab/bootstrap.js | Bootstrap PWA V10; panou «Arhivă de continuitate · MASTER» și buton de descărcare. |
 | rta-lab/manifest.webmanifest | Manifest PWA V10. |
 | .github/workflows/quality-gate.yml | Validare JS/JSON, catalog, reguli și PWA. |
@@ -258,9 +262,11 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 - GT One: 28/5 și 29/5 contact; spaced nu este default.
 - GTR: dacă slotul NiFe TC este ales, se afișează Dicodes/Resistherm NiFe30 320/7; prioritate de platformă validată.
 - KX: 28/5 și Dicodes/Resistherm NiFe30 320/7 rămân validate.
-- Dvarw CL/FL: 28/5 confirmat generic; 29/5 este test prioritar personal, nu validare distinctă.
+- Dvarw CL/FL: 28/5 confirmat generic; 29/5 este test prioritar personal, nu validare distinctă. Dvarw FL are acum SS316L Clapton/5 ca pereche Clapton dedicată.
 - KLP: 29/5 default personal; 29/6 alternativă validată. **Nu se schimbă prin tc-platform-map.js.**
 - PM Freehand + NET: 29/6 rămâne excepția validată; 29/5 se testează ulterior.
+- Chariot: K1 Clapton 2×30+38 / 5 spire este perechea Clapton dedicată; validarea directă Cronos Tab Plus rămâne reperul practic.
+- Perechile Clapton dedicate nu forțează un rezultat #1 pentru orice profil de lichid; scoringul contextual rămâne activ.
 - Harta NiFe schimbă varianta internă a slotului TC pe platformele specificate, nu numărul de sloturi din TOP 3.
 
 ## 9.4. Commit / stare repo
@@ -303,12 +309,13 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 | «NiFe30/7 este implicit aceeași alegere TC pe toate platformele» | REFINAT | GTR/KX păstrează NiFe30 Dicodes 320/7; K Prime folosește curent NiFe52 Zivipf 310/6 ca preferință TC; KLP nu este modificat. |
 | GTR/GT One/KX NiFe30 default generic pentru toate | REFINAT | GTR = NiFe30 TC specialist; KX = 28/5 + NiFe30/7; GT One = 28/5 sau 29/5 contact. |
 | K Prime = doar NiFe30 | REFINAT | NiFe30/7 rămâne benchmark specific 80/20; NiFe52/6 este direcția TC curent preferată; 29/5 spaced optim round-wire, 28/5 echilibru. |
+| «Claptonurile rămân doar opțiuni generice fără platformă principală» | REFINAT | Chariot devine perechea dedicată K1 Clapton/5; Dvarw MTL FL devine perechea dedicată SS316L Clapton/5. |
 | Dvarw CL/FL tratate la fel | INTERZIS | Rămân distincte; observațiile generice se marchează contextual. |
 | PM Freehand evaluat prin nota globală | DEPĂȘIT | Specialist NET: 28/5 sau 29/6 după obiectiv; 29/6 excepție validată față de priorul personal. |
 
 # 12. Protocol de reluare și update viitor
 
-1. Citește această arhivă și apoi `rta-lab/data/tuning-415.js` + `rta-lab/data/personal-5wrap.js` + `rta-lab/data/tc-platform-map.js`.
+1. Citește această arhivă și apoi `rta-lab/data/tuning-415.js` + `rta-lab/data/personal-5wrap.js` + `rta-lab/data/tc-platform-map.js` + `rta-lab/data/clapton-platform-map.js`.
 2. Dacă utilizatorul raportează un nou A/B, notează exact: RTA, airflow/pin, sârmă, Ø, spire, contact/spaced, poziție, watt/TC, lichid și diferența senzorială.
 3. Separă «validat practic» de «preferință personală recurentă», «extrapolat în Lab» și «ipoteză mecanică».
 4. Ridică în Lab doar concluziile care pot fi exprimate coerent prin scoring/build logic; nu inventa universalitate.
@@ -323,7 +330,7 @@ Versiunea aceasta prevalează asupra arhivelor mai vechi atunci când există di
 
 # 14. Încheiere de continuitate
 
-Starea proiectului la 28.08.2026: colecția este modelată ca hartă de specializări, nu ierarhie liniară. Peste ADN-ul fiecărei platforme există un prior personal explicit: coil compact round-wire, cu K1 29/5 ca expresie principală și K1 28/5 ca versiune mai plină. Priorul nu șterge validări puternice de platformă. Pentru TC, baseline-urile rămân NiFe30 Dicodes 320/7 și NiFe52 Zivipf 310/6, ambele Ø2,5 mm, iar alegerea internă se face acum și după platformă: **GTR/KX → NiFe30/7; K Prime → NiFe52/6; KLP neschimbat.**
+Starea proiectului la 28.08.2026: colecția este modelată ca hartă de specializări, nu ierarhie liniară. Peste ADN-ul fiecărei platforme există un prior personal explicit: coil compact round-wire, cu K1 29/5 ca expresie principală și K1 28/5 ca versiune mai plină. Priorul nu șterge validări puternice de platformă. Pentru TC, baseline-urile rămân NiFe30 Dicodes 320/7 și NiFe52 Zivipf 310/6, ambele Ø2,5 mm, iar alegerea internă se face și după platformă: **GTR/KX → NiFe30/7; K Prime → NiFe52/6; KLP neschimbat.** Pentru Clapton, perechile dedicate sunt acum **Chariot → K1 Clapton/5** și **Dvarw MTL FL → SS316L Clapton/5**.
 
 # 15. Tobacco Core Visibility - criteriu senzorial permanent
 
@@ -351,7 +358,7 @@ REGULA 2 — comanda „du-te în Lab și actualizează-te!”
 
 - Locul canonic este repository-ul GitHub `andreiclim77-cell/rta`, branch `main`, directorul `rta-lab/`.
 - Fișierul de intrare stabil este `rta-lab/RTA_CONTINUITY_MASTER.md`. Acesta se citește primul și integral.
-- După el se citesc `rta-lab/data/tuning-415.js`, `rta-lab/data/personal-5wrap.js` și `rta-lab/data/tc-platform-map.js`.
+- După el se citesc `rta-lab/data/tuning-415.js`, `rta-lab/data/personal-5wrap.js`, `rta-lab/data/tc-platform-map.js` și `rta-lab/data/clapton-platform-map.js`.
 - Dacă arhiva indică modificări de engine/UI, se citesc și `rta-lab/engine.js`, `rta-lab/index.html`, respectiv fișierele menționate în arhivă.
 - Asistentul nu reconstruiește proiectul din memorie dacă sursa canonică este accesibilă.
 - În RTA Lab există permanent buton de descărcare pentru `RTA_CONTINUITY_MASTER.md`.
@@ -475,10 +482,36 @@ Această regulă extinde sensul comenzii **„salvează”**: pentru modificări
 
 ## 21.2. Implementare Lab
 
-- Fișier nou: `rta-lab/data/tc-platform-map.js`.
+- Fișier: `rta-lab/data/tc-platform-map.js`.
 - Nu adaugă o a șasea sârmă în scoring; operează în interiorul slotului existent **NiFe TC**.
 - Pentru GTR și KX, când slotul NiFe este ales, outputul devine explicit **NiFe30 Dicodes 320 / 7 spire**.
 - Pentru K Prime, când slotul NiFe este ales, outputul devine explicit **NiFe52 Zivipf 310 / 6 spire**, păstrând în notă benchmark-ul NiFe30/7 specific 80/20.
 - Pentru KLP, overlay-ul nu face nicio modificare; rezultatul rămâne exact pe regulile existente.
 - `index.html` încarcă `tc-platform-map.js` după `personal-5wrap.js` și înainte de `bootstrap.js`.
 - `sw.js` îl include în cache și păstrează markerul Quality Gate `rta-lab-v10-five-wire-clapton-620`.
+
+# 22. CLAPTON PLATFORM MAP — 28.08.2026
+
+**Status: perechi dedicate în colecția personală; ambele la Ø2,5 mm / 5 spire.**
+
+| Clapton | Platformă dedicată | Status | Rol principal |
+| --- | --- | --- | --- |
+| **K1 Clapton 2×30+38** | **Chariot** | **Pereche dedicată; validare directă existentă pe Cronos Tab Plus** | corp, densitate, mouthfeel, TH, tutun complex/dark |
+| **SS316L Clapton 2×30+38** | **Dvarw MTL FL** | **Pereche dedicată canonică; de confirmat A/B per lichid** | claritate, top-notes, layering, bright/Oriental/Perique/citrice |
+
+## 22.1. Regula canonică
+
+- **K1 Clapton rămâne pe Chariot, 5 spire.** Chariot este platforma principală/dedicată pentru acest Clapton în colecție.
+- **SS316L Clapton rămâne pe Dvarw MTL FL, 5 spire.** Dvarw FL este platforma principală/dedicată pentru acest Clapton în colecție.
+- Ambele păstrează Ø2,5 mm.
+- Această alocare nu elimină posibilitatea unor teste pe alte RTA-uri, dar în lipsa unei validări noi nu se mută perechea principală.
+- „Pereche dedicată” nu înseamnă că motorul trebuie să forțeze Clapton-ul #1 pentru orice lichid; compatibilitatea lichidului și obiectivul rămân active în scoring.
+
+## 22.2. Implementare Lab
+
+- Fișier: `rta-lab/data/clapton-platform-map.js`.
+- Chariot + K1 Clapton este etichetat explicit ca pereche dedicată și păstrează 5 spire.
+- Dvarw FL + SS316L Clapton este etichetat explicit ca pereche dedicată și păstrează 5 spire.
+- Overlay-ul nu modifică numărul celor 5 sloturi active și nu alterează KLP/KX/GTR/K Prime.
+- `index.html` afișează platforma dedicată în cardurile celor două Clapton-uri și încarcă `clapton-platform-map.js` după `tc-platform-map.js`.
+- `sw.js` include fișierul în cache și păstrează markerul Quality Gate V10 existent.
