@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 4,
+  "schemaVersion": 5,
   "scopeYear": 2026,
   "timezone": "Europe/Bucharest",
   "nationalAudit": {
@@ -14,7 +14,7 @@
     "publicPagesOnly": true,
     "requestsPerSecondMax": 1,
     "maxPagesPerSeed": 4,
-    "userAgent": "Ghid-RTA-Market-Observatory/4.0 (+https://ghid-rta.ro/)",
+    "userAgent": "Ghid-RTA-Market-Observatory/5.2 (+https://ghid-rta.ro/)",
     "noSalesInference": true,
     "dailyRefresh": true,
     "refreshTarget": "06:00 Europe/Bucharest",
@@ -41,6 +41,9 @@
     {"id":"vapshop","name":"Vapshop.ro","url":"https://www.vapshop.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["bumbac","sarma Kanthal","unelte","moduri","acumulatori","incarcatoare","atomizoare"],"seeds":[{"url":"https://www.vapshop.ro/bumbac-sarma-kanthal-unelte-tigara-electronica","categoryHint":"mixed","maxPages":4},{"url":"https://www.vapshop.ro/moduri-electronice","categoryHint":"mod","maxPages":4},{"url":"https://www.vapshop.ro/atomizoare","categoryHint":"mixed","maxPages":4}]},
     {"id":"steamfactory","name":"SteamFactory","url":"https://steamfactory.ro/","country":"RO","mode":"public-html","status":"monitored","operatorId":"loa-kalfou-group-ro40828330","coverage":["RTA","atomizoare","moduri","acumulatori/incarcatoare","lichide tutunoase"],"seeds":[{"url":"https://steamfactory.ro/atomizoare/","categoryHint":"RTA","maxPages":4},{"url":"https://steamfactory.ro/moduri/","categoryHint":"mod","maxPages":4},{"url":"https://steamfactory.ro/lichide-fara-nicotina/","categoryHint":"lichid","maxPages":4}]},
     {"id":"ecigvapo","name":"Ecig Vapo","url":"https://ecig-vapo.com/","country":"RO","mode":"public-html","status":"monitored","operatorId":"pam-import-export-ro359285","coverage":["RTA/RBA/RDA servisabile","sarme Kanthal","accesorii"],"seeds":[{"url":"https://ecig-vapo.com/atomizoare-servisabile/","categoryHint":"RTA","maxPages":4},{"url":"https://ecig-vapo.com/?s=kanthal&post_type=product","categoryHint":"mixed","maxPages":4}]},
-    {"id":"merlin","name":"Merlin.ro","url":"https://merlin.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","atomizoare servisabile","moduri/accesorii"],"seeds":[{"url":"https://merlin.ro/categorie-produs/atomizoare/atomizoare-servisabile/","categoryHint":"RTA","maxPages":4},{"url":"https://merlin.ro/?s=RTA&post_type=product","categoryHint":"RTA","maxPages":4}]}
+    {"id":"merlin","name":"Merlin.ro","url":"https://merlin.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","atomizoare servisabile","moduri/accesorii"],"seeds":[{"url":"https://merlin.ro/categorie-produs/atomizoare/atomizoare-servisabile/","categoryHint":"RTA","maxPages":4},{"url":"https://merlin.ro/?s=RTA&post_type=product","categoryHint":"RTA","maxPages":4}]},
+    {"id":"vapero","name":"Vape.ro","url":"https://vape.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA/RBA/RDTA","atomizoare servisabile","accesorii"],"seeds":[{"url":"https://vape.ro/atomizoare/atomizoare-rba-rta-rdta/","categoryHint":"RTA","maxPages":4}]},
+    {"id":"alphavape","name":"AlphaVape","url":"https://alphavape.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA/RBA/RDTA","atomizoare servisabile","accesorii"],"seeds":[{"url":"https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/","categoryHint":"RTA","maxPages":4}]},
+    {"id":"smartvape","name":"SmartVape","url":"https://smartvape.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA/RBA/RDTA","atomizoare servisabile","accesorii"],"seeds":[{"url":"https://smartvape.ro/categorie-produs/atomizoare/atomizoare-servisabile/","categoryHint":"RTA","maxPages":4}]}
   ]
 }
