@@ -55,6 +55,8 @@ jobs:
           node --check tools/collect-market-hype-wide-2026.js
           node --check tools/collect-market-hype-products-2026.js
           node --check tools/collect-market-hype-vendor-pagination-2026.js
+          node --check tools/collect-market-hype-vendor-profiles-v2-2026.js
+          node --check tools/merge-market-hype-upstream-products-2026.js
           node --check assets/market-hype-ui.js
           node --check assets/market-loading-guard.js
           node --check assets/market-access-policy.js
@@ -73,6 +75,8 @@ jobs:
           const flow=read('.github/workflows/market-hype-2026-sync.yml');
           const products=read('tools/collect-market-hype-products-2026.js');
           const multi=read('tools/collect-market-hype-vendor-pagination-2026.js');
+          const v2=read('tools/collect-market-hype-vendor-profiles-v2-2026.js');
+          const merge=read('tools/merge-market-hype-upstream-products-2026.js');
           const ui=read('assets/market-hype-ui.js');
           const guard=read('assets/market-loading-guard.js');
           const access=read('assets/market-access-policy.js');
@@ -84,15 +88,17 @@ jobs:
           need(Array.isArray(vendors.profiles)&&vendors.profiles.length>=5,'Multi-vendor profile coverage too small');
           for(const d of ['3fvape.com','2fdeal.com','shareavape.com','ecigone.co.uk','sourcemore.com'])need(vendors.profiles.some(x=>x.domain===d),'Missing direct vendor profile '+d);
           need((vendors.searchOnlyDomains||[]).includes('3avape.com')&&(vendors.searchOnlyDomains||[]).includes('vapingbest.com'),'Search-only vendor coverage missing');
-          need(flow.includes('collect-market-hype-vendor-pagination-2026.js --write')&&flow.includes('data/market-hype-products-2026.json'),'Multi-vendor pass/publish missing');
-          need(products.includes('afterReleaseRequiresExplicitDate:true')&&products.includes('newArrivalIsNotRelease:true')&&products.includes('relistingIsNotRelease:true'),'Release/relisting protection missing');
+          need(flow.includes('collect-market-hype-vendor-profiles-v2-2026.js --write')&&flow.includes('data/market-hype-products-2026.json'),'Product-title multi-vendor pass/publish missing');
+          need(products.includes('newArrivalIsNotRelease:true')&&products.includes('relistingIsNotRelease:true'),'Release/relisting protection missing');
           need(multi.includes('vendorProfileScan:true')&&multi.includes('transportRtaRejected:true')&&multi.includes('multiVendor:true'),'Multi-vendor truth protections missing');
+          need(v2.includes('concreteProductTitles:true')&&v2.includes('genericVendorTitlesRejected:true'),'Concrete title resolver missing');
           need(multi.includes("const VCFG='data/market-hype-vendor-profiles-2026.json'")&&multi.includes('allowPreviewPublicationDate'),'Config-driven vendor/preview discovery missing');
           need(products.includes('BANNED_HOSTS')&&products.includes('steampowered')&&products.includes('dictionary'),'False-positive blacklist missing');
-          need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel'),'Expandable product Hype UI missing');
+          need(merge.includes('upstreamEvidenceMerged:true')&&merge.includes('release-observed')&&merge.includes('observedReleaseIsNotClaimedAsExactReleaseDate:true'),'Truthful upstream/release-observed merge missing');
+          need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel')&&ui.includes('release-observed'),'Expandable observed-release Hype UI missing');
           need(!ui.includes('hype-direct')&&!ui.includes("t('Acum','Now')"),'Old automatic conclusion returned');
-          need(guard.includes("key:'hypeProducts'")&&guard.includes("dateConfidence==='explicit'"),'Atomic loader does not require product/date validation');
+          need(guard.includes("key:'hypeProducts'")&&guard.includes('validAfterProduct')&&guard.includes('release-observed'),'Atomic loader does not validate observed releases');
           need(access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password may be prefilled');
-          need(sw.includes('/data/market-hype-products-2026.json'),'Product Hype cache/data contract missing');
-          console.log('Hype Global gate OK: GLOBAL 30d; multi-vendor profiles; concrete products; expandable UI; explicit dated after-release; false-positive/relisting protection; 06:00 only.');
+          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('ghid-rta-static-v37-hype-upstream-merge'),'Product Hype cache/data contract missing');
+          console.log('Hype Global gate OK: GLOBAL 30d; multi-vendor profiles; concrete products; upstream merge ready; observed releases truthful; expandable UI; false-positive/relisting protection; 06:00 only.');
           NODE
