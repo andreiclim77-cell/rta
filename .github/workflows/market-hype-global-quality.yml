@@ -9,6 +9,8 @@ on:
       - 'assets/market-hype-*.css'
       - 'assets/market-view-switcher.js'
       - 'assets/market-source-info.js'
+      - 'assets/market-access-policy.js'
+      - 'assets/enhancements.js'
       - '.github/workflows/market-hype-2026-sync.yml'
       - '.github/workflows/market-hype-global-quality.yml'
       - 'sw.js'
@@ -21,6 +23,8 @@ on:
       - 'assets/market-hype-*.css'
       - 'assets/market-view-switcher.js'
       - 'assets/market-source-info.js'
+      - 'assets/market-access-policy.js'
+      - 'assets/enhancements.js'
       - '.github/workflows/market-hype-2026-sync.yml'
       - '.github/workflows/market-hype-global-quality.yml'
       - 'sw.js'
@@ -47,6 +51,8 @@ jobs:
           node --check assets/market-view-switcher.js
           node --check assets/market-source-info.js
           node --check assets/market-loading-guard.js
+          node --check assets/market-access-policy.js
+          node --check assets/enhancements.js
           node --check sw.js
       - name: Contract
         run: |
@@ -61,6 +67,8 @@ jobs:
           const view=read('assets/market-view-switcher.js');
           const source=read('assets/market-source-info.js');
           const guard=read('assets/market-loading-guard.js');
+          const access=read('assets/market-access-policy.js');
+          const enhancements=read('assets/enhancements.js');
           const sw=read('sw.js');
           const need=(ok,msg)=>{if(!ok)throw new Error(msg)};
           need(Number(cfg.lookbackHours)===720&&Number(cfg.hypeWindowDays)===30,'Hype discovery must be exactly 30 days');
@@ -95,5 +103,9 @@ jobs:
           need(guard.includes('Hype · global · 30 zile')&&!guard.includes("label:'Hype · 72h'"),'Atomic loader still exposes old Hype window');
           need(sw.includes('/data/market-hype-heartbeat-2026.json')&&sw.includes('/data/market-hype-heartbeat-evidence-2026.json'),'Heartbeat data are not network-first');
           need(!ui.includes('site:facebook.com')&&!ui.includes('www.bing.com'),'Browser UI must never crawl external Hype sources');
-          console.log('Hype Global 30d gate OK: global RTA + clones; before/after windows; 06:00 only; source proof separated.');
+          need(access.includes("sessionStorage.removeItem(KEY)")&&access.includes("[data-tab=\"market2026\"]")&&access.includes('[data-market-unlock]'),'Per-click password reset policy missing');
+          const policyPos=enhancements.indexOf('/assets/market-access-policy.js?v=1'),marketPos=enhancements.indexOf('/assets/market-2026.js?v=4');
+          need(policyPos>=0&&marketPos>policyPos,'Access policy must load before Market module');
+          need(sw.includes('/assets/market-access-policy.js?v=1'),'Access policy is not cached/network-first');
+          console.log('Hype Global 30d gate OK: global RTA + clones; before/after windows; 06:00 only; source proof separated; password reset per access.');
           NODE
