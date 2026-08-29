@@ -1,0 +1,51 @@
+name: Market Hype Host Quality Gate
+
+on:
+  pull_request:
+    paths:
+      - "tools/filter-market-hype-evidence-2026.js"
+      - "tools/collect-market-hype-deep-2026.js"
+      - "data/market-hype-sources-2026.json"
+      - "data/market-hype-radar-2026.json"
+      - "data/market-hype-evidence-2026.json"
+      - ".github/workflows/market-hype-2026-sync.yml"
+      - ".github/workflows/market-hype-host-quality.yml"
+  push:
+    branches: [main]
+    paths:
+      - "tools/filter-market-hype-evidence-2026.js"
+      - "tools/collect-market-hype-deep-2026.js"
+      - "data/market-hype-sources-2026.json"
+      - "data/market-hype-radar-2026.json"
+      - "data/market-hype-evidence-2026.json"
+      - ".github/workflows/market-hype-2026-sync.yml"
+      - ".github/workflows/market-hype-host-quality.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  strict-host:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Execute strict host filter on current snapshot
+        run: |
+          node --check tools/filter-market-hype-evidence-2026.js
+          node tools/filter-market-hype-evidence-2026.js --write
+          node - <<'NODE'
+          const fs=require('fs');
+          const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
+          const e=JSON.parse(fs.readFileSync('data/market-hype-evidence-2026.json','utf8'));
+          const allSources=(e.events||[]).flatMap(x=>x.sources||[]);
+          if(allSources.some(x=>/fortbendcountytx\.gov/i.test(String(x.url||''))))throw new Error('Known wrong-host evidence survived strict filter');
+          if((d.categories&&d.categories.RTA||[]).some(x=>x.eventId==='45ca0cc050a84096ae76'))throw new Error('Known false Hype warning survived strict filter');
+          if(!e.truth||e.truth.strictHostValidated!==true)throw new Error('Evidence strictHostValidated flag missing');
+          if(!d.sourceStatus||d.sourceStatus.deepStrictHostValidated!==true)throw new Error('Radar strict-host flag missing');
+          if(Number(d.sourceStatus.deepWrongHostRejected||0)<1)throw new Error('Expected contaminated snapshot to reject at least one wrong-host signal');
+          console.log(`Strict-host gate OK: rejected ${d.sourceStatus.deepWrongHostRejected}; warnings ${(d.categories.RTA||[]).filter(x=>x.kind==='warning').length+(d.categories.MODURI||[]).filter(x=>x.kind==='warning').length+(d.categories.ACCESORII||[]).filter(x=>x.kind==='warning').length}.`);
+          NODE
