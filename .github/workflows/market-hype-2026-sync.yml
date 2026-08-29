@@ -16,6 +16,7 @@ on:
       - "tools/filter-market-hype-evidence-2026.js"
       - "tools/collect-market-hype-wide-2026.js"
       - "tools/collect-market-hype-products-2026.js"
+      - "tools/collect-market-hype-active-makers-2026.js"
       - "tools/collect-market-hype-vendor-direct-2026.js"
       - "tools/collect-market-hype-targeted-vendor-2026.js"
       - "tools/augment-market-hype-explicit-vendor-dates-2026.js"
@@ -33,6 +34,7 @@ on:
       - "tools/merge-market-hype-upstream-products-2026.js"
       - "tools/validate-market-hype-publish-2026.js"
       - "data/market-hype-sources-2026.json"
+      - "data/market-hype-active-makers-extra-2026.json"
       - "data/market-hype-vendor-profiles-2026.json"
       - ".github/workflows/market-hype-2026-sync.yml"
 
@@ -165,6 +167,10 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-vendor-profiles-v2-2026.js --write
 
+      - name: Supplemental active makers - RTA and MODURI
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/collect-market-hype-active-makers-2026.js --write
+
       - name: Recover explicit RTA ETA and batch events from Pre-Order cards
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/augment-market-hype-preorder-card-events-2026.js --write
@@ -186,6 +192,7 @@ jobs:
           node --check tools/filter-market-hype-evidence-2026.js
           node --check tools/collect-market-hype-wide-2026.js
           node --check tools/collect-market-hype-products-2026.js
+          node --check tools/collect-market-hype-active-makers-2026.js
           node --check tools/collect-market-hype-vendor-direct-2026.js
           node --check tools/collect-market-hype-targeted-vendor-2026.js
           node --check tools/augment-market-hype-explicit-vendor-dates-2026.js
@@ -202,6 +209,14 @@ jobs:
           node --check tools/finalize-market-hype-category-relevance-2026.js
           node --check tools/merge-market-hype-upstream-products-2026.js
           node --check tools/validate-market-hype-publish-2026.js
+          node - <<'NODE'
+          const fs=require('fs');
+          const extra=JSON.parse(fs.readFileSync('data/market-hype-active-makers-extra-2026.json','utf8'));
+          const names=new Set();
+          for(const m of extra.activeMakers||[]){const k=String(m.name||'').toLowerCase();if(!k)throw new Error('Empty active maker');if(names.has(k))throw new Error('Duplicate active maker: '+m.name);names.add(k)}
+          if(names.size<25)throw new Error('Supplemental active-maker registry unexpectedly small');
+          console.log(`Active-maker registry gate: ${names.size} supplemental makers, deduplicated.`);
+          NODE
           node tools/validate-market-hype-publish-2026.js
 
       - name: Publish complete Hype, product and heartbeat snapshots
