@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T22:11:33.116Z",
+  "generatedAt": "2026-08-29T22:34:44.751Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -18,6 +18,9 @@
     "bingRedirectDecoded": true,
     "explicitVendorPhrasePass": true,
     "searchIndexVendorEtaRecovery": true,
+    "searchIndexSnippetFallback": true,
+    "searchIndexSnippetRequiresExplicitDate": true,
+    "searchIndexSnippetDiscoveryOnly": true,
     "pastEtaIsNotRelease": true,
     "symmetric30DayEventWindow": true,
     "newArrivalPathOnlyForDiscovery": true,
@@ -52,10 +55,10 @@
   "scan": {
     "queries": 88,
     "working": 88,
-    "rawDocs": 635,
+    "rawDocs": 629,
     "preCandidates": 28,
-    "resolvedVendorPages": 14,
-    "pagesFetched": 23,
+    "resolvedVendorPages": 15,
+    "pagesFetched": 24,
     "events": 0,
     "samplePre": [
       {
@@ -90,9 +93,18 @@
     "searchIndexEtaWorking": 60,
     "searchIndexEtaCandidates": 2,
     "searchIndexEtaPages": 0,
-    "searchIndexEtaPhraseHits": 0,
-    "searchIndexEtaEvents": 0,
-    "searchIndexEtaSample": [],
+    "searchIndexEtaPhraseHits": 1,
+    "searchIndexEtaSnippetFallbacks": 1,
+    "searchIndexEtaEvents": 1,
+    "searchIndexEtaSample": [
+      {
+        "name": "YFTK Flash e-Vapor V4.5S+ Style RTA 316SS 23mm Tank Atomizer",
+        "eventDate": "2026-09-10T00:00:00.000Z",
+        "stage": "batch viitor",
+        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
+        "evidenceMode": "search-index-snippet"
+      }
+    ],
     "newArrivalCatalogPages": 16,
     "newArrivalRtaLinks": 68,
     "newArrivalProductPages": 67,
@@ -102,7 +114,7 @@
       {
         "id": "3fvape",
         "catalogPages": 44,
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 183,
         "productPages": 182,
         "events": 0,
@@ -145,17 +157,17 @@
         "samples": []
       }
     ],
-    "catalogPagesFetched": 51,
+    "catalogPagesFetched": 52,
     "productLinks": 472,
     "productPagesFetched": 471,
     "profilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 188,
-        "productPages": 186,
+        "productPages": 187,
         "events": 1,
-        "titleFallbacks": 7,
+        "titleFallbacks": 8,
         "samples": [
           {
             "name": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
@@ -203,12 +215,12 @@
       }
     ],
     "productLinksV2": 478,
-    "productPagesV2": 476,
+    "productPagesV2": 477,
     "eventsV2": 1,
     "activeMakerRegistry": 42,
     "activeMakerQueries": 84,
     "activeMakerQueriesWorking": 84,
-    "activeMakerCandidatePages": 414,
+    "activeMakerCandidatePages": 430,
     "activeMakerAcceptedSignals": 0,
     "activeMakerOfficialSignals": 0,
     "activeMakerEligibleSignals": 0,
@@ -852,47 +864,46 @@
       }
     ],
     "currentVendorEvents": 3,
-    "upstreamEvidenceEvents": 72,
-    "upstreamEventsAccepted": 6,
-    "upstreamRejectedTitle": 80,
+    "upstreamEvidenceEvents": 58,
+    "upstreamEventsAccepted": 5,
+    "upstreamRejectedTitle": 57,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
     "finalCategoryRejected": 5,
     "finalCategoryRejectedSample": [
+      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "VAPORESSO » Premium Vape Brand Manufacture",
       "OXVA New Theme - v4.3.0-黑五后更换回去",
-      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "vaporesso| By YIGUO SEO Perf.Opt v1.0",
       "MOVE BEYOND ORDINARY - Vaporesso"
     ],
     "recentReleaseObserver": {
       "reference": "2026-08-29T03:00:00.000Z",
       "profiles": 4,
-      "indexWorking": 3,
-      "links": 49,
-      "pagesFetched": 49,
-      "candidates": 3,
-      "eventsAppended": 1,
-      "rejectedDate": 43,
+      "indexWorking": 2,
+      "links": 8,
+      "pagesFetched": 8,
+      "candidates": 0,
+      "eventsAppended": 0,
+      "rejectedDate": 5,
       "rejectedReleaseTerm": 3,
       "rejectedTitle": 0
     }
   },
   "products": [
     {
-      "id": "95296bc0c565530e6e5e",
-      "productName": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
+      "productName": "YFTK Flash e-Vapor V4.5S+ Style RTA 316SS 23mm Tank Atomizer",
       "brand": "YFTK",
       "category": "RTA",
-      "typology": "RDL single",
+      "typology": "MTL single",
       "window": "before",
       "stage": "BATCH",
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T22:09:34.624Z",
-      "lastSeenAt": "2026-08-29T22:11:32.600Z",
+      "firstSeenAt": "2026-08-29T22:31:15.486Z",
+      "lastSeenAt": "2026-08-29T22:34:44.201Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
@@ -900,78 +911,26 @@
         {
           "host": "3fvape.com",
           "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
-          "title": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
-          "sourceType": "clone-original-vendor",
+          "title": "YFTK Flash e-Vapor V4.5S+ Style RTA 316SS 23mm Tank Atomizer",
+          "sourceType": "vendor-search-index-snippet",
           "decisionEligible": false,
           "discoveryOnly": true,
           "eventDate": "2026-09-10T00:00:00.000Z",
-          "dateConfidence": "explicit",
-          "stage": "batch viitor"
-        }
-      ]
-    },
-    {
-      "productName": "Hellvape Dead Rabbit Solo 2 RTA",
-      "brand": "Hellvape",
-      "category": "RTA",
-      "typology": "MTL single",
-      "window": "after",
-      "stage": "RELEASED",
-      "stageLabel": "lansare observată",
-      "eventDate": "2026-07-30T09:09:00.000Z",
-      "dateConfidence": "release-observed",
-      "firstSeenAt": "2026-07-30T09:09:00.000Z",
-      "lastSeenAt": "2026-07-30T12:00:00.000Z",
-      "ageHours": 713.85,
-      "sourceCount": 3,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "sourceType": "independent-vape-news",
-          "host": "news.cloumix.com",
-          "url": "https://news.cloumix.com/2026/07/do-you-like-hellvape-dead-rabbit-solo-2.html",
-          "title": "Hellvape Dead Rabbit Solo 2 RTA",
-          "publishedAt": "2026-07-30T12:00:00.000Z",
-          "eventDate": "2026-07-30T09:09:00.000Z",
-          "stage": "lansat",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "dateConfidence": "release-observed"
-        },
-        {
-          "sourceType": "independent-vape-news",
-          "host": "news.cloumix.com",
-          "url": "https://news.cloumix.com/search/label/Hellvape%20Dead%20Rabbit%20Solo%202%20RTA?&max-results=8",
-          "title": "Hellvape Dead Rabbit Solo 2 RTA",
-          "publishedAt": "2026-07-30T09:09:00.000Z",
-          "eventDate": "2026-07-30T09:09:00.000Z",
-          "stage": "lansat",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "dateConfidence": "release-observed"
-        },
-        {
-          "sourceType": "independent-vape-news",
-          "host": "news.cloumix.com",
-          "url": "https://news.cloumix.com/search/label/Hellvape%20Dead%20Rabbit%20Solo%202%20RTA",
-          "title": "Hellvape Dead Rabbit Solo 2 RTA",
-          "publishedAt": "2026-07-30T09:09:00.000Z",
-          "eventDate": "2026-07-30T09:09:00.000Z",
-          "stage": "lansat",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "dateConfidence": "release-observed"
+          "dateConfidence": "explicit-search-index-snippet-eta",
+          "evidenceConfidence": "medium",
+          "stage": "batch viitor",
+          "observedAt": "2026-08-29T22:31:15.486Z"
         }
       ],
-      "id": "421f063a3cc39492bd3c"
+      "id": "95296bc0c565530e6e5e"
     }
   ],
   "summary": {
-    "total": 2,
+    "total": 1,
     "before": 1,
-    "after": 1,
+    "after": 0,
     "explicitAfter": 0,
-    "observedAfter": 1
+    "observedAfter": 0
   },
   "snapshotReferenceAt": "2026-08-29T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
