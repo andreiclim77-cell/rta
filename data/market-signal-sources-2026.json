@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "scopeYear": 2026,
+  "refreshTarget": "06:00 Europe/Bucharest",
+  "purpose": "Registry of decision-support signals for Romanian RTA market intelligence. Every source is labelled by what it measures and must never be promoted to verified sales unless it is direct sales evidence.",
+  "sources": [
+    {
+      "id": "retailer-sales",
+      "label": "Vânzări / bestseller retailer",
+      "metric": "sales_or_retailer_ranking",
+      "scope": "Romania",
+      "weight": 1.0,
+      "blocking": true,
+      "truthRule": "Primary commercial evidence. Exact units only when explicitly exposed; otherwise ranking/bestseller stays a ranking signal."
+    },
+    {
+      "id": "google-keyword-planner-ro",
+      "label": "Căutări Google România",
+      "metric": "average_monthly_searches_and_monthly_volumes",
+      "scope": "Romania",
+      "weight": 0.75,
+      "blocking": false,
+      "status": "adapter-ready-needs-google-ads-api-access",
+      "truthRule": "Measures search demand, not sales. Use Romania geo targeting and exact product/brand aliases; preserve monthly series and average monthly searches."
+    },
+    {
+      "id": "google-trends-ro",
+      "label": "Google Trends România",
+      "metric": "relative_search_interest",
+      "scope": "Romania",
+      "weight": 0.55,
+      "blocking": false,
+      "status": "optional-when-api-access-available",
+      "truthRule": "Relative search interest only; never convert Trends index into absolute search volume or sales."
+    },
+    {
+      "id": "ghid-rta-intent",
+      "label": "Interes în ghid-rta.ro",
+      "metric": "anonymous_search_and_tool_intent",
+      "scope": "ghid-rta.ro audience",
+      "weight": 0.7,
+      "blocking": false,
+      "truthRule": "Anonymous first-party intent. Aggregate by canonical product/brand/category; do not expose raw user-level histories."
+    },
+    {
+      "id": "reddit-vaping",
+      "label": "Reddit vaping",
+      "metric": "mentions_engagement_and_sentiment",
+      "scope": "international/community",
+      "weight": 0.4,
+      "blocking": false,
+      "status": "adapter-ready-needs-authorized-reddit-api-access",
+      "targets": ["r/electronic_cigarette"],
+      "truthRule": "Community interest and sentiment, not Romanian sales. Respect authorized API access, rate limits and subreddit/platform rules."
+    },
+    {
+      "id": "facebook-ro-vaping",
+      "label": "Comunități Facebook vaping România",
+      "metric": "public_or_authorized_mentions_and_engagement",
+      "scope": "Romania/community",
+      "weight": 0.5,
+      "blocking": false,
+      "status": "public-indexable-or-authorized-only",
+      "truthRule": "Do not bypass Meta access restrictions. Only public indexable content or explicitly authorized/exported sources may be used."
+    },
+    {
+      "id": "public-vaping-forums",
+      "label": "Forumuri publice vaping",
+      "metric": "mentions_thread_activity_and_recency",
+      "scope": "Romania/international",
+      "weight": 0.35,
+      "blocking": false,
+      "status": "public-pages-only",
+      "truthRule": "Use only publicly accessible pages and respect robots/terms. Measures discussion interest, not sales."
+    },
+    {
+      "id": "youtube-emerging",
+      "label": "YouTube emergent",
+      "metric": "recent_review_and_view_activity",
+      "scope": "international",
+      "weight": 0.35,
+      "blocking": false,
+      "truthRule": "Current external lead indicator only; old lifetime views cannot create an emerging signal."
+    },
+    {
+      "id": "manufacturer-radar",
+      "label": "Radar producători",
+      "metric": "new_product_and_release_signals",
+      "scope": "international/upstream",
+      "weight": 0.3,
+      "blocking": false,
+      "truthRule": "Launch radar, not demand proof. Can corroborate but cannot create a Romanian sales recommendation by itself."
+    }
+  ],
+  "harmonization": {
+    "primaryDecisionOrder": [
+      "retailer-sales",
+      "google-keyword-planner-ro",
+      "ghid-rta-intent",
+      "facebook-ro-vaping",
+      "reddit-vaping",
+      "public-vaping-forums",
+      "youtube-emerging",
+      "manufacturer-radar"
+    ],
+    "managementRule": "External and intent signals may strengthen or weaken confidence and reveal white-space, but a BUY/EXPAND recommendation must retain Romanian commercial evidence unless explicitly labelled as a controlled test.",
+    "missingSourceRule": "Unavailable optional sources reduce signal coverage/confidence but never fail the core Market pipeline or create partial UI output."
+  }
+}
