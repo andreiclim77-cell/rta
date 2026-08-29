@@ -23,7 +23,7 @@ concurrency:
 jobs:
   collect-hype-radar:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 25
     steps:
       - name: Gate 06:00 Bucharest
         id: gate
@@ -49,7 +49,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Collect upstream pre-announcement signals
+      - name: Collect upstream pre-announcement trend and risk signals
         if: steps.gate.outputs.run_sync == 'true'
         env:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
@@ -65,17 +65,22 @@ jobs:
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
           if(Number(d.scopeYear)!==2026)throw new Error('Hype scope must remain 2026');
-          if(Number(d.schemaVersion)<2)throw new Error('Hype semantic schema v2 did not run');
+          if(Number(d.schemaVersion)<3)throw new Error('Hype final schema v3 did not run');
           if(d.mode!=='pre-market-upstream-only')throw new Error('Hype mode is not upstream-only');
           if(!d.truth||d.truth.retailSourcesUsed!==false||d.truth.commercialPagesRejected!==true||d.truth.classificationUsesNavigation!==false)throw new Error('Retail/commercial/navigation exclusion truth rule missing');
           if(d.truth.brandsExposed!==false||d.truth.shopLinksExposed!==false||d.truth.pricesExposed!==false)throw new Error('Public Hype output exposes prohibited fields');
+          if(d.truth.buyHypeRequiresAllConditions!==true||d.truth.buyTrendRequiresDistinctAccounts!==true||d.truth.complaintStopRequiresIndependentSources!==true)throw new Error('Decision truth boundaries incomplete');
           if(!d.methodology||!/narrow context windows/i.test(String(d.methodology.classification||'')))throw new Error('Semantic context classifier did not run');
           for(const cat of ['RTA','MODURI','ACCESORII'])if(!Array.isArray(d.categories&&d.categories[cat]))throw new Error(`Missing Hype category ${cat}`);
-          for(const rows of Object.values(d.categories||{}))for(const x of rows||[]){
+          for(const [cat,rows] of Object.entries(d.categories||{}))for(const x of rows||[]){
             if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Brand/shop/price leaked into public Hype event');
-            if(x.decision&&x.decision.code==='BUY_HYPE'&&!(x.newestSignalHours<14*24&&x.sourceTypeCount>=2&&x.velocityVerified===true&&Number(x.velocity7d)>=3))throw new Error('BUY_HYPE issued without every required condition');
+            const c=x.decision&&x.decision.code;
+            if(c==='BUY_HYPE'&&!(x.newestSignalHours<14*24&&x.sourceTypeCount>=2&&x.velocityVerified===true&&Number(x.velocity7d)>=3))throw new Error('BUY_HYPE issued without every required condition');
+            if(c==='BUY_TREND'&&!(Number(x.mentions7d)>=3&&Number(x.distinctAccounts7d)>=3))throw new Error('BUY_TREND issued without distinct-account evidence');
+            if(c==='PREPARE_ACCESSORIES'&&cat!=='ACCESORII')throw new Error('Accessory preparation leaked outside ACCESORII');
+            if(c==='STOP_REVIEW'&&Number(x.complaintSourceCount||0)>0&&Number(x.complaintSourceCount)<3)throw new Error('Complaint STOP issued with fewer than three independent sources');
           }
-          console.log(`Hype gate OK: ${d.sourceStatus.qualifiedPrelaunchSignals} qualified semantic pre-announcement signals; retail=false; classificationNavigation=false.`);
+          console.log(`Hype gate OK: pre ${d.sourceStatus.qualifiedPrelaunchSignals}; trend ${d.sourceStatus.trendSignals7d}; complaints ${d.sourceStatus.complaintSignals7d}; retail=false.`);
           NODE
 
       - name: Publish complete Hype Radar snapshot
