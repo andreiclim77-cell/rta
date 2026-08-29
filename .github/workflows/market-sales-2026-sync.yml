@@ -10,6 +10,8 @@ on:
     branches: [main]
     paths:
       - "tools/sync-market-sales-2026.js"
+      - "tools/build-market-sales-summary-2026.js"
+      - "data/market-sales-sources-2026.json"
       - "data/market-retailers-2026.json"
       - ".github/workflows/market-sales-2026-sync.yml"
 
@@ -49,14 +51,19 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Collect real sales and bestseller signals
+      - name: Collect real sales evidence
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/sync-market-sales-2026.js --write
+
+      - name: Build sales synthesis
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/build-market-sales-summary-2026.js --write
 
       - name: Validate sales truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
           node --check tools/sync-market-sales-2026.js
+          node --check tools/build-market-sales-summary-2026.js
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
@@ -64,8 +71,9 @@ jobs:
           if(Number(d.scopeYear)!==2026)throw new Error('Sales scope must be 2026');
           if(Number(d.coverage.storefrontsConfigured)!==(r.retailers||[]).length)throw new Error('Sales coverage denominator mismatch');
           for(const x of d.actualSales||[])if(!Number.isFinite(Number(x.unitsSold)))throw new Error('Non-explicit unitsSold row leaked');
-          if(d.coverage.nationalUnitsSoldAvailable===true&&Number(d.coverage.storefrontsWithActualUnitSales)!==(r.retailers||[]).length)throw new Error('National sold-units claim became true without full coverage');
-          console.log(`Sales truth gate: unit counters ${d.coverage.storefrontsWithActualUnitSales}/${d.coverage.storefrontsConfigured}; bestseller rankings ${d.coverage.storefrontsWithRetailerSalesRanking}/${d.coverage.storefrontsConfigured}.`);
+          if(d.coverage.nationalMarketShareAvailable===true&&Number(d.coverage.storefrontsWithActualUnitSales)!==(r.retailers||[]).length)throw new Error('National share became true without full Tier-A coverage');
+          if(!d.summary||!d.summary.observedBestsellerIndex)throw new Error('Sales synthesis missing');
+          console.log(`Sales truth gate: Tier-A ${d.coverage.storefrontsWithActualUnitSales}/${d.coverage.storefrontsConfigured}; Tier-B ${d.coverage.storefrontsWithRetailerSalesRanking}/${d.coverage.storefrontsConfigured}.`);
           NODE
 
       - name: Publish sales snapshot
