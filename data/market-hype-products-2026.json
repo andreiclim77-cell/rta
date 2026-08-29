@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 9,
+  "schemaVersion": 13,
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T18:37:45.207Z",
+  "generatedAt": "2026-08-29T19:01:02.326Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -16,50 +16,140 @@
     "targetedVendorSearch": true,
     "outboundHtmlSearch": true,
     "bingRedirectDecoded": true,
-    "explicitVendorPhrasePass": true
+    "explicitVendorPhrasePass": true,
+    "newArrivalPathOnlyForDiscovery": true,
+    "vendorProfileScan": true,
+    "transportRtaRejected": true,
+    "multiVendor": true
   },
   "scan": {
     "queries": 74,
     "working": 74,
-    "rawDocs": 746,
-    "preCandidates": 18,
-    "resolvedVendorPages": 6,
-    "pagesFetched": 16,
+    "rawDocs": 527,
+    "preCandidates": 20,
+    "resolvedVendorPages": 10,
+    "pagesFetched": 14,
     "events": 0,
     "samplePre": [
       {
-        "url": "https://app.rtafleet.com/",
-        "title": "RTA Fleet - fmis-web"
+        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
+        "title": "Buy YFTK Flash e-Vapor V4.5S+ Style RTA 316SS 23mm Tank Atomizer"
       },
       {
-        "url": "https://www.riversidetransit.com/",
-        "title": "Riverside Transit Agency - Home"
-      },
-      {
-        "url": "https://www.riversidetransit.com/index.php/maps-schedules",
-        "title": "Riverside Transit Agency - Maps & Schedules"
+        "url": "https://www.3fvape.com/content/9-coupon-discount",
+        "title": "Coupon & Discount - 3FVape"
       },
       {
         "url": "https://www.rta.ae/wps/portal/rta/ae/home/",
         "title": "Roads & Transport Authority - Home"
       },
       {
-        "url": "https://www.riderta.com/",
-        "title": "Homepage | RideRTA"
+        "url": "https://www.rta.ae/wps/portal/rta/ae/home/rta-services",
+        "title": "RTA Services - Roads & Transport Authority"
+      },
+      {
+        "url": "https://traffic.rta.ae/trfesrv/public_resources/ffu/fines-payment.do?switchLanguage=en",
+        "title": "Dubai Traffic Fines | RTA"
       }
     ],
     "explicitQueries": 33,
     "explicitWorking": 33,
-    "explicitRaw": 330,
+    "explicitRaw": 231,
     "explicitCandidates": 0,
     "explicitPages": 0,
     "explicitPhraseHits": 0,
-    "explicitEvents": 0
+    "explicitEvents": 0,
+    "newArrivalCatalogPages": 16,
+    "newArrivalRtaLinks": 68,
+    "newArrivalProductPages": 67,
+    "newArrivalPhraseHits": 1,
+    "newArrivalEvents": 1,
+    "profiles": [
+      {
+        "id": "3fvape",
+        "catalogPages": 44,
+        "catalogFetched": 24,
+        "productLinks": 183,
+        "productPages": 182,
+        "events": 0,
+        "samples": []
+      },
+      {
+        "id": "2fdeal",
+        "catalogPages": 24,
+        "catalogFetched": 24,
+        "productLinks": 180,
+        "productPages": 180,
+        "events": 0,
+        "samples": []
+      },
+      {
+        "id": "shareavape",
+        "catalogPages": 2,
+        "catalogFetched": 2,
+        "productLinks": 71,
+        "productPages": 71,
+        "events": 0,
+        "samples": []
+      },
+      {
+        "id": "ecigone",
+        "catalogPages": 2,
+        "catalogFetched": 2,
+        "productLinks": 38,
+        "productPages": 38,
+        "events": 0,
+        "samples": []
+      },
+      {
+        "id": "sourcemore",
+        "catalogPages": 1,
+        "catalogFetched": 0,
+        "productLinks": 0,
+        "productPages": 0,
+        "events": 0,
+        "samples": []
+      }
+    ],
+    "catalogPagesFetched": 52,
+    "productLinks": 472,
+    "productPagesFetched": 471
   },
-  "products": [],
+  "products": [
+    {
+      "id": "e0786af13e5bebc73728",
+      "productName": "3FVape",
+      "brand": "3FVape",
+      "category": "RTA",
+      "typology": "RDL single",
+      "window": "before",
+      "stage": "BATCH",
+      "stageLabel": "batch viitor",
+      "eventDate": "2026-09-10T00:00:00.000Z",
+      "dateConfidence": "explicit",
+      "firstSeenAt": "2026-08-29T19:00:08.239Z",
+      "lastSeenAt": "2026-08-29T19:00:08.239Z",
+      "ageHours": 0,
+      "sourceCount": 1,
+      "eligibleSources": 0,
+      "sources": [
+        {
+          "host": "3fvape.com",
+          "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
+          "title": "3FVape",
+          "sourceType": "vendor-rta-newarrival-path",
+          "decisionEligible": false,
+          "discoveryOnly": true,
+          "eventDate": "2026-09-10T00:00:00.000Z",
+          "dateConfidence": "explicit",
+          "stage": "batch viitor"
+        }
+      ]
+    }
+  ],
   "summary": {
-    "total": 0,
-    "before": 0,
+    "total": 1,
+    "before": 1,
     "after": 0,
     "explicitDatedAfter": 0
   }
