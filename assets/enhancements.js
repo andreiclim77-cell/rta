@@ -7,7 +7,10 @@
     if(done)script.addEventListener('load',done,{once:true});
     document.head.appendChild(script)
   }
+  function isMainGuide(){
+    return !/^\/rta-lab(?:\/|$)/i.test(location.pathname)
+  }
   load('/assets/enhancements-core.js?v=8',function(){
-    load('/assets/market-2026.js?v=2')
+    if(isMainGuide())load('/assets/market-2026.js?v=3')
   })
 })();
