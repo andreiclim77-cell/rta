@@ -5,7 +5,7 @@ var MODULES=[
  {id:'marketManagementCockpit',src:'/assets/market-management-v2.js?v=4'},
  {id:'marketAnalysisSynthesis',src:'/assets/market-analysis-synthesis.js?v=1'},
  {id:'marketHypeRadar',src:'/assets/market-hype-ui.js?v=4'},
- {id:'marketViewSwitcher',src:'/assets/market-view-switcher.js?v=5'}
+ {id:'marketViewSwitcher',src:'/assets/market-view-switcher.js?v=6'}
 ];
 function el(id){return document.getElementById(id)}
 function inject(m){var n=attempts[m.id]||0;if(n>=5)return;attempts[m.id]=n+1;last[m.id]=Date.now();var s=document.createElement('script');s.async=false;s.src=m.src+(m.src.indexOf('?')>=0?'&':'?')+'recover='+Date.now()+'&try='+(n+1);document.head.appendChild(s)}
