@@ -18,13 +18,13 @@ function waitForMarket(){
   marketUiStarted=true;
   style('/assets/market-management-v4-extra.css?v=1');
   style('/assets/market-hype-warnings.css?v=2');
-  load('/assets/market-loading-guard.js?v=13');
-  load('/assets/market-ui-recovery.js?v=6');
+  load('/assets/market-loading-guard.js?v=14');
+  load('/assets/market-ui-recovery.js?v=7');
   load('/assets/market-management-v2.js?v=4',function(){load('/assets/market-analysis-synthesis.js?v=1')});
-  load('/assets/market-hype-ui.js?v=5');
+  load('/assets/market-hype-ui.js?v=6');
   load('/assets/market-view-switcher.js?v=7');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
-function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-access-policy.js?v=1',function(){load('/assets/market-2026.js?v=4',function(){waitForMarket()})})}
+function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-access-policy.js?v=2',function(){load('/assets/market-2026.js?v=4',function(){waitForMarket()})})}
 load('/assets/enhancements-core.js?v=8',function(){loadMarket()});
 })();

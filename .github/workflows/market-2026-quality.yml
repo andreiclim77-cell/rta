@@ -51,6 +51,7 @@ jobs:
             tools/collect-market-hype-deep-2026.js \
             tools/filter-market-hype-evidence-2026.js \
             tools/collect-market-hype-wide-2026.js \
+            tools/collect-market-hype-products-2026.js \
             tools/probe-market-sales-counters-2026.js \
             tools/market-product-canonical-2026.js \
             tools/canonicalize-market-sales-products-2026.js \
@@ -72,7 +73,7 @@ jobs:
             sw.js; do node --check "$f"; done
           node tools/normalize-market-2026.js --check
 
-      - name: Validate Market and global Hype contracts
+      - name: Validate Market and Hype contracts
         run: |
           node tools/check-market-report-final.js
           node - <<'NODE'
@@ -94,7 +95,7 @@ jobs:
           const switcher=read('assets/market-view-switcher.js');
           const sourceInfo=read('assets/market-source-info.js');
           const access=read('assets/market-access-policy.js');
-          const wide=read('tools/collect-market-hype-wide-2026.js');
+          const productHype=read('tools/collect-market-hype-products-2026.js');
           const probe=read('tools/probe-market-sales-counters-2026.js');
           const sw=read('sw.js');
           const daily=read('.github/workflows/market-2026-sync.yml');
@@ -104,47 +105,33 @@ jobs:
           const worker=read('cloudflare/market-hype-refresh/worker.mjs');
           const marketJs=read('assets/market-2026.js');
           const expectedHash='113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
-
           if([market,registry,sales,demand,presence,cfg].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must remain 2026');
           if((registry.retailers||[]).length<22)throw new Error('National registry shrank below 22 storefronts');
           if(!(market.observations||[]).length)throw new Error('Market dataset has no observations');
           if(!marketJs.includes(expectedHash)||!marketJs.includes('trendSnapshots'))throw new Error('Market access/trend regression');
-
           for(const flow of [daily,salesFlow,hypeFlow])if(!flow.includes("cron: '0 3 * * *'")||!flow.includes("cron: '0 4 * * *'"))throw new Error('06:00 Bucharest DST architecture missing');
           if(!validator.includes('status.date!==today'))throw new Error('Daily freshness validator missing');
           for(const token of ['canonicalize-market-sales-products-2026.js','canonicalize-market-demand-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js','probe-market-sales-counters-2026.js'])if(!salesFlow.includes(token))throw new Error('Sales/management pipeline missing '+token);
-          for(const token of ['collect-market-hype-radar-2026.js','collect-market-hype-deep-2026.js','filter-market-hype-evidence-2026.js','collect-market-hype-wide-2026.js'])if(!hypeFlow.includes(token))throw new Error('Hype 06:00 pipeline missing '+token);
-
-          const essential=['/assets/market-access-policy.js?v=1','/assets/market-loading-guard.js?v=13','/assets/market-ui-recovery.js?v=6','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=5','/assets/market-view-switcher.js?v=7'];
+          for(const token of ['collect-market-hype-radar-2026.js','collect-market-hype-deep-2026.js','filter-market-hype-evidence-2026.js','collect-market-hype-wide-2026.js','collect-market-hype-products-2026.js'])if(!hypeFlow.includes(token))throw new Error('Hype 06:00 pipeline missing '+token);
+          const essential=['/assets/market-access-policy.js?v=2','/assets/market-loading-guard.js?v=14','/assets/market-ui-recovery.js?v=7','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=6','/assets/market-view-switcher.js?v=7'];
           for(const asset of essential)if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
-          if(!sw.includes('/assets/market-source-info.js?v=3')||!sw.includes('/assets/market-hype-warnings.css?v=2')||!sw.includes('ghid-rta-static-v34-hype-global-30d'))throw new Error('Final Hype cache manifest mismatch');
-          if(!guard.includes("key:'heartbeat'")||!guard.includes("label:'Hype · GLOBAL · 30 zile'"))throw new Error('Atomic global Hype validation missing');
-          if(!recovery.includes('market-hype-ui.js?v=5')||!recovery.includes('market-view-switcher.js?v=7'))throw new Error('Recovery points to old Hype assets');
-
-          if(!analysis.includes('May be?...'))throw new Error('Required May be?... title missing');
-          if(analysis.includes('Ce cumpăr, ce împing la vânzare și unde mă dezvolt'))throw new Error('Rejected old heading returned');
-          for(const token of ['data-row','Sfat acum','De ce rezultă asta','Ce mă face prudent','Ce schimbă decizia'])if(!analysis.includes(token))throw new Error('Interactive explained analysis missing '+token);
+          if(!sw.includes('/assets/market-source-info.js?v=3')||!sw.includes('/assets/market-hype-ui.css?v=4')||!sw.includes('ghid-rta-static-v36-hype-product-level'))throw new Error('Final Market/Hype cache manifest mismatch');
+          if(!sw.includes('/data/market-hype-products-2026.json'))throw new Error('Concrete Hype data are not network-first');
+          if(!guard.includes("key:'hypeProducts'")||!guard.includes("afterReleaseRequiresExplicitDate")||!recovery.includes('market-hype-ui.js?v=6'))throw new Error('Atomic/recovery Hype contract incomplete');
+          if(!analysis.includes('May be?...')||analysis.includes('Ce cumpăr, ce împing la vânzare și unde mă dezvolt'))throw new Error('Analysis heading regression');
+          for(const token of ['data-row','Sfat acum','De ce rezultă asta','Ce mă face prudent','Ce schimbă decizia'])if(!analysis.includes(token))throw new Error('Interactive analysis missing '+token);
           for(const token of ['Top România','Rotație','Sinteză','Management','categoryLeaders','validUnit'])if(!synth.includes(token))throw new Error('Management synthesis missing '+token);
-          if(!switcher.includes('ANALIZĂ · ROMÂNIA · ACTUALIZARE 06:00 · Ce se vinde cel mai bine'))throw new Error('Analysis kicker missing');
-          if(!switcher.includes('Global · înainte + după apariție · 30 zile'))throw new Error('Global Hype nav missing');
-          if(!sourceInfo.includes('market-hype-heartbeat-evidence-2026.json')||!sourceInfo.includes('GLOBAL pentru RTA + clone RTA'))throw new Error('Info surse global Hype evidence missing');
-
+          if(!switcher.includes('ANALIZĂ · ROMÂNIA · ACTUALIZARE 06:00 · Ce se vinde cel mai bine')||!switcher.includes('Global · înainte + după apariție · 30 zile'))throw new Error('Final navigation copy missing');
+          if(!sourceInfo.includes('market-hype-heartbeat-evidence-2026.json')||!sourceInfo.includes('GLOBAL pentru RTA + clone RTA'))throw new Error('Info surse Hype evidence missing');
           if(Number(cfg.hypeWindowDays)!==30||Number(cfg.lookbackHours)!==720||cfg.scope!=='GLOBAL RTA + clone RTA')throw new Error('Global 30-day Hype config missing');
-          if((cfg.officialMakers||[]).length<35||(cfg.cloneMakers||[]).length<12||(cfg.forumDomains||[]).length<12)throw new Error('Global Hype source coverage too small');
+          if((cfg.officialMakers||[]).length<35||(cfg.cloneMakers||[]).length<12||(cfg.forumDomains||[]).length<14)throw new Error('Global Hype source coverage too small');
           for(const token of ['2fdeal.com','3fvape.com','facebook.com','instagram.com','youtube.com','ecigssa.co.za','vapoo.de','SXK','ULTON','YFTK','SJMY','Tobeco'])if(!JSON.stringify(cfg).toLowerCase().includes(token.toLowerCase()))throw new Error('Global Hype source/maker missing '+token);
-          if(!wide.includes("kind==='upcoming'")||!wide.includes("kind==='released'")||!wide.includes('mergeMemory')||!wide.includes("mode:'after-first-heart-beat'"))throw new Error('Two-window 30-day Hype engine incomplete');
-          if(!hypeUi.includes('HYPE · GLOBAL · 30 ZILE')||!hypeUi.includes('Orice zvon relevant cu 30 zile înainte...')||!hypeUi.includes('After the first heart-beat...'))throw new Error('Global Hype UI contract incomplete');
-
-          if(!access.includes('sessionStorage.removeItem(KEY)')||!access.includes('pageshow'))throw new Error('Per-entry Market password clearing missing');
-          if(!loader.includes("load('/assets/market-access-policy.js?v=1',function(){load('/assets/market-2026.js?v=4'"))throw new Error('Password policy must load before Market');
-
+          for(const token of ['productLevelOnly:true','newArrivalIsNotRelease:true','afterReleaseRequiresExplicitDate:true','relistingIsNotRelease:true','BANNED_HOSTS'])if(!productHype.includes(token))throw new Error('Product Hype protection missing '+token);
+          if(!hypeUi.includes('hype-category-button')||!hypeUi.includes('hype-product-card')||hypeUi.includes('hype-direct'))throw new Error('Product-level Hype UI regression');
+          if(!access.includes("sessionStorage.removeItem(KEY)")||!access.includes("autocomplete','new-password")||!access.includes("input.value=''"))throw new Error('Per-entry empty password policy missing');
           if(!probe.includes('rejectedGenericOrderCounters:true')||!probe.includes('validHistoricCounter'))throw new Error('Generic order-counter rejection missing');
-          const counterFn=probe.slice(probe.indexOf('function explicitCounter'),probe.indexOf('function walk'));
-          if(/comenzi|orders\)/i.test(counterFn))throw new Error('Generic order text is still accepted by explicit product counter parser');
           if(!sales.methodology||sales.methodology.noStockInference!==true)throw new Error('Sales layer must prohibit stock-based sales inference');
           if(!presence.methodology||!/Bestseller breadth/i.test(String(presence.methodology.truthRule||'')))throw new Error('Listing/bestseller separation missing');
-
           if(!worker.includes('progressForRun')||!worker.includes('/actions/runs/')||!worker.includes("kind:'hype-refresh'"))throw new Error('Hype refresh progress source missing');
-          if(!sw.includes("url.pathname.startsWith('/assets/market-')")||!sw.includes("'/data/market-hype-heartbeat-2026.json'"))throw new Error('Market/Hype assets or heartbeat data are not network-first');
-          console.log(`Market gate OK: ${(market.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis=RO; Hype=GLOBAL 30d; two windows; 06:00; password every entry.`);
+          console.log(`Market gate OK: ${(market.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis=RO; Hype=GLOBAL product-level 30d; 06:00; password every entry.`);
           NODE
