@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "scopeYear": 2026,
+  "updatedAt": "2026-08-29",
+  "objective": "Definirea unui univers national auditabil al storefront-urilor consumer din Romania care comercializeaza hardware RTA/rebuildable sau componente esentiale aferente.",
+  "certificationRule": {
+    "discoveryCertified": false,
+    "minimumIndependentPassesWithoutNewStorefront": 2,
+    "currentConsecutivePassesWithoutNewStorefront": 0,
+    "additionalRequirements": [
+      "fiecare candidat este verificat ca storefront consumer, nu doar rezultat de cautare",
+      "operatorul economic este identificat/deduplicat cand informatia este publica",
+      "B2B exclusiv, marketplace, editorial si storefront strain sunt excluse din KPI retail",
+      "registrul activ si registrul de audit au aceeasi lista de storefront-uri",
+      "niciun storefront cunoscut nu este eliminat doar pentru ca blocheaza colectarea",
+      "o trecere pe modele/branduri high-end nu descopera storefront nou",
+      "o trecere pe termeni generici RTA/RBA/RDA/RDTA/atomizor servisabil nu descopera storefront nou"
+    ]
+  },
+  "discoveryPasses": [
+    {
+      "id": "generic-ro-retail",
+      "status": "performed-expanding",
+      "queryFamilies": [
+        "RTA magazin Romania lei adauga in cos",
+        "atomizor RTA Romania magazin online",
+        "atomizoare servisabile Romania",
+        "atomizoare RBA RTA RDTA Romania",
+        "sarma Kanthal RTA Romania",
+        "bumbac RTA Romania"
+      ],
+      "newStorefrontsFound": ["tigaraego","steamfactory","ecigvapo","merlin"]
+    },
+    {
+      "id": "high-end-brand-model-crosscheck",
+      "status": "performed-no-new-consumer-storefront-in-latest-pass",
+      "queryFamilies": [
+        "Kayfun Romania",
+        "Taifun GTR Romania",
+        "Dvarw MTL FL Romania",
+        "Baya RTA Romania",
+        "Muted RTA Romania",
+        "Revorie RTA Romania",
+        "Blaze MTL RTA Romania",
+        "Sparrow RTA Romania"
+      ],
+      "newStorefrontsFound": []
+    },
+    {
+      "id": "scope-boundary-check",
+      "status": "performed",
+      "candidatesReviewed": [
+        {
+          "id": "vape-dist",
+          "decision": "exclude-from-consumer-retail-kpi",
+          "reason": "B2B exclusiv / en-gros pentru persoane juridice"
+        },
+        {
+          "id": "vaperomania",
+          "decision": "exclude-from-consumer-retail-kpi",
+          "reason": "continut/editorial, nu storefront retail comparabil"
+        },
+        {
+          "id": "olx-and-marketplaces",
+          "decision": "exclude-as-storefront",
+          "reason": "marketplace; folosit doar pentru semnale de descoperire"
+        }
+      ]
+    }
+  ],
+  "nextCertificationActions": [
+    "a doua trecere independenta generica fara reutilizarea listei curente drept filtru pozitiv",
+    "cross-check pe minimum doua motoare/canale de cautare si pe modele RTA curente 2026",
+    "verificare a magazinelor nou aparute prin date comerciale si checkout consumer",
+    "dupa zero rezultate noi in doua treceri consecutive: discoveryCertified poate fi reevaluat, nu activat automat"
+  ],
+  "claimLanguage": {
+    "beforeCertification": "Audit national in curs — acoperire observata, nu 100% Romania.",
+    "afterCertification": "100% din universul national identificat si certificat prin protocolul publicat; nu se afirma existenta imposibila de demonstrat a tuturor comerciantilor nepublici."
+  }
+}
