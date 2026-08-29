@@ -26,6 +26,8 @@ on:
       - "tools/hype-upstream-page-title-resolver.js"
       - "tools/augment-market-hype-recent-release-observer-2026.js"
       - "tools/augment-market-hype-current-vendor-rta-events-2026.js"
+      - "tools/augment-market-hype-preorder-card-events-2026.js"
+      - "tools/enforce-market-hype-symmetric-window-2026.js"
       - "tools/merge-market-hype-upstream-products-v2-2026.js"
       - "tools/finalize-market-hype-category-relevance-2026.js"
       - "tools/merge-market-hype-upstream-products-2026.js"
@@ -163,9 +165,17 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-vendor-profiles-v2-2026.js --write
 
+      - name: Recover explicit RTA ETA and batch events from Pre-Order cards
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/augment-market-hype-preorder-card-events-2026.js --write
+
       - name: Merge global, direct-release and vendor product signals
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/merge-market-hype-upstream-products-2026.js --write
+
+      - name: Enforce exact 30 days before and 30 days after
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/enforce-market-hype-symmetric-window-2026.js --write
 
       - name: Validate Hype global 30-day truth rules
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
@@ -186,6 +196,8 @@ jobs:
           node --check tools/hype-upstream-page-title-resolver.js
           node --check tools/augment-market-hype-recent-release-observer-2026.js
           node --check tools/augment-market-hype-current-vendor-rta-events-2026.js
+          node --check tools/augment-market-hype-preorder-card-events-2026.js
+          node --check tools/enforce-market-hype-symmetric-window-2026.js
           node --check tools/merge-market-hype-upstream-products-v2-2026.js
           node --check tools/finalize-market-hype-category-relevance-2026.js
           node --check tools/merge-market-hype-upstream-products-2026.js
