@@ -1,0 +1,322 @@
+{
+  "schemaVersion": 1,
+  "scope": "Romania RTA market observatory",
+  "scopeYear": 2026,
+  "updatedAt": "2026-08-29T09:00:00+03:00",
+  "currency": "RON",
+  "methodology": {
+    "publicDataOnly": true,
+    "salesClaimAllowed": false,
+    "description": "Observator de oferta publica 2026. Masoara produse/SKU-uri listate, preturi, disponibilitate, aparitii/disparitii si restocari observate. Nu echivaleaza disponibilitatea sau disparitia din stoc cu vanzari reale.",
+    "historyPolicy": "Doar 2026. Nu se reconstruieste si nu se afiseaza 2025.",
+    "dicodesPolicy": "Dispozitivele/modurile Dicodes finite sunt excluse din monitorizarea 2026 a modurilor. Placile/chipseturile Dicodes raman categorie separata de urmarit, inclusiv BF60, FL80 sau succesoare, numai cand exista listari verificabile.",
+    "coverageNote": "Valorile initiale reprezinta un seed verificabil si nu pretind acoperire exhaustiva a pietei nationale. Acoperirea creste numai prin surse publice validate."
+  },
+  "retailers": [
+    {
+      "id": "smokee",
+      "name": "Smokee",
+      "url": "https://smokee.ro/",
+      "country": "RO",
+      "status": "monitored",
+      "coverage": ["RTA", "sarme/coiluri", "bumbac", "moduri/chipseturi", "acumulatori/incarcatoare", "unelte", "componente RTA", "lichide tutunoase/NET/DIY"],
+      "note": "Catalogul propriu al ghidului are deja sincronizare separata; in observator se pastreaza distinct fata de datele celorlalti retaileri."
+    },
+    {
+      "id": "vaperia",
+      "name": "Vaperia",
+      "url": "https://vaperia.ro/",
+      "country": "RO",
+      "status": "monitored",
+      "coverage": ["RTA", "coiluri", "bumbac", "componente RTA", "moduri", "acumulatori/incarcatoare"],
+      "note": "Pagina RTA afisa 32 produse la captura initiala 2026."
+    },
+    {
+      "id": "smokemania",
+      "name": "SmokeMania",
+      "url": "https://www.smokemania.ro/",
+      "country": "RO",
+      "status": "monitored",
+      "coverage": ["RTA", "coiluri/sarme", "moduri", "accesorii", "componente"],
+      "note": "Seed initial din pagini publice de brand/produs."
+    },
+    {
+      "id": "vapez",
+      "name": "Vapez",
+      "url": "https://www.vapez.ro/",
+      "country": "RO",
+      "status": "source-validated",
+      "coverage": ["RTA/RDA", "consumabile", "accesorii/piese", "moduri", "acumulatori/incarcatoare", "truse"],
+      "note": "Sursa publica validata; inventarul detaliat intra in capturi ulterioare."
+    },
+    {
+      "id": "voore",
+      "name": "Voore",
+      "url": "https://www.voore.ro/",
+      "country": "RO",
+      "status": "source-validated",
+      "coverage": ["atomizoare servisabile", "accesorii"],
+      "note": "Sursa publica validata; nu se confunda RDA/RDTA cu RTA in agregari."
+    }
+  ],
+  "categorySnapshots": [
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "listed": 32,
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta",
+      "confidence": "direct-category-count"
+    }
+  ],
+  "observations": [
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Auguse",
+      "product": "Era RTA V3",
+      "priceRon": 233.87,
+      "stock": "variant",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "HellVape",
+      "product": "Dead Rabbit MTL RTA 2 - SS",
+      "priceRon": 175,
+      "stock": "in_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "HellVape",
+      "product": "Dead Rabbit MTL RTA 2 - Matte Black",
+      "priceRon": 175,
+      "stock": "in_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Ennequadro Mods",
+      "product": "BAYA RTA - Silver",
+      "priceRon": 550,
+      "stock": "in_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Innokin",
+      "product": "Ares MTL RTA D24",
+      "priceRon": 161.67,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Innokin",
+      "product": "Ares 2 RTA D22",
+      "priceRon": 171.84,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Vape Systems",
+      "product": "BY KA SE Standard",
+      "priceRon": 650.76,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Cthulhu",
+      "product": "Valor MTL RTA 2.4ml SS",
+      "priceRon": 193.19,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Cthulhu",
+      "product": "Valor MTL RTA 2.4ml Black",
+      "priceRon": 193.19,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Ambition Mods",
+      "product": "Bi2hop MTL RTA",
+      "priceRon": 233.87,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Innokin",
+      "product": "Ares Finale MTL RTA 4.5ml",
+      "priceRon": 193.19,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "Vape Systems",
+      "product": "BY KA V10",
+      "priceRon": 711.76,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "SvoeMesto",
+      "product": "Kayfun Prime",
+      "priceRon": 610.08,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "brand": "The Vaping Gentlemen Club",
+      "product": "Millennium RTA",
+      "priceRon": 762.61,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "RTA",
+      "brand": "Early Bird",
+      "product": "Sparrow RTA",
+      "priceRon": 369.9,
+      "stock": "in_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/early_bird"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "mod",
+      "brand": "Early Bird",
+      "product": "Harrier DNA60C",
+      "priceRon": 869.9,
+      "stock": "in_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/early_bird"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "RTA",
+      "brand": "Taifun",
+      "product": "Taifun GTR",
+      "priceRon": 820,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/smokerstore"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "RTA",
+      "brand": "Centenary Mods",
+      "product": "Diplomat RDL RTA",
+      "priceRon": 514.9,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/centenary_mods"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "RTA",
+      "brand": "Damn Vape",
+      "product": "Nitrous RTA 24mm",
+      "priceRon": 224.9,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/atomizor-damn-vape-nitrous-rta-24mm.html"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "mod",
+      "brand": "Damn Vape / The Mind Flayer",
+      "product": "Atemporal 21 BF Mod",
+      "priceRon": 438.9,
+      "stock": "in_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/damn_vape"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "accesoriu",
+      "brand": "Damn Vape / The Mind Flayer",
+      "product": "Atemporal 21 Squonk Tank 6.5ml",
+      "priceRon": 51.4,
+      "stock": "in_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/damn_vape"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "sarma/coil",
+      "brand": "Vandy Vape",
+      "product": "Superfine MTL Fused Clapton Ni80 32GAx2+38GA",
+      "priceRon": 32.9,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/vandyvape"
+    },
+    {
+      "retailerId": "smokemania",
+      "category": "sarma/coil",
+      "brand": "Vandy Vape",
+      "product": "Superfine MTL SS316L Fused Clapton 30GAx2+38GA",
+      "priceRon": 34.9,
+      "stock": "out_of_stock",
+      "observedAt": "2026-08-29",
+      "source": "https://www.smokemania.ro/vandyvape"
+    }
+  ],
+  "boardWatch": [
+    {
+      "maker": "Dicodes",
+      "product": "BF60 board",
+      "category": "chipset/board",
+      "scope": "reference-only-until-romanian-listing",
+      "source": "https://www.cremedevape.com/Dicodes-BF60-board",
+      "note": "Urmarit ca placa/chipset, nu ca mod Dicodes finit."
+    },
+    {
+      "maker": "Dicodes",
+      "product": "FL80 board",
+      "category": "chipset/board",
+      "scope": "reference-only-until-romanian-listing",
+      "source": "https://www.cremedevape.com/Modders",
+      "note": "Urmarit ca placa/chipset, nu ca mod Dicodes finit."
+    }
+  ]
+}
