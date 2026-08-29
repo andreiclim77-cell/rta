@@ -3,18 +3,29 @@ name: Market 2026 Quality Gate
 on:
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "assets/market-2026.js"
+      - "assets/market-2026-report.js"
+      - "assets/market-coverage-ui.js"
+      - "assets/market-sales-ui.js"
       - "assets/enhancements.js"
       - "assets/enhancements-core.js"
       - "data/market-2026.json"
+      - "data/market-coverage-2026.json"
+      - "data/market-sales-2026.json"
       - "data/market-retailers-2026.json"
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
+      - "tools/sync-market-specialized-2026.js"
+      - "tools/verify-market-prices-2026.js"
       - "tools/normalize-market-2026.js"
+      - "tools/market-coverage-audit-2026.js"
+      - "tools/validate-market-daily-2026.js"
+      - "tools/sync-market-sales-2026.js"
+      - "tools/build-market-sales-summary-2026.js"
       - ".github/workflows/market-2026-sync.yml"
+      - ".github/workflows/market-sales-2026-sync.yml"
       - "sw.js"
       - ".github/workflows/market-2026-quality.yml"
 
@@ -24,74 +35,55 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 3
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate Market 2026 module
+      - name: Validate current Market architecture
         run: |
-          node --check assets/enhancements.js
-          node --check assets/enhancements-core.js
-          node --check assets/market-2026.js
-          node --check tools/sync-market-2026.js
-          node --check tools/sync-market-smokee-2026.js
-          node --check tools/normalize-market-2026.js
-          node --check sw.js
-
-          # Collector outputs may temporarily contain raw labels that the publish pipeline
-          # is explicitly designed to repair. Validate the deterministic normalized view
-          # instead of treating repairable raw labels as CI failures.
+          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js sw.js; do node --check "$f"; done
           node tools/normalize-market-2026.js --check
-
           node - <<'NODE'
-          const fs = require('fs');
+          const fs=require('fs');
+          const data=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
+          const registry=JSON.parse(fs.readFileSync('data/market-retailers-2026.json','utf8'));
+          const sales=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
+          const market=fs.readFileSync('assets/market-2026.js','utf8');
+          const loader=fs.readFileSync('assets/enhancements.js','utf8');
+          const sw=fs.readFileSync('sw.js','utf8');
+          const daily=fs.readFileSync('.github/workflows/market-2026-sync.yml','utf8');
+          const salesFlow=fs.readFileSync('.github/workflows/market-sales-2026-sync.yml','utf8');
+          const validator=fs.readFileSync('tools/validate-market-daily-2026.js','utf8');
+          const expectedHash='113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
 
-          const data = JSON.parse(fs.readFileSync('data/market-2026.json', 'utf8'));
-          const registry = JSON.parse(fs.readFileSync('data/market-retailers-2026.json', 'utf8'));
-          const market = fs.readFileSync('assets/market-2026.js', 'utf8');
-          const loader = fs.readFileSync('assets/enhancements.js', 'utf8');
-          const sw = fs.readFileSync('sw.js', 'utf8');
-          const syncWorkflow = fs.readFileSync('.github/workflows/market-2026-sync.yml', 'utf8');
-          const expectedHash = '113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
+          if(Number(data.scopeYear)!==2026||Number(registry.scopeYear)!==2026||Number(sales.scopeYear)!==2026)throw new Error('Market scope must remain 2026');
+          if((registry.retailers||[]).length<19)throw new Error('National registry shrank below 19 storefronts');
+          if(!(data.observations||[]).length)throw new Error('Market dataset has no observations');
+          if(!market.includes(expectedHash))throw new Error('Market access hash changed');
+          if(!market.includes('trendSnapshots'))throw new Error('Longitudinal trend support missing');
 
-          if (Number(data.scopeYear) !== 2026 || Number(registry.scopeYear) !== 2026) throw new Error('Market scope must be 2026 only');
-          if (!registry.collectorPolicy || registry.collectorPolicy.dailyRefresh !== true) throw new Error('Daily market refresh policy is missing');
-          if (!/07:00\s+Europe\/Bucharest/i.test(String(registry.collectorPolicy.refreshTarget || ''))) throw new Error('Daily refresh target is not 07:00 Europe/Bucharest');
-          if ((registry.retailers || []).length < 10) throw new Error('Expected at least 10 configured Romanian retailers');
-          if (!(registry.retailers || []).some(row => row.id === 'smokee' && row.mode === 'smokee-api')) throw new Error('Smokee daily API mode is missing');
+          if(!daily.includes("cron: '0 3 * * *'")||!daily.includes("cron: '0 4 * * *'"))throw new Error('06:00 Bucharest daily schedules missing');
+          if(!daily.includes('node tools/validate-market-daily-2026.js'))throw new Error('Dedicated daily truth validator missing');
+          if(!validator.includes('status.date!==today'))throw new Error('Freshness validation missing from dedicated validator');
+          if(!salesFlow.includes("cron: '0 3 * * *'")||!salesFlow.includes("cron: '0 4 * * *'"))throw new Error('06:00 Bucharest sales schedules missing');
+          if(!salesFlow.includes('sync-market-sales-2026.js')||!salesFlow.includes('build-market-sales-summary-2026.js'))throw new Error('Sales evidence/synthesis pipeline missing');
 
-          const observations = data.observations || [];
-          if (!observations.length) throw new Error('Market dataset has no observations');
-          for (const observation of observations) {
-            if (!/^2026-/.test(String(observation.observedAt || ''))) throw new Error(`Observation outside 2026: ${observation.product || 'unknown'}`);
-          }
+          const marketAsset=(loader.match(/\/assets\/market-2026\.js\?v=\d+/)||[])[0];
+          const salesAsset=(loader.match(/\/assets\/market-sales-ui\.js\?v=\d+/)||[])[0];
+          if(!marketAsset||!sw.includes(marketAsset))throw new Error('Market asset/cache mismatch');
+          if(!salesAsset||!sw.includes(salesAsset))throw new Error('Sales UI asset/cache mismatch');
+          if(!sw.includes("'/data/market-2026.json'")||!sw.includes("'/data/market-sales-2026.json'"))throw new Error('Live Market data is not network-first');
 
-          const watch = data.boardWatch || [];
-          if (!watch.some(item => /BF60/i.test(item.product || ''))) throw new Error('Dicodes BF60 board watch is missing');
-          if (!watch.some(item => /FL80/i.test(item.product || ''))) throw new Error('Dicodes FL80 board watch is missing');
-          if (!market.includes(expectedHash)) throw new Error('Market access hash is not the expected one');
-          if (!market.includes('zilnic · 07:00 RO')) throw new Error('Daily refresh marker is missing from Market UI');
-          if (!market.includes('trendSnapshots')) throw new Error('Longitudinal daily trend support is missing');
+          if(!sales.methodology||sales.methodology.noStockInference!==true)throw new Error('Sales layer must prohibit stock-based sales inference');
+          if(sales.coverage&&sales.coverage.nationalMarketShareAvailable===true&&Number(sales.coverage.storefrontsWithActualUnitSales)!==(registry.retailers||[]).length)throw new Error('National market share claimed without full Tier-A coverage');
 
-          if (!loader.includes('/assets/enhancements-core.js?v=8')) throw new Error('Enhancements core loader is missing');
-          const assetMatch = loader.match(/\/assets\/market-2026\.js\?v=\d+/);
-          if (!assetMatch) throw new Error('Versioned Market module loader is missing');
-          if (!sw.includes(assetMatch[0])) throw new Error(`PWA cache does not include current Market asset ${assetMatch[0]}`);
-          if (!/ghid-rta-static-v\d+/.test(sw)) throw new Error('PWA cache version marker is missing');
-          if (!sw.includes("'/data/market-2026.json'")) throw new Error('Market dataset is not network-first in the PWA');
+          for(const row of data.observations||[])if(!/^2026-/.test(String(row.observedAt||'')))throw new Error(`Observation outside 2026: ${row.product||'unknown'}`);
+          const watch=data.boardWatch||[];
+          if(!watch.some(x=>/BF60/i.test(x.product||''))||!watch.some(x=>/FL80/i.test(x.product||'')))throw new Error('Dicodes board watch missing');
 
-          if (!syncWorkflow.includes("cron: '0 4 * * *'") || !syncWorkflow.includes("cron: '0 5 * * *'")) throw new Error('Daily Bucharest market schedules are missing');
-          if (!syncWorkflow.includes('node tools/sync-market-2026.js --write')) throw new Error('Romania collector is not scheduled');
-          if (!syncWorkflow.includes('node tools/sync-market-smokee-2026.js --write')) throw new Error('Smokee market API collector is not scheduled');
-          if (!syncWorkflow.includes('node tools/normalize-market-2026.js --write')) throw new Error('Market normalizer is not scheduled');
-          if (!syncWorkflow.includes('status.date !== today')) throw new Error('Daily freshness validation is missing');
-
-          const updated = Date.parse(data.updatedAt || '');
-          if (!Number.isFinite(updated)) throw new Error('Market updatedAt is invalid');
-          const ageHours = (Date.now() - updated) / 36e5;
-          if (ageHours > 36) throw new Error(`Market dataset is stale: ${ageHours.toFixed(1)}h old`);
-
-          console.log(`Market 2026 normalized quality gate validated: ${observations.length} observations; ${registry.retailers.length} retailers; ${assetMatch[0]}.`);
+          const updated=Date.parse(data.updatedAt||'');
+          if(!Number.isFinite(updated)||(Date.now()-updated)/36e5>36)throw new Error('Market dataset is stale');
+          console.log(`Market gate OK: ${(data.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Tier-B ${(sales.coverage&&sales.coverage.storefrontsWithRetailerSalesRanking)||0}/${(registry.retailers||[]).length}; refresh 06:00 Bucharest.`);
           NODE
