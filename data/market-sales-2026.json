@@ -1,19 +1,25 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "scopeYear": 2026,
-  "updatedAt": "2026-08-29T10:44:46.817Z",
+  "updatedAt": "2026-08-29T10:46:19.429Z",
   "methodology": {
     "actualSalesOnly": true,
     "noStockInference": true,
-    "unitsSoldRule": "Contoarele publice cumulative devin baseline la prima observatie; vanzarile perioadei se calculeaza numai ca delta intre snapshoturi.",
-    "rankingRule": "Ranking-ul public bestseller/popularity este pastrat zilnic si nu este convertit in unitati.",
-    "marketShareRule": "Cotele nationale pe unitati/valoare se calculeaza numai cu acoperire reala comparabila."
+    "evidenceTiers": {
+      "A": "explicit public units sold counter or direct merchant feed",
+      "B": "retailer-labelled bestseller/popularity ranking",
+      "C": "other demand proxy; never labelled sales"
+    },
+    "unitsSoldRule": "first cumulative counter observation is baseline; only positive snapshot deltas are period sales",
+    "rankingRule": "retailer rankings are kept as rankings and aggregated only into a clearly labelled observed bestseller index",
+    "marketShareRule": "national unit/value shares only with full comparable Tier-A coverage"
   },
   "coverage": {
     "storefrontsConfigured": 19,
     "storefrontsWithActualUnitSales": 0,
-    "storefrontsWithRetailerSalesRanking": 7,
+    "storefrontsWithRetailerSalesRanking": 10,
     "actualUnitSalesCoveragePct": 0,
+    "rankingCoveragePct": 52.6,
     "nationalUnitsSoldAvailable": false,
     "nationalMarketShareAvailable": false
   },
@@ -25,8 +31,7 @@
   "retailerStatus": [
     {
       "retailerId": "smokee",
-      "retailerName": "Smokee",
-      "supported": true,
+      "method": "woo-popularity-api",
       "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 5,
       "actualSalesCount": 0,
@@ -34,8 +39,7 @@
     },
     {
       "retailerId": "vaperia",
-      "retailerName": "Vaperia",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://vaperia.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -43,8 +47,7 @@
     },
     {
       "retailerId": "vapepoint",
-      "retailerName": "VapePoint",
-      "supported": true,
+      "method": "woo-popularity-api",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 37,
       "actualSalesCount": 0,
@@ -52,8 +55,7 @@
     },
     {
       "retailerId": "vapetronic",
-      "retailerName": "Vapetronic",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://vapetronic.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -61,8 +63,7 @@
     },
     {
       "retailerId": "smokemania",
-      "retailerName": "SmokeMania",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://www.smokemania.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -70,8 +71,7 @@
     },
     {
       "retailerId": "vapez",
-      "retailerName": "Vapez",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://www.vapez.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -79,8 +79,7 @@
     },
     {
       "retailerId": "justvape",
-      "retailerName": "JustVape",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://www.justvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -88,8 +87,7 @@
     },
     {
       "retailerId": "epotion",
-      "retailerName": "e-Potion",
-      "supported": true,
+      "method": "woo-popularity-api",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 9,
       "actualSalesCount": 0,
@@ -97,8 +95,7 @@
     },
     {
       "retailerId": "nouatigaraelectronica",
-      "retailerName": "Noua Tigara Electronica",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://www.nouatigaraelectronica.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -106,8 +103,7 @@
     },
     {
       "retailerId": "voore",
-      "retailerName": "Voore",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://www.voore.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -115,8 +111,7 @@
     },
     {
       "retailerId": "vapersparadise",
-      "retailerName": "Vaper's Paradise",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://www.vapersparadise.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -124,8 +119,7 @@
     },
     {
       "retailerId": "viciishop",
-      "retailerName": "Vicii Shop",
-      "supported": true,
+      "method": "woo-popularity-api",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 19,
       "actualSalesCount": 0,
@@ -133,8 +127,7 @@
     },
     {
       "retailerId": "tigaraego",
-      "retailerName": "TigaraEgo",
-      "supported": true,
+      "method": "woo-popularity-api",
       "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 5,
       "actualSalesCount": 0,
@@ -142,8 +135,7 @@
     },
     {
       "retailerId": "geekvapero",
-      "retailerName": "Geekvape.ro",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://geekvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -151,8 +143,7 @@
     },
     {
       "retailerId": "vaps",
-      "retailerName": "VAPS",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://vaps.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -160,8 +151,7 @@
     },
     {
       "retailerId": "vapshop",
-      "retailerName": "Vapshop.ro",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://www.vapshop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -169,8 +159,7 @@
     },
     {
       "retailerId": "steamfactory",
-      "retailerName": "SteamFactory",
-      "supported": false,
+      "method": "woo-popularity-api",
       "source": "https://steamfactory.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
@@ -178,8 +167,7 @@
     },
     {
       "retailerId": "ecigvapo",
-      "retailerName": "Ecig Vapo",
-      "supported": true,
+      "method": "woo-popularity-api",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 9,
       "actualSalesCount": 0,
@@ -187,10 +175,73 @@
     },
     {
       "retailerId": "merlin",
-      "retailerName": "Merlin.ro",
-      "supported": true,
+      "method": "woo-popularity-api",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 7,
+      "actualSalesCount": 0,
+      "error": null
+    },
+    {
+      "retailerId": "smokemania",
+      "method": "retailer-bestseller-page",
+      "source": "https://www.smokemania.ro/best-seller.html",
+      "rankingCount": 0,
+      "actualSalesCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "retailerId": "smokemania",
+      "method": "retailer-bestseller-page",
+      "source": "https://www.smokemania.ro/best-seller/atomizoare.html",
+      "rankingCount": 0,
+      "actualSalesCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "retailerId": "smokemania",
+      "method": "retailer-bestseller-page",
+      "source": "https://www.smokemania.ro/best-seller/mod-uri.html",
+      "rankingCount": 0,
+      "actualSalesCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "retailerId": "smokemania",
+      "method": "retailer-bestseller-page",
+      "source": "https://www.smokemania.ro/best-seller/rezistente.html",
+      "rankingCount": 0,
+      "actualSalesCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "retailerId": "smokemania",
+      "method": "retailer-bestseller-page",
+      "source": "https://www.smokemania.ro/best-seller/lichide-cu-nicotina.html",
+      "rankingCount": 0,
+      "actualSalesCount": 0,
+      "error": "HTTP 403"
+    },
+    {
+      "retailerId": "nouatigaraelectronica",
+      "method": "retailer-bestseller-page",
+      "source": "https://www.nouatigaraelectronica.ro/",
+      "rankingCount": 5,
+      "actualSalesCount": 0,
+      "error": null
+    },
+    {
+      "retailerId": "vaps",
+      "method": "retailer-bestseller-page",
+      "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "rankingCount": 6,
+      "actualSalesCount": 0,
+      "error": null
+    },
+    {
+      "retailerId": "vapshop",
+      "method": "retailer-bestseller-page",
+      "source": "https://www.vapshop.ro/",
+      "rankingCount": 3,
       "actualSalesCount": 0,
       "error": null
     }
@@ -204,7 +255,8 @@
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://smokee.ro/product/rola-3m-vandyvape-superfine-mtl-fused-clapton-ni80-30gax238ga/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "smokee",
@@ -214,7 +266,8 @@
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://smokee.ro/product/bumbac-bp-mods-pro-vape-2-5mm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "smokee",
@@ -224,7 +277,8 @@
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://smokee.ro/product/acumulator-18650-x-power-20a-4000mah/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "smokee",
@@ -234,7 +288,8 @@
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://smokee.ro/product/zeus-juice-10-ml-nicotina-18-mg-smooth-tobacco/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "smokee",
@@ -244,7 +299,8 @@
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://smokee.ro/product/lichid-tigara-electronica-dinner-lady-select-tobacco-20mg-nicotina-10-ml-rich/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -254,7 +310,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/bumbac-muji/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -264,7 +321,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/acumulator-sony-vtc6/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -274,7 +332,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-negru/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -284,7 +343,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-gri/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -294,7 +354,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-clapton-1-0ohm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -304,7 +365,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-coil-master-18650/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -314,7 +376,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/cloud-9-cotton/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -324,7 +387,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/guerrilla-black-ops-tobacco-net-0mg-30ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -334,7 +398,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-dotmod-18650/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -344,7 +409,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/rola-sarma-crazy-wire-ni80-10m-0-4mm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -354,7 +420,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/head-shot-bourbon-tobacco-0mg-30ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -364,7 +431,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-galben/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -374,7 +442,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/acumulator-sony-vtc6a-21700/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -384,7 +453,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/wick-n-vape-cotton-bacon-v2/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -394,7 +464,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-69-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -404,7 +475,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-portocaliu/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -414,7 +486,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/rola-sarma-crazy-wire-ni80-10m-0-32mm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -424,7 +497,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-transparent/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -434,7 +508,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-11-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -444,7 +519,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/carcasa-dubla-18650-clear/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -454,7 +530,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/bp-mods-pro-vape-cotton-2-5mm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -464,7 +541,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/atomizor-khw-mods-dvarw-mtl-fl-rta-22mm-argintiu/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -474,7 +552,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-rosu/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -484,7 +563,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-alb/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -494,7 +574,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-37-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -504,7 +585,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-fused-clapton-0-5ohm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -514,7 +596,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/bp-mods-pro-vape-cotton-3-0mm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -524,7 +607,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-29-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -534,7 +618,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/rola-sarma-crazy-wire-ss316l-10m-0-4mm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -544,7 +629,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/demon-killer-slacker-cotton-hardcover/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -554,7 +640,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-mov/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -564,7 +651,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-fused-clapton-0-75ohm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -574,7 +662,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-21700-20700/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -584,7 +673,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-micro-alien-0-6ohm/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -594,7 +684,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-odb-18650-pizza/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -604,7 +695,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/folie-acumulator-dotmod-18350/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "vapepoint",
@@ -614,7 +706,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vapepoint.ro/produs/fiber-n-cotton/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -624,7 +717,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-mrb-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -634,7 +728,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-ry4-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -644,7 +739,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/lichid-liqua-10ml-cu-nicotina/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -654,7 +750,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-dnh-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -664,7 +761,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/lichid-smokemania-black-coffee-tobacco-30ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -674,7 +772,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/lichid-tigara-electronica-smokemania-tobacco-menthol/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -684,7 +783,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-knt-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -694,7 +794,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-vrg-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "epotion",
@@ -704,7 +805,8 @@
       "observedAt": "2026-08-29",
       "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-gold-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -714,17 +816,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-menthol-pentru-tutun-si-tigari-2/",
-      "evidence": "woocommerce-public-popularity-order"
-    },
-    {
-      "retailerId": "viciishop",
-      "category": "lichid tutunos/NET/DIY",
-      "product": "Card aromatizant Tobi Menthol pentru tutun si tigari",
-      "rank": 4,
-      "observedAt": "2026-08-29",
-      "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-      "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-menthol-pentru-tutun-si-tigari/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -734,7 +827,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/mb-tutun-rulat-django-original-30g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -744,7 +838,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-pentru-rulat-golden-virginia-original-50g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -754,7 +849,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-drum-the-original-50g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -764,7 +860,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/aroma-tutun-mac-baren-chocolate-16/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -774,7 +871,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-pentru-rulat-mac-baren-amsterdamer-original-30g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -784,7 +882,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-drum-white-50g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -794,7 +893,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-cherry-pentru-tutun-si-tigari/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -804,7 +904,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-blueberry-pentru-tutun-si-tigari/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -814,7 +915,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-pueblo-classic-30g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -824,7 +926,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-pentru-rulat-golden-virginia-the-original-gold-50g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -834,7 +937,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-rulat-marlboro-crafted-gold-30-gr/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -844,7 +948,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-bali-shag-authentic-nature-35g-foite/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -854,7 +959,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-mac-baren-american-blend-30g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -864,7 +970,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-senator-blue-volume-135g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -874,7 +981,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/tutun-senator-white-extra-volume-80g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -884,7 +992,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/lichid-tob-liquids-dry-tobacco-30ml-0mg/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "viciishop",
@@ -894,7 +1003,8 @@
       "observedAt": "2026-08-29",
       "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://vicii-shop.ro/vandyvape-superfine-mtl-ni80-30gax2-38ga/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "tigaraego",
@@ -904,7 +1014,8 @@
       "observedAt": "2026-08-29",
       "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://tigaraego.com/cartus-vuse-creamy-tobacco-20mg-2-bucati/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "tigaraego",
@@ -914,7 +1025,8 @@
       "observedAt": "2026-08-29",
       "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://tigaraego.com/aroma-concentrata-tob-liquids-superior-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "tigaraego",
@@ -924,7 +1036,8 @@
       "observedAt": "2026-08-29",
       "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://tigaraego.com/lichid-tob-liquids-dry-tobacco-30ml-0mg/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "tigaraego",
@@ -934,7 +1047,8 @@
       "observedAt": "2026-08-29",
       "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://tigaraego.com/lichid-elfbar-elfliq-nic-salt-cream-tobacco-20mg/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "tigaraego",
@@ -944,7 +1058,8 @@
       "observedAt": "2026-08-29",
       "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://tigaraego.com/aroma-concentrata-tob-liquids-imperial-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -954,7 +1069,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/kanthal-035-mm-10-metri/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -964,7 +1080,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/nichelina-sarma-speciala-rezistenta-035-mm-10-metri/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -974,7 +1091,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/tutun-mentolat-10ml-flavourtec/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -984,7 +1102,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/nickel-coil-ni200-sarma-rezistente-0-4mm-10-metri/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -994,7 +1113,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/kanthal-a1-sarma-rezistente-diametru-08mm-rola-15m/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -1004,7 +1124,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-flat-top-si-pcb/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -1014,7 +1135,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-top-button-si-pcb/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -1024,7 +1146,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/kanthal-tip-a-010-mm-10-metri/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "ecigvapo",
@@ -1034,7 +1157,8 @@
       "observedAt": "2026-08-29",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://ecig-vapo.com/tutun-simplu-30ml-e-lichid-vg-pg/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "merlin",
@@ -1044,7 +1168,8 @@
       "observedAt": "2026-08-29",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://merlin.ro/produs/aroma-concentrata-tigara-electronica-m3rlin-dark-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "merlin",
@@ -1054,7 +1179,8 @@
       "observedAt": "2026-08-29",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://merlin.ro/produs/aroma-concentrata-tigara-electronica-m3rlin-silver-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "merlin",
@@ -1064,7 +1190,8 @@
       "observedAt": "2026-08-29",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://merlin.ro/produs/tigara-electronica-de-unica-folosinta-elf-bar-cream-tobacco-600puff-2nicotina/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "merlin",
@@ -1074,7 +1201,8 @@
       "observedAt": "2026-08-29",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://merlin.ro/produs/acumulator-tigara-electronica-sony-vtc6-18650-3000mah/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "merlin",
@@ -1084,7 +1212,8 @@
       "observedAt": "2026-08-29",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://merlin.ro/produs/aroma-concentrata-tigara-electronica-m3rlin-red-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "merlin",
@@ -1094,7 +1223,8 @@
       "observedAt": "2026-08-29",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://merlin.ro/produs/lichid-tigara-electronica-liqua-traditional-tobacco-10ml/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
     },
     {
       "retailerId": "merlin",
@@ -1104,21 +1234,449 @@
       "observedAt": "2026-08-29",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://merlin.ro/produs/tutun-de-rulat-bali-shag-white-halfzware-40g/",
-      "evidence": "woocommerce-public-popularity-order"
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "nouatigaraelectronica",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "USA Mix tobacco Hangsen 10ml",
+      "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://www.nouatigaraelectronica.ro/",
+      "productUrl": "https://www.nouatigaraelectronica.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "nouatigaraelectronica",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "SEC tobacco Hangsen 10ml",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://www.nouatigaraelectronica.ro/",
+      "productUrl": "https://www.nouatigaraelectronica.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "nouatigaraelectronica",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Liqua Traditional Tobacco 10ml",
+      "rank": 3,
+      "observedAt": "2026-08-29",
+      "source": "https://www.nouatigaraelectronica.ro/",
+      "productUrl": "https://www.nouatigaraelectronica.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "nouatigaraelectronica",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Tobacco Hangsen 10ml",
+      "rank": 4,
+      "observedAt": "2026-08-29",
+      "source": "https://www.nouatigaraelectronica.ro/",
+      "productUrl": "https://www.nouatigaraelectronica.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "nouatigaraelectronica",
+      "category": "acumulator",
+      "product": "Acumulator Sony 18650 VTC6 3000 mAh high drain 30A",
+      "rank": 5,
+      "observedAt": "2026-08-29",
+      "source": "https://www.nouatigaraelectronica.ro/",
+      "productUrl": "https://www.nouatigaraelectronica.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vaps",
+      "category": "bumbac/wick",
+      "product": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+      "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vaps",
+      "category": "mod",
+      "product": "Kit Tigara Electronica Vape Jac Vapour VIM AIO Box Mod Slate, 2600 mAh, 2ml TF Tank MTL/DTL, Rezistenta 1ohm Inclusa, Compatibil NicSalts",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vaps",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Pachet Lichid Tigara Electronica Premium Jac Vapour Real Tobacco Gold 60ml / 120ml, Nicotina 3/6/9 mg/ml, High VG, Fabricat in UK",
+      "rank": 3,
+      "observedAt": "2026-08-29",
+      "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vaps",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Pachet Lichid Tigara Electronica Premium Jac Vapour Real Tobacco Silver 60ml / 120ml, Nicotina 3/6/9 mg/ml, High VG, Fabricat in UK",
+      "rank": 4,
+      "observedAt": "2026-08-29",
+      "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vaps",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Vape El Toro Cigarillos, Extras Natural din Tutun Organic Cubanez Premium, Macerat la Rece, 60ml, Nicotina 0-10mg",
+      "rank": 5,
+      "observedAt": "2026-08-29",
+      "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vaps",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Vape El Toro Puros, Extras Natural din Tutun Organic Cubanez Premium, Macerat la Rece, 60ml, Nicotina 0-10mg",
+      "rank": 6,
+      "observedAt": "2026-08-29",
+      "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vapshop",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Liqua Traditional Tobacco 10ml",
+      "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://www.vapshop.ro/",
+      "productUrl": "https://www.vapshop.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vapshop",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Liqua American Tobacco 10ml",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://www.vapshop.ro/",
+      "productUrl": "https://www.vapshop.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
+    },
+    {
+      "retailerId": "vapshop",
+      "category": "acumulator",
+      "product": "Acumulator 18650 VTC6 3000 mAh 30A - Sony",
+      "rank": 3,
+      "observedAt": "2026-08-29",
+      "source": "https://www.vapshop.ro/",
+      "productUrl": "https://www.vapshop.ro/",
+      "evidence": "retailer-labelled-best-seller-discovered",
+      "evidenceTier": "B"
     }
   ],
   "actualSales": [],
-  "history": [
-    {
-      "date": "2026-08-29",
-      "rankings": 91,
-      "actualSalesRows": 0,
-      "retailersWithRanking": 7,
-      "retailersWithActualUnits": 0,
-      "dailyUnitsObserved": 0,
-      "productsWithDelta": 0
-    }
-  ],
+  "summary": {
+    "rankingIndex": {
+      "method": "sum reciprocal retailer rank; derived only from public retailer bestseller/popularity rankings",
+      "topProducts": [
+        {
+          "name": "Liqua Traditional Tobacco 10ml",
+          "score": 1.3333
+        },
+        {
+          "name": "USA Mix tobacco Hangsen 10ml",
+          "score": 1
+        },
+        {
+          "name": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+          "score": 1
+        },
+        {
+          "name": "Pad Bumbac Muji",
+          "score": 0.5
+        },
+        {
+          "name": "Card aromatizant Tobi Menthol pentru tutun si tigari",
+          "score": 0.5
+        },
+        {
+          "name": "SEC tobacco Hangsen 10ml",
+          "score": 0.5
+        },
+        {
+          "name": "Kit Tigara Electronica Vape Jac Vapour VIM AIO Box Mod Slate, 2600 mAh, 2ml TF Tank MTL/DTL, Rezistenta 1ohm Inclusa, Compatibil NicSalts",
+          "score": 0.5
+        },
+        {
+          "name": "Liqua American Tobacco 10ml",
+          "score": 0.5
+        },
+        {
+          "name": "Acumulator Sony VTC6 18650",
+          "score": 0.3333
+        },
+        {
+          "name": "Pachet Lichid Tigara Electronica Premium Jac Vapour Real Tobacco Gold 60ml / 120ml, Nicotina 3/6/9 mg/ml, High VG, Fabricat in UK",
+          "score": 0.3333
+        },
+        {
+          "name": "Acumulator 18650 VTC6 3000 mAh 30A - Sony",
+          "score": 0.3333
+        },
+        {
+          "name": "Cartus Vuse &#8211; Creamy Tobacco 20mg [2 Bucati]",
+          "score": 0.25
+        },
+        {
+          "name": "Kanthal 0,35 mm &#8211; 10 metri",
+          "score": 0.25
+        },
+        {
+          "name": "Tobacco Hangsen 10ml",
+          "score": 0.25
+        },
+        {
+          "name": "Pachet Lichid Tigara Electronica Premium Jac Vapour Real Tobacco Silver 60ml / 120ml, Nicotina 3/6/9 mg/ml, High VG, Fabricat in UK",
+          "score": 0.25
+        },
+        {
+          "name": "Acumulator Sony 18650 VTC6 3000 mAh high drain 30A",
+          "score": 0.2
+        },
+        {
+          "name": "Lichid Vape El Toro Cigarillos, Extras Natural din Tutun Organic Cubanez Premium, Macerat la Rece, 60ml, Nicotina 0-10mg",
+          "score": 0.2
+        },
+        {
+          "name": "Lichid Vape El Toro Puros, Extras Natural din Tutun Organic Cubanez Premium, Macerat la Rece, 60ml, Nicotina 0-10mg",
+          "score": 0.1667
+        },
+        {
+          "name": "MB Tutun rulat Django Original 30g",
+          "score": 0.1429
+        },
+        {
+          "name": "Nichelina sarma speciala rezistenta 0,35 mm &#8211; 10 metri",
+          "score": 0.1111
+        },
+        {
+          "name": "Tutun pentru rulat Golden Virginia Original 50g",
+          "score": 0.0833
+        },
+        {
+          "name": "Aroma Concentrata The Flavor By e-Potion MRB Tobacco 10ml",
+          "score": 0.0769
+        },
+        {
+          "name": "Folie Acumulator 18650 &#8211; Negru",
+          "score": 0.0714
+        },
+        {
+          "name": "Tutun DRUM The Original 50g",
+          "score": 0.0625
+        },
+        {
+          "name": "Folie Acumulator 18650 &#8211; Gri",
+          "score": 0.0588
+        },
+        {
+          "name": "Tutun Mentolat 10ml Flavourtec",
+          "score": 0.0588
+        },
+        {
+          "name": "Aroma Concentrata The Flavor By e-Potion RY4 Tobacco 10ml",
+          "score": 0.0556
+        },
+        {
+          "name": "Aroma Tutun Mac Baren &#8211; Chocolate 16",
+          "score": 0.0556
+        },
+        {
+          "name": "Aroma Concentrata Merlin Dark Tobacco 10ml",
+          "score": 0.0556
+        },
+        {
+          "name": "Set Rezistente FCK Coils NI80 (2 bucati) &#8211; MTL Micro Clapton 1.0ohm",
+          "score": 0.0526
+        }
+      ],
+      "topCategories": [
+        {
+          "name": "lichid tutunos/NET/DIY",
+          "score": 6.6643
+        },
+        {
+          "name": "bumbac/wick",
+          "score": 1.633
+        },
+        {
+          "name": "acumulator",
+          "score": 1.2899
+        },
+        {
+          "name": "mod",
+          "score": 0.5
+        },
+        {
+          "name": "sarma",
+          "score": 0.3625
+        },
+        {
+          "name": "coil prebuilt",
+          "score": 0.2525
+        },
+        {
+          "name": "chipset/board",
+          "score": 0.0494
+        },
+        {
+          "name": "RTA",
+          "score": 0.0156
+        }
+      ],
+      "topNameTokens": [
+        {
+          "name": "Liqua Traditional",
+          "score": 1.3333
+        },
+        {
+          "name": "USA Mix",
+          "score": 1
+        },
+        {
+          "name": "Set 5",
+          "score": 1
+        },
+        {
+          "name": "Pachet Lichid",
+          "score": 0.5833
+        },
+        {
+          "name": "Acumulator Sony",
+          "score": 0.5566
+        },
+        {
+          "name": "Card aromatizant",
+          "score": 0.5466
+        },
+        {
+          "name": "Pad Bumbac",
+          "score": 0.5
+        },
+        {
+          "name": "SEC tobacco",
+          "score": 0.5
+        },
+        {
+          "name": "Kit Tigara",
+          "score": 0.5
+        },
+        {
+          "name": "Liqua American",
+          "score": 0.5
+        },
+        {
+          "name": "Lichid Vape",
+          "score": 0.3667
+        },
+        {
+          "name": "Folie Acumulator",
+          "score": 0.3495
+        },
+        {
+          "name": "Aroma Concentrata",
+          "score": 0.3495
+        },
+        {
+          "name": "Acumulator 18650",
+          "score": 0.347
+        },
+        {
+          "name": "Cartus Vuse",
+          "score": 0.25
+        },
+        {
+          "name": "Kanthal 0,35",
+          "score": 0.25
+        },
+        {
+          "name": "Tobacco Hangsen",
+          "score": 0.25
+        },
+        {
+          "name": "Tutun pentru",
+          "score": 0.1431
+        },
+        {
+          "name": "MB Tutun",
+          "score": 0.1429
+        },
+        {
+          "name": "Nichelina sarma",
+          "score": 0.1111
+        },
+        {
+          "name": "Set Rezistente",
+          "score": 0.0881
+        },
+        {
+          "name": "Tutun DRUM",
+          "score": 0.0881
+        },
+        {
+          "name": "Aroma Flavormonks",
+          "score": 0.0673
+        },
+        {
+          "name": "Rola Sarma",
+          "score": 0.0616
+        },
+        {
+          "name": "Tutun Mentolat",
+          "score": 0.0588
+        },
+        {
+          "name": "Aroma Tutun",
+          "score": 0.0556
+        },
+        {
+          "name": "Lichid Smokemania",
+          "score": 0.0551
+        },
+        {
+          "name": "Acumulator Trustfire",
+          "score": 0.0494
+        },
+        {
+          "name": "Cloud 9",
+          "score": 0.0435
+        },
+        {
+          "name": "Guerrilla Black",
+          "score": 0.04
+        }
+      ]
+    },
+    "actualSalesTop": []
+  },
   "rankingHistory": [
     {
       "date": "2026-08-29",
@@ -1131,7 +1689,8 @@
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://smokee.ro/product/rola-3m-vandyvape-superfine-mtl-fused-clapton-ni80-30gax238ga/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "smokee",
@@ -1141,7 +1700,8 @@
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://smokee.ro/product/bumbac-bp-mods-pro-vape-2-5mm/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "smokee",
@@ -1151,7 +1711,8 @@
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://smokee.ro/product/acumulator-18650-x-power-20a-4000mah/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "smokee",
@@ -1161,7 +1722,8 @@
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://smokee.ro/product/zeus-juice-10-ml-nicotina-18-mg-smooth-tobacco/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "smokee",
@@ -1171,7 +1733,8 @@
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://smokee.ro/product/lichid-tigara-electronica-dinner-lady-select-tobacco-20mg-nicotina-10-ml-rich/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1181,67 +1744,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/bumbac-muji/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "bumbac/wick",
-          "product": "Cloud 9 Cotton",
-          "rank": 23,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/cloud-9-cotton/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "bumbac/wick",
-          "product": "Wick &#8216;n&#8217; Vape Cotton Bacon V2",
-          "rank": 44,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/wick-n-vape-cotton-bacon-v2/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "bumbac/wick",
-          "product": "BP Mods Pro Vape Cotton &#8211; 2.5mm",
-          "rank": 62,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/bp-mods-pro-vape-cotton-2-5mm/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "bumbac/wick",
-          "product": "BP Mods Pro Vape Cotton &#8211; 3.0mm",
-          "rank": 74,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/bp-mods-pro-vape-cotton-3-0mm/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "bumbac/wick",
-          "product": "Demon Killer Slacker Cotton Hardcover",
-          "rank": 84,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/demon-killer-slacker-cotton-hardcover/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "bumbac/wick",
-          "product": "Fiber N&#8217; Cotton",
-          "rank": 99,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/fiber-n-cotton/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1251,7 +1755,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/acumulator-sony-vtc6/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1261,7 +1766,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-negru/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1271,137 +1777,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-gri/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator Coil Master 18650",
-          "rank": 20,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-coil-master-18650/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator Dotmod 18650",
-          "rank": 31,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-dotmod-18650/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator 18650 &#8211; Galben",
-          "rank": 41,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-galben/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Acumulator Sony VTC6A 21700",
-          "rank": 43,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/acumulator-sony-vtc6a-21700/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator 18650 &#8211; Portocaliu",
-          "rank": 48,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-portocaliu/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator 18650 &#8211; Transparent",
-          "rank": 53,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-transparent/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Carcasa Dubla 18650 &#8211; Transparent",
-          "rank": 57,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/carcasa-dubla-18650-clear/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator 18650 &#8211; Rosu",
-          "rank": 66,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-rosu/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator 18650 &#8211; Alb",
-          "rank": 70,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-alb/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator 18650 &#8211; Mov",
-          "rank": 85,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-mov/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator 21700/20700",
-          "rank": 93,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-21700-20700/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator ODB 18650 &#8211; Pizza",
-          "rank": 95,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-odb-18650-pizza/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "acumulator",
-          "product": "Folie Acumulator Dotmod 18350",
-          "rank": 96,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-dotmod-18350/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1411,37 +1788,30 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-clapton-1-0ohm/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
-          "category": "coil prebuilt",
-          "product": "Set Rezistente FCK Coils NI80 (2 bucati) &#8211; Fused Clapton 0.5ohm",
-          "rank": 73,
+          "category": "acumulator",
+          "product": "Folie Acumulator Coil Master 18650",
+          "rank": 20,
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-fused-clapton-0-5ohm/",
-          "evidence": "woocommerce-public-popularity-order"
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-coil-master-18650/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
-          "category": "coil prebuilt",
-          "product": "Set Rezistente FCK Coils NI80 (2 bucati) &#8211; MTL Fused Clapton 0.7ohm",
-          "rank": 90,
+          "category": "bumbac/wick",
+          "product": "Cloud 9 Cotton",
+          "rank": 23,
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-fused-clapton-0-75ohm/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "coil prebuilt",
-          "product": "Set Rezistente FCK Coils NI80 (2 bucati) &#8211; MTL Alien 0.6ohm",
-          "rank": 94,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-micro-alien-0-6ohm/",
-          "evidence": "woocommerce-public-popularity-order"
+          "productUrl": "https://vapepoint.ro/produs/cloud-9-cotton/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1451,57 +1821,19 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/guerrilla-black-ops-tobacco-net-0mg-30ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Head Shot Bourbon Tobacco 0mg 30ml",
-          "rank": 38,
+          "category": "acumulator",
+          "product": "Folie Acumulator Dotmod 18650",
+          "rank": 31,
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/head-shot-bourbon-tobacco-0mg-30ml/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Flavormonks Tobacco Bastards No 69 Whisky Oak 10ml",
-          "rank": 46,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-69-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Flavormonks Tobacco Bastards No 11 Dark Honey 10ml",
-          "rank": 54,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-11-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Flavormonks Tobacco Bastards No 37 Original 10ml",
-          "rank": 71,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-37-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "vapepoint",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Flavormonks Tobacco Bastards No 29 Coffee 10ml",
-          "rank": 77,
-          "observedAt": "2026-08-29",
-          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-29-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-dotmod-18650/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1511,7 +1843,74 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/rola-sarma-crazy-wire-ni80-10m-0-4mm/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Head Shot Bourbon Tobacco 0mg 30ml",
+          "rank": 38,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/head-shot-bourbon-tobacco-0mg-30ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator 18650 &#8211; Galben",
+          "rank": 41,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-galben/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Acumulator Sony VTC6A 21700",
+          "rank": 43,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/acumulator-sony-vtc6a-21700/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "bumbac/wick",
+          "product": "Wick &#8216;n&#8217; Vape Cotton Bacon V2",
+          "rank": 44,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/wick-n-vape-cotton-bacon-v2/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Flavormonks Tobacco Bastards No 69 Whisky Oak 10ml",
+          "rank": 46,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-69-10ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator 18650 &#8211; Portocaliu",
+          "rank": 48,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-portocaliu/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1521,17 +1920,52 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/rola-sarma-crazy-wire-ni80-10m-0-32mm/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
-          "category": "sarma",
-          "product": "Rola Sarma Crazy Wire SS316L 10m &#8211; 0.4mm",
-          "rank": 79,
+          "category": "acumulator",
+          "product": "Folie Acumulator 18650 &#8211; Transparent",
+          "rank": 53,
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vapepoint.ro/produs/rola-sarma-crazy-wire-ss316l-10m-0-4mm/",
-          "evidence": "woocommerce-public-popularity-order"
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-transparent/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Flavormonks Tobacco Bastards No 11 Dark Honey 10ml",
+          "rank": 54,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-11-10ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Carcasa Dubla 18650 &#8211; Transparent",
+          "rank": 57,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/carcasa-dubla-18650-clear/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "bumbac/wick",
+          "product": "BP Mods Pro Vape Cotton &#8211; 2.5mm",
+          "rank": 62,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/bp-mods-pro-vape-cotton-2-5mm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "vapepoint",
@@ -1541,7 +1975,173 @@
           "observedAt": "2026-08-29",
           "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vapepoint.ro/produs/atomizor-khw-mods-dvarw-mtl-fl-rta-22mm-argintiu/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator 18650 &#8211; Rosu",
+          "rank": 66,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-rosu/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator 18650 &#8211; Alb",
+          "rank": 70,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-alb/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Flavormonks Tobacco Bastards No 37 Original 10ml",
+          "rank": 71,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-37-10ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "coil prebuilt",
+          "product": "Set Rezistente FCK Coils NI80 (2 bucati) &#8211; Fused Clapton 0.5ohm",
+          "rank": 73,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-fused-clapton-0-5ohm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "bumbac/wick",
+          "product": "BP Mods Pro Vape Cotton &#8211; 3.0mm",
+          "rank": 74,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/bp-mods-pro-vape-cotton-3-0mm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Flavormonks Tobacco Bastards No 29 Coffee 10ml",
+          "rank": 77,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/aroma-flavormonks-tobacco-bastards-no-29-10ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "sarma",
+          "product": "Rola Sarma Crazy Wire SS316L 10m &#8211; 0.4mm",
+          "rank": 79,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/rola-sarma-crazy-wire-ss316l-10m-0-4mm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "bumbac/wick",
+          "product": "Demon Killer Slacker Cotton Hardcover",
+          "rank": 84,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/demon-killer-slacker-cotton-hardcover/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator 18650 &#8211; Mov",
+          "rank": 85,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-18650-mov/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "coil prebuilt",
+          "product": "Set Rezistente FCK Coils NI80 (2 bucati) &#8211; MTL Fused Clapton 0.7ohm",
+          "rank": 90,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-fused-clapton-0-75ohm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator 21700/20700",
+          "rank": 93,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-21700-20700/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "coil prebuilt",
+          "product": "Set Rezistente FCK Coils NI80 (2 bucati) &#8211; MTL Alien 0.6ohm",
+          "rank": 94,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/set-rezistente-fck-coils-ni80-2-bucati-mtl-micro-alien-0-6ohm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator ODB 18650 &#8211; Pizza",
+          "rank": 95,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-odb-18650-pizza/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "acumulator",
+          "product": "Folie Acumulator Dotmod 18350",
+          "rank": 96,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/folie-acumulator-dotmod-18350/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapepoint",
+          "category": "bumbac/wick",
+          "product": "Fiber N&#8217; Cotton",
+          "rank": 99,
+          "observedAt": "2026-08-29",
+          "source": "https://vapepoint.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://vapepoint.ro/produs/fiber-n-cotton/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1551,7 +2151,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-mrb-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1561,7 +2162,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-ry4-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1571,7 +2173,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/lichid-liqua-10ml-cu-nicotina/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1581,7 +2184,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-dnh-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1591,7 +2195,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/lichid-smokemania-black-coffee-tobacco-30ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1601,7 +2206,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/lichid-tigara-electronica-smokemania-tobacco-menthol/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1611,7 +2217,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-knt-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1621,7 +2228,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-vrg-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "epotion",
@@ -1631,7 +2239,8 @@
           "observedAt": "2026-08-29",
           "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-gold-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1641,17 +2250,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-menthol-pentru-tutun-si-tigari-2/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "viciishop",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Card aromatizant Tobi Menthol pentru tutun si tigari",
-          "rank": 4,
-          "observedAt": "2026-08-29",
-          "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-menthol-pentru-tutun-si-tigari/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1661,7 +2261,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/mb-tutun-rulat-django-original-30g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1671,7 +2272,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-pentru-rulat-golden-virginia-original-50g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1681,7 +2283,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-drum-the-original-50g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1691,7 +2294,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/aroma-tutun-mac-baren-chocolate-16/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1701,7 +2305,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-pentru-rulat-mac-baren-amsterdamer-original-30g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1711,7 +2316,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-drum-white-50g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1721,7 +2327,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-cherry-pentru-tutun-si-tigari/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1731,7 +2338,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/card-aromatizant-tobi-blueberry-pentru-tutun-si-tigari/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1741,7 +2349,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-pueblo-classic-30g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1751,7 +2360,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-pentru-rulat-golden-virginia-the-original-gold-50g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1761,7 +2371,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-rulat-marlboro-crafted-gold-30-gr/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1771,7 +2382,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-bali-shag-authentic-nature-35g-foite/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1781,7 +2393,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-mac-baren-american-blend-30g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1791,7 +2404,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-senator-blue-volume-135g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1801,7 +2415,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/tutun-senator-white-extra-volume-80g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1811,7 +2426,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/lichid-tob-liquids-dry-tobacco-30ml-0mg/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "viciishop",
@@ -1821,7 +2437,8 @@
           "observedAt": "2026-08-29",
           "source": "https://vicii-shop.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://vicii-shop.ro/vandyvape-superfine-mtl-ni80-30gax2-38ga/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "tigaraego",
@@ -1831,7 +2448,8 @@
           "observedAt": "2026-08-29",
           "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://tigaraego.com/cartus-vuse-creamy-tobacco-20mg-2-bucati/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "tigaraego",
@@ -1841,7 +2459,8 @@
           "observedAt": "2026-08-29",
           "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://tigaraego.com/aroma-concentrata-tob-liquids-superior-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "tigaraego",
@@ -1851,7 +2470,8 @@
           "observedAt": "2026-08-29",
           "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://tigaraego.com/lichid-tob-liquids-dry-tobacco-30ml-0mg/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "tigaraego",
@@ -1861,7 +2481,8 @@
           "observedAt": "2026-08-29",
           "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://tigaraego.com/lichid-elfbar-elfliq-nic-salt-cream-tobacco-20mg/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "tigaraego",
@@ -1871,7 +2492,8 @@
           "observedAt": "2026-08-29",
           "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://tigaraego.com/aroma-concentrata-tob-liquids-imperial-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "ecigvapo",
@@ -1881,17 +2503,8 @@
           "observedAt": "2026-08-29",
           "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://ecig-vapo.com/kanthal-035-mm-10-metri/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "ecigvapo",
-          "category": "sarma",
-          "product": "Kanthal Tip A 0,10 mm &#8211; 10 metri",
-          "rank": 47,
-          "observedAt": "2026-08-29",
-          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://ecig-vapo.com/kanthal-tip-a-010-mm-10-metri/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "ecigvapo",
@@ -1901,27 +2514,8 @@
           "observedAt": "2026-08-29",
           "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://ecig-vapo.com/nichelina-sarma-speciala-rezistenta-035-mm-10-metri/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "ecigvapo",
-          "category": "coil prebuilt",
-          "product": "Nickel Coil Ni200 sarma rezistente 0.4mm &#8211; 10 metri",
-          "rank": 37,
-          "observedAt": "2026-08-29",
-          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://ecig-vapo.com/nickel-coil-ni200-sarma-rezistente-0-4mm-10-metri/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "ecigvapo",
-          "category": "coil prebuilt",
-          "product": "Kanthal A1 sârmă rezistențe diametru 0,8mm rolă 9,14m(30fit)",
-          "rank": 38,
-          "observedAt": "2026-08-29",
-          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://ecig-vapo.com/kanthal-a1-sarma-rezistente-diametru-08mm-rola-15m/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "ecigvapo",
@@ -1931,17 +2525,30 @@
           "observedAt": "2026-08-29",
           "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://ecig-vapo.com/tutun-mentolat-10ml-flavourtec/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "ecigvapo",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Tutun Simplu 30ml e-lichid VG + PG",
-          "rank": 81,
+          "category": "coil prebuilt",
+          "product": "Nickel Coil Ni200 sarma rezistente 0.4mm &#8211; 10 metri",
+          "rank": 37,
           "observedAt": "2026-08-29",
           "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://ecig-vapo.com/tutun-simplu-30ml-e-lichid-vg-pg/",
-          "evidence": "woocommerce-public-popularity-order"
+          "productUrl": "https://ecig-vapo.com/nickel-coil-ni200-sarma-rezistente-0-4mm-10-metri/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "coil prebuilt",
+          "product": "Kanthal A1 sârmă rezistențe diametru 0,8mm rolă 9,14m(30fit)",
+          "rank": 38,
+          "observedAt": "2026-08-29",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/kanthal-a1-sarma-rezistente-diametru-08mm-rola-15m/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "ecigvapo",
@@ -1951,7 +2558,8 @@
           "observedAt": "2026-08-29",
           "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-flat-top-si-pcb/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "ecigvapo",
@@ -1961,7 +2569,30 @@
           "observedAt": "2026-08-29",
           "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-top-button-si-pcb/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "sarma",
+          "product": "Kanthal Tip A 0,10 mm &#8211; 10 metri",
+          "rank": 47,
+          "observedAt": "2026-08-29",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/kanthal-tip-a-010-mm-10-metri/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Tutun Simplu 30ml e-lichid VG + PG",
+          "rank": 81,
+          "observedAt": "2026-08-29",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/tutun-simplu-30ml-e-lichid-vg-pg/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "merlin",
@@ -1971,7 +2602,8 @@
           "observedAt": "2026-08-29",
           "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://merlin.ro/produs/aroma-concentrata-tigara-electronica-m3rlin-dark-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "merlin",
@@ -1981,7 +2613,8 @@
           "observedAt": "2026-08-29",
           "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://merlin.ro/produs/aroma-concentrata-tigara-electronica-m3rlin-silver-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "merlin",
@@ -1991,37 +2624,8 @@
           "observedAt": "2026-08-29",
           "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://merlin.ro/produs/tigara-electronica-de-unica-folosinta-elf-bar-cream-tobacco-600puff-2nicotina/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "merlin",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Concentrata Merlin Red Tobacco 10ml",
-          "rank": 56,
-          "observedAt": "2026-08-29",
-          "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://merlin.ro/produs/aroma-concentrata-tigara-electronica-m3rlin-red-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "merlin",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Lichid Liqua Traditional Tobacco 10ml",
-          "rank": 74,
-          "observedAt": "2026-08-29",
-          "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://merlin.ro/produs/lichid-tigara-electronica-liqua-traditional-tobacco-10ml/",
-          "evidence": "woocommerce-public-popularity-order"
-        },
-        {
-          "retailerId": "merlin",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Tutun de rulat Bali Shag White Halfzware 40g",
-          "rank": 78,
-          "observedAt": "2026-08-29",
-          "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-          "productUrl": "https://merlin.ro/produs/tutun-de-rulat-bali-shag-white-halfzware-40g/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
         },
         {
           "retailerId": "merlin",
@@ -2031,7 +2635,195 @@
           "observedAt": "2026-08-29",
           "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://merlin.ro/produs/acumulator-tigara-electronica-sony-vtc6-18650-3000mah/",
-          "evidence": "woocommerce-public-popularity-order"
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "merlin",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Concentrata Merlin Red Tobacco 10ml",
+          "rank": 56,
+          "observedAt": "2026-08-29",
+          "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://merlin.ro/produs/aroma-concentrata-tigara-electronica-m3rlin-red-tobacco-10ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "merlin",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Liqua Traditional Tobacco 10ml",
+          "rank": 74,
+          "observedAt": "2026-08-29",
+          "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://merlin.ro/produs/lichid-tigara-electronica-liqua-traditional-tobacco-10ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "merlin",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Tutun de rulat Bali Shag White Halfzware 40g",
+          "rank": 78,
+          "observedAt": "2026-08-29",
+          "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://merlin.ro/produs/tutun-de-rulat-bali-shag-white-halfzware-40g/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "nouatigaraelectronica",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "USA Mix tobacco Hangsen 10ml",
+          "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://www.nouatigaraelectronica.ro/",
+          "productUrl": "https://www.nouatigaraelectronica.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "nouatigaraelectronica",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "SEC tobacco Hangsen 10ml",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://www.nouatigaraelectronica.ro/",
+          "productUrl": "https://www.nouatigaraelectronica.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "nouatigaraelectronica",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Liqua Traditional Tobacco 10ml",
+          "rank": 3,
+          "observedAt": "2026-08-29",
+          "source": "https://www.nouatigaraelectronica.ro/",
+          "productUrl": "https://www.nouatigaraelectronica.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "nouatigaraelectronica",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Tobacco Hangsen 10ml",
+          "rank": 4,
+          "observedAt": "2026-08-29",
+          "source": "https://www.nouatigaraelectronica.ro/",
+          "productUrl": "https://www.nouatigaraelectronica.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "nouatigaraelectronica",
+          "category": "acumulator",
+          "product": "Acumulator Sony 18650 VTC6 3000 mAh high drain 30A",
+          "rank": 5,
+          "observedAt": "2026-08-29",
+          "source": "https://www.nouatigaraelectronica.ro/",
+          "productUrl": "https://www.nouatigaraelectronica.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vaps",
+          "category": "bumbac/wick",
+          "product": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+          "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vaps",
+          "category": "mod",
+          "product": "Kit Tigara Electronica Vape Jac Vapour VIM AIO Box Mod Slate, 2600 mAh, 2ml TF Tank MTL/DTL, Rezistenta 1ohm Inclusa, Compatibil NicSalts",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vaps",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Pachet Lichid Tigara Electronica Premium Jac Vapour Real Tobacco Gold 60ml / 120ml, Nicotina 3/6/9 mg/ml, High VG, Fabricat in UK",
+          "rank": 3,
+          "observedAt": "2026-08-29",
+          "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vaps",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Pachet Lichid Tigara Electronica Premium Jac Vapour Real Tobacco Silver 60ml / 120ml, Nicotina 3/6/9 mg/ml, High VG, Fabricat in UK",
+          "rank": 4,
+          "observedAt": "2026-08-29",
+          "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vaps",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Vape El Toro Cigarillos, Extras Natural din Tutun Organic Cubanez Premium, Macerat la Rece, 60ml, Nicotina 0-10mg",
+          "rank": 5,
+          "observedAt": "2026-08-29",
+          "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vaps",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Vape El Toro Puros, Extras Natural din Tutun Organic Cubanez Premium, Macerat la Rece, 60ml, Nicotina 0-10mg",
+          "rank": 6,
+          "observedAt": "2026-08-29",
+          "source": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "productUrl": "https://vaps.ro/cea-mai-buna-tigara-electronica/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapshop",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Liqua Traditional Tobacco 10ml",
+          "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://www.vapshop.ro/",
+          "productUrl": "https://www.vapshop.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapshop",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Liqua American Tobacco 10ml",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://www.vapshop.ro/",
+          "productUrl": "https://www.vapshop.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapshop",
+          "category": "acumulator",
+          "product": "Acumulator 18650 VTC6 3000 mAh 30A - Sony",
+          "rank": 3,
+          "observedAt": "2026-08-29",
+          "source": "https://www.vapshop.ro/",
+          "productUrl": "https://www.vapshop.ro/",
+          "evidence": "retailer-labelled-best-seller-discovered",
+          "evidenceTier": "B"
         }
       ]
     }
