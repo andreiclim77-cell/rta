@@ -14,11 +14,11 @@ function waitForMarket(){
   var root=document.getElementById('market2026Root');
   if(!root||!root.querySelector('.market-hero')){setTimeout(waitForMarket,100);return}
   marketUiStarted=true;
-  load('/assets/market-loading-guard.js?v=10');
-  load('/assets/market-ui-recovery.js?v=4');
-  load('/assets/market-management-v2.js?v=4');
+  load('/assets/market-loading-guard.js?v=11');
+  load('/assets/market-ui-recovery.js?v=5');
+  load('/assets/market-management-v2.js?v=4',function(){load('/assets/market-analysis-synthesis.js?v=1')});
   load('/assets/market-hype-ui.js?v=4');
-  load('/assets/market-view-switcher.js?v=4');
+  load('/assets/market-view-switcher.js?v=5');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
 function loadMarket(){if(!isMainGuide())return;load('/assets/market-2026.js?v=4',function(){waitForMarket()})}
