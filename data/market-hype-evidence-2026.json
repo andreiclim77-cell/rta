@@ -1,7 +1,7 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-08-29T19:08:44.877Z",
+  "generatedAt": "2026-08-29T19:56:26.057Z",
   "mode": "hype-source-evidence",
   "truth": {
     "retailUsedAsHype": false,
@@ -14,25 +14,26 @@
     "commercialDiscoveryDoesNotEscalate": true,
     "globalScope": true,
     "productRelevanceValidated": true,
-    "concreteProductTitles": true
+    "concreteProductTitles": true,
+    "upstreamEvidenceMerged": true
   },
   "scan": {
     "queriesRun": 109,
     "queriesWorking": 109,
-    "candidateDocuments": 593,
-    "acceptedUpstreamSignals": 7,
-    "rejectedWrongHostSignals": 33,
+    "candidateDocuments": 582,
+    "acceptedUpstreamSignals": 11,
+    "rejectedWrongHostSignals": 28,
     "acceptedEvidenceEvents": 1,
     "wideQueriesRun": 169,
     "wideQueriesWorking": 169,
-    "wideSignals": 55,
-    "wideEvidenceEvents": 52,
+    "wideSignals": 58,
+    "wideEvidenceEvents": 53,
     "scope": "GLOBAL",
     "directVendorProducts": 0
   },
   "events": [
     {
-      "eventId": "fb1ae2ad8b79178d4bc9",
+      "eventId": "95296bc0c565530e6e5e",
       "kind": "upcoming",
       "category": "RTA",
       "typology": "RDL single",
@@ -54,6 +55,60 @@
           "eventDate": "2026-09-10T00:00:00.000Z",
           "dateConfidence": "explicit",
           "stage": "batch viitor"
+        }
+      ]
+    },
+    {
+      "eventId": "5a6902f01bd18c05f776",
+      "kind": "released",
+      "category": "RTA",
+      "typology": "RDL single",
+      "productName": "OXVA New Theme - v4.3.0-黑五后更换回去",
+      "brand": "OXVA",
+      "stages": [
+        "lansare observată"
+      ],
+      "sourceTypeCount": 1,
+      "sourceHostCount": 1,
+      "sources": [
+        {
+          "sourceType": "manufacturer-official",
+          "host": "store.oxva.com",
+          "url": "https://store.oxva.com/collections/all",
+          "title": "OXVA New Theme - v4.3.0-黑五后更换回去",
+          "publishedAt": "2026-08-28T23:07:00.000Z",
+          "eventDate": "2026-08-28T23:07:00.000Z",
+          "stage": "lansat",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "dateConfidence": "release-observed"
+        }
+      ]
+    },
+    {
+      "eventId": "f6ace10d6a0dcc8d463a",
+      "kind": "released",
+      "category": "MODURI",
+      "typology": "dual battery",
+      "productName": "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
+      "brand": null,
+      "stages": [
+        "lansare observată"
+      ],
+      "sourceTypeCount": 1,
+      "sourceHostCount": 1,
+      "sources": [
+        {
+          "sourceType": "manufacturer-official",
+          "host": "store.geekvape.com",
+          "url": "https://store.geekvape.com/collections/all-products",
+          "title": "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
+          "publishedAt": "2026-08-28T11:11:00.000Z",
+          "eventDate": "2026-08-28T11:11:00.000Z",
+          "stage": "lansat",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "dateConfidence": "release-observed"
         }
       ]
     }
