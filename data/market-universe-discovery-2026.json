@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "scopeYear": 2026,
+  "country": "RO",
+  "purpose": "Continuously rediscover the Romanian consumer online RTA/rebuildable retail universe. Candidates never enter market statistics until validated.",
+  "searchQueries": [
+    "\"RTA\" vape Romania magazin",
+    "\"atomizoare servisabile\" Romania",
+    "\"RBA\" \"RTA\" vape Romania",
+    "\"RTA tank\" Romania vape",
+    "\"Kanthal\" bumbac vape Romania magazin",
+    "\"Kayfun\" Romania vape magazin",
+    "\"Dvarw\" Romania vape magazin",
+    "\"Taifun GTR\" Romania vape magazin",
+    "\"Arcana Mods\" Romania vape",
+    "\"Ennequadro\" Romania vape",
+    "\"Dicodes\" board Romania vape",
+    "\"YiHi\" SXmini Romania vape",
+    "\"MTL RTA\" Romania magazin",
+    "\"High End\" RTA Romania vape"
+  ],
+  "searchEndpoints": [
+    {
+      "id": "bing-rss",
+      "urlTemplate": "https://www.bing.com/search?format=rss&q={query}",
+      "kind": "public-search-discovery",
+      "nonAuthoritative": true
+    },
+    {
+      "id": "duckduckgo-html",
+      "urlTemplate": "https://html.duckduckgo.com/html/?q={query}",
+      "kind": "public-search-discovery",
+      "nonAuthoritative": true
+    }
+  ],
+  "manufacturerSignals": [
+    {"maker":"KHW Mods / Dvarw","url":"https://www.khwmods.com/","kind":"official-maker-product-release"},
+    {"maker":"Dicodes","url":"https://www.dicodes-mods.com/shop-partner.html","kind":"official-maker-dealer-discovery"},
+    {"maker":"YiHi / SXmini","url":"https://www.yihisxmini.com/","kind":"official-maker-product-release"},
+    {"maker":"SmokerStore / Taifun","url":"https://www.smokerstore.de/","kind":"official-maker-product-release"},
+    {"maker":"SvoeMesto / Kayfun","url":"https://svoemesto.de/","kind":"official-maker-product-release"}
+  ],
+  "candidateValidation": {
+    "mustBeConsumerRetail": true,
+    "mustServeRomania": true,
+    "mustHavePublicOnlineCatalog": true,
+    "mustShowRtaOrRebuildableEvidence": true,
+    "excludeMarketplaceOnly": true,
+    "excludeB2BOnly": true,
+    "excludeEditorialOnly": true,
+    "excludeForeignRetailerWithoutRomanianStorefront": true
+  },
+  "discoveryTerms": [
+    "rta","rba","rdta","atomizor servisabil","rebuildable","kayfun","dvarw","taifun","kanthal","ni80","bumbac","wick","dicodes","yihi","sxmini","arcana","ennequadro"
+  ]
+}
