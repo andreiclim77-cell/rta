@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T21:35:54.347Z",
+  "generatedAt": "2026-08-29T21:43:23.615Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -24,8 +24,10 @@
     "concreteProductTitles": true,
     "genericVendorTitlesRejected": true,
     "preorderCardEtaRecovery": true,
+    "expandedCommercialCatalogDiscovery": true,
     "symmetric30DayEventWindow": true,
     "futureEtaMayExceed30Days": false,
+    "pastEtaIsNotRelease": true,
     "currentVendorRtaEtaScan": true,
     "etaPastIsNotRelease": true,
     "signalLookback30dEtaHorizon365d": false,
@@ -46,10 +48,10 @@
   "scan": {
     "queries": 90,
     "working": 90,
-    "rawDocs": 648,
-    "preCandidates": 23,
-    "resolvedVendorPages": 10,
-    "pagesFetched": 20,
+    "rawDocs": 656,
+    "preCandidates": 27,
+    "resolvedVendorPages": 13,
+    "pagesFetched": 22,
     "events": 0,
     "samplePre": [
       {
@@ -65,12 +67,12 @@
         "title": "RTA Fleet - fmis-web"
       },
       {
-        "url": "https://www.riversidetransit.com/",
-        "title": "Riverside Transit Agency - Home"
+        "url": "https://rta.com/",
+        "title": "RTA Brand: Luxury Streetwear Clothing for Men & Women"
       },
       {
-        "url": "https://www.riversidetransit.com/index.php/maps-schedules",
-        "title": "Riverside Transit Agency - Maps & Schedules"
+        "url": "https://rtafleet.com/",
+        "title": "RTA Fleet Management Software | RTA Fleet"
       }
     ],
     "explicitQueries": 45,
@@ -138,11 +140,11 @@
     "profilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 188,
-        "productPages": 186,
+        "productPages": 187,
         "events": 1,
-        "titleFallbacks": 7,
+        "titleFallbacks": 8,
         "samples": [
           {
             "name": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
@@ -190,20 +192,14 @@
       }
     ],
     "productLinksV2": 478,
-    "productPagesV2": 476,
+    "productPagesV2": 477,
     "eventsV2": 1,
-    "preorderPagesFetched": 7,
-    "preorderRtaLinks": 3,
+    "preorderCatalogsRequested": 4,
+    "preorderPagesFetched": 0,
+    "preorderRtaLinks": 0,
     "preorderContextEvents": 0,
-    "preorderPageFallbackEvents": 1,
-    "preorderRecoveredSample": [
-      {
-        "name": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer",
-        "eventDate": "2026-09-10T00:00:00.000Z",
-        "stage": "batch viitor",
-        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html"
-      }
-    ],
+    "preorderPageFallbackEvents": 0,
+    "preorderRecoveredSample": [],
     "currentVendorPagination": [
       {
         "base": "https://www.3fvape.com/39-new-arrivals",
@@ -412,7 +408,7 @@
             "resolvedUrl": "https://www.3fvape.com/57-preorder"
           },
           {
-            "page": 2,
+            "page": 3,
             "fetched": true,
             "links": 6,
             "newLinks": 0,
@@ -837,15 +833,16 @@
       }
     ],
     "currentVendorEvents": 3,
-    "upstreamEvidenceEvents": 69,
-    "upstreamEventsAccepted": 6,
-    "upstreamRejectedTitle": 71,
+    "upstreamEvidenceEvents": 53,
+    "upstreamEventsAccepted": 7,
+    "upstreamRejectedTitle": 50,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
-    "finalCategoryRejected": 5,
+    "finalCategoryRejected": 6,
     "finalCategoryRejectedSample": [
       "VAPORESSO » Premium Vape Brand Manufacture",
+      "More Choices for Kids and Teens from YouTube",
       "OXVA New Theme - v4.3.0-黑五后更换回去",
       "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "vaporesso| By YIGUO SEO Perf.Opt v1.0",
@@ -876,8 +873,8 @@
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T21:34:24.754Z",
-      "lastSeenAt": "2026-08-29T21:35:53.921Z",
+      "firstSeenAt": "2026-08-29T21:41:59.984Z",
+      "lastSeenAt": "2026-08-29T21:43:23.072Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
