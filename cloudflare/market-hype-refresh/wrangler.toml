@@ -1,0 +1,17 @@
+name = "ghid-rta-market-hype-refresh"
+main = "worker.mjs"
+compatibility_date = "2026-08-01"
+workers_dev = true
+routes = [
+  { pattern = "ghid-rta.ro/__market-hype-refresh*", zone_name = "ghid-rta.ro" }
+]
+
+[vars]
+GITHUB_OWNER = "andreiclim77-cell"
+GITHUB_REPO = "rta"
+GITHUB_WORKFLOW = "market-hype-2026-sync.yml"
+GITHUB_REF = "main"
+
+[[kv_namespaces]]
+binding = "RTA_METRICS"
+id = "5d3abc9ae882498ea83129ed0b59c546"

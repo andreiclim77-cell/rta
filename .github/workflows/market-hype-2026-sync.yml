@@ -1,0 +1,96 @@
+name: Market 2026 Hype Radar
+
+on:
+  schedule:
+    # 06:00 Europe/Bucharest; DST gated below.
+    - cron: '0 3 * * *'
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/collect-market-hype-radar-2026.js"
+      - "data/market-hype-sources-2026.json"
+      - ".github/workflows/market-hype-2026-sync.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-2026-hype-radar
+  cancel-in-progress: true
+
+jobs:
+  collect-hype-radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Gate 06:00 Bucharest
+        id: gate
+        shell: bash
+        run: |
+          run_sync=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            offset="$(TZ=Europe/Bucharest date +%z)"
+            cron="${{ github.event.schedule }}"
+            if { [ "$offset" = "+0300" ] && [ "$cron" != "0 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "0 4 * * *" ]; }; then run_sync=false; fi
+          fi
+          echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        if: steps.gate.outputs.run_sync == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        if: steps.gate.outputs.run_sync == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Collect upstream pre-announcement signals
+        if: steps.gate.outputs.run_sync == 'true'
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
+        run: node tools/collect-market-hype-radar-2026.js --write
+
+      - name: Validate Hype Radar truth rules
+        if: steps.gate.outputs.run_sync == 'true'
+        run: |
+          node --check tools/collect-market-hype-radar-2026.js
+          node - <<'NODE'
+          const fs=require('fs');
+          const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
+          if(Number(d.scopeYear)!==2026)throw new Error('Hype scope must remain 2026');
+          if(Number(d.schemaVersion)<2)throw new Error('Hype semantic schema v2 did not run');
+          if(d.mode!=='pre-market-upstream-only')throw new Error('Hype mode is not upstream-only');
+          if(!d.truth||d.truth.retailSourcesUsed!==false||d.truth.commercialPagesRejected!==true||d.truth.classificationUsesNavigation!==false)throw new Error('Retail/commercial/navigation exclusion truth rule missing');
+          if(d.truth.brandsExposed!==false||d.truth.shopLinksExposed!==false||d.truth.pricesExposed!==false)throw new Error('Public Hype output exposes prohibited fields');
+          if(!d.methodology||!/narrow context windows/i.test(String(d.methodology.classification||'')))throw new Error('Semantic context classifier did not run');
+          for(const cat of ['RTA','MODURI','ACCESORII'])if(!Array.isArray(d.categories&&d.categories[cat]))throw new Error(`Missing Hype category ${cat}`);
+          for(const rows of Object.values(d.categories||{}))for(const x of rows||[]){
+            if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Brand/shop/price leaked into public Hype event');
+            if(x.decision&&x.decision.code==='BUY_HYPE'&&!(x.newestSignalHours<14*24&&x.sourceTypeCount>=2&&x.velocityVerified===true&&Number(x.velocity7d)>=3))throw new Error('BUY_HYPE issued without every required condition');
+          }
+          console.log(`Hype gate OK: ${d.sourceStatus.qualifiedPrelaunchSignals} qualified semantic pre-announcement signals; retail=false; classificationNavigation=false.`);
+          NODE
+
+      - name: Publish complete Hype Radar snapshot
+        if: steps.gate.outputs.run_sync == 'true'
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- data/market-hype-radar-2026.json)" ]; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market-hype-radar-2026.json
+          git commit -m "Snapshot pre-market Hype Radar 2026"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt*3))
+          done
+          exit 1
