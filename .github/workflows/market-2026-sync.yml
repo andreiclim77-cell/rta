@@ -110,11 +110,24 @@ jobs:
         run: |
           if git diff --quiet -- data/market-2026.json data/market-history-2026; then
             echo "No Market 2026 changes."
-          else
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add data/market-2026.json data/market-history-2026
-            git commit -m "Snapshot Romania RTA market 2026"
-            git pull --rebase
-            git push
+            exit 0
           fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market-2026.json data/market-history-2026
+          git commit -m "Snapshot Romania RTA market 2026"
+
+          for attempt in 1 2 3 4 5; do
+            echo "Market snapshot push attempt $attempt/5"
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then
+              echo "Market snapshot published successfully."
+              exit 0
+            fi
+            sleep $((attempt * 3))
+          done
+
+          echo "Market snapshot could not be published after 5 race-safe attempts." >&2
+          exit 1
