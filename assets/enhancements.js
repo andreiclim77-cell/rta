@@ -9,6 +9,7 @@ function load(src,done){
   document.head.appendChild(script)
 }
 function style(src){if(document.querySelector('link[data-rta-style="'+src.replace(/"/g,'\\"')+'"]'))return;var l=document.createElement('link');l.rel='stylesheet';l.href=src;l.dataset.rtaStyle=src;document.head.appendChild(l)}
+function stabilizeMarket(){if(document.getElementById('marketBootStabilizer'))return;var s=document.createElement('style');s.id='marketBootStabilizer';s.textContent='#market2026Root:not(.market-load-guard-active):not([data-market-guard-ready="1"]){visibility:hidden;min-height:520px;overflow-anchor:none}';document.head.appendChild(s);setTimeout(function(){var root=document.getElementById('market2026Root'),x=document.getElementById('marketBootStabilizer');if(x&&root&&!root.classList.contains('market-load-guard-active')&&root.dataset.marketGuardReady!=='1')x.remove()},12000)}
 function isMainGuide(){return !/^\/rta-lab(?:\/|$)/i.test(location.pathname)}
 function waitForMarket(){
   if(marketUiStarted||!isMainGuide())return;
@@ -24,6 +25,6 @@ function waitForMarket(){
   load('/assets/market-view-switcher.js?v=5');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
-function loadMarket(){if(!isMainGuide())return;load('/assets/market-2026.js?v=4',function(){waitForMarket()})}
+function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=4',function(){waitForMarket()})}
 load('/assets/enhancements-core.js?v=8',function(){loadMarket()});
 })();
