@@ -1,0 +1,86 @@
+name: Market 2026 Romania Universe Audit
+
+on:
+  schedule:
+    # 05:10 Europe/Bucharest; DST gated below. Runs before 06:00 market refresh.
+    - cron: '10 2 * * *'
+    - cron: '10 3 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/audit-market-universe-2026.js"
+      - "data/market-universe-discovery-2026.json"
+      - "data/market-retailers-2026.json"
+      - ".github/workflows/market-universe-audit-2026.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-2026-romania-universe
+  cancel-in-progress: true
+
+jobs:
+  audit-universe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Gate 05:10 Bucharest
+        id: gate
+        shell: bash
+        run: |
+          run_sync=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            offset="$(TZ=Europe/Bucharest date +%z)"
+            cron="${{ github.event.schedule }}"
+            if { [ "$offset" = "+0300" ] && [ "$cron" != "10 2 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "10 3 * * *" ]; }; then run_sync=false; fi
+          fi
+          echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        if: steps.gate.outputs.run_sync == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        if: steps.gate.outputs.run_sync == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Audit Romanian online RTA retail universe
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/audit-market-universe-2026.js --write
+
+      - name: Validate audit integrity
+        if: steps.gate.outputs.run_sync == 'true'
+        run: |
+          node --check tools/audit-market-universe-2026.js
+          node - <<'NODE'
+          const fs=require('fs');
+          const a=JSON.parse(fs.readFileSync('data/market-universe-audit-2026.json','utf8'));
+          const r=JSON.parse(fs.readFileSync('data/market-retailers-2026.json','utf8'));
+          if(Number(a.scopeYear)!==2026)throw new Error('Universe audit scope must be 2026');
+          if(Number(a.registryStorefronts)!==(r.retailers||[]).length)throw new Error('Universe denominator mismatch');
+          if(!a.nationalUniverseGate||typeof a.nationalUniverseGate.pass!=='boolean')throw new Error('Universe gate missing');
+          console.log(`Universe gate: ${a.nationalUniverseGate.pass?'PASS':'HOLD'} · registry ${a.registryStorefronts} · new ${a.validatedNewRetailers.length} · unresolved ${a.unresolvedCandidates.length}`);
+          NODE
+
+      - name: Publish universe audit
+        if: steps.gate.outputs.run_sync == 'true'
+        shell: bash
+        run: |
+          if git diff --quiet -- data/market-universe-audit-2026.json; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market-universe-audit-2026.json
+          git commit -m "Audit Romania RTA online retail universe 2026"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt*3))
+          done
+          exit 1
