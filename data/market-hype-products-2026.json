@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T20:20:58.297Z",
+  "generatedAt": "2026-08-29T20:32:40.252Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -27,6 +27,7 @@
     "etaPastIsNotRelease": true,
     "signalLookback30dEtaHorizon365d": true,
     "futureEtaMayExceed30Days": true,
+    "currentVendorProductTitleResolved": true,
     "upstreamEvidenceMerged": true,
     "observedReleaseIsNotClaimedAsExactReleaseDate": true,
     "eligibleTrustedContextCanCarryProductClassification": true,
@@ -37,10 +38,10 @@
   "scan": {
     "queries": 74,
     "working": 74,
-    "rawDocs": 555,
-    "preCandidates": 23,
-    "resolvedVendorPages": 11,
-    "pagesFetched": 20,
+    "rawDocs": 554,
+    "preCandidates": 24,
+    "resolvedVendorPages": 10,
+    "pagesFetched": 19,
     "events": 0,
     "samplePre": [
       {
@@ -52,12 +53,12 @@
         "title": "Coupon & Discount - 3FVape"
       },
       {
-        "url": "https://www.transitrta.com/",
-        "title": "Welcome to RTA – RTA is your connection to all corners of Central …"
+        "url": "https://app.rtafleet.com/",
+        "title": "RTA Fleet - fmis-web"
       },
       {
-        "url": "https://www.iriderta.org/",
-        "title": "Dayton RTA"
+        "url": "https://rtafleet.com/",
+        "title": "RTA Fleet Management Software | RTA Fleet"
       },
       {
         "url": "https://rta.com/",
@@ -80,7 +81,7 @@
       {
         "id": "3fvape",
         "catalogPages": 44,
-        "catalogFetched": 24,
+        "catalogFetched": 23,
         "productLinks": 183,
         "productPages": 182,
         "events": 0,
@@ -123,7 +124,7 @@
         "samples": []
       }
     ],
-    "catalogPagesFetched": 52,
+    "catalogPagesFetched": 51,
     "productLinks": 472,
     "productPagesFetched": 471,
     "profilesV2": [
@@ -187,20 +188,80 @@
     "currentVendorRtaLinks": 153,
     "currentVendorProductPages": 150,
     "currentVendorPhraseHits": 3,
-    "currentVendorEvents": 0,
-    "upstreamEvidenceEvents": 51,
-    "upstreamEventsAccepted": 2,
-    "upstreamRejectedTitle": 52,
+    "currentVendorPhraseSample": [
+      {
+        "url": "https://www.3fvape.com/rta/74530-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pctg-4ml-22mm-diamter.html",
+        "title": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer"
+      },
+      {
+        "url": "https://www.3fvape.com/rta/74529-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pei-4ml-22mm-diamter.html",
+        "title": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer"
+      },
+      {
+        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
+        "title": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer"
+      }
+    ],
+    "currentVendorEvents": 3,
+    "upstreamEvidenceEvents": 56,
+    "upstreamEventsAccepted": 5,
+    "upstreamRejectedTitle": 53,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
-    "finalCategoryRejected": 2,
+    "finalCategoryRejected": 5,
     "finalCategoryRejectedSample": [
+      "VAPORESSO » Premium Vape Brand Manufacture",
       "OXVA New Theme - v4.3.0-黑五后更换回去",
-      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local"
+      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
+      "vaporesso| By YIGUO SEO Perf.Opt v1.0",
+      "MOVE BEYOND ORDINARY - Vaporesso"
     ]
   },
   "products": [
+    {
+      "productName": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer",
+      "brand": "RekaVape",
+      "category": "RTA",
+      "typology": "MTL single",
+      "window": "before",
+      "stage": "IMMINENT",
+      "stageLabel": "ETA / precomandă",
+      "eventDate": "2026-09-30T00:00:00.000Z",
+      "dateConfidence": "explicit",
+      "firstSeenAt": "2026-08-29T20:32:39.871Z",
+      "lastSeenAt": "2026-08-29T20:32:39.871Z",
+      "ageHours": 0,
+      "sourceCount": 2,
+      "eligibleSources": 0,
+      "sources": [
+        {
+          "host": "3fvape.com",
+          "url": "https://www.3fvape.com/rta/74530-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pctg-4ml-22mm-diamter.html",
+          "title": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer",
+          "sourceType": "vendor-discovery",
+          "decisionEligible": false,
+          "discoveryOnly": true,
+          "eventDate": "2026-09-30T00:00:00.000Z",
+          "dateConfidence": "explicit-vendor-eta",
+          "stage": "ETA / precomandă",
+          "observedAt": "2026-08-29T20:32:39.871Z"
+        },
+        {
+          "host": "3fvape.com",
+          "url": "https://www.3fvape.com/rta/74529-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pei-4ml-22mm-diamter.html",
+          "title": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer",
+          "sourceType": "vendor-discovery",
+          "decisionEligible": false,
+          "discoveryOnly": true,
+          "eventDate": "2026-09-30T00:00:00.000Z",
+          "dateConfidence": "explicit-vendor-eta",
+          "stage": "ETA / precomandă",
+          "observedAt": "2026-08-29T20:32:39.871Z"
+        }
+      ],
+      "id": "a03d17a96eb746635edf"
+    },
     {
       "id": "95296bc0c565530e6e5e",
       "productName": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
@@ -212,8 +273,8 @@
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T20:20:02.088Z",
-      "lastSeenAt": "2026-08-29T20:20:02.088Z",
+      "firstSeenAt": "2026-08-29T20:31:45.669Z",
+      "lastSeenAt": "2026-08-29T20:32:39.871Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
@@ -233,8 +294,8 @@
     }
   ],
   "summary": {
-    "total": 1,
-    "before": 1,
+    "total": 2,
+    "before": 2,
     "after": 0,
     "explicitAfter": 0,
     "observedAfter": 0
