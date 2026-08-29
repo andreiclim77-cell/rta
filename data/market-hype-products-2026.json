@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 13,
+  "schemaVersion": 14,
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T19:01:02.326Z",
+  "generatedAt": "2026-08-29T19:08:44.877Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -20,41 +20,43 @@
     "newArrivalPathOnlyForDiscovery": true,
     "vendorProfileScan": true,
     "transportRtaRejected": true,
-    "multiVendor": true
+    "multiVendor": true,
+    "concreteProductTitles": true,
+    "genericVendorTitlesRejected": true
   },
   "scan": {
     "queries": 74,
     "working": 74,
-    "rawDocs": 527,
-    "preCandidates": 20,
-    "resolvedVendorPages": 10,
-    "pagesFetched": 14,
+    "rawDocs": 742,
+    "preCandidates": 16,
+    "resolvedVendorPages": 5,
+    "pagesFetched": 15,
     "events": 0,
     "samplePre": [
       {
-        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
-        "title": "Buy YFTK Flash e-Vapor V4.5S+ Style RTA 316SS 23mm Tank Atomizer"
+        "url": "https://www.riversidetransit.com/",
+        "title": "Riverside Transit Agency - Home"
       },
       {
-        "url": "https://www.3fvape.com/content/9-coupon-discount",
-        "title": "Coupon & Discount - 3FVape"
+        "url": "https://www.riversidetransit.com/index.php/maps-schedules",
+        "title": "Riverside Transit Agency - Maps & Schedules"
       },
       {
-        "url": "https://www.rta.ae/wps/portal/rta/ae/home/",
-        "title": "Roads & Transport Authority - Home"
+        "url": "https://app.rtafleet.com/",
+        "title": "RTA Fleet - fmis-web"
       },
       {
-        "url": "https://www.rta.ae/wps/portal/rta/ae/home/rta-services",
-        "title": "RTA Services - Roads & Transport Authority"
+        "url": "https://rtafleet.com/",
+        "title": "RTA Fleet Management Software | RTA Fleet"
       },
       {
-        "url": "https://traffic.rta.ae/trfesrv/public_resources/ffu/fines-payment.do?switchLanguage=en",
-        "title": "Dubai Traffic Fines | RTA"
+        "url": "https://app.rtafleet.com/login",
+        "title": "fmis-web"
       }
     ],
     "explicitQueries": 33,
     "explicitWorking": 33,
-    "explicitRaw": 231,
+    "explicitRaw": 330,
     "explicitCandidates": 0,
     "explicitPages": 0,
     "explicitPhraseHits": 0,
@@ -79,7 +81,7 @@
         "catalogPages": 24,
         "catalogFetched": 24,
         "productLinks": 180,
-        "productPages": 180,
+        "productPages": 168,
         "events": 0,
         "samples": []
       },
@@ -113,13 +115,70 @@
     ],
     "catalogPagesFetched": 52,
     "productLinks": 472,
-    "productPagesFetched": 471
+    "productPagesFetched": 459,
+    "profilesV2": [
+      {
+        "id": "3fvape",
+        "catalogFetched": 23,
+        "productLinks": 188,
+        "productPages": 187,
+        "events": 1,
+        "titleFallbacks": 8,
+        "samples": [
+          {
+            "name": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
+            "eventDate": "2026-09-10T00:00:00.000Z",
+            "stage": "batch viitor",
+            "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html"
+          }
+        ]
+      },
+      {
+        "id": "2fdeal",
+        "catalogFetched": 24,
+        "productLinks": 180,
+        "productPages": 180,
+        "events": 0,
+        "titleFallbacks": 47,
+        "samples": []
+      },
+      {
+        "id": "shareavape",
+        "catalogFetched": 2,
+        "productLinks": 72,
+        "productPages": 72,
+        "events": 0,
+        "titleFallbacks": 8,
+        "samples": []
+      },
+      {
+        "id": "ecigone",
+        "catalogFetched": 2,
+        "productLinks": 38,
+        "productPages": 38,
+        "events": 0,
+        "titleFallbacks": 1,
+        "samples": []
+      },
+      {
+        "id": "sourcemore",
+        "catalogFetched": 0,
+        "productLinks": 0,
+        "productPages": 0,
+        "events": 0,
+        "titleFallbacks": 0,
+        "samples": []
+      }
+    ],
+    "productLinksV2": 478,
+    "productPagesV2": 477,
+    "eventsV2": 1
   },
   "products": [
     {
-      "id": "e0786af13e5bebc73728",
-      "productName": "3FVape",
-      "brand": "3FVape",
+      "id": "fb1ae2ad8b79178d4bc9",
+      "productName": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
+      "brand": "YFTK",
       "category": "RTA",
       "typology": "RDL single",
       "window": "before",
@@ -127,8 +186,8 @@
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T19:00:08.239Z",
-      "lastSeenAt": "2026-08-29T19:00:08.239Z",
+      "firstSeenAt": "2026-08-29T19:08:26.653Z",
+      "lastSeenAt": "2026-08-29T19:08:26.653Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
@@ -136,8 +195,8 @@
         {
           "host": "3fvape.com",
           "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
-          "title": "3FVape",
-          "sourceType": "vendor-rta-newarrival-path",
+          "title": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
+          "sourceType": "clone-original-vendor",
           "decisionEligible": false,
           "discoveryOnly": true,
           "eventDate": "2026-09-10T00:00:00.000Z",
