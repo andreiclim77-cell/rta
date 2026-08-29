@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "scopeYear": 2026,
   "timezone": "Europe/Bucharest",
   "lookbackHours": 72,
@@ -11,7 +11,7 @@
     "retailIsNeverHype": true,
     "rejectCommercialPages": true,
     "commercialRejectTerms": ["add to cart","buy now","in stock","out of stock","checkout","shopping cart","shop now","order now","adauga in cos","adaugă în coș","cumpara acum","cumpără acum","în stoc","in stoc","stoc epuizat","vendors","vendor offer"],
-    "preAnnouncementTerms": ["teaser","sneak peek","coming soon","prototype","final prototype","prototype final","prototype reveal","first batch","first batch production","sample sent","samples sent","sample sent to reviewers","sent to reviewers","announcement soon","launch announcement","pre-announcement","pre announcement","pre-order soon","preorder soon","pre-orders soon","preorders soon","pre-order opens","preorder opens","waitlist soon","certification passed","production started","production sample","review sample","review coming","prototype received","first look soon","new rta announced","new mod announced","new accessory announced"],
+    "preAnnouncementTerms": ["teaser","sneak peek","coming soon","prototype","final prototype","prototype final","prototype reveal","engineering sample","pre-production sample","production sample","first batch","first batch production","sample sent","samples sent","sample sent to reviewers","sent to reviewers","review sample","reviewer sample","sample received","prototype received","review coming","first look soon","announcement soon","launch announcement","launching soon","release soon","reveal soon","pre-announcement","pre announcement","pre-order soon","preorder soon","pre-orders soon","preorders soon","pre-order opens","preorder opens","waitlist soon","waitlist open","notify me","certification passed","tpd notified","notification passed","production started","mass production","shipping to reviewers","new rta announced","new mod announced","new accessory announced"],
     "engagementTerms": ["when release","release date","when available","where can i get","waitlist","can't wait","cant wait","take my money","need this","want this"],
     "beginnerQuestionTerms": ["which rta","what rta","best rta for","first rta","beginner rta","which mod","what mod","first mod","beginner mod","what wire","which wire","what cotton","which cotton"],
     "complaintTerms": ["leak","leaking","condensation","whistle","whistling","hot spot","hotspot","bad machining","thread issue","cracked glass","button issue","board issue","battery door","510 issue"],
@@ -50,18 +50,18 @@
     {"name":"Wotofo","domains":["wotofo.com"]},
     {"name":"Vaporesso","domains":["vaporesso.com"]},
     {"name":"VOOPOO","domains":["voopoo.com"]},
-    {"name":"ThunderCloud","domains":[]},
+    {"name":"ThunderHead Creations","domains":["thunderheadcreations.com"]},
+    {"name":"Telli's Mod","domains":["tellismod.com"]},
+    {"name":"Fakirs Mods","domains":["fakirsmods.com"]},
+    {"name":"Hussar","domains":["hussarvapes.com"]},
     {"name":"Ennequadro","domains":[]},
     {"name":"YG Creations","domains":[]},
-    {"name":"Telli's Mod","domains":[]},
     {"name":"Monarchy","domains":[]},
-    {"name":"Fakirs Mods","domains":[]},
-    {"name":"Hussar","domains":[]},
     {"name":"GD Mods","domains":[]},
     {"name":"Ambition Mods","domains":[]}
   ],
-  "forumDomains": ["e-cigarette-forum.com","vapingunderground.com","forum.planetofthevapes.co.uk","forum-ecigarette.com","worldofkrazzy.forum-ecigarette.com","forum.e-liquid-recipes.com","rovapers.eu"],
-  "independentNewsDomains": ["vaping360.com","ecigclick.co.uk","vapingpost.com","vapouround.co.uk"],
+  "forumDomains": ["e-cigarette-forum.com","vapingunderground.com","forum.planetofthevapes.co.uk","forum-ecigarette.com","worldofkrazzy.forum-ecigarette.com","forum.e-liquid-recipes.com","rovapers.eu","sigarettaelettronicaforum.com"],
+  "independentNewsDomains": ["vaping360.com","ecigclick.co.uk","vapingpost.com","vapouround.co.uk","en.2firsts.com"],
   "categories": {
     "RTA": ["MTL single","MTL top airflow","RDL single","DL single","DL dual"],
     "MODURI": ["single battery","dual battery","squonk","side by side"],
@@ -74,6 +74,7 @@
     "hidePrices": true,
     "returnHtmlCategories": ["RTA","MODURI","ACCESORII"],
     "returnJson": true,
-    "includeLastUpdated": true
+    "includeLastUpdated": true,
+    "includeWarnings": true
   }
 }
