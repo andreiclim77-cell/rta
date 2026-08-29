@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 4,
+  "scopeYear": 2026,
+  "timezone": "Europe/Bucharest",
+  "nationalAudit": {
+    "status": "in_progress",
+    "discoveryCertified": false,
+    "lastAuditedAt": "2026-08-29",
+    "claimRule": "100% Romania poate fi afisat numai cand discoveryCertified=true si fiecare storefront din registrul national are colectare zilnica exhaustiva si verificata.",
+    "unitStorefront": "domeniu/site online distinct",
+    "unitOperator": "operator economic unic; storefront-urile aceluiasi operator nu se dubleaza in indicatorul operatorilor"
+  },
+  "collectorPolicy": {
+    "publicPagesOnly": true,
+    "requestsPerSecondMax": 1,
+    "maxPagesPerSeed": 4,
+    "userAgent": "Ghid-RTA-Market-Observatory/4.0 (+https://ghid-rta.ro/)",
+    "noSalesInference": true,
+    "dailyRefresh": true,
+    "refreshTarget": "07:00 Europe/Bucharest",
+    "coverageTarget": "national-online-rta-ecosystem",
+    "coverageRule": "Orice storefront romanesc identificat cu oferta RTA/rebuildable ramane in registru inclusiv cand are zero produse active, blocheaza colectarea sau necesita parser dedicat. Golurile se raporteaza explicit; nu se estimeaza.",
+    "notes": "Registru national canonic 2026. Colectare exclusiv din surse publice, cu provenance si timestamp."
+  },
+  "retailers": [
+    {
+      "id":"smokee","name":"Smokee","url":"https://smokee.ro/","country":"RO","mode":"smokee-api","status":"monitored","operatorId":"scaby-vape-ro47040419","coverage":["RTA","sarme","coiluri prebuilt","bumbac","moduri/chipseturi","acumulatori/incarcatoare","unelte","componente RTA","lichide tutunoase/NET/DIY"],"seeds":[]
+    },
+    {
+      "id":"vaperia","name":"Vaperia","url":"https://vaperia.ro/","country":"RO","mode":"public-html","status":"monitored","operatorId":"vape-style-ro34435182","coverage":["RTA","RBA","sarme","coiluri","bumbac","componente RTA","moduri","acumulatori/incarcatoare","unelte"],"seeds":[{"url":"https://vaperia.ro/rta","categoryHint":"RTA","maxPages":4},{"url":"https://vaperia.ro/baze-rba-rta","categoryHint":"mixed","maxPages":4},{"url":"https://vaperia.ro/rezistente-d-i-y","categoryHint":"mixed","maxPages":4},{"url":"https://vaperia.ro/accesorii-60-4","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"vapepoint","name":"VapePoint","url":"https://vapepoint.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","RDA/RDTA","moduri","acumulatori/incarcatoare","accesorii","lichide tutunoase"],"seeds":[{"url":"https://vapepoint.ro/categorie/atomizoare/rta/","categoryHint":"RTA","maxPages":4},{"url":"https://vapepoint.ro/categorie/kituri-si-moduri/","categoryHint":"mod","maxPages":4},{"url":"https://vapepoint.ro/categorie/lichide/","categoryHint":"lichid","maxPages":4}]
+    },
+    {
+      "id":"vapetronic","name":"Vapetronic","url":"https://vapetronic.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","coiluri","bumbac","moduri","acumulatori/incarcatoare","unelte","componente"],"seeds":[{"url":"https://vapetronic.ro/categorie/accesorii/atomizor/?product_count=96&product_view=list","categoryHint":"RTA","maxPages":4},{"url":"https://vapetronic.ro/tip-produs/moduri/","categoryHint":"mod","maxPages":4},{"url":"https://vapetronic.ro/tip-produs/baterii/","categoryHint":"mixed","maxPages":4},{"url":"https://vapetronic.ro/categorie/accesorii/incarcator/","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"smokemania","name":"SmokeMania","url":"https://www.smokemania.ro/","country":"RO","mode":"public-html","status":"monitored","operatorId":"ovidanmarc","coverage":["RTA","sarme/coiluri","bumbac","moduri","acumulatori/incarcatoare","accesorii","componente","lichide"],"seeds":[{"url":"https://www.smokemania.ro/atomizoare-tigara-electronica/atomizoare/avansati.html","categoryHint":"RTA","maxPages":4},{"url":"https://www.smokemania.ro/accesorii-tigara-electronica/acumulatori-li-ion.html","categoryHint":"mixed","maxPages":4},{"url":"https://www.smokemania.ro/early_bird","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"vapez","name":"Vapez","url":"https://www.vapez.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","RDA","consumabile","accesorii/piese","moduri","acumulatori/incarcatoare","truse"],"seeds":[{"url":"https://vapez.ro/rta-tank","categoryHint":"RTA","maxPages":4},{"url":"https://vapez.ro/acumulatori-li-ion","categoryHint":"mixed","maxPages":4},{"url":"https://www.vapez.ro/","categoryHint":"mixed","maxPages":2}]
+    },
+    {
+      "id":"justvape","name":"JustVape","url":"https://www.justvape.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA/RDA servisabile","sarme","bumbac","rezistente preconstruite","geamuri","acumulatori","incarcatoare","unelte","accesorii"],"seeds":[{"url":"https://www.justvape.ro/Atomizoare-Justvape-ro/Atomizoare-servisabile-justvape-ro","categoryHint":"RTA","maxPages":4},{"url":"https://www.justvape.ro/Accesorii-Justvape-ro/Bumbac-justvape-ro","categoryHint":"mixed","maxPages":4},{"url":"https://www.justvape.ro/Accesorii-Justvape-ro/Acumulatori-justvape-ro","categoryHint":"mixed","maxPages":4},{"url":"https://www.justvape.ro/","categoryHint":"mixed","maxPages":2}]
+    },
+    {
+      "id":"epotion","name":"e-Potion","url":"https://e-potion.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA/RDA","sarme","bumbac","moduri","accesorii","lichide tutunoase/DIY"],"seeds":[{"url":"https://e-potion.ro/atomizoare/","categoryHint":"RTA","maxPages":4},{"url":"https://e-potion.ro/atomizoare/bumbac/","categoryHint":"mixed","maxPages":4},{"url":"https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/","categoryHint":"lichid","maxPages":4}]
+    },
+    {
+      "id":"nouatigaraelectronica","name":"Noua Tigara Electronica","url":"https://www.nouatigaraelectronica.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["atomizoare","moduri","baterii/acumulatori","incarcatoare","bumbac/sarma/unelte","lichide tutunoase"],"seeds":[{"url":"https://www.nouatigaraelectronica.ro/moduri-electronice","categoryHint":"mod","maxPages":4},{"url":"https://www.nouatigaraelectronica.ro/baterii-acumulatori","categoryHint":"mixed","maxPages":4},{"url":"https://www.nouatigaraelectronica.ro/","categoryHint":"mixed","maxPages":2}]
+    },
+    {
+      "id":"voore","name":"Voore","url":"https://www.voore.ro/","country":"RO","mode":"public-html","status":"monitored","operatorId":"organza-ro22560777","coverage":["RTA/RDTA/RDA servisabile","sarme","bumbac","acumulatori","incarcatoare","componente","accesorii"],"seeds":[{"url":"https://www.voore.ro/atomizor-tigara-electronica/atomizoare-vapat/atomizoare-servisabile","categoryHint":"RTA","maxPages":4},{"url":"https://www.voore.ro/atomizor-tigara-electronica/consumabile-atomizoare-vapat/fire","categoryHint":"mixed","maxPages":4},{"url":"https://www.voore.ro/atomizor-tigara-electronica/consumabile-atomizoare-vapat/bumbac","categoryHint":"mixed","maxPages":4},{"url":"https://www.voore.ro/accesorii-vape","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"vapersparadise","name":"Vaper's Paradise","url":"https://www.vapersparadise.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","atomizoare","moduri","accesorii"],"seeds":[{"url":"https://www.vapersparadise.ro/categorie-produs/rta/","categoryHint":"RTA","maxPages":4},{"url":"https://www.vapersparadise.ro/categorie-produs/atomizoare/","categoryHint":"mixed","maxPages":4},{"url":"https://www.vapersparadise.ro/shop/","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"viciishop","name":"Vicii Shop","url":"https://vicii-shop.ro/","country":"RO","mode":"public-html","status":"monitored","operatorId":"biansi-ego-ro29921968","coverage":["RTA","RDA/RDTA","componente","accesorii"],"seeds":[{"url":"https://vicii-shop.ro/rta-tank/","categoryHint":"RTA","maxPages":4},{"url":"https://vicii-shop.ro/atomizoare/","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"tigaraego","name":"TigaraEgo","url":"https://tigaraego.com/","country":"RO","mode":"public-html","status":"monitored","operatorId":"biansi-ego-ro29921968","coverage":["RTA","RDA/RDTA","atomizoare","componente","accesorii"],"seeds":[{"url":"https://tigaraego.com/rta-tank/","categoryHint":"RTA","maxPages":4},{"url":"https://tigaraego.com/atomizoare/","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"geekvapero","name":"Geekvape.ro","url":"https://geekvape.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","RBA","sarme","coiluri","moduri","componente"],"seeds":[{"url":"https://geekvape.ro/index.php?route=product/search&search=RTA","categoryHint":"RTA","maxPages":4},{"url":"https://geekvape.ro/index.php?route=product/search&search=wire","categoryHint":"mixed","maxPages":4},{"url":"https://geekvape.ro/index.php?route=product/search&search=coil","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"vaps","name":"VAPS","url":"https://vaps.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RBA/RTA/RDTA","moduri","DIY/accesorii","lichide tutun natural"],"seeds":[{"url":"https://vaps.ro/atomizoare/atomizoare-rba-rta-rdta/","categoryHint":"RTA","maxPages":4},{"url":"https://vaps.ro/atomizoare/","categoryHint":"mixed","maxPages":4},{"url":"https://vaps.ro/harta_magazinului.htm","categoryHint":"mixed","maxPages":2}]
+    },
+    {
+      "id":"vapshop","name":"Vapshop.ro","url":"https://www.vapshop.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["bumbac","sarma Kanthal","unelte","moduri","acumulatori","incarcatoare","atomizoare"],"seeds":[{"url":"https://www.vapshop.ro/bumbac-sarma-kanthal-unelte-tigara-electronica","categoryHint":"mixed","maxPages":4},{"url":"https://www.vapshop.ro/moduri-electronice","categoryHint":"mod","maxPages":4},{"url":"https://www.vapshop.ro/atomizoare","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"steamfactory","name":"SteamFactory","url":"https://steamfactory.ro/","country":"RO","mode":"public-html","status":"monitored","operatorId":"loa-kalfou-group-ro40828330","coverage":["RTA","atomizoare","moduri","acumulatori/incarcatoare","lichide tutunoase"],"seeds":[{"url":"https://steamfactory.ro/atomizoare/","categoryHint":"RTA","maxPages":4},{"url":"https://steamfactory.ro/moduri/","categoryHint":"mod","maxPages":4},{"url":"https://steamfactory.ro/lichide-fara-nicotina/","categoryHint":"lichid","maxPages":4}]
+    },
+    {
+      "id":"ecigvapo","name":"Ecig Vapo","url":"https://ecig-vapo.com/","country":"RO","mode":"public-html","status":"monitored","operatorId":"pam-import-export-ro359285","coverage":["RTA/RBA/RDA servisabile","sarme Kanthal","accesorii"],"seeds":[{"url":"https://ecig-vapo.com/atomizoare-servisabile/","categoryHint":"RTA","maxPages":4},{"url":"https://ecig-vapo.com/?s=kanthal&post_type=product","categoryHint":"mixed","maxPages":4}]
+    },
+    {
+      "id":"merlin","name":"Merlin.ro","url":"https://merlin.ro/","country":"RO","mode":"public-html","status":"monitored","coverage":["RTA","atomizoare servisabile","moduri/accesorii"],"seeds":[{"url":"https://merlin.ro/categorie-produs/atomizoare/atomizoare-servisabile/","categoryHint":"RTA","maxPages":4},{"url":"https://merlin.ro/?s=RTA&post_type=product","categoryHint":"RTA","maxPages":4}]
+    }
+  ]
+}
