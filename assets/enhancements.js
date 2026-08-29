@@ -14,8 +14,9 @@
   function loadMarketModules(){
     if(!isMainGuide())return;
     load('/assets/market-2026.js?v=4',function(){
+      load('/assets/market-loading-guard.js?v=7');
+      load('/assets/market-ui-recovery.js?v=1');
       [
-        '/assets/market-loading-guard.js?v=7',
         '/assets/market-2026-report.js?v=1',
         '/assets/market-coverage-ui.js?v=2',
         '/assets/market-sales-ui.js?v=3',
