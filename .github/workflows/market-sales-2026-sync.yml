@@ -1,10 +1,13 @@
 name: Market 2026 Sales Signals
 
 on:
+  workflow_run:
+    workflows: ["Market 2026 Daily Sync"]
+    types: [completed]
   schedule:
-    # 06:00 Europe/Bucharest; DST gated below.
-    - cron: '0 3 * * *'
-    - cron: '0 4 * * *'
+    # Fallback at 06:30 Europe/Bucharest if the chained refresh did not complete.
+    - cron: '30 3 * * *'
+    - cron: '30 4 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -33,22 +36,25 @@ permissions:
 
 concurrency:
   group: market-2026-sales-signals
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   collect-sales-signals:
     runs-on: ubuntu-latest
     timeout-minutes: 38
     steps:
-      - name: Gate 06:00 Bucharest
+      - name: Gate chained or fallback Analysis refresh
         id: gate
         shell: bash
         run: |
           run_sync=true
+          if [ "${{ github.event_name }}" = "workflow_run" ] && [ "${{ github.event.workflow_run.conclusion }}" != "success" ]; then
+            run_sync=false
+          fi
           if [ "${{ github.event_name }}" = "schedule" ]; then
             offset="$(TZ=Europe/Bucharest date +%z)"
             cron="${{ github.event.schedule }}"
-            if { [ "$offset" = "+0300" ] && [ "$cron" != "0 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "0 4 * * *" ]; }; then run_sync=false; fi
+            if { [ "$offset" = "+0300" ] && [ "$cron" != "30 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "30 4 * * *" ]; }; then run_sync=false; fi
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
 
@@ -58,46 +64,79 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
+      - name: Decide whether fallback is already fresh
         if: steps.gate.outputs.run_sync == 'true'
+        id: refresh
+        shell: bash
+        run: |
+          run_analysis=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            if node - <<'NODE'
+          const fs=require('fs');
+          const day=v=>{const d=new Date(v);return Number.isFinite(d.getTime())?new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(d):''};
+          const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+          try{
+            const m=JSON.parse(fs.readFileSync('data/market-management-2026.json','utf8'));
+            const b=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
+            if(day(m.generatedAt)===today && b.collectorStatus && b.collectorStatus.date===today) process.exit(0);
+          }catch(_){ }
+          process.exit(1);
+          NODE
+            then run_analysis=false; fi
+          fi
+          echo "run_analysis=$run_analysis" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
+      - name: Require fresh 06:00 Market base for Analysis
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const d=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
+          const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+          if(!d.collectorStatus||d.collectorStatus.date!==today)throw new Error(`Analysis base Market is stale: ${d.collectorStatus&&d.collectorStatus.date} vs ${today}`);
+          console.log(`Analysis base Market fresh for ${today}.`);
+          NODE
+
       - name: Discover retailer sales-ranking sources
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/discover-market-sales-sources-2026.js --write
 
       - name: Collect public sales evidence
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/sync-market-sales-2026.js --write
 
       - name: Verify dynamically discovered rankings
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/collect-discovered-market-sales-2026.js --write
 
       - name: Probe explicit product sales counters and demand signals
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/probe-market-sales-counters-2026.js --write
 
       - name: Canonicalize product identities before aggregation
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/canonicalize-market-sales-products-2026.js --write
 
       - name: Build canonical Romanian product presence
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/build-market-product-presence-2026.js --write
 
       - name: Build sales synthesis
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/build-market-sales-summary-2026.js --write
 
       - name: Build external demand and manufacturer radar
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/build-market-external-intelligence-2026.js --write
 
       - name: Collect Google and community demand intelligence
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         continue-on-error: true
         env:
           GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
@@ -112,19 +151,19 @@ jobs:
         run: node tools/collect-market-demand-intelligence-2026.js --write
 
       - name: Canonicalize Google and community product identities
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/canonicalize-market-demand-products-2026.js --write
 
       - name: Build management decision intelligence
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/build-market-management-2026.js --write
 
       - name: Add real listing breadth to management report
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/augment-market-management-presence-2026.js --write
 
-      - name: Validate sales and management truth rules
-        if: steps.gate.outputs.run_sync == 'true'
+      - name: Validate sales, management and daily Analysis freshness
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: |
           for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js; do node --check "$f"; done
           node - <<'NODE'
@@ -135,8 +174,14 @@ jobs:
           const p=JSON.parse(fs.readFileSync('data/market-product-presence-2026.json','utf8'));
           const m=JSON.parse(fs.readFileSync('data/market-management-2026.json','utf8'));
           const r=JSON.parse(fs.readFileSync('data/market-retailers-2026.json','utf8'));
+          const base=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
           const disc=JSON.parse(fs.readFileSync('data/market-sales-sources-discovered-2026.json','utf8'));
+          const localDay=v=>{const x=new Date(v);return Number.isFinite(x.getTime())?new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(x):''};
+          const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
           if([d,disc,e,q,p,m].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must be 2026');
+          if(!base.collectorStatus||base.collectorStatus.date!==today)throw new Error('Analysis used stale base Market snapshot');
+          if(localDay(m.generatedAt)!==today)throw new Error(`Management Analysis stale: ${m.generatedAt}`);
+          if(!d.summary||localDay(d.summary.generatedAt)!==today)throw new Error(`Sales Analysis stale: ${d.summary&&d.summary.generatedAt}`);
           if(Number(d.coverage.storefrontsConfigured)!==(r.retailers||[]).length)throw new Error('Sales coverage denominator mismatch');
           if(!d.canonicalization||!d.canonicalization.after)throw new Error('Canonical product reconciliation did not run');
           if(!q.canonicalization||!Number.isFinite(Number(q.canonicalization.canonicalProducts)))throw new Error('Demand canonicalization did not run');
@@ -154,11 +199,11 @@ jobs:
             if(!Number.isFinite(Number(row.listedStorefronts))||!Number.isFinite(Number(row.bestsellerStorefronts)))throw new Error(`Listing/bestseller separation missing: ${row.name}`);
           }
           if(!/Retail listing breadth/i.test(String(m.methodology&&m.methodology.listingBreadth||'')))throw new Error('Management listing-breadth truth rule missing');
-          console.log(`Decision gate: Tier-A ${m.coverage.tierAStores}/${m.coverage.configuredStores}; Tier-B ${m.coverage.tierBStores}/${m.coverage.configuredStores}; canonical products ${p.summary.canonicalProducts}; merged variants ${p.summary.groupsWithMergedAliasesOrVariants}; demand canonical ${q.canonicalization.canonicalProducts}.`);
+          console.log(`Analysis daily gate: ${today}; Tier-A ${m.coverage.tierAStores}/${m.coverage.configuredStores}; Tier-B ${m.coverage.tierBStores}/${m.coverage.configuredStores}; canonical products ${p.summary.canonicalProducts}.`);
           NODE
 
       - name: Publish sales and management snapshot
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         shell: bash
         run: |
           if [ -z "$(git status --porcelain -- data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-product-presence-2026.json data/market-management-2026.json)" ]; then exit 0; fi
