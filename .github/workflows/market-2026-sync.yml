@@ -1,0 +1,91 @@
+name: Market 2026 Daily Sync
+
+on:
+  schedule:
+    # 07:00 Romania time. GitHub cron is UTC; both DST offsets are scheduled and gated below.
+    - cron: '0 4 * * *'
+    - cron: '0 5 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-2026-daily-sync
+  cancel-in-progress: true
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - name: Confirm Bucharest collection window
+        id: market_window
+        shell: bash
+        run: |
+          run_sync=true
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            bucharest_offset="$(TZ=Europe/Bucharest date +%z)"
+            scheduled_cron="${{ github.event.schedule }}"
+            if { [ "$bucharest_offset" = "+0300" ] && [ "$scheduled_cron" != "0 4 * * *" ]; } ||
+               { [ "$bucharest_offset" = "+0200" ] && [ "$scheduled_cron" != "0 5 * * *" ]; }; then
+              run_sync=false
+            fi
+            echo "Bucharest offset $bucharest_offset; schedule $scheduled_cron; run_sync=$run_sync."
+          else
+            echo "Manual run allowed."
+          fi
+          echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        if: steps.market_window.outputs.run_sync == 'true'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        if: steps.market_window.outputs.run_sync == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Collect public 2026 market snapshot
+        if: steps.market_window.outputs.run_sync == 'true'
+        run: node tools/sync-market-2026.js --write
+
+      - name: Validate snapshot discipline
+        if: steps.market_window.outputs.run_sync == 'true'
+        run: |
+          node --check tools/sync-market-2026.js
+          node --check assets/market-2026.js
+          node - <<'NODE'
+          const fs = require('fs');
+          const data = JSON.parse(fs.readFileSync('data/market-2026.json', 'utf8'));
+          const registry = JSON.parse(fs.readFileSync('data/market-retailers-2026.json', 'utf8'));
+          if (Number(data.scopeYear) !== 2026 || Number(registry.scopeYear) !== 2026) throw new Error('Market scope drifted outside 2026');
+          if (!Array.isArray(data.observations) || !data.observations.length) throw new Error('No observations were produced');
+          if ((registry.retailers || []).length < 8) throw new Error('Retailer registry unexpectedly shrank');
+          for (const row of data.observations) {
+            if (!/^2026-/.test(String(row.observedAt || ''))) throw new Error(`Out-of-scope observation: ${row.product || 'unknown'}`);
+            const text = [row.brand, row.product].filter(Boolean).join(' ');
+            if (/dicodes/i.test(text) && row.category === 'mod' && !/(bf60|fl80|board|placa|chipset|pcb)/i.test(text)) {
+              throw new Error(`Finished Dicodes mod leaked into Market 2026: ${text}`);
+            }
+          }
+          console.log(`Validated ${data.observations.length} observations across ${registry.retailers.length} configured retailers.`);
+          NODE
+
+      - name: Commit daily market snapshot
+        if: steps.market_window.outputs.run_sync == 'true'
+        shell: bash
+        run: |
+          if git diff --quiet -- data/market-2026.json data/market-history-2026; then
+            echo "No Market 2026 changes."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/market-2026.json data/market-history-2026
+            git commit -m "Snapshot Romania RTA market 2026"
+            git pull --rebase
+            git push
+          fi
