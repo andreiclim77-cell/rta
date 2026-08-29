@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 'use strict';
-// Compatibility wrapper v2.2. Resolve source-page product titles before the recall-safe merge.
+// Compatibility wrapper v2.3. Resolve source-page product titles before the recall-safe merge; resolver write mode fixed.
 // Contract markers retained for CI: upstreamEvidenceMerged:true release-observed observedReleaseIsNotClaimedAsExactReleaseDate:true
 const {execFileSync}=require('child_process');
 const path=require('path');
