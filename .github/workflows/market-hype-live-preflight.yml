@@ -1,0 +1,51 @@
+name: Market Hype Live Preflight
+on:
+  push:
+    branches: [market-hype-live-v2]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and integration
+        run: |
+          for f in tools/collect-market-hype-radar-2026.js assets/market-hype-ui.js assets/market-loading-guard.js assets/market-view-switcher.js assets/enhancements.js sw.js; do node --check "$f"; done
+          node - <<'NODE'
+          const fs=require('fs');
+          const loader=fs.readFileSync('assets/enhancements.js','utf8');
+          const guard=fs.readFileSync('assets/market-loading-guard.js','utf8');
+          const view=fs.readFileSync('assets/market-view-switcher.js','utf8');
+          const sw=fs.readFileSync('sw.js','utf8');
+          const flow=fs.readFileSync('.github/workflows/market-hype-2026-sync.yml','utf8');
+          if(!loader.includes('/assets/market-hype-ui.js?v=1')||!loader.includes('/assets/market-loading-guard.js?v=5')||!loader.includes('/assets/market-view-switcher.js?v=2'))throw new Error('Hype loader integration missing');
+          if(!guard.includes('/data/market-hype-radar-2026.json')||!guard.includes('marketHypeRadar'))throw new Error('Atomic guard missing Hype');
+          if(!view.includes('marketHypeRadar')||!view.includes('Analiza')||!view.includes('Details'))throw new Error('Analysis/Details integration missing');
+          if(!sw.includes("'/data/market-hype-radar-2026.json'")||!sw.includes('/assets/market-hype-ui.js?v=1'))throw new Error('Hype cache/network integration missing');
+          if(!flow.includes("cron: '0 3 * * *'")||!flow.includes("cron: '0 4 * * *'"))throw new Error('06:00 Hype schedule missing');
+          NODE
+      - name: Run full upstream Hype scan
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
+        run: node tools/collect-market-hype-radar-2026.js --write
+      - name: Truth gate
+        run: |
+          node - <<'NODE'
+          const d=require('./data/market-hype-radar-2026.json');
+          if(d.mode!=='pre-market-upstream-only'||d.truth.retailSourcesUsed!==false||d.truth.commercialPagesRejected!==true)throw new Error('Hype source separation failed');
+          if(d.truth.brandsExposed!==false||d.truth.shopLinksExposed!==false||d.truth.pricesExposed!==false)throw new Error('Hype public scope leaked');
+          for(const cat of ['RTA','MODURI','ACCESORII'])if(!Array.isArray(d.categories&&d.categories[cat]))throw new Error('Missing '+cat);
+          for(const rows of Object.values(d.categories||{}))for(const x of rows||[]){
+            if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Prohibited public Hype field leaked');
+            if(x.decision&&x.decision.code==='BUY_HYPE'&&!(x.newestSignalHours<336&&x.sourceTypeCount>=2&&x.velocityVerified===true&&Number(x.velocity7d)>=3))throw new Error('BUY_HYPE truth rule failed');
+          }
+          console.log('Hype live preflight OK',d.sourceStatus,d.summary);
+          NODE
