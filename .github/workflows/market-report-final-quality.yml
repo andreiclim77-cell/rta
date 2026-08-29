@@ -1,0 +1,37 @@
+name: Market Final Report Quality Gate
+
+on:
+  pull_request:
+    paths:
+      - 'assets/market-**'
+      - 'assets/enhancements.js'
+      - 'tools/check-market-report-final.js'
+      - 'sw.js'
+      - '.github/workflows/market-*-2026-sync.yml'
+      - '.github/workflows/market-report-final-quality.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/market-**'
+      - 'assets/enhancements.js'
+      - 'tools/check-market-report-final.js'
+      - 'sw.js'
+      - '.github/workflows/market-*-2026-sync.yml'
+      - '.github/workflows/market-report-final-quality.yml'
+
+jobs:
+  final-market-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: |
+          node --check assets/market-view-switcher.js
+          node --check assets/market-loading-guard.js
+          node --check assets/enhancements.js
+          node --check tools/check-market-report-final.js
+      - name: Final report contract
+        run: node tools/check-market-report-final.js
