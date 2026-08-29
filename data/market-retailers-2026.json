@@ -1,0 +1,142 @@
+{
+  "schemaVersion": 1,
+  "scopeYear": 2026,
+  "timezone": "Europe/Bucharest",
+  "collectorPolicy": {
+    "publicPagesOnly": true,
+    "requestsPerSecondMax": 1,
+    "maxPagesPerSeed": 3,
+    "userAgent": "Ghid-RTA-Market-Observatory/1.0 (+https://ghid-rta.ro/)",
+    "noSalesInference": true,
+    "notes": "Colectare zilnica, cu volum redus, numai din pagini publice. Stocul si disparitia unui produs nu sunt tratate drept vanzari."
+  },
+  "retailers": [
+    {
+      "id": "smokee",
+      "name": "Smokee",
+      "url": "https://smokee.ro/",
+      "country": "RO",
+      "mode": "existing-feed",
+      "status": "monitored",
+      "coverage": ["RTA", "sarme/coiluri", "bumbac", "moduri/chipseturi", "acumulatori/incarcatoare", "unelte", "componente RTA", "lichide tutunoase/NET/DIY"],
+      "seeds": []
+    },
+    {
+      "id": "vaperia",
+      "name": "Vaperia",
+      "url": "https://vaperia.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["RTA", "bumbac", "sarme/coiluri", "componente RTA", "moduri", "acumulatori/incarcatoare"],
+      "seeds": [
+        {"url": "https://vaperia.ro/rta", "categoryHint": "RTA", "maxPages": 3},
+        {"url": "https://vaperia.ro/geamuri", "categoryHint": "componente RTA", "maxPages": 2},
+        {"url": "https://vaperia.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    },
+    {
+      "id": "vapepoint",
+      "name": "VapePoint",
+      "url": "https://vapepoint.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["RTA", "RDA/RDTA separat", "moduri", "lichide", "accesorii"],
+      "seeds": [
+        {"url": "https://vapepoint.ro/categorie/atomizoare/", "categoryHint": "RTA", "maxPages": 3},
+        {"url": "https://vapepoint.ro/categorie/kituri-si-moduri/", "categoryHint": "mod", "maxPages": 2},
+        {"url": "https://vapepoint.ro/categorie/lichide/", "categoryHint": "lichid", "maxPages": 2}
+      ]
+    },
+    {
+      "id": "vapetronic",
+      "name": "Vapetronic",
+      "url": "https://vapetronic.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["RTA", "coiluri", "bumbac", "moduri", "acumulatori/incarcatoare", "unelte", "componente"],
+      "seeds": [
+        {"url": "https://vapetronic.ro/categorie/accesorii/atomizor/?product_count=96&product_view=list", "categoryHint": "RTA", "maxPages": 3},
+        {"url": "https://vapetronic.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    },
+    {
+      "id": "smokemania",
+      "name": "SmokeMania",
+      "url": "https://www.smokemania.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["RTA", "sarme/coiluri", "moduri", "accesorii", "componente", "lichide"],
+      "seeds": [
+        {"url": "https://www.smokemania.ro/atomizoare-tigara-electronica/atomizoare/atomizoare-high-end.html", "categoryHint": "RTA", "maxPages": 3},
+        {"url": "https://www.smokemania.ro/centenary_mods", "categoryHint": "RTA", "maxPages": 2},
+        {"url": "https://www.smokemania.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    },
+    {
+      "id": "vapez",
+      "name": "Vapez",
+      "url": "https://www.vapez.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["RTA", "RDA separat", "consumabile", "accesorii/piese", "moduri", "acumulatori/incarcatoare", "truse"],
+      "seeds": [
+        {"url": "https://www.vapez.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    },
+    {
+      "id": "justvape",
+      "name": "JustVape",
+      "url": "https://www.justvape.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["sarme", "bumbac", "rezistente preconstruite", "geamuri", "acumulatori", "incarcatoare", "unelte", "accesorii"],
+      "seeds": [
+        {"url": "https://www.justvape.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    },
+    {
+      "id": "epotion",
+      "name": "e-Potion",
+      "url": "https://e-potion.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["RTA/RDA", "sarme", "bumbac", "moduri", "accesorii", "lichide/DIY"],
+      "seeds": [
+        {"url": "https://e-potion.ro/atomizoare/", "categoryHint": "RTA", "maxPages": 3},
+        {"url": "https://e-potion.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    },
+    {
+      "id": "nouatigaraelectronica",
+      "name": "Noua Tigara Electronica",
+      "url": "https://www.nouatigaraelectronica.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["atomizoare", "moduri", "baterii/acumulatori", "incarcatoare", "bumbac/sarma/unelte", "lichide"],
+      "seeds": [
+        {"url": "https://www.nouatigaraelectronica.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    },
+    {
+      "id": "voore",
+      "name": "Voore",
+      "url": "https://www.voore.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "coverage": ["RTA/RDTA", "componente", "accesorii"],
+      "seeds": [
+        {"url": "https://www.voore.ro/atomizor-tigara-electronica/atomizoare-vapat/atomizoare-rta-rdta", "categoryHint": "RTA", "maxPages": 2},
+        {"url": "https://www.voore.ro/", "categoryHint": "mixed", "maxPages": 1}
+      ]
+    }
+  ]
+}
