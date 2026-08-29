@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T21:13:41.724Z",
+  "generatedAt": "2026-08-29T21:22:23.273Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -36,15 +36,18 @@
     "eligibleTrustedContextCanCarryProductClassification": true,
     "genericCatalogAndHomepageTitlesRejected": true,
     "finalCategoryAnchorValidated": true,
-    "nonRtaProductTitlesRejected": true
+    "nonRtaProductTitlesRejected": true,
+    "dailyWindowAnchoredAt0600Bucharest": true,
+    "recentReleaseRequiresExplicitWording": true,
+    "recentReviewAloneIsNotRelease": true
   },
   "scan": {
     "queries": 90,
     "working": 90,
-    "rawDocs": 664,
-    "preCandidates": 25,
-    "resolvedVendorPages": 12,
-    "pagesFetched": 21,
+    "rawDocs": 661,
+    "preCandidates": 26,
+    "resolvedVendorPages": 14,
+    "pagesFetched": 23,
     "events": 0,
     "samplePre": [
       {
@@ -56,12 +59,12 @@
         "title": "Coupon & Discount - 3FVape"
       },
       {
-        "url": "https://www.transitrta.com/",
-        "title": "Welcome to RTA – RTA is your connection to all corners of Central …"
+        "url": "https://app.rtafleet.com/",
+        "title": "RTA Fleet - fmis-web"
       },
       {
-        "url": "https://www.iriderta.org/",
-        "title": "Dayton RTA"
+        "url": "https://rtafleet.com/",
+        "title": "RTA Fleet Management Software | RTA Fleet"
       },
       {
         "url": "https://rta.com/",
@@ -75,9 +78,9 @@
     "explicitPages": 0,
     "explicitPhraseHits": 0,
     "explicitEvents": 0,
-    "newArrivalCatalogPages": 12,
+    "newArrivalCatalogPages": 16,
     "newArrivalRtaLinks": 68,
-    "newArrivalProductPages": 68,
+    "newArrivalProductPages": 67,
     "newArrivalPhraseHits": 1,
     "newArrivalEvents": 1,
     "profiles": [
@@ -133,7 +136,7 @@
     "profilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 188,
         "productPages": 187,
         "events": 1,
@@ -820,9 +823,9 @@
       }
     ],
     "currentVendorEvents": 3,
-    "upstreamEvidenceEvents": 53,
-    "upstreamEventsAccepted": 5,
-    "upstreamRejectedTitle": 55,
+    "upstreamEvidenceEvents": 67,
+    "upstreamEventsAccepted": 6,
+    "upstreamRejectedTitle": 66,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
@@ -833,7 +836,19 @@
       "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "vaporesso| By YIGUO SEO Perf.Opt v1.0",
       "MOVE BEYOND ORDINARY - Vaporesso"
-    ]
+    ],
+    "recentReleaseObserver": {
+      "reference": "2026-08-29T03:00:00.000Z",
+      "profiles": 4,
+      "indexWorking": 3,
+      "links": 49,
+      "pagesFetched": 49,
+      "candidates": 3,
+      "eventsAppended": 1,
+      "rejectedDate": 43,
+      "rejectedReleaseTerm": 3,
+      "rejectedTitle": 0
+    }
   },
   "products": [
     {
@@ -846,8 +861,8 @@
       "stageLabel": "ETA / precomandă",
       "eventDate": "2026-09-30T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T21:13:41.158Z",
-      "lastSeenAt": "2026-08-29T21:13:41.158Z",
+      "firstSeenAt": "2026-08-29T21:22:22.760Z",
+      "lastSeenAt": "2026-08-29T21:22:22.760Z",
       "ageHours": 0,
       "sourceCount": 2,
       "eligibleSources": 0,
@@ -862,7 +877,7 @@
           "eventDate": "2026-09-30T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "ETA / precomandă",
-          "observedAt": "2026-08-29T21:13:41.158Z"
+          "observedAt": "2026-08-29T21:22:22.760Z"
         },
         {
           "host": "3fvape.com",
@@ -874,7 +889,7 @@
           "eventDate": "2026-09-30T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "ETA / precomandă",
-          "observedAt": "2026-08-29T21:13:41.158Z"
+          "observedAt": "2026-08-29T21:22:22.760Z"
         }
       ],
       "id": "a03d17a96eb746635edf"
@@ -890,8 +905,8 @@
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T21:12:40.124Z",
-      "lastSeenAt": "2026-08-29T21:13:41.158Z",
+      "firstSeenAt": "2026-08-29T21:21:03.234Z",
+      "lastSeenAt": "2026-08-29T21:22:22.760Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
@@ -908,13 +923,70 @@
           "stage": "batch viitor"
         }
       ]
+    },
+    {
+      "productName": "Hellvape Dead Rabbit Solo 2 RTA",
+      "brand": "Hellvape",
+      "category": "RTA",
+      "typology": "MTL single",
+      "window": "after",
+      "stage": "RELEASED",
+      "stageLabel": "lansare observată",
+      "eventDate": "2026-07-30T09:09:00.000Z",
+      "dateConfidence": "release-observed",
+      "firstSeenAt": "2026-07-30T09:09:00.000Z",
+      "lastSeenAt": "2026-07-30T12:00:00.000Z",
+      "ageHours": 713.85,
+      "sourceCount": 3,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "sourceType": "independent-vape-news",
+          "host": "news.cloumix.com",
+          "url": "https://news.cloumix.com/2026/07/do-you-like-hellvape-dead-rabbit-solo-2.html",
+          "title": "Hellvape Dead Rabbit Solo 2 RTA",
+          "publishedAt": "2026-07-30T12:00:00.000Z",
+          "eventDate": "2026-07-30T09:09:00.000Z",
+          "stage": "lansat",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "dateConfidence": "release-observed"
+        },
+        {
+          "sourceType": "independent-vape-news",
+          "host": "news.cloumix.com",
+          "url": "https://news.cloumix.com/search/label/Hellvape%20Dead%20Rabbit%20Solo%202%20RTA?&max-results=8",
+          "title": "Hellvape Dead Rabbit Solo 2 RTA",
+          "publishedAt": "2026-07-30T09:09:00.000Z",
+          "eventDate": "2026-07-30T09:09:00.000Z",
+          "stage": "lansat",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "dateConfidence": "release-observed"
+        },
+        {
+          "sourceType": "independent-vape-news",
+          "host": "news.cloumix.com",
+          "url": "https://news.cloumix.com/search/label/Hellvape%20Dead%20Rabbit%20Solo%202%20RTA",
+          "title": "Hellvape Dead Rabbit Solo 2 RTA",
+          "publishedAt": "2026-07-30T09:09:00.000Z",
+          "eventDate": "2026-07-30T09:09:00.000Z",
+          "stage": "lansat",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "dateConfidence": "release-observed"
+        }
+      ],
+      "id": "421f063a3cc39492bd3c"
     }
   ],
   "summary": {
-    "total": 2,
+    "total": 3,
     "before": 2,
-    "after": 0,
+    "after": 1,
     "explicitAfter": 0,
-    "observedAfter": 0
-  }
+    "observedAfter": 1
+  },
+  "snapshotReferenceAt": "2026-08-29T03:00:00.000Z",
+  "dailyWindowTimezone": "Europe/Bucharest"
 }
