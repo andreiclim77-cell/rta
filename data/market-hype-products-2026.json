@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T21:05:46.241Z",
+  "generatedAt": "2026-08-29T21:13:41.724Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -30,6 +30,7 @@
     "currentVendorProductTitleResolved": true,
     "currentVendorPaginationExpanded": true,
     "currentVendorPaginationProbed": true,
+    "currentVendorPreorderCatalog": true,
     "upstreamEvidenceMerged": true,
     "observedReleaseIsNotClaimedAsExactReleaseDate": true,
     "eligibleTrustedContextCanCarryProductClassification": true,
@@ -40,10 +41,10 @@
   "scan": {
     "queries": 90,
     "working": 90,
-    "rawDocs": 670,
-    "preCandidates": 29,
-    "resolvedVendorPages": 14,
-    "pagesFetched": 23,
+    "rawDocs": 664,
+    "preCandidates": 25,
+    "resolvedVendorPages": 12,
+    "pagesFetched": 21,
     "events": 0,
     "samplePre": [
       {
@@ -74,9 +75,9 @@
     "explicitPages": 0,
     "explicitPhraseHits": 0,
     "explicitEvents": 0,
-    "newArrivalCatalogPages": 16,
+    "newArrivalCatalogPages": 12,
     "newArrivalRtaLinks": 68,
-    "newArrivalProductPages": 67,
+    "newArrivalProductPages": 68,
     "newArrivalPhraseHits": 1,
     "newArrivalEvents": 1,
     "profiles": [
@@ -132,7 +133,7 @@
     "profilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 24,
+        "catalogFetched": 23,
         "productLinks": 188,
         "productPages": 187,
         "events": 1,
@@ -376,12 +377,74 @@
         ]
       },
       {
+        "base": "https://www.3fvape.com/57-preorder",
+        "minBaseline": 1,
+        "cap": 8,
+        "pagesProbed": 8,
+        "pagesFetched": 7,
+        "pagesWithLinks": 7,
+        "pagesWithNewLinks": 1,
+        "highestPageWithNewLinks": 1,
+        "uniqueLinks": 3,
+        "detail": [
+          {
+            "page": 1,
+            "fetched": true,
+            "links": 6,
+            "newLinks": 3,
+            "resolvedUrl": "https://www.3fvape.com/57-preorder"
+          },
+          {
+            "page": 3,
+            "fetched": true,
+            "links": 6,
+            "newLinks": 0,
+            "resolvedUrl": "https://www.3fvape.com/57-preorder"
+          },
+          {
+            "page": 4,
+            "fetched": true,
+            "links": 6,
+            "newLinks": 0,
+            "resolvedUrl": "https://www.3fvape.com/57-preorder"
+          },
+          {
+            "page": 5,
+            "fetched": true,
+            "links": 6,
+            "newLinks": 0,
+            "resolvedUrl": "https://www.3fvape.com/57-preorder"
+          },
+          {
+            "page": 6,
+            "fetched": true,
+            "links": 6,
+            "newLinks": 0,
+            "resolvedUrl": "https://www.3fvape.com/57-preorder"
+          },
+          {
+            "page": 7,
+            "fetched": true,
+            "links": 6,
+            "newLinks": 0,
+            "resolvedUrl": "https://www.3fvape.com/57-preorder"
+          },
+          {
+            "page": 8,
+            "fetched": true,
+            "links": 6,
+            "newLinks": 0,
+            "resolvedUrl": "https://www.3fvape.com/57-preorder"
+          }
+        ]
+      },
+      {
         "base": "https://www.3fvape.com/148-rekavape",
         "minBaseline": 10,
         "cap": 24,
         "pagesProbed": 24,
-        "pagesFetched": 23,
-        "pagesWithLinks": 18,
+        "pagesFetched": 24,
+        "pagesWithLinks": 19,
         "pagesWithNewLinks": 9,
         "highestPageWithNewLinks": 11,
         "uniqueLinks": 35,
@@ -483,6 +546,13 @@
             "links": 0,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape?p=14"
+          },
+          {
+            "page": 15,
+            "fetched": true,
+            "links": 8,
+            "newLinks": 0,
+            "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 16,
@@ -731,7 +801,7 @@
         ]
       }
     ],
-    "currentVendorCatalogPages": 72,
+    "currentVendorCatalogPages": 80,
     "currentVendorRtaLinks": 160,
     "currentVendorProductPages": 160,
     "currentVendorPhraseHits": 3,
@@ -750,9 +820,9 @@
       }
     ],
     "currentVendorEvents": 3,
-    "upstreamEvidenceEvents": 55,
+    "upstreamEvidenceEvents": 53,
     "upstreamEventsAccepted": 5,
-    "upstreamRejectedTitle": 53,
+    "upstreamRejectedTitle": 55,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
@@ -776,8 +846,8 @@
       "stageLabel": "ETA / precomandă",
       "eventDate": "2026-09-30T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T21:05:45.735Z",
-      "lastSeenAt": "2026-08-29T21:05:45.735Z",
+      "firstSeenAt": "2026-08-29T21:13:41.158Z",
+      "lastSeenAt": "2026-08-29T21:13:41.158Z",
       "ageHours": 0,
       "sourceCount": 2,
       "eligibleSources": 0,
@@ -792,7 +862,7 @@
           "eventDate": "2026-09-30T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "ETA / precomandă",
-          "observedAt": "2026-08-29T21:05:45.735Z"
+          "observedAt": "2026-08-29T21:13:41.158Z"
         },
         {
           "host": "3fvape.com",
@@ -804,7 +874,7 @@
           "eventDate": "2026-09-30T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "ETA / precomandă",
-          "observedAt": "2026-08-29T21:05:45.735Z"
+          "observedAt": "2026-08-29T21:13:41.158Z"
         }
       ],
       "id": "a03d17a96eb746635edf"
@@ -820,8 +890,8 @@
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T21:04:42.465Z",
-      "lastSeenAt": "2026-08-29T21:05:45.735Z",
+      "firstSeenAt": "2026-08-29T21:12:40.124Z",
+      "lastSeenAt": "2026-08-29T21:13:41.158Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
