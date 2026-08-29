@@ -13,6 +13,7 @@ on:
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
       - "tools/sync-market-specialized-2026.js"
+      - "tools/verify-market-prices-2026.js"
       - "tools/normalize-market-2026.js"
       - "tools/market-coverage-audit-2026.js"
       - "data/market-retailers-2026.json"
@@ -28,7 +29,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 45
     steps:
       - name: Confirm Bucharest collection window
         id: market_window
@@ -72,6 +73,10 @@ jobs:
         if: steps.market_window.outputs.run_sync == 'true'
         run: node tools/sync-market-specialized-2026.js --write
 
+      - name: Verify suspicious product prices at source
+        if: steps.market_window.outputs.run_sync == 'true'
+        run: node tools/verify-market-prices-2026.js --write
+
       - name: Normalize and QA all market observations
         if: steps.market_window.outputs.run_sync == 'true'
         run: node tools/normalize-market-2026.js --write
@@ -86,6 +91,7 @@ jobs:
           node --check tools/sync-market-2026.js
           node --check tools/sync-market-smokee-2026.js
           node --check tools/sync-market-specialized-2026.js
+          node --check tools/verify-market-prices-2026.js
           node --check tools/normalize-market-2026.js
           node --check tools/market-coverage-audit-2026.js
           node --check assets/market-2026.js
@@ -103,6 +109,7 @@ jobs:
           const status = data.collectorStatus || {};
           const categories = new Set(observations.map(row => row.category));
           const specialist = data.specializedCollectorStatus || {};
+          const priceVerification = data.priceVerificationStatus || {};
 
           if (Number(data.scopeYear) !== 2026 || Number(registry.scopeYear) !== 2026) throw new Error('Market scope drifted outside 2026');
           if (!Array.isArray(observations) || !observations.length) throw new Error('No observations were produced');
@@ -111,9 +118,11 @@ jobs:
           if (Number(status.retailersConfigured || 0) !== configured.length) throw new Error('Collector status does not cover every configured storefront');
           if (!(status.byRetailer || []).some(row => row.retailerId === 'smokee')) throw new Error('Smokee source status is missing');
           if (specialist.date !== today) throw new Error('Specialized storefront collection did not run today');
-          for (const id of ['vapshop','viciishop','tigaraego','vapersparadise','vapetronic','steamfactory']) {
+          for (const id of ['vapshop','viciishop','tigaraego','vapersparadise','vapetronic','steamfactory','ecigvapo','merlin']) {
             if (!(specialist.byRetailer || []).some(row => row.retailerId === id)) throw new Error(`Missing specialized collector status for ${id}`);
           }
+          if (priceVerification.date !== today) throw new Error('Suspicious-price verification did not run today');
+          if (Number(priceVerification.failed || 0) !== 0) throw new Error(`Suspicious-price verification left ${priceVerification.failed} failures`);
           if (coverage.date !== today) throw new Error('National coverage audit is not fresh');
           if (Number(coverage.coverage && coverage.coverage.storefrontsConfigured || 0) !== configured.length) throw new Error('National coverage audit storefront count mismatch');
           if (registry.nationalAudit && registry.nationalAudit.discoveryCertified !== true && coverage.nationalClaim && coverage.nationalClaim.allowed === true) {
