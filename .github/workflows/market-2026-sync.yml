@@ -2,9 +2,10 @@ name: Market 2026 Daily Sync
 
 on:
   schedule:
-    # 06:00 Europe/Bucharest. GitHub cron is UTC; DST is gated below.
+    # Primary 06:00 Europe/Bucharest + 07:00 fallback; DST gated below.
     - cron: '0 3 * * *'
     - cron: '0 4 * * *'
+    - cron: '0 5 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -31,17 +32,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Gate 06:00 Bucharest
+      - name: Gate 06:00 Bucharest and 07:00 fallback
         id: gate
         shell: bash
         run: |
           run_sync=true
+          fallback=false
           if [ "${{ github.event_name }}" = "schedule" ]; then
             offset="$(TZ=Europe/Bucharest date +%z)"
             cron="${{ github.event.schedule }}"
-            if { [ "$offset" = "+0300" ] && [ "$cron" != "0 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "0 4 * * *" ]; }; then run_sync=false; fi
+            if [ "$offset" = "+0300" ]; then
+              if [ "$cron" = "0 3 * * *" ]; then fallback=false
+              elif [ "$cron" = "0 4 * * *" ]; then fallback=true
+              else run_sync=false
+              fi
+            elif [ "$offset" = "+0200" ]; then
+              if [ "$cron" = "0 4 * * *" ]; then fallback=false
+              elif [ "$cron" = "0 5 * * *" ]; then fallback=true
+              else run_sync=false
+              fi
+            else
+              run_sync=false
+            fi
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
+          echo "fallback=$fallback" >> "$GITHUB_OUTPUT"
 
       - name: Checkout
         if: steps.gate.outputs.run_sync == 'true'
@@ -49,44 +64,67 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
+      - name: Decide whether fallback Market refresh is needed
         if: steps.gate.outputs.run_sync == 'true'
+        id: refresh
+        shell: bash
+        run: |
+          run_collect=true
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ steps.gate.outputs.fallback }}" = "true" ]; then
+            if node - <<'NODE'
+          const fs=require('fs');
+          const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+          try{
+            const d=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
+            if(d.collectorStatus&&d.collectorStatus.date===today&&d.specializedCollectorStatus&&d.specializedCollectorStatus.date===today&&d.priceVerificationStatus&&d.priceVerificationStatus.date===today)process.exit(0);
+          }catch(_){ }
+          process.exit(1);
+          NODE
+            then
+              echo "06:00 Market snapshot is already fresh; 07:00 fallback is not needed."
+              run_collect=false
+            fi
+          fi
+          echo "run_collect=$run_collect" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Collect national storefronts
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         run: node tools/sync-market-2026.js --write
 
       - name: Collect Smokee API families
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         run: node tools/sync-market-smokee-2026.js --write
 
       - name: Run dedicated storefront parsers
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         run: node tools/sync-market-specialized-2026.js --write
 
       - name: Verify suspicious prices at source
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         run: node tools/verify-market-prices-2026.js --write
 
       - name: Normalize observations
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         run: node tools/normalize-market-2026.js --write
 
       - name: Audit national coverage
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         run: node tools/market-coverage-audit-2026.js --write
 
       - name: Validate truth and freshness
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         run: |
           for f in tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js; do node --check "$f"; done
           node tools/validate-market-daily-2026.js
 
       - name: Publish daily market snapshot
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_collect == 'true'
         shell: bash
         run: |
           if git diff --quiet -- data/market-2026.json data/market-history-2026 data/market-coverage-2026.json; then exit 0; fi
