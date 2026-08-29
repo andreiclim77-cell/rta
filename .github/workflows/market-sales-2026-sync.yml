@@ -5,9 +5,9 @@ on:
     workflows: ["Market 2026 Daily Sync"]
     types: [completed]
   schedule:
-    # Fallback at 06:30 Europe/Bucharest if the chained refresh did not complete.
-    - cron: '30 3 * * *'
+    # Fallback at 07:30 Europe/Bucharest, after the Market 07:00 recovery slot.
     - cron: '30 4 * * *'
+    - cron: '30 5 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -54,7 +54,7 @@ jobs:
           if [ "${{ github.event_name }}" = "schedule" ]; then
             offset="$(TZ=Europe/Bucharest date +%z)"
             cron="${{ github.event.schedule }}"
-            if { [ "$offset" = "+0300" ] && [ "$cron" != "30 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "30 4 * * *" ]; }; then run_sync=false; fi
+            if { [ "$offset" = "+0300" ] && [ "$cron" != "30 4 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "30 5 * * *" ]; }; then run_sync=false; fi
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
 
