@@ -1,0 +1,98 @@
+name: Hype Radar 72h
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "tools/collect-market-hype-72h.js"
+      - "data/market-hype-sources-2026.json"
+      - ".github/workflows/market-hype-72h.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: market-hype-radar-72h
+  cancel-in-progress: true
+
+jobs:
+  scan-upstream:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate collector syntax
+        run: node --check tools/collect-market-hype-72h.js
+
+      - name: Scan pre-announcement sources
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
+        run: node tools/collect-market-hype-72h.js --write --evidence=hype-radar-evidence.json
+
+      - name: Validate public truth boundary
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const d=JSON.parse(fs.readFileSync('data/market-hype-72h.json','utf8'));
+          if(Number(d.scopeYear)!==2026)throw new Error('Hype scope must be 2026');
+          if(Number(d.windowHours)!==72)throw new Error('Hype window must be 72h');
+          if(!Array.isArray(d.categories)||d.categories.length!==3)throw new Error('Hype categories missing');
+          const allowed=new Set(['CUMPĂRĂ ÎN HYPE','CUMPĂRĂ PE TREND','OPRIT / LICHIDAT','URMĂREȘTE','PREGĂTEȘTE']);
+          for(const group of d.categories){
+            if(!['RTA','MODURI','ACCESORII'].includes(group.category))throw new Error('Unexpected category');
+            for(const card of group.cards||[]){
+              if(!allowed.has(card.action))throw new Error('Unexpected decision action');
+              for(const key of Object.keys(card))if(/url|brand|maker|price|stock|product/i.test(key))throw new Error('Commercial/private field leaked: '+key);
+              if(!Number.isFinite(Number(card.strength))||!Number.isFinite(Number(card.confidence)))throw new Error('Invalid Hype score');
+            }
+          }
+          if(/https?:\/\//i.test(JSON.stringify(d.categories)))throw new Error('Source URL leaked into public cards');
+          console.log(`Hype gate: ${d.summary.signals72h} upstream signals; ${d.summary.decisionCards} decision cards; ${d.summary.rejectedCommerce} commerce pages rejected.`);
+          NODE
+
+      - name: Keep rolling history compact
+        shell: bash
+        run: |
+          mkdir -p data/market-hype-history-2026
+          count="$(find data/market-hype-history-2026 -maxdepth 1 -type f -name '*.json' | wc -l)"
+          if [ "$count" -gt 120 ]; then
+            find data/market-hype-history-2026 -maxdepth 1 -type f -name '*.json' | sort | head -n $((count-120)) | xargs -r rm -f
+          fi
+
+      - name: Preserve raw evidence for audit only
+        uses: actions/upload-artifact@v4
+        with:
+          name: hype-radar-evidence-${{ github.run_id }}
+          path: hype-radar-evidence.json
+          retention-days: 30
+          if-no-files-found: error
+
+      - name: Publish sanitized Hype Radar snapshot
+        shell: bash
+        run: |
+          if [ -z "$(git status --porcelain -- data/market-hype-72h.json data/market-hype-history-2026)" ]; then exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/market-hype-72h.json data/market-hype-history-2026
+          git commit -m "Snapshot upstream Hype Radar 72h"
+          for attempt in 1 2 3 4 5; do
+            git fetch origin main
+            git rebase origin/main
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt*3))
+          done
+          exit 1
