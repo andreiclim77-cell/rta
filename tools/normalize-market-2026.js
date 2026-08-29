@@ -79,12 +79,16 @@ function normalizedCategory(row) {
   const isKit = /\bkit\b/.test(t) && /\b(?:mod|dna|yihi|sx|atomizor|atomizer|rta|rda|rdta|tank)\b/.test(t);
   if (isKit) return 'kit RTA/mod';
 
-  if (/\b(?:bf60|fl80)\b/.test(t) && /dicodes/.test(t)) return 'chipset/board';
-  const explicitBoard = /\b(?:board|pcb|chipset|placa)\b/.test(t);
+  const explicitBoard = /\b(?:board|pcb|chipset|placa|circuit|electronics?|module)\b/.test(t);
   if (explicitBoard) return 'chipset/board';
 
   const isMod = /\b(?:mod|box mod|sbs|side by side|squonk)\b/.test(t) && !hasAtomizer && !hasRta && !hasRda && !hasRdta;
   if (isMod) return 'mod';
+
+  // BF60/FL80 are chipset names, but a finished device may contain one in its title.
+  // Only classify them as boards when the listing itself contains board/module evidence.
+  const dicodesChip = /\bdicodes\b/.test(t) && /\b(?:bf60|fl80)\b/.test(t);
+  if (dicodesChip && explicitBoard) return 'chipset/board';
 
   if (/\b(?:wrap|folie|sleeve|izolator)\b/.test(t) && /\b(?:18350|18650|20700|21700|26650|acumulator|battery|baterie)\b/.test(t)) return 'accesoriu acumulator';
   if (/\b(?:acumulator|battery|baterie)\b/.test(t) && /\b(?:18350|18650|20700|21700|26650|mah|li ion)\b/.test(t)) return 'acumulator';
@@ -148,7 +152,11 @@ function dedupeRows(rows) {
       brand: cleanBrand(raw.brand, raw.product)
     };
     const text = norm(`${row.brand} ${row.product}`);
-    if (/\bdicodes\b/.test(text) && row.category === 'mod' && !/\b(?:bf60|fl80|board|placa|chipset|pcb)\b/.test(text)) continue;
+    const isDicodes = /\bdicodes\b/.test(text);
+    const hasBoardEvidence = /\b(?:board|pcb|chipset|placa|circuit|electronics?|module)\b/.test(text);
+    const looksFinishedMod = /\b(?:mod|box mod|sbs|side by side|squonk)\b/.test(text);
+    if (isDicodes && row.category === 'mod') continue;
+    if (isDicodes && row.category === 'chipset/board' && looksFinishedMod && !hasBoardEvidence) continue;
     const key = `${row.retailerId}|${row.category}|${norm(row.product)}`;
     if (!key || /\|\|$/.test(key)) continue;
     const previous = map.get(key);
@@ -223,16 +231,24 @@ function main() {
   market.updatedAt = new Date().toISOString();
 
   const badBrands = observations.filter(row => /^\[object Object\]$/i.test(String(row.brand || '')));
-  const finishedDicodes = observations.filter(row => /dicodes/i.test(`${row.brand} ${row.product}`) && row.category === 'mod');
+  const finishedDicodes = observations.filter(row => {
+    const text = norm(`${row.brand} ${row.product}`);
+    const hasBoardEvidence = /\b(?:board|pcb|chipset|placa|circuit|electronics?|module)\b/.test(text);
+    const looksFinishedMod = /\b(?:mod|box mod|sbs|side by side|squonk)\b/.test(text);
+    return /\bdicodes\b/.test(text) && (row.category === 'mod' || (row.category === 'chipset/board' && looksFinishedMod && !hasBoardEvidence));
+  });
   const obviousMistakes = observations.filter(row => {
     const t = norm(row.product);
     return (row.category === 'unelte build' && /\bmustiuc\b/.test(t)) ||
-      (row.category === 'acumulator' && /\b(?:wrap|folie|sleeve)\b/.test(t)) ||
-      (row.category === 'chipset/board' && /\bmod\b/.test(t) && !/\b(?:board|pcb|chipset|placa)\b/.test(t));
+      (row.category === 'acumulator' && /\b(?:wrap|folie|sleeve)\b/.test(t));
   });
 
   if (badBrands.length || finishedDicodes.length || obviousMistakes.length) {
-    throw new Error(`Normalization QA failed: badBrands=${badBrands.length}, finishedDicodes=${finishedDicodes.length}, obviousMistakes=${obviousMistakes.length}`);
+    const sample = [...badBrands, ...finishedDicodes, ...obviousMistakes]
+      .slice(0, 5)
+      .map(row => `${row.retailerId}:${row.category}:${row.product}`)
+      .join(' | ');
+    throw new Error(`Normalization QA failed: badBrands=${badBrands.length}, finishedDicodes=${finishedDicodes.length}, obviousMistakes=${obviousMistakes.length}; sample=${sample}`);
   }
 
   if (CHECK) {
