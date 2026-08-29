@@ -1,7 +1,14 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "scopeYear": 2026,
   "sources": [
+    {
+      "retailerId": "vapepoint",
+      "type": "retailer-bestseller-page",
+      "url": "https://vapepoint.ro/",
+      "scope": "all",
+      "evidence": "retailer-labelled-cele-mai-vandute"
+    },
     {
       "retailerId": "vapetronic",
       "type": "retailer-bestseller-page",
@@ -50,6 +57,34 @@
       "url": "https://www.smokemania.ro/best-seller/lichide-cu-nicotina.html",
       "scope": "lichide",
       "evidence": "retailer-labelled-best-seller"
+    },
+    {
+      "retailerId": "vaps",
+      "type": "retailer-bestseller-category",
+      "url": "https://vaps.ro/atomizoare/atomizoare-rba-rta-rdta/",
+      "scope": "RBA/RTA/RDTA",
+      "evidence": "retailer-labelled-cele-mai-vandute-sort"
+    },
+    {
+      "retailerId": "vaps",
+      "type": "retailer-bestseller-category",
+      "url": "https://vaps.ro/mod-uri/",
+      "scope": "moduri",
+      "evidence": "retailer-labelled-cele-mai-vandute-sort"
+    },
+    {
+      "retailerId": "vaps",
+      "type": "retailer-bestseller-category",
+      "url": "https://vaps.ro/lichide-fara-nicotina/",
+      "scope": "lichide/NET",
+      "evidence": "retailer-labelled-cele-mai-vandute-sort"
+    },
+    {
+      "retailerId": "merlin",
+      "type": "retailer-bestseller-widget",
+      "url": "https://merlin.ro/categorii-produse/tigari-electronice/",
+      "scope": "tigari-electronice",
+      "evidence": "retailer-labelled-cele-mai-vandute-produse"
     }
   ],
   "discoveryPatterns": [
@@ -58,6 +93,8 @@
     "best seller",
     "cele mai vandute",
     "cele mai vândute",
+    "cele mai vandute produse",
+    "cele mai vândute produse",
     "top 5 cele mai vandute",
     "top 5 cele mai vândute",
     "top vanzari",
