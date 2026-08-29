@@ -1,0 +1,92 @@
+#!/usr/bin/env node
+'use strict';
+
+const fs=require('fs');
+const crypto=require('crypto');
+const CFG='data/market-hype-sources-2026.json';
+const RADAR='data/market-hype-radar-2026.json';
+const EVID='data/market-hype-evidence-2026.json';
+const HEART='data/market-hype-heartbeat-2026.json';
+const HEART_EVID='data/market-hype-heartbeat-evidence-2026.json';
+const OUT='data/market-hype-products-2026.json';
+const WRITE=process.argv.includes('--write');
+
+function read(p,f={}){try{return JSON.parse(fs.readFileSync(p,'utf8'))}catch(_){return f}}
+function write(p,v){fs.writeFileSync(p,JSON.stringify(v,null,2)+'\n','utf8')}
+function norm(v){return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim()}
+function clean(v){return String(v||'').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;|&apos;/g,"'").replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim()}
+function hash(v){return crypto.createHash('sha256').update(String(v||'')).digest('hex').slice(0,20)}
+function host(u){try{return new URL(String(u||'')).hostname.replace(/^www\./,'').toLowerCase()}catch(_){return''}}
+function unique(a){return[...new Set((a||[]).filter(Boolean))]}
+function iso(v){const ms=Date.parse(String(v||''));return Number.isFinite(ms)?new Date(ms).toISOString():null}
+function ageHours(v){const ms=Date.parse(String(v||''));return Number.isFinite(ms)?Math.max(0,(Date.now()-ms)/36e5):null}
+function in30d(v){const a=ageHours(v);return a!=null&&a<=720}
+function domainMatch(h,d){h=String(h||'').toLowerCase();d=String(d||'').toLowerCase();return h===d||h.endsWith('.'+d)}
+
+function strongRta(text){return /\bmtl\s+rta\b|\brdl\s+rta\b|\bdl\s+rta\b|\brta\s+(?:rebuildable|atomiz)|\brebuildable\s+tank\s+atomiz|\b(?:styled?|style)\s+rta\b|\batomiz(?:er|or|eur|zatore).{0,30}\brta\b/i.test(text)}
+function vape(text){return /vape|vaping|vaper|e[- ]?cig|atomiz|rebuildable|\bmtl\b|\brdl\b|\bdtl\b|squonk|boro|drip tip|coil|wick|cotton|kanthal|nichrome|ni80|ss316|18650|21700/i.test(text)}
+function classify(text){
+  const t=norm(text);
+  if(strongRta(text)){
+    if(/\bmtl\b/.test(t)&&/top airflow|top air/.test(t))return{category:'RTA',typology:'MTL top airflow'};
+    if(/\bmtl\b/.test(t))return{category:'RTA',typology:'MTL single'};
+    if(/\brdl\b|restricted direct/.test(t))return{category:'RTA',typology:'RDL single'};
+    if(/dual coil|dual deck/.test(t))return{category:'RTA',typology:'DL dual'};
+    if(/\bdl\b|\bdtl\b|direct lung/.test(t))return{category:'RTA',typology:'DL single'};
+    return{category:'RTA',typology:'RDL single'};
+  }
+  if(vape(text)&&/side by side|\bsbs\b/.test(t))return{category:'MODURI',typology:'side by side'};
+  if(vape(text)&&/squonk|bottom feeder/.test(t))return{category:'MODURI',typology:'squonk'};
+  if(vape(text)&&/dual battery|dual 18650|dual 21700|2x18650|2x21700/.test(t))return{category:'MODURI',typology:'dual battery'};
+  if(vape(text)&&/box mod|mech mod|mechanical mod|single battery|18650 mod|21700 mod/.test(t))return{category:'MODURI',typology:'single battery'};
+  if(vape(text)&&/drip tip/.test(t))return{category:'ACCESORII',typology:'drip tip'};
+  if(vape(text)&&/replacement glass|glass tank|tank glass|pyrex/.test(t))return{category:'ACCESORII',typology:'sticla'};
+  if(vape(text)&&/vape cotton|wicking cotton/.test(t))return{category:'ACCESORII',typology:'bumbac'};
+  if(vape(text)&&/kanthal|nichrome|ni80|ss316|nife|vape wire|coil wire/.test(t))return{category:'ACCESORII',typology:'sarma'};
+  if(vape(text)&&/coil jig|vape tool|build tool|airflow pin|air pin|replacement deck/.test(t))return{category:'ACCESORII',typology:'tool-uri'};
+  return null;
+}
+function knownHost(h,cfg){
+  const domains=unique([...(cfg.forumDomains||[]),...(cfg.independentNewsDomains||[]),...(cfg.discoveryCommercialDomains||[]),...(cfg.socialDiscoveryDomains||[]),...(cfg.officialMakers||[]).flatMap(x=>x.domains||[]),'reddit.com']);
+  return domains.some(d=>domainMatch(h,d));
+}
+function sourceRelevant(s,cfg){
+  const h=host(s&&s.url),title=clean(s&&s.title);
+  if(!h||!title)return false;
+  if(/dictionary\.|steampowered\.com$|cbsnews\.com$|(^|\.)rta\.ae$/.test(h))return false;
+  if(classify(title))return true;
+  if(knownHost(h,cfg)&&vape(title)&&/(prototype|teaser|coming soon|pre[- ]?order|pre[- ]?sale|eta|batch|release|released|launch|sample|new arrival)/i.test(title))return true;
+  return false;
+}
+function releaseEvidence(s){
+  const text=clean((s.title||'')+' '+(s.stage||'')+' '+(s.maturityLabel||''));
+  if(!/(release(?:d)?|launch(?:ed)?|available now|newly released|new rta|new clone|eta|first batch|next batch|shipping now|pre[- ]?order|pre[- ]?sale)/i.test(text))return null;
+  const date=iso(s.publishedAt);
+  if(!date||!in30d(date))return null;
+  if(/pre[- ]?order|pre[- ]?sale|coming soon|eta|next batch|first batch/i.test(text))return{window:'before',stage:/batch/i.test(text)?'BATCH':'IMMINENT',label:/batch/i.test(text)?'batch nou':'iminent / precomandă',eventDate:date};
+  return{window:'after',stage:'RELEASED',label:'lansat',eventDate:date};
+}
+function cleanName(title){return clean(title).replace(/^\[[^\]]+\]\s*/,'').replace(/^sale\s+/i,'').replace(/\s*\|\s*[^|]{0,60}$/,'').replace(/\s*[-–—]\s*(silver|black|gun metal|rainbow|blue|gold|purple|white|transparent)\b.*$/i,'').slice(0,190)}
+function productKey(name,cls){return hash(norm(name).replace(/\b(authentic|style|styled|rebuildable|tank|atomizer|atomiser|atomizor|silver|black)\b/g,' ').replace(/\s+/g,' ').trim()+'|'+cls.category+'|'+cls.typology)}
+function brand(name,cfg){const t=norm(name);for(const x of cfg.cloneMakers||[])if(t.includes(norm(x)))return x;for(const m of cfg.officialMakers||[]){for(const a of String(m.name||'').split(/[\/|]/)){if(a.length>=3&&t.includes(norm(a)))return m.name}}return null}
+function oldSeen(old){const m=new Map();for(const p of old.products||[])m.set(p.id,p.firstSeenAt||old.generatedAt);return m}
+function add(map,item){const old=map.get(item.id);if(!old){map.set(item.id,item);return}old.sources=uniqSources((old.sources||[]).concat(item.sources||[]));old.sourceCount=old.sources.length;old.eligibleSources=old.sources.filter(x=>x.decisionEligible).length;if(item.window==='before'&&old.window!=='before'){old.window=item.window;old.stage=item.stage;old.stageLabel=item.stageLabel;old.eventDate=item.eventDate}if(!old.brand&&item.brand)old.brand=item.brand}
+function uniqSources(a){const m=new Map();for(const s of a||[]){const k=String(s.url||'')+'|'+String(s.title||'');if(k&&!m.has(k))m.set(k,s)}return[...m.values()].slice(0,12)}
+function itemFrom(s,cfg,seen,forced){if(!sourceRelevant(s,cfg))return null;const cls=classify(s.title);if(!cls)return null;const name=cleanName(s.title),id=productKey(name,cls),ev=forced||releaseEvidence(s);if(!ev)return null;const now=new Date().toISOString(),first=seen.get(id)||s.firstSeenAt||now;return{id,productName:name,brand:brand(name,cfg),category:cls.category,typology:cls.typology,window:ev.window,stage:ev.stage,stageLabel:ev.label,eventDate:ev.eventDate||iso(s.publishedAt),firstSeenAt:first,lastSeenAt:now,ageHours:Number((ageHours(ev.eventDate||first)||0).toFixed(1)),sourceCount:1,eligibleSources:s.decisionEligible===true?1:0,sources:[{host:host(s.url),url:s.url,title:s.title,sourceType:s.sourceType||'evidence',decisionEligible:s.decisionEligible===true,discoveryOnly:s.discoveryOnly===true,publishedAt:iso(s.publishedAt)}]}}
+function sanitizeEvidence(doc,cfg){doc.events=(doc.events||[]).map(ev=>({...ev,sources:(ev.sources||[]).filter(s=>sourceRelevant(s,cfg))})).filter(ev=>ev.sources.length);doc.truth=doc.truth||{};doc.truth.productRelevanceValidated=true;return doc}
+function sanitizeHeart(doc,cfg){doc.upcomingEvents=(doc.upcomingEvents||[]).filter(s=>sourceRelevant(s,cfg));doc.events=(doc.events||[]).filter(s=>sourceRelevant(s,cfg));doc.productRelevanceValidated=true;return doc}
+function rebuildPublic(radar,heart,products){
+  const before=products.filter(p=>p.window==='before'&&in30d(p.eventDate||p.firstSeenAt));const after=products.filter(p=>p.window==='after'&&in30d(p.eventDate));
+  radar.categories={RTA:[],MODURI:[],ACCESORII:[]};
+  for(const p of before){const c=p.eligibleSources>=2?'PREPARE':'WATCH';radar.categories[p.category].push({kind:'product',eventId:p.id,category:p.category,typology:p.typology,mentions30d:p.sourceCount,sourceTypeCount:p.eligibleSources,newestSignalHours:p.ageHours,maturityStage:p.stage,maturityLabel:p.stageLabel,confidence:Math.min(85,25+p.eligibleSources*18+p.sourceCount*4),productDetailAvailable:true,decision:{code:c,label:c==='PREPARE'?'PREGĂTEȘTE / URMĂREȘTE':'URMĂREȘTE',reason:c==='PREPARE'?'Produs concret confirmat din mai multe surse.':'Produs concret detectat; confirmarea independentă este încă insuficientă.'}})}
+  radar.summary={};for(const cat of ['RTA','MODURI','ACCESORII']){const rows=radar.categories[cat];radar.summary[cat]={signals:rows.reduce((s,x)=>s+x.mentions30d,0),events:rows.length,buyHype:0,buyTrend:0,prepareAccessories:0,prepare:rows.filter(x=>x.decision.code==='PREPARE').length,watch:rows.filter(x=>x.decision.code==='WATCH').length,stop:0}}
+  radar.truth=radar.truth||{};radar.truth.productRelevanceValidated=true;radar.sourceStatus=radar.sourceStatus||{};radar.sourceStatus.finalRelevantProductsBefore=before.length;
+  heart.releasedLast30Days=after.map(p=>({eventId:p.id,category:p.category,typology:p.typology,maturityStage:p.stage,maturityLabel:p.stageLabel,publishedAt:p.eventDate,firstSeenAt:p.firstSeenAt,ageHours:p.ageHours,detectedDelayHours:Math.max(0,(Date.parse(p.firstSeenAt)-Date.parse(p.eventDate))/36e5),sourceCount:p.sourceCount,eligibleSourceCount:p.eligibleSources,discoveryOnly:p.eligibleSources===0,status:p.eligibleSources>=2?'CONFIRMED':p.eligibleSources===1?'EARLY':'DISCOVERY',productDetailAvailable:true}));heart.summary=heart.summary||{};heart.summary.releasedLast30Days=heart.releasedLast30Days.length;heart.summary.productRelevanceValidated=true;
+}
+
+async function main(){const cfg=read(CFG,{}),radar=read(RADAR,{}),evid=sanitizeEvidence(read(EVID,{}),cfg),heart=read(HEART,{}),he=sanitizeHeart(read(HEART_EVID,{}),cfg),old=read(OUT,{products:[]}),seen=oldSeen(old),map=new Map();
+  for(const ev of evid.events||[])for(const s of ev.sources||[]){let forced=null;if(ev.kind==='upcoming'||ev.kind==='pre'||ev.kind==='warning'){const d=iso(s.publishedAt);if(d&&in30d(d))forced={window:'before',stage:'SIGNAL',label:(ev.stages||[])[0]||'semnal timpuriu',eventDate:d}}const x=itemFrom(s,cfg,seen,forced);if(x)add(map,x)}
+  for(const s of he.upcomingEvents||[]){const d=iso(s.publishedAt);if(d&&in30d(d)){const x=itemFrom(s,cfg,seen,{window:'before',stage:s.maturityStage||'SIGNAL',label:s.maturityLabel||'semnal timpuriu',eventDate:d});if(x)add(map,x)}}
+  for(const s of he.events||[]){const x=itemFrom(s,cfg,seen);if(x)add(map,x)}
+  const products=[...map.values()].filter(p=>in30d(p.eventDate||p.firstSeenAt)).sort((a,b)=>Number(a.ageHours)-Number(b.ageHours)),now=new Date().toISOString();rebuildPublic(radar,heart,products);radar.generatedAt=now;heart.generatedAt=now;evid.generatedAt=now;he.generatedAt=now;const out={schemaVersion:2,scopeYear:2026,scope:'GLOBAL RTA + clone RTA',windowDays:30,generatedAt:now,pendingRefresh:false,truth:{productLevelOnly:true,newArrivalIsNotRelease:true,releaseRequiresDatedEvidence:true,genericPagesRejected:true},products,summary:{total:products.length,before:products.filter(x=>x.window==='before').length,after:products.filter(x=>x.window==='after').length}};if(WRITE){write(RADAR,radar);write(EVID,evid);write(HEART,heart);write(HEART_EVID,he);write(OUT,out);console.log(`Hype products: ${out.summary.total}; before ${out.summary.before}; after ${out.summary.after}`)}else console.log(JSON.stringify(out.summary,null,2))}
+main().catch(e=>{console.error(e&&e.stack||e);process.exitCode=1});
