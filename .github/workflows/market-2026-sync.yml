@@ -2,7 +2,7 @@ name: Market 2026 Daily Sync
 
 on:
   schedule:
-    # 07:00 Romania time. GitHub cron is UTC; both DST offsets are scheduled and gated below.
+    # 07:00 Romania time, every day. GitHub cron is UTC; both DST offsets are scheduled and gated below.
     - cron: '0 4 * * *'
     - cron: '0 5 * * *'
   workflow_dispatch:
@@ -11,6 +11,7 @@ on:
       - main
     paths:
       - "tools/sync-market-2026.js"
+      - "tools/sync-market-smokee-2026.js"
       - "data/market-retailers-2026.json"
       - ".github/workflows/market-2026-sync.yml"
 
@@ -24,7 +25,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 18
+    timeout-minutes: 24
     steps:
       - name: Confirm Bucharest collection window
         id: market_window
@@ -56,30 +57,51 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Collect public 2026 market snapshot
+      - name: Collect all public Romania sources
         if: steps.market_window.outputs.run_sync == 'true'
         run: node tools/sync-market-2026.js --write
 
-      - name: Validate snapshot discipline
+      - name: Collect all Smokee RTA ecosystem families
+        if: steps.market_window.outputs.run_sync == 'true'
+        run: node tools/sync-market-smokee-2026.js --write
+
+      - name: Validate daily snapshot discipline
         if: steps.market_window.outputs.run_sync == 'true'
         run: |
           node --check tools/sync-market-2026.js
+          node --check tools/sync-market-smokee-2026.js
           node --check assets/market-2026.js
           node - <<'NODE'
           const fs = require('fs');
           const data = JSON.parse(fs.readFileSync('data/market-2026.json', 'utf8'));
           const registry = JSON.parse(fs.readFileSync('data/market-retailers-2026.json', 'utf8'));
+          const today = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'Europe/Bucharest', year: 'numeric', month: '2-digit', day: '2-digit'
+          }).format(new Date());
+          const configured = registry.retailers || [];
+          const observations = data.observations || [];
+          const status = data.collectorStatus || {};
+          const categories = new Set(observations.map(row => row.category));
+
           if (Number(data.scopeYear) !== 2026 || Number(registry.scopeYear) !== 2026) throw new Error('Market scope drifted outside 2026');
-          if (!Array.isArray(data.observations) || !data.observations.length) throw new Error('No observations were produced');
-          if ((registry.retailers || []).length < 8) throw new Error('Retailer registry unexpectedly shrank');
-          for (const row of data.observations) {
+          if (!Array.isArray(observations) || !observations.length) throw new Error('No observations were produced');
+          if (configured.length < 8) throw new Error('Retailer registry unexpectedly shrank');
+          if (status.date !== today) throw new Error(`Market snapshot is not fresh for today: ${status.date} vs ${today}`);
+          if (Number(status.retailersConfigured || 0) !== configured.length) throw new Error('Collector status does not cover every configured retailer');
+          if (!(status.byRetailer || []).some(row => row.retailerId === 'smokee' && Number(row.observations || 0) > 0)) {
+            throw new Error('Smokee daily API observations are missing');
+          }
+          for (const row of observations) {
             if (!/^2026-/.test(String(row.observedAt || ''))) throw new Error(`Out-of-scope observation: ${row.product || 'unknown'}`);
             const text = [row.brand, row.product].filter(Boolean).join(' ');
             if (/dicodes/i.test(text) && row.category === 'mod' && !/(bf60|fl80|board|placa|chipset|pcb)/i.test(text)) {
               throw new Error(`Finished Dicodes mod leaked into Market 2026: ${text}`);
             }
           }
-          console.log(`Validated ${data.observations.length} observations across ${registry.retailers.length} configured retailers.`);
+          const desiredFamilies = ['RTA', 'mod', 'acumulator', 'bumbac/wick', 'lichid tutunos/NET/DIY'];
+          const present = desiredFamilies.filter(name => categories.has(name));
+          if (present.length < 4) throw new Error(`Too few core data families present: ${present.join(', ')}`);
+          console.log(`Validated ${observations.length} daily observations across ${configured.length} configured retailers; core families: ${present.join(', ')}.`);
           NODE
 
       - name: Commit daily market snapshot
