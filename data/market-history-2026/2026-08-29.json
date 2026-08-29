@@ -1,247 +1,8 @@
 {
   "schemaVersion": 1,
-  "scope": "Romania RTA market observatory",
   "scopeYear": 2026,
-  "updatedAt": "2026-08-29T09:05:43.745Z",
-  "currency": "RON",
-  "methodology": {
-    "publicDataOnly": true,
-    "salesClaimAllowed": false,
-    "description": "Observator de oferta publica 2026. Masoara produse/SKU-uri listate, preturi, disponibilitate, aparitii/disparitii si restocari observate. Nu echivaleaza disponibilitatea sau disparitia din stoc cu vanzari reale.",
-    "historyPolicy": "Strict 2026: se colecteaza, se calculeaza si se afiseaza exclusiv observatii din anul de referinta.",
-    "dicodesPolicy": "Dispozitivele/modurile Dicodes finite sunt excluse din monitorizarea 2026 a modurilor. Placile/chipseturile Dicodes raman categorie separata de urmarit, inclusiv BF60, FL80 sau succesoare, numai cand exista listari verificabile.",
-    "coverageNote": "Valorile initiale reprezinta un seed verificabil si nu pretind acoperire exhaustiva a pietei nationale. Acoperirea creste numai prin surse publice validate."
-  },
-  "retailers": [
-    {
-      "id": "smokee",
-      "name": "Smokee",
-      "url": "https://smokee.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "sarme/coiluri",
-        "bumbac",
-        "moduri/chipseturi",
-        "acumulatori/incarcatoare",
-        "unelte",
-        "componente RTA",
-        "lichide tutunoase/NET/DIY"
-      ],
-      "note": "Date integrate prin feedul deja existent al ghidului; collectorul public extern nu dubleaza feedul."
-    },
-    {
-      "id": "vaperia",
-      "name": "Vaperia",
-      "url": "https://vaperia.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "bumbac",
-        "sarme/coiluri",
-        "componente RTA",
-        "moduri",
-        "acumulatori/incarcatoare"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vapepoint",
-      "name": "VapePoint",
-      "url": "https://vapepoint.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RDA/RDTA separat",
-        "moduri",
-        "lichide",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vapetronic",
-      "name": "Vapetronic",
-      "url": "https://vapetronic.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "coiluri",
-        "bumbac",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "unelte",
-        "componente"
-      ],
-      "note": "Collector activ; 1 pagini au necesitat retry/verificare la ultima rulare."
-    },
-    {
-      "id": "smokemania",
-      "name": "SmokeMania",
-      "url": "https://www.smokemania.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "sarme/coiluri",
-        "moduri",
-        "accesorii",
-        "componente",
-        "lichide"
-      ],
-      "note": "Collector activ; 3 pagini au necesitat retry/verificare la ultima rulare."
-    },
-    {
-      "id": "vapez",
-      "name": "Vapez",
-      "url": "https://www.vapez.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RDA separat",
-        "consumabile",
-        "accesorii/piese",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "truse"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "justvape",
-      "name": "JustVape",
-      "url": "https://www.justvape.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "sarme",
-        "bumbac",
-        "rezistente preconstruite",
-        "geamuri",
-        "acumulatori",
-        "incarcatoare",
-        "unelte",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "epotion",
-      "name": "e-Potion",
-      "url": "https://e-potion.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RDA",
-        "sarme",
-        "bumbac",
-        "moduri",
-        "accesorii",
-        "lichide/DIY"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "nouatigaraelectronica",
-      "name": "Noua Tigara Electronica",
-      "url": "https://www.nouatigaraelectronica.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "atomizoare",
-        "moduri",
-        "baterii/acumulatori",
-        "incarcatoare",
-        "bumbac/sarma/unelte",
-        "lichide"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "voore",
-      "name": "Voore",
-      "url": "https://www.voore.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RDTA",
-        "componente",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    }
-  ],
-  "categorySnapshots": [
-    {
-      "retailerId": "vaperia",
-      "category": "RTA",
-      "listed": 32,
-      "observedAt": "2026-08-29",
-      "source": "https://vaperia.ro/rta",
-      "confidence": "direct-category-count"
-    },
-    {
-      "retailerId": "vaperia",
-      "category": "RTA",
-      "listed": 32,
-      "observedAt": "2026-08-29",
-      "source": "https://vaperia.ro/rta?p=1",
-      "confidence": "direct-category-count"
-    },
-    {
-      "retailerId": "vapepoint",
-      "category": "RTA",
-      "listed": 57,
-      "observedAt": "2026-08-29",
-      "source": "https://vapepoint.ro/categorie/atomizoare/",
-      "confidence": "direct-category-count"
-    },
-    {
-      "retailerId": "vapepoint",
-      "category": "RTA",
-      "listed": 57,
-      "observedAt": "2026-08-29",
-      "source": "https://vapepoint.ro/categorie/atomizoare/page/2/",
-      "confidence": "direct-category-count"
-    },
-    {
-      "retailerId": "epotion",
-      "category": "RTA",
-      "listed": 343,
-      "observedAt": "2026-08-29",
-      "source": "https://e-potion.ro/atomizoare/",
-      "confidence": "direct-category-count"
-    },
-    {
-      "retailerId": "epotion",
-      "category": "RTA",
-      "listed": 343,
-      "observedAt": "2026-08-29",
-      "source": "https://e-potion.ro/atomizoare/page/2/",
-      "confidence": "direct-category-count"
-    },
-    {
-      "retailerId": "epotion",
-      "category": "RTA",
-      "listed": 343,
-      "observedAt": "2026-08-29",
-      "source": "https://e-potion.ro/atomizoare/page/3/",
-      "confidence": "direct-category-count"
-    },
-    {
-      "retailerId": "voore",
-      "category": "RTA",
-      "listed": 0,
-      "observedAt": "2026-08-29",
-      "source": "https://www.voore.ro/atomizor-tigara-electronica/atomizoare-vapat/atomizoare-rta-rdta",
-      "confidence": "direct-category-count"
-    }
-  ],
+  "date": "2026-08-29",
+  "generatedAt": "2026-08-29T09:05:43.745Z",
   "observations": [
     {
       "retailerId": "epotion",
@@ -4907,159 +4668,205 @@
       "sourceMode": "html-anchor"
     }
   ],
-  "boardWatch": [
+  "categorySnapshots": [
     {
-      "maker": "Dicodes",
-      "product": "BF60 board",
-      "category": "chipset/board",
-      "scope": "reference-only-until-romanian-listing",
-      "source": "https://www.cremedevape.com/Dicodes-BF60-board",
-      "note": "Urmarit ca placa/chipset, nu ca mod Dicodes finit."
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "listed": 32,
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta",
+      "confidence": "direct-category-count"
     },
     {
-      "maker": "Dicodes",
-      "product": "FL80 board",
-      "category": "chipset/board",
-      "scope": "reference-only-until-romanian-listing",
-      "source": "https://www.cremedevape.com/Modders",
-      "note": "Urmarit ca placa/chipset, nu ca mod Dicodes finit."
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "listed": 32,
+      "observedAt": "2026-08-29",
+      "source": "https://vaperia.ro/rta?p=1",
+      "confidence": "direct-category-count"
+    },
+    {
+      "retailerId": "vapepoint",
+      "category": "RTA",
+      "listed": 57,
+      "observedAt": "2026-08-29",
+      "source": "https://vapepoint.ro/categorie/atomizoare/",
+      "confidence": "direct-category-count"
+    },
+    {
+      "retailerId": "vapepoint",
+      "category": "RTA",
+      "listed": 57,
+      "observedAt": "2026-08-29",
+      "source": "https://vapepoint.ro/categorie/atomizoare/page/2/",
+      "confidence": "direct-category-count"
+    },
+    {
+      "retailerId": "epotion",
+      "category": "RTA",
+      "listed": 343,
+      "observedAt": "2026-08-29",
+      "source": "https://e-potion.ro/atomizoare/",
+      "confidence": "direct-category-count"
+    },
+    {
+      "retailerId": "epotion",
+      "category": "RTA",
+      "listed": 343,
+      "observedAt": "2026-08-29",
+      "source": "https://e-potion.ro/atomizoare/page/2/",
+      "confidence": "direct-category-count"
+    },
+    {
+      "retailerId": "epotion",
+      "category": "RTA",
+      "listed": 343,
+      "observedAt": "2026-08-29",
+      "source": "https://e-potion.ro/atomizoare/page/3/",
+      "confidence": "direct-category-count"
+    },
+    {
+      "retailerId": "voore",
+      "category": "RTA",
+      "listed": 0,
+      "observedAt": "2026-08-29",
+      "source": "https://www.voore.ro/atomizor-tigara-electronica/atomizoare-vapat/atomizoare-rta-rdta",
+      "confidence": "direct-category-count"
     }
   ],
-  "trendSnapshots": [
-    {
-      "date": "2026-08-29",
-      "observations": 426,
-      "retailersWithObservations": 9,
-      "categories": {
-        "bumbac/wick": {
-          "listed": 18,
-          "inStock": 1,
-          "outOfStock": 2,
-          "unknownStock": 15,
-          "retailers": 7
-        },
-        "coil prebuilt": {
-          "listed": 96,
-          "inStock": 27,
-          "outOfStock": 0,
-          "unknownStock": 69,
-          "retailers": 7
-        },
-        "incarcator": {
-          "listed": 11,
-          "inStock": 6,
-          "outOfStock": 0,
-          "unknownStock": 5,
-          "retailers": 2
-        },
-        "lichid tutunos/NET/DIY": {
-          "listed": 26,
-          "inStock": 2,
-          "outOfStock": 2,
-          "unknownStock": 22,
-          "retailers": 5
-        },
-        "mod": {
-          "listed": 54,
-          "inStock": 4,
-          "outOfStock": 13,
-          "unknownStock": 37,
-          "retailers": 8
-        },
-        "RTA-candidat": {
-          "listed": 27,
-          "inStock": 0,
-          "outOfStock": 4,
-          "unknownStock": 23,
-          "retailers": 4
-        },
-        "RTA/RDA mixed": {
-          "listed": 5,
-          "inStock": 0,
-          "outOfStock": 0,
-          "unknownStock": 5,
-          "retailers": 3
-        },
-        "sarma": {
-          "listed": 4,
-          "inStock": 0,
-          "outOfStock": 2,
-          "unknownStock": 2,
-          "retailers": 3
-        },
-        "acumulator": {
-          "listed": 10,
-          "inStock": 7,
-          "outOfStock": 0,
-          "unknownStock": 3,
-          "retailers": 2
-        },
-        "accesoriu": {
-          "listed": 1,
-          "inStock": 1,
-          "outOfStock": 0,
-          "unknownStock": 0,
-          "retailers": 1
-        },
-        "RTA": {
-          "listed": 92,
-          "inStock": 8,
-          "outOfStock": 47,
-          "unknownStock": 37,
-          "retailers": 4
-        },
-        "sarma/coil": {
-          "listed": 2,
-          "inStock": 0,
-          "outOfStock": 2,
-          "unknownStock": 0,
-          "retailers": 1
-        },
-        "chipset/board": {
-          "listed": 1,
-          "inStock": 0,
-          "outOfStock": 1,
-          "unknownStock": 0,
-          "retailers": 1
-        },
-        "componente RTA": {
-          "listed": 38,
-          "inStock": 20,
-          "outOfStock": 7,
-          "unknownStock": 11,
-          "retailers": 3
-        },
-        "RBA/bridge": {
-          "listed": 3,
-          "inStock": 0,
-          "outOfStock": 0,
-          "unknownStock": 3,
-          "retailers": 3
-        },
-        "RDA/RDTA": {
-          "listed": 8,
-          "inStock": 0,
-          "outOfStock": 1,
-          "unknownStock": 7,
-          "retailers": 3
-        },
-        "unelte build": {
-          "listed": 17,
-          "inStock": 10,
-          "outOfStock": 0,
-          "unknownStock": 7,
-          "retailers": 3
-        },
-        "accesoriu RTA/mod": {
-          "listed": 13,
-          "inStock": 8,
-          "outOfStock": 0,
-          "unknownStock": 5,
-          "retailers": 1
-        }
+  "summary": {
+    "date": "2026-08-29",
+    "observations": 426,
+    "retailersWithObservations": 9,
+    "categories": {
+      "bumbac/wick": {
+        "listed": 18,
+        "inStock": 1,
+        "outOfStock": 2,
+        "unknownStock": 15,
+        "retailers": 7
+      },
+      "coil prebuilt": {
+        "listed": 96,
+        "inStock": 27,
+        "outOfStock": 0,
+        "unknownStock": 69,
+        "retailers": 7
+      },
+      "incarcator": {
+        "listed": 11,
+        "inStock": 6,
+        "outOfStock": 0,
+        "unknownStock": 5,
+        "retailers": 2
+      },
+      "lichid tutunos/NET/DIY": {
+        "listed": 26,
+        "inStock": 2,
+        "outOfStock": 2,
+        "unknownStock": 22,
+        "retailers": 5
+      },
+      "mod": {
+        "listed": 54,
+        "inStock": 4,
+        "outOfStock": 13,
+        "unknownStock": 37,
+        "retailers": 8
+      },
+      "RTA-candidat": {
+        "listed": 27,
+        "inStock": 0,
+        "outOfStock": 4,
+        "unknownStock": 23,
+        "retailers": 4
+      },
+      "RTA/RDA mixed": {
+        "listed": 5,
+        "inStock": 0,
+        "outOfStock": 0,
+        "unknownStock": 5,
+        "retailers": 3
+      },
+      "sarma": {
+        "listed": 4,
+        "inStock": 0,
+        "outOfStock": 2,
+        "unknownStock": 2,
+        "retailers": 3
+      },
+      "acumulator": {
+        "listed": 10,
+        "inStock": 7,
+        "outOfStock": 0,
+        "unknownStock": 3,
+        "retailers": 2
+      },
+      "accesoriu": {
+        "listed": 1,
+        "inStock": 1,
+        "outOfStock": 0,
+        "unknownStock": 0,
+        "retailers": 1
+      },
+      "RTA": {
+        "listed": 92,
+        "inStock": 8,
+        "outOfStock": 47,
+        "unknownStock": 37,
+        "retailers": 4
+      },
+      "sarma/coil": {
+        "listed": 2,
+        "inStock": 0,
+        "outOfStock": 2,
+        "unknownStock": 0,
+        "retailers": 1
+      },
+      "chipset/board": {
+        "listed": 1,
+        "inStock": 0,
+        "outOfStock": 1,
+        "unknownStock": 0,
+        "retailers": 1
+      },
+      "componente RTA": {
+        "listed": 38,
+        "inStock": 20,
+        "outOfStock": 7,
+        "unknownStock": 11,
+        "retailers": 3
+      },
+      "RBA/bridge": {
+        "listed": 3,
+        "inStock": 0,
+        "outOfStock": 0,
+        "unknownStock": 3,
+        "retailers": 3
+      },
+      "RDA/RDTA": {
+        "listed": 8,
+        "inStock": 0,
+        "outOfStock": 1,
+        "unknownStock": 7,
+        "retailers": 3
+      },
+      "unelte build": {
+        "listed": 17,
+        "inStock": 10,
+        "outOfStock": 0,
+        "unknownStock": 7,
+        "retailers": 3
+      },
+      "accesoriu RTA/mod": {
+        "listed": 13,
+        "inStock": 8,
+        "outOfStock": 0,
+        "unknownStock": 5,
+        "retailers": 1
       }
     }
-  ],
+  },
   "collectorStatus": {
     "date": "2026-08-29",
     "generatedAt": "2026-08-29T09:05:43.745Z",
