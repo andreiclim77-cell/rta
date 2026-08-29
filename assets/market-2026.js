@@ -5,7 +5,6 @@
   var ACCESS_KEY='rtaMarket2026Access';
   var PASSWORD_SHA256='113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
   var marketData=null;
-  var smokeeMods=null;
   var activeTab='market';
   var loadingPromise=null;
 
@@ -21,7 +20,10 @@
       .replace(/'/g,'&#039;')
   }
   function fmtNumber(value){return Number(value||0).toLocaleString(en()?'en-GB':'ro-RO',{maximumFractionDigits:2})}
-  function fmtMoney(value){return Number(value||0).toLocaleString(en()?'en-GB':'ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2})+' lei'}
+  function fmtMoney(value){
+    if(value==null||value==='')return '—';
+    return Number(value||0).toLocaleString(en()?'en-GB':'ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2})+' lei'
+  }
   function stockLabel(stock){
     if(stock==='in_stock')return word('în stoc','in stock');
     if(stock==='out_of_stock')return word('stoc epuizat','out of stock');
@@ -34,12 +36,17 @@
     return out
   }
   function is2026(date){return /^2026(?:-|$)/.test(String(date||''))}
-  function isDicodesFinishedDevice(item){
-    var text=[item&&item.title,item&&item.product,item&&item.description].filter(Boolean).join(' ');
-    if(!/dicodes/i.test(text))return false;
-    return !/(?:bf60|fl80|board|placa|chipset|pcb)/i.test(text)
-  }
   function safeSource(url){return /^https:\/\//i.test(String(url||''))?String(url):''}
+  function unique(values){return Array.from(new Set(values.filter(Boolean)))}
+  function bucharestToday(){
+    try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}catch(e){return ''}
+  }
+  function freshness(){
+    var status=marketData&&marketData.collectorStatus||{};
+    var today=bucharestToday();
+    var date=String(status.date||'');
+    return {date:date,today:today,fresh:Boolean(date&&today&&date===today),errors:Number(status.errors||0),pages:Number(status.pagesFetched||0)}
+  }
 
   function injectStyles(){
     if(byId('market2026Styles'))return;
@@ -50,9 +57,11 @@
       .market-lock-nav::after{content:"";width:6px;height:6px;border-radius:999px;background:#ff7a1a;display:inline-block;margin-left:6px;vertical-align:middle;box-shadow:0 0 0 3px rgba(255,122,26,.12)}\
       .market-shell{display:grid;gap:18px}\
       .market-hero{padding:22px;border:1px solid var(--line);border-radius:20px;background:linear-gradient(135deg,var(--panel),var(--panel2));display:grid;gap:10px}\
-      .market-hero-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap}\
+      .market-hero-top{display:flex;gap:8px;align-items:center;flex-wrap:wrap}\
       .market-kicker{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}\
-      .market-year{padding:5px 9px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:800}\
+      .market-year,.market-fresh{padding:5px 9px;border-radius:999px;border:1px solid var(--line);font-size:12px;font-weight:800}\
+      .market-fresh.ok{border-color:rgba(85,209,122,.5)}\
+      .market-fresh.warn{border-color:rgba(217,93,0,.55)}\
       .market-hero h1{margin:0;font-size:clamp(28px,5vw,48px);line-height:1}\
       .market-hero p{margin:0;max-width:980px;color:var(--muted)}\
       .market-tabs{display:flex;gap:8px;flex-wrap:wrap}\
@@ -94,6 +103,8 @@
       .market-error{min-height:20px;margin-top:8px;color:#b94100;font-size:12px;font-weight:800}\
       .market-bar{height:7px;border-radius:999px;background:var(--panel2);overflow:hidden;margin-top:8px;border:1px solid var(--line)}\
       .market-bar span{display:block;height:100%;background:currentColor}\
+      .market-delta{font-size:12px;font-weight:800;margin-left:6px}\
+      .market-delta.up{color:#318c50}.market-delta.down{color:#b94100}.market-delta.flat{color:var(--muted)}\
       @media(max-width:900px){.market-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.market-grid{grid-template-columns:1fr}}\
       @media(max-width:560px){.market-metrics{grid-template-columns:1fr}.market-hero{padding:17px}.market-card{padding:14px}}\
     ';
@@ -146,16 +157,9 @@
         var error=byId('market2026Error');
         try{
           var digest=await sha256(input.value);
-          if(digest===PASSWORD_SHA256){
-            setAccess();
-            close(true)
-          }else{
-            error.textContent=word('Parolă incorectă.','Incorrect password.');
-            input.select()
-          }
-        }catch(e){
-          error.textContent=word('Browserul nu poate valida accesul securizat.','This browser cannot validate secure access.')
-        }
+          if(digest===PASSWORD_SHA256){setAccess();close(true)}
+          else{error.textContent=word('Parolă incorectă.','Incorrect password.');input.select()}
+        }catch(e){error.textContent=word('Browserul nu poate valida accesul securizat.','This browser cannot validate secure access.')}
       });
       setTimeout(function(){input.focus()},30)
     })
@@ -185,10 +189,7 @@
     if(anchor)anchor.insertAdjacentElement('beforebegin',button);else nav.appendChild(button);
     button.addEventListener('click',function(event){
       event.preventDefault();
-      requestAccess().then(function(ok){
-        if(!ok)return;
-        if(typeof setRoute==='function')setRoute(ROUTE);else location.hash='#'+ROUTE
-      })
+      requestAccess().then(function(ok){if(ok){if(typeof setRoute==='function')setRoute(ROUTE);else location.hash='#'+ROUTE}})
     })
   }
 
@@ -203,10 +204,7 @@
       return previousTitle(id,atom)
     };
     var previousEnsure=window.ensureSectionRendered;
-    window.ensureSectionRendered=function(id){
-      if(id===ROUTE){initMarket();return}
-      return previousEnsure(id)
-    }
+    window.ensureSectionRendered=function(id){if(id===ROUTE){initMarket();return}return previousEnsure(id)}
   }
 
   function renderLocked(){
@@ -218,59 +216,42 @@
 
   function loadData(){
     if(loadingPromise)return loadingPromise;
-    loadingPromise=Promise.all([
-      fetch('/data/market-2026.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('market-data');return r.json()}),
-      fetch('/data/smokee-mods.json',{cache:'no-store'}).then(function(r){return r.ok?r.json():null}).catch(function(){return null})
-    ]).then(function(values){
-      marketData=values[0];
-      smokeeMods=values[1];
+    loadingPromise=fetch('/data/market-2026.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('market-data');return r.json()}).then(function(value){
+      marketData=value;
       if(Number(marketData.scopeYear)!==2026)throw new Error('invalid-market-year');
       marketData.observations=(marketData.observations||[]).filter(function(o){return is2026(o.observedAt)});
+      marketData.trendSnapshots=(marketData.trendSnapshots||[]).filter(function(o){return is2026(o.date)});
       return marketData
     }).finally(function(){loadingPromise=null});
     return loadingPromise
   }
 
-  function smokeeFeedSummary(){
-    var items=smokeeMods&&Array.isArray(smokeeMods.items)?smokeeMods.items:[];
-    var filtered=items.filter(function(item){return !isDicodesFinishedDevice(item)});
-    return {
-      observedAt:String(smokeeMods&&smokeeMods.generated||'').slice(0,10),
-      total:filtered.length,
-      inStock:filtered.filter(function(item){return item.stock===true}).length,
-      highEnd:filtered.filter(function(item){return item.highEnd===true}).length
-    }
-  }
-
   function observations(){return (marketData&&marketData.observations||[]).filter(function(o){return is2026(o.observedAt)})}
-  function unique(values){return Array.from(new Set(values.filter(Boolean)))}
   function counts(){
     var obs=observations();
-    var feed=smokeeFeedSummary();
     var retailerIds=unique(obs.map(function(o){return o.retailerId}));
-    if(feed.total>0&&is2026(feed.observedAt))retailerIds.push('smokee');
-    retailerIds=unique(retailerIds);
     return {
       retailers:(marketData.retailers||[]).length,
       retailersWithData:retailerIds.length,
-      observations:obs.length+feed.total,
-      inStock:obs.filter(function(o){return o.stock==='in_stock'}).length+feed.inStock,
-      categories:unique(obs.map(function(o){return o.category}).concat(feed.total?['mod']:[])).length,
-      rtaListed:(marketData.categorySnapshots||[]).filter(function(s){return s.category==='RTA'&&is2026(s.observedAt)}).reduce(function(sum,s){return sum+Number(s.listed||0)},0)
+      observations:obs.length,
+      inStock:obs.filter(function(o){return o.stock==='in_stock'}).length,
+      categories:unique(obs.map(function(o){return o.category})).length,
+      rtaOffers:obs.filter(function(o){return o.category==='RTA'}).length
     }
   }
 
   function renderHero(){
     var c=counts();
+    var fresh=freshness();
     return '<div class="market-hero">'+
-      '<div class="market-hero-top"><span class="market-kicker">PRIVATE MARKET INTELLIGENCE</span><span class="market-year">2026 ONLY</span></div>'+
+      '<div class="market-hero-top"><span class="market-kicker">PRIVATE MARKET INTELLIGENCE</span><span class="market-year">2026 ONLY</span><span class="market-fresh '+(fresh.fresh?'ok':'warn')+'">'+escHtml(fresh.fresh?word('● ACTUALIZAT AZI','● UPDATED TODAY'):word('● NECESITĂ ACTUALIZARE','● REFRESH NEEDED'))+'</span><span class="market-year">'+escHtml(word('zilnic · 07:00 RO','daily · 07:00 RO'))+'</span></div>'+
       '<h1>'+escHtml(word('PIAȚA RTA ROMÂNIA','ROMANIA RTA MARKET'))+'</h1>'+
-      '<p>'+escHtml(word('Observator de ofertă publică pentru ecosistemul rebuildable: RTA, sârme/coiluri, bumbac, moduri și chipseturi, acumulatori, unelte, componente, accesorii și lichide tutunoase/NET. Nu transformă stocul public în „vânzări”.','Public-offer observatory for the rebuildable ecosystem: RTAs, wires/coils, cotton, mods and chipsets, batteries, tools, parts, accessories and tobacco/NET liquids. Public stock is not treated as sales.'))+'</p>'+
+      '<p>'+escHtml(word('Observator de ofertă publică pentru ecosistemul rebuildable: RTA, sârme/coiluri, bumbac, moduri și chipseturi, acumulatori, încărcătoare, unelte, componente, accesorii și lichide tutunoase/NET. Toate sursele configurate sunt verificate zilnic. Stocul public nu este tratat drept vânzare.','Public-offer observatory for the rebuildable ecosystem: RTAs, wires/coils, cotton, mods and chipsets, batteries, chargers, tools, parts, accessories and tobacco/NET liquids. Every configured source is checked daily. Public stock is not treated as sales.'))+'</p>'+
       '<div class="market-metrics">'+
-        metric(c.retailers,word('surse retail validate','validated retail sources'))+
-        metric(c.observations,word('observații 2026 încărcate','2026 observations loaded'))+
-        metric(c.inStock,word('poziții observate în stoc','observed in-stock positions'))+
-        metric(c.rtaListed,word('RTA listate în snapshot-uri directe','RTAs listed in direct snapshots'))+
+        metric(c.retailersWithData+'/'+c.retailers,word('retaileri cu date / configurați','retailers with data / configured'))+
+        metric(c.observations,word('poziții observate azi','positions observed today'))+
+        metric(c.rtaOffers,word('oferte RTA observate','RTA offers observed'))+
+        metric(c.categories,word('familii de produse detectate','product families detected'))+
       '</div>'+
       '<div class="market-tabs">'+
         tabButton('market',word('PIAȚĂ','MARKET'))+
@@ -283,14 +264,21 @@
   function metric(value,label){return '<div class="market-metric"><b>'+escHtml(fmtNumber(value))+'</b><span>'+escHtml(label)+'</span></div>'}
   function tabButton(id,label){return '<button type="button" class="market-tab-btn'+(activeTab===id?' active':'')+'" data-market-tab="'+id+'">'+escHtml(label)+'</button>'}
 
+  function familyCoverageHtml(){
+    var desired=['RTA','sarma','coil prebuilt','bumbac/wick','mod','chipset/board','acumulator','incarcator','unelte build','componente RTA','accesoriu RTA/mod','lichid tutunos/NET/DIY'];
+    var cats=new Set(observations().map(function(o){return o.category}));
+    return '<div class="market-coverage">'+desired.map(function(name){return '<span>'+escHtml((cats.has(name)?'✓ ':'○ ')+name)+'</span>'}).join('')+'</div>'
+  }
+
   function renderMarketTab(){
-    var feed=smokeeFeedSummary();
     var retailers=marketData.retailers||[];
+    var status=marketData.collectorStatus||{};
+    var fresh=freshness();
     return '<div class="market-grid">'+
       '<article class="market-card"><h3>'+escHtml(word('Regula de interpretare','Interpretation rule'))+'</h3><p>'+escHtml(marketData.methodology.description)+'</p><div class="market-note" style="margin-top:12px"><strong>2026:</strong> '+escHtml(marketData.methodology.historyPolicy)+'</div></article>'+
+      '<article class="market-card"><h3>'+escHtml(word('Actualizare zilnică','Daily refresh'))+'</h3><p><strong>'+escHtml(fresh.date||'—')+'</strong> · '+escHtml(fmtNumber(status.pagesFetched||0))+' '+escHtml(word('pagini/API verificate · ','pages/API calls checked · '))+escHtml(fmtNumber(status.errors||0))+' '+escHtml(word('erori raportate.','reported errors.'))+'</p><div class="market-note" style="margin-top:12px">'+escHtml(word('Țintă operațională: o captură completă în fiecare zi, la 07:00 ora României; dashboardul semnalizează dacă snapshotul nu este din ziua curentă.','Operational target: one complete capture every day at 07:00 Romania time; the dashboard flags a snapshot that is not from the current day.'))+'</div></article>'+
+      '<article class="market-card"><h3>'+escHtml(word('Familii monitorizate','Monitored families'))+'</h3><p>'+escHtml(word('Semnul ✓ arată că familia a produs cel puțin o observație în snapshotul curent.','✓ means the family produced at least one observation in the current snapshot.'))+'</p>'+familyCoverageHtml()+'</article>'+
       '<article class="market-card"><h3>'+escHtml(word('Dicodes: tratament separat','Dicodes: separate treatment'))+'</h3><p>'+escHtml(marketData.methodology.dicodesPolicy)+'</p></article>'+
-      '<article class="market-card"><h3>'+escHtml(word('Feed Smokee · moduri','Smokee feed · mods'))+'</h3><p><strong>'+escHtml(fmtNumber(feed.total))+'</strong> '+escHtml(word('moduri observate în feedul curent; ','mods observed in the current feed; '))+'<strong>'+escHtml(fmtNumber(feed.inStock))+'</strong> '+escHtml(word('în stoc. Dispozitivele finite Dicodes sunt filtrate din acest total.','in stock. Finished Dicodes devices are filtered from this total.'))+'</p><div class="market-note" style="margin-top:12px">'+escHtml(word('Snapshot feed: ','Feed snapshot: ')+String(feed.observedAt||'—'))+'</div></article>'+
-      '<article class="market-card"><h3>'+escHtml(word('Acoperire retail','Retail coverage'))+'</h3><p>'+escHtml(word('Sursele sunt adăugate numai după validarea paginilor publice. „Monitored” nu înseamnă că toate categoriile au deja snapshot complet.','Sources are added only after validating public pages. “Monitored” does not mean every category already has a complete snapshot.'))+'</p></article>'+
       retailers.map(function(r){return '<article class="market-card"><h3>'+escHtml(r.name)+'</h3><p>'+escHtml(r.note||'')+'</p><div class="market-coverage">'+(r.coverage||[]).map(function(x){return '<span>'+escHtml(x)+'</span>'}).join('')+'</div><p style="margin-top:10px"><a class="market-source-link" target="_blank" rel="noreferrer" href="'+escHtml(safeSource(r.url))+'">'+escHtml(word('Sursa publică','Public source'))+'</a></p></article>'}).join('')+
     '</div>'
   }
@@ -304,7 +292,7 @@
     var map=retailerMap();
     var obs=observations();
     return '<div class="market-shell">'+
-      '<div class="market-toolbar"><div><strong>'+escHtml(word('Eșantion public 2026','Public 2026 sample'))+'</strong><div style="color:var(--muted);font-size:12px">'+escHtml(word('Fiecare rând păstrează sursa și data observației.','Every row keeps its source and observation date.'))+'</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><select id="marketCategoryFilter">'+categoryOptions()+'</select><button type="button" class="mini-link" data-market-csv>'+escHtml(word('Export CSV','Export CSV'))+'</button></div></div>'+
+      '<div class="market-toolbar"><div><strong>'+escHtml(word('Snapshot public zilnic 2026','Daily public 2026 snapshot'))+'</strong><div style="color:var(--muted);font-size:12px">'+escHtml(word('Fiecare rând păstrează retailerul, sursa și data observației.','Every row keeps the retailer, source and observation date.'))+'</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><select id="marketCategoryFilter">'+categoryOptions()+'</select><button type="button" class="mini-link" data-market-csv>'+escHtml(word('Export CSV','Export CSV'))+'</button></div></div>'+
       '<div id="marketProductsTable">'+productsTable(obs,map,'')+'</div>'+
     '</div>'
   }
@@ -317,23 +305,33 @@
     }).join('')+'</tbody></table></div>'
   }
 
-  function trendGroups(){
-    var obs=observations();
-    var dates=unique(obs.map(function(o){return o.observedAt})).sort();
-    var categories=unique(obs.map(function(o){return o.category})).sort();
-    return {obs:obs,dates:dates,categories:categories}
+  function categoryTrendRows(){
+    var snapshots=(marketData&&marketData.trendSnapshots||[]).slice().sort(function(a,b){return String(a.date).localeCompare(String(b.date))});
+    var latest=snapshots[snapshots.length-1]||null;
+    var previous=snapshots[snapshots.length-2]||null;
+    var names=unique(Object.keys(latest&&latest.categories||{}).concat(Object.keys(previous&&previous.categories||{}))).sort();
+    return {snapshots:snapshots,latest:latest,previous:previous,names:names}
+  }
+
+  function deltaHtml(current,previous){
+    var delta=Number(current||0)-Number(previous||0);
+    var cls=delta>0?'up':delta<0?'down':'flat';
+    return '<span class="market-delta '+cls+'">'+escHtml((delta>0?'▲ +':delta<0?'▼ ':'• ')+fmtNumber(delta))+'</span>'
   }
 
   function renderTrendsTab(){
-    var group=trendGroups();
-    var enough=group.dates.length>=2;
-    var body=group.categories.map(function(cat){
-      var rows=group.obs.filter(function(o){return o.category===cat});
-      var out=rows.filter(function(o){return o.stock==='out_of_stock'}).length;
-      var ratio=rows.length?Math.round(out/rows.length*100):0;
-      return '<article class="market-card"><h3>'+escHtml(cat)+'</h3><p>'+escHtml(fmtNumber(rows.length))+' '+escHtml(word('observații în eșantion · ','observations in sample · '))+escHtml(fmtNumber(ratio))+'% '+escHtml(word('marcate stoc epuizat.','marked out of stock.'))+'</p><div class="market-bar"><span style="width:'+Math.min(100,ratio)+'%"></span></div></article>'
+    var group=categoryTrendRows();
+    var enough=group.snapshots.length>=2;
+    if(!group.latest)return '<div class="market-note">'+escHtml(word('Nu există încă snapshot longitudinal.','No longitudinal snapshot yet.'))+'</div>';
+    var body=group.names.map(function(cat){
+      var now=group.latest.categories&&group.latest.categories[cat]||{};
+      var before=group.previous&&group.previous.categories&&group.previous.categories[cat]||{};
+      var listed=Number(now.listed||0);
+      var out=Number(now.outOfStock||0);
+      var ratio=listed?Math.round(out/listed*100):0;
+      return '<article class="market-card"><h3>'+escHtml(cat)+deltaHtml(listed,Number(before.listed||0))+'</h3><p><strong>'+escHtml(fmtNumber(listed))+'</strong> '+escHtml(word('poziții · ','positions · '))+escHtml(fmtNumber(now.retailers||0))+' '+escHtml(word('retaileri · ','retailers · '))+escHtml(fmtNumber(ratio))+'% '+escHtml(word('marcate stoc epuizat.','marked out of stock.'))+'</p><div class="market-bar"><span style="width:'+Math.min(100,ratio)+'%"></span></div></article>'
     }).join('');
-    return '<div class="market-note"><strong>'+escHtml(word('Trend longitudinal: ','Longitudinal trend: '))+'</strong>'+escHtml(enough?word('există cel puțin două date de captură și pot fi comparate.','at least two capture dates exist and can be compared.'):word('baseline-ul a început în 2026; nu inventăm trend dintr-o singură captură.','the baseline started in 2026; no trend is invented from a single capture.'))+'</div><div class="market-grid">'+body+'</div>'
+    return '<div class="market-note"><strong>'+escHtml(word('Trend longitudinal 2026: ','2026 longitudinal trend: '))+'</strong>'+escHtml(enough?word('comparăm automat ultima captură cu ziua precedentă disponibilă.','the latest capture is automatically compared with the previous available day.'):word('prima captură este baseline; diferențele apar după următoarea actualizare zilnică.','the first capture is the baseline; differences appear after the next daily refresh.'))+' '+escHtml(word('Ultima zi: ','Latest day: ')+group.latest.date)+'.</div><div class="market-grid">'+body+'</div>'
   }
 
   function renderOpportunitiesTab(){
@@ -341,12 +339,11 @@
     var cats=unique(obs.map(function(o){return o.category})).map(function(cat){
       var rows=obs.filter(function(o){return o.category===cat});
       var out=rows.filter(function(o){return o.stock==='out_of_stock'}).length;
-      var inStock=rows.filter(function(o){return o.stock==='in_stock'}).length;
-      return {cat:cat,total:rows.length,out:out,inStock:inStock,ratio:rows.length?out/rows.length:0}
+      return {cat:cat,total:rows.length,out:out,ratio:rows.length?out/rows.length:0,retailers:unique(rows.map(function(o){return o.retailerId})).length}
     }).sort(function(a,b){return b.ratio-a.ratio||b.total-a.total});
-    return '<div class="market-note"><strong>'+escHtml(word('Cum citim oportunitățile: ','How opportunities are read: '))+'</strong>'+escHtml(word('stocul epuizat repetat poate semnala o zonă de ofertă insuficientă, dar NU dovedește sell-through sau cerere fără date comerciale de la retailer.','repeated out-of-stock status can signal a supply gap, but it does NOT prove sell-through or demand without retailer sales data.'))+'</div><div class="market-grid">'+cats.map(function(x){
+    return '<div class="market-note"><strong>'+escHtml(word('Cum citim oportunitățile: ','How opportunities are read: '))+'</strong>'+escHtml(word('stocul epuizat repetat poate semnala o zonă de ofertă insuficientă, dar NU dovedește sell-through sau cerere fără date comerciale de la retailer. După mai multe snapshoturi zilnice, motorul va putea separa episoadele izolate de lipsurile persistente.','repeated out-of-stock status can signal a supply gap, but it does NOT prove sell-through or demand without retailer sales data. After multiple daily snapshots, the engine can separate isolated events from persistent gaps.'))+'</div><div class="market-grid">'+cats.map(function(x){
       var pct=Math.round(x.ratio*100);
-      return '<article class="market-card"><h3>'+escHtml(x.cat)+'</h3><p><strong>'+escHtml(fmtNumber(pct))+'%</strong> '+escHtml(word('out-of-stock în eșantionul curent · ','out-of-stock in the current sample · '))+'n='+escHtml(fmtNumber(x.total))+'.</p><div class="market-bar"><span style="width:'+Math.min(100,pct)+'%"></span></div></article>'
+      return '<article class="market-card"><h3>'+escHtml(x.cat)+'</h3><p><strong>'+escHtml(fmtNumber(pct))+'%</strong> '+escHtml(word('out-of-stock în snapshotul curent · ','out-of-stock in the current snapshot · '))+'n='+escHtml(fmtNumber(x.total))+' · '+escHtml(fmtNumber(x.retailers))+' '+escHtml(word('retaileri','retailers'))+'.</p><div class="market-bar"><span style="width:'+Math.min(100,pct)+'%"></span></div></article>'
     }).join('')+'</div><div class="market-card"><h3>'+escHtml(word('Watchlist chipseturi / plăci','Chipset / board watchlist'))+'</h3><div class="market-grid">'+(marketData.boardWatch||[]).map(function(b){return '<div class="market-note"><strong>'+escHtml(b.maker+' '+b.product)+'</strong><br>'+escHtml(b.note||'')+'<br><a class="market-source-link" target="_blank" rel="noreferrer" href="'+escHtml(safeSource(b.source))+'">'+escHtml(word('Referință verificată','Verified reference'))+'</a></div>'}).join('')+'</div></div>'
   }
 
@@ -360,16 +357,9 @@
   function bindUi(){
     var root=byId('market2026Root');
     if(!root)return;
-    root.querySelectorAll('[data-market-tab]').forEach(function(button){
-      button.addEventListener('click',function(){activeTab=button.dataset.marketTab;renderUnlocked()})
-    });
+    root.querySelectorAll('[data-market-tab]').forEach(function(button){button.addEventListener('click',function(){activeTab=button.dataset.marketTab;renderUnlocked()})});
     var filter=byId('marketCategoryFilter');
-    if(filter){
-      filter.addEventListener('change',function(){
-        var target=byId('marketProductsTable');
-        if(target)target.innerHTML=productsTable(observations(),retailerMap(),filter.value)
-      })
-    }
+    if(filter){filter.addEventListener('change',function(){var target=byId('marketProductsTable');if(target)target.innerHTML=productsTable(observations(),retailerMap(),filter.value)})}
     var csv=root.querySelector('[data-market-csv]');
     if(csv)csv.addEventListener('click',exportCsv)
   }
@@ -382,13 +372,7 @@
     var lines=[header.join(',')].concat(rows.map(function(o){return [map[o.retailerId]&&map[o.retailerId].name||o.retailerId,o.category,o.brand,o.product,o.priceRon,o.stock,o.observedAt,o.source].map(quote).join(',')}));
     var blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8'});
     var url=URL.createObjectURL(blob);
-    var a=document.createElement('a');
-    a.href=url;
-    a.download='piata-rta-romania-2026.csv';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(function(){URL.revokeObjectURL(url)},500)
+    var a=document.createElement('a');a.href=url;a.download='piata-rta-romania-2026.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},500)
   }
 
   function renderUnlocked(){
@@ -404,10 +388,8 @@
     if(!hasAccess()&&!force){renderLocked();return}
     var root=byId('market2026Root');
     if(!root)return;
-    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⌛</div><h2>'+escHtml(word('Se încarcă observațiile 2026…','Loading 2026 observations…'))+'</h2></div>';
-    loadData().then(renderUnlocked).catch(function(error){
-      root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⚠️</div><h2>'+escHtml(word('Date indisponibile','Data unavailable'))+'</h2><p>'+escHtml(word('Modulul nu a putut încărca datasetul 2026. Reîncearcă după refresh.','The module could not load the 2026 dataset. Retry after refresh.'))+'</p><small>'+escHtml(String(error&&error.message||error))+'</small></div>'
-    })
+    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⌛</div><h2>'+escHtml(word('Se încarcă observațiile zilnice 2026…','Loading daily 2026 observations…'))+'</h2></div>';
+    loadData().then(renderUnlocked).catch(function(error){root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⚠️</div><h2>'+escHtml(word('Date indisponibile','Data unavailable'))+'</h2><p>'+escHtml(word('Modulul nu a putut încărca datasetul 2026. Reîncearcă după refresh.','The module could not load the 2026 dataset. Retry after refresh.'))+'</p><small>'+escHtml(String(error&&error.message||error))+'</small></div>'})
   }
 
   function boot(){
