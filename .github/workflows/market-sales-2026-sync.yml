@@ -2,8 +2,9 @@ name: Market 2026 Sales Signals
 
 on:
   schedule:
-    - cron: '20 4 * * *'
-    - cron: '20 5 * * *'
+    # 06:00 Europe/Bucharest; DST gated below.
+    - cron: '0 3 * * *'
+    - cron: '0 4 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -24,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - name: Gate Romania time
+      - name: Gate 06:00 Bucharest
         id: gate
         shell: bash
         run: |
@@ -32,21 +33,27 @@ jobs:
           if [ "${{ github.event_name }}" = "schedule" ]; then
             offset="$(TZ=Europe/Bucharest date +%z)"
             cron="${{ github.event.schedule }}"
-            if { [ "$offset" = "+0300" ] && [ "$cron" != "20 4 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "20 5 * * *" ]; }; then run_sync=false; fi
+            if { [ "$offset" = "+0300" ] && [ "$cron" != "0 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "0 4 * * *" ]; }; then run_sync=false; fi
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
+
       - name: Checkout
         if: steps.gate.outputs.run_sync == 'true'
         uses: actions/checkout@v4
-        with: { fetch-depth: 0 }
+        with:
+          fetch-depth: 0
+
       - name: Setup Node
         if: steps.gate.outputs.run_sync == 'true'
         uses: actions/setup-node@v4
-        with: { node-version: '22' }
+        with:
+          node-version: '22'
+
       - name: Collect real sales and bestseller signals
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/sync-market-sales-2026.js --write
-      - name: Validate truth rules
+
+      - name: Validate sales truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
           node --check tools/sync-market-sales-2026.js
@@ -58,8 +65,9 @@ jobs:
           if(Number(d.coverage.storefrontsConfigured)!==(r.retailers||[]).length)throw new Error('Sales coverage denominator mismatch');
           for(const x of d.actualSales||[])if(!Number.isFinite(Number(x.unitsSold)))throw new Error('Non-explicit unitsSold row leaked');
           if(d.coverage.nationalUnitsSoldAvailable===true&&Number(d.coverage.storefrontsWithActualUnitSales)!==(r.retailers||[]).length)throw new Error('National sold-units claim became true without full coverage');
-          console.log(`Sales truth gate: actual units ${d.coverage.storefrontsWithActualUnitSales}/${d.coverage.storefrontsConfigured}; public bestseller ranking ${d.coverage.storefrontsWithRetailerSalesRanking}/${d.coverage.storefrontsConfigured}.`);
+          console.log(`Sales truth gate: unit counters ${d.coverage.storefrontsWithActualUnitSales}/${d.coverage.storefrontsConfigured}; bestseller rankings ${d.coverage.storefrontsWithRetailerSalesRanking}/${d.coverage.storefrontsConfigured}.`);
           NODE
+
       - name: Publish sales snapshot
         if: steps.gate.outputs.run_sync == 'true'
         shell: bash
