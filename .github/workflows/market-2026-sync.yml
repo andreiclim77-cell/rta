@@ -2,13 +2,12 @@ name: Market 2026 Daily Sync
 
 on:
   schedule:
-    # 07:00 Romania time, every day. GitHub cron is UTC; both DST offsets are scheduled and gated below.
+    # 06:00 Europe/Bucharest. GitHub cron is UTC; DST is gated below.
+    - cron: '0 3 * * *'
     - cron: '0 4 * * *'
-    - cron: '0 5 * * *'
   workflow_dispatch:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
@@ -16,6 +15,7 @@ on:
       - "tools/verify-market-prices-2026.js"
       - "tools/normalize-market-2026.js"
       - "tools/market-coverage-audit-2026.js"
+      - "tools/validate-market-daily-2026.js"
       - "data/market-retailers-2026.json"
       - ".github/workflows/market-2026-sync.yml"
 
@@ -31,146 +31,73 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Confirm Bucharest collection window
-        id: market_window
+      - name: Gate 06:00 Bucharest
+        id: gate
         shell: bash
         run: |
           run_sync=true
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            bucharest_offset="$(TZ=Europe/Bucharest date +%z)"
-            scheduled_cron="${{ github.event.schedule }}"
-            if { [ "$bucharest_offset" = "+0300" ] && [ "$scheduled_cron" != "0 4 * * *" ]; } ||
-               { [ "$bucharest_offset" = "+0200" ] && [ "$scheduled_cron" != "0 5 * * *" ]; }; then
-              run_sync=false
-            fi
-            echo "Bucharest offset $bucharest_offset; schedule $scheduled_cron; run_sync=$run_sync."
-          else
-            echo "Push/manual run allowed."
+            offset="$(TZ=Europe/Bucharest date +%z)"
+            cron="${{ github.event.schedule }}"
+            if { [ "$offset" = "+0300" ] && [ "$cron" != "0 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "0 4 * * *" ]; }; then run_sync=false; fi
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
 
       - name: Checkout
-        if: steps.market_window.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Node
-        if: steps.market_window.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: Collect all public Romania sources
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Collect national storefronts
+        if: steps.gate.outputs.run_sync == 'true'
         run: node tools/sync-market-2026.js --write
 
-      - name: Collect all Smokee RTA ecosystem families
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Collect Smokee API families
+        if: steps.gate.outputs.run_sync == 'true'
         run: node tools/sync-market-smokee-2026.js --write
 
-      - name: Collect storefronts requiring dedicated parsers
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Run dedicated storefront parsers
+        if: steps.gate.outputs.run_sync == 'true'
         run: node tools/sync-market-specialized-2026.js --write
 
-      - name: Verify suspicious product prices at source
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Verify suspicious prices at source
+        if: steps.gate.outputs.run_sync == 'true'
         run: node tools/verify-market-prices-2026.js --write
 
-      - name: Normalize and QA all market observations
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Normalize observations
+        if: steps.gate.outputs.run_sync == 'true'
         run: node tools/normalize-market-2026.js --write
 
-      - name: Audit national coverage truthfully
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Audit national coverage
+        if: steps.gate.outputs.run_sync == 'true'
         run: node tools/market-coverage-audit-2026.js --write
 
-      - name: Validate daily snapshot discipline
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Validate truth and freshness
+        if: steps.gate.outputs.run_sync == 'true'
         run: |
-          node --check tools/sync-market-2026.js
-          node --check tools/sync-market-smokee-2026.js
-          node --check tools/sync-market-specialized-2026.js
-          node --check tools/verify-market-prices-2026.js
-          node --check tools/normalize-market-2026.js
-          node --check tools/market-coverage-audit-2026.js
-          node --check assets/market-2026.js
-          node --check assets/market-2026-report.js
-          node - <<'NODE'
-          const fs = require('fs');
-          const data = JSON.parse(fs.readFileSync('data/market-2026.json', 'utf8'));
-          const registry = JSON.parse(fs.readFileSync('data/market-retailers-2026.json', 'utf8'));
-          const coverage = JSON.parse(fs.readFileSync('data/market-coverage-2026.json', 'utf8'));
-          const today = new Intl.DateTimeFormat('en-CA', {
-            timeZone: 'Europe/Bucharest', year: 'numeric', month: '2-digit', day: '2-digit'
-          }).format(new Date());
-          const configured = registry.retailers || [];
-          const observations = data.observations || [];
-          const status = data.collectorStatus || {};
-          const categories = new Set(observations.map(row => row.category));
-          const specialist = data.specializedCollectorStatus || {};
-          const priceVerification = data.priceVerificationStatus || {};
+          for f in tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js; do node --check "$f"; done
+          node tools/validate-market-daily-2026.js
 
-          if (Number(data.scopeYear) !== 2026 || Number(registry.scopeYear) !== 2026) throw new Error('Market scope drifted outside 2026');
-          if (!Array.isArray(observations) || !observations.length) throw new Error('No observations were produced');
-          if (configured.length < 19) throw new Error('National retailer registry unexpectedly shrank below 19 storefronts');
-          if (status.date !== today) throw new Error(`Market snapshot is not fresh for today: ${status.date} vs ${today}`);
-          if (Number(status.retailersConfigured || 0) !== configured.length) throw new Error('Collector status does not cover every configured storefront');
-          if (!(status.byRetailer || []).some(row => row.retailerId === 'smokee')) throw new Error('Smokee source status is missing');
-          if (specialist.date !== today) throw new Error('Specialized storefront collection did not run today');
-          for (const id of ['vapshop','viciishop','tigaraego','vapersparadise','vapetronic','steamfactory','ecigvapo','merlin']) {
-            if (!(specialist.byRetailer || []).some(row => row.retailerId === id)) throw new Error(`Missing specialized collector status for ${id}`);
-          }
-          if (priceVerification.date !== today) throw new Error('Suspicious-price verification did not run today');
-          if (Number(priceVerification.failed || 0) !== 0) throw new Error(`Suspicious-price verification left ${priceVerification.failed} failures`);
-          if (coverage.date !== today) throw new Error('National coverage audit is not fresh');
-          if (Number(coverage.coverage && coverage.coverage.storefrontsConfigured || 0) !== configured.length) throw new Error('National coverage audit storefront count mismatch');
-          if (registry.nationalAudit && registry.nationalAudit.discoveryCertified !== true && coverage.nationalClaim && coverage.nationalClaim.allowed === true) {
-            throw new Error('100% Romania claim became true before discovery certification');
-          }
-          for (const row of observations) {
-            if (!/^2026-/.test(String(row.observedAt || ''))) throw new Error(`Out-of-scope observation: ${row.product || 'unknown'}`);
-            const text = [row.brand, row.product].filter(Boolean).join(' ');
-            if (/dicodes/i.test(text) && row.category === 'mod' && !/(bf60|fl80|board|placa|chipset|pcb)/i.test(text)) {
-              throw new Error(`Finished Dicodes mod leaked into Market 2026: ${text}`);
-            }
-            if (/^\[object Object\]$/i.test(String(row.brand || ''))) throw new Error(`Invalid JSON-LD brand leaked: ${row.product || 'unknown'}`);
-            if (row.category === 'unelte build' && /mustiuc/i.test(String(row.product || ''))) throw new Error(`Drip tip misclassified as build tool: ${row.product}`);
-            if (row.category === 'acumulator' && /\b(?:wrap|folie|sleeve)\b/i.test(String(row.product || ''))) throw new Error(`Battery wrap misclassified as accumulator: ${row.product}`);
-            if (['viciishop','tigaraego'].includes(row.retailerId) && row.category === 'RTA' && Number(row.priceRon) > 0 && Number(row.priceRon) < 20) {
-              throw new Error(`Cashback leaked as RTA price for ${row.retailerId}: ${row.product} = ${row.priceRon}`);
-            }
-          }
-          const desiredFamilies = ['RTA', 'mod', 'acumulator', 'bumbac/wick', 'lichid tutunos/NET/DIY'];
-          const present = desiredFamilies.filter(name => categories.has(name));
-          if (present.length < 4) throw new Error(`Too few core data families present: ${present.join(', ')}`);
-          console.log(`Validated ${observations.length} normalized daily observations across ${configured.length} configured storefronts. National state: ${coverage.qualityState}; 100% claim=${coverage.nationalClaim.allowed}.`);
-          NODE
-
-      - name: Commit daily market snapshot
-        if: steps.market_window.outputs.run_sync == 'true'
+      - name: Publish daily market snapshot
+        if: steps.gate.outputs.run_sync == 'true'
         shell: bash
         run: |
-          if git diff --quiet -- data/market-2026.json data/market-history-2026 data/market-coverage-2026.json; then
-            echo "No Market 2026 changes."
-            exit 0
-          fi
-
+          if git diff --quiet -- data/market-2026.json data/market-history-2026 data/market-coverage-2026.json; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add data/market-2026.json data/market-history-2026 data/market-coverage-2026.json
           git commit -m "Snapshot Romania RTA market 2026"
-
           for attempt in 1 2 3 4 5; do
-            echo "Market snapshot push attempt $attempt/5"
             git fetch origin main
             git rebase origin/main
-            if git push origin HEAD:main; then
-              echo "Market snapshot published successfully."
-              exit 0
-            fi
-            sleep $((attempt * 3))
+            if git push origin HEAD:main; then exit 0; fi
+            sleep $((attempt*3))
           done
-
-          echo "Market snapshot could not be published after 5 race-safe attempts." >&2
           exit 1
