@@ -7,20 +7,21 @@
   "cacheMaxHours": 24,
   "trendLookbackDays": 7,
   "preAnnouncementMemoryDays": 21,
-  "purpose": "Pre-market Hype Radar cu fereastra de descoperire de 30 de zile. Detecteaza zvonuri, scurgeri, teasere, prototipuri, mostre, productie, precomenzi si lansari iminente pentru toata gama RTA si clone RTA. Sursele comerciale sunt discovery-only si nu pot valida singure o decizie de cumparare.",
+  "purpose": "Pre-market Hype Radar cu fereastra de descoperire de 30 de zile. Detecteaza zvonuri, scurgeri, teasere, prototipuri, mostre, productie, precomenzi, lansari iminente si produse lansate in ultimele 30 de zile pentru toata gama RTA si clone RTA. Sursele comerciale sunt discovery-only si nu pot valida singure o decizie de cumparare.",
   "truthRules": {
     "retailIsNeverHype": true,
     "retailDiscoveryDoesNotEscalate": true,
     "rejectCommercialPagesFromDecisionEvidence": true,
-    "commercialRejectTerms": ["add to cart","buy now","in stock","out of stock","checkout","shopping cart","shop now","order now","adauga in cos","adaugă în coș","cumpara acum","cumpără acum","în stoc","in stoc","stoc epuizat","vendors","vendor offer"],
+    "commercialRejectTerms": ["add to cart","buy now","checkout","shopping cart","shop now","order now","adauga in cos","adaugă în coș","cumpara acum","cumpără acum","vendors","vendor offer"],
     "preAnnouncementTerms": ["rumor","rumour","leak","leaked","spotted","teaser","sneak peek","coming soon","prototype","final prototype","prototype final","prototype reveal","engineering sample","pre-production sample","production sample","first batch","first batch production","sample sent","samples sent","sample sent to reviewers","sent to reviewers","review sample","reviewer sample","sample received","prototype received","review coming","first look soon","announcement soon","launch announcement","launching soon","release soon","reveal soon","pre-announcement","pre announcement","pre-order soon","preorder soon","pre-orders soon","preorders soon","pre-order opens","preorder opens","pre-sale","presale","waitlist soon","waitlist open","notify me","certification passed","tpd notified","notification passed","production started","mass production","shipping to reviewers","new rta announced","new mod announced","new accessory announced","eta","estimated shipping"],
+    "releaseTerms": ["new arrival","new arrivals","just arrived","released","just released","launched","launch day","available now","now available","in stock now","shipping now","ready to ship","officially available","released today","released this week"],
     "engagementTerms": ["when release","release date","when available","where can i get","waitlist","can't wait","cant wait","take my money","need this","want this"],
     "beginnerQuestionTerms": ["which rta","what rta","best rta for","first rta","beginner rta","which mod","what mod","first mod","beginner mod","what wire","which wire","what cotton","which cotton"],
     "complaintTerms": ["leak","leaking","condensation","whistle","whistling","hot spot","hotspot","bad machining","thread issue","cracked glass","button issue","board issue","battery door","510 issue"],
     "buyInHype": "preannouncement age <14 days AND same event corroborated by >=2 different decision-eligible source types AND verified comment/waitlist velocity >=3x in 7 days",
     "buyTrend": "no new preannouncement in 21 days AND beginner questions repeat >=3 times in 7 days from distinct verified accounts; unavailable identity evidence must not be inferred",
     "stopOrLiquidate": "mentions fall >=70% from prior hype peak OR V2/clone/second-batch announcement OR same complaint is independently corroborated across >=3 sources",
-    "discoveryWindow": "All relevant public/indexable RTA and clone-RTA rumors are searched over 30 days. Signals aged 15-30 days may remain WATCH/context but cannot become BUY_HYPE.",
+    "discoveryWindow": "All relevant public/indexable RTA and clone-RTA rumors and releases are searched over 30 days. Signals aged 15-30 days may remain WATCH/context but cannot become BUY_HYPE.",
     "missingEvidence": "When a required condition cannot be measured, downgrade to PREPARE/WATCH and state the missing confirmation. Never fabricate velocity, distinct accounts, sales, or market share."
   },
   "sourceTypes": [
@@ -78,7 +79,7 @@
     {"name":"Golden Greek","domains":[]},
     {"name":"GUS Mods","domains":[]}
   ],
-  "cloneMakers": ["SXK","ULTON","Ulton","YFTK","Kindbright","ShenRay","Coppervape","Vazzling"],
+  "cloneMakers": ["SXK","ULTON","Ulton","YFTK","Kindbright","ShenRay","Coppervape","Vazzling","Vapeasy"],
   "forumDomains": [
     "e-cigarette-forum.com",
     "vapingunderground.com",
@@ -93,10 +94,13 @@
     "vape.to",
     "dampfer-board.de",
     "dampferzuflucht.de",
-    "vapingcommunity.co.uk"
+    "vapingcommunity.co.uk",
+    "forum.belvaping.com"
   ],
   "independentNewsDomains": ["vaping360.com","ecigclick.co.uk","vapingpost.com","vapouround.co.uk","en.2firsts.com","spinfuel.com"],
-  "discoveryCommercialDomains": ["2fdeal.com","3fvape.com","sourcemore.com","vapingbest.com"],
+  "originalSellerDiscoveryDomains": ["cremedevape.com","intaste.de","pipeline-store.net","lepetitvapoteur.com","naturevape.co.uk","ecigone.co.uk"],
+  "cloneSellerDiscoveryDomains": ["2fdeal.com","3fvape.com","shareavape.com","sourcemore.com","vapingbest.com"],
+  "discoveryCommercialDomains": ["cremedevape.com","intaste.de","pipeline-store.net","lepetitvapoteur.com","naturevape.co.uk","ecigone.co.uk","2fdeal.com","3fvape.com","shareavape.com","sourcemore.com","vapingbest.com"],
   "socialDiscoveryDomains": ["facebook.com","instagram.com","threads.net","tiktok.com","x.com","twitter.com","youtube.com","youtu.be","t.me","telegram.me","discord.com","discord.gg"],
   "redditScopes": ["reddit.com/r/electronic_cigarette","reddit.com/r/Vaping","reddit.com/r/Vaping101","reddit.com"],
   "openWebDiscoveryQueries": [
@@ -105,9 +109,14 @@
     "new RTA sample received review coming",
     "RTA first batch production started",
     "RTA preorder waitlist launch soon",
-    "RTA clone SXK Ulton YFTK Kindbright",
-    "styled RTA clone preorder",
-    "new product watch RTA vaping forum"
+    "RTA new arrival released available now",
+    "RTA clone SXK Ulton YFTK Kindbright ShenRay",
+    "styled RTA clone preorder new arrival",
+    "new product watch RTA vaping forum",
+    "high end RTA upcoming new release",
+    "MTL RTA upcoming prototype",
+    "RDL RTA upcoming prototype",
+    "DL RTA upcoming dual coil prototype"
   ],
   "maturityStages": {
     "RUMOR": 15,
@@ -115,7 +124,8 @@
     "PROTOTYPE": 45,
     "SAMPLE_REVIEW": 60,
     "PRODUCTION": 75,
-    "IMMINENT": 90
+    "IMMINENT": 90,
+    "RELEASED": 100
   },
   "categories": {
     "RTA": ["MTL single","MTL top airflow","RDL single","DL single","DL dual"],
@@ -132,6 +142,8 @@
     "includeLastUpdated": true,
     "includeWarnings": true,
     "includeRumors": true,
-    "includeMaturityStage": true
+    "includeMaturityStage": true,
+    "includeReleasedLast30Days": true,
+    "includeHeartbeat": true
   }
 }
