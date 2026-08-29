@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "scope": "GLOBAL RTA + clone RTA",
+  "windowDays": 30,
+  "profiles": [
+    {
+      "id": "3fvape",
+      "domain": "3fvape.com",
+      "role": "clone-original-vendor",
+      "seedUrls": [
+        "https://www.3fvape.com/115-rta",
+        "https://www.3fvape.com/new-arrivals"
+      ],
+      "generatedPages": [
+        {"template": "https://www.3fvape.com/115-rta?p={page}", "from": 2, "to": 24},
+        {"template": "https://www.3fvape.com/new-arrivals?p={page}", "from": 2, "to": 20}
+      ],
+      "maxProductPages": 220
+    },
+    {
+      "id": "2fdeal",
+      "domain": "2fdeal.com",
+      "role": "clone-vendor",
+      "seedUrls": ["https://www.2fdeal.com/c/rta_0376/1.html"],
+      "generatedPages": [
+        {"template": "https://www.2fdeal.com/c/rta_0376/{page}.html", "from": 2, "to": 24}
+      ],
+      "maxProductPages": 180
+    },
+    {
+      "id": "shareavape",
+      "domain": "shareavape.com",
+      "role": "clone-original-vendor",
+      "seedUrls": [
+        "https://www.shareavape.com/rtas.html",
+        "https://www.shareavape.com/"
+      ],
+      "discoverPagination": true,
+      "maxCatalogPages": 20,
+      "maxProductPages": 180
+    },
+    {
+      "id": "ecigone",
+      "domain": "ecigone.co.uk",
+      "role": "original-vendor",
+      "seedUrls": ["https://ecigone.co.uk/collections/rta-tanks"],
+      "discoverPagination": true,
+      "maxCatalogPages": 12,
+      "maxProductPages": 100
+    },
+    {
+      "id": "sourcemore",
+      "domain": "sourcemore.com",
+      "role": "original-vendor-news",
+      "seedUrls": ["https://www.sourcemore.com/blog/"],
+      "discoverPagination": true,
+      "maxCatalogPages": 12,
+      "maxProductPages": 80,
+      "allowPreviewPublicationDate": true
+    }
+  ],
+  "searchOnlyDomains": [
+    "3avape.com",
+    "vapingbest.com",
+    "intaste.de",
+    "cremedevape.com",
+    "pipeline-store.net",
+    "lepetitvapoteur.com",
+    "naturevape.co.uk"
+  ],
+  "truth": {
+    "newArrivalAloneIsNotRelease": true,
+    "retailListingAloneIsNotLaunch": true,
+    "explicitEtaBatchReleaseDateRequiredForAfterWindow": true,
+    "previewPublicationCanBeBeforeMarketSignal": true,
+    "transportRtaMustBeRejected": true
+  }
+}
