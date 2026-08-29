@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T19:56:26.057Z",
+  "generatedAt": "2026-08-29T20:10:50.354Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -23,39 +23,43 @@
     "multiVendor": true,
     "concreteProductTitles": true,
     "genericVendorTitlesRejected": true,
+    "currentVendorRtaEtaScan": true,
+    "etaPastIsNotRelease": true,
     "upstreamEvidenceMerged": true,
     "observedReleaseIsNotClaimedAsExactReleaseDate": true,
     "eligibleTrustedContextCanCarryProductClassification": true,
-    "genericCatalogAndHomepageTitlesRejected": true
+    "genericCatalogAndHomepageTitlesRejected": true,
+    "finalCategoryAnchorValidated": true,
+    "nonRtaProductTitlesRejected": true
   },
   "scan": {
     "queries": 74,
     "working": 74,
-    "rawDocs": 561,
-    "preCandidates": 29,
-    "resolvedVendorPages": 16,
-    "pagesFetched": 25,
+    "rawDocs": 585,
+    "preCandidates": 23,
+    "resolvedVendorPages": 10,
+    "pagesFetched": 20,
     "events": 0,
     "samplePre": [
       {
-        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
-        "title": "Buy YFTK Flash e-Vapor V4.5S+ Style RTA 316SS 23mm Tank Atomizer"
+        "url": "https://app.rtafleet.com/",
+        "title": "RTA Fleet - fmis-web"
       },
       {
-        "url": "https://www.3fvape.com/content/9-coupon-discount",
-        "title": "Coupon & Discount - 3FVape"
+        "url": "https://www.riversidetransit.com/",
+        "title": "Riverside Transit Agency - Home"
       },
       {
-        "url": "https://www.transitrta.com/",
-        "title": "Welcome to RTA – RTA is your connection to all corners of Central …"
+        "url": "https://www.riversidetransit.com/index.php/maps-schedules",
+        "title": "Riverside Transit Agency - Maps & Schedules"
       },
       {
-        "url": "https://www.iriderta.org/",
-        "title": "Dayton RTA"
+        "url": "https://www.rta.ae/wps/portal/rta/ae/home/",
+        "title": "Roads & Transport Authority - Home"
       },
       {
-        "url": "https://rta.com/",
-        "title": "RTA Brand: Luxury Streetwear Clothing for Men & Women"
+        "url": "https://www.riderta.com/",
+        "title": "Homepage | RideRTA"
       }
     ],
     "explicitQueries": 33,
@@ -123,7 +127,7 @@
     "profilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 24,
+        "catalogFetched": 23,
         "productLinks": 188,
         "productPages": 186,
         "events": 1,
@@ -177,12 +181,25 @@
     "productLinksV2": 478,
     "productPagesV2": 476,
     "eventsV2": 1,
-    "upstreamEvidenceEvents": 54,
-    "upstreamEventsAccepted": 2,
-    "upstreamRejectedTitle": 55,
-    "upstreamRejectedOld": 1,
+    "currentVendorCatalogPages": 33,
+    "currentVendorRtaLinks": 153,
+    "currentVendorProductPages": 150,
+    "currentVendorPhraseHits": 3,
+    "currentVendorEvents": 0,
+    "upstreamEvidenceEvents": 65,
+    "upstreamEventsAccepted": 6,
+    "upstreamRejectedTitle": 61,
+    "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
-    "upstreamRejectedAfterCorroboration": 0
+    "upstreamRejectedAfterCorroboration": 0,
+    "finalCategoryRejected": 5,
+    "finalCategoryRejectedSample": [
+      "VAPORESSO » Premium Vape Brand Manufacture",
+      "OXVA New Theme - v4.3.0-黑五后更换回去",
+      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
+      "vaporesso| By YIGUO SEO Perf.Opt v1.0",
+      "MOVE BEYOND ORDINARY - Vaporesso"
+    ]
   },
   "products": [
     {
@@ -196,8 +213,8 @@
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T19:56:05.679Z",
-      "lastSeenAt": "2026-08-29T19:56:05.679Z",
+      "firstSeenAt": "2026-08-29T20:09:59.189Z",
+      "lastSeenAt": "2026-08-29T20:09:59.189Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
@@ -214,75 +231,13 @@
           "stage": "batch viitor"
         }
       ]
-    },
-    {
-      "productName": "OXVA New Theme - v4.3.0-黑五后更换回去",
-      "brand": "OXVA",
-      "category": "RTA",
-      "typology": "RDL single",
-      "window": "after",
-      "stage": "RELEASED",
-      "stageLabel": "lansare observată",
-      "eventDate": "2026-08-28T23:07:00.000Z",
-      "dateConfidence": "release-observed",
-      "firstSeenAt": "2026-08-28T23:07:00.000Z",
-      "lastSeenAt": "2026-08-28T23:07:00.000Z",
-      "ageHours": 20.823904166666665,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "sourceType": "manufacturer-official",
-          "host": "store.oxva.com",
-          "url": "https://store.oxva.com/collections/all",
-          "title": "OXVA New Theme - v4.3.0-黑五后更换回去",
-          "publishedAt": "2026-08-28T23:07:00.000Z",
-          "eventDate": "2026-08-28T23:07:00.000Z",
-          "stage": "lansat",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "dateConfidence": "release-observed"
-        }
-      ],
-      "id": "5a6902f01bd18c05f776"
-    },
-    {
-      "productName": "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
-      "brand": null,
-      "category": "MODURI",
-      "typology": "dual battery",
-      "window": "after",
-      "stage": "RELEASED",
-      "stageLabel": "lansare observată",
-      "eventDate": "2026-08-28T11:11:00.000Z",
-      "dateConfidence": "release-observed",
-      "firstSeenAt": "2026-08-28T11:11:00.000Z",
-      "lastSeenAt": "2026-08-28T11:11:00.000Z",
-      "ageHours": 32.757237777777775,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "sourceType": "manufacturer-official",
-          "host": "store.geekvape.com",
-          "url": "https://store.geekvape.com/collections/all-products",
-          "title": "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
-          "publishedAt": "2026-08-28T11:11:00.000Z",
-          "eventDate": "2026-08-28T11:11:00.000Z",
-          "stage": "lansat",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "dateConfidence": "release-observed"
-        }
-      ],
-      "id": "f6ace10d6a0dcc8d463a"
     }
   ],
   "summary": {
-    "total": 3,
+    "total": 1,
     "before": 1,
-    "after": 2,
+    "after": 0,
     "explicitAfter": 0,
-    "observedAfter": 2
+    "observedAfter": 0
   }
 }
