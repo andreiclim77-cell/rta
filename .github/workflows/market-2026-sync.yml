@@ -12,6 +12,7 @@ on:
     paths:
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
+      - "tools/normalize-market-2026.js"
       - "data/market-retailers-2026.json"
       - ".github/workflows/market-2026-sync.yml"
 
@@ -65,11 +66,16 @@ jobs:
         if: steps.market_window.outputs.run_sync == 'true'
         run: node tools/sync-market-smokee-2026.js --write
 
+      - name: Normalize and QA all market observations
+        if: steps.market_window.outputs.run_sync == 'true'
+        run: node tools/normalize-market-2026.js --write
+
       - name: Validate daily snapshot discipline
         if: steps.market_window.outputs.run_sync == 'true'
         run: |
           node --check tools/sync-market-2026.js
           node --check tools/sync-market-smokee-2026.js
+          node --check tools/normalize-market-2026.js
           node --check assets/market-2026.js
           node - <<'NODE'
           const fs = require('fs');
@@ -97,11 +103,14 @@ jobs:
             if (/dicodes/i.test(text) && row.category === 'mod' && !/(bf60|fl80|board|placa|chipset|pcb)/i.test(text)) {
               throw new Error(`Finished Dicodes mod leaked into Market 2026: ${text}`);
             }
+            if (/^\[object Object\]$/i.test(String(row.brand || ''))) throw new Error(`Invalid JSON-LD brand leaked: ${row.product || 'unknown'}`);
+            if (row.category === 'unelte build' && /mustiuc/i.test(String(row.product || ''))) throw new Error(`Drip tip misclassified as build tool: ${row.product}`);
+            if (row.category === 'acumulator' && /\b(?:wrap|folie|sleeve)\b/i.test(String(row.product || ''))) throw new Error(`Battery wrap misclassified as accumulator: ${row.product}`);
           }
           const desiredFamilies = ['RTA', 'mod', 'acumulator', 'bumbac/wick', 'lichid tutunos/NET/DIY'];
           const present = desiredFamilies.filter(name => categories.has(name));
           if (present.length < 4) throw new Error(`Too few core data families present: ${present.join(', ')}`);
-          console.log(`Validated ${observations.length} daily observations across ${configured.length} configured retailers; core families: ${present.join(', ')}.`);
+          console.log(`Validated ${observations.length} normalized daily observations across ${configured.length} configured retailers; core families: ${present.join(', ')}.`);
           NODE
 
       - name: Commit daily market snapshot
