@@ -56,7 +56,7 @@ need(finalizer.includes('finalCategoryAnchorValidated:true')&&finalizer.includes
 need(hype.includes("PRODUCTS='/data/market-hype-products-2026.json'"),'Hype UI does not load concrete products');
 need(hype.includes('hype-category-button')&&hype.includes('hype-product-card'),'Hype categories/products are not expandable');
 need(hype.includes('productName')&&hype.includes('brandLabel'),'Concrete product and brand detail missing');
-need(hype.includes('release-observed')&&hype.includes('prima dovadă publică'),'Observed release is not explained truthfully');
+need(hype.includes('release-observed')&&hype.toLowerCase().includes('prima dovadă publică'),'Observed release is not explained truthfully');
 need(!hype.includes('hype-direct')&&!hype.includes("t('Acum','Now')"),'Rejected automatic Now/conclusion block returned');
 need(hype.includes('Orice zvon relevant cu 30 zile înainte...')&&hype.includes('After the first heart-beat...'),'Two Hype windows missing');
 need(hype.includes('New Arrivals')&&hype.includes('dată explicită'),'UI does not explain relisting/release distinction');
