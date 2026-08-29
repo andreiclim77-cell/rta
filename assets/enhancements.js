@@ -8,12 +8,15 @@ function load(src,done){
   script.addEventListener('error',function(){if(done)done(new Error('asset-load-failed'),src)},{once:true});
   document.head.appendChild(script)
 }
+function style(src){if(document.querySelector('link[data-rta-style="'+src.replace(/"/g,'\\"')+'"]'))return;var l=document.createElement('link');l.rel='stylesheet';l.href=src;l.dataset.rtaStyle=src;document.head.appendChild(l)}
 function isMainGuide(){return !/^\/rta-lab(?:\/|$)/i.test(location.pathname)}
 function waitForMarket(){
   if(marketUiStarted||!isMainGuide())return;
   var root=document.getElementById('market2026Root');
   if(!root||!root.querySelector('.market-hero')){setTimeout(waitForMarket,100);return}
   marketUiStarted=true;
+  style('/assets/market-management-v4-extra.css?v=1');
+  style('/assets/market-hype-warnings.css?v=1');
   load('/assets/market-loading-guard.js?v=11');
   load('/assets/market-ui-recovery.js?v=5');
   load('/assets/market-management-v2.js?v=4',function(){load('/assets/market-analysis-synthesis.js?v=1')});
