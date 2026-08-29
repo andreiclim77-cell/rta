@@ -16,6 +16,7 @@ on:
       - "tools/collect-market-hype-products-2026.js"
       - "tools/collect-market-hype-vendor-direct-2026.js"
       - "tools/collect-market-hype-targeted-vendor-2026.js"
+      - "tools/augment-market-hype-explicit-vendor-dates-2026.js"
       - "data/market-hype-sources-2026.json"
       - ".github/workflows/market-hype-2026-sync.yml"
 
@@ -87,6 +88,10 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/collect-market-hype-targeted-vendor-2026.js --write
 
+      - name: Explicit vendor date phrases - verified ETA and batch
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/augment-market-hype-explicit-vendor-dates-2026.js --write
+
       - name: Validate Hype global 30-day truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
@@ -97,6 +102,7 @@ jobs:
           node --check tools/collect-market-hype-products-2026.js
           node --check tools/collect-market-hype-vendor-direct-2026.js
           node --check tools/collect-market-hype-targeted-vendor-2026.js
+          node --check tools/augment-market-hype-explicit-vendor-dates-2026.js
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
@@ -111,9 +117,11 @@ jobs:
           if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.productRelevanceValidated!==true)throw new Error('Product Hype evidence missing');
           if(h.mode!=='after-first-heart-beat'||Number(h.windowDays)!==30||h.scope!=='GLOBAL RTA + clone RTA'||!Array.isArray(h.releasedLast30Days))throw new Error('Heartbeat missing');
           if(he.mode!=='after-first-heart-beat-evidence'||Number(he.windowDays)!==30||he.productRelevanceValidated!==true)throw new Error('Heartbeat evidence missing');
-          if(Number(p.schemaVersion)<5||Number(p.windowDays)!==30||p.scope!=='GLOBAL RTA + clone RTA'||p.pendingRefresh===true||!Array.isArray(p.products))throw new Error('Targeted product Hype snapshot invalid');
-          if(!p.truth||p.truth.productLevelOnly!==true||p.truth.newArrivalIsNotRelease!==true||p.truth.afterReleaseRequiresExplicitDate!==true||p.truth.relistingIsNotRelease!==true||p.truth.targetedVendorSearch!==true)throw new Error('Product/relisting/targeted-vendor truth contract missing');
-          if(!p.scan||Number(p.scan.working)<1)throw new Error('Targeted vendor queries did not work');
+          if(Number(p.schemaVersion)<9||Number(p.windowDays)!==30||p.scope!=='GLOBAL RTA + clone RTA'||p.pendingRefresh===true||!Array.isArray(p.products))throw new Error('Explicit product Hype snapshot invalid');
+          if(!p.truth||p.truth.productLevelOnly!==true||p.truth.newArrivalIsNotRelease!==true||p.truth.afterReleaseRequiresExplicitDate!==true||p.truth.relistingIsNotRelease!==true||p.truth.explicitVendorPhrasePass!==true)throw new Error('Product/relisting/explicit-vendor truth contract missing');
+          if(!p.scan||Number(p.scan.explicitWorking)<1)throw new Error('Explicit vendor queries did not work');
+          if(Number(p.scan.preCandidates)>0&&Number(p.scan.resolvedVendorPages)===0)throw new Error('Targeted Hype found candidates but could not resolve any vendor page');
+          if(Number(p.scan.explicitPhraseHits)>0&&Number(p.scan.explicitEvents)===0)throw new Error('Explicit dated vendor phrases were found but no event was produced');
           const banned=/dictionary\.|steampowered\.com|cbsnews\.com|(^|\.)rta\.ae|rtafleet\.com|(^|\.)rta\.com|merriam-webster/i;
           for(const x of p.products){
             if(!x.id||!x.productName||x.category!=='RTA'||!x.typology||!['before','after'].includes(x.window))throw new Error('Incomplete product-level Hype row');
@@ -122,7 +130,7 @@ jobs:
             if(x.window==='after'&&(x.dateConfidence!=='explicit'||Math.abs(Date.now()-Date.parse(x.eventDate))/36e5>720))throw new Error('Invalid after-release date: '+x.productName);
           }
           for(const x of h.releasedLast30Days||[])if(x.dateConfidence!=='explicit'||Number(x.ageHours)>720)throw new Error('Heartbeat contains undated/old event');
-          console.log(`Hype product gate OK: products ${p.products.length}; before ${p.summary.before}; after ${p.summary.after}; targeted ${p.scan.working}/${p.scan.queries}, candidates ${p.scan.candidates}, events ${p.scan.events}.`);
+          console.log(`Hype product gate OK: products ${p.products.length}; before ${p.summary.before}; after ${p.summary.after}; explicit ${p.scan.explicitEvents}; phrase hits ${p.scan.explicitPhraseHits}.`);
           NODE
 
       - name: Publish complete Hype, product and heartbeat snapshots
