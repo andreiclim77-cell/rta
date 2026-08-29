@@ -1,7 +1,7 @@
-const CACHE_VERSION = 'ghid-rta-static-v13';
+const CACHE_VERSION = 'ghid-rta-static-v14';
 const OFFLINE_URL = '/offline.html';
 const SAFE_PAGES = [OFFLINE_URL,'/ghid-rta-mtl.html','/sarme-rta-builduri.html','/builduri-mtl-sarme-rta.html','/airflow-camera-rta-mtl.html','/control-temperatura-mtl.html','/diagnostic-gust-rta-mtl.html','/calculator-lichide-vape.html','/legislativ-vape.html'];
-const STATIC_ASSETS = ['/assets/favicon-192.png','/assets/favicon-512.png','/assets/apple-touch-icon.png','/assets/smokee-logo-official.png','/assets/rta-hero-background.png','/assets/seo-pages.css','/assets/enhancements.css?v=7','/assets/enhancements.js?v=7','/assets/enhancements-core.js?v=8','/assets/market-2026.js?v=4','/assets/market-2026-report.js?v=1','/assets/market-coverage-ui.js?v=1','/assets/market-sales-ui.js?v=1','/site.webmanifest','/site-en.webmanifest'];
+const STATIC_ASSETS = ['/assets/favicon-192.png','/assets/favicon-512.png','/assets/apple-touch-icon.png','/assets/smokee-logo-official.png','/assets/rta-hero-background.png','/assets/seo-pages.css','/assets/enhancements.css?v=7','/assets/enhancements.js?v=7','/assets/enhancements-core.js?v=8','/assets/market-2026.js?v=4','/assets/market-2026-report.js?v=1','/assets/market-coverage-ui.js?v=1','/assets/market-sales-ui.js?v=2','/site.webmanifest','/site-en.webmanifest'];
 self.addEventListener('install',event=>{event.waitUntil(caches.open(CACHE_VERSION).then(cache=>cache.addAll(SAFE_PAGES.concat(STATIC_ASSETS))))});
 self.addEventListener('activate',event=>{event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key!==CACHE_VERSION).map(key=>caches.delete(key)))).then(()=>self.clients.claim()))});
 self.addEventListener('message',event=>{if(event.data&&event.data.type==='SKIP_WAITING')self.skipWaiting()});
