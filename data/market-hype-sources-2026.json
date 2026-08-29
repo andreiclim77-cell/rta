@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "scopeYear": 2026,
+  "timezone": "Europe/Bucharest",
+  "lookbackHours": 72,
+  "cacheMaxHours": 24,
+  "purpose": "Pre-market Hype Radar. Detecteaza numai semnale upstream de pre-anunt, inainte de listarea comerciala normala. Nu foloseste magazine ca sursa de hype.",
+  "truthRules": {
+    "retailIsNeverHype": true,
+    "rejectCommercialPages": true,
+    "commercialRejectTerms": ["add to cart","buy now","in stock","checkout","shopping cart","adauga in cos","adaugă în coș","cumpara acum","cumpără acum","în stoc","in stoc"],
+    "preAnnouncementTerms": ["teaser","sneak peek","coming soon","prototype","final prototype","first batch","sample sent","samples sent","announcement soon","pre-announcement","pre announcement","pre-order soon","preorder soon","waitlist soon","certification passed","production started","production sample","review sample","review coming","prototype received","new rta announced","new mod announced","new accessory announced"],
+    "buyInHype": "preannouncement age <14 days AND same event corroborated by >=2 different source types AND verified comment/waitlist velocity >=3x in 7 days",
+    "buyTrend": "no new preannouncement in 21 days AND beginner questions repeat >=3 times in 7 days from distinct accounts; unavailable identity evidence must not be inferred",
+    "stopOrLiquidate": "mentions fall >=70% from prior hype peak OR V2/clone/second-batch announcement OR same complaint is independently corroborated across >=3 source types",
+    "missingEvidence": "When a required condition cannot be measured, downgrade to PREPARE/WATCH and state the missing confirmation. Never fabricate velocity, distinct accounts, sales, or market share."
+  },
+  "sourceTypes": [
+    "manufacturer-official",
+    "manufacturer-social-public",
+    "manufacturer-community",
+    "vaping-forum-prelaunch",
+    "reddit-prelaunch",
+    "independent-vape-news",
+    "creator-prelaunch"
+  ],
+  "officialMakers": [
+    {"name":"SvoeMesto","domains":["svoemesto.de"]},
+    {"name":"KHW Mods","domains":["khwmods.com"]},
+    {"name":"SmokerStore / Taifun","domains":["smokerstore.de"]},
+    {"name":"Arcana Mods","domains":["arcanamods.com"]},
+    {"name":"Centenary Mods","domains":["centenarymods.com"]},
+    {"name":"Cthulhu Mod","domains":["cthulhumod.com"]},
+    {"name":"Vandy Vape","domains":["vandyvape.com"]},
+    {"name":"Dovpo / BP Mods","domains":["dovpo.com"]},
+    {"name":"Geekvape","domains":["geekvape.com","us.geekvape.com"]},
+    {"name":"Lost Vape","domains":["lostvape.com"]},
+    {"name":"YiHi / SXmini","domains":["yihisxmini.com"]},
+    {"name":"Vapefly","domains":["vapefly.com"]}
+  ],
+  "forumDomains": ["e-cigarette-forum.com","vapingunderground.com","planet-of-the-vapes.co.uk","rovapers.eu"],
+  "independentNewsDomains": ["vaping360.com","ecigclick.co.uk","vapingpost.com"],
+  "categories": {
+    "RTA": ["MTL single","MTL top airflow","RDL single","DL single","DL dual"],
+    "MODURI": ["single battery","dual battery","squonk","side by side"],
+    "ACCESORII": ["sarma","bumbac","sticla","drip tip","tool-uri"]
+  },
+  "outputPolicy": {
+    "publicTypologiesOnly": true,
+    "hideBrands": true,
+    "hideShopLinks": true,
+    "hidePrices": true,
+    "returnHtmlCategories": ["RTA","MODURI","ACCESORII"],
+    "returnJson": true,
+    "includeLastUpdated": true
+  }
+}
