@@ -3,6 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { execFileSync } = require('child_process');
 
 const ROOT = path.resolve(__dirname, '..');
 const MARKET_PATH = path.join(ROOT, 'data', 'market-2026.json');
@@ -12,6 +13,7 @@ const WRITE = process.argv.includes('--write');
 const CHECK = process.argv.includes('--check');
 const PER_PAGE = 100;
 const MAX_CATEGORY_PAGES = 6;
+const MAX_ATTEMPTS = 4;
 
 const CATEGORY_GROUPS = [
   { id: 'atomizers', categoryId: 76, hint: 'atomizer' },
@@ -35,6 +37,10 @@ function readJson(file) {
 function writeJson(file, value) {
   fs.mkdirSync(path.dirname(file), { recursive: true });
   fs.writeFileSync(file, JSON.stringify(value, null, 2) + '\n', 'utf8');
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 function bucharestDate(now = new Date()) {
@@ -155,22 +161,42 @@ function isFinishedDicodes(category, title) {
 }
 
 async function fetchJson(url) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 15000);
-  try {
-    const response = await fetch(url, {
-      headers: {
-        'user-agent': 'Ghid-RTA-Market-Observatory/1.0 (+https://ghid-rta.ro/)',
-        'accept': 'application/json'
-      },
-      signal: controller.signal,
-      redirect: 'follow'
-    });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return { data: await response.json(), totalPages: Number(response.headers.get('x-wp-totalpages') || 0), total: Number(response.headers.get('x-wp-total') || 0) };
-  } finally {
-    clearTimeout(timer);
+  let lastError = null;
+  for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt += 1) {
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 18000);
+    try {
+      const response = await fetch(url, {
+        headers: {
+          'user-agent': 'Ghid-RTA-Market-Observatory/4.0 (+https://ghid-rta.ro/)',
+          'accept': 'application/json',
+          'accept-language': 'ro-RO,ro;q=0.9,en;q=0.7',
+          'cache-control': 'no-cache'
+        },
+        signal: controller.signal,
+        redirect: 'follow'
+      });
+      if (response.ok) {
+        return {
+          data: await response.json(),
+          totalPages: Number(response.headers.get('x-wp-totalpages') || 0),
+          total: Number(response.headers.get('x-wp-total') || 0)
+        };
+      }
+      const retryable = response.status === 408 || response.status === 425 || response.status === 429 || response.status >= 500 || response.status === 403;
+      const retryAfter = Number(response.headers.get('retry-after') || 0);
+      lastError = new Error(`HTTP ${response.status}`);
+      if (!retryable || attempt === MAX_ATTEMPTS) throw lastError;
+      await sleep(retryAfter > 0 ? retryAfter * 1000 : 1200 * attempt * attempt);
+    } catch (error) {
+      lastError = error;
+      if (attempt === MAX_ATTEMPTS) throw error;
+      await sleep(1200 * attempt * attempt);
+    } finally {
+      clearTimeout(timer);
+    }
   }
+  throw lastError || new Error('Unknown Smokee API error');
 }
 
 async function categoryProducts(group) {
@@ -186,6 +212,7 @@ async function categoryProducts(group) {
     products.push(...rows.map(product => ({ product, hint: group.hint, sourceGroup: group.id })));
     const totalPages = result.totalPages || 0;
     if (!rows.length || rows.length < PER_PAGE || (totalPages && page >= totalPages)) break;
+    await sleep(250);
   }
   return { products, total, pagesFetched };
 }
@@ -233,6 +260,23 @@ function summaryByCategory(observations) {
   }]));
 }
 
+function loadHeadMarket() {
+  try {
+    const raw = execFileSync('git', ['show', 'HEAD:data/market-2026.json'], { cwd: ROOT, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] });
+    return JSON.parse(raw);
+  } catch (_) {
+    return null;
+  }
+}
+
+function sameDaySmokeeFallback(date) {
+  const headMarket = loadHeadMarket();
+  if (!headMarket) return { observations: [], categorySnapshots: [], generatedAt: null };
+  const observations = (headMarket.observations || []).filter(row => row.retailerId === 'smokee' && row.observedAt === date);
+  const categorySnapshots = (headMarket.categorySnapshots || []).filter(row => row.retailerId === 'smokee' && row.observedAt === date);
+  return { observations, categorySnapshots, generatedAt: headMarket.updatedAt || null };
+}
+
 async function main() {
   const market = readJson(MARKET_PATH);
   const date = bucharestDate();
@@ -262,6 +306,7 @@ async function main() {
     } catch (error) {
       errors.push({ source: `category:${group.id}`, error: String(error && error.message || error).slice(0, 180) });
     }
+    await sleep(350);
   }
 
   for (const term of SEARCH_TERMS) {
@@ -272,6 +317,7 @@ async function main() {
     } catch (error) {
       errors.push({ source: `search:${term}`, error: String(error && error.message || error).slice(0, 180) });
     }
+    await sleep(350);
   }
 
   const rows = [];
@@ -296,8 +342,12 @@ async function main() {
     });
   }
 
-  const observations = dedupe(rows).sort((a, b) => `${a.category}|${a.product}`.localeCompare(`${b.category}|${b.product}`, 'ro'));
-  if (!observations.length) throw new Error(`Smokee market API returned zero classified observations; errors=${errors.length}`);
+  const liveObservations = dedupe(rows).sort((a, b) => `${a.category}|${a.product}`.localeCompare(`${b.category}|${b.product}`, 'ro'));
+  const fallback = liveObservations.length ? { observations: [], categorySnapshots: [], generatedAt: null } : sameDaySmokeeFallback(date);
+  const fallbackUsed = !liveObservations.length && fallback.observations.length > 0;
+  const observations = liveObservations.length ? liveObservations : fallback.observations.map(row => ({ ...row, sourceMode: row.sourceMode || 'smokee-store-api' }));
+  const effectiveSnapshots = liveObservations.length ? snapshots : fallback.categorySnapshots;
+  const collectionComplete = liveObservations.length > 0 && errors.length === 0;
 
   market.observations = [
     ...(market.observations || []).filter(row => row.retailerId !== 'smokee' && /^2026-/.test(String(row.observedAt || ''))),
@@ -306,7 +356,7 @@ async function main() {
 
   market.categorySnapshots = [
     ...(market.categorySnapshots || []).filter(row => row.retailerId !== 'smokee' && /^2026-/.test(String(row.observedAt || ''))),
-    ...snapshots
+    ...effectiveSnapshots
   ];
 
   const status = market.collectorStatus || {};
@@ -320,9 +370,13 @@ async function main() {
     retailerId: 'smokee',
     pagesFetched,
     observations: observations.length,
+    liveObservations: liveObservations.length,
     errors,
     skipped: null,
-    sourceMode: 'smokee-store-api'
+    sourceMode: liveObservations.length ? 'smokee-store-api' : (fallbackUsed ? 'smokee-store-api-same-day-cache' : 'smokee-store-api-unavailable'),
+    collectionComplete,
+    fallbackUsed,
+    fallbackGeneratedAt: fallbackUsed ? fallback.generatedAt : null
   });
   market.collectorStatus = status;
   market.updatedAt = status.generatedAt;
@@ -345,17 +399,32 @@ async function main() {
   history.summary = trend;
   history.collectorStatus = status;
 
+  const resultSummary = {
+    pagesFetched,
+    observations: observations.length,
+    liveObservations: liveObservations.length,
+    errors: errors.length,
+    collectionComplete,
+    fallbackUsed
+  };
+
   if (CHECK) {
-    console.log(JSON.stringify({ pagesFetched, observations: observations.length, errors: errors.length }, null, 2));
+    console.log(JSON.stringify(resultSummary, null, 2));
     return;
   }
 
   if (WRITE) {
     writeJson(MARKET_PATH, market);
     writeJson(historyPath, history);
-    console.log(`Merged ${observations.length} Smokee observations into Market 2026 (${pagesFetched} API requests, ${errors.length} errors).`);
+    if (liveObservations.length) {
+      console.log(`Merged ${liveObservations.length} live Smokee observations into Market 2026 (${pagesFetched} API requests, ${errors.length} errors).`);
+    } else if (fallbackUsed) {
+      console.warn(`Smokee API unavailable in this run; preserved ${observations.length} verified same-day observations. National completeness remains false.`);
+    } else {
+      console.warn(`Smokee API unavailable and no same-day fallback exists. Published market remains partial; national completeness remains false.`);
+    }
   } else {
-    console.log(JSON.stringify({ observations, pagesFetched, errors }, null, 2));
+    console.log(JSON.stringify({ observations, ...resultSummary }, null, 2));
   }
 }
 
