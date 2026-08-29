@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "scopeYear": 2026,
-  "generatedAt": "2026-08-29T15:52:41.460Z",
+  "generatedAt": "2026-08-29T16:01:43.492Z",
   "lookbackHours": 72,
   "cacheMaxHours": 24,
   "pendingRefresh": false,
@@ -28,7 +28,7 @@
     "queriesWorking": 121,
     "redditAuthorized": false,
     "redditMode": "credentials-or-approval-missing",
-    "rawDocuments": 416,
+    "rawDocuments": 422,
     "qualifiedPrelaunchSignals": 0,
     "trendSignals7d": 0,
     "complaintSignals7d": 0,
@@ -41,7 +41,7 @@
       "manufacturer-social-public": {
         "queries": 29,
         "working": 29,
-        "documents": 284
+        "documents": 275
       },
       "manufacturer-community": {
         "queries": 29,
@@ -73,12 +73,30 @@
     "indexDateSignals": 0,
     "deepQueriesRun": 73,
     "deepQueriesWorking": 73,
-    "deepCandidateDocuments": 409,
-    "deepWarningsAdded": 0,
+    "deepCandidateDocuments": 406,
+    "deepWarningsAdded": 1,
     "deepScan": true
   },
   "categories": {
-    "RTA": [],
+    "RTA": [
+      {
+        "kind": "warning",
+        "eventId": "45ca0cc050a84096ae76",
+        "category": "RTA",
+        "typology": "DL single",
+        "mentions72h": 1,
+        "sourceTypeCount": 1,
+        "sourceFamilyCount": 1,
+        "newestSignalHours": 34.9,
+        "confidence": 42,
+        "warningStage": "prototip",
+        "decision": {
+          "code": "WATCH",
+          "label": "ATENȚIE · URMĂREȘTE",
+          "reason": "Semnal upstream timpuriu dintr-o singură familie de surse. Urmărește confirmarea înainte de orice comandă."
+        }
+      }
+    ],
     "MODURI": [],
     "ACCESORII": []
   },
