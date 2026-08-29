@@ -115,9 +115,9 @@ jobs:
           for(const token of ['canonicalize-market-sales-products-2026.js','canonicalize-market-demand-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js','probe-market-sales-counters-2026.js'])if(!salesFlow.includes(token))throw new Error('Sales/management pipeline missing '+token);
           for(const token of ['collect-market-hype-radar-2026.js','collect-market-hype-deep-2026.js','filter-market-hype-evidence-2026.js','collect-market-hype-wide-2026.js'])if(!hypeFlow.includes(token))throw new Error('Hype 06:00 pipeline missing '+token);
 
-          const essential=['/assets/market-access-policy.js?v=1','/assets/market-loading-guard.js?v=13','/assets/market-ui-recovery.js?v=6','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=5','/assets/market-view-switcher.js?v=7'];
+          const essential=['/assets/market-access-policy.js?v=2','/assets/market-loading-guard.js?v=13','/assets/market-ui-recovery.js?v=6','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=5','/assets/market-view-switcher.js?v=7'];
           for(const asset of essential)if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
-          if(!sw.includes('/assets/market-source-info.js?v=3')||!sw.includes('/assets/market-hype-warnings.css?v=2')||!sw.includes('ghid-rta-static-v34-hype-global-30d'))throw new Error('Final Hype cache manifest mismatch');
+          if(!sw.includes('/assets/market-source-info.js?v=3')||!sw.includes('/assets/market-hype-warnings.css?v=2')||!sw.includes('ghid-rta-static-v35-market-password-empty'))throw new Error('Final Market cache manifest mismatch');
           if(!guard.includes("key:'heartbeat'")||!guard.includes("label:'Hype · GLOBAL · 30 zile'"))throw new Error('Atomic global Hype validation missing');
           if(!recovery.includes('market-hype-ui.js?v=5')||!recovery.includes('market-view-switcher.js?v=7'))throw new Error('Recovery points to old Hype assets');
 
@@ -136,7 +136,8 @@ jobs:
           if(!hypeUi.includes('HYPE · GLOBAL · 30 ZILE')||!hypeUi.includes('Orice zvon relevant cu 30 zile înainte...')||!hypeUi.includes('After the first heart-beat...'))throw new Error('Global Hype UI contract incomplete');
 
           if(!access.includes('sessionStorage.removeItem(KEY)')||!access.includes('pageshow'))throw new Error('Per-entry Market password clearing missing');
-          if(!loader.includes("load('/assets/market-access-policy.js?v=1',function(){load('/assets/market-2026.js?v=4'"))throw new Error('Password policy must load before Market');
+          if(!access.includes("setAttribute('autocomplete','new-password')")||!access.includes("input.value=''"))throw new Error('Password field can still be autofilled');
+          if(!loader.includes("load('/assets/market-access-policy.js?v=2',function(){load('/assets/market-2026.js?v=4'"))throw new Error('Password policy v2 must load before Market');
 
           if(!probe.includes('rejectedGenericOrderCounters:true')||!probe.includes('validHistoricCounter'))throw new Error('Generic order-counter rejection missing');
           const counterFn=probe.slice(probe.indexOf('function explicitCounter'),probe.indexOf('function walk'));
@@ -146,5 +147,5 @@ jobs:
 
           if(!worker.includes('progressForRun')||!worker.includes('/actions/runs/')||!worker.includes("kind:'hype-refresh'"))throw new Error('Hype refresh progress source missing');
           if(!sw.includes("url.pathname.startsWith('/assets/market-')")||!sw.includes("'/data/market-hype-heartbeat-2026.json'"))throw new Error('Market/Hype assets or heartbeat data are not network-first');
-          console.log(`Market gate OK: ${(market.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis=RO; Hype=GLOBAL 30d; two windows; 06:00; password every entry.`);
+          console.log(`Market gate OK: ${(market.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis=RO; Hype=GLOBAL 30d; two windows; 06:00; empty password every entry.`);
           NODE
