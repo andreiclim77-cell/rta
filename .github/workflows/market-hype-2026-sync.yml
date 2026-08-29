@@ -20,6 +20,7 @@ on:
       - "tools/augment-market-hype-3fvape-newarrival-rta-2026.js"
       - "tools/collect-market-hype-vendor-pagination-2026.js"
       - "tools/collect-market-hype-vendor-profiles-v2-2026.js"
+      - "tools/merge-market-hype-upstream-products-2026.js"
       - "data/market-hype-sources-2026.json"
       - "data/market-hype-vendor-profiles-2026.json"
       - ".github/workflows/market-hype-2026-sync.yml"
@@ -80,6 +81,12 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/collect-market-hype-wide-2026.js --write
 
+      - name: Preserve global upstream evidence before product enrichment
+        if: steps.gate.outputs.run_sync == 'true'
+        run: |
+          cp data/market-hype-evidence-2026.json /tmp/market-hype-upstream-evidence-2026.json
+          cp data/market-hype-heartbeat-evidence-2026.json /tmp/market-hype-upstream-heartbeat-evidence-2026.json
+
       - name: Resolve concrete products and reject relistings / generic false positives
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/collect-market-hype-products-2026.js --write
@@ -108,6 +115,10 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/collect-market-hype-vendor-profiles-v2-2026.js --write
 
+      - name: Merge upstream global signals with verified vendor products
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/merge-market-hype-upstream-products-2026.js --write
+
       - name: Validate Hype global 30-day truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
@@ -122,6 +133,7 @@ jobs:
           node --check tools/augment-market-hype-3fvape-newarrival-rta-2026.js
           node --check tools/collect-market-hype-vendor-pagination-2026.js
           node --check tools/collect-market-hype-vendor-profiles-v2-2026.js
+          node --check tools/merge-market-hype-upstream-products-2026.js
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
@@ -131,24 +143,33 @@ jobs:
           const p=JSON.parse(fs.readFileSync('data/market-hype-products-2026.json','utf8'));
           if([d,e,h,he,p].some(x=>Number(x.scopeYear)!==2026))throw new Error('Hype scope must remain 2026');
           if(Number(d.schemaVersion)<4||Number(d.hypeWindowDays)!==30||Number(d.lookbackHours)!==720)throw new Error('Global Hype 30d core did not run');
-          if(d.mode!=='pre-market-upstream-only'||!d.truth||d.truth.globalScope!==true||d.truth.productRelevanceValidated!==true)throw new Error('Global/product Hype boundary missing');
+          if(d.mode!=='pre-market-upstream-only'||!d.truth||d.truth.globalScope!==true||d.truth.productRelevanceValidated!==true||d.truth.upstreamEvidenceMerged!==true)throw new Error('Global/product Hype boundary or upstream merge missing');
           if(!d.sourceStatus||d.sourceStatus.deepScan!==true||d.sourceStatus.deepStrictHostValidated!==true||d.sourceStatus.wideScan!==true||d.sourceStatus.scope!=='GLOBAL')throw new Error('Deep/global Hype passes incomplete');
-          if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.productRelevanceValidated!==true)throw new Error('Product Hype evidence missing');
+          if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.productRelevanceValidated!==true||e.truth.upstreamEvidenceMerged!==true)throw new Error('Merged product Hype evidence missing');
           if(h.mode!=='after-first-heart-beat'||Number(h.windowDays)!==30||h.scope!=='GLOBAL RTA + clone RTA'||!Array.isArray(h.releasedLast30Days))throw new Error('Heartbeat missing');
           if(he.mode!=='after-first-heart-beat-evidence'||Number(he.windowDays)!==30||he.productRelevanceValidated!==true)throw new Error('Heartbeat evidence missing');
-          if(Number(p.schemaVersion)<14||Number(p.windowDays)!==30||p.scope!=='GLOBAL RTA + clone RTA'||p.pendingRefresh===true||!Array.isArray(p.products))throw new Error('Product-title V2 Hype snapshot invalid');
-          if(!p.truth||p.truth.productLevelOnly!==true||p.truth.newArrivalIsNotRelease!==true||p.truth.afterReleaseRequiresExplicitDate!==true||p.truth.relistingIsNotRelease!==true||p.truth.vendorProfileScan!==true||p.truth.multiVendor!==true||p.truth.transportRtaRejected!==true||p.truth.concreteProductTitles!==true||p.truth.genericVendorTitlesRejected!==true)throw new Error('Product-title/relisting truth contract missing');
-          if(!p.scan||!Array.isArray(p.scan.profilesV2)||p.scan.profilesV2.length<4||Number(p.scan.productPagesV2)<1)throw new Error('Product-title V2 crawler did not reach real product pages');
+          if(Number(p.schemaVersion)<15||Number(p.windowDays)!==30||p.scope!=='GLOBAL RTA + clone RTA'||p.pendingRefresh===true||!Array.isArray(p.products))throw new Error('Upstream-merged Hype snapshot invalid');
+          if(!p.truth||p.truth.productLevelOnly!==true||p.truth.newArrivalIsNotRelease!==true||p.truth.relistingIsNotRelease!==true||p.truth.vendorProfileScan!==true||p.truth.multiVendor!==true||p.truth.transportRtaRejected!==true||p.truth.concreteProductTitles!==true||p.truth.genericVendorTitlesRejected!==true||p.truth.upstreamEvidenceMerged!==true||p.truth.observedReleaseIsNotClaimedAsExactReleaseDate!==true)throw new Error('Upstream merge/relisting truth contract missing');
+          if(!p.scan||!Array.isArray(p.scan.profilesV2)||p.scan.profilesV2.length<4||Number(p.scan.productPagesV2)<1||Number(p.scan.upstreamEvidenceEvents)<1||Number(p.scan.upstreamEventsAccepted)<1)throw new Error('Hype did not preserve/merge real upstream global evidence');
+          if(p.products.length<1)throw new Error('Hype final product list is empty');
           const banned=/dictionary\.|steampowered\.com|cbsnews\.com|(^|\.)rta\.ae|rtafleet\.com|(^|\.)rta\.com|merriam-webster|riversidetransit|riderta/i;
           const generic=/^(3fvape|2fdeal|shareavape|ecigone|sourcemore)$/i;
           for(const x of p.products){
             if(!x.id||!x.productName||!['RTA','MODURI','ACCESORII'].includes(x.category)||!x.typology||!['before','after'].includes(x.window))throw new Error('Incomplete product-level Hype row');
             if(generic.test(String(x.productName).trim()))throw new Error('Generic vendor name leaked as product: '+x.productName);
             for(const s of x.sources||[])if(banned.test(String(s.host||s.url||'')))throw new Error('Generic false positive leaked: '+String(s.host||s.url));
-            if(x.window==='after'&&(x.dateConfidence!=='explicit'||Math.abs(Date.now()-Date.parse(x.eventDate))/36e5>720))throw new Error('Invalid after-release date: '+x.productName);
+            if(x.window==='after'){
+              if(!['explicit','release-observed'].includes(x.dateConfidence))throw new Error('Invalid after-release confidence: '+x.productName);
+              if(x.dateConfidence==='release-observed'&&(Number(x.eligibleSources||0)<1||!(x.sources||[]).some(s=>s.decisionEligible===true)))throw new Error('Observed release lacks eligible evidence: '+x.productName);
+              if(Math.abs(Date.now()-Date.parse(x.eventDate))/36e5>720)throw new Error('After-release event outside 30 days: '+x.productName);
+            }
           }
-          for(const x of h.releasedLast30Days||[])if(x.dateConfidence!=='explicit'||Number(x.ageHours)>720)throw new Error('Heartbeat contains undated/old event');
-          console.log(`Hype V2 gate OK: products ${p.products.length}; before ${p.summary.before}; after ${p.summary.after}; profiles ${p.scan.profilesV2.length}; pages ${p.scan.productPagesV2}; events ${p.scan.eventsV2}.`);
+          for(const x of h.releasedLast30Days||[]){
+            if(!['explicit','release-observed'].includes(x.dateConfidence))throw new Error('Heartbeat confidence invalid');
+            if(x.dateConfidence==='release-observed'&&Number(x.eligibleSourceCount||0)<1)throw new Error('Heartbeat observed release lacks eligible evidence');
+            if(Number(x.ageHours)>720)throw new Error('Heartbeat contains old event');
+          }
+          console.log(`Hype merged gate OK: products ${p.products.length}; before ${p.summary.before}; after ${p.summary.after}; upstream accepted ${p.scan.upstreamEventsAccepted}/${p.scan.upstreamEvidenceEvents}; observed ${p.summary.observedAfter||0}.`);
           NODE
 
       - name: Publish complete Hype, product and heartbeat snapshots
