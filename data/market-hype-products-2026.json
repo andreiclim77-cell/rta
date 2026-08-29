@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-29T23:09:17.902Z",
+  "generatedAt": "2026-08-29T23:19:07.521Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -19,6 +19,7 @@
     "explicitVendorPhrasePass": true,
     "searchIndexVendorEtaRecovery": true,
     "searchIndexMakerTargeting": true,
+    "searchIndexCloneMakerTargeting": true,
     "searchIndexSnippetFallback": true,
     "searchIndexSnippetRequiresExplicitDate": true,
     "searchIndexSnippetDiscoveryOnly": true,
@@ -59,10 +60,10 @@
   "scan": {
     "queries": 88,
     "working": 88,
-    "rawDocs": 596,
-    "preCandidates": 24,
-    "resolvedVendorPages": 14,
-    "pagesFetched": 20,
+    "rawDocs": 641,
+    "preCandidates": 22,
+    "resolvedVendorPages": 10,
+    "pagesFetched": 17,
     "events": 0,
     "samplePre": [
       {
@@ -88,16 +89,17 @@
     ],
     "explicitQueries": 45,
     "explicitWorking": 45,
-    "explicitRaw": 315,
+    "explicitRaw": 450,
     "explicitCandidates": 0,
     "explicitPages": 0,
     "explicitPhraseHits": 0,
     "explicitEvents": 0,
-    "searchIndexEtaQueries": 194,
-    "searchIndexEtaWorking": 194,
-    "searchIndexEtaMakerTargets": 67,
-    "searchIndexEtaCandidates": 2,
-    "searchIndexEtaPages": 0,
+    "searchIndexEtaQueries": 222,
+    "searchIndexEtaWorking": 222,
+    "searchIndexEtaMakerTargets": 81,
+    "searchIndexEtaCloneMakerRegistry": 14,
+    "searchIndexEtaCandidates": 5,
+    "searchIndexEtaPages": 1,
     "searchIndexEtaPhraseHits": 1,
     "searchIndexEtaSnippetFallbacks": 1,
     "searchIndexEtaEvents": 1,
@@ -121,7 +123,7 @@
       {
         "id": "3fvape",
         "catalogPages": 44,
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 183,
         "productPages": 182,
         "events": 0,
@@ -164,17 +166,17 @@
         "samples": []
       }
     ],
-    "catalogPagesFetched": 51,
+    "catalogPagesFetched": 52,
     "productLinks": 472,
     "productPagesFetched": 471,
     "profilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 188,
-        "productPages": 186,
+        "productPages": 187,
         "events": 1,
-        "titleFallbacks": 7,
+        "titleFallbacks": 8,
         "samples": [
           {
             "name": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
@@ -222,19 +224,19 @@
       }
     ],
     "productLinksV2": 478,
-    "productPagesV2": 476,
+    "productPagesV2": 477,
     "eventsV2": 1,
     "activeMakerRegistry": 42,
     "activeMakerQueries": 84,
     "activeMakerQueriesWorking": 84,
-    "activeMakerCandidatePages": 412,
+    "activeMakerCandidatePages": 434,
     "activeMakerAcceptedSignals": 0,
     "activeMakerOfficialSignals": 0,
     "activeMakerEligibleSignals": 0,
     "activeMakerSample": [],
     "preorderCatalogsRequested": 52,
-    "preorderPagesFetched": 44,
-    "preorderRtaLinks": 152,
+    "preorderPagesFetched": 40,
+    "preorderRtaLinks": 143,
     "preorderContextEvents": 0,
     "preorderPageFallbackEvents": 0,
     "preorderRecoveredSample": [],
@@ -494,8 +496,8 @@
         "minBaseline": 10,
         "cap": 24,
         "pagesProbed": 24,
-        "pagesFetched": 24,
-        "pagesWithLinks": 19,
+        "pagesFetched": 23,
+        "pagesWithLinks": 18,
         "pagesWithNewLinks": 9,
         "highestPageWithNewLinks": 11,
         "uniqueLinks": 35,
@@ -628,13 +630,6 @@
           },
           {
             "page": 19,
-            "fetched": true,
-            "links": 8,
-            "newLinks": 0,
-            "resolvedUrl": "https://www.3fvape.com/148-rekavape"
-          },
-          {
-            "page": 20,
             "fetched": true,
             "links": 8,
             "newLinks": 0,
@@ -852,7 +847,7 @@
         ]
       }
     ],
-    "currentVendorCatalogPages": 80,
+    "currentVendorCatalogPages": 79,
     "currentVendorRtaLinks": 160,
     "currentVendorProductPages": 160,
     "currentVendorPhraseHits": 3,
@@ -871,17 +866,17 @@
       }
     ],
     "currentVendorEvents": 3,
-    "upstreamEvidenceEvents": 62,
+    "upstreamEvidenceEvents": 57,
     "upstreamEventsAccepted": 6,
-    "upstreamRejectedTitle": 63,
+    "upstreamRejectedTitle": 56,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
     "finalCategoryRejected": 5,
     "finalCategoryRejectedSample": [
-      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "VAPORESSO » Premium Vape Brand Manufacture",
       "OXVA New Theme - v4.3.0-黑五后更换回去",
+      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "vaporesso| By YIGUO SEO Perf.Opt v1.0",
       "MOVE BEYOND ORDINARY - Vaporesso"
     ],
@@ -909,8 +904,8 @@
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-29T23:05:03.946Z",
-      "lastSeenAt": "2026-08-29T23:09:17.384Z",
+      "firstSeenAt": "2026-08-29T23:14:45.678Z",
+      "lastSeenAt": "2026-08-29T23:19:06.970Z",
       "ageHours": 0,
       "sourceCount": 1,
       "eligibleSources": 0,
@@ -925,7 +920,7 @@
           "eventDate": "2026-09-10T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "batch viitor",
-          "observedAt": "2026-08-29T23:09:17.384Z"
+          "observedAt": "2026-08-29T23:19:06.970Z"
         }
       ],
       "id": "95296bc0c565530e6e5e"
