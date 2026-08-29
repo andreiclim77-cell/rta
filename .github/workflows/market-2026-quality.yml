@@ -13,6 +13,7 @@ on:
       - "data/market-retailers-2026.json"
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
+      - "tools/normalize-market-2026.js"
       - ".github/workflows/market-2026-sync.yml"
       - "sw.js"
       - ".github/workflows/market-2026-quality.yml"
@@ -36,6 +37,7 @@ jobs:
           node --check assets/market-2026.js
           node --check tools/sync-market-2026.js
           node --check tools/sync-market-smokee-2026.js
+          node --check tools/normalize-market-2026.js
           node --check sw.js
           node - <<'NODE'
           const fs = require('fs');
@@ -50,18 +52,20 @@ jobs:
 
           if (Number(data.scopeYear) !== 2026 || Number(registry.scopeYear) !== 2026) throw new Error('Market scope must be 2026 only');
           if (/2025/.test(JSON.stringify(data))) throw new Error('2025 must not appear in the Market 2026 dataset');
-          if (registry.collectorPolicy && registry.collectorPolicy.dailyRefresh !== true) throw new Error('Daily market refresh policy is missing');
+          if (!registry.collectorPolicy || registry.collectorPolicy.dailyRefresh !== true) throw new Error('Daily market refresh policy is missing');
+          if (!/07:00\s+Europe\/Bucharest/i.test(String(registry.collectorPolicy.refreshTarget || ''))) throw new Error('Daily refresh target is not 07:00 Europe/Bucharest');
           if ((registry.retailers || []).length < 10) throw new Error('Expected at least 10 configured Romanian retailers');
           if (!(registry.retailers || []).some(row => row.id === 'smokee' && row.mode === 'smokee-api')) throw new Error('Smokee daily API mode is missing');
 
-          for (const observation of data.observations || []) {
-            if (!/^2026-/.test(String(observation.observedAt || ''))) {
-              throw new Error(`Observation outside 2026: ${observation.product || 'unknown'}`);
-            }
+          const observations = data.observations || [];
+          if (!observations.length) throw new Error('Market dataset has no observations');
+          for (const observation of observations) {
+            if (!/^2026-/.test(String(observation.observedAt || ''))) throw new Error(`Observation outside 2026: ${observation.product || 'unknown'}`);
             const text = [observation.brand, observation.product].filter(Boolean).join(' ');
-            if (/dicodes/i.test(text) && observation.category === 'mod' && !/(bf60|fl80|board|placa|chipset|pcb)/i.test(text)) {
-              throw new Error(`Finished Dicodes mod leaked into market observations: ${text}`);
-            }
+            if (/dicodes/i.test(text) && observation.category === 'mod' && !/(bf60|fl80|board|placa|chipset|pcb)/i.test(text)) throw new Error(`Finished Dicodes mod leaked into market observations: ${text}`);
+            if (/^\[object Object\]$/i.test(String(observation.brand || ''))) throw new Error(`Invalid brand leaked: ${observation.product || 'unknown'}`);
+            if (observation.category === 'unelte build' && /mustiuc/i.test(String(observation.product || ''))) throw new Error(`Drip tip misclassified as tool: ${observation.product}`);
+            if (observation.category === 'acumulator' && /\b(?:wrap|folie|sleeve)\b/i.test(String(observation.product || ''))) throw new Error(`Battery wrap misclassified as accumulator: ${observation.product}`);
           }
 
           const watch = data.boardWatch || [];
@@ -72,15 +76,22 @@ jobs:
           if (!market.includes('trendSnapshots')) throw new Error('Longitudinal daily trend support is missing');
 
           if (!loader.includes('/assets/enhancements-core.js?v=8')) throw new Error('Enhancements core loader is missing');
-          if (!loader.includes('/assets/market-2026.js?v=2')) throw new Error('Market v2 module loader is missing');
-          if (!sw.includes("ghid-rta-static-v9")) throw new Error('PWA cache version v9 is missing');
-          if (!sw.includes('/assets/market-2026.js?v=2')) throw new Error('Market v2 module is not cached by the PWA');
+          const assetMatch = loader.match(/\/assets\/market-2026\.js\?v=\d+/);
+          if (!assetMatch) throw new Error('Versioned Market module loader is missing');
+          if (!sw.includes(assetMatch[0])) throw new Error(`PWA cache does not include current Market asset ${assetMatch[0]}`);
+          if (!/ghid-rta-static-v\d+/.test(sw)) throw new Error('PWA cache version marker is missing');
           if (!sw.includes("'/data/market-2026.json'")) throw new Error('Market dataset is not network-first in the PWA');
 
           if (!syncWorkflow.includes("cron: '0 4 * * *'") || !syncWorkflow.includes("cron: '0 5 * * *'")) throw new Error('Daily Bucharest market schedules are missing');
           if (!syncWorkflow.includes('node tools/sync-market-2026.js --write')) throw new Error('Romania collector is not scheduled');
           if (!syncWorkflow.includes('node tools/sync-market-smokee-2026.js --write')) throw new Error('Smokee market API collector is not scheduled');
+          if (!syncWorkflow.includes('node tools/normalize-market-2026.js --write')) throw new Error('Market normalizer is not scheduled');
           if (!syncWorkflow.includes('status.date !== today')) throw new Error('Daily freshness validation is missing');
 
-          console.log('Market 2026 daily module validated.');
+          const updated = Date.parse(data.updatedAt || '');
+          if (!Number.isFinite(updated)) throw new Error('Market updatedAt is invalid');
+          const ageHours = (Date.now() - updated) / 36e5;
+          if (ageHours > 36) throw new Error(`Market dataset is stale: ${ageHours.toFixed(1)}h old`);
+
+          console.log(`Market 2026 daily module validated: ${observations.length} observations; ${registry.retailers.length} retailers; ${assetMatch[0]}.`);
           NODE
