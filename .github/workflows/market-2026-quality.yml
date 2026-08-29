@@ -1,0 +1,67 @@
+name: Market 2026 Quality Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "assets/market-2026.js"
+      - "assets/enhancements.js"
+      - "assets/enhancements-core.js"
+      - "data/market-2026.json"
+      - "sw.js"
+      - ".github/workflows/market-2026-quality.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Validate Market 2026 module
+        run: |
+          node --check assets/enhancements.js
+          node --check assets/enhancements-core.js
+          node --check assets/market-2026.js
+          node --check sw.js
+          node - <<'NODE'
+          const fs = require('fs');
+
+          const data = JSON.parse(fs.readFileSync('data/market-2026.json', 'utf8'));
+          const market = fs.readFileSync('assets/market-2026.js', 'utf8');
+          const loader = fs.readFileSync('assets/enhancements.js', 'utf8');
+          const sw = fs.readFileSync('sw.js', 'utf8');
+          const expectedHash = '113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
+
+          if (Number(data.scopeYear) !== 2026) throw new Error('Market scope must be 2026 only');
+          if (/2025/.test(JSON.stringify(data))) throw new Error('2025 must not appear in the Market 2026 dataset');
+          for (const observation of data.observations || []) {
+            if (!/^2026-/.test(String(observation.observedAt || ''))) {
+              throw new Error(`Observation outside 2026: ${observation.product || 'unknown'}`);
+            }
+            const text = [observation.brand, observation.product].filter(Boolean).join(' ');
+            if (/dicodes/i.test(text) && !/(bf60|fl80|board|placa|chipset|pcb)/i.test(text)) {
+              throw new Error(`Finished Dicodes device leaked into market observations: ${text}`);
+            }
+          }
+
+          const watch = data.boardWatch || [];
+          if (!watch.some(item => /BF60/i.test(item.product || ''))) throw new Error('Dicodes BF60 board watch is missing');
+          if (!watch.some(item => /FL80/i.test(item.product || ''))) throw new Error('Dicodes FL80 board watch is missing');
+          if (!market.includes(expectedHash)) throw new Error('Market access hash is not the expected one');
+
+          if (!loader.includes('/assets/enhancements-core.js?v=8')) throw new Error('Enhancements core loader is missing');
+          if (!loader.includes('/assets/market-2026.js?v=1')) throw new Error('Market module loader is missing');
+          if (!sw.includes("ghid-rta-static-v8")) throw new Error('PWA cache version v8 is missing');
+          if (!sw.includes('/assets/market-2026.js?v=1')) throw new Error('Market module is not cached by the PWA');
+          if (!sw.includes("'/data/market-2026.json'")) throw new Error('Market dataset is not network-first in the PWA');
+
+          console.log('Market 2026 module validated.');
+          NODE
