@@ -1,22 +1,108 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "scopeYear": 2026,
-  "generatedAt": "1970-01-01T00:00:00.000Z",
+  "generatedAt": "2026-08-29T13:56:46.620Z",
   "lookbackHours": 72,
   "cacheMaxHours": 24,
-  "pendingRefresh": true,
+  "pendingRefresh": false,
   "mode": "pre-market-upstream-only",
+  "methodology": {
+    "classification": "Product category is inferred only from search title/snippet and narrow context windows around pre-announcement phrases after navigation/header/footer removal. Whole-page navigation is never used to choose a category.",
+    "recency": "Source/API publication time preferred; search-index time is accepted only as lower-confidence evidence and cannot by itself satisfy velocity.",
+    "separation": "Hype = before market; Trend = accelerating demand; Sales = current commercial evidence."
+  },
   "truth": {
     "retailSourcesUsed": false,
     "commercialPagesRejected": true,
     "brandsExposed": false,
     "shopLinksExposed": false,
     "pricesExposed": false,
-    "rule": "Pending first complete upstream scan. No partial Hype report may be displayed."
+    "classificationUsesNavigation": false,
+    "buyHypeRequiresAllConditions": true,
+    "rule": "Only upstream pre-announcement evidence may enter Hype. Store/product/cart/price pages are rejected. Missing corroboration or velocity always downgrades the decision."
   },
-  "sourceStatus": {"queriesRun":0,"queriesWorking":0,"redditAuthorized":false,"redditMode":"pending","rawDocuments":0,"qualifiedPrelaunchSignals":0},
-  "categories": {"RTA":[],"MODURI":[],"ACCESORII":[]},
-  "summary": {"RTA":{"signals":0,"events":0,"buyHype":0,"prepare":0,"watch":0,"stop":0},"MODURI":{"signals":0,"events":0,"buyHype":0,"prepare":0,"watch":0,"stop":0},"ACCESORII":{"signals":0,"events":0,"buyHype":0,"prepare":0,"watch":0,"stop":0}},
-  "beginnerDemand": {"available":false,"distinctAccountsVerified":false},
-  "internalHistory": []
+  "sourceStatus": {
+    "queriesRun": 46,
+    "queriesWorking": 46,
+    "redditAuthorized": false,
+    "redditMode": "credentials-or-approval-missing",
+    "rawDocuments": 374,
+    "qualifiedPrelaunchSignals": 0,
+    "sourceTypes": {
+      "manufacturer-official": {
+        "queries": 13,
+        "working": 13,
+        "documents": 130
+      },
+      "manufacturer-social-public": {
+        "queries": 12,
+        "working": 12,
+        "documents": 119
+      },
+      "manufacturer-community": {
+        "queries": 12,
+        "working": 12,
+        "documents": 111
+      },
+      "vaping-forum-prelaunch": {
+        "queries": 4,
+        "working": 4,
+        "documents": 31
+      },
+      "independent-vape-news": {
+        "queries": 3,
+        "working": 3,
+        "documents": 30
+      },
+      "reddit-prelaunch": {
+        "queries": 1,
+        "working": 1,
+        "documents": 10
+      },
+      "creator-prelaunch": {
+        "queries": 1,
+        "working": 1,
+        "documents": 10
+      }
+    },
+    "verifiedDateSignals": 0,
+    "indexDateSignals": 0
+  },
+  "categories": {
+    "RTA": [],
+    "MODURI": [],
+    "ACCESORII": []
+  },
+  "summary": {
+    "RTA": {
+      "signals": 0,
+      "events": 0,
+      "buyHype": 0,
+      "prepare": 0,
+      "watch": 0,
+      "stop": 0
+    },
+    "MODURI": {
+      "signals": 0,
+      "events": 0,
+      "buyHype": 0,
+      "prepare": 0,
+      "watch": 0,
+      "stop": 0
+    },
+    "ACCESORII": {
+      "signals": 0,
+      "events": 0,
+      "buyHype": 0,
+      "prepare": 0,
+      "watch": 0,
+      "stop": 0
+    }
+  },
+  "internalHistory": [
+    {
+      "date": "2026-08-29",
+      "events": []
+    }
+  ]
 }
