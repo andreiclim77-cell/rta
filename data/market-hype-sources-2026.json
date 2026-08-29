@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "scopeYear": 2026,
   "windowHours": 72,
   "cacheFreshHours": 24,
@@ -21,13 +21,22 @@
     "pre announcement",
     "preorder soon",
     "pre-order soon",
+    "preorders soon",
+    "pre-orders soon",
+    "preorder opens",
+    "pre-order opens",
     "waitlist soon",
     "production started",
+    "first batch production",
     "first production batch",
     "certification passed",
     "sent to reviewers",
+    "sample sent to reviewers",
     "review sample",
-    "prototype final"
+    "prototype final",
+    "prototype reveal",
+    "first look soon",
+    "launch announcement"
   ],
   "engagementTerms": [
     "when release",
@@ -84,7 +93,9 @@
     "shopping cart",
     "checkout",
     "shop now",
-    "order now"
+    "order now",
+    "vendors",
+    "vendor offer"
   ],
   "commerceRejectPatterns": [
     "(?:€|£|\\$|lei|ron)\\s*\\d+(?:[.,]\\d+)?",
@@ -119,14 +130,19 @@
     {"name":"Hussar"},
     {"name":"GD Mods"},
     {"name":"Ambition Mods"},
-    {"name":"BP Mods"}
+    {"name":"BP Mods"},
+    {"name":"ThunderCloud"}
   ],
   "communityHosts": [
     "reddit.com",
     "www.reddit.com",
     "e-cigarette-forum.com",
     "www.e-cigarette-forum.com",
-    "forum.planetofthevapes.co.uk"
+    "forum.planetofthevapes.co.uk",
+    "forum-ecigarette.com",
+    "www.forum-ecigarette.com",
+    "worldofkrazzy.forum-ecigarette.com",
+    "forum.e-liquid-recipes.com"
   ],
   "independentNewsHosts": [
     "ecigclick.co.uk",
@@ -156,6 +172,7 @@
   "publicCommunityQueries": [
     "RTA teaser OR prototype OR \"coming soon\" vaping",
     "MTL RTA teaser OR prototype OR \"coming soon\"",
+    "MTL RTA \"sample sent\" OR \"first batch\"",
     "RDL RTA teaser OR prototype OR \"coming soon\"",
     "DL RTA teaser OR prototype OR \"coming soon\"",
     "vape mod teaser OR prototype OR \"coming soon\"",
