@@ -13,6 +13,8 @@ on:
       - "assets/market-management-v2.js"
       - "assets/market-executive-report-v2.js"
       - "assets/market-demand-ui.js"
+      - "assets/market-hype-ui.js"
+      - "assets/market-hype-ui.css"
       - "assets/market-view-switcher.js"
       - "assets/market-view-switcher.css"
       - "assets/enhancements.js"
@@ -22,12 +24,15 @@ on:
       - "data/market-sales-2026.json"
       - "data/market-demand-intelligence-2026.json"
       - "data/market-product-presence-2026.json"
+      - "data/market-hype-sources-2026.json"
+      - "data/market-hype-radar-2026.json"
       - "data/market-retailers-2026.json"
       - "tools/market-product-canonical-2026.js"
       - "tools/canonicalize-market-sales-products-2026.js"
       - "tools/canonicalize-market-demand-products-2026.js"
       - "tools/build-market-product-presence-2026.js"
       - "tools/augment-market-management-presence-2026.js"
+      - "tools/collect-market-hype-radar-2026.js"
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
       - "tools/sync-market-specialized-2026.js"
@@ -41,6 +46,7 @@ on:
       - "tools/build-market-management-2026.js"
       - ".github/workflows/market-2026-sync.yml"
       - ".github/workflows/market-sales-2026-sync.yml"
+      - ".github/workflows/market-hype-2026-sync.yml"
       - "sw.js"
       - ".github/workflows/market-2026-quality.yml"
 
@@ -58,7 +64,7 @@ jobs:
           node-version: "22"
       - name: Validate current Market architecture
         run: |
-          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js assets/market-loading-guard.js assets/market-management-v2.js assets/market-executive-report-v2.js assets/market-demand-ui.js assets/market-view-switcher.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-product-presence-2026.js tools/augment-market-management-presence-2026.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js sw.js; do node --check "$f"; done
+          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js assets/market-loading-guard.js assets/market-management-v2.js assets/market-executive-report-v2.js assets/market-demand-ui.js assets/market-hype-ui.js assets/market-view-switcher.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-product-presence-2026.js tools/augment-market-management-presence-2026.js tools/collect-market-hype-radar-2026.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js sw.js; do node --check "$f"; done
           node tools/normalize-market-2026.js --check
           node - <<'NODE'
           const fs=require('fs');
@@ -67,27 +73,38 @@ jobs:
           const sales=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
           const demand=JSON.parse(fs.readFileSync('data/market-demand-intelligence-2026.json','utf8'));
           const presence=JSON.parse(fs.readFileSync('data/market-product-presence-2026.json','utf8'));
+          const hype=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
+          const hypeCfg=JSON.parse(fs.readFileSync('data/market-hype-sources-2026.json','utf8'));
           const market=fs.readFileSync('assets/market-2026.js','utf8');
           const loader=fs.readFileSync('assets/enhancements.js','utf8');
           const guard=fs.readFileSync('assets/market-loading-guard.js','utf8');
           const switcher=fs.readFileSync('assets/market-view-switcher.js','utf8');
+          const hypeUi=fs.readFileSync('assets/market-hype-ui.js','utf8');
           const sw=fs.readFileSync('sw.js','utf8');
           const daily=fs.readFileSync('.github/workflows/market-2026-sync.yml','utf8');
           const salesFlow=fs.readFileSync('.github/workflows/market-sales-2026-sync.yml','utf8');
+          const hypeFlow=fs.readFileSync('.github/workflows/market-hype-2026-sync.yml','utf8');
           const validator=fs.readFileSync('tools/validate-market-daily-2026.js','utf8');
           const expectedHash='113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
-          if([data,registry,sales,demand,presence].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must remain 2026');
+          if([data,registry,sales,demand,presence,hype,hypeCfg].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must remain 2026');
           if((registry.retailers||[]).length<22)throw new Error('National registry shrank below 22 validated storefronts');
           if(!(data.observations||[]).length)throw new Error('Market dataset has no observations');
           if(!market.includes(expectedHash)||!market.includes('trendSnapshots'))throw new Error('Market core/access/trend regression');
           if(!daily.includes("cron: '0 3 * * *'")||!daily.includes("cron: '0 4 * * *'")||!validator.includes('status.date!==today'))throw new Error('06:00/freshness architecture missing');
           for(const token of ['canonicalize-market-sales-products-2026.js','canonicalize-market-demand-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js'])if(!salesFlow.includes(token))throw new Error('Canonical market pipeline missing '+token);
-          for(const asset of ['/assets/market-loading-guard.js?v=4','/assets/market-management-v2.js?v=1','/assets/market-executive-report-v2.js?v=1','/assets/market-view-switcher.js?v=1'])if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
-          if(!switcher.includes("data-primary=\"analysis\"")||!switcher.includes('Details'))throw new Error('Analysis/Details primary UI missing');
-          if(!guard.includes('/data/market-product-presence-2026.json')||!guard.includes('marketViewSwitcher'))throw new Error('Atomic loading guard incomplete');
-          if(!sw.includes("url.pathname.startsWith('/assets/market-')")||!sw.includes("url.pathname==='/assets/enhancements.js'"))throw new Error('Market assets are not network-first');
+          if(!hypeFlow.includes("cron: '0 3 * * *'")||!hypeFlow.includes("cron: '0 4 * * *'")||!hypeFlow.includes('collect-market-hype-radar-2026.js'))throw new Error('Hype 06:00 workflow missing');
+          for(const asset of ['/assets/market-loading-guard.js?v=5','/assets/market-management-v2.js?v=1','/assets/market-executive-report-v2.js?v=1','/assets/market-hype-ui.js?v=1','/assets/market-view-switcher.js?v=2'])if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
+          if(!switcher.includes("data-primary=\"analysis\"")||!switcher.includes('Details')||!switcher.includes('marketHypeRadar'))throw new Error('Analysis/Details/Hype UI missing');
+          if(!guard.includes('/data/market-product-presence-2026.json')||!guard.includes('/data/market-hype-radar-2026.json')||!guard.includes('marketHypeRadar'))throw new Error('Atomic loading guard incomplete');
+          if(!sw.includes("url.pathname.startsWith('/assets/market-')")||!sw.includes("url.pathname==='/assets/enhancements.js'")||!sw.includes("'/data/market-hype-radar-2026.json'"))throw new Error('Market/Hype assets are not network-first');
           if(!presence.methodology||!/Bestseller breadth/i.test(String(presence.methodology.truthRule||'')))throw new Error('Listing/bestseller truth rule missing');
           if(!sales.methodology||sales.methodology.noStockInference!==true)throw new Error('Sales layer must prohibit stock-based sales inference');
           if(sales.coverage&&sales.coverage.nationalMarketShareAvailable===true&&Number(sales.coverage.storefrontsWithActualUnitSales)!==(registry.retailers||[]).length)throw new Error('National market share claimed without full Tier-A coverage');
-          console.log(`Market structural gate OK: ${(data.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis/Details ready; canonical reconciliation wired; refresh 06:00 Bucharest.`);
+          if(hype.mode!=='pre-market-upstream-only'||!hype.truth||hype.truth.retailSourcesUsed!==false||hype.truth.commercialPagesRejected!==true)throw new Error('Hype upstream-only truth rule missing');
+          if(hype.truth.brandsExposed!==false||hype.truth.shopLinksExposed!==false||hype.truth.pricesExposed!==false)throw new Error('Hype public-output privacy/scope rule missing');
+          if(!hypeCfg.truthRules||hypeCfg.truthRules.retailIsNeverHype!==true||hypeCfg.truthRules.rejectCommercialPages!==true)throw new Error('Hype source configuration can admit retail');
+          for(const cat of ['RTA','MODURI','ACCESORII'])if(!Array.isArray(hype.categories&&hype.categories[cat]))throw new Error('Missing Hype category '+cat);
+          for(const rows of Object.values(hype.categories||{}))for(const x of rows||[]){if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Prohibited public Hype field leaked');if(x.decision&&x.decision.code==='BUY_HYPE'&&!(x.newestSignalHours<336&&x.sourceTypeCount>=2&&x.velocityVerified===true&&Number(x.velocity7d)>=3))throw new Error('BUY_HYPE without every required condition')}
+          if(!hypeUi.includes('Hype = înainte de piață')||!hypeUi.includes('Add to Cart/Buy Now/In Stock'))throw new Error('Hype UI does not explain pre-market separation');
+          console.log(`Market structural gate OK: ${(data.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis/Details + Hype ready; refresh 06:00 Bucharest.`);
           NODE
