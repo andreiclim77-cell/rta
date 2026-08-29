@@ -17,6 +17,7 @@ on:
       - "assets/market-demand-ui.js"
       - "assets/market-hype-ui.js"
       - "assets/market-hype-ui.css"
+      - "assets/market-management-augment.js"
       - "assets/market-view-switcher.js"
       - "assets/market-view-switcher.css"
       - "assets/enhancements.js"
@@ -68,7 +69,7 @@ jobs:
           node-version: "22"
       - name: Validate current Market architecture
         run: |
-          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js assets/market-loading-guard.js assets/market-ui-recovery.js assets/market-management-v2.js assets/market-executive-report-v2.js assets/market-demand-ui.js assets/market-hype-ui.js assets/market-view-switcher.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-product-presence-2026.js tools/augment-market-management-presence-2026.js tools/collect-market-hype-radar-2026.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js cloudflare/market-hype-refresh/worker.mjs sw.js; do node --check "$f"; done
+          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js assets/market-loading-guard.js assets/market-ui-recovery.js assets/market-management-v2.js assets/market-executive-report-v2.js assets/market-demand-ui.js assets/market-hype-ui.js assets/market-management-augment.js assets/market-view-switcher.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-product-presence-2026.js tools/augment-market-management-presence-2026.js tools/collect-market-hype-radar-2026.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js cloudflare/market-hype-refresh/worker.mjs sw.js; do node --check "$f"; done
           node tools/normalize-market-2026.js --check
           node - <<'NODE'
           const fs=require('fs');
@@ -83,6 +84,9 @@ jobs:
           const loader=fs.readFileSync('assets/enhancements.js','utf8');
           const recovery=fs.readFileSync('assets/market-ui-recovery.js','utf8');
           const analysis=fs.readFileSync('assets/market-management-v2.js','utf8');
+          const executive=fs.readFileSync('assets/market-executive-report-v2.js','utf8');
+          const demandUi=fs.readFileSync('assets/market-demand-ui.js','utf8');
+          const augment=fs.readFileSync('assets/market-management-augment.js','utf8');
           const guard=fs.readFileSync('assets/market-loading-guard.js','utf8');
           const switcher=fs.readFileSync('assets/market-view-switcher.js','utf8');
           const hypeUi=fs.readFileSync('assets/market-hype-ui.js','utf8');
@@ -101,10 +105,13 @@ jobs:
           if(!daily.includes("cron: '0 3 * * *'")||!daily.includes("cron: '0 4 * * *'")||!validator.includes('status.date!==today'))throw new Error('06:00/freshness architecture missing');
           for(const token of ['canonicalize-market-sales-products-2026.js','canonicalize-market-demand-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js'])if(!salesFlow.includes(token))throw new Error('Canonical market pipeline missing '+token);
           if(!hypeFlow.includes("cron: '0 3 * * *'")||!hypeFlow.includes("cron: '0 4 * * *'")||!hypeFlow.includes('collect-market-hype-radar-2026.js'))throw new Error('Hype 06:00 workflow missing');
-          for(const asset of ['/assets/market-loading-guard.js?v=8','/assets/market-ui-recovery.js?v=2','/assets/market-management-v2.js?v=3','/assets/market-executive-report-v2.js?v=1','/assets/market-hype-ui.js?v=2','/assets/market-view-switcher.js?v=3'])if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
-          if(!loader.includes('waitForMarketRoot')||!loader.includes('series([')||loader.indexOf('/assets/market-loading-guard.js?v=8')<loader.indexOf('/assets/market-management-v2.js?v=3'))throw new Error('Guard must start after deterministic UI loading');
-          if(!recovery.includes("document.dispatchEvent(new CustomEvent('rta:market:hydrate'))")||!recovery.includes('n>=12')||!recovery.includes('market-management-v2.js?v=3'))throw new Error('Persistent UI recovery missing');
+          for(const asset of ['/assets/market-loading-guard.js?v=9','/assets/market-ui-recovery.js?v=3','/assets/market-management-v2.js?v=3','/assets/market-executive-report-v2.js?v=2','/assets/market-demand-ui.js?v=2','/assets/market-hype-ui.js?v=3','/assets/market-management-augment.js?v=2','/assets/market-view-switcher.js?v=3'])if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
+          if(!loader.includes('waitForMarketRoot')||!loader.includes('waitForId')||!loader.includes('hydrateSeries')||loader.indexOf('/assets/market-loading-guard.js?v=9')<loader.indexOf('/assets/market-view-switcher.js?v=3'))throw new Error('Guard must start after actual UI hydration');
+          if(!recovery.includes("document.dispatchEvent(new CustomEvent('rta:market:hydrate'))")||!recovery.includes('n>=8')||!recovery.includes('market-executive-report-v2.js?v=2'))throw new Error('Persistent UI recovery missing');
           if(!analysis.includes("document.addEventListener('rta:market:hydrate',schedule)")||!analysis.includes('retries<30')||!analysis.includes('__rtaMarketAnalysisReady'))throw new Error('Analysis self-hydration retry missing');
+          for(const [name,src] of [['executive',executive],['demand',demandUi],['hype',hypeUi],['augment',augment]]){
+            if(!src.includes('if(el(ID)||loading)')||!src.includes("document.addEventListener('rta:market:hydrate',hydrate)"))throw new Error(name+' UI is not idempotent/self-hydrating');
+          }
           if(!guard.includes('reloadUi(m)')||!guard.includes('hydrateMissing(n)')||!guard.includes('market-management-v2.js?v=3'))throw new Error('Guard active UI recovery missing');
           if(!sw.includes('/assets/market-hype-ui.css?v=2')||!sw.includes('/assets/market-view-switcher.css?v=3'))throw new Error('Hype CSS cache version mismatch');
           if(!switcher.includes('data-primary="hype"')||!switcher.includes('Hype Radar · 72h')||!switcher.includes('Details'))throw new Error('Analysis/Hype/Details navigation missing');
@@ -130,5 +137,5 @@ jobs:
           if(/queriesWorking|rawDocuments|verified source dates/i.test(hypeUi))throw new Error('Technical internals leaked into Hype UI');
           if(!hypeUi.includes('hype-progress-ring')||!hypeUi.includes('fetchRefreshStatus'))throw new Error('Hype rescan progress UI missing');
           if(!/radial-gradient/.test(hypeCss)||!/#c13b65/.test(hypeCss)||!/#ffd34e/.test(hypeCss)||!/#4fdf86/.test(hypeCss)||!/#46b9ff/.test(hypeCss))throw new Error('Five-star black/porto/yellow/green/blue Hype visual system missing');
-          console.log(`Market gate OK: ${(data.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; deterministic hydration + active recovery ready.`);
+          console.log(`Market gate OK: ${(data.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; deadlock-free atomic hydration ready.`);
           NODE
