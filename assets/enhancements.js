@@ -22,7 +22,7 @@ function waitForMarket(){
   load('/assets/market-ui-recovery.js?v=5');
   load('/assets/market-management-v2.js?v=4',function(){load('/assets/market-analysis-synthesis.js?v=1')});
   load('/assets/market-hype-ui.js?v=4');
-  load('/assets/market-view-switcher.js?v=5');
+  load('/assets/market-view-switcher.js?v=6');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
 function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=4',function(){waitForMarket()})}
