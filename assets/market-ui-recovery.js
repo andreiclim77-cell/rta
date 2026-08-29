@@ -4,7 +4,7 @@ var attempts={},last={},stopped=false;
 var MODULES=[
  {id:'marketManagementCockpit',src:'/assets/market-management-v2.js?v=4'},
  {id:'marketAnalysisSynthesis',src:'/assets/market-analysis-synthesis.js?v=1'},
- {id:'marketHypeRadar',src:'/assets/market-hype-ui.js?v=6'},
+ {id:'marketHypeRadar',src:'/assets/market-hype-ui.js?v=7'},
  {id:'marketViewSwitcher',src:'/assets/market-view-switcher.js?v=7'}
 ];
 function el(id){return document.getElementById(id)}
