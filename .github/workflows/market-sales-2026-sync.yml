@@ -19,6 +19,7 @@ on:
       - "tools/build-market-sales-summary-2026.js"
       - "tools/build-market-external-intelligence-2026.js"
       - "tools/collect-market-demand-intelligence-2026.js"
+      - "tools/canonicalize-market-demand-products-2026.js"
       - "tools/build-market-management-2026.js"
       - "tools/augment-market-management-presence-2026.js"
       - "data/market-sales-sources-2026.json"
@@ -110,6 +111,10 @@ jobs:
           REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
         run: node tools/collect-market-demand-intelligence-2026.js --write
 
+      - name: Canonicalize Google and community product identities
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/canonicalize-market-demand-products-2026.js --write
+
       - name: Build management decision intelligence
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/build-market-management-2026.js --write
@@ -121,7 +126,7 @@ jobs:
       - name: Validate sales and management truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
-          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js; do node --check "$f"; done
+          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js; do node --check "$f"; done
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
@@ -134,6 +139,7 @@ jobs:
           if([d,disc,e,q,p,m].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must be 2026');
           if(Number(d.coverage.storefrontsConfigured)!==(r.retailers||[]).length)throw new Error('Sales coverage denominator mismatch');
           if(!d.canonicalization||!d.canonicalization.after)throw new Error('Canonical product reconciliation did not run');
+          if(!q.canonicalization||!Number.isFinite(Number(q.canonicalization.canonicalProducts)))throw new Error('Demand canonicalization did not run');
           for(const x of d.actualSales||[])if(!Number.isFinite(Number(x.unitsSold)))throw new Error('Non-explicit unitsSold row leaked');
           if(d.coverage.nationalMarketShareAvailable===true&&Number(d.coverage.storefrontsWithActualUnitSales)!==(r.retailers||[]).length)throw new Error('National share became true without full Tier-A coverage');
           if(!d.summary||!d.summary.observedBestsellerIndex)throw new Error('Sales synthesis missing');
@@ -148,7 +154,7 @@ jobs:
             if(!Number.isFinite(Number(row.listedStorefronts))||!Number.isFinite(Number(row.bestsellerStorefronts)))throw new Error(`Listing/bestseller separation missing: ${row.name}`);
           }
           if(!/Retail listing breadth/i.test(String(m.methodology&&m.methodology.listingBreadth||'')))throw new Error('Management listing-breadth truth rule missing');
-          console.log(`Decision gate: Tier-A ${m.coverage.tierAStores}/${m.coverage.configuredStores}; Tier-B ${m.coverage.tierBStores}/${m.coverage.configuredStores}; canonical products ${p.summary.canonicalProducts}; merged variants ${p.summary.groupsWithMergedAliasesOrVariants}.`);
+          console.log(`Decision gate: Tier-A ${m.coverage.tierAStores}/${m.coverage.configuredStores}; Tier-B ${m.coverage.tierBStores}/${m.coverage.configuredStores}; canonical products ${p.summary.canonicalProducts}; merged variants ${p.summary.groupsWithMergedAliasesOrVariants}; demand canonical ${q.canonicalization.canonicalProducts}.`);
           NODE
 
       - name: Publish sales and management snapshot

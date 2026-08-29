@@ -25,6 +25,7 @@ on:
       - "data/market-retailers-2026.json"
       - "tools/market-product-canonical-2026.js"
       - "tools/canonicalize-market-sales-products-2026.js"
+      - "tools/canonicalize-market-demand-products-2026.js"
       - "tools/build-market-product-presence-2026.js"
       - "tools/augment-market-management-presence-2026.js"
       - "tools/sync-market-2026.js"
@@ -57,7 +58,7 @@ jobs:
           node-version: "22"
       - name: Validate current Market architecture
         run: |
-          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js assets/market-loading-guard.js assets/market-management-v2.js assets/market-executive-report-v2.js assets/market-demand-ui.js assets/market-view-switcher.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/augment-market-management-presence-2026.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js sw.js; do node --check "$f"; done
+          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js assets/market-loading-guard.js assets/market-management-v2.js assets/market-executive-report-v2.js assets/market-demand-ui.js assets/market-view-switcher.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-product-presence-2026.js tools/augment-market-management-presence-2026.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js sw.js; do node --check "$f"; done
           node tools/normalize-market-2026.js --check
           node - <<'NODE'
           const fs=require('fs');
@@ -80,7 +81,7 @@ jobs:
           if(!(data.observations||[]).length)throw new Error('Market dataset has no observations');
           if(!market.includes(expectedHash)||!market.includes('trendSnapshots'))throw new Error('Market core/access/trend regression');
           if(!daily.includes("cron: '0 3 * * *'")||!daily.includes("cron: '0 4 * * *'")||!validator.includes('status.date!==today'))throw new Error('06:00/freshness architecture missing');
-          for(const token of ['canonicalize-market-sales-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js'])if(!salesFlow.includes(token))throw new Error('Canonical market pipeline missing '+token);
+          for(const token of ['canonicalize-market-sales-products-2026.js','canonicalize-market-demand-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js'])if(!salesFlow.includes(token))throw new Error('Canonical market pipeline missing '+token);
           for(const asset of ['/assets/market-loading-guard.js?v=4','/assets/market-management-v2.js?v=1','/assets/market-executive-report-v2.js?v=1','/assets/market-view-switcher.js?v=1'])if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
           if(!switcher.includes("data-primary=\"analysis\"")||!switcher.includes('Details'))throw new Error('Analysis/Details primary UI missing');
           if(!guard.includes('/data/market-product-presence-2026.json')||!guard.includes('marketViewSwitcher'))throw new Error('Atomic loading guard incomplete');
