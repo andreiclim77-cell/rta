@@ -58,7 +58,7 @@ jobs:
           REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
         run: node tools/collect-market-hype-radar-2026.js --write
 
-      - name: Deep second-pass warnings
+      - name: Deep second-pass warnings and evidence
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/collect-market-hype-deep-2026.js --write
 
@@ -70,7 +70,8 @@ jobs:
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
-          if(Number(d.scopeYear)!==2026)throw new Error('Hype scope must remain 2026');
+          const e=JSON.parse(fs.readFileSync('data/market-hype-evidence-2026.json','utf8'));
+          if(Number(d.scopeYear)!==2026||Number(e.scopeYear)!==2026)throw new Error('Hype scope must remain 2026');
           if(Number(d.schemaVersion)<3)throw new Error('Hype final schema v3 did not run');
           if(d.mode!=='pre-market-upstream-only')throw new Error('Hype mode is not upstream-only');
           if(!d.truth||d.truth.retailSourcesUsed!==false||d.truth.commercialPagesRejected!==true||d.truth.classificationUsesNavigation!==false)throw new Error('Retail/commercial/navigation exclusion truth rule missing');
@@ -78,6 +79,8 @@ jobs:
           if(d.truth.buyHypeRequiresAllConditions!==true||d.truth.buyTrendRequiresDistinctAccounts!==true||d.truth.complaintStopRequiresIndependentSources!==true)throw new Error('Decision truth boundaries incomplete');
           if(!d.methodology||!/narrow context windows/i.test(String(d.methodology.classification||'')))throw new Error('Semantic context classifier did not run');
           if(!d.sourceStatus||d.sourceStatus.deepScan!==true)throw new Error('Deep Hype warning pass did not run');
+          if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.commercialPagesRejected!==true||e.truth.evidenceDoesNotEscalateDecision!==true)throw new Error('Hype evidence boundary missing');
+          for(const ev of e.events||[])for(const s of ev.sources||[]){if(!/^https?:\/\//.test(String(s.url||'')))throw new Error('Hype evidence URL missing');}
           for(const cat of ['RTA','MODURI','ACCESORII'])if(!Array.isArray(d.categories&&d.categories[cat]))throw new Error(`Missing Hype category ${cat}`);
           for(const [cat,rows] of Object.entries(d.categories||{}))for(const x of rows||[]){
             if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Brand/shop/price leaked into public Hype event');
@@ -88,17 +91,17 @@ jobs:
             if(c==='STOP_REVIEW'&&Number(x.complaintSourceCount||0)>0&&Number(x.complaintSourceCount)<3)throw new Error('Complaint STOP issued with fewer than three independent sources');
             if(x.kind==='warning'&&!['WATCH','PREPARE'].includes(c))throw new Error('Deep warning escalated beyond WATCH/PREPARE');
           }
-          console.log(`Hype gate OK: pre ${d.sourceStatus.qualifiedPrelaunchSignals}; deep warnings ${d.sourceStatus.deepWarningsAdded||0}; retail=false.`);
+          console.log(`Hype gate OK: pre ${d.sourceStatus.qualifiedPrelaunchSignals}; deep warnings ${d.sourceStatus.deepWarningsAdded||0}; evidence events ${(e.events||[]).length}; retail=false.`);
           NODE
 
       - name: Publish complete Hype Radar snapshot
         if: steps.gate.outputs.run_sync == 'true'
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain -- data/market-hype-radar-2026.json)" ]; then exit 0; fi
+          if [ -z "$(git status --porcelain -- data/market-hype-radar-2026.json data/market-hype-evidence-2026.json)" ]; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/market-hype-radar-2026.json
+          git add data/market-hype-radar-2026.json data/market-hype-evidence-2026.json
           git commit -m "Snapshot pre-market Hype Radar 2026"
           for attempt in 1 2 3 4 5; do
             git fetch origin main
