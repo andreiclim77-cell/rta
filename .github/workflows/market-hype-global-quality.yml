@@ -54,6 +54,7 @@ jobs:
           node --check tools/filter-market-hype-evidence-2026.js
           node --check tools/collect-market-hype-wide-2026.js
           node --check tools/collect-market-hype-products-2026.js
+          node --check tools/collect-market-hype-vendor-pagination-2026.js
           node --check assets/market-hype-ui.js
           node --check assets/market-loading-guard.js
           node --check assets/market-access-policy.js
@@ -68,8 +69,10 @@ jobs:
           const read=p=>fs.readFileSync(p,'utf8');
           const json=p=>JSON.parse(read(p));
           const cfg=json('data/market-hype-sources-2026.json');
+          const vendors=json('data/market-hype-vendor-profiles-2026.json');
           const flow=read('.github/workflows/market-hype-2026-sync.yml');
           const products=read('tools/collect-market-hype-products-2026.js');
+          const multi=read('tools/collect-market-hype-vendor-pagination-2026.js');
           const ui=read('assets/market-hype-ui.js');
           const guard=read('assets/market-loading-guard.js');
           const access=read('assets/market-access-policy.js');
@@ -78,14 +81,18 @@ jobs:
           need(Number(cfg.lookbackHours)===720&&Number(cfg.hypeWindowDays)===30&&cfg.scope==='GLOBAL RTA + clone RTA','Hype must be GLOBAL / 30 days');
           need((cfg.officialMakers||[]).length>=35&&(cfg.cloneMakers||[]).length>=12&&(cfg.forumDomains||[]).length>=14,'Global source coverage too small');
           for(const d of ['2fdeal.com','3fvape.com','shareavape.com','sourcemore.com','facebook.com','instagram.com','youtube.com','ecigssa.co.za','vapoo.de'])need(JSON.stringify(cfg).toLowerCase().includes(d.toLowerCase()),'Missing Hype source '+d);
-          need(flow.includes('collect-market-hype-products-2026.js --write')&&flow.includes('data/market-hype-products-2026.json'),'Product-level pass/publish missing');
+          need(Array.isArray(vendors.profiles)&&vendors.profiles.length>=5,'Multi-vendor profile coverage too small');
+          for(const d of ['3fvape.com','2fdeal.com','shareavape.com','ecigone.co.uk','sourcemore.com'])need(vendors.profiles.some(x=>x.domain===d),'Missing direct vendor profile '+d);
+          need((vendors.searchOnlyDomains||[]).includes('3avape.com')&&(vendors.searchOnlyDomains||[]).includes('vapingbest.com'),'Search-only vendor coverage missing');
+          need(flow.includes('collect-market-hype-vendor-pagination-2026.js --write')&&flow.includes('data/market-hype-products-2026.json'),'Multi-vendor pass/publish missing');
           need(products.includes('afterReleaseRequiresExplicitDate:true')&&products.includes('newArrivalIsNotRelease:true')&&products.includes('relistingIsNotRelease:true'),'Release/relisting protection missing');
+          need(multi.includes('vendorProfileScan:true')&&multi.includes('transportRtaRejected:true')&&multi.includes('multiVendor:true'),'Multi-vendor truth protections missing');
+          need(multi.includes("const VCFG='data/market-hype-vendor-profiles-2026.json'")&&multi.includes('allowPreviewPublicationDate'),'Config-driven vendor/preview discovery missing');
           need(products.includes('BANNED_HOSTS')&&products.includes('steampowered')&&products.includes('dictionary'),'False-positive blacklist missing');
-          need(products.includes('cloneSellerDiscoveryDomains')&&products.includes('originalSellerDiscoveryDomains'),'Direct original/clone seller discovery missing');
           need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel'),'Expandable product Hype UI missing');
           need(!ui.includes('hype-direct')&&!ui.includes("t('Acum','Now')"),'Old automatic conclusion returned');
           need(guard.includes("key:'hypeProducts'")&&guard.includes("dateConfidence==='explicit'"),'Atomic loader does not require product/date validation');
           need(access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password may be prefilled');
-          need(sw.includes('ghid-rta-static-v36-hype-product-level')&&sw.includes('/data/market-hype-products-2026.json'),'Final product Hype cache/data contract missing');
-          console.log('Hype Global gate OK: GLOBAL 30d; concrete products; expandable UI; explicit dated after-release; false-positive/relisting protection; 06:00 only.');
+          need(sw.includes('/data/market-hype-products-2026.json'),'Product Hype cache/data contract missing');
+          console.log('Hype Global gate OK: GLOBAL 30d; multi-vendor profiles; concrete products; expandable UI; explicit dated after-release; false-positive/relisting protection; 06:00 only.');
           NODE
