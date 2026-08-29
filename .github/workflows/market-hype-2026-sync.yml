@@ -11,6 +11,7 @@ on:
     paths:
       - "tools/collect-market-hype-radar-2026.js"
       - "tools/collect-market-hype-deep-2026.js"
+      - "tools/filter-market-hype-evidence-2026.js"
       - "data/market-hype-sources-2026.json"
       - ".github/workflows/market-hype-2026-sync.yml"
 
@@ -62,11 +63,16 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/collect-market-hype-deep-2026.js --write
 
+      - name: Strictly validate evidence hosts
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/filter-market-hype-evidence-2026.js --write
+
       - name: Validate Hype Radar truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
           node --check tools/collect-market-hype-radar-2026.js
           node --check tools/collect-market-hype-deep-2026.js
+          node --check tools/filter-market-hype-evidence-2026.js
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
@@ -78,8 +84,8 @@ jobs:
           if(d.truth.brandsExposed!==false||d.truth.shopLinksExposed!==false||d.truth.pricesExposed!==false)throw new Error('Public Hype output exposes prohibited fields');
           if(d.truth.buyHypeRequiresAllConditions!==true||d.truth.buyTrendRequiresDistinctAccounts!==true||d.truth.complaintStopRequiresIndependentSources!==true)throw new Error('Decision truth boundaries incomplete');
           if(!d.methodology||!/narrow context windows/i.test(String(d.methodology.classification||'')))throw new Error('Semantic context classifier did not run');
-          if(!d.sourceStatus||d.sourceStatus.deepScan!==true)throw new Error('Deep Hype warning pass did not run');
-          if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.commercialPagesRejected!==true||e.truth.evidenceDoesNotEscalateDecision!==true)throw new Error('Hype evidence boundary missing');
+          if(!d.sourceStatus||d.sourceStatus.deepScan!==true||d.sourceStatus.deepStrictHostValidated!==true)throw new Error('Deep Hype strict-host pass did not run');
+          if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.commercialPagesRejected!==true||e.truth.evidenceDoesNotEscalateDecision!==true||e.truth.strictHostValidated!==true)throw new Error('Hype evidence boundary missing');
           for(const ev of e.events||[])for(const s of ev.sources||[]){if(!/^https?:\/\//.test(String(s.url||'')))throw new Error('Hype evidence URL missing');}
           for(const cat of ['RTA','MODURI','ACCESORII'])if(!Array.isArray(d.categories&&d.categories[cat]))throw new Error(`Missing Hype category ${cat}`);
           for(const [cat,rows] of Object.entries(d.categories||{}))for(const x of rows||[]){
@@ -91,7 +97,7 @@ jobs:
             if(c==='STOP_REVIEW'&&Number(x.complaintSourceCount||0)>0&&Number(x.complaintSourceCount)<3)throw new Error('Complaint STOP issued with fewer than three independent sources');
             if(x.kind==='warning'&&!['WATCH','PREPARE'].includes(c))throw new Error('Deep warning escalated beyond WATCH/PREPARE');
           }
-          console.log(`Hype gate OK: pre ${d.sourceStatus.qualifiedPrelaunchSignals}; deep warnings ${d.sourceStatus.deepWarningsAdded||0}; evidence events ${(e.events||[]).length}; retail=false.`);
+          console.log(`Hype gate OK: pre ${d.sourceStatus.qualifiedPrelaunchSignals}; deep warnings ${d.sourceStatus.deepWarningsAdded||0}; wrong-host rejected ${d.sourceStatus.deepWrongHostRejected||0}; evidence events ${(e.events||[]).length}; retail=false.`);
           NODE
 
       - name: Publish complete Hype Radar snapshot
