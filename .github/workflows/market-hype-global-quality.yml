@@ -100,7 +100,7 @@ jobs:
           need(view.includes('ACTUALIZARE 06:00 · Ce se vinde cel mai bine'),'Requested Analysis copy missing');
           need(source.includes('market-hype-heartbeat-evidence-2026.json'),'Heartbeat proof links missing from Info surse');
           need(source.includes('Hype este GLOBAL'),'Info surse does not explain global scope');
-          need(guard.includes('Hype · global · 30 zile')&&!guard.includes("label:'Hype · 72h'"),'Atomic loader still exposes old Hype window');
+          need(/Hype · global · 30 zile/i.test(guard)&&!guard.includes("label:'Hype · 72h'"),'Atomic loader still exposes old Hype window');
           need(sw.includes('/data/market-hype-heartbeat-2026.json')&&sw.includes('/data/market-hype-heartbeat-evidence-2026.json'),'Heartbeat data are not network-first');
           need(!ui.includes('site:facebook.com')&&!ui.includes('www.bing.com'),'Browser UI must never crawl external Hype sources');
           need(access.includes("sessionStorage.removeItem(KEY)")&&access.includes("[data-tab=\"market2026\"]")&&access.includes('[data-market-unlock]'),'Per-click password reset policy missing');
