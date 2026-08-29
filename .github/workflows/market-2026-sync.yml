@@ -12,6 +12,7 @@ on:
     paths:
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
+      - "tools/sync-market-specialized-2026.js"
       - "tools/normalize-market-2026.js"
       - "data/market-retailers-2026.json"
       - ".github/workflows/market-2026-sync.yml"
@@ -26,7 +27,7 @@ concurrency:
 jobs:
   collect:
     runs-on: ubuntu-latest
-    timeout-minutes: 24
+    timeout-minutes: 35
     steps:
       - name: Confirm Bucharest collection window
         id: market_window
@@ -66,6 +67,10 @@ jobs:
         if: steps.market_window.outputs.run_sync == 'true'
         run: node tools/sync-market-smokee-2026.js --write
 
+      - name: Collect storefronts requiring dedicated parsers
+        if: steps.market_window.outputs.run_sync == 'true'
+        run: node tools/sync-market-specialized-2026.js --write
+
       - name: Normalize and QA all market observations
         if: steps.market_window.outputs.run_sync == 'true'
         run: node tools/normalize-market-2026.js --write
@@ -75,8 +80,10 @@ jobs:
         run: |
           node --check tools/sync-market-2026.js
           node --check tools/sync-market-smokee-2026.js
+          node --check tools/sync-market-specialized-2026.js
           node --check tools/normalize-market-2026.js
           node --check assets/market-2026.js
+          node --check assets/market-2026-report.js
           node - <<'NODE'
           const fs = require('fs');
           const data = JSON.parse(fs.readFileSync('data/market-2026.json', 'utf8'));
@@ -88,14 +95,19 @@ jobs:
           const observations = data.observations || [];
           const status = data.collectorStatus || {};
           const categories = new Set(observations.map(row => row.category));
+          const specialist = data.specializedCollectorStatus || {};
 
           if (Number(data.scopeYear) !== 2026 || Number(registry.scopeYear) !== 2026) throw new Error('Market scope drifted outside 2026');
           if (!Array.isArray(observations) || !observations.length) throw new Error('No observations were produced');
-          if (configured.length < 8) throw new Error('Retailer registry unexpectedly shrank');
+          if (configured.length < 15) throw new Error('National retailer registry unexpectedly shrank');
           if (status.date !== today) throw new Error(`Market snapshot is not fresh for today: ${status.date} vs ${today}`);
-          if (Number(status.retailersConfigured || 0) !== configured.length) throw new Error('Collector status does not cover every configured retailer');
+          if (Number(status.retailersConfigured || 0) !== configured.length) throw new Error('Collector status does not cover every configured storefront');
           if (!(status.byRetailer || []).some(row => row.retailerId === 'smokee' && Number(row.observations || 0) > 0)) {
             throw new Error('Smokee daily API observations are missing');
+          }
+          if (specialist.date !== today) throw new Error('Specialized storefront collection did not run today');
+          for (const id of ['vapshop','viciishop','tigaraego','vapersparadise','vapetronic','steamfactory']) {
+            if (!(specialist.byRetailer || []).some(row => row.retailerId === id)) throw new Error(`Missing specialized collector status for ${id}`);
           }
           for (const row of observations) {
             if (!/^2026-/.test(String(row.observedAt || ''))) throw new Error(`Out-of-scope observation: ${row.product || 'unknown'}`);
@@ -106,11 +118,14 @@ jobs:
             if (/^\[object Object\]$/i.test(String(row.brand || ''))) throw new Error(`Invalid JSON-LD brand leaked: ${row.product || 'unknown'}`);
             if (row.category === 'unelte build' && /mustiuc/i.test(String(row.product || ''))) throw new Error(`Drip tip misclassified as build tool: ${row.product}`);
             if (row.category === 'acumulator' && /\b(?:wrap|folie|sleeve)\b/i.test(String(row.product || ''))) throw new Error(`Battery wrap misclassified as accumulator: ${row.product}`);
+            if (['viciishop','tigaraego'].includes(row.retailerId) && row.category === 'RTA' && Number(row.priceRon) > 0 && Number(row.priceRon) < 20) {
+              throw new Error(`Cashback leaked as RTA price for ${row.retailerId}: ${row.product} = ${row.priceRon}`);
+            }
           }
           const desiredFamilies = ['RTA', 'mod', 'acumulator', 'bumbac/wick', 'lichid tutunos/NET/DIY'];
           const present = desiredFamilies.filter(name => categories.has(name));
           if (present.length < 4) throw new Error(`Too few core data families present: ${present.join(', ')}`);
-          console.log(`Validated ${observations.length} normalized daily observations across ${configured.length} configured retailers; core families: ${present.join(', ')}.`);
+          console.log(`Validated ${observations.length} normalized daily observations across ${configured.length} configured storefronts; specialized parsers active; core families: ${present.join(', ')}.`);
           NODE
 
       - name: Commit daily market snapshot
