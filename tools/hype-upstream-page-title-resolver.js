@@ -2,6 +2,7 @@
 'use strict';
 
 const fs=require('fs');
+const WRITE=process.argv.includes('--write');
 const FILE='/tmp/market-hype-upstream-evidence-2026.json';
 const ELIGIBLE=new Set(['manufacturer-official','manufacturer-social-public','independent-vape-news','creator-prelaunch','vaping-forum-prelaunch','reddit-prelaunch','manufacturer-community']);
 const BANNED=/dictionary\.|steampowered\.com|cbsnews\.com|(^|\.)rta\.ae|rtafleet\.com|(^|\.)rta\.com|merriam-webster|riversidetransit|riderta|transitrta|luxury streetwear|fleet software/i;
