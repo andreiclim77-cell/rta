@@ -8,9 +8,15 @@
   function en(){return window.__rtaLang==='en'}
   function t(ro,enText){return en()?enText:ro}
   function n(v){return Number(v||0).toLocaleString(en()?'en-GB':'ro-RO')}
+  function alignVisibleSchedule(root){
+    root.querySelectorAll('*').forEach(function(el){
+      if(el.children.length===0&&/07:00/.test(el.textContent||''))el.textContent=(el.textContent||'').replace(/07:00/g,'06:00')
+    })
+  }
   function render(coverage){
     var root=byId('market2026Root');
     if(!root||!root.querySelector('.market-hero'))return;
+    alignVisibleSchedule(root);
     var old=byId(BOX_ID);if(old)old.remove();
     var claim=coverage&&coverage.nationalClaim||{};
     var c=coverage&&coverage.coverage||{};
@@ -26,7 +32,7 @@
     var box=document.createElement('div');
     box.id=BOX_ID;
     box.style.cssText='border:2px solid '+(allowed?'rgba(85,209,122,.75)':'rgba(217,93,0,.65)')+';border-radius:16px;padding:16px;background:var(--panel);display:grid;gap:8px';
-    box.innerHTML='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><strong style="font-size:20px">'+esc(t('ROMÂNIA 100%','ROMANIA 100%'))+': '+esc(allowed?t('DA','YES'):t('NU','NO'))+'</strong><span class="market-report-pill '+(allowed?'ok':'warn')+'">'+esc(allowed?t('CERTIFICAT','CERTIFIED'):t('AUDIT ÎN CURS','AUDIT IN PROGRESS'))+'</span></div>'+
+    box.innerHTML='<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><strong style="font-size:20px">'+esc(t('ROMÂNIA 100%','ROMANIA 100%'))+': '+esc(allowed?t('DA','YES'):t('NU','NO'))+'</strong><span class="market-report-pill '+(allowed?'ok':'warn')+'">'+esc(allowed?t('CERTIFICAT','CERTIFIED'):t('AUDIT ÎN CURS','AUDIT IN PROGRESS'))+'</span><span class="market-report-pill ok">'+esc(t('refresh zilnic · 06:00 RO','daily refresh · 06:00 RO'))+'</span></div>'+
       '<div class="market-report-note">'+esc(t('Storefront-uri consumer în registrul curent','Consumer storefronts in current registry'))+': <strong>'+n(c.storefrontsConfigured)+'</strong> · '+esc(t('operatori economici unici','unique operators'))+': <strong>'+n(c.uniqueOperatorsConfigured)+'</strong> · '+esc(t('cu observații azi','with observations today'))+': <strong>'+n(c.storefrontsWithObservationsToday)+'</strong> · '+esc(t('poziții observate azi','positions observed today'))+': <strong>'+n(c.observationsToday)+'</strong></div>'+
       (!allowed?'<div class="market-report-note"><strong>'+esc(t('De ce NU este încă 100%','Why it is NOT 100% yet'))+':</strong> '+esc(problems.join(' · ')||claim.reason||'—')+'</div>':'')+
       '<div class="market-report-note">'+esc(t('Important: „storefront-uri cu date / storefront-uri în registru” este doar acoperirea observată a registrului curent. Nu este echivalentă cu certificarea întregii piețe din România.','Important: “storefronts with data / storefronts in registry” is only observed coverage of the current registry. It is not equivalent to certification of the entire Romanian market.'))+'</div>';
