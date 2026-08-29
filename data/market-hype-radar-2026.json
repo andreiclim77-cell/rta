@@ -1,15 +1,18 @@
 {
-  "schemaVersion": 3,
+  "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-08-29T16:06:05.217Z",
-  "lookbackHours": 72,
+  "generatedAt": "2026-08-29T17:24:43.714Z",
+  "lookbackHours": 720,
   "cacheMaxHours": 24,
   "pendingRefresh": false,
   "mode": "pre-market-upstream-only",
   "methodology": {
     "classification": "Product category is inferred only from search title/snippet and narrow context windows around relevant signal phrases after navigation/header/footer removal. Whole-page navigation is never used to choose a category.",
     "recency": "Source/API publication time preferred; search-index time is accepted only as lower-confidence evidence and cannot by itself satisfy comment velocity or distinct-account rules.",
-    "separation": "Hype = before market; Trend = repeated demand without a recent pre-announcement; Sales = current commercial evidence."
+    "separation": "Hype = before market; Trend = repeated demand without a recent pre-announcement; Sales = current commercial evidence.",
+    "scope": "GLOBAL RTA + clone RTA",
+    "wideDiscovery": "30-day global public/indexable discovery across original manufacturers, original sellers, clone makers, clone sellers, social, communities, forums, news, creators and open web. Commercial discovery never validates BUY_HYPE.",
+    "memory": "A relevant rumor remains in the Hype memory for up to 30 days even when the search index does not return it again on the next daily run."
   },
   "truth": {
     "retailSourcesUsed": false,
@@ -21,78 +24,178 @@
     "buyHypeRequiresAllConditions": true,
     "buyTrendRequiresDistinctAccounts": true,
     "complaintStopRequiresIndependentSources": true,
-    "rule": "Only upstream pre-announcement evidence may enter Hype. Store/product/cart/price pages are rejected. Missing corroboration, velocity or distinct-account evidence always downgrades the decision."
+    "rule": "Only upstream pre-announcement evidence may enter Hype. Store/product/cart/price pages are rejected. Missing corroboration, velocity or distinct-account evidence always downgrades the decision.",
+    "discoveryCommercialSourcesUsed": true,
+    "discoveryCommercialSourcesCanEscalate": false,
+    "wideDiscoveryWindowDays": 30,
+    "globalScope": true
   },
   "sourceStatus": {
-    "queriesRun": 121,
-    "queriesWorking": 121,
+    "queriesRun": 179,
+    "queriesWorking": 179,
     "redditAuthorized": false,
     "redditMode": "credentials-or-approval-missing",
-    "rawDocuments": 469,
-    "qualifiedPrelaunchSignals": 0,
+    "rawDocuments": 609,
+    "qualifiedPrelaunchSignals": 2,
     "trendSignals7d": 0,
     "complaintSignals7d": 0,
     "sourceTypes": {
       "manufacturer-official": {
-        "queries": 25,
-        "working": 25,
-        "documents": 174
+        "queries": 32,
+        "working": 32,
+        "documents": 320
       },
       "manufacturer-social-public": {
-        "queries": 29,
-        "working": 29,
-        "documents": 272
+        "queries": 43,
+        "working": 43,
+        "documents": 402
       },
       "manufacturer-community": {
-        "queries": 29,
-        "working": 29,
-        "documents": 275
+        "queries": 43,
+        "working": 43,
+        "documents": 412
       },
       "vaping-forum-prelaunch": {
-        "queries": 24,
-        "working": 24,
-        "documents": 198
+        "queries": 45,
+        "working": 45,
+        "documents": 450
       },
       "independent-vape-news": {
-        "queries": 10,
-        "working": 10,
-        "documents": 70
+        "queries": 12,
+        "working": 12,
+        "documents": 120
       },
       "reddit-prelaunch": {
         "queries": 3,
         "working": 3,
-        "documents": 24
+        "documents": 30
       },
       "creator-prelaunch": {
         "queries": 1,
         "working": 1,
-        "documents": 7
+        "documents": 10
       }
     },
     "verifiedDateSignals": 0,
-    "indexDateSignals": 0,
-    "deepQueriesRun": 73,
-    "deepQueriesWorking": 73,
-    "deepCandidateDocuments": 427,
-    "deepWarningsAdded": 0,
+    "indexDateSignals": 2,
+    "deepQueriesRun": 109,
+    "deepQueriesWorking": 109,
+    "deepCandidateDocuments": 580,
+    "deepWarningsAdded": 1,
     "deepScan": true,
     "deepStrictHostValidated": true,
-    "deepWrongHostRejected": 2
+    "deepWrongHostRejected": 19,
+    "wideQueriesRun": 169,
+    "wideQueriesWorking": 169,
+    "wideCandidateDocuments": 840,
+    "wideSignalsAccepted": 62,
+    "wideUpcomingSignals": 4,
+    "wideReleasedSignals": 58,
+    "wideRememberedUpcomingSignals": 4,
+    "wideRememberedReleasedSignals": 58,
+    "wideDiscoveryOnlySignals": 51,
+    "wideDecisionEligibleSignals": 11,
+    "wideCloneSignals": 0,
+    "wideScan": true,
+    "scope": "GLOBAL"
   },
   "categories": {
-    "RTA": [],
+    "RTA": [
+      {
+        "kind": "pre",
+        "eventId": "c155d624094204e8601b",
+        "category": "RTA",
+        "typology": "RDL single",
+        "mentions72h": 1,
+        "sourceTypeCount": 1,
+        "sourceFamilyCount": 1,
+        "newestSignalHours": 10,
+        "verifiedSourceDates": 0,
+        "indexDateSignals": 1,
+        "velocity7d": null,
+        "velocityVerified": false,
+        "complaintSourceCount": 0,
+        "verifiedEngagement": 0,
+        "confidence": 35,
+        "decision": {
+          "code": "PREPARE",
+          "label": "PREGĂTEȘTE / URMĂREȘTE",
+          "reason": "Pre-anunț recent, dar încă nu este confirmat de minimum două tipuri de surse independente."
+        },
+        "mentions30d": 1,
+        "discoverySourceCount": 1,
+        "maturityStage": "RUMOR",
+        "maturityLabel": "zvon",
+        "maturityScore": 15
+      },
+      {
+        "kind": "warning",
+        "eventId": "0c4a2ef827ab90ebfaca",
+        "category": "RTA",
+        "typology": "DL single",
+        "mentions72h": 1,
+        "sourceTypeCount": 1,
+        "sourceFamilyCount": 1,
+        "newestSignalHours": 215.1,
+        "confidence": 42,
+        "warningStage": "semnal timpuriu",
+        "decision": {
+          "code": "WATCH",
+          "label": "ATENȚIE · URMĂREȘTE",
+          "reason": "Semnal upstream timpuriu dintr-o singură familie de surse. Urmărește confirmarea înainte de orice comandă."
+        }
+      }
+    ],
     "MODURI": [],
-    "ACCESORII": []
+    "ACCESORII": [
+      {
+        "kind": "derived",
+        "eventId": "5c5776c4d685f55f0148",
+        "category": "ACCESORII",
+        "typology": "compatibilitate noua",
+        "mentions72h": 1,
+        "sourceTypeCount": 1,
+        "newestSignalHours": 10,
+        "confidence": 50,
+        "decision": {
+          "code": "PREPARE_ACCESSORIES",
+          "label": "PREGĂTEȘTE ACCESORII · 7–10 ZILE",
+          "reason": "Există un semnal hardware timpuriu suficient de puternic pentru a pregăti accesoriile compatibile. Confirmă compatibilitatea exactă înainte de cumpărare."
+        }
+      },
+      {
+        "kind": "pre",
+        "eventId": "d24304b280e6f1a8db7c",
+        "category": "ACCESORII",
+        "typology": "tool-uri",
+        "mentions72h": 1,
+        "sourceTypeCount": 1,
+        "sourceFamilyCount": 1,
+        "newestSignalHours": 72.8,
+        "verifiedSourceDates": 0,
+        "indexDateSignals": 1,
+        "velocity7d": null,
+        "velocityVerified": false,
+        "complaintSourceCount": 0,
+        "verifiedEngagement": 0,
+        "confidence": 35,
+        "decision": {
+          "code": "PREPARE",
+          "label": "PREGĂTEȘTE / URMĂREȘTE",
+          "reason": "Pre-anunț recent, dar încă nu este confirmat de minimum două tipuri de surse independente."
+        }
+      }
+    ]
   },
   "summary": {
     "RTA": {
-      "signals": 0,
-      "events": 0,
+      "signals": 2,
+      "events": 2,
       "buyHype": 0,
       "buyTrend": 0,
       "prepareAccessories": 0,
-      "prepare": 0,
-      "watch": 0,
+      "prepare": 1,
+      "watch": 1,
       "stop": 0
     },
     "MODURI": {
@@ -106,12 +209,12 @@
       "stop": 0
     },
     "ACCESORII": {
-      "signals": 0,
-      "events": 0,
+      "signals": 2,
+      "events": 2,
       "buyHype": 0,
       "buyTrend": 0,
-      "prepareAccessories": 0,
-      "prepare": 0,
+      "prepareAccessories": 1,
+      "prepare": 1,
       "watch": 0,
       "stop": 0
     }
@@ -119,7 +222,29 @@
   "internalHistory": [
     {
       "date": "2026-08-29",
-      "events": []
+      "events": [
+        {
+          "kind": "pre",
+          "eventId": "d24304b280e6f1a8db7c",
+          "category": "ACCESORII",
+          "typology": "tool-uri",
+          "mentions": 1,
+          "engagement": 0,
+          "sourceTypeCount": 1,
+          "decision": "PREPARE"
+        },
+        {
+          "kind": "pre",
+          "eventId": "c155d624094204e8601b",
+          "category": "RTA",
+          "typology": "RDL single",
+          "mentions": 1,
+          "engagement": 0,
+          "sourceTypeCount": 1,
+          "decision": "PREPARE"
+        }
+      ]
     }
-  ]
+  ],
+  "hypeWindowDays": 30
 }
