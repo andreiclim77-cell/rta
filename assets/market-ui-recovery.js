@@ -3,10 +3,10 @@
 var timer=null,startedAt=Date.now(),attempts={},lastInject={};
 var MODULES=[
   {id:'marketManagementCockpit',src:'/assets/market-management-v2.js?v=3',label:'Analiza'},
-  {id:'marketExecutiveReport',src:'/assets/market-executive-report-v2.js?v=1',label:'Raport'},
-  {id:'marketDemandIntelligence',src:'/assets/market-demand-ui.js?v=1',label:'Interes'},
-  {id:'marketHypeRadar',src:'/assets/market-hype-ui.js?v=2',label:'Hype Radar'},
-  {id:'marketManagementAugment',src:'/assets/market-management-augment.js?v=1',label:'Management'},
+  {id:'marketExecutiveReport',src:'/assets/market-executive-report-v2.js?v=2',label:'Raport'},
+  {id:'marketDemandIntelligence',src:'/assets/market-demand-ui.js?v=2',label:'Interes'},
+  {id:'marketHypeRadar',src:'/assets/market-hype-ui.js?v=3',label:'Hype Radar'},
+  {id:'marketManagementAugment',src:'/assets/market-management-augment.js?v=2',label:'Management'},
   {id:'marketViewSwitcher',src:'/assets/market-view-switcher.js?v=3',label:'Interfață'}
 ];
 function el(id){return document.getElementById(id)}
@@ -26,12 +26,12 @@ function scan(){
   MODULES.forEach(function(m){
     if(el(m.id))return;
     var n=attempts[m.id]||0;
-    if(n>=12)return;
+    if(n>=8)return;
     if(Date.now()-Number(lastInject[m.id]||0)<1600)return;
     inject(m);
   });
 }
-function schedule(){clearTimeout(timer);timer=setTimeout(scan,180)}
+function schedule(){if(timer)return;timer=setTimeout(function(){timer=null;scan()},180)}
 function boot(){
   new MutationObserver(schedule).observe(document.body,{childList:true,subtree:true});
   schedule();
