@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ghid-rta-static-v8';
+const CACHE_VERSION = 'ghid-rta-static-v9';
 const OFFLINE_URL = '/offline.html';
 const SAFE_PAGES = [
   OFFLINE_URL,
@@ -21,7 +21,7 @@ const STATIC_ASSETS = [
   '/assets/enhancements.css?v=7',
   '/assets/enhancements.js?v=7',
   '/assets/enhancements-core.js?v=8',
-  '/assets/market-2026.js?v=1',
+  '/assets/market-2026.js?v=2',
   '/site.webmanifest',
   '/site-en.webmanifest'
 ];
