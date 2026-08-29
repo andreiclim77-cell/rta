@@ -1,7 +1,7 @@
 {
   "schemaVersion": 3,
   "scopeYear": 2026,
-  "updatedAt": "2026-08-29T11:38:36.162Z",
+  "updatedAt": "2026-08-29T12:14:03.014Z",
   "methodology": {
     "actualSalesOnly": true,
     "noStockInference": true,
@@ -15,15 +15,15 @@
     "marketShareRule": "national unit/value shares only with full comparable Tier-A coverage"
   },
   "coverage": {
-    "storefrontsConfigured": 19,
+    "storefrontsConfigured": 22,
     "storefrontsWithActualUnitSales": 2,
-    "storefrontsWithRetailerSalesRanking": 18,
-    "actualUnitSalesCoveragePct": 10.5,
-    "rankingCoveragePct": 94.7,
+    "storefrontsWithRetailerSalesRanking": 21,
+    "actualUnitSalesCoveragePct": 9.1,
+    "rankingCoveragePct": 95.5,
     "nationalUnitsSoldAvailable": false,
     "nationalMarketShareAvailable": false,
     "storefrontsWithDemandProxy": 6,
-    "demandProxyCoveragePct": 31.6
+    "demandProxyCoveragePct": 27.3
   },
   "today": {
     "date": "2026-08-29",
@@ -180,6 +180,30 @@
       "method": "woo-popularity-api",
       "source": "https://merlin.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 7,
+      "actualSalesCount": 0,
+      "error": null
+    },
+    {
+      "retailerId": "vapero",
+      "method": "woo-popularity-api",
+      "source": "https://vape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "rankingCount": 0,
+      "actualSalesCount": 0,
+      "error": "Unexpected token '<', \"<!DOCTYPE \"... is not valid JSON"
+    },
+    {
+      "retailerId": "alphavape",
+      "method": "woo-popularity-api",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "rankingCount": 11,
+      "actualSalesCount": 0,
+      "error": null
+    },
+    {
+      "retailerId": "smartvape",
+      "method": "woo-popularity-api",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "rankingCount": 14,
       "actualSalesCount": 0,
       "error": null
     },
@@ -1386,6 +1410,306 @@
       "brand": ""
     },
     {
+      "retailerId": "alphavape",
+      "category": "sarma",
+      "product": "Kanthal Suedia 0.35mm",
+      "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/kanthal-suedia-0-35mm/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "sarma",
+      "product": "Kanthal Suedia 0.4mm",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/kanthal-suedia-0-4mm/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "bumbac/wick",
+      "product": "Bumbac Organic",
+      "rank": 9,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/bumbac-organic/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "sarma",
+      "product": "Kanthal Suedia 0.3mm",
+      "rank": 14,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/kanthal-suedia-0-3mm/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma Vapebar 10ml &#8211; Coffee Tobacco",
+      "rank": 20,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/aroma-vapebar-10ml-coffee-tobacco/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "acumulator",
+      "product": "Acumulator SONY VTC6 18650",
+      "rank": 21,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/acumulator-sony-vtc6-18650-3100mah/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Flavor Madness Tobacco Coffee 30ml",
+      "rank": 24,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/lichid-flavor-madness-tobacco-coffee-30ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma Oops! &#8211; SE Tobacco 10ml",
+      "rank": 47,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/aroma-oops-se-tobacco-10ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma Liqua 10ml &#8211; Vanilla Tobacco",
+      "rank": 59,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/aroma-liqua-10ml-vanilla-tobacco/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma Flavor Madness Tobacco White 9ml",
+      "rank": 66,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/aroma-flavor-madness-tobacco-white-9ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma Vapebar 10ml &#8211; Virginia Tobacco",
+      "rank": 86,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://alphavape.ro/p/aroma-vapebar-10ml-virginia-tobacco-2/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "bumbac/wick",
+      "product": "Bumbac Cotton Bacon V2 Wick &#8216;N&#8217; Vape",
+      "rank": 20,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/bumbac-cotton-bacon-v2-wick-n-vape/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "RTA",
+      "product": "Atomizor Gear V2 RTA 3.5ml Wotofo Silver",
+      "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/categorie-produs/atomizoare/atomizoare-servisabile/?orderby=popularity",
+      "productUrl": "https://smartvape.ro/produs/atomizor-gear-v2-rta-3-5ml-wotofo-silver/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": "Wotofo"
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "acumulator",
+      "product": "Acumulator Sony VTC6 18650 Li-Ion, 3000mAh, 15A &#8211; 30A",
+      "rank": 25,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/acumulator-sony-vtc6-18650-3000mah/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "acumulator",
+      "product": "Acumulator Samsung 40T 21700 Li-Ion, 4000mAh, 30A &#8211; 35A",
+      "rank": 26,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/acumulator-samsung-40t-21700-li-ion-4000mah-30a-sep-sitename/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Virginia Tobacco The Vaping Giant 40ml",
+      "rank": 43,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-virginia-tobacco-the-vaping-giant-40ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Traditional Tobacco The Vaping Giant 40ml",
+      "rank": 45,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-traditional-tobacco-the-vaping-giant-40ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Light Tobacco The Vaping Giant 40ml",
+      "rank": 51,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-light-tobacco-the-vaping-giant-40ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Cherry Tobacco The Vaping Giant 40ml",
+      "rank": 55,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-cherry-tobacco-the-vaping-giant-40ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid American Tobacco The Vaping Giant 40ml",
+      "rank": 58,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-american-tobacco-the-vaping-giant-40ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Tobacco Vanilla Caramel Flavor Madness 30 ml",
+      "rank": 61,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-tobacco-vanilla-caramel-flavor-madness-30-ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Tobacco Golden Flavor Madness 30 ml",
+      "rank": 62,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-tobacco-golden-flavor-madness-30-ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Tobacco Fantastic III Flavor Madness 30 ml",
+      "rank": 63,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-tobacco-fantastic-iii-flavor-madness-30-ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid OOPS! Cream Tobacco 40ml",
+      "rank": 83,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-oops-cream-tobacco-40ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "smartvape",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Tobacco Puff Bar 40 ml",
+      "rank": 84,
+      "observedAt": "2026-08-29",
+      "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smartvape.ro/produs/lichid-tobacco-puff-bar-40-ml/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
       "retailerId": "vapepoint",
       "category": "RTA",
       "product": "Kuma MTL RTA",
@@ -1952,68 +2276,80 @@
     {
       "retailerId": "smokee",
       "category": "mod",
-      "product": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
+      "product": "Mod Voopoo Drag 6 &#8211; Black",
       "rank": 1,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-early-bird-harrier-n80-murdered-out/",
+      "productUrl": "https://smokee.ro/product/mod-voopoo-drag-6-black/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "brand": "Early Bird"
+      "brand": "Voopoo"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-10ml-120ml-new-york/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": "Drops"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
+      "rank": 3,
+      "observedAt": "2026-08-29",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/nasty-juice-10-ml-nicotina-20mg-menthol-tobacco/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": ""
     },
     {
       "retailerId": "smokee",
       "category": "mod",
-      "product": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
-      "rank": 2,
-      "observedAt": "2026-08-29",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-dicodes-dani-extreme-v3-l-60w-18650-22mm/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "brand": "Dicodes"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "RTA",
-      "product": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
-      "rank": 3,
-      "observedAt": "2026-08-29",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/atomizor-by-ka-v-11-rta-23mm-by-vape-systems-standard-set/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "brand": "Vape Systems"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "incarcator",
-      "product": "Incarcator acumulatori MAXICELL MX4",
+      "product": "Mod Mechvape x Nitrous Pocket &#8211; Black",
       "rank": 4,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/incarcator-acumulatori-maxicell-mx4/",
+      "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-black/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": "Mechvape"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "acumulator",
+      "product": "San Dynasty Pro Dual Battery Charger – Orca Vape",
+      "rank": 5,
+      "observedAt": "2026-08-29",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/san-dynasty-pro-dual-battery-charger-orca-vape/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
       "brand": ""
     },
     {
       "retailerId": "smokee",
-      "category": "RBA/bridge",
-      "product": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
-      "rank": 5,
+      "category": "mod",
+      "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
+      "rank": 6,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/thunder-cloud-x-monarchy-idot-rba-edition-black/",
+      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "brand": ""
+      "brand": "Eleaf"
     },
     {
       "retailerId": "smokee",
       "category": "mod",
       "product": "Mod Mechvape x Nitrous Pocket &#8211; PEEK",
-      "rank": 6,
+      "rank": 7,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
       "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-peek/",
@@ -6020,8 +6356,20 @@
     {
       "retailerId": "voore",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+      "product": "Aroma Oops! - SE Tobacco 10ml",
       "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://www.voore.ro/?orderby=popularity",
+      "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "voore",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+      "rank": 2,
       "observedAt": "2026-08-29",
       "source": "https://www.voore.ro/?orderby=popularity",
       "productUrl": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
@@ -6033,22 +6381,10 @@
       "retailerId": "voore",
       "category": "lichid tutunos/NET/DIY",
       "product": "Aroma Oops! - Coffee Tobacco 10ml",
-      "rank": 2,
-      "observedAt": "2026-08-29",
-      "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "brand": ""
-    },
-    {
-      "retailerId": "voore",
-      "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Oops! - SE Tobacco 10ml",
       "rank": 3,
       "observedAt": "2026-08-29",
       "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+      "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
       "brand": ""
@@ -8872,6 +9208,102 @@
       "evidence": "verified-discovered-retailer-bestseller-page",
       "evidenceTier": "B",
       "brand": ""
+    },
+    {
+      "retailerId": "vapero",
+      "category": "mod",
+      "product": "Vape Kit Reincarcabil Jac Vapour VIM AIO Box Mod Slate, 2600 mAh, 2ml TF Tank MTL/DTL, Rezistenta 1ohm Inclusa, Compatibil NicSalts",
+      "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://vape.ro/",
+      "productUrl": "https://vape.ro/vape-kit-reincarcabil-jac-vapour-vim-aio-box-mod-slate-2600-mah-2ml-tf-tank-mtldtl-rezistenta-1ohm-inclusa-compatibil-nicsalts/535.htm",
+      "evidence": "verified-discovered-retailer-bestseller-page",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "vapero",
+      "category": "bumbac/wick",
+      "product": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://vape.ro/",
+      "productUrl": "https://vape.ro/set-5-rezistente-atomizor-vape-jac-vapour-s-coil-mtl-10-ohm-bumbac-organic-cutie-5-bucati-tip-capsula/64.htm",
+      "evidence": "verified-discovered-retailer-bestseller-page",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "vapero",
+      "category": "mod",
+      "product": "Atomizor Tank pt Box Mod-ul AIO VIM, 2 ml Topfill, Rezistenta tip capsula 1 ohm inclusa, Compatibil MTL,DL si Sub-Ohm",
+      "rank": 3,
+      "observedAt": "2026-08-29",
+      "source": "https://vape.ro/",
+      "productUrl": "https://vape.ro/atomizor-tank-pt-box-mod-ul-aio-vim-2-ml-topfill-rezistenta-tip-capsula-1-ohm-inclusa-compatibil-mtldl-si-sub-ohm/1000.htm",
+      "evidence": "verified-discovered-retailer-bestseller-page",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "vapero",
+      "category": "bumbac/wick",
+      "product": "Set 5 Rezistente Innokin Prism T20, 1.5 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+      "rank": 4,
+      "observedAt": "2026-08-29",
+      "source": "https://vape.ro/",
+      "productUrl": "https://vape.ro/set-5-rezistente-innokin-prism-t20-15-ohm-bumbac-organic-cutie-5-bucati-tip-capsula/463.htm",
+      "evidence": "verified-discovered-retailer-bestseller-page",
+      "evidenceTier": "B",
+      "brand": "Innokin"
+    },
+    {
+      "retailerId": "vapero",
+      "category": "acumulator",
+      "product": "Acumulator Samsung INR18650-25R, 2500 mAh, 20A, Durata prelungita de viata de peste 500 incarcari",
+      "rank": 5,
+      "observedAt": "2026-08-29",
+      "source": "https://vape.ro/",
+      "productUrl": "https://vape.ro/acumulator-samsung-inr18650-25r-2500-mah-20a-durata-prelungita-de-viata-de-peste-500-incarcari/735.htm",
+      "evidence": "verified-discovered-retailer-bestseller-page",
+      "evidenceTier": "B",
+      "brand": ""
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "RTA",
+      "product": "Atomizor Dead Rabbit MTL RTA 2 Hellvape Matte Black",
+      "rank": 1,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/?orderby=popularity",
+      "productUrl": "https://alphavape.ro/p/atomizor-dead-rabbit-mtl-rta-2-hellvape-matte-black/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": "Hellvape"
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "RTA",
+      "product": "Atomizor Bonza Pro RTA Purple Thunder Cloud x Vaping Bogan",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/?orderby=popularity",
+      "productUrl": "https://alphavape.ro/p/atomizor-bonza-pro-rta-purple-thunder-cloud-x-vaping-bogan/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": "Thunder Cloud"
+    },
+    {
+      "retailerId": "alphavape",
+      "category": "RTA",
+      "product": "Atomizor Dead Rabbit 4 RTA Pro Black Gold Hellvape",
+      "rank": 3,
+      "observedAt": "2026-08-29",
+      "source": "https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/?orderby=popularity",
+      "productUrl": "https://alphavape.ro/p/atomizor-dead-rabbit-4-rta-pro-black-gold-hellvape/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "brand": "Hellvape"
     }
   ],
   "actualSales": [
@@ -9268,470 +9700,470 @@
     }
   ],
   "summary": {
-    "generatedAt": "2026-08-29T11:38:36.249Z",
+    "generatedAt": "2026-08-29T12:14:03.100Z",
     "observedBestsellerIndex": {
       "method": "reciprocal-rank aggregation of Tier-B retailer bestseller/popularity lists; this is not unit market share",
-      "coveragePct": 94.7,
+      "coveragePct": 95.5,
       "topProducts": [
+        {
+          "name": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+          "value": 1.5,
+          "sharePct": 0.99
+        },
         {
           "name": "Liqua Traditional Tobacco 10ml",
           "value": 1.3333,
-          "sharePct": 0.92
+          "sharePct": 0.88
         },
         {
           "name": "TopFill pentru Dvarw MTL RTA &#8211; Silver",
           "value": 1.3333,
-          "sharePct": 0.92
+          "sharePct": 0.88
+        },
+        {
+          "name": "Atomizor Tank pt Box Mod-ul AIO VIM, 2 ml Topfill, Rezistenta tip capsula 1 ohm inclusa, Compatibil MTL,DL si Sub-Ohm",
+          "value": 1.3333,
+          "sharePct": 0.88
         },
         {
           "name": "Mod Aspire Zelos 80X - Black Gradient",
           "value": 1.2,
-          "sharePct": 0.83
+          "sharePct": 0.79
         },
         {
           "name": "Atomizor Vision Eternity RBA",
           "value": 1.0667,
-          "sharePct": 0.74
+          "sharePct": 0.7
         },
         {
           "name": "Card aromatizant Tobi Menthol pentru tutun si tigari",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Kanthal 0,35 mm &#8211; 10 metri",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu flat top si PCB",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
+        },
+        {
+          "name": "Kanthal Suedia 0.35mm",
+          "value": 1,
+          "sharePct": 0.66
+        },
+        {
+          "name": "Atomizor Gear V2 RTA 3.5ml Wotofo Silver",
+          "value": 1,
+          "sharePct": 0.66
         },
         {
           "name": "Kuma MTL RTA",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Mod Nitrous Pocket Mechvape Black",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Rezistenta Clapton 3 Core Ni80 0.35 Ohm 10 buc Thunder Cloud x Coilturd",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Mod Electronic Jac Vapour SERIES-B DNA 75 W Black Edition PVD Matte 23mm, Control Temperatura, Calitate Premium, Finisaje PVD",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Aroma El Toro Silver Surfer 30ml Longfill, Extras Natural din Tutun Organic Cubanez Premium Macerat la Rece, Se Obtin pana la 90ml Lichid",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Lichid Vape El Toro Silver Surfer, Extras Natural din Tutun Organic Cubanez Premium, Macerat la Rece, 60ml, Nicotina 0-10mg",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "USA Mix tobacco Hangsen 10ml",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
-          "name": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+          "name": "Mod Voopoo Drag 6 &#8211; Black",
           "value": 1,
-          "sharePct": 0.69
-        },
-        {
-          "name": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
-          "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "VIRGINIA TOSCANO Unique 20ml, Azhad&#039;s Elixirs",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Atomizor Era RTA V3, Auguse",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Chamber SWEET Kayfun BB RBA, Svoemesto",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Wire Shots Twisted KA1 28GAx2, UD",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Extensie Standard Bi2hop MTL RTA, Ambition Mods",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "GD Mods MD-01 RTA &#8211; Argintiu 450,00 lei",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Reduceri! Atomizor KHW Mods Dvarw MTL FL RTA 22mm &#8211; Argintiu 540,00 lei Prețul inițial a fost: 540,00 lei. 520,00 lei Prețul curent este: 520,00 lei.",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Disposable Pod Elf Bar Cotton Candy Ice 30,00 lei",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Reduceri! Guerrilla Black Ops Tobacco NET 0MG 30ML 42,00 lei Prețul inițial a fost: 42,00 lei. 25,20 lei Prețul curent este: 25,20 lei.",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Lichid Liqua 10ml &#8211; Traditional Tobacco 6-18mg",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Rezistențe Alien Clapton MTL Ni80 0.63ohm Handmade Fumytech",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Mod Aspire Boxxer Black",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Acumulator Samsung 25R INR 18650 &#8211; 2500mAh + carcasa cadou",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Incarcator XTAR MC2",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "mod SXmini MQ Plus silver",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "atomizor Gear v2 RTA negru",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Molicel INR-21700-P45B 4500mAh",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Atomizor Geekvape Zeus X RTA",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "- Bumbac (6)",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Rezerve IQOS cu Tutun",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Acumulator 21700 Sony VTC6A 30A 4000mAh",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
-          "name": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+          "name": "Aroma Oops! - SE Tobacco 10ml",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Consumabile > Fire','Atomizoare');\">Fir Ni80 0.40mm - Zivipf",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Consumabile > Bumbac','Atomizoare');\">",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Stickere','Accesorii');\">Wrap Acumulator 18650 - M7",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "RTA (13)",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Cartuse LVE Orion II Pro – Compatibile cu RBA LVE Orion II Pro 25,00 lei",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "5% reducere DEAD RABBIT MTL RTA 2 &#8211; IT&#8217;S A HELL OF A VAPE! 199,00 lei 189,00 lei",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "WOTOFO Gear V2 RTA 3.5ml &#8211; Black",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "Lichid TOBDRY LIQUIDS – Virginia 10ml / 30ml",
           "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         },
         {
           "name": "tank GeekVape Zeus RTA",
           "value": 1,
-          "sharePct": 0.69
-        },
-        {
-          "name": "GV wire roll SS430 24GA",
-          "value": 1,
-          "sharePct": 0.69
-        },
-        {
-          "name": "Atomizor Tank pt Box Mod-ul AIO VIM, 2 ml Topfill, Rezistenta tip capsula 1 ohm inclusa, Compatibil MTL,DL si Sub-Ohm",
-          "value": 1,
-          "sharePct": 0.69
-        },
-        {
-          "name": "Pachet bumbac HOLY FIBER",
-          "value": 1,
-          "sharePct": 0.69
+          "sharePct": 0.66
         }
       ],
       "topBrands": [
         {
           "name": "Geekvape",
           "value": 5.493,
-          "sharePct": 11.52
+          "sharePct": 10.81
         },
         {
           "name": "Aspire",
           "value": 5.4711,
-          "sharePct": 11.48
+          "sharePct": 10.77
+        },
+        {
+          "name": "Hellvape",
+          "value": 4.6393,
+          "sharePct": 9.13
+        },
+        {
+          "name": "Wotofo",
+          "value": 3.9502,
+          "sharePct": 7.77
         },
         {
           "name": "Ambition Mods",
           "value": 3.471,
-          "sharePct": 7.28
+          "sharePct": 6.83
         },
         {
-          "name": "Hellvape",
-          "value": 3.306,
-          "sharePct": 6.93
-        },
-        {
-          "name": "Wotofo",
-          "value": 2.9502,
-          "sharePct": 6.19
+          "name": "Voopoo",
+          "value": 2.8855,
+          "sharePct": 5.68
         },
         {
           "name": "Mechvape",
-          "value": 2.4935,
-          "sharePct": 5.23
+          "value": 2.7197,
+          "sharePct": 5.35
+        },
+        {
+          "name": "Thunder Cloud",
+          "value": 2.5552,
+          "sharePct": 5.03
         },
         {
           "name": "UD",
           "value": 2.2258,
-          "sharePct": 4.67
-        },
-        {
-          "name": "Thunder Cloud",
-          "value": 2.0552,
-          "sharePct": 4.31
-        },
-        {
-          "name": "Voopoo",
-          "value": 1.8855,
-          "sharePct": 3.96
+          "sharePct": 4.38
         },
         {
           "name": "Cthulhu",
           "value": 1.8294,
-          "sharePct": 3.84
+          "sharePct": 3.6
         },
         {
           "name": "SvoëMesto",
           "value": 1.5833,
-          "sharePct": 3.32
+          "sharePct": 3.12
         },
         {
           "name": "Auguse",
           "value": 1.5,
-          "sharePct": 3.15
+          "sharePct": 2.95
         },
         {
           "name": "BP Mods",
           "value": 1.4637,
-          "sharePct": 3.07
+          "sharePct": 2.88
         },
         {
           "name": "Fumytech",
           "value": 1.4022,
-          "sharePct": 2.94
+          "sharePct": 2.76
         },
         {
-          "name": "Early Bird",
-          "value": 1.1563,
-          "sharePct": 2.43
+          "name": "Innokin",
+          "value": 1.0454,
+          "sharePct": 2.06
         },
         {
           "name": "KHW Mods",
           "value": 1.0156,
-          "sharePct": 2.13
+          "sharePct": 2
         },
         {
           "name": "Taifun",
           "value": 0.9786,
-          "sharePct": 2.05
-        },
-        {
-          "name": "Innokin",
-          "value": 0.7954,
-          "sharePct": 1.67
+          "sharePct": 1.93
         },
         {
           "name": "Ennequadro Mods",
           "value": 0.74,
-          "sharePct": 1.55
+          "sharePct": 1.46
         },
         {
           "name": "Vandy Vape",
           "value": 0.7178,
-          "sharePct": 1.51
+          "sharePct": 1.41
         },
         {
           "name": "Lost Vape",
           "value": 0.6762,
-          "sharePct": 1.42
+          "sharePct": 1.33
         },
         {
           "name": "Vaporesso",
           "value": 0.5337,
-          "sharePct": 1.12
+          "sharePct": 1.05
         },
         {
-          "name": "Dicodes",
+          "name": "Eleaf",
+          "value": 0.5291,
+          "sharePct": 1.04
+        },
+        {
+          "name": "Drops",
           "value": 0.5,
-          "sharePct": 1.05
+          "sharePct": 0.98
         },
         {
           "name": "VooPoo",
           "value": 0.5,
-          "sharePct": 1.05
+          "sharePct": 0.98
         },
         {
           "name": "Wick N Vape",
           "value": 0.4992,
-          "sharePct": 1.05
+          "sharePct": 0.98
         },
         {
           "name": "Vapefly",
           "value": 0.4103,
-          "sharePct": 0.86
-        },
-        {
-          "name": "Eleaf",
-          "value": 0.3624,
-          "sharePct": 0.76
-        },
-        {
-          "name": "Vape Systems",
-          "value": 0.3333,
-          "sharePct": 0.7
+          "sharePct": 0.81
         },
         {
           "name": "Steam Crave",
           "value": 0.25,
-          "sharePct": 0.52
+          "sharePct": 0.49
         },
         {
           "name": "THC",
           "value": 0.25,
-          "sharePct": 0.52
+          "sharePct": 0.49
+        },
+        {
+          "name": "Hotcig",
+          "value": 0.1667,
+          "sharePct": 0.33
+        },
+        {
+          "name": "Alexa",
+          "value": 0.1667,
+          "sharePct": 0.33
         }
       ],
       "topCategories": [
         {
           "name": "RTA",
-          "value": 36.6077,
-          "sharePct": 25.29
+          "value": 39.1077,
+          "sharePct": 25.69
         },
         {
           "name": "lichid tutunos/NET/DIY",
-          "value": 29.1918,
-          "sharePct": 20.17
+          "value": 30.3547,
+          "sharePct": 19.94
         },
         {
           "name": "mod",
-          "value": 28.2189,
-          "sharePct": 19.49
+          "value": 29.4451,
+          "sharePct": 19.35
         },
         {
           "name": "acumulator",
-          "value": 11.2666,
-          "sharePct": 7.78
+          "value": 11.7927,
+          "sharePct": 7.75
         },
         {
           "name": "sarma",
-          "value": 9.9406,
-          "sharePct": 6.87
+          "value": 11.512,
+          "sharePct": 7.56
         },
         {
           "name": "bumbac/wick",
-          "value": 9.3131,
-          "sharePct": 6.43
+          "value": 10.2242,
+          "sharePct": 6.72
         },
         {
           "name": "RBA/bridge",
-          "value": 8.222,
-          "sharePct": 5.68
+          "value": 8.022,
+          "sharePct": 5.27
         },
         {
           "name": "coil prebuilt",
           "value": 6.757,
-          "sharePct": 4.67
+          "sharePct": 4.44
         },
         {
           "name": "incarcator",
-          "value": 4.2118,
-          "sharePct": 2.91
+          "value": 3.9618,
+          "sharePct": 2.6
         },
         {
           "name": "chipset/board",
           "value": 1.0244,
-          "sharePct": 0.71
+          "sharePct": 0.67
         }
       ]
     },
     "measuredUnitSales": {
       "method": "positive deltas of Tier-A explicit cumulative unit counters only",
-      "coveragePct": 10.5,
+      "coveragePct": 9.1,
       "national": false,
       "topProducts": [
         {
@@ -9913,7 +10345,7 @@
     },
     "publicDemandSignals": {
       "method": "Tier-C public demand corroboration only; reviews/views/wishlist are not sales and are never converted into sold units",
-      "coveragePct": 31.6,
+      "coveragePct": 27.3,
       "reviewCount": {
         "topProducts": [
           {
@@ -9957,27 +10389,32 @@
             "sharePct": 5.88
           },
           {
-            "name": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
+            "name": "Mod Voopoo Drag 6 &#8211; Black",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
+            "name": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
+            "name": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Incarcator acumulatori MAXICELL MX4",
+            "name": "Mod Mechvape x Nitrous Pocket &#8211; Black",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
+            "name": "San Dynasty Pro Dual Battery Charger – Orca Vape",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
             "value": 0,
             "sharePct": 0
           },
@@ -10110,11 +10547,6 @@
             "name": "Baza Nautilus Prime RBA, Aspire",
             "value": 0,
             "sharePct": 0
-          },
-          {
-            "name": "Rezistenta PnP-RBA, Voopoo",
-            "value": 0,
-            "sharePct": 0
           }
         ],
         "topBrands": [
@@ -10124,22 +10556,22 @@
             "sharePct": 100
           },
           {
-            "name": "Early Bird",
+            "name": "Voopoo",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Dicodes",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Vape Systems",
+            "name": "Drops",
             "value": 0,
             "sharePct": 0
           },
           {
             "name": "Mechvape",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Eleaf",
             "value": 0,
             "sharePct": 0
           },
@@ -10231,22 +10663,17 @@
             "sharePct": 0
           },
           {
+            "name": "sarma",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
             "name": "RTA",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "incarcator",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "RBA/bridge",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "sarma",
             "value": 0,
             "sharePct": 0
           }
@@ -10262,27 +10689,32 @@
       "viewCount": {
         "topProducts": [
           {
-            "name": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
+            "name": "Mod Voopoo Drag 6 &#8211; Black",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
+            "name": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
+            "name": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Incarcator acumulatori MAXICELL MX4",
+            "name": "Mod Mechvape x Nitrous Pocket &#8211; Black",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
+            "name": "San Dynasty Pro Dual Battery Charger – Orca Vape",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
             "value": 0,
             "sharePct": 0
           },
@@ -10455,31 +10887,26 @@
             "name": "Baza Nautilus Prime RBA, Aspire",
             "value": 0,
             "sharePct": 0
-          },
-          {
-            "name": "Rezistenta PnP-RBA, Voopoo",
-            "value": 0,
-            "sharePct": 0
           }
         ],
         "topBrands": [
           {
-            "name": "Early Bird",
+            "name": "Voopoo",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Dicodes",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Vape Systems",
+            "name": "Drops",
             "value": 0,
             "sharePct": 0
           },
           {
             "name": "Mechvape",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Eleaf",
             "value": 0,
             "sharePct": 0
           },
@@ -10561,17 +10988,12 @@
             "sharePct": 0
           },
           {
-            "name": "RTA",
+            "name": "lichid tutunos/NET/DIY",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "incarcator",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "RBA/bridge",
+            "name": "acumulator",
             "value": 0,
             "sharePct": 0
           },
@@ -10586,12 +11008,12 @@
             "sharePct": 0
           },
           {
-            "name": "acumulator",
+            "name": "RTA",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "lichid tutunos/NET/DIY",
+            "name": "RBA/bridge",
             "value": 0,
             "sharePct": 0
           }
@@ -10661,27 +11083,32 @@
             "sharePct": 8.33
           },
           {
-            "name": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
+            "name": "Mod Voopoo Drag 6 &#8211; Black",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
+            "name": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
+            "name": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Incarcator acumulatori MAXICELL MX4",
+            "name": "Mod Mechvape x Nitrous Pocket &#8211; Black",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
+            "name": "San Dynasty Pro Dual Battery Charger – Orca Vape",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
             "value": 0,
             "sharePct": 0
           },
@@ -10794,11 +11221,6 @@
             "name": "Aroma Concentrata Merlin Dark Tobacco 10ml",
             "value": 0,
             "sharePct": 0
-          },
-          {
-            "name": "Aroma Concentrata Merlin Silver Tobacco 10ml",
-            "value": 0,
-            "sharePct": 0
           }
         ],
         "topBrands": [
@@ -10843,22 +11265,22 @@
             "sharePct": 10
           },
           {
-            "name": "Early Bird",
+            "name": "Voopoo",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Dicodes",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Vape Systems",
+            "name": "Drops",
             "value": 0,
             "sharePct": 0
           },
           {
             "name": "Mechvape",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Eleaf",
             "value": 0,
             "sharePct": 0
           },
@@ -10905,6 +11327,11 @@
             "sharePct": 25
           },
           {
+            "name": "lichid tutunos/NET/DIY",
+            "value": 980,
+            "sharePct": 8.33
+          },
+          {
             "name": "sarma",
             "value": 980,
             "sharePct": 8.33
@@ -10915,17 +11342,7 @@
             "sharePct": 8.33
           },
           {
-            "name": "lichid tutunos/NET/DIY",
-            "value": 980,
-            "sharePct": 8.33
-          },
-          {
             "name": "mod",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "incarcator",
             "value": 0,
             "sharePct": 0
           },
@@ -11935,6 +12352,281 @@
           "evidenceTier": "B"
         },
         {
+          "retailerId": "alphavape",
+          "category": "sarma",
+          "product": "Kanthal Suedia 0.35mm",
+          "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/kanthal-suedia-0-35mm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "sarma",
+          "product": "Kanthal Suedia 0.4mm",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/kanthal-suedia-0-4mm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "bumbac/wick",
+          "product": "Bumbac Organic",
+          "rank": 9,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/bumbac-organic/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "sarma",
+          "product": "Kanthal Suedia 0.3mm",
+          "rank": 14,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/kanthal-suedia-0-3mm/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Vapebar 10ml &#8211; Coffee Tobacco",
+          "rank": 20,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/aroma-vapebar-10ml-coffee-tobacco/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "acumulator",
+          "product": "Acumulator SONY VTC6 18650",
+          "rank": 21,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/acumulator-sony-vtc6-18650-3100mah/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Flavor Madness Tobacco Coffee 30ml",
+          "rank": 24,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/lichid-flavor-madness-tobacco-coffee-30ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Oops! &#8211; SE Tobacco 10ml",
+          "rank": 47,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/aroma-oops-se-tobacco-10ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Liqua 10ml &#8211; Vanilla Tobacco",
+          "rank": 59,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/aroma-liqua-10ml-vanilla-tobacco/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Flavor Madness Tobacco White 9ml",
+          "rank": 66,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/aroma-flavor-madness-tobacco-white-9ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Vapebar 10ml &#8211; Virginia Tobacco",
+          "rank": 86,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://alphavape.ro/p/aroma-vapebar-10ml-virginia-tobacco-2/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "bumbac/wick",
+          "product": "Bumbac Cotton Bacon V2 Wick &#8216;N&#8217; Vape",
+          "rank": 20,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/bumbac-cotton-bacon-v2-wick-n-vape/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "RTA",
+          "product": "Atomizor Gear V2 RTA 3.5ml Wotofo Silver",
+          "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/categorie-produs/atomizoare/atomizoare-servisabile/?orderby=popularity",
+          "productUrl": "https://smartvape.ro/produs/atomizor-gear-v2-rta-3-5ml-wotofo-silver/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "acumulator",
+          "product": "Acumulator Sony VTC6 18650 Li-Ion, 3000mAh, 15A &#8211; 30A",
+          "rank": 25,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/acumulator-sony-vtc6-18650-3000mah/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "acumulator",
+          "product": "Acumulator Samsung 40T 21700 Li-Ion, 4000mAh, 30A &#8211; 35A",
+          "rank": 26,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/acumulator-samsung-40t-21700-li-ion-4000mah-30a-sep-sitename/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Virginia Tobacco The Vaping Giant 40ml",
+          "rank": 43,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-virginia-tobacco-the-vaping-giant-40ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Traditional Tobacco The Vaping Giant 40ml",
+          "rank": 45,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-traditional-tobacco-the-vaping-giant-40ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Light Tobacco The Vaping Giant 40ml",
+          "rank": 51,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-light-tobacco-the-vaping-giant-40ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Cherry Tobacco The Vaping Giant 40ml",
+          "rank": 55,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-cherry-tobacco-the-vaping-giant-40ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid American Tobacco The Vaping Giant 40ml",
+          "rank": 58,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-american-tobacco-the-vaping-giant-40ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Tobacco Vanilla Caramel Flavor Madness 30 ml",
+          "rank": 61,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-tobacco-vanilla-caramel-flavor-madness-30-ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Tobacco Golden Flavor Madness 30 ml",
+          "rank": 62,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-tobacco-golden-flavor-madness-30-ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Tobacco Fantastic III Flavor Madness 30 ml",
+          "rank": 63,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-tobacco-fantastic-iii-flavor-madness-30-ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid OOPS! Cream Tobacco 40ml",
+          "rank": 83,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-oops-cream-tobacco-40ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smartvape",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Tobacco Puff Bar 40 ml",
+          "rank": 84,
+          "observedAt": "2026-08-29",
+          "source": "https://smartvape.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smartvape.ro/produs/lichid-tobacco-puff-bar-40-ml/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B"
+        },
+        {
           "retailerId": "vapepoint",
           "category": "RTA",
           "product": "Kuma MTL RTA",
@@ -12454,55 +13146,66 @@
         {
           "retailerId": "smokee",
           "category": "mod",
-          "product": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
+          "product": "Mod Voopoo Drag 6 &#8211; Black",
           "rank": 1,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-early-bird-harrier-n80-murdered-out/",
+          "productUrl": "https://smokee.ro/product/mod-voopoo-drag-6-black/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smokee",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-10ml-120ml-new-york/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smokee",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
+          "rank": 3,
+          "observedAt": "2026-08-29",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/nasty-juice-10-ml-nicotina-20mg-menthol-tobacco/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B"
         },
         {
           "retailerId": "smokee",
           "category": "mod",
-          "product": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
-          "rank": 2,
-          "observedAt": "2026-08-29",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-dicodes-dani-extreme-v3-l-60w-18650-22mm/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B"
-        },
-        {
-          "retailerId": "smokee",
-          "category": "RTA",
-          "product": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
-          "rank": 3,
-          "observedAt": "2026-08-29",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/atomizor-by-ka-v-11-rta-23mm-by-vape-systems-standard-set/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B"
-        },
-        {
-          "retailerId": "smokee",
-          "category": "incarcator",
-          "product": "Incarcator acumulatori MAXICELL MX4",
+          "product": "Mod Mechvape x Nitrous Pocket &#8211; Black",
           "rank": 4,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/incarcator-acumulatori-maxicell-mx4/",
+          "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-black/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B"
         },
         {
           "retailerId": "smokee",
-          "category": "RBA/bridge",
-          "product": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
+          "category": "acumulator",
+          "product": "San Dynasty Pro Dual Battery Charger – Orca Vape",
           "rank": 5,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/thunder-cloud-x-monarchy-idot-rba-edition-black/",
+          "productUrl": "https://smokee.ro/product/san-dynasty-pro-dual-battery-charger-orca-vape/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "smokee",
+          "category": "mod",
+          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
+          "rank": 6,
+          "observedAt": "2026-08-29",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B"
         },
@@ -12510,7 +13213,7 @@
           "retailerId": "smokee",
           "category": "mod",
           "product": "Mod Mechvape x Nitrous Pocket &#8211; PEEK",
-          "rank": 6,
+          "rank": 7,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
           "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-peek/",
@@ -16183,8 +16886,19 @@
         {
           "retailerId": "voore",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+          "product": "Aroma Oops! - SE Tobacco 10ml",
           "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://www.voore.ro/?orderby=popularity",
+          "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "voore",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+          "rank": 2,
           "observedAt": "2026-08-29",
           "source": "https://www.voore.ro/?orderby=popularity",
           "productUrl": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
@@ -16195,21 +16909,10 @@
           "retailerId": "voore",
           "category": "lichid tutunos/NET/DIY",
           "product": "Aroma Oops! - Coffee Tobacco 10ml",
-          "rank": 2,
-          "observedAt": "2026-08-29",
-          "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B"
-        },
-        {
-          "retailerId": "voore",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Oops! - SE Tobacco 10ml",
           "rank": 3,
           "observedAt": "2026-08-29",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+          "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B"
         },
@@ -18797,6 +19500,94 @@
           "productUrl": "https://merlin.ro/categorii-produse/tutun/",
           "evidence": "verified-discovered-retailer-bestseller-page",
           "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapero",
+          "category": "mod",
+          "product": "Vape Kit Reincarcabil Jac Vapour VIM AIO Box Mod Slate, 2600 mAh, 2ml TF Tank MTL/DTL, Rezistenta 1ohm Inclusa, Compatibil NicSalts",
+          "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://vape.ro/",
+          "productUrl": "https://vape.ro/vape-kit-reincarcabil-jac-vapour-vim-aio-box-mod-slate-2600-mah-2ml-tf-tank-mtldtl-rezistenta-1ohm-inclusa-compatibil-nicsalts/535.htm",
+          "evidence": "verified-discovered-retailer-bestseller-page",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapero",
+          "category": "bumbac/wick",
+          "product": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://vape.ro/",
+          "productUrl": "https://vape.ro/set-5-rezistente-atomizor-vape-jac-vapour-s-coil-mtl-10-ohm-bumbac-organic-cutie-5-bucati-tip-capsula/64.htm",
+          "evidence": "verified-discovered-retailer-bestseller-page",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapero",
+          "category": "mod",
+          "product": "Atomizor Tank pt Box Mod-ul AIO VIM, 2 ml Topfill, Rezistenta tip capsula 1 ohm inclusa, Compatibil MTL,DL si Sub-Ohm",
+          "rank": 3,
+          "observedAt": "2026-08-29",
+          "source": "https://vape.ro/",
+          "productUrl": "https://vape.ro/atomizor-tank-pt-box-mod-ul-aio-vim-2-ml-topfill-rezistenta-tip-capsula-1-ohm-inclusa-compatibil-mtldl-si-sub-ohm/1000.htm",
+          "evidence": "verified-discovered-retailer-bestseller-page",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapero",
+          "category": "bumbac/wick",
+          "product": "Set 5 Rezistente Innokin Prism T20, 1.5 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+          "rank": 4,
+          "observedAt": "2026-08-29",
+          "source": "https://vape.ro/",
+          "productUrl": "https://vape.ro/set-5-rezistente-innokin-prism-t20-15-ohm-bumbac-organic-cutie-5-bucati-tip-capsula/463.htm",
+          "evidence": "verified-discovered-retailer-bestseller-page",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "vapero",
+          "category": "acumulator",
+          "product": "Acumulator Samsung INR18650-25R, 2500 mAh, 20A, Durata prelungita de viata de peste 500 incarcari",
+          "rank": 5,
+          "observedAt": "2026-08-29",
+          "source": "https://vape.ro/",
+          "productUrl": "https://vape.ro/acumulator-samsung-inr18650-25r-2500-mah-20a-durata-prelungita-de-viata-de-peste-500-incarcari/735.htm",
+          "evidence": "verified-discovered-retailer-bestseller-page",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "RTA",
+          "product": "Atomizor Dead Rabbit MTL RTA 2 Hellvape Matte Black",
+          "rank": 1,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/?orderby=popularity",
+          "productUrl": "https://alphavape.ro/p/atomizor-dead-rabbit-mtl-rta-2-hellvape-matte-black/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "RTA",
+          "product": "Atomizor Bonza Pro RTA Purple Thunder Cloud x Vaping Bogan",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/?orderby=popularity",
+          "productUrl": "https://alphavape.ro/p/atomizor-bonza-pro-rta-purple-thunder-cloud-x-vaping-bogan/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
+        },
+        {
+          "retailerId": "alphavape",
+          "category": "RTA",
+          "product": "Atomizor Dead Rabbit 4 RTA Pro Black Gold Hellvape",
+          "rank": 3,
+          "observedAt": "2026-08-29",
+          "source": "https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/?orderby=popularity",
+          "productUrl": "https://alphavape.ro/p/atomizor-dead-rabbit-4-rta-pro-black-gold-hellvape/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B"
         }
       ]
     }
@@ -19132,17 +19923,17 @@
   ],
   "discoveredSourceStatus": {
     "date": "2026-08-29",
-    "generatedAt": "2026-08-29T11:36:55.094Z",
-    "verifiedSources": 67,
-    "totalCandidates": 98,
-    "rankingsAdded": 718,
+    "generatedAt": "2026-08-29T12:11:49.151Z",
+    "verifiedSources": 72,
+    "totalCandidates": 108,
+    "rankingsAdded": 738,
     "bySource": [
       {
         "retailerId": "smokee",
         "source": "https://smokee.ro/?orderby=popularity",
         "verified": true,
         "evidenceType": "retailer-popularity-sort",
-        "rankings": 6,
+        "rankings": 7,
         "error": null
       },
       {
@@ -19920,6 +20711,86 @@
         "evidenceType": null,
         "rankings": 0,
         "error": "verified page yielded zero in-scope products"
+      },
+      {
+        "retailerId": "vapero",
+        "source": "https://vape.ro/",
+        "verified": true,
+        "evidenceType": "retailer-bestseller",
+        "rankings": 5,
+        "error": null
+      },
+      {
+        "retailerId": "vapero",
+        "source": "https://vape.ro/?orderby=popularity",
+        "verified": true,
+        "evidenceType": "retailer-bestseller",
+        "rankings": 5,
+        "error": null
+      },
+      {
+        "retailerId": "vapero",
+        "source": "https://vape.ro/",
+        "verified": true,
+        "evidenceType": "retailer-bestseller",
+        "rankings": 5,
+        "error": null
+      },
+      {
+        "retailerId": "vapero",
+        "source": "https://vape.ro/atomizoare/atomizoare-rba-rta-rdta/?orderby=popularity",
+        "verified": false,
+        "evidenceType": null,
+        "rankings": 0,
+        "error": "verified page yielded zero in-scope products"
+      },
+      {
+        "retailerId": "alphavape",
+        "source": "https://alphavape.ro/?orderby=popularity",
+        "verified": false,
+        "evidenceType": null,
+        "rankings": 0,
+        "error": "verified page yielded zero in-scope products"
+      },
+      {
+        "retailerId": "alphavape",
+        "source": "https://alphavape.ro/shop/?orderby=popularity",
+        "verified": false,
+        "evidenceType": null,
+        "rankings": 0,
+        "error": "HTTP 404"
+      },
+      {
+        "retailerId": "alphavape",
+        "source": "https://alphavape.ro/cat/atomizoare/atomizoare-servisabile/?orderby=popularity",
+        "verified": true,
+        "evidenceType": "retailer-popularity-sort",
+        "rankings": 3,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "source": "https://smartvape.ro/?orderby=popularity",
+        "verified": false,
+        "evidenceType": null,
+        "rankings": 0,
+        "error": "verified page yielded zero in-scope products"
+      },
+      {
+        "retailerId": "smartvape",
+        "source": "https://smartvape.ro/shop/?orderby=popularity",
+        "verified": false,
+        "evidenceType": null,
+        "rankings": 0,
+        "error": "verified page yielded zero in-scope products"
+      },
+      {
+        "retailerId": "smartvape",
+        "source": "https://smartvape.ro/categorie-produs/atomizoare/atomizoare-servisabile/?orderby=popularity",
+        "verified": true,
+        "evidenceType": "retailer-popularity-sort",
+        "rankings": 1,
+        "error": null
       }
     ]
   },
@@ -19927,11 +20798,11 @@
     {
       "retailerId": "smokee",
       "category": "mod",
-      "product": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
+      "product": "Mod Voopoo Drag 6 &#8211; Black",
       "rank": 1,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-early-bird-harrier-n80-murdered-out/",
+      "productUrl": "https://smokee.ro/product/mod-voopoo-drag-6-black/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": null,
@@ -19943,58 +20814,79 @@
       "viewCountDelta": null,
       "wishlistCountDelta": null,
       "baseline": true,
-      "brand": "Early Bird"
+      "brand": "Voopoo"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
+      "rank": 2,
+      "observedAt": "2026-08-29",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-10ml-120ml-new-york/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "reviewCount": null,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": null,
+      "wishlistCount": 0,
+      "reviewCountDelta": null,
+      "viewCountDelta": null,
+      "wishlistCountDelta": null,
+      "baseline": true,
+      "brand": "Drops"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
+      "rank": 3,
+      "observedAt": "2026-08-29",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/nasty-juice-10-ml-nicotina-20mg-menthol-tobacco/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "reviewCount": null,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": null,
+      "wishlistCount": 0,
+      "reviewCountDelta": null,
+      "viewCountDelta": null,
+      "wishlistCountDelta": null,
+      "baseline": true,
+      "brand": ""
     },
     {
       "retailerId": "smokee",
       "category": "mod",
-      "product": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
-      "rank": 2,
-      "observedAt": "2026-08-29",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-dicodes-dani-extreme-v3-l-60w-18650-22mm/",
-      "evidence": "public-product-demand-signals",
-      "evidenceTier": "C",
-      "reviewCount": null,
-      "ratingValue": null,
-      "latestReviewDate": null,
-      "viewCount": null,
-      "wishlistCount": 0,
-      "reviewCountDelta": null,
-      "viewCountDelta": null,
-      "wishlistCountDelta": null,
-      "baseline": true,
-      "brand": "Dicodes"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "RTA",
-      "product": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
-      "rank": 3,
-      "observedAt": "2026-08-29",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/atomizor-by-ka-v-11-rta-23mm-by-vape-systems-standard-set/",
-      "evidence": "public-product-demand-signals",
-      "evidenceTier": "C",
-      "reviewCount": null,
-      "ratingValue": null,
-      "latestReviewDate": null,
-      "viewCount": null,
-      "wishlistCount": 0,
-      "reviewCountDelta": null,
-      "viewCountDelta": null,
-      "wishlistCountDelta": null,
-      "baseline": true,
-      "brand": "Vape Systems"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "incarcator",
-      "product": "Incarcator acumulatori MAXICELL MX4",
+      "product": "Mod Mechvape x Nitrous Pocket &#8211; Black",
       "rank": 4,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/incarcator-acumulatori-maxicell-mx4/",
+      "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-black/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "reviewCount": null,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": null,
+      "wishlistCount": 0,
+      "reviewCountDelta": null,
+      "viewCountDelta": null,
+      "wishlistCountDelta": null,
+      "baseline": true,
+      "brand": "Mechvape"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "acumulator",
+      "product": "San Dynasty Pro Dual Battery Charger – Orca Vape",
+      "rank": 5,
+      "observedAt": "2026-08-29",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/san-dynasty-pro-dual-battery-charger-orca-vape/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": null,
@@ -20010,12 +20902,12 @@
     },
     {
       "retailerId": "smokee",
-      "category": "RBA/bridge",
-      "product": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
-      "rank": 5,
+      "category": "mod",
+      "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
+      "rank": 6,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/thunder-cloud-x-monarchy-idot-rba-edition-black/",
+      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": null,
@@ -20027,13 +20919,13 @@
       "viewCountDelta": null,
       "wishlistCountDelta": null,
       "baseline": true,
-      "brand": ""
+      "brand": "Eleaf"
     },
     {
       "retailerId": "smokee",
       "category": "mod",
       "product": "Mod Mechvape x Nitrous Pocket &#8211; PEEK",
-      "rank": 6,
+      "rank": 7,
       "observedAt": "2026-08-29",
       "source": "https://smokee.ro/?orderby=popularity",
       "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-peek/",
@@ -20830,11 +21722,11 @@
     {
       "retailerId": "voore",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+      "product": "Aroma Oops! - SE Tobacco 10ml",
       "rank": 1,
       "observedAt": "2026-08-29",
       "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
+      "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": null,
@@ -20914,11 +21806,11 @@
     {
       "retailerId": "voore",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Oops! - Coffee Tobacco 10ml",
+      "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
       "rank": 2,
       "observedAt": "2026-08-29",
       "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
+      "productUrl": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": null,
@@ -20998,11 +21890,11 @@
     {
       "retailerId": "voore",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Oops! - SE Tobacco 10ml",
+      "product": "Aroma Oops! - Coffee Tobacco 10ml",
       "rank": 3,
       "observedAt": "2026-08-29",
       "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+      "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": null,
@@ -21087,11 +21979,43 @@
         {
           "retailerId": "smokee",
           "category": "mod",
-          "product": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
+          "product": "Mod Voopoo Drag 6 &#8211; Black",
           "rank": 1,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-early-bird-harrier-n80-murdered-out/",
+          "productUrl": "https://smokee.ro/product/mod-voopoo-drag-6-black/",
+          "evidence": "public-product-demand-signals",
+          "evidenceTier": "C",
+          "reviewCount": null,
+          "ratingValue": null,
+          "latestReviewDate": null,
+          "viewCount": null,
+          "wishlistCount": 0
+        },
+        {
+          "retailerId": "smokee",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
+          "rank": 2,
+          "observedAt": "2026-08-29",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-10ml-120ml-new-york/",
+          "evidence": "public-product-demand-signals",
+          "evidenceTier": "C",
+          "reviewCount": null,
+          "ratingValue": null,
+          "latestReviewDate": null,
+          "viewCount": null,
+          "wishlistCount": 0
+        },
+        {
+          "retailerId": "smokee",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
+          "rank": 3,
+          "observedAt": "2026-08-29",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/nasty-juice-10-ml-nicotina-20mg-menthol-tobacco/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -21103,43 +22027,11 @@
         {
           "retailerId": "smokee",
           "category": "mod",
-          "product": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
-          "rank": 2,
-          "observedAt": "2026-08-29",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-dicodes-dani-extreme-v3-l-60w-18650-22mm/",
-          "evidence": "public-product-demand-signals",
-          "evidenceTier": "C",
-          "reviewCount": null,
-          "ratingValue": null,
-          "latestReviewDate": null,
-          "viewCount": null,
-          "wishlistCount": 0
-        },
-        {
-          "retailerId": "smokee",
-          "category": "RTA",
-          "product": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
-          "rank": 3,
-          "observedAt": "2026-08-29",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/atomizor-by-ka-v-11-rta-23mm-by-vape-systems-standard-set/",
-          "evidence": "public-product-demand-signals",
-          "evidenceTier": "C",
-          "reviewCount": null,
-          "ratingValue": null,
-          "latestReviewDate": null,
-          "viewCount": null,
-          "wishlistCount": 0
-        },
-        {
-          "retailerId": "smokee",
-          "category": "incarcator",
-          "product": "Incarcator acumulatori MAXICELL MX4",
+          "product": "Mod Mechvape x Nitrous Pocket &#8211; Black",
           "rank": 4,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/incarcator-acumulatori-maxicell-mx4/",
+          "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-black/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -21150,12 +22042,28 @@
         },
         {
           "retailerId": "smokee",
-          "category": "RBA/bridge",
-          "product": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
+          "category": "acumulator",
+          "product": "San Dynasty Pro Dual Battery Charger – Orca Vape",
           "rank": 5,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/thunder-cloud-x-monarchy-idot-rba-edition-black/",
+          "productUrl": "https://smokee.ro/product/san-dynasty-pro-dual-battery-charger-orca-vape/",
+          "evidence": "public-product-demand-signals",
+          "evidenceTier": "C",
+          "reviewCount": null,
+          "ratingValue": null,
+          "latestReviewDate": null,
+          "viewCount": null,
+          "wishlistCount": 0
+        },
+        {
+          "retailerId": "smokee",
+          "category": "mod",
+          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
+          "rank": 6,
+          "observedAt": "2026-08-29",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -21168,7 +22076,7 @@
           "retailerId": "smokee",
           "category": "mod",
           "product": "Mod Mechvape x Nitrous Pocket &#8211; PEEK",
-          "rank": 6,
+          "rank": 7,
           "observedAt": "2026-08-29",
           "source": "https://smokee.ro/?orderby=popularity",
           "productUrl": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-peek/",
@@ -21775,11 +22683,11 @@
         {
           "retailerId": "voore",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+          "product": "Aroma Oops! - SE Tobacco 10ml",
           "rank": 1,
           "observedAt": "2026-08-29",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
+          "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -21839,11 +22747,11 @@
         {
           "retailerId": "voore",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Oops! - Coffee Tobacco 10ml",
+          "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
           "rank": 2,
           "observedAt": "2026-08-29",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
+          "productUrl": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -21903,11 +22811,11 @@
         {
           "retailerId": "voore",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Oops! - SE Tobacco 10ml",
+          "product": "Aroma Oops! - Coffee Tobacco 10ml",
           "rank": 3,
           "observedAt": "2026-08-29",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+          "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -21969,15 +22877,15 @@
   ],
   "productCounterProbeStatus": {
     "date": "2026-08-29",
-    "generatedAt": "2026-08-29T11:38:36.162Z",
-    "pagesProbed": 193,
+    "generatedAt": "2026-08-29T12:14:03.014Z",
+    "pagesProbed": 223,
     "countersFound": 23,
     "retailersWithCounters": 2,
     "byProduct": [
       {
         "retailerId": "smokee",
-        "product": "Mod Early Bird Harrier N80 &#8211; Murdered Out",
-        "source": "https://smokee.ro/product/mod-early-bird-harrier-n80-murdered-out/",
+        "product": "Mod Voopoo Drag 6 &#8211; Black",
+        "source": "https://smokee.ro/product/mod-voopoo-drag-6-black/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -21985,8 +22893,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Mod Dicodes Dani Extreme V3 L 60w 18650 -22mm",
-        "source": "https://smokee.ro/product/mod-dicodes-dani-extreme-v3-l-60w-18650-22mm/",
+        "product": "Longfill Drops Tobacco Masters 10ml/120ml &#8211; New York",
+        "source": "https://smokee.ro/product/longfill-drops-tobacco-masters-10ml-120ml-new-york/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -21994,8 +22902,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Atomizor BY-ka V.11 RTA 23mm by Vape Systems – Standard Set",
-        "source": "https://smokee.ro/product/atomizor-by-ka-v-11-rta-23mm-by-vape-systems-standard-set/",
+        "product": "Lichid Tigara Electronica Nasty Juice 10 ml, nicotina 20mg &#8211; Menthol Tobacco",
+        "source": "https://smokee.ro/product/nasty-juice-10-ml-nicotina-20mg-menthol-tobacco/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -22003,8 +22911,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Incarcator acumulatori MAXICELL MX4",
-        "source": "https://smokee.ro/product/incarcator-acumulatori-maxicell-mx4/",
+        "product": "Mod Mechvape x Nitrous Pocket &#8211; Black",
+        "source": "https://smokee.ro/product/mod-mechvape-x-nitrous-pocket-black/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -22012,8 +22920,17 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Thunder Cloud x Monarchy iDot RBA Edition &#8211; Black",
-        "source": "https://smokee.ro/product/thunder-cloud-x-monarchy-idot-rba-edition-black/",
+        "product": "San Dynasty Pro Dual Battery Charger – Orca Vape",
+        "source": "https://smokee.ro/product/san-dynasty-pro-dual-battery-charger-orca-vape/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smokee",
+        "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
+        "source": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -22680,6 +23597,222 @@
         "retailerId": "merlin",
         "product": "Tutun de rulat Bali Shag White Halfzware 40g",
         "source": "https://merlin.ro/produs/tutun-de-rulat-bali-shag-white-halfzware-40g/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Kanthal Suedia 0.35mm",
+        "source": "https://alphavape.ro/p/kanthal-suedia-0-35mm/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Atomizor Dead Rabbit MTL RTA 2 Hellvape Matte Black",
+        "source": "https://alphavape.ro/p/atomizor-dead-rabbit-mtl-rta-2-hellvape-matte-black/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Kanthal Suedia 0.4mm",
+        "source": "https://alphavape.ro/p/kanthal-suedia-0-4mm/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Atomizor Bonza Pro RTA Purple Thunder Cloud x Vaping Bogan",
+        "source": "https://alphavape.ro/p/atomizor-bonza-pro-rta-purple-thunder-cloud-x-vaping-bogan/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Atomizor Dead Rabbit 4 RTA Pro Black Gold Hellvape",
+        "source": "https://alphavape.ro/p/atomizor-dead-rabbit-4-rta-pro-black-gold-hellvape/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Bumbac Organic",
+        "source": "https://alphavape.ro/p/bumbac-organic/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Kanthal Suedia 0.3mm",
+        "source": "https://alphavape.ro/p/kanthal-suedia-0-3mm/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Aroma Vapebar 10ml &#8211; Coffee Tobacco",
+        "source": "https://alphavape.ro/p/aroma-vapebar-10ml-coffee-tobacco/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Acumulator SONY VTC6 18650",
+        "source": "https://alphavape.ro/p/acumulator-sony-vtc6-18650-3100mah/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Lichid Flavor Madness Tobacco Coffee 30ml",
+        "source": "https://alphavape.ro/p/lichid-flavor-madness-tobacco-coffee-30ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Aroma Oops! &#8211; SE Tobacco 10ml",
+        "source": "https://alphavape.ro/p/aroma-oops-se-tobacco-10ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "alphavape",
+        "product": "Aroma Liqua 10ml &#8211; Vanilla Tobacco",
+        "source": "https://alphavape.ro/p/aroma-liqua-10ml-vanilla-tobacco/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Atomizor Gear V2 RTA 3.5ml Wotofo Silver",
+        "source": "https://smartvape.ro/produs/atomizor-gear-v2-rta-3-5ml-wotofo-silver/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Bumbac Cotton Bacon V2 Wick &#8216;N&#8217; Vape",
+        "source": "https://smartvape.ro/produs/bumbac-cotton-bacon-v2-wick-n-vape/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Acumulator Sony VTC6 18650 Li-Ion, 3000mAh, 15A &#8211; 30A",
+        "source": "https://smartvape.ro/produs/acumulator-sony-vtc6-18650-3000mah/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Acumulator Samsung 40T 21700 Li-Ion, 4000mAh, 30A &#8211; 35A",
+        "source": "https://smartvape.ro/produs/acumulator-samsung-40t-21700-li-ion-4000mah-30a-sep-sitename/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid Virginia Tobacco The Vaping Giant 40ml",
+        "source": "https://smartvape.ro/produs/lichid-virginia-tobacco-the-vaping-giant-40ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid Traditional Tobacco The Vaping Giant 40ml",
+        "source": "https://smartvape.ro/produs/lichid-traditional-tobacco-the-vaping-giant-40ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid Light Tobacco The Vaping Giant 40ml",
+        "source": "https://smartvape.ro/produs/lichid-light-tobacco-the-vaping-giant-40ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid Cherry Tobacco The Vaping Giant 40ml",
+        "source": "https://smartvape.ro/produs/lichid-cherry-tobacco-the-vaping-giant-40ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid American Tobacco The Vaping Giant 40ml",
+        "source": "https://smartvape.ro/produs/lichid-american-tobacco-the-vaping-giant-40ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid Tobacco Vanilla Caramel Flavor Madness 30 ml",
+        "source": "https://smartvape.ro/produs/lichid-tobacco-vanilla-caramel-flavor-madness-30-ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid Tobacco Golden Flavor Madness 30 ml",
+        "source": "https://smartvape.ro/produs/lichid-tobacco-golden-flavor-madness-30-ml/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smartvape",
+        "product": "Lichid Tobacco Fantastic III Flavor Madness 30 ml",
+        "source": "https://smartvape.ro/produs/lichid-tobacco-fantastic-iii-flavor-madness-30-ml/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -23407,8 +24540,8 @@
       },
       {
         "retailerId": "voore",
-        "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
-        "source": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
+        "product": "Aroma Oops! - SE Tobacco 10ml",
+        "source": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
         "found": false,
         "value": null,
         "evidence": null,
@@ -23443,8 +24576,8 @@
       },
       {
         "retailerId": "voore",
-        "product": "Aroma Oops! - Coffee Tobacco 10ml",
-        "source": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
+        "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
+        "source": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
         "found": false,
         "value": null,
         "evidence": null,
@@ -23479,8 +24612,8 @@
       },
       {
         "retailerId": "voore",
-        "product": "Aroma Oops! - SE Tobacco 10ml",
-        "source": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+        "product": "Aroma Oops! - Coffee Tobacco 10ml",
+        "source": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
         "found": false,
         "value": null,
         "evidence": null,
@@ -23710,16 +24843,61 @@
         "value": null,
         "evidence": null,
         "error": "HTTP 403"
+      },
+      {
+        "retailerId": "vapero",
+        "product": "Vape Kit Reincarcabil Jac Vapour VIM AIO Box Mod Slate, 2600 mAh, 2ml TF Tank MTL/DTL, Rezistenta 1ohm Inclusa, Compatibil NicSalts",
+        "source": "https://vape.ro/vape-kit-reincarcabil-jac-vapour-vim-aio-box-mod-slate-2600-mah-2ml-tf-tank-mtldtl-rezistenta-1ohm-inclusa-compatibil-nicsalts/535.htm",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "vapero",
+        "product": "Set 5 Rezistente Atomizor Vape Jac Vapour S-Coil MTL 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+        "source": "https://vape.ro/set-5-rezistente-atomizor-vape-jac-vapour-s-coil-mtl-10-ohm-bumbac-organic-cutie-5-bucati-tip-capsula/64.htm",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "vapero",
+        "product": "Atomizor Tank pt Box Mod-ul AIO VIM, 2 ml Topfill, Rezistenta tip capsula 1 ohm inclusa, Compatibil MTL,DL si Sub-Ohm",
+        "source": "https://vape.ro/atomizor-tank-pt-box-mod-ul-aio-vim-2-ml-topfill-rezistenta-tip-capsula-1-ohm-inclusa-compatibil-mtldl-si-sub-ohm/1000.htm",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "vapero",
+        "product": "Set 5 Rezistente Innokin Prism T20, 1.5 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
+        "source": "https://vape.ro/set-5-rezistente-innokin-prism-t20-15-ohm-bumbac-organic-cutie-5-bucati-tip-capsula/463.htm",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "vapero",
+        "product": "Acumulator Samsung INR18650-25R, 2500 mAh, 20A, Durata prelungita de viata de peste 500 incarcari",
+        "source": "https://vape.ro/acumulator-samsung-inr18650-25r-2500-mah-20a-durata-prelungita-de-viata-de-peste-500-incarcari/735.htm",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
       }
     ]
   },
   "demandProbeStatus": {
     "date": "2026-08-29",
-    "generatedAt": "2026-08-29T11:38:36.162Z",
-    "signalsFound": 55,
+    "generatedAt": "2026-08-29T12:14:03.014Z",
+    "signalsFound": 56,
     "retailersWithSignals": 6,
     "reviewSignals": 9,
     "viewSignals": 0,
-    "wishlistSignals": 47
+    "wishlistSignals": 48
   }
 }
