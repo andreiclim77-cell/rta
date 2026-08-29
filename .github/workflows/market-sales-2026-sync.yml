@@ -36,7 +36,7 @@ permissions:
 
 concurrency:
   group: market-2026-sales-signals
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   collect-sales-signals:
@@ -64,7 +64,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Decide whether fallback is already fresh
+      - name: Decide whether Analysis should run
         if: steps.gate.outputs.run_sync == 'true'
         id: refresh
         shell: bash
@@ -83,6 +83,21 @@ jobs:
           process.exit(1);
           NODE
             then run_analysis=false; fi
+          fi
+          if [ "${{ github.event_name }}" = "push" ]; then
+            if ! node - <<'NODE'
+          const fs=require('fs');
+          const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+          try{
+            const b=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
+            if(b.collectorStatus && b.collectorStatus.date===today) process.exit(0);
+          }catch(_){ }
+          process.exit(1);
+          NODE
+            then
+              echo "Technical push detected before today's 06:00 Market snapshot; Analysis will refresh from the daily chain instead."
+              run_analysis=false
+            fi
           fi
           echo "run_analysis=$run_analysis" >> "$GITHUB_OUTPUT"
 
