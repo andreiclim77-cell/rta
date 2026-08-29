@@ -20,6 +20,8 @@ const wide=read('tools/collect-market-hype-wide-2026.js');
 const products=read('tools/collect-market-hype-products-2026.js');
 const v2=read('tools/collect-market-hype-vendor-profiles-v2-2026.js');
 const merge=read('tools/merge-market-hype-upstream-products-2026.js');
+const currentEta=read('tools/augment-market-hype-current-vendor-rta-events-2026.js');
+const finalizer=read('tools/finalize-market-hype-category-relevance-2026.js');
 const cfg=json('data/market-hype-sources-2026.json');
 const vendorCfg=json('data/market-hype-vendor-profiles-2026.json');
 const hypeFlow=read('.github/workflows/market-hype-2026-sync.yml');
@@ -47,7 +49,10 @@ need(wide.includes("kind==='released'")&&wide.includes('releasedLast30Days'),'Wi
 for(const token of ['productLevelOnly:true','newArrivalIsNotRelease:true','relistingIsNotRelease:true','BANNED_HOSTS','market-hype-products-2026.json'])need(products.includes(token),`Product-level Hype protection missing: ${token}`);
 need(products.includes('site:${d}')&&products.includes('cloneSellerDiscoveryDomains')&&products.includes('originalSellerDiscoveryDomains'),'Direct vendor product discovery missing');
 need(v2.includes('concreteProductTitles:true')&&v2.includes('genericVendorTitlesRejected:true'),'Concrete vendor product-title resolver missing');
-for(const token of ['upstreamEvidenceMerged:true','release-observed','observedReleaseIsNotClaimedAsExactReleaseDate:true','sourceGoodAfter'])need(merge.includes(token),`Upstream Hype merge missing: ${token}`);
+for(const token of ['upstreamEvidenceMerged:true','release-observed','observedReleaseIsNotClaimedAsExactReleaseDate:true'])need(merge.includes(token),`Upstream Hype merge missing: ${token}`);
+need(merge.includes('augment-market-hype-current-vendor-rta-events-2026.js')&&merge.includes('finalize-market-hype-category-relevance-2026.js'),'Final Hype ETA/relevance passes missing from wrapper');
+need(currentEta.includes('signalLookback30dEtaHorizon365d:true')&&currentEta.includes('futureEtaMayExceed30Days:true'),'Future ETA horizon is incorrectly limited to 30 days');
+need(finalizer.includes('finalCategoryAnchorValidated:true')&&finalizer.includes('nonRtaProductTitlesRejected:true'),'Final category relevance protection missing');
 need(hype.includes("PRODUCTS='/data/market-hype-products-2026.json'"),'Hype UI does not load concrete products');
 need(hype.includes('hype-category-button')&&hype.includes('hype-product-card'),'Hype categories/products are not expandable');
 need(hype.includes('productName')&&hype.includes('brandLabel'),'Concrete product and brand detail missing');
@@ -59,4 +64,4 @@ need(hypeCss.includes('.hype-category-button>summary')&&hypeCss.includes('.hype-
 for(const token of ['collect-market-hype-products-2026.js --write','collect-market-hype-vendor-profiles-v2-2026.js --write','merge-market-hype-upstream-products-2026.js --write','Preserve global upstream evidence'])need(hypeFlow.includes(token),`Final Hype pipeline missing: ${token}`);
 need(hypeFlow.includes('data/market-hype-products-2026.json'),'Product snapshot is not atomically published');
 need(hypeFlow.includes("cron: '0 3 * * *'")&&hypeFlow.includes("cron: '0 4 * * *'")&&hypeFlow.includes('Europe/Bucharest'),'Hype 06:00 DST-safe schedule missing');
-console.log('Market final gate OK: Analysis=Romania; Hype=GLOBAL 30d, product-level, upstream+multi-vendor merged, expandable; explicit/observed release truth preserved; password every entry; cache v37.');
+console.log('Market final gate OK: Analysis=Romania; Hype=GLOBAL 30d signal lookback, future ETA allowed, product-level, upstream+multi-vendor merged, final category anchors enforced, expandable; password every entry; cache v37.');

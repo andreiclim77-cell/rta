@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
-// Compatibility wrapper v2.4. Resolve source-page titles, add current vendor RTA ETA/batch evidence, merge upstream, then enforce final category anchors.
-// Contract markers retained for CI: upstreamEvidenceMerged:true release-observed observedReleaseIsNotClaimedAsExactReleaseDate:true
+// Compatibility wrapper v2.5. Resolve source-page titles, allow future ETA beyond 30d while signal lookback stays 30d, merge upstream, then enforce final category anchors.
+// Contract markers retained for CI: upstreamEvidenceMerged:true release-observed observedReleaseIsNotClaimedAsExactReleaseDate:true finalCategoryAnchorValidated:true nonRtaProductTitlesRejected:true futureEtaMayExceed30Days:true
 const {execFileSync}=require('child_process');
 const path=require('path');
 const write=process.argv.includes('--write');
