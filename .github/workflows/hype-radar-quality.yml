@@ -1,0 +1,80 @@
+name: Hype Radar Quality Gate
+
+on:
+  pull_request:
+    paths:
+      - "assets/market-hype-radar.*"
+      - "assets/market-loading-guard.js"
+      - "assets/market-view-switcher.*"
+      - "assets/enhancements.js"
+      - "data/market-hype-72h.json"
+      - "data/market-hype-sources-2026.json"
+      - "tools/collect-market-hype-72h-final.js"
+      - "cloudflare/smokee-sync-backup/worker-hype.mjs"
+      - "cloudflare/smokee-sync-backup/wrangler.toml"
+      - "sw.js"
+      - ".github/workflows/market-hype-72h.yml"
+      - ".github/workflows/hype-radar-quality.yml"
+  push:
+    branches: [main]
+    paths:
+      - "assets/market-hype-radar.*"
+      - "assets/market-loading-guard.js"
+      - "assets/market-view-switcher.*"
+      - "assets/enhancements.js"
+      - "data/market-hype-72h.json"
+      - "data/market-hype-sources-2026.json"
+      - "tools/collect-market-hype-72h-final.js"
+      - "cloudflare/smokee-sync-backup/worker-hype.mjs"
+      - "cloudflare/smokee-sync-backup/wrangler.toml"
+      - "sw.js"
+      - ".github/workflows/market-hype-72h.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check JavaScript syntax
+        run: |
+          node --check tools/collect-market-hype-72h-final.js
+          node --check assets/market-hype-radar.js
+          node --check assets/market-loading-guard.js
+          node --check assets/market-view-switcher.js
+          node --check assets/enhancements.js
+          node --check cloudflare/smokee-sync-backup/worker-hype.mjs
+          node --check cloudflare/smokee-sync-backup/worker.mjs
+          node --check sw.js
+
+      - name: Validate upstream-only contract
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const cfg=JSON.parse(fs.readFileSync('data/market-hype-sources-2026.json','utf8'));
+          const out=JSON.parse(fs.readFileSync('data/market-hype-72h.json','utf8'));
+          if(Number(cfg.windowHours)!==72||Number(cfg.cacheFreshHours)!==24)throw new Error('Hype windows invalid');
+          if(!cfg.commerceRejectTerms.includes('add to cart')||!cfg.commerceRejectTerms.includes('buy now')||!cfg.commerceRejectTerms.includes('in stock'))throw new Error('Commerce rejection incomplete');
+          if(!cfg.preannounceTerms.includes('prototype')||!cfg.preannounceTerms.includes('coming soon')||!cfg.preannounceTerms.includes('sample sent'))throw new Error('Pre-announcement vocabulary incomplete');
+          if(Number(out.scopeYear)!==2026||Number(out.windowHours)!==72)throw new Error('Public Hype seed invalid');
+          if(!Array.isArray(out.categories)||out.categories.map(x=>x.category).join('|')!=='RTA|MODURI|ACCESORII')throw new Error('Public Hype categories invalid');
+          for(const group of out.categories)for(const card of group.cards||[]){
+            for(const key of Object.keys(card))if(/url|brand|maker|price|stock|product/i.test(key))throw new Error('Public card leaks internal/commercial field: '+key);
+          }
+          const hype=fs.readFileSync('assets/market-hype-radar.js','utf8');
+          const guard=fs.readFileSync('assets/market-loading-guard.js','utf8');
+          const enhancements=fs.readFileSync('assets/enhancements.js','utf8');
+          const worker=fs.readFileSync('cloudflare/smokee-sync-backup/worker-hype.mjs','utf8');
+          if(!/fără magazine/.test(hype)||!/Hype Radar · 72h/.test(fs.readFileSync('assets/market-view-switcher.js','utf8')))throw new Error('Executive Hype UI missing');
+          if(!/market-loading-percent/.test(guard)||!/Hype Radar 72h/.test(guard))throw new Error('Atomic progress guard missing Hype step');
+          if(!enhancements.includes('/assets/market-hype-radar.js?v=1'))throw new Error('Hype UI not wired into guide');
+          if(!worker.includes("market-hype-72h.yml")||!worker.includes('MIN_REFRESH_GAP_MS'))throw new Error('Protected refresh bridge missing');
+          console.log('Hype Radar static contract OK');
+          NODE
