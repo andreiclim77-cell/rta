@@ -8,7 +8,7 @@ var REQUIRED=[
  {key:'universe',url:'/data/market-universe-audit-2026.json',label:'Acoperire',weight:9},
  {key:'demand',url:'/data/market-demand-intelligence-2026.json',label:'Cerere',weight:9},
  {key:'presence',url:'/data/market-product-presence-2026.json',label:'Produse',weight:9},
- {key:'hype',url:'/data/market-hype-radar-2026.json',label:'Hype · 72h',weight:12}
+ {key:'hype',url:'/data/market-hype-radar-2026.json',label:'Hype · global · 30 zile',weight:12}
 ];
 var DOM=[
  {id:'marketManagementCockpit',key:'uiAnalysis',label:'Analiza',weight:6,src:'/assets/market-management-v2.js?v=4'},
