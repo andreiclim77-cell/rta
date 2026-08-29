@@ -6,6 +6,13 @@ on:
     - cron: '0 4 * * *'
     - cron: '0 5 * * *'
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "tools/sync-market-2026.js"
+      - "data/market-retailers-2026.json"
+      - ".github/workflows/market-2026-sync.yml"
 
 permissions:
   contents: write
@@ -33,7 +40,7 @@ jobs:
             fi
             echo "Bucharest offset $bucharest_offset; schedule $scheduled_cron; run_sync=$run_sync."
           else
-            echo "Manual run allowed."
+            echo "Push/manual run allowed."
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
 
