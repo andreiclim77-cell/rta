@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "scopeYear": 2026,
+  "updatedAt": "2026-08-29",
+  "consumerRetailDefinition": "Storefront public accesibil consumatorilor, cu oferta verificabila RTA/rebuildable sau componente esentiale ale ecosistemului RTA si posibilitate de achizitie retail.",
+  "includedUnits": {
+    "storefront": "Fiecare domeniu/site consumer distinct este monitorizat separat.",
+    "operator": "Storefront-urile detinute de acelasi operator economic sunt deduplicate separat in indicatorul operatorilor unici."
+  },
+  "excludedOrSeparate": [
+    {
+      "id": "vape-dist",
+      "name": "Vape Distribution",
+      "url": "https://vape-dist.ro/",
+      "scope": "b2b-wholesale-reference",
+      "retailKpiIncluded": false,
+      "reason": "Site-ul declara explicit vanzare exclusiv en-gros catre persoane juridice, cu preturi dependente de cantitate si afisate dupa inregistrarea contului. Este relevant pentru supply-side, dar nu pentru numarul retailerilor consumer."
+    },
+    {
+      "id": "marketplaces",
+      "scope": "marketplace-listings",
+      "retailKpiIncluded": false,
+      "reason": "Listarile OLX/marketplace nu sunt tratate ca storefront-uri RTA distincte; pot fi folosite numai ca semnale de descoperire pentru comercianti reali."
+    },
+    {
+      "id": "content-sites",
+      "scope": "editorial-or-community",
+      "retailKpiIncluded": false,
+      "reason": "Site-urile editoriale/comunitare fara checkout retail nu intra in universul magazinelor."
+    },
+    {
+      "id": "foreign-direct",
+      "scope": "non-ro-storefront",
+      "retailKpiIncluded": false,
+      "reason": "Magazinele straine sau paginile producatorilor pot servi ca referinta tehnica, dar nu intra in piata retail online Romania."
+    }
+  ],
+  "claimPolicy": "Niciun indicator de acoperire observata nu este echivalent cu afirmatia 100% Romania. Aceasta necesita discoveryCertified=true si certificare exhaustiva separata pentru fiecare storefront consumer din registru."
+}
