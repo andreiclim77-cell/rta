@@ -9,11 +9,17 @@ on:
       - "assets/market-2026-report.js"
       - "assets/market-coverage-ui.js"
       - "assets/market-sales-ui.js"
+      - "assets/market-loading-guard.js"
+      - "assets/market-management.js"
+      - "assets/market-executive-report.js"
+      - "assets/market-demand-ui.js"
+      - "assets/market-demand-ui.css"
       - "assets/enhancements.js"
       - "assets/enhancements-core.js"
       - "data/market-2026.json"
       - "data/market-coverage-2026.json"
       - "data/market-sales-2026.json"
+      - "data/market-demand-intelligence-2026.json"
       - "data/market-retailers-2026.json"
       - "tools/sync-market-2026.js"
       - "tools/sync-market-smokee-2026.js"
@@ -24,6 +30,8 @@ on:
       - "tools/validate-market-daily-2026.js"
       - "tools/sync-market-sales-2026.js"
       - "tools/build-market-sales-summary-2026.js"
+      - "tools/collect-market-demand-intelligence-2026.js"
+      - "tools/build-market-management-2026.js"
       - ".github/workflows/market-2026-sync.yml"
       - ".github/workflows/market-sales-2026-sync.yml"
       - "sw.js"
@@ -35,7 +43,7 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 4
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -43,23 +51,25 @@ jobs:
           node-version: "22"
       - name: Validate current Market architecture
         run: |
-          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js sw.js; do node --check "$f"; done
+          for f in assets/enhancements.js assets/enhancements-core.js assets/market-2026.js assets/market-2026-report.js assets/market-coverage-ui.js assets/market-sales-ui.js assets/market-loading-guard.js assets/market-management.js assets/market-executive-report.js assets/market-demand-ui.js tools/sync-market-2026.js tools/sync-market-smokee-2026.js tools/sync-market-specialized-2026.js tools/verify-market-prices-2026.js tools/normalize-market-2026.js tools/market-coverage-audit-2026.js tools/validate-market-daily-2026.js tools/sync-market-sales-2026.js tools/build-market-sales-summary-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js sw.js; do node --check "$f"; done
           node tools/normalize-market-2026.js --check
           node - <<'NODE'
           const fs=require('fs');
           const data=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
           const registry=JSON.parse(fs.readFileSync('data/market-retailers-2026.json','utf8'));
           const sales=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
+          const demand=JSON.parse(fs.readFileSync('data/market-demand-intelligence-2026.json','utf8'));
           const market=fs.readFileSync('assets/market-2026.js','utf8');
           const loader=fs.readFileSync('assets/enhancements.js','utf8');
+          const guard=fs.readFileSync('assets/market-loading-guard.js','utf8');
           const sw=fs.readFileSync('sw.js','utf8');
           const daily=fs.readFileSync('.github/workflows/market-2026-sync.yml','utf8');
           const salesFlow=fs.readFileSync('.github/workflows/market-sales-2026-sync.yml','utf8');
           const validator=fs.readFileSync('tools/validate-market-daily-2026.js','utf8');
           const expectedHash='113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
 
-          if(Number(data.scopeYear)!==2026||Number(registry.scopeYear)!==2026||Number(sales.scopeYear)!==2026)throw new Error('Market scope must remain 2026');
-          if((registry.retailers||[]).length<19)throw new Error('National registry shrank below 19 storefronts');
+          if(Number(data.scopeYear)!==2026||Number(registry.scopeYear)!==2026||Number(sales.scopeYear)!==2026||Number(demand.scopeYear)!==2026)throw new Error('Market scope must remain 2026');
+          if((registry.retailers||[]).length<22)throw new Error('National registry shrank below 22 validated storefronts');
           if(!(data.observations||[]).length)throw new Error('Market dataset has no observations');
           if(!market.includes(expectedHash))throw new Error('Market access hash changed');
           if(!market.includes('trendSnapshots'))throw new Error('Longitudinal trend support missing');
@@ -68,16 +78,17 @@ jobs:
           if(!daily.includes('node tools/validate-market-daily-2026.js'))throw new Error('Dedicated daily truth validator missing');
           if(!validator.includes('status.date!==today'))throw new Error('Freshness validation missing from dedicated validator');
           if(!salesFlow.includes("cron: '0 3 * * *'")||!salesFlow.includes("cron: '0 4 * * *'"))throw new Error('06:00 Bucharest sales schedules missing');
-          if(!salesFlow.includes('sync-market-sales-2026.js')||!salesFlow.includes('build-market-sales-summary-2026.js'))throw new Error('Sales evidence/synthesis pipeline missing');
+          if(!salesFlow.includes('collect-market-demand-intelligence-2026.js')||!salesFlow.includes('build-market-management-2026.js'))throw new Error('Demand/management pipeline missing');
 
-          const marketAsset=(loader.match(/\/assets\/market-2026\.js\?v=\d+/)||[])[0];
-          const salesAsset=(loader.match(/\/assets\/market-sales-ui\.js\?v=\d+/)||[])[0];
-          if(!marketAsset||!sw.includes(marketAsset))throw new Error('Market asset/cache mismatch');
-          if(!salesAsset||!sw.includes(salesAsset))throw new Error('Sales UI asset/cache mismatch');
-          if(!sw.includes("'/data/market-2026.json'")||!sw.includes("'/data/market-sales-2026.json'"))throw new Error('Live Market data is not network-first');
+          for(const assetRe of [/\/assets\/market-2026\.js\?v=\d+/,/\/assets\/market-sales-ui\.js\?v=\d+/,/\/assets\/market-loading-guard\.js\?v=\d+/,/\/assets\/market-demand-ui\.js\?v=\d+/]){
+            const asset=(loader.match(assetRe)||[])[0];if(!asset||!sw.includes(asset))throw new Error(`Market asset/cache mismatch: ${assetRe}`);
+          }
+          for(const p of ['/data/market-2026.json','/data/market-sales-2026.json','/data/market-demand-intelligence-2026.json'])if(!sw.includes(`'${p}'`))throw new Error(`Live Market data is not network-first: ${p}`);
+          if(!guard.includes('/data/market-demand-intelligence-2026.json')||!guard.includes('marketDemandIntelligence'))throw new Error('Atomic loading guard does not include demand intelligence');
 
           if(!sales.methodology||sales.methodology.noStockInference!==true)throw new Error('Sales layer must prohibit stock-based sales inference');
           if(sales.coverage&&sales.coverage.nationalMarketShareAvailable===true&&Number(sales.coverage.storefrontsWithActualUnitSales)!==(registry.retailers||[]).length)throw new Error('National market share claimed without full Tier-A coverage');
+          if(!demand.methodology||!/sales|vânzări/i.test(String(demand.methodology.truthRule||'')))throw new Error('Demand truth rule missing');
 
           for(const row of data.observations||[])if(!/^2026-/.test(String(row.observedAt||'')))throw new Error(`Observation outside 2026: ${row.product||'unknown'}`);
           const watch=data.boardWatch||[];
@@ -85,5 +96,5 @@ jobs:
 
           const updated=Date.parse(data.updatedAt||'');
           if(!Number.isFinite(updated)||(Date.now()-updated)/36e5>36)throw new Error('Market dataset is stale');
-          console.log(`Market gate OK: ${(data.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Tier-B ${(sales.coverage&&sales.coverage.storefrontsWithRetailerSalesRanking)||0}/${(registry.retailers||[]).length}; refresh 06:00 Bucharest.`);
+          console.log(`Market gate OK: ${(data.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Tier-B ${(sales.coverage&&sales.coverage.storefrontsWithRetailerSalesRanking)||0}/${(registry.retailers||[]).length}; demand products ${(demand.coverage&&demand.coverage.productsTracked)||0}; refresh 06:00 Bucharest.`);
           NODE
