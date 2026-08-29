@@ -53,6 +53,19 @@ function cleanText(input) {
     .trim();
 }
 
+function cleanProductTitle(input) {
+  let title = cleanText(input)
+    .replace(/^[»›>\-–—\s]+/, '')
+    .replace(/^(?:Reduceri|Sale|Oferta|Promo(?:ție)?)!?:?\s*/i, '')
+    .replace(/^(?:Mărește|Mareste|Reduce)\s+cantitatea\s+pentru\s+/i, '')
+    .replace(/\s+(?:Prețul|Pretul)\s+(?:inițial|initial|curent)\b[\s\S]*$/i, '')
+    .replace(/\s+(?:Stoc\s+epuizat|Indisponibil|Out\s+of\s+stock|Sold\s+out)\b[\s\S]*$/i, '')
+    .replace(/\s+\d{1,5}(?:[ .]\d{3})*(?:[,.]\d{2})?\s*(?:lei|ron)\b[\s\S]*$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return title;
+}
+
 function absoluteUrl(base, href) {
   try {
     const url = new URL(href, base);
@@ -86,55 +99,109 @@ function normalizeKey(value) {
 function inferBrand(title) {
   const known = [
     'Ambition Mods','Arcana Mods','BP Mods','Centenary Mods','Cthulhu','Dicodes','Damn Vape','Dovpo','Early Bird',
-    'Ennequadro Mods','Geekvape','Hellvape','Innokin','KHW Mods','Lost Vape','SvoeMesto','SvoëMesto','Taifun',
-    'Thunder Cloud','Vandy Vape','Vape Systems','Vapefly','Vaporesso','Voopoo','Wotofo','Yachtvape','YiHi','YIHI'
+    'Ennequadro Mods','Geekvape','Hellvape','Innokin','KHW Mods','Lost Vape','Sirius Mods','SvoeMesto','SvoëMesto','Taifun',
+    'Thunder Cloud','ThunderHead Creations','Vandy Vape','VandyVape','Vape Systems','Vapefly','Vaporesso','Voopoo','VooPoo',
+    'Wotofo','Yachtvape','YiHi','YIHI','StattQualm','The Vaping Gentlemen Club'
   ];
   const match = known.find(brand => new RegExp(brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(title));
   return match || '';
 }
 
+function isLikelyMenuLabel(title) {
+  const t = normalizeKey(title);
+  if (!t) return true;
+  if (/^(?:rta|rda|rdta|rba|atomizoare?|accesorii|consumabile|moduri|sarme?|wire|bumbac|cotton|rezistente|coiluri|truse|ustensile|unelte)(?:\s+\d+)?$/.test(t)) return true;
+  if (/^(?:vezi toate|toate produsele|produse|categorii|magazin|shop|home|acasa)$/.test(t)) return true;
+  return false;
+}
+
+function isCategoryLikeUrl(url) {
+  try {
+    const u = new URL(url);
+    const pathName = u.pathname.toLowerCase();
+    return /\/(?:categorie|category|product-category|tag|brand|atomizoare|accesorii|consumabile|bumbac|sarme|rezistente|truse|ustensile)\/?(?:$|page\/\d+\/?$)/.test(pathName) || /\/page\/\d+\/?$/.test(pathName);
+  } catch (_) {
+    return false;
+  }
+}
+
+function isProductLikeUrl(url) {
+  try {
+    const u = new URL(url);
+    const p = u.pathname.toLowerCase();
+    if (/\/(?:produs|product)\//.test(p)) return true;
+    if (/\.html?$/.test(p) && !isCategoryLikeUrl(url)) return true;
+    return false;
+  } catch (_) {
+    return false;
+  }
+}
+
+function isRtaSpecificUrl(url) {
+  try {
+    const p = new URL(url).pathname.toLowerCase().replace(/\/+$/, '');
+    if (/rta-rdta|rda-rta|rta-rda/.test(p)) return false;
+    return /(?:^|\/)rta(?:\/|$)/.test(p) || /atomizoare?-rta(?:\/|$)/.test(p);
+  } catch (_) {
+    return false;
+  }
+}
+
 function classify(title, hint) {
   const t = normalizeKey(title);
-  if (!t || t.length < 4) return '';
+  if (!t || t.length < 4 || isLikelyMenuLabel(title)) return '';
 
   const hasRta = /\brta\b/.test(t);
   const hasRda = /\brda\b/.test(t);
   const hasRdta = /\brdta\b/.test(t);
+  const platform = /dvarw|kayfun|taifun|diplomat|muted|asylum|bishop|pioneer|purity|millennium|gtr|chariot|prime minister|by ka|spica|squape/.test(t);
   const part = /\b(?:bell|bell cap|chimney|chamber|camera|clopot|air ?pin|airflow pin|insert|reducer|reductie|top ?cap|bottom ?cap|tank|geam|glass|pyrex|psu|pei|ultem|drip ?tip|mustiuc|o ?ring|oring|spare|insulator|izolator|screw|surub|deck|jfc|juice control|510 pin)\b/.test(t);
-  if (part && (hasRta || /dvarw|kayfun|taifun|diplomat|muted|asylum|bishop|pioneer|purity|millennium|gtr|chariot|prime minister/.test(t))) return 'componente RTA';
+  if (part && (hasRta || platform)) return 'componente RTA';
 
   if (hasRta && !hasRda && !hasRdta) return 'RTA';
   if (hasRta && (hasRda || hasRdta)) return 'RTA/RDA mixed';
   if (!hasRta && (hasRda || hasRdta)) return 'RDA/RDTA';
   if (/\b(?:bridge|rba)\b/.test(t)) return 'RBA/bridge';
 
-  if (/\b(?:bumbac|cotton|rayon|wick|vata)\b/.test(t)) return 'bumbac/wick';
-  if (/\b(?:kanthal|ka1|k1|ni80|nichrome|ss316|ss316l|nife30|nife52|nife|ni200|titanium|titan|clapton|fused|alien|twisted|sarma|wire)\b/.test(t)) {
-    if (/\b(?:rezistenta|rezistente|coil|coils|prebuilt|pre built|handmade)\b/.test(t)) return 'coil prebuilt';
-    return 'sarma';
-  }
-  if (/\b(?:rezistenta|rezistente|coil|coils)\b/.test(t) && !/pod|cartus|cartridge/.test(t)) return 'coil prebuilt';
-
-  if (/\b(?:acumulator|battery|baterie)\b/.test(t) && /\b(?:18350|18650|20700|21700|26650|li ion|mah)\b/.test(t)) return 'acumulator';
-  if (/\b(?:incarcator|charger|charging)\b/.test(t)) return 'incarcator';
-  if (/\b(?:ohm ?meter|ohm ?reader|build ?tab|coil ?jig|coiling|penseta|tweezers|ceramic|cleste|cutter|foarfeca|scissors|tool ?kit|trusa|ustensile)\b/.test(t)) return 'unelte build';
-
   if (/\b(?:bf60|fl80)\b/.test(t) && /dicodes/.test(t)) return 'chipset/board';
   if (/\b(?:board|pcb|chipset|dna60|dna60c|dna75|dna75c|dna100c|evolv)\b/.test(t) && !/atomizor|rta|rda|rdta/.test(t)) return 'chipset/board';
-  if (/\b(?:mod|box mod|sbs|side by side|squonk)\b/.test(t) && !/atomizor|rta|rda|rdta|bridge/.test(t)) return 'mod';
+
+  const isMod = /\b(?:mod|box mod|sbs|side by side|squonk)\b/.test(t) && !/atomizor|atomizer|rta|rda|rdta|bridge|rba/.test(t);
+  if (isMod) return 'mod';
+
+  const cottonFlavorNoise = /\b(?:cotton candy|candy ice|ice|aroma|lichid|liquid|e liquid|eliquid|flavour|flavor)\b/.test(t);
+  const wickStrong = /\b(?:bumbac|rayon|vata|wick|wicking|cotton bacon|cotton gods|organic cotton|native wicks|fiber n cotton|muji cotton)\b/.test(t);
+  const plainCotton = /\bcotton\b/.test(t) && /\b(?:organic|bacon|wick|wicking|rta|rda|rdta|coil|atomizor|atomizer)\b/.test(t);
+  if ((wickStrong || plainCotton) && !cottonFlavorNoise) return 'bumbac/wick';
+
+  const wireExplicit = /\b(?:sarma|wire|kanthal|ka1|nichrome|ni80|ss316l?|nife30|nife52|nife|ni200)\b/.test(t);
+  const wireConstruction = /\b(?:clapton|fused clapton|alien|twisted)\b/.test(t);
+  const wireGeometry = /\b(?:awg|ga|gauge|0 [1-9]\d? mm|\d{2}ga|\d{2}awg|metri|metres|meter|meters)\b/.test(t);
+  const titaniumWire = /\b(?:titanium|titan)\b/.test(t) && /\b(?:wire|sarma|coil|awg|ga|gauge|mm)\b/.test(t) && !/\b(?:gray|grey|gri|color|culoare)\b/.test(t);
+  const prebuiltContext = /\b(?:prebuilt|pre built|handmade|coil|coils|rezistenta|rezistente)\b/.test(t);
+  const stockCoilNoise = /\b(?:pod|cartus|cartridge|nautilus|gtl|z coil|pnp|tpp|rpm|mesh coil head|coil head)\b/.test(t);
+  if ((wireExplicit || wireConstruction || titaniumWire) && (wireGeometry || wireConstruction || /\b(?:sarma|wire)\b/.test(t))) {
+    if (prebuiltContext && !stockCoilNoise) return 'coil prebuilt';
+    return 'sarma';
+  }
+  if (prebuiltContext && wireConstruction && !stockCoilNoise) return 'coil prebuilt';
+
+  if (/\b(?:acumulator|battery|baterie)\b/.test(t) && /\b(?:18350|18650|20700|21700|26650|li ion|mah)\b/.test(t)) return 'acumulator';
+  if (/\b(?:incarcator|charger|charging)\b/.test(t) && /\b(?:battery|baterie|acumulator|18350|18650|21700|slot)\b/.test(t)) return 'incarcator';
+  if (/\b(?:ohm ?meter|ohm ?reader|build ?tab|coil ?jig|coiling|penseta|tweezers|ceramic|cleste|cutter|foarfeca|scissors|tool ?kit|trusa build|ustensile build)\b/.test(t)) return 'unelte build';
 
   const tobacco = /\b(?:tutun|tobacco|net|virginia|burley|kentucky|latakia|oriental|turkish|perique|cigar|cigarro|cavendish|balkan|english blend|american blend)\b/.test(t);
   const liquidForm = /\b(?:lichid|liquid|e liquid|eliquid|aroma|longfill|shortfill|concentrat|extract|shot)\b/.test(t);
   if (tobacco && liquidForm) return 'lichid tutunos/NET/DIY';
 
-  if (/\b(?:husa|adaptor|adapter|beauty ring|heat sink|stand|suport|wrap folie)\b/.test(t)) return 'accesoriu RTA/mod';
+  if (/\b(?:beauty ring|heat sink|atomizer stand|suport atomizor|adaptor 510|adapter 510|drip tip|mustiuc)\b/.test(t)) return 'accesoriu RTA/mod';
 
-  if (hint === 'RTA' && /atomizor|atomizer|tank/.test(t) && !/nautilus|sub ohm|clearomiz|pod/.test(t)) return 'RTA-candidat';
+  if (hint === 'RTA' && /atomizor|atomizer|tank/.test(t) && !/nautilus|sub ohm|clearomiz|pod|cartus|cartridge/.test(t)) return 'RTA-candidat';
   return '';
 }
 
 function parsePrice(text) {
-  const candidates = String(text || '').match(/(?:^|\s)(\d{1,4}(?:[ .]\d{3})*(?:[,.]\d{2})?)\s*(?:lei|ron)\b/ig) || [];
+  const candidates = String(text || '').match(/(?:^|\s)(\d{1,5}(?:[ .]\d{3})*(?:[,.]\d{2})?)\s*(?:lei|ron)\b/ig) || [];
   if (!candidates.length) return null;
   const raw = candidates[candidates.length - 1]
     .replace(/[^0-9,. ]/g, '')
@@ -147,8 +214,8 @@ function parsePrice(text) {
 
 function parseStock(text) {
   const t = normalizeKey(text);
-  if (/stoc epuizat|indisponibil|out of stock|sold out|notificare/.test(t)) return 'out_of_stock';
-  if (/in stoc|adaug[aă] in cos|adauga in cos|add to cart|cumpara/.test(String(text || '').toLowerCase())) return 'in_stock';
+  if (/stoc epuizat|indisponibil|out of stock|sold out/.test(t)) return 'out_of_stock';
+  if (/\bin stoc\b|adauga in cos|add to cart|cumpara/.test(t)) return 'in_stock';
   return 'unknown';
 }
 
@@ -157,17 +224,18 @@ function productFromJsonLd(node, baseUrl, hint) {
   const list = [];
   const type = Array.isArray(node['@type']) ? node['@type'].join(' ') : String(node['@type'] || '');
   if (/Product/i.test(type) && node.name) {
-    const category = classify(node.name, hint);
-    if (category) {
+    const title = cleanProductTitle(node.name);
+    const category = classify(title, hint);
+    if (category && category !== 'RTA-candidat') {
       const offers = Array.isArray(node.offers) ? node.offers[0] : node.offers || {};
       const price = Number(offers.price || offers.lowPrice || node.price || NaN);
       const availability = String(offers.availability || '');
       list.push({
-        title: cleanText(node.name),
+        title,
         url: canonicalUrl(absoluteUrl(baseUrl, node.url || offers.url || baseUrl)),
         priceRon: Number.isFinite(price) ? price : null,
         stock: /OutOfStock|SoldOut/i.test(availability) ? 'out_of_stock' : /InStock|PreOrder|LimitedAvailability/i.test(availability) ? 'in_stock' : 'unknown',
-        brand: cleanText(node.brand && (node.brand.name || node.brand) || ''),
+        brand: cleanText(node.brand && (node.brand.name || node.brand) || '') || inferBrand(title),
         category,
         sourceMode: 'json-ld'
       });
@@ -202,23 +270,30 @@ function parseAnchors(html, baseUrl, hint) {
   let match;
   while ((match = re.exec(html))) {
     const attrs = `${match[1] || ''} ${match[3] || ''}`;
-    let title = cleanText(match[4]);
-    if (title.length < 4) {
+    let rawTitle = cleanText(match[4]);
+    if (rawTitle.length < 4) {
       const attrTitle = attrs.match(/(?:aria-label|title)=["']([^"']+)["']/i);
-      if (attrTitle) title = cleanText(attrTitle[1]);
+      if (attrTitle) rawTitle = cleanText(attrTitle[1]);
     }
-    if (title.length < 4 || title.length > 180) continue;
-    const category = classify(title, hint);
-    if (!category) continue;
+    if (rawTitle.length < 4 || rawTitle.length > 260) continue;
+
     const url = canonicalUrl(absoluteUrl(baseUrl, match[2]));
     if (!url) continue;
-    const start = Math.max(0, match.index - 180);
-    const end = Math.min(html.length, re.lastIndex + 700);
+    const start = Math.max(0, match.index - 120);
+    const end = Math.min(html.length, re.lastIndex + 420);
     const context = cleanText(html.slice(start, end));
+    const priceRon = parsePrice(rawTitle) ?? parsePrice(context);
+    const title = cleanProductTitle(rawTitle);
+    if (title.length < 4 || title.length > 180 || isLikelyMenuLabel(title)) continue;
+    if (isCategoryLikeUrl(url) && priceRon == null) continue;
+    if (!isProductLikeUrl(url) && priceRon == null) continue;
+
+    const category = classify(title, hint);
+    if (!category || category === 'RTA-candidat') continue;
     products.push({
       title,
       url,
-      priceRon: parsePrice(context),
+      priceRon,
       stock: parseStock(context),
       brand: inferBrand(title),
       category,
@@ -228,17 +303,19 @@ function parseAnchors(html, baseUrl, hint) {
   return products;
 }
 
-function listedCount(html, hint) {
+function listedCount(html, hint, pageUrl) {
   if (hint !== 'RTA') return null;
   const text = cleanText(html);
-  const patterns = [
+  const explicit = text.match(/\bRTA\s*\((\d+)\)/i);
+  if (explicit) return { count: Number(explicit[1]), confidence: 'explicit-rta-count' };
+  if (!isRtaSpecificUrl(pageUrl)) return null;
+  const totalPatterns = [
     /(?:afi[sș]ez|afiseaza|showing)\s*\d+\s*[-–]\s*\d+\s*(?:din|of)\s*(\d+)\s*(?:de\s*)?(?:rezultate|produse|results)?/i,
-    /\bRTA\s*\((\d+)\)/i,
     /\b(\d+)\s+(?:articole|produse|products)\b/i
   ];
-  for (const pattern of patterns) {
-    const match = text.match(pattern);
-    if (match) return Number(match[1]);
+  for (const pattern of totalPatterns) {
+    const found = text.match(pattern);
+    if (found) return { count: Number(found[1]), confidence: 'rta-specific-category-total' };
   }
   return null;
 }
@@ -276,6 +353,22 @@ function dedupeProducts(items) {
     });
   }
   return [...map.values()];
+}
+
+function dedupeCategorySnapshots(items) {
+  const priority = { 'explicit-rta-count': 3, 'rta-specific-category-total': 2, 'direct-category-count': 1 };
+  const map = new Map();
+  for (const item of items) {
+    if (!item || !item.retailerId || !item.category || !item.observedAt) continue;
+    const key = `${item.retailerId}|${item.category}|${item.observedAt}`;
+    const previous = map.get(key);
+    const score = priority[item.confidence] || 0;
+    const previousScore = previous ? (priority[previous.confidence] || 0) : -1;
+    if (!previous || score > previousScore || (score === previousScore && String(item.source || '').length < String(previous.source || '').length)) {
+      map.set(key, item);
+    }
+  }
+  return [...map.values()].sort((a, b) => `${a.retailerId}|${a.category}`.localeCompare(`${b.retailerId}|${b.category}`, 'ro'));
 }
 
 async function fetchText(url, registry) {
@@ -344,15 +437,15 @@ async function collectRetailer(retailer, registry, date) {
             sourceMode: product.sourceMode
           });
         }
-        const count = listedCount(fetched.text, seed.categoryHint);
-        if (count != null) {
+        const count = listedCount(fetched.text, seed.categoryHint, fetched.url);
+        if (count && Number.isFinite(count.count)) {
           categorySnapshots.push({
             retailerId: retailer.id,
             category: seed.categoryHint,
-            listed: count,
+            listed: count.count,
             observedAt: date,
             source: fetched.url,
-            confidence: 'direct-category-count'
+            confidence: count.confidence
           });
         }
         if (seedPages === 1) {
@@ -380,7 +473,7 @@ async function collectRetailer(retailer, registry, date) {
     sourceMode: o.sourceMode
   }));
 
-  return { retailerId: retailer.id, pagesFetched, observations: uniqueObs, categorySnapshots, errors };
+  return { retailerId: retailer.id, pagesFetched, observations: uniqueObs, categorySnapshots: dedupeCategorySnapshots(categorySnapshots), errors };
 }
 
 function summaryByCategory(observations) {
@@ -419,6 +512,14 @@ function retailerPublicShape(retailer, result) {
   };
 }
 
+function retainedFallbackRows(market, results, date) {
+  const failedRetailers = new Set(results
+    .filter(result => !result.skipped && Number(result.pagesFetched || 0) === 0 && (result.errors || []).length > 0)
+    .map(result => result.retailerId));
+  if (!failedRetailers.size) return [];
+  return (market.observations || []).filter(row => row.observedAt === date && failedRetailers.has(row.retailerId));
+}
+
 async function main() {
   const registry = readJson(REGISTRY_PATH);
   const market = readJson(MARKET_PATH);
@@ -438,19 +539,38 @@ async function main() {
   }
 
   const collected = results.flatMap(r => r.observations || []);
-  const existingToday = (market.observations || []).filter(o => o.observedAt === date && !collected.some(c => c.retailerId === o.retailerId && normalizeKey(c.product) === normalizeKey(o.product)));
-  const observations = [...collected, ...existingToday]
-    .filter(o => /^2026-/.test(String(o.observedAt || '')))
+  const fallback = retainedFallbackRows(market, results, date);
+  const observations = dedupeProducts([...collected, ...fallback].map(o => ({
+    title: o.product,
+    url: o.source,
+    priceRon: o.priceRon,
+    stock: o.stock,
+    brand: o.brand,
+    category: o.category,
+    sourceMode: o.sourceMode,
+    retailerId: o.retailerId,
+    observedAt: o.observedAt
+  }))).map(o => ({
+    retailerId: o.retailerId,
+    category: o.category,
+    brand: o.brand || '',
+    product: o.title,
+    priceRon: o.priceRon,
+    stock: o.stock,
+    observedAt: date,
+    source: o.url,
+    sourceMode: o.sourceMode
+  })).filter(o => /^2026-/.test(String(o.observedAt || '')))
     .sort((a, b) => `${a.retailerId}|${a.category}|${a.product}`.localeCompare(`${b.retailerId}|${b.category}|${b.product}`, 'ro'));
-  const snapshots = [...results.flatMap(r => r.categorySnapshots || []), ...(market.categorySnapshots || []).filter(s => s.observedAt === date && !results.some(r => r.retailerId === s.retailerId))];
 
+  const snapshots = dedupeCategorySnapshots(results.flatMap(r => r.categorySnapshots || []));
   const trend = {
     date,
     observations: observations.length,
     retailersWithObservations: new Set(observations.map(o => o.retailerId)).size,
     categories: summaryByCategory(observations)
   };
-  const trendSnapshots = (market.trendSnapshots || []).filter(item => item.date !== date);
+  const trendSnapshots = (market.trendSnapshots || []).filter(item => item.date !== date && /^2026-/.test(String(item.date || '')));
   trendSnapshots.push(trend);
   trendSnapshots.sort((a, b) => a.date.localeCompare(b.date));
 
