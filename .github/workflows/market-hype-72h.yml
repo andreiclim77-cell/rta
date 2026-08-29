@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "tools/collect-market-hype-72h.js"
+      - "tools/collect-market-hype-72h-final.js"
       - "data/market-hype-sources-2026.json"
       - ".github/workflows/market-hype-72h.yml"
 
@@ -34,14 +34,14 @@ jobs:
           node-version: '22'
 
       - name: Validate collector syntax
-        run: node --check tools/collect-market-hype-72h.js
+        run: node --check tools/collect-market-hype-72h-final.js
 
       - name: Scan pre-announcement sources
         env:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
           REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
-        run: node tools/collect-market-hype-72h.js --write --evidence=hype-radar-evidence.json
+        run: node tools/collect-market-hype-72h-final.js --write --evidence=hype-radar-evidence.json
 
       - name: Validate public truth boundary
         run: |
@@ -61,6 +61,7 @@ jobs:
             }
           }
           if(/https?:\/\//i.test(JSON.stringify(d.categories)))throw new Error('Source URL leaked into public cards');
+          if(!/Magazinele.*excluse/i.test(String(d.truthRule||'')))throw new Error('Upstream-only truth rule missing');
           console.log(`Hype gate: ${d.summary.signals72h} upstream signals; ${d.summary.decisionCards} decision cards; ${d.summary.rejectedCommerce} commerce pages rejected.`);
           NODE
 
