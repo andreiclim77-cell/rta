@@ -1,8 +1,8 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "scopeYear": 2026,
-  "purpose": "Supplemental active-maker registry for GLOBAL Hype discovery. Contains only makers/brands not already present in data/market-hype-sources-2026.json and currently active enough to justify daily discovery. Historical/inactive makers are deliberately excluded from the daily scan.",
-  "deduplicationRule": "One canonical maker entry; aliases are search terms, not separate makers.",
+  "purpose": "Supplemental active-maker registry for GLOBAL Hype discovery. Contains only makers/brands not already present in data/market-hype-sources-2026.json and currently active enough to justify daily discovery. Historical/inactive makers and brands supported only by stale/secondary-market evidence are deliberately excluded from the daily scan.",
+  "deduplicationRule": "One canonical maker entry; aliases are search terms, not separate makers. Makers already present in the base registry are never repeated here.",
   "activeMakers": [
     {"name":"EXVAPE","aliases":["Exvape","Expromizer"],"domains":["exvape.com"],"categories":["RTA"]},
     {"name":"The Vaping Gentlemen Club","aliases":["TVGC"],"domains":["thevapinggentlemen.club"],"categories":["RTA","MODURI"]},
@@ -34,12 +34,26 @@
     {"name":"HorizonTech","aliases":["Horizon Tech"],"domains":["horizontechvape.com"],"categories":["RTA"]},
     {"name":"Boxer Mod / Ginger Industries","aliases":["Boxer Mod","Ginger Vaper","Ginger Industries"],"domains":["gingerindustries.com"],"categories":["MODURI"]},
     {"name":"Rebel Vape","aliases":["Rebel Mod"],"domains":["rebelvape.com"],"categories":["MODURI","BORO"]},
-    {"name":"Rincoe","aliases":[],"domains":["rincoe.com"],"categories":["MODURI"]}
+    {"name":"Rincoe","aliases":[],"domains":["rincoe.com"],"categories":["MODURI"]},
+    {"name":"BD Vape","aliases":["BDVAPE","Precisio"],"domains":["bd-vape.com"],"categories":["RTA","MODURI"]},
+    {"name":"Creavap","aliases":["Créavap"],"domains":["creavap.com"],"categories":["MODURI"]},
+    {"name":"Galactika Mod","aliases":["Galactika"],"domains":[],"categories":["MODURI"]},
+    {"name":"Four One Five Mod","aliases":["415 Mod","FOUR ONE FIVE","415RTA"],"domains":["415mod.co"],"categories":["RTA"]},
+    {"name":"Sturdy MFG","aliases":["Sturdy Mfg","SturdyONE"],"domains":[],"categories":["RTA","BORO","ACCESORII"]},
+    {"name":"Veepon","aliases":["VEEPON","TITA AIO","KUKA AIO"],"domains":["veepontech.com"],"categories":["MODURI","BORO"]},
+    {"name":"Across Vape","aliases":["Across","Hazard RTA"],"domains":["acrossvape.com"],"categories":["RTA","MODURI","BORO"]},
+    {"name":"Reload Vapor USA","aliases":["Reload Vapor","ReLoad"],"domains":["thereloadvaporusa.com"],"categories":["RTA","MODURI","BORO"]},
+    {"name":"Signature Tips / Signature Mods","aliases":["Signature Tips","Signature Mods","SQ Mods"],"domains":["signaturetips.com"],"categories":["MODURI","BORO","ACCESORII"]},
+    {"name":"Uwell","aliases":["UWELL"],"domains":["myuwell.com","uwell.io"],"categories":["MODURI"]},
+    {"name":"Freemax","aliases":["FreeMax"],"domains":["freemaxvape.com"],"categories":["MODURI"]}
   ],
   "explicitlyExcludedFromDailyActiveScan": [
-    {"name":"Dicodes","reason":"production ended after insolvency announcement; historical benchmark, not an active new-product maker for daily Hype"},
+    {"name":"Dicodes","reason":"dicodes GmbH closed after insolvency; production ended, so it remains a historical/technical benchmark but not an active new-product maker for daily Hype"},
     {"name":"ProVape","reason":"historical/inactive"},
     {"name":"Vapor Shark","reason":"historical/unverified current hardware production"},
-    {"name":"Hana Modz","reason":"historical/unverified current hardware production"}
+    {"name":"Hana Modz","reason":"historical/unverified current hardware production"},
+    {"name":"Hellfire Mods / The Attysmith","reason":"current evidence found was old/discontinued or spare-part inventory; no sufficiently current maker release activity confirmed"},
+    {"name":"Delro","reason":"current evidence found was secondary-market activity; no sufficiently current maker release activity confirmed"},
+    {"name":"Squid Industries vape hardware","reason":"current official presence is not sufficient to confirm active vape-hardware releases"}
   ]
 }
