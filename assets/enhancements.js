@@ -11,6 +11,9 @@
     return !/^\/rta-lab(?:\/|$)/i.test(location.pathname)
   }
   load('/assets/enhancements-core.js?v=8',function(){
-    if(isMainGuide())load('/assets/market-2026.js?v=3')
+    if(!isMainGuide())return;
+    load('/assets/market-2026.js?v=4',function(){
+      load('/assets/market-2026-report.js?v=1')
+    })
   })
 })();
