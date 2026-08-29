@@ -34,15 +34,19 @@ need(source.includes('market-hype-heartbeat-evidence-2026.json'),'Heartbeat evid
 need(source.includes('GLOBAL pentru RTA + clone RTA'),'Info surse does not state global Hype scope');
 
 for(const asset of ['/assets/market-loading-guard.js?v=13','/assets/market-ui-recovery.js?v=6','/assets/market-hype-ui.js?v=5','/assets/market-view-switcher.js?v=7'])need(enhancements.includes(asset),`Loader is not on final asset ${asset}`);
-need(enhancements.includes('/assets/market-access-policy.js?v=1'),'Per-entry password policy is not loaded before Market');
-for(const asset of ['/assets/market-loading-guard.js?v=13','/assets/market-ui-recovery.js?v=6','/assets/market-hype-ui.js?v=5','/assets/market-view-switcher.js?v=7','/assets/market-source-info.js?v=3','/assets/market-access-policy.js?v=1'])need(sw.includes(asset),`Service worker is not on final asset ${asset}`);
-need(sw.includes('ghid-rta-static-v34-hype-global-30d'),'Final service worker cache version missing');
+need(enhancements.includes('/assets/market-access-policy.js?v=2'),'Per-entry password policy v2 is not loaded before Market');
+for(const asset of ['/assets/market-loading-guard.js?v=13','/assets/market-ui-recovery.js?v=6','/assets/market-hype-ui.js?v=5','/assets/market-view-switcher.js?v=7','/assets/market-source-info.js?v=3','/assets/market-access-policy.js?v=2'])need(sw.includes(asset),`Service worker is not on final asset ${asset}`);
+need(sw.includes('ghid-rta-static-v35-market-password-empty'),'Final service worker cache version missing');
 need(recovery.includes('market-hype-ui.js?v=5')&&recovery.includes('market-view-switcher.js?v=7'),'Recovery can inject old Hype assets');
 need(guard.includes("key:'heartbeat'")&&guard.includes("windowDays)===30")&&guard.includes("scope==='GLOBAL RTA + clone RTA'"),'Atomic guard does not validate both Hype windows');
 
 need(access.includes("sessionStorage.removeItem(KEY)"),'Access policy does not clear previous session access');
-need(access.includes("[data-tab=\"market2026\"]")||access.includes("[data-tab=\\\"market2026\\\"]")||access.includes('[data-tab="market2026"]'),'Access policy does not intercept Market entry');
+need(access.includes('[data-tab="market2026"]'),'Access policy does not intercept Market entry');
 need(access.includes('pageshow'),'Access policy does not clear access on page restore');
+need(access.includes("setAttribute('autocomplete','new-password')"),'Password field autofill suppression missing');
+need(access.includes("input.value=''"),'Password field is not force-cleared');
+need(access.includes("setAttribute('name','rta-market-access-") ,'Dynamic password field name missing');
+need(access.includes('input.readOnly=true'),'Password manager readonly shield missing');
 
 need(Number(cfg.hypeWindowDays)===30&&Number(cfg.lookbackHours)===720,'Hype config is not 30 days');
 need(cfg.scope==='GLOBAL RTA + clone RTA','Hype config is not explicitly global');
@@ -56,7 +60,7 @@ need(cfg.authorizedSourcePolicy&&cfg.authorizedSourcePolicy.publicIndexableAlway
 need(wide.includes("kind==='upcoming'")&&wide.includes("kind==='released'"),'Wide engine does not separate before/after release');
 need(wide.includes('mergeMemory')&&wide.includes('720'),'30-day Hype memory missing');
 need(wide.includes("mode:'after-first-heart-beat'")&&wide.includes('releasedLast30Days'),'After the first heart-beat output missing');
-need(wide.includes('discoveryCommercialSourcesCanEscalate=false')||wide.includes('discoveryCommercialSourcesCanEscalate=false')||wide.includes('radar.truth.discoveryCommercialSourcesCanEscalate=false'),'Commercial discovery escalation boundary missing');
+need(wide.includes('radar.truth.discoveryCommercialSourcesCanEscalate=false'),'Commercial discovery escalation boundary missing');
 need(hype.includes('HYPE · GLOBAL · 30 ZILE'),'Global 30-day Hype heading missing');
 need(hype.includes('Orice zvon relevant cu 30 zile înainte...'),'Requested rumor subtitle missing');
 need(hype.includes('After the first heart-beat...'),'Heartbeat UI missing');
@@ -67,4 +71,4 @@ need(hypeFlow.includes("cron: '0 3 * * *'")&&hypeFlow.includes("cron: '0 4 * * *
 need(hypeFlow.includes('collect-market-hype-wide-2026.js --write'),'Global wide pass is not in the 06:00 workflow');
 need(!hypeFlow.includes('collect-market-hype-heartbeat-2026.js --write'),'Duplicate heartbeat crawler must not run');
 
-console.log('Market final gate OK: Analysis=Romania; Hype=GLOBAL 30d with before/after windows; sources separate; password every entry; one 06:00 pipeline; v34 cache.');
+console.log('Market final gate OK: Analysis=Romania; Hype=GLOBAL 30d with before/after windows; sources separate; empty password every entry; one 06:00 pipeline; v35 cache.');
