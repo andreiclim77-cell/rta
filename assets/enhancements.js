@@ -8,6 +8,6 @@
     document.head.appendChild(script)
   }
   load('/assets/enhancements-core.js?v=8',function(){
-    load('/assets/market-2026.js?v=1')
+    load('/assets/market-2026.js?v=2')
   })
 })();
