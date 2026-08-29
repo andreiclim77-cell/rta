@@ -2,9 +2,10 @@ name: Market 2026 Hype Radar
 
 on:
   schedule:
-    # 06:00 Europe/Bucharest; DST gated below.
+    # Primary 06:00 Europe/Bucharest + 07:00 fallback; DST gated below.
     - cron: '0 3 * * *'
     - cron: '0 4 * * *'
+    - cron: '0 5 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -45,17 +46,31 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Gate 06:00 Bucharest
+      - name: Gate 06:00 Bucharest and 07:00 fallback
         id: gate
         shell: bash
         run: |
           run_sync=true
+          fallback=false
           if [ "${{ github.event_name }}" = "schedule" ]; then
             offset="$(TZ=Europe/Bucharest date +%z)"
             cron="${{ github.event.schedule }}"
-            if { [ "$offset" = "+0300" ] && [ "$cron" != "0 3 * * *" ]; } || { [ "$offset" = "+0200" ] && [ "$cron" != "0 4 * * *" ]; }; then run_sync=false; fi
+            if [ "$offset" = "+0300" ]; then
+              if [ "$cron" = "0 3 * * *" ]; then fallback=false
+              elif [ "$cron" = "0 4 * * *" ]; then fallback=true
+              else run_sync=false
+              fi
+            elif [ "$offset" = "+0200" ]; then
+              if [ "$cron" = "0 4 * * *" ]; then fallback=false
+              elif [ "$cron" = "0 5 * * *" ]; then fallback=true
+              else run_sync=false
+              fi
+            else
+              run_sync=false
+            fi
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
+          echo "fallback=$fallback" >> "$GITHUB_OUTPUT"
 
       - name: Checkout
         if: steps.gate.outputs.run_sync == 'true'
@@ -63,14 +78,39 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Node
+      - name: Decide whether fallback Hype refresh is needed
         if: steps.gate.outputs.run_sync == 'true'
+        id: refresh
+        shell: bash
+        run: |
+          run_hype=true
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ steps.gate.outputs.fallback }}" = "true" ]; then
+            if node - <<'NODE'
+          const fs=require('fs');
+          const {referenceIso}=require('./tools/hype-window-reference-2026.js');
+          try{
+            const p=JSON.parse(fs.readFileSync('data/market-hype-products-2026.json','utf8'));
+            const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
+            const expected=referenceIso();
+            if(p.snapshotReferenceAt===expected&&d.snapshotReferenceAt===expected&&p.pendingRefresh!==true)process.exit(0);
+          }catch(_){ }
+          process.exit(1);
+          NODE
+            then
+              echo "06:00 Hype snapshot is already fresh; 07:00 fallback is not needed."
+              run_hype=false
+            fi
+          fi
+          echo "run_hype=$run_hype" >> "$GITHUB_OUTPUT"
+
+      - name: Setup Node
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
       - name: Collect strict upstream pre-announcement trend and risk signals
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         env:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
@@ -78,57 +118,57 @@ jobs:
         run: node tools/run-market-hype-radar-2026.js --write
 
       - name: Deep upstream second pass
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-deep-2026.js --write
 
       - name: Strictly validate upstream evidence hosts
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/filter-market-hype-evidence-2026.js --write
 
       - name: Global 30-day wide discovery and After the first heart-beat
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-wide-2026.js --write
 
       - name: Preserve global upstream evidence before product enrichment
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: |
           cp data/market-hype-evidence-2026.json /tmp/market-hype-upstream-evidence-2026.json
           cp data/market-hype-heartbeat-evidence-2026.json /tmp/market-hype-upstream-heartbeat-evidence-2026.json
 
       - name: Resolve concrete products and reject relistings / generic false positives
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-products-2026.js --write
 
       - name: Direct vendor product pages - ETA batch and release verification
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-vendor-direct-2026.js --write
 
       - name: Targeted vendor search - next batch ETA pre-sale
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-targeted-vendor-2026.js --write
 
       - name: Explicit vendor date phrases - verified ETA and batch
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/augment-market-hype-explicit-vendor-dates-2026.js --write
 
       - name: 3FVape RTA catalog - resolve dated new-arrival product paths
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/augment-market-hype-3fvape-newarrival-rta-2026.js --write
 
       - name: Global multi-vendor profiles - catalog pagination and product verification
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-vendor-pagination-2026.js --write
 
       - name: Robust concrete product titles - final multi-vendor resolver
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-vendor-profiles-v2-2026.js --write
 
       - name: Merge global, direct-release and vendor product signals
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/merge-market-hype-upstream-products-2026.js --write
 
       - name: Validate Hype global 30-day truth rules
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: |
           node --check tools/collect-market-hype-radar-2026.js
           node --check tools/run-market-hype-radar-2026.js
@@ -153,7 +193,7 @@ jobs:
           node tools/validate-market-hype-publish-2026.js
 
       - name: Publish complete Hype, product and heartbeat snapshots
-        if: steps.gate.outputs.run_sync == 'true'
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         shell: bash
         run: |
           files="data/market-hype-radar-2026.json data/market-hype-evidence-2026.json data/market-hype-heartbeat-2026.json data/market-hype-heartbeat-evidence-2026.json data/market-hype-products-2026.json"
