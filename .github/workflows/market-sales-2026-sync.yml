@@ -103,7 +103,7 @@ jobs:
           if(d.coverage.nationalMarketShareAvailable===true&&Number(d.coverage.storefrontsWithActualUnitSales)!==(r.retailers||[]).length)throw new Error('National share became true without full Tier-A coverage');
           if(!d.summary||!d.summary.observedBestsellerIndex)throw new Error('Sales synthesis missing');
           if(!d.productCounterProbeStatus)throw new Error('Product probe did not run');
-          if(!e.methodology||!/Never labelled Romania sales/.test(String(e.methodology.youtube||'')))throw new Error('External intelligence truth rule missing');
+          if(!e.methodology||!e.methodology.youtubeEmerging||!e.methodology.youtubeEvergreen||!/cannot replace verified Romanian sales/i.test(String(e.methodology.truthRule||'')))throw new Error('External intelligence truth rule missing');
           if(!m.periods||!m.periods['30']||!m.periods['30'].category||!m.periods['30'].brand||!m.periods['30'].product)throw new Error('Management dimensions missing');
           for(const dim of ['category','brand','product']) for(const row of (m.periods['30'][dim].rows||[])) {
             if(!Number.isFinite(Number(row.confidence))||!Number.isFinite(Number(row.priorityScore))) throw new Error(`Invalid management score: ${dim}/${row.name}`);
