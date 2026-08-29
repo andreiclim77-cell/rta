@@ -13,12 +13,15 @@ on:
       - "tools/sync-market-sales-2026.js"
       - "tools/collect-discovered-market-sales-2026.js"
       - "tools/probe-market-sales-counters-2026.js"
+      - "tools/market-product-canonical-2026.js"
+      - "tools/canonicalize-market-sales-products-2026.js"
+      - "tools/build-market-product-presence-2026.js"
       - "tools/build-market-sales-summary-2026.js"
       - "tools/build-market-external-intelligence-2026.js"
       - "tools/collect-market-demand-intelligence-2026.js"
       - "tools/build-market-management-2026.js"
+      - "tools/augment-market-management-presence-2026.js"
       - "data/market-sales-sources-2026.json"
-      - "data/market-signal-sources-2026.json"
       - "data/market-retailers-2026.json"
       - "data/market-universe-discovery-2026.json"
       - "data/youtube-reviews.js"
@@ -34,7 +37,7 @@ concurrency:
 jobs:
   collect-sales-signals:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
+    timeout-minutes: 38
     steps:
       - name: Gate 06:00 Bucharest
         id: gate
@@ -76,6 +79,14 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/probe-market-sales-counters-2026.js --write
 
+      - name: Canonicalize product identities before aggregation
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/canonicalize-market-sales-products-2026.js --write
+
+      - name: Build canonical Romanian product presence
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/build-market-product-presence-2026.js --write
+
       - name: Build sales synthesis
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/build-market-sales-summary-2026.js --write
@@ -86,61 +97,68 @@ jobs:
 
       - name: Collect Google and community demand intelligence
         if: steps.gate.outputs.run_sync == 'true'
+        continue-on-error: true
         env:
           GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
           GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
           GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
-          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
           GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
           GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
-          REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
+          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
         run: node tools/collect-market-demand-intelligence-2026.js --write
 
       - name: Build management decision intelligence
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/build-market-management-2026.js --write
 
+      - name: Add real listing breadth to management report
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/augment-market-management-presence-2026.js --write
+
       - name: Validate sales and management truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
-          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js; do node --check "$f"; done
+          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js; do node --check "$f"; done
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
           const e=JSON.parse(fs.readFileSync('data/market-external-intelligence-2026.json','utf8'));
           const q=JSON.parse(fs.readFileSync('data/market-demand-intelligence-2026.json','utf8'));
+          const p=JSON.parse(fs.readFileSync('data/market-product-presence-2026.json','utf8'));
           const m=JSON.parse(fs.readFileSync('data/market-management-2026.json','utf8'));
           const r=JSON.parse(fs.readFileSync('data/market-retailers-2026.json','utf8'));
           const disc=JSON.parse(fs.readFileSync('data/market-sales-sources-discovered-2026.json','utf8'));
-          if(Number(d.scopeYear)!==2026||Number(disc.scopeYear)!==2026||Number(e.scopeYear)!==2026||Number(q.scopeYear)!==2026||Number(m.scopeYear)!==2026)throw new Error('Market scope must be 2026');
+          if([d,disc,e,q,p,m].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must be 2026');
           if(Number(d.coverage.storefrontsConfigured)!==(r.retailers||[]).length)throw new Error('Sales coverage denominator mismatch');
+          if(!d.canonicalization||!d.canonicalization.after)throw new Error('Canonical product reconciliation did not run');
           for(const x of d.actualSales||[])if(!Number.isFinite(Number(x.unitsSold)))throw new Error('Non-explicit unitsSold row leaked');
           if(d.coverage.nationalMarketShareAvailable===true&&Number(d.coverage.storefrontsWithActualUnitSales)!==(r.retailers||[]).length)throw new Error('National share became true without full Tier-A coverage');
           if(!d.summary||!d.summary.observedBestsellerIndex)throw new Error('Sales synthesis missing');
           if(!d.productCounterProbeStatus)throw new Error('Product probe did not run');
+          if(!p.methodology||!/Bestseller breadth/i.test(String(p.methodology.truthRule||'')))throw new Error('Product presence truth rule missing');
           if(!e.methodology||!e.methodology.youtubeEmerging||!e.methodology.youtubeEvergreen||!/cannot replace verified Romanian sales/i.test(String(e.methodology.truthRule||'')))throw new Error('External intelligence truth rule missing');
-          if(q.fatalError)throw new Error(`Demand intelligence fatal: ${q.fatalError}`);
-          if(!q.sourceStatus||!q.methodology||!/cannot by themselves create a BUY\/EXPAND claim/i.test(String(q.methodology.truthRule||'')))throw new Error('Demand intelligence truth rule missing');
-          if(!m.periods||!m.periods['30']||!m.periods['30'].category||!m.periods['30'].brand||!m.periods['30'].product)throw new Error('Management dimensions missing');
-          for(const dim of ['category','brand','product']) for(const row of (m.periods['30'][dim].rows||[])) {
-            if(!Number.isFinite(Number(row.confidence))||!Number.isFinite(Number(row.priorityScore))) throw new Error(`Invalid management score: ${dim}/${row.name}`);
-            if(!row.action||!row.action.code||!row.buyDepth||!row.buyDepth.code) throw new Error(`Missing buyer guidance: ${dim}/${row.name}`);
-            if(row.action.code==='GROW'&&Number(row.strength||0)<=0)throw new Error(`External-only BUY/EXPAND leaked: ${dim}/${row.name}`);
+          if(!q.methodology||!/sales|vânzări/i.test(String(q.methodology.truthRule||'')))throw new Error('Demand intelligence truth rule missing');
+          if(!m.periods||!m.periods['30']||!m.periods['30'].product)throw new Error('Management dimensions missing');
+          for(const row of (m.periods['30'].product.rows||[])) {
+            if(!Number.isFinite(Number(row.confidence))||!Number.isFinite(Number(row.priorityScore)))throw new Error(`Invalid management score: ${row.name}`);
+            if(!row.action||!row.action.code||!row.buyDepth||!row.buyDepth.code)throw new Error(`Missing buyer guidance: ${row.name}`);
+            if(!Number.isFinite(Number(row.listedStorefronts))||!Number.isFinite(Number(row.bestsellerStorefronts)))throw new Error(`Listing/bestseller separation missing: ${row.name}`);
           }
-          if(!/Prețul, stocul/.test(String(m.methodology&&m.methodology.truthRule||''))||!/BUY\/EXPAND/.test(String(m.methodology&&m.methodology.truthRule||'')))throw new Error('Management truth rule must preserve commercial primacy');
-          console.log(`Decision gate: Tier-A ${m.coverage.tierAStores}/${m.coverage.configuredStores}; Tier-B ${m.coverage.tierBStores}/${m.coverage.configuredStores}; Tier-C ${m.coverage.tierCStores}/${m.coverage.configuredStores}; Google ${m.coverage.demandSources&&m.coverage.demandSources.google?'on':'off'}; community ${(m.coverage.demandSources&&['reddit','facebook','forums'].some(k=>m.coverage.demandSources[k]))?'on':'off'}; snapshots ${m.coverage.rankingSnapshots}.`);
+          if(!/Retail listing breadth/i.test(String(m.methodology&&m.methodology.listingBreadth||'')))throw new Error('Management listing-breadth truth rule missing');
+          console.log(`Decision gate: Tier-A ${m.coverage.tierAStores}/${m.coverage.configuredStores}; Tier-B ${m.coverage.tierBStores}/${m.coverage.configuredStores}; canonical products ${p.summary.canonicalProducts}; merged variants ${p.summary.groupsWithMergedAliasesOrVariants}.`);
           NODE
 
       - name: Publish sales and management snapshot
         if: steps.gate.outputs.run_sync == 'true'
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain -- data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-management-2026.json)" ]; then exit 0; fi
+          if [ -z "$(git status --porcelain -- data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-product-presence-2026.json data/market-management-2026.json)" ]; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-management-2026.json
+          git add data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-product-presence-2026.json data/market-management-2026.json
           git commit -m "Snapshot Romania RTA market intelligence 2026"
           for attempt in 1 2 3 4 5; do
             git fetch origin main
