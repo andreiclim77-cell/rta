@@ -18,7 +18,7 @@ function waitForMarket(){
   marketUiStarted=true;
   style('/assets/market-management-v4-extra.css?v=1');
   style('/assets/market-hype-warnings.css?v=1');
-  load('/assets/market-loading-guard.js?v=11');
+  load('/assets/market-loading-guard.js?v=12');
   load('/assets/market-ui-recovery.js?v=5');
   load('/assets/market-management-v2.js?v=4',function(){load('/assets/market-analysis-synthesis.js?v=1')});
   load('/assets/market-hype-ui.js?v=4');
