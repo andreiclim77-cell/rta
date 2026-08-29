@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-08-29T17:24:43.714Z",
+  "generatedAt": "2026-08-29T18:02:43.247Z",
   "lookbackHours": 720,
   "cacheMaxHours": 24,
   "pendingRefresh": false,
@@ -28,14 +28,15 @@
     "discoveryCommercialSourcesUsed": true,
     "discoveryCommercialSourcesCanEscalate": false,
     "wideDiscoveryWindowDays": 30,
-    "globalScope": true
+    "globalScope": true,
+    "productRelevanceValidated": true
   },
   "sourceStatus": {
     "queriesRun": 179,
     "queriesWorking": 179,
     "redditAuthorized": false,
     "redditMode": "credentials-or-approval-missing",
-    "rawDocuments": 609,
+    "rawDocuments": 596,
     "qualifiedPrelaunchSignals": 2,
     "trendSignals7d": 0,
     "complaintSignals7d": 0,
@@ -48,12 +49,12 @@
       "manufacturer-social-public": {
         "queries": 43,
         "working": 43,
-        "documents": 402
+        "documents": 411
       },
       "manufacturer-community": {
         "queries": 43,
         "working": 43,
-        "documents": 412
+        "documents": 396
       },
       "vaping-forum-prelaunch": {
         "queries": 45,
@@ -80,122 +81,43 @@
     "indexDateSignals": 2,
     "deepQueriesRun": 109,
     "deepQueriesWorking": 109,
-    "deepCandidateDocuments": 580,
-    "deepWarningsAdded": 1,
+    "deepCandidateDocuments": 589,
+    "deepWarningsAdded": 0,
     "deepScan": true,
     "deepStrictHostValidated": true,
-    "deepWrongHostRejected": 19,
+    "deepWrongHostRejected": 29,
     "wideQueriesRun": 169,
     "wideQueriesWorking": 169,
-    "wideCandidateDocuments": 840,
-    "wideSignalsAccepted": 62,
+    "wideCandidateDocuments": 855,
+    "wideSignalsAccepted": 70,
     "wideUpcomingSignals": 4,
-    "wideReleasedSignals": 58,
+    "wideReleasedSignals": 66,
     "wideRememberedUpcomingSignals": 4,
-    "wideRememberedReleasedSignals": 58,
-    "wideDiscoveryOnlySignals": 51,
-    "wideDecisionEligibleSignals": 11,
+    "wideRememberedReleasedSignals": 87,
+    "wideDiscoveryOnlySignals": 62,
+    "wideDecisionEligibleSignals": 8,
     "wideCloneSignals": 0,
     "wideScan": true,
-    "scope": "GLOBAL"
+    "scope": "GLOBAL",
+    "finalRelevantProductsBefore": 0,
+    "productQueriesRun": 84,
+    "productQueriesWorking": 84,
+    "productCandidates": 0
   },
   "categories": {
-    "RTA": [
-      {
-        "kind": "pre",
-        "eventId": "c155d624094204e8601b",
-        "category": "RTA",
-        "typology": "RDL single",
-        "mentions72h": 1,
-        "sourceTypeCount": 1,
-        "sourceFamilyCount": 1,
-        "newestSignalHours": 10,
-        "verifiedSourceDates": 0,
-        "indexDateSignals": 1,
-        "velocity7d": null,
-        "velocityVerified": false,
-        "complaintSourceCount": 0,
-        "verifiedEngagement": 0,
-        "confidence": 35,
-        "decision": {
-          "code": "PREPARE",
-          "label": "PREGĂTEȘTE / URMĂREȘTE",
-          "reason": "Pre-anunț recent, dar încă nu este confirmat de minimum două tipuri de surse independente."
-        },
-        "mentions30d": 1,
-        "discoverySourceCount": 1,
-        "maturityStage": "RUMOR",
-        "maturityLabel": "zvon",
-        "maturityScore": 15
-      },
-      {
-        "kind": "warning",
-        "eventId": "0c4a2ef827ab90ebfaca",
-        "category": "RTA",
-        "typology": "DL single",
-        "mentions72h": 1,
-        "sourceTypeCount": 1,
-        "sourceFamilyCount": 1,
-        "newestSignalHours": 215.1,
-        "confidence": 42,
-        "warningStage": "semnal timpuriu",
-        "decision": {
-          "code": "WATCH",
-          "label": "ATENȚIE · URMĂREȘTE",
-          "reason": "Semnal upstream timpuriu dintr-o singură familie de surse. Urmărește confirmarea înainte de orice comandă."
-        }
-      }
-    ],
+    "RTA": [],
     "MODURI": [],
-    "ACCESORII": [
-      {
-        "kind": "derived",
-        "eventId": "5c5776c4d685f55f0148",
-        "category": "ACCESORII",
-        "typology": "compatibilitate noua",
-        "mentions72h": 1,
-        "sourceTypeCount": 1,
-        "newestSignalHours": 10,
-        "confidence": 50,
-        "decision": {
-          "code": "PREPARE_ACCESSORIES",
-          "label": "PREGĂTEȘTE ACCESORII · 7–10 ZILE",
-          "reason": "Există un semnal hardware timpuriu suficient de puternic pentru a pregăti accesoriile compatibile. Confirmă compatibilitatea exactă înainte de cumpărare."
-        }
-      },
-      {
-        "kind": "pre",
-        "eventId": "d24304b280e6f1a8db7c",
-        "category": "ACCESORII",
-        "typology": "tool-uri",
-        "mentions72h": 1,
-        "sourceTypeCount": 1,
-        "sourceFamilyCount": 1,
-        "newestSignalHours": 72.8,
-        "verifiedSourceDates": 0,
-        "indexDateSignals": 1,
-        "velocity7d": null,
-        "velocityVerified": false,
-        "complaintSourceCount": 0,
-        "verifiedEngagement": 0,
-        "confidence": 35,
-        "decision": {
-          "code": "PREPARE",
-          "label": "PREGĂTEȘTE / URMĂREȘTE",
-          "reason": "Pre-anunț recent, dar încă nu este confirmat de minimum două tipuri de surse independente."
-        }
-      }
-    ]
+    "ACCESORII": []
   },
   "summary": {
     "RTA": {
-      "signals": 2,
-      "events": 2,
+      "signals": 0,
+      "events": 0,
       "buyHype": 0,
       "buyTrend": 0,
       "prepareAccessories": 0,
-      "prepare": 1,
-      "watch": 1,
+      "prepare": 0,
+      "watch": 0,
       "stop": 0
     },
     "MODURI": {
@@ -209,12 +131,12 @@
       "stop": 0
     },
     "ACCESORII": {
-      "signals": 2,
-      "events": 2,
+      "signals": 0,
+      "events": 0,
       "buyHype": 0,
       "buyTrend": 0,
-      "prepareAccessories": 1,
-      "prepare": 1,
+      "prepareAccessories": 0,
+      "prepare": 0,
       "watch": 0,
       "stop": 0
     }
