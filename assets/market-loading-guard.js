@@ -14,8 +14,8 @@ var REQUIRED=[
 var DOM=[
  {id:'marketManagementCockpit',key:'uiAnalysis',label:'Analiza',weight:6,src:'/assets/market-management-v2.js?v=4'},
  {id:'marketAnalysisSynthesis',key:'uiSynthesis',label:'Sinteză',weight:5,src:'/assets/market-analysis-synthesis.js?v=1'},
- {id:'marketHypeRadar',key:'uiHype',label:'Hype',weight:4,src:'/assets/market-hype-ui.js?v=4'},
- {id:'marketViewSwitcher',key:'uiNav',label:'Interfața',weight:3,src:'/assets/market-view-switcher.js?v=6'}
+ {id:'marketHypeRadar',key:'uiHype',label:'Hype',weight:4,src:'/assets/market-hype-ui.js?v=5'},
+ {id:'marketViewSwitcher',key:'uiNav',label:'Interfața',weight:3,src:'/assets/market-view-switcher.js?v=7'}
 ];
 var TOTAL=REQUIRED.concat(DOM).reduce(function(s,x){return s+x.weight},0);
 function el(id){return document.getElementById(id)}function en(){return window.__rtaLang==='en'}function t(ro,enText){return en()?enText:ro}
