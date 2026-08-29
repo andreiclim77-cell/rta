@@ -26,17 +26,18 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 7
+    timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
-      - name: Validate final Market architecture
+      - name: Syntax
         run: |
           for f in \
             assets/enhancements.js \
             assets/enhancements-core.js \
+            assets/market-access-policy.js \
             assets/market-2026.js \
             assets/market-loading-guard.js \
             assets/market-ui-recovery.js \
@@ -45,8 +46,11 @@ jobs:
             assets/market-hype-ui.js \
             assets/market-view-switcher.js \
             assets/market-source-info.js \
+            tools/check-market-report-final.js \
             tools/collect-market-hype-radar-2026.js \
             tools/collect-market-hype-deep-2026.js \
+            tools/filter-market-hype-evidence-2026.js \
+            tools/collect-market-hype-wide-2026.js \
             tools/probe-market-sales-counters-2026.js \
             tools/market-product-canonical-2026.js \
             tools/canonicalize-market-sales-products-2026.js \
@@ -67,29 +71,30 @@ jobs:
             cloudflare/market-hype-refresh/worker.mjs \
             sw.js; do node --check "$f"; done
           node tools/normalize-market-2026.js --check
+
+      - name: Validate Market and global Hype contracts
+        run: |
+          node tools/check-market-report-final.js
           node - <<'NODE'
           const fs=require('fs');
           const read=p=>fs.readFileSync(p,'utf8');
           const json=p=>JSON.parse(read(p));
-          const marketData=json('data/market-2026.json');
+          const market=json('data/market-2026.json');
           const registry=json('data/market-retailers-2026.json');
           const sales=json('data/market-sales-2026.json');
           const demand=json('data/market-demand-intelligence-2026.json');
           const presence=json('data/market-product-presence-2026.json');
-          const hype=json('data/market-hype-radar-2026.json');
-          const hypeCfg=json('data/market-hype-sources-2026.json');
-          const market=read('assets/market-2026.js');
+          const cfg=json('data/market-hype-sources-2026.json');
           const loader=read('assets/enhancements.js');
           const guard=read('assets/market-loading-guard.js');
           const recovery=read('assets/market-ui-recovery.js');
           const analysis=read('assets/market-management-v2.js');
           const synth=read('assets/market-analysis-synthesis.js');
           const hypeUi=read('assets/market-hype-ui.js');
-          const hypeCss=read('assets/market-hype-ui.css');
-          const hypeDeep=read('tools/collect-market-hype-deep-2026.js');
           const switcher=read('assets/market-view-switcher.js');
-          const switcherCss=read('assets/market-view-switcher.css');
           const sourceInfo=read('assets/market-source-info.js');
+          const access=read('assets/market-access-policy.js');
+          const wide=read('tools/collect-market-hype-wide-2026.js');
           const probe=read('tools/probe-market-sales-counters-2026.js');
           const sw=read('sw.js');
           const daily=read('.github/workflows/market-2026-sync.yml');
@@ -97,63 +102,49 @@ jobs:
           const hypeFlow=read('.github/workflows/market-hype-2026-sync.yml');
           const validator=read('tools/validate-market-daily-2026.js');
           const worker=read('cloudflare/market-hype-refresh/worker.mjs');
+          const marketJs=read('assets/market-2026.js');
           const expectedHash='113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
 
-          if([marketData,registry,sales,demand,presence,hype,hypeCfg].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must remain 2026');
+          if([market,registry,sales,demand,presence,cfg].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must remain 2026');
           if((registry.retailers||[]).length<22)throw new Error('National registry shrank below 22 storefronts');
-          if(!(marketData.observations||[]).length)throw new Error('Market dataset has no observations');
-          if(!market.includes(expectedHash)||!market.includes('trendSnapshots'))throw new Error('Market access/trend regression');
+          if(!(market.observations||[]).length)throw new Error('Market dataset has no observations');
+          if(!marketJs.includes(expectedHash)||!marketJs.includes('trendSnapshots'))throw new Error('Market access/trend regression');
 
           for(const flow of [daily,salesFlow,hypeFlow])if(!flow.includes("cron: '0 3 * * *'")||!flow.includes("cron: '0 4 * * *'"))throw new Error('06:00 Bucharest DST architecture missing');
           if(!validator.includes('status.date!==today'))throw new Error('Daily freshness validator missing');
           for(const token of ['canonicalize-market-sales-products-2026.js','canonicalize-market-demand-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js','probe-market-sales-counters-2026.js'])if(!salesFlow.includes(token))throw new Error('Sales/management pipeline missing '+token);
-          if(!hypeFlow.includes('collect-market-hype-radar-2026.js')||!hypeFlow.includes('collect-market-hype-deep-2026.js'))throw new Error('Deep Hype 06:00 pipeline missing');
+          for(const token of ['collect-market-hype-radar-2026.js','collect-market-hype-deep-2026.js','filter-market-hype-evidence-2026.js','collect-market-hype-wide-2026.js'])if(!hypeFlow.includes(token))throw new Error('Hype 06:00 pipeline missing '+token);
 
-          const essential=['/assets/market-loading-guard.js?v=12','/assets/market-ui-recovery.js?v=5','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=4','/assets/market-view-switcher.js?v=6'];
+          const essential=['/assets/market-access-policy.js?v=1','/assets/market-loading-guard.js?v=13','/assets/market-ui-recovery.js?v=6','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=5','/assets/market-view-switcher.js?v=7'];
           for(const asset of essential)if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
-          for(const asset of ['/assets/market-management-v4-extra.css?v=1','/assets/market-hype-warnings.css?v=1','/assets/market-analysis-synthesis.css?v=1','/assets/market-source-info.js?v=2','/assets/market-source-info.css?v=1'])if(!sw.includes(asset))throw new Error('Final Market asset missing from cache '+asset);
-          if(!loader.includes("style('/assets/market-management-v4-extra.css?v=1')")||!loader.includes("style('/assets/market-hype-warnings.css?v=1')"))throw new Error('Final Market style bootstrap missing');
-          if(!guard.includes("id:'marketAnalysisSynthesis'")||!guard.includes('market-view-switcher.js?v=6')||!/market-load-guard-active/.test(guard))throw new Error('Atomic final-report guard incomplete');
-          if(!recovery.includes('marketAnalysisSynthesis')||!recovery.includes('market-view-switcher.js?v=6'))throw new Error('Final-report recovery incomplete');
+          if(!sw.includes('/assets/market-source-info.js?v=3')||!sw.includes('/assets/market-hype-warnings.css?v=2')||!sw.includes('ghid-rta-static-v34-hype-global-30d'))throw new Error('Final Hype cache manifest mismatch');
+          if(!guard.includes("key:'heartbeat'")||!guard.includes("label:'Hype · GLOBAL · 30 zile'"))throw new Error('Atomic global Hype validation missing');
+          if(!recovery.includes('market-hype-ui.js?v=5')||!recovery.includes('market-view-switcher.js?v=7'))throw new Error('Recovery points to old Hype assets');
 
           if(!analysis.includes('May be?...'))throw new Error('Required May be?... title missing');
           if(analysis.includes('Ce cumpăr, ce împing la vânzare și unde mă dezvolt'))throw new Error('Rejected old heading returned');
           for(const token of ['data-row','Sfat acum','De ce rezultă asta','Ce mă face prudent','Ce schimbă decizia'])if(!analysis.includes(token))throw new Error('Interactive explained analysis missing '+token);
-          for(const token of ['Top România','Rotație','Sinteză','Management','categoryLeaders','validUnit'])if(!synth.includes(token))throw new Error('All-source management synthesis missing '+token);
-          if(!synth.includes('counterEvidence')||!synth.includes('comenzi')||!synth.includes('orders'))throw new Error('Rotation does not protect against contaminated generic counters');
+          for(const token of ['Top România','Rotație','Sinteză','Management','categoryLeaders','validUnit'])if(!synth.includes(token))throw new Error('Management synthesis missing '+token);
+          if(!switcher.includes('ANALIZĂ · ROMÂNIA · ACTUALIZARE 06:00 · Ce se vinde cel mai bine'))throw new Error('Analysis kicker missing');
+          if(!switcher.includes('Global · înainte + după apariție · 30 zile'))throw new Error('Global Hype nav missing');
+          if(!sourceInfo.includes('market-hype-heartbeat-evidence-2026.json')||!sourceInfo.includes('GLOBAL pentru RTA + clone RTA'))throw new Error('Info surse global Hype evidence missing');
 
-          if(!switcher.includes("t('Analiza','Analysis')")||!switcher.includes("<strong>Hype</strong>")||!switcher.includes("t('Info surse','Source info')"))throw new Error('Short final navigation missing');
-          if(switcher.includes('Details')||switcher.includes('Hype Radar · 72h'))throw new Error('Old navigation labels returned');
-          if(!switcher.includes('market-source-info.js?v=2'))throw new Error('Info surse lazy loading missing');
-          if(!switcher.includes("setTechnical(root,mode==='sources')")||!switcher.includes("BASE='market2026Body'"))throw new Error('Technical Market layer can leak into Analysis/Hype');
-          if(!switcher.includes("replace(/\\bNaN\\b/g,'—')"))throw new Error('Visible NaN sanitizer missing');
-          if(!switcherCss.includes('#market2026Root:not([data-market-primary-view="sources"])>#market2026Body'))throw new Error('CSS source-only isolation missing');
-          for(const token of ['Dovezi și trimiteri','retailerStatus','rankings','observations','productUrl','source'])if(!sourceInfo.includes(token))throw new Error('Info surse evidence view missing '+token);
+          if(Number(cfg.hypeWindowDays)!==30||Number(cfg.lookbackHours)!==720||cfg.scope!=='GLOBAL RTA + clone RTA')throw new Error('Global 30-day Hype config missing');
+          if((cfg.officialMakers||[]).length<35||(cfg.cloneMakers||[]).length<12||(cfg.forumDomains||[]).length<12)throw new Error('Global Hype source coverage too small');
+          for(const token of ['2fdeal.com','3fvape.com','facebook.com','instagram.com','youtube.com','ecigssa.co.za','vapoo.de','SXK','ULTON','YFTK','SJMY','Tobeco'])if(!JSON.stringify(cfg).toLowerCase().includes(token.toLowerCase()))throw new Error('Global Hype source/maker missing '+token);
+          if(!wide.includes("kind==='upcoming'")||!wide.includes("kind==='released'")||!wide.includes('mergeMemory')||!wide.includes("mode:'after-first-heart-beat'"))throw new Error('Two-window 30-day Hype engine incomplete');
+          if(!hypeUi.includes('HYPE · GLOBAL · 30 ZILE')||!hypeUi.includes('Orice zvon relevant cu 30 zile înainte...')||!hypeUi.includes('After the first heart-beat...'))throw new Error('Global Hype UI contract incomplete');
+
+          if(!access.includes('sessionStorage.removeItem(KEY)')||!access.includes('pageshow'))throw new Error('Per-entry Market password clearing missing');
+          if(!loader.includes("load('/assets/market-access-policy.js?v=1',function(){load('/assets/market-2026.js?v=4'"))throw new Error('Password policy must load before Market');
 
           if(!probe.includes('rejectedGenericOrderCounters:true')||!probe.includes('validHistoricCounter'))throw new Error('Generic order-counter rejection missing');
           const counterFn=probe.slice(probe.indexOf('function explicitCounter'),probe.indexOf('function walk'));
           if(/comenzi|orders\)/i.test(counterFn))throw new Error('Generic order text is still accepted by explicit product counter parser');
           if(!sales.methodology||sales.methodology.noStockInference!==true)throw new Error('Sales layer must prohibit stock-based sales inference');
-          if(sales.coverage&&sales.coverage.nationalMarketShareAvailable===true&&Number(sales.coverage.storefrontsWithActualUnitSales)!==(registry.retailers||[]).length)throw new Error('National market share claimed without full Tier-A coverage');
           if(!presence.methodology||!/Bestseller breadth/i.test(String(presence.methodology.truthRule||'')))throw new Error('Listing/bestseller separation missing');
 
-          if(Number(hype.schemaVersion)<3||hype.mode!=='pre-market-upstream-only'||!hype.truth||hype.truth.retailSourcesUsed!==false||hype.truth.commercialPagesRejected!==true)throw new Error('Hype upstream-only truth rule missing');
-          if(hype.truth.brandsExposed!==false||hype.truth.shopLinksExposed!==false||hype.truth.pricesExposed!==false||hype.truth.buyTrendRequiresDistinctAccounts!==true||hype.truth.complaintStopRequiresIndependentSources!==true)throw new Error('Hype public/decision truth rules missing');
-          if(!hypeCfg.truthRules||hypeCfg.truthRules.retailIsNeverHype!==true||hypeCfg.truthRules.rejectCommercialPages!==true||hypeCfg.outputPolicy.includeWarnings!==true)throw new Error('Hype warning configuration incomplete');
-          if((hypeCfg.officialMakers||[]).length<28)throw new Error('Deep official-maker coverage too small');
-          for(const domain of ['thunderheadcreations.com','tellismod.com','fakirsmods.com','hussarvapes.com'])if(!JSON.stringify(hypeCfg).includes(domain))throw new Error('Deep official source missing '+domain);
-          if(!hypeUi.includes('Atenționări')||!hypeUi.includes('warningStage')||!hypeUi.includes('PREPARE_ACCESSORIES'))throw new Error('Hype warning UI missing');
-          if(!hypeDeep.includes('Deep second-pass')&&!hypeDeep.includes('deep|'))throw new Error('Deep Hype collector missing');
-          if(!hypeDeep.includes("decision:{code:multi?'PREPARE':'WATCH'"))throw new Error('Deep warnings can escalate beyond PREPARE/WATCH');
-          for(const [cat,rows] of Object.entries(hype.categories||{}))for(const x of rows||[]){
-            if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Prohibited public Hype field leaked');
-            const c=x.decision&&x.decision.code;
-            if(c==='BUY_HYPE'&&!(x.newestSignalHours<336&&x.sourceTypeCount>=2&&x.velocityVerified===true&&Number(x.velocity7d)>=3))throw new Error('BUY_HYPE without every required condition');
-            if(c==='BUY_TREND'&&!(Number(x.mentions7d)>=3&&Number(x.distinctAccounts7d)>=3))throw new Error('BUY_TREND without distinct-account evidence');
-          }
-          if(!/radial-gradient/.test(hypeCss)||!/#c13b65/.test(hypeCss)||!/#ffd34e/.test(hypeCss)||!/#4fdf86/.test(hypeCss)||!/#46b9ff/.test(hypeCss))throw new Error('Hype visual system regression');
-
           if(!worker.includes('progressForRun')||!worker.includes('/actions/runs/')||!worker.includes("kind:'hype-refresh'"))throw new Error('Hype refresh progress source missing');
-          if(!sw.includes("url.pathname.startsWith('/assets/market-')")||!sw.includes("'/data/market-hype-radar-2026.json'"))throw new Error('Market assets/data are not network-first');
-          console.log(`Market final gate OK: ${(marketData.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis/Hype/Info surse ready; 06:00 active.`);
+          if(!sw.includes("url.pathname.startsWith('/assets/market-')")||!sw.includes("'/data/market-hype-heartbeat-2026.json'"))throw new Error('Market/Hype assets or heartbeat data are not network-first');
+          console.log(`Market gate OK: ${(market.observations||[]).length} observations; ${(registry.retailers||[]).length} storefronts; Analysis=RO; Hype=GLOBAL 30d; two windows; 06:00; password every entry.`);
           NODE
