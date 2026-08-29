@@ -1,12 +1,20 @@
 {
-  "schemaVersion": 2,
+  "schemaVersion": 3,
   "scopeYear": 2026,
   "timezone": "Europe/Bucharest",
+  "nationalAudit": {
+    "status": "in_progress",
+    "discoveryCertified": false,
+    "lastAuditedAt": "2026-08-29",
+    "claimRule": "100% Romania poate fi afisat numai cand discoveryCertified=true si toate storefront-urile din registru au colectare zilnica verificata, fara erori sau fallback prezentat drept live.",
+    "unitStorefront": "domeniu/site online distinct",
+    "unitOperator": "operator economic unic; storefront-urile aceluiasi CUI nu se dubleaza in indicatorul operatorilor"
+  },
   "collectorPolicy": {
     "publicPagesOnly": true,
     "requestsPerSecondMax": 1,
     "maxPagesPerSeed": 4,
-    "userAgent": "Ghid-RTA-Market-Observatory/2.0 (+https://ghid-rta.ro/)",
+    "userAgent": "Ghid-RTA-Market-Observatory/3.0 (+https://ghid-rta.ro/)",
     "noSalesInference": true,
     "dailyRefresh": true,
     "refreshTarget": "07:00 Europe/Bucharest",
@@ -22,6 +30,7 @@
       "country": "RO",
       "mode": "smokee-api",
       "status": "monitored",
+      "operatorId": "ovidanmarc",
       "coverage": ["RTA", "sarme", "coiluri prebuilt", "bumbac", "moduri/chipseturi", "acumulatori/incarcatoare", "unelte", "componente RTA", "lichide tutunoase/NET/DIY"],
       "seeds": []
     },
@@ -75,11 +84,12 @@
       "country": "RO",
       "mode": "public-html",
       "status": "monitored",
+      "operatorId": "ovidanmarc",
       "coverage": ["RTA", "sarme/coiluri", "bumbac", "moduri", "acumulatori/incarcatoare", "accesorii", "componente", "lichide"],
       "seeds": [
-        {"url": "https://www.smokemania.ro/atomizoare-tigara-electronica/atomizoare/atomizoare-high-end.html", "categoryHint": "RTA", "maxPages": 4},
+        {"url": "https://www.smokemania.ro/atomizoare-tigara-electronica/atomizoare/avansati.html", "categoryHint": "RTA", "maxPages": 4},
         {"url": "https://www.smokemania.ro/accesorii-tigara-electronica/acumulatori-li-ion.html", "categoryHint": "mixed", "maxPages": 4},
-        {"url": "https://www.smokemania.ro/smokerstore", "categoryHint": "RTA", "maxPages": 4}
+        {"url": "https://www.smokemania.ro/early_bird", "categoryHint": "mixed", "maxPages": 4}
       ]
     },
     {
@@ -147,7 +157,7 @@
       "status": "monitored",
       "coverage": ["RTA/RDTA", "bumbac", "acumulatori", "incarcatoare", "componente", "accesorii"],
       "seeds": [
-        {"url": "https://www.voore.ro/atomizor-tigara-electronica/atomizoare-vapat/atomizoare-rta-rdta", "categoryHint": "RTA", "maxPages": 4},
+        {"url": "https://www.voore.ro/atomizor-tigara-electronica/atomizoare-vapat/atomizoare-servisabile", "categoryHint": "RTA", "maxPages": 4},
         {"url": "https://www.voore.ro/atomizor-tigara-electronica/consumabile-atomizoare-vapat/bumbac", "categoryHint": "mixed", "maxPages": 4},
         {"url": "https://www.voore.ro/mod-tigara-electronica/acumulatori-tigara-electronica", "categoryHint": "mixed", "maxPages": 4},
         {"url": "https://www.voore.ro/mod-tigara-electronica/incarcatoare", "categoryHint": "mixed", "maxPages": 4},
@@ -164,7 +174,7 @@
       "coverage": ["RTA", "atomizoare", "moduri", "accesorii"],
       "seeds": [
         {"url": "https://www.vapersparadise.ro/categorie-produs/rta/", "categoryHint": "RTA", "maxPages": 4},
-        {"url": "https://www.vapersparadise.ro/eticheta-produs/atomizor/", "categoryHint": "mixed", "maxPages": 4},
+        {"url": "https://www.vapersparadise.ro/categorie-produs/atomizoare/", "categoryHint": "mixed", "maxPages": 4},
         {"url": "https://www.vapersparadise.ro/shop/", "categoryHint": "mixed", "maxPages": 4}
       ]
     },
@@ -175,10 +185,25 @@
       "country": "RO",
       "mode": "public-html",
       "status": "monitored",
+      "operatorId": "biansi-ego-ro29921968",
       "coverage": ["RTA", "RDA/RDTA", "componente", "accesorii"],
       "seeds": [
         {"url": "https://vicii-shop.ro/rta-tank/", "categoryHint": "RTA", "maxPages": 4},
         {"url": "https://vicii-shop.ro/", "categoryHint": "mixed", "maxPages": 2}
+      ]
+    },
+    {
+      "id": "tigaraego",
+      "name": "TigaraEgo",
+      "url": "https://tigaraego.com/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "operatorId": "biansi-ego-ro29921968",
+      "coverage": ["RTA", "RDA/RDTA", "atomizoare", "componente", "accesorii"],
+      "seeds": [
+        {"url": "https://tigaraego.com/rta-tank/", "categoryHint": "RTA", "maxPages": 4},
+        {"url": "https://tigaraego.com/", "categoryHint": "mixed", "maxPages": 2}
       ]
     },
     {
@@ -219,9 +244,25 @@
       "status": "monitored",
       "coverage": ["bumbac", "sarma Kanthal", "unelte", "moduri", "acumulatori", "incarcatoare", "atomizoare"],
       "seeds": [
-        {"url": "https://www.vapshop.ro/accesorii-tigara-electronica/bumbac-sarma-kanthal-unelte-tigara-electronica", "categoryHint": "mixed", "maxPages": 4},
+        {"url": "https://www.vapshop.ro/bumbac-sarma-kanthal-unelte-tigara-electronica", "categoryHint": "mixed", "maxPages": 4},
         {"url": "https://www.vapshop.ro/moduri-electronice", "categoryHint": "mod", "maxPages": 4},
-        {"url": "https://www.vapshop.ro/atomizoare", "categoryHint": "mixed", "maxPages": 4}
+        {"url": "https://www.vapshop.ro/atomizoare", "categoryHint": "mixed", "maxPages": 4},
+        {"url": "https://www.vapshop.ro/arome-tigari-electronice-halo-nicopure", "categoryHint": "lichid", "maxPages": 4}
+      ]
+    },
+    {
+      "id": "steamfactory",
+      "name": "SteamFactory",
+      "url": "https://steamfactory.ro/",
+      "country": "RO",
+      "mode": "public-html",
+      "status": "monitored",
+      "operatorId": "loa-kalfou-group-ro40828330",
+      "coverage": ["RTA", "atomizoare", "moduri", "acumulatori/incarcatoare", "lichide tutunoase"],
+      "seeds": [
+        {"url": "https://steamfactory.ro/atomizoare/", "categoryHint": "RTA", "maxPages": 4},
+        {"url": "https://steamfactory.ro/moduri/", "categoryHint": "mod", "maxPages": 4},
+        {"url": "https://steamfactory.ro/lichide-fara-nicotina/", "categoryHint": "lichid", "maxPages": 4}
       ]
     }
   ]
