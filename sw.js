@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'ghid-rta-static-v7';
+const CACHE_VERSION = 'ghid-rta-static-v8';
 const OFFLINE_URL = '/offline.html';
 const SAFE_PAGES = [
   OFFLINE_URL,
@@ -20,6 +20,8 @@ const STATIC_ASSETS = [
   '/assets/seo-pages.css',
   '/assets/enhancements.css?v=7',
   '/assets/enhancements.js?v=7',
+  '/assets/enhancements-core.js?v=8',
+  '/assets/market-2026.js?v=1',
   '/site.webmanifest',
   '/site-en.webmanifest'
 ];
@@ -83,7 +85,7 @@ self.addEventListener('fetch', event => {
     return;
   }
 
-  if (url.pathname === '/data/youtube-reviews.js') {
+  if (url.pathname === '/data/youtube-reviews.js' || url.pathname === '/data/market-2026.json' || url.pathname === '/data/smokee-mods.json') {
     event.respondWith(networkFirstData(request));
     return;
   }
