@@ -12,6 +12,7 @@ on:
       - "tools/collect-market-hype-radar-2026.js"
       - "tools/collect-market-hype-deep-2026.js"
       - "tools/filter-market-hype-evidence-2026.js"
+      - "tools/collect-market-hype-wide-2026.js"
       - "data/market-hype-sources-2026.json"
       - ".github/workflows/market-hype-2026-sync.yml"
 
@@ -25,7 +26,7 @@ concurrency:
 jobs:
   collect-hype-radar:
     runs-on: ubuntu-latest
-    timeout-minutes: 32
+    timeout-minutes: 45
     steps:
       - name: Gate 06:00 Bucharest
         id: gate
@@ -51,7 +52,7 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Collect upstream pre-announcement trend and risk signals
+      - name: Collect strict upstream pre-announcement trend and risk signals
         if: steps.gate.outputs.run_sync == 'true'
         env:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
@@ -59,34 +60,43 @@ jobs:
           REDDIT_DATA_API_APPROVED: ${{ secrets.REDDIT_DATA_API_APPROVED }}
         run: node tools/collect-market-hype-radar-2026.js --write
 
-      - name: Deep second-pass warnings and evidence
+      - name: Deep upstream second pass
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/collect-market-hype-deep-2026.js --write
 
-      - name: Strictly validate evidence hosts
+      - name: Strictly validate upstream evidence hosts
         if: steps.gate.outputs.run_sync == 'true'
         run: node tools/filter-market-hype-evidence-2026.js --write
 
-      - name: Validate Hype Radar truth rules
+      - name: Global 30-day wide discovery and After the first heart-beat
+        if: steps.gate.outputs.run_sync == 'true'
+        run: node tools/collect-market-hype-wide-2026.js --write
+
+      - name: Validate Hype global 30-day truth rules
         if: steps.gate.outputs.run_sync == 'true'
         run: |
           node --check tools/collect-market-hype-radar-2026.js
           node --check tools/collect-market-hype-deep-2026.js
           node --check tools/filter-market-hype-evidence-2026.js
+          node --check tools/collect-market-hype-wide-2026.js
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
           const e=JSON.parse(fs.readFileSync('data/market-hype-evidence-2026.json','utf8'));
-          if(Number(d.scopeYear)!==2026||Number(e.scopeYear)!==2026)throw new Error('Hype scope must remain 2026');
-          if(Number(d.schemaVersion)<3)throw new Error('Hype final schema v3 did not run');
-          if(d.mode!=='pre-market-upstream-only')throw new Error('Hype mode is not upstream-only');
-          if(!d.truth||d.truth.retailSourcesUsed!==false||d.truth.commercialPagesRejected!==true||d.truth.classificationUsesNavigation!==false)throw new Error('Retail/commercial/navigation exclusion truth rule missing');
+          const h=JSON.parse(fs.readFileSync('data/market-hype-heartbeat-2026.json','utf8'));
+          const he=JSON.parse(fs.readFileSync('data/market-hype-heartbeat-evidence-2026.json','utf8'));
+          if([d,e,h,he].some(x=>Number(x.scopeYear)!==2026))throw new Error('Hype scope must remain 2026');
+          if(Number(d.schemaVersion)<4)throw new Error('Global Hype schema v4 did not run');
+          if(Number(d.hypeWindowDays)!==30||Number(d.lookbackHours)!==720)throw new Error('Hype discovery window is not 30 days');
+          if(d.mode!=='pre-market-upstream-only')throw new Error('Hype strict core mode regressed');
+          if(!d.truth||d.truth.retailSourcesUsed!==false||d.truth.discoveryCommercialSourcesCanEscalate!==false||d.truth.globalScope!==true)throw new Error('Global commercial-discovery boundary missing');
           if(d.truth.brandsExposed!==false||d.truth.shopLinksExposed!==false||d.truth.pricesExposed!==false)throw new Error('Public Hype output exposes prohibited fields');
           if(d.truth.buyHypeRequiresAllConditions!==true||d.truth.buyTrendRequiresDistinctAccounts!==true||d.truth.complaintStopRequiresIndependentSources!==true)throw new Error('Decision truth boundaries incomplete');
-          if(!d.methodology||!/narrow context windows/i.test(String(d.methodology.classification||'')))throw new Error('Semantic context classifier did not run');
-          if(!d.sourceStatus||d.sourceStatus.deepScan!==true||d.sourceStatus.deepStrictHostValidated!==true)throw new Error('Deep Hype strict-host pass did not run');
-          if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.commercialPagesRejected!==true||e.truth.evidenceDoesNotEscalateDecision!==true||e.truth.strictHostValidated!==true)throw new Error('Hype evidence boundary missing');
-          for(const ev of e.events||[])for(const s of ev.sources||[]){if(!/^https?:\/\//.test(String(s.url||'')))throw new Error('Hype evidence URL missing');}
+          if(!d.sourceStatus||d.sourceStatus.deepScan!==true||d.sourceStatus.deepStrictHostValidated!==true||d.sourceStatus.wideScan!==true||d.sourceStatus.scope!=='GLOBAL')throw new Error('Deep/global Hype passes did not complete');
+          if(!d.methodology||d.methodology.scope!=='GLOBAL RTA + clone RTA')throw new Error('Hype is not explicitly global');
+          if(e.mode!=='hype-source-evidence'||!e.truth||e.truth.strictHostValidated!==true||e.truth.globalScope!==true)throw new Error('Global Hype evidence boundary missing');
+          if(h.mode!=='after-first-heart-beat'||Number(h.windowDays)!==30||h.scope!=='GLOBAL RTA + clone RTA'||!Array.isArray(h.releasedLast30Days))throw new Error('After the first heart-beat window missing');
+          if(he.mode!=='after-first-heart-beat-evidence'||Number(he.windowDays)!==30)throw new Error('Heartbeat evidence missing');
           for(const cat of ['RTA','MODURI','ACCESORII'])if(!Array.isArray(d.categories&&d.categories[cat]))throw new Error(`Missing Hype category ${cat}`);
           for(const [cat,rows] of Object.entries(d.categories||{}))for(const x of rows||[]){
             if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Brand/shop/price leaked into public Hype event');
@@ -95,20 +105,27 @@ jobs:
             if(c==='BUY_TREND'&&!(Number(x.mentions7d)>=3&&Number(x.distinctAccounts7d)>=3))throw new Error('BUY_TREND issued without distinct-account evidence');
             if(c==='PREPARE_ACCESSORIES'&&cat!=='ACCESORII')throw new Error('Accessory preparation leaked outside ACCESORII');
             if(c==='STOP_REVIEW'&&Number(x.complaintSourceCount||0)>0&&Number(x.complaintSourceCount)<3)throw new Error('Complaint STOP issued with fewer than three independent sources');
-            if(x.kind==='warning'&&!['WATCH','PREPARE'].includes(c))throw new Error('Deep warning escalated beyond WATCH/PREPARE');
+            if(x.kind==='wide'&&Number(x.newestSignalHours)>=14*24&&c==='BUY_HYPE')throw new Error('30-day context escalated to BUY_HYPE');
           }
-          console.log(`Hype gate OK: pre ${d.sourceStatus.qualifiedPrelaunchSignals}; deep warnings ${d.sourceStatus.deepWarningsAdded||0}; wrong-host rejected ${d.sourceStatus.deepWrongHostRejected||0}; evidence events ${(e.events||[]).length}; retail=false.`);
+          for(const x of h.releasedLast30Days||[]){
+            if(x.brand||x.url||x.price||x.shop||x.retailerId)throw new Error('Brand/shop/price leaked into heartbeat public window');
+            if(Number(x.ageHours)>720)throw new Error('Heartbeat release older than 30 days');
+          }
+          for(const ev of e.events||[])for(const s of ev.sources||[]){if(!/^https?:\/\//.test(String(s.url||'')))throw new Error('Hype evidence URL missing');}
+          for(const ev of he.events||[]){if(!/^https?:\/\//.test(String(ev.url||'')))throw new Error('Heartbeat evidence URL missing');}
+          console.log(`Hype global gate OK: strict ${d.sourceStatus.qualifiedPrelaunchSignals||0}; wide ${d.sourceStatus.wideSignalsAccepted||0}; released ${h.releasedLast30Days.length}; 30d; 06:00.`);
           NODE
 
-      - name: Publish complete Hype Radar snapshot
+      - name: Publish complete Hype and heartbeat snapshots
         if: steps.gate.outputs.run_sync == 'true'
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain -- data/market-hype-radar-2026.json data/market-hype-evidence-2026.json)" ]; then exit 0; fi
+          files="data/market-hype-radar-2026.json data/market-hype-evidence-2026.json data/market-hype-heartbeat-2026.json data/market-hype-heartbeat-evidence-2026.json"
+          if [ -z "$(git status --porcelain -- $files)" ]; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/market-hype-radar-2026.json data/market-hype-evidence-2026.json
-          git commit -m "Snapshot pre-market Hype Radar 2026"
+          git add $files
+          git commit -m "Snapshot global 30-day Hype Radar 2026"
           for attempt in 1 2 3 4 5; do
             git fetch origin main
             git rebase origin/main

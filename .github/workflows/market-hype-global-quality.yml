@@ -1,0 +1,111 @@
+name: Hype Global 30d Quality Gate
+
+on:
+  pull_request:
+    paths:
+      - 'data/market-hype-*.json'
+      - 'tools/*market-hype*2026.js'
+      - 'assets/market-hype-*.js'
+      - 'assets/market-hype-*.css'
+      - 'assets/market-view-switcher.js'
+      - 'assets/market-source-info.js'
+      - 'assets/market-access-policy.js'
+      - 'assets/enhancements.js'
+      - '.github/workflows/market-hype-2026-sync.yml'
+      - '.github/workflows/market-hype-global-quality.yml'
+      - 'sw.js'
+  push:
+    branches: [main]
+    paths:
+      - 'data/market-hype-*.json'
+      - 'tools/*market-hype*2026.js'
+      - 'assets/market-hype-*.js'
+      - 'assets/market-hype-*.css'
+      - 'assets/market-view-switcher.js'
+      - 'assets/market-source-info.js'
+      - 'assets/market-access-policy.js'
+      - 'assets/enhancements.js'
+      - '.github/workflows/market-hype-2026-sync.yml'
+      - '.github/workflows/market-hype-global-quality.yml'
+      - 'sw.js'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-hype-global:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: |
+          node --check tools/collect-market-hype-radar-2026.js
+          node --check tools/collect-market-hype-deep-2026.js
+          node --check tools/filter-market-hype-evidence-2026.js
+          node --check tools/collect-market-hype-wide-2026.js
+          node --check assets/market-hype-ui.js
+          node --check assets/market-view-switcher.js
+          node --check assets/market-source-info.js
+          node --check assets/market-loading-guard.js
+          node --check assets/market-access-policy.js
+          node --check assets/enhancements.js
+          node --check sw.js
+      - name: Contract
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const read=p=>fs.readFileSync(p,'utf8');
+          const json=p=>JSON.parse(read(p));
+          const cfg=json('data/market-hype-sources-2026.json');
+          const flow=read('.github/workflows/market-hype-2026-sync.yml');
+          const wide=read('tools/collect-market-hype-wide-2026.js');
+          const ui=read('assets/market-hype-ui.js');
+          const view=read('assets/market-view-switcher.js');
+          const source=read('assets/market-source-info.js');
+          const guard=read('assets/market-loading-guard.js');
+          const access=read('assets/market-access-policy.js');
+          const enhancements=read('assets/enhancements.js');
+          const sw=read('sw.js');
+          const need=(ok,msg)=>{if(!ok)throw new Error(msg)};
+          need(Number(cfg.lookbackHours)===720&&Number(cfg.hypeWindowDays)===30,'Hype discovery must be exactly 30 days');
+          need(/GLOBAL/.test(cfg.purpose||''),'Hype config must state global scope');
+          need((cfg.officialMakers||[]).length>=35,'Original maker coverage too small');
+          need((cfg.cloneMakers||[]).length>=8,'Clone maker coverage too small');
+          for(const name of ['SXK','Ulton','YFTK','Kindbright','ShenRay','Coppervape','Vazzling'])need((cfg.cloneMakers||[]).some(x=>String(x).toLowerCase()===name.toLowerCase()),'Missing clone maker '+name);
+          need((cfg.forumDomains||[]).length>=14,'Forum coverage too small');
+          for(const d of ['e-cigarette-forum.com','vapingunderground.com','forum.planetofthevapes.co.uk','forum-ecigarette.com','sigarettaelettronicaforum.com','ecigssa.co.za','vapoo.de'])need((cfg.forumDomains||[]).includes(d),'Missing forum '+d);
+          for(const d of ['2fdeal.com','3fvape.com','shareavape.com','sourcemore.com'])need((cfg.cloneSellerDiscoveryDomains||[]).includes(d),'Missing clone seller '+d);
+          need((cfg.originalSellerDiscoveryDomains||[]).length>=5,'Original seller discovery too small');
+          for(const d of ['facebook.com','instagram.com','threads.net','tiktok.com','x.com','youtube.com','t.me','discord.com'])need((cfg.socialDiscoveryDomains||[]).includes(d),'Missing social/community surface '+d);
+          need((cfg.openWebDiscoveryQueries||[]).length>=10,'Open-web discovery is too narrow');
+          need(cfg.truthRules&&cfg.truthRules.retailIsNeverHype===true&&cfg.truthRules.retailDiscoveryDoesNotEscalate===true,'Commercial discovery boundary missing');
+          need(/age <14 days/.test(cfg.truthRules.buyInHype||''),'BUY_HYPE 14-day heat rule missing');
+          need(cfg.outputPolicy&&cfg.outputPolicy.includeReleasedLast30Days===true&&cfg.outputPolicy.includeHeartbeat===true,'Two-window output policy missing');
+          need(!fs.existsSync('tools/collect-market-hype-heartbeat-2026.js'),'Duplicate heartbeat crawler must not exist');
+          need(flow.includes("cron: '0 3 * * *'")&&flow.includes("cron: '0 4 * * *'")&&flow.includes('Europe/Bucharest'),'06:00 Bucharest schedule missing');
+          need(flow.includes('collect-market-hype-wide-2026.js --write'),'Global wide scan is not wired into 06:00 workflow');
+          need(flow.includes('data/market-hype-heartbeat-2026.json')&&flow.includes('data/market-hype-heartbeat-evidence-2026.json'),'Heartbeat snapshots are not atomically published');
+          need(wide.includes("scope='GLOBAL'")||wide.includes("scope:'GLOBAL RTA + clone RTA'"),'Wide collector does not declare global scope');
+          need(wide.includes('discoveryCommercialSourcesCanEscalate=false'),'Vendor discovery could escalate decisions');
+          need(wide.includes("kind==='released'")&&wide.includes('releasedLast30Days'),'Released <=30 day window missing');
+          need(ui.includes('HYPE · GLOBAL · 30 ZILE'),'Global 30-day Hype label missing');
+          need(ui.includes('Orice zvon relevant cu 30 zile înainte...'),'Requested before-market copy missing');
+          need(ui.includes('After the first heart-beat...'),'Heartbeat title missing');
+          need(ui.includes('DUPĂ APARIȚIE · GLOBAL · MAX. 30 ZILE'),'Released-window label missing');
+          need(view.includes('Global · înainte + după apariție · 30 zile'),'Hype navigation copy missing');
+          need(view.includes('ACTUALIZARE 06:00 · Ce se vinde cel mai bine'),'Requested Analysis copy missing');
+          need(source.includes('market-hype-heartbeat-evidence-2026.json'),'Heartbeat proof links missing from Info surse');
+          need(source.includes('Hype este GLOBAL'),'Info surse does not explain global scope');
+          need(/Hype · global · 30 zile/i.test(guard)&&!guard.includes("label:'Hype · 72h'"),'Atomic loader still exposes old Hype window');
+          need(sw.includes('/data/market-hype-heartbeat-2026.json')&&sw.includes('/data/market-hype-heartbeat-evidence-2026.json'),'Heartbeat data are not network-first');
+          need(!ui.includes('site:facebook.com')&&!ui.includes('www.bing.com'),'Browser UI must never crawl external Hype sources');
+          need(access.includes("sessionStorage.removeItem(KEY)")&&access.includes("[data-tab=\"market2026\"]")&&access.includes('[data-market-unlock]'),'Per-click password reset policy missing');
+          const policyPos=enhancements.indexOf('/assets/market-access-policy.js?v=1'),marketPos=enhancements.indexOf('/assets/market-2026.js?v=4');
+          need(policyPos>=0&&marketPos>policyPos,'Access policy must load before Market module');
+          need(sw.includes('/assets/market-access-policy.js?v=1'),'Access policy is not cached/network-first');
+          console.log('Hype Global 30d gate OK: global RTA + clones; before/after windows; 06:00 only; source proof separated; password reset per access.');
+          NODE
