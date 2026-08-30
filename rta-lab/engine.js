@@ -23,7 +23,7 @@ const escapeHtml = value => String(value ?? "")
  * - K1 28 GA rămâne peste tot la 5 spire.
  * - K1 29 GA primește 5 spire pe jeturile concentrate și 6 pe geometriile late.
  * - Ambele Claptonuri sunt fixe la 5 spire, Ø2,5 mm.
- * - NiFe30 rămâne la 7 spire.
+ * - Familia NiFe TC folosește baseline-ul canonic de 6 spire pe Ø2,5 mm.
  */
 const BUILD_RULES = {
   "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa round-wire mai plină." },
@@ -305,7 +305,7 @@ function wireBonus(atom, wire, ax, objective, liquid) {
 
 function buildRule(atom, wire) {
   if (wire.id === "nife30") {
-    return { wraps: 7, reason: "NiFe30 rămâne fix la 7 spire, Ø2,5 mm, cu calibrare complet rece." };
+    return { wraps: 6, reason: "Familia NiFe TC folosește baseline-ul canonic de 6 spire, Ø2,5 mm, cu calibrare complet rece și TCR corect." };
   }
   if (["k1clap", "ssclap"].includes(wire.id)) {
     return { wraps: 5, reason: claptonPlatformText(atom, wire.id) };
@@ -368,8 +368,8 @@ function buildOutput(atom, wire, liquid) {
   }
   if (wire.id === "nife30") {
     output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
-      ? "Benchmark validat pe 80% trabuc / 20% cireșe. Dicodes/Resistherm TCR 320 sau Zivipf TCR 310; calibrare complet rece."
-      : "7 spire. Dicodes/Resistherm TCR 320 sau Zivipf TCR 310; calibrare complet rece.";
+      ? "Benchmark validat pe 80% trabuc / 20% cireșe. Familia NiFe folosește 6 spire pe Ø2,5 mm; Dicodes RESISTHERM TCR 320 sau Zivipf NiFe52 TCR 310, calibrare complet rece."
+      : "6 spire pe Ø2,5 mm. Dicodes RESISTHERM TCR 320 sau Zivipf NiFe52 TCR 310; calibrare complet rece.";
     if (atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")) {
       output.status = "Validat";
       output.noteClass = "valid";
@@ -380,7 +380,7 @@ function buildOutput(atom, wire, liquid) {
 
 function footprintText(atom, wire, output) {
   if (wire.id === "nife30") {
-    return "7 spire rămân reperul fix pentru TC; lungimea reală depinde de diametrul exact al firului NiFe30 folosit.";
+    return "6 spire pe Ø2,5 mm rămân reperul fix pentru TC; aliajul și TCR-ul se aleg corect, iar calibrarea se face complet la rece.";
   }
   if (["k1clap", "ssclap"].includes(wire.id)) {
     return `5 spire pe Ø2,5 mm. Claptonul are suprafață și masă mai mari decât round-wire, deci nu se compară axial 1:1 cu 28/5 sau 29/5. ${buildRule(atom, wire).reason}`;
@@ -465,7 +465,7 @@ function geometrySummary(atom) {
       <span><b>K1 29 GA</b>${rule.k129} spire · ≈ ${CONTACT_WIDTH_MM.k129[rule.k129]} mm</span>
       <span><b>K1 Clapton</b>2×30+38 · 5 spire</span>
       <span><b>SS Clapton</b>2×30+38 · 5 spire</span>
-      <span><b>NiFe30</b>7 spire · TCR 320/310</span>
+      <span><b>NiFe TC</b>6 spire · Ø2,5 · TCR 320/310</span>
     </div>
     <p>${escapeHtml(rule.reason)} Claptonurile intră în TOP 3 numai când profilul lichidului și platforma justifică suprafața și masa suplimentare.</p>
   </div>`;
@@ -783,7 +783,7 @@ function renderAtomExplorer() {
     <p class="explorer-air"><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
     ${geometrySummary(atom)}
     <div class="explorer-builds explorer-builds-five">${cards}</div>
-    <div class="explorer-tip"><b>Cum folosești rezultatul:</b> aici vezi ADN-ul platformei pentru toate cele 5 sârme. În motorul principal, Claptonurile intră în TOP 3 numai când bat efectiv round-wire-ul sau NiFe30 pentru lichidul și obiectivul selectat.</div>`;
+    <div class="explorer-tip"><b>Cum folosești rezultatul:</b> aici vezi ADN-ul platformei pentru toate cele 5 sârme. În motorul principal, Claptonurile intră în TOP 3 numai când bat efectiv round-wire-ul sau NiFe TC pentru lichidul și obiectivul selectat.</div>`;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
