@@ -39,7 +39,6 @@
     let bonus = baseWireBonus(atom, wire, ax, objective, liquid);
     if (!wire) return bonus;
 
-    // Prior personal moderat: ajută la departajare, dar nu trebuie să bată automat un ADN de platformă puternic validat.
     if (wire.id === "k129") bonus += 0.55;
     if (wire.id === "k128") bonus += 0.30;
 
@@ -61,13 +60,11 @@
 
     if (wire.id !== "k129") return output;
 
-    // PM Freehand + NET păstrează 29/6: aici există validare directă de platformă.
     if (preserveSix(atom, liquid, output)) {
       output.note = `${output.note || ""} Excepție justificată față de priorul personal 5-spire: 29/6 rămâne validat direct pe PM Freehand + NET până la A/B 29/5 dedicat.`.trim();
       return output;
     }
 
-    // Noua regulă personală: în lipsa unei excepții validate, se testează/recomandă mai întâi 29/5.
     output.wraps = "5";
 
     if (atom.id === "415") {
@@ -131,7 +128,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const guide = document.querySelector(".wire-guide-foot");
     if (guide) {
-      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 spire; K1 29 = <b>5 spire prior personal</b>, 6 numai când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes/Resistherm NiFe30 = <b>7 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. ADN-ul platformei poate depăși priorul personal.";
+      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 spire; K1 29 = <b>5 spire prior personal</b>, 6 numai când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes RESISTHERM NiFe30 = <b>6 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. ADN-ul platformei poate depăși priorul personal.";
     }
   });
 })();
