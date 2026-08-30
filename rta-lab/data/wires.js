@@ -46,7 +46,20 @@ window.RTA_WIRES=[
     "diam":"Ø2,5 mm",
     "power":"TC 225–235°C · limită 12–15 W",
     "kind":"TC",
-    "role":"finețe, consistență termică, layering și completitudine; Dicodes/Resistherm NiFe30 TCR 320 = 7 spire; Zivipf NiFe52 TCR 310 = 6 spire",
+    "role":"finețe, consistență termică, layering și completitudine; Dicodes/Resistherm NiFe30 TCR 320 = 7 spire, rola personală confirmată 5,5 Ω/m; Zivipf NiFe52 TCR 310 = 6 spire",
+    "materialSpecs":{
+      "dicodesResisthermNiFe30":{
+        "name":"Dicodes RESISTHERM NiFe30",
+        "tcr":320,
+        "resistanceOhmPerM":5.5,
+        "evidence":"etichetă rolă fizică fotografiată de utilizator la 30.08.2026",
+        "status":"confirmat direct de pe etichetă"
+      },
+      "zivipfNiFe52":{
+        "name":"Zivipf NiFe52",
+        "tcr":310
+      }
+    },
     "traits":{"tobacco":4.7,"layers":5.0,"body":4.4,"th":4.1,"smooth":5.0,"bright":4.6,"dry":4.0,"dark":4.6,"sweet":4.4,"complete":5.0}
   }
 ];
