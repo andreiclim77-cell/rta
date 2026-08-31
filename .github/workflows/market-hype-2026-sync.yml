@@ -67,21 +67,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 75
     steps:
-      - name: Gate exact 06:00 and 06:20 Bucharest runs
+      - name: Gate intended 06:00 and 06:20 Bucharest runs
         id: gate
         shell: bash
         run: |
           run_sync=true
-          fallback=false
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            local_time="$(TZ=Europe/Bucharest date +%H:%M)"
-            if [ "$local_time" = "06:00" ]; then fallback=false
-            elif [ "$local_time" = "06:20" ]; then fallback=true
-            else run_sync=false
+            # Scheduled jobs can start late. Select the UTC cron intended for the
+            # current Bucharest offset instead of checking the runner start time.
+            bucharest_offset="$(TZ=Europe/Bucharest date +%z)"
+            scheduled_cron="${{ github.event.schedule }}"
+            if { [ "$bucharest_offset" = "+0300" ] && [ "$scheduled_cron" != "0,20 3 * * *" ]; } ||
+               { [ "$bucharest_offset" = "+0200" ] && [ "$scheduled_cron" != "0,20 4 * * *" ]; }; then
+              run_sync=false
             fi
+            echo "Bucharest offset $bucharest_offset; schedule $scheduled_cron; run_sync=$run_sync."
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
-          echo "fallback=$fallback" >> "$GITHUB_OUTPUT"
 
       - name: Checkout
         if: steps.gate.outputs.run_sync == 'true'
@@ -95,7 +97,7 @@ jobs:
         shell: bash
         run: |
           run_hype=true
-          if [ "${{ github.event_name }}" = "schedule" ] && [ "${{ steps.gate.outputs.fallback }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "schedule" ]; then
             if node - <<'NODE'
           const fs=require('fs');
           const {referenceIso}=require('./tools/hype-window-reference-2026.js');
@@ -108,7 +110,7 @@ jobs:
           process.exit(1);
           NODE
             then
-              echo "06:00 Hype snapshot is complete; the 06:20 recovery run is not needed."
+              echo "Today's Hype snapshot is complete; no duplicate 06:00/06:20 collection is needed."
               run_hype=false
             fi
           fi
