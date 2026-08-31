@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "scopeYear": 2026,
-  "generatedAt": "2026-08-31T10:52:53.524Z",
+  "generatedAt": "2026-08-31T11:30:33.498Z",
   "refreshTarget": "06:00 Europe/Bucharest",
   "methodology": {
     "google": "Approximate Google Search demand for Romania from Google Ads Keyword Planner historical metrics when authorized. Search volume is demand, never sales.",
@@ -23,7 +23,7 @@
     "reddit": {
       "available": true,
       "mode": "public-index-fallback",
-      "documents": 30,
+      "documents": 27,
       "error": null
     },
     "facebook": {
@@ -49,7 +49,7 @@
     "productsTracked": 447,
     "productsInRomanianMarket": 535,
     "productsWithGoogleVolume": 0,
-    "productsWithCommunityEvidence": 0,
+    "productsWithCommunityEvidence": 1,
     "productsWithGuideIntent": 0
   },
   "products": [
@@ -14191,11 +14191,11 @@
         "latestAt": null
       },
       "facebook": {
-        "mentionsObserved": 0,
+        "mentionsObserved": 1,
         "mentions30d": 0,
         "mentions90d": 0,
         "engagement": 0,
-        "latestAt": null
+        "latestAt": "2026-08-30T16:09:00.000Z"
       },
       "forums": {
         "mentionsObserved": 0,
@@ -14205,11 +14205,13 @@
         "latestAt": null
       },
       "googleSearchScore": 0,
-      "communityScore": 0,
+      "communityScore": 100,
       "guideIntentScore": 0,
-      "corroborationScore": 0,
-      "corroboratingSources": [],
-      "communityObservedMentions": 0,
+      "corroborationScore": 100,
+      "corroboratingSources": [
+        "community"
+      ],
+      "communityObservedMentions": 1,
       "rawNames": [
         "Minister MTL"
       ],
@@ -33632,8 +33634,8 @@
           "key": "minister mtl",
           "googleAvgMonthlySearches": null,
           "guideSearches30d": 0,
-          "communityObservedMentions": 0,
-          "corroborationScore": 0
+          "communityObservedMentions": 1,
+          "corroborationScore": 100
         },
         {
           "key": "monarchy mtl ost old school",
@@ -34123,7 +34125,7 @@
   ],
   "canonicalization": {
     "schemaVersion": 1,
-    "generatedAt": "2026-08-31T10:52:53.639Z",
+    "generatedAt": "2026-08-31T11:30:33.600Z",
     "rule": "Search/community signals are consolidated to the same canonical product identity used by Romanian commercial evidence. Variant aliases are not summed when that could double-count the same underlying demand; maxima are used for overlapping public signals.",
     "rawProducts": 600,
     "canonicalProducts": 447,
