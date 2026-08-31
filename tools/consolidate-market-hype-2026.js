@@ -71,6 +71,20 @@ function applyRetailEvidenceGate(input){
   return row;
 }
 
+function normalizeConfidenceTier(input){
+  const row={...input};
+  if(!['confirmed','reported','public-signal'].includes(row.confidenceTier)){
+    if(row.dateConfidence==='official-product-published-at')row.confidenceTier='confirmed';
+    else if(STRONG_DATES.has(row.dateConfidence))row.confidenceTier='reported';
+    else row.confidenceTier='public-signal';
+  }
+  if(row.confidenceTier==='public-signal'){
+    row.signalKind=row.signalKind||'dated-public-signal';
+    row.stageLabel=row.stageLabel||'indiciu public, nu lansare confirmata';
+  }
+  return row;
+}
+
 function lifecycleScore(row){
   const event=ms(row.eventDate),future=row.window==='before'&&event!=null&&event>REF;
   const rank=eventRank(row);
@@ -111,7 +125,7 @@ function consolidate(doc,file){
   const isPodFile=/pods/.test(file);
   const grouped=new Map();
   for(const input of doc.products||[]){const row=applyRetailEvidenceGate(applyPriorHistory(normalizeFromEvidence(input)));if(!row||!row.productName||!inWindow(row)||!validTarget(row,isPodFile))continue;const rowKey=key(row),old=grouped.get(rowKey);grouped.set(rowKey,old?mergeRows(old,row):{...row});}
-  const products=Array.from(grouped.entries()).map(function(entry){const row=entry[1],canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''});row.id=hash(entry[0]);row.brand=canonical.brand||row.brand||'';row.sources=Array.from(new Map((row.sources||[]).map(function(source){return[sourceKey(source),source]})).values());row.sourceCount=row.sources.length;row.eligibleSources=unique(row.sources.filter(function(source){return source.decisionEligible!==false}).map(function(source){return source.sourceType})).length;row.firstPublicEvidenceAt=row.firstPublicEvidenceAt||earliestIso(row.sources.map(function(source){return source.eventDate}))||row.eventDate;row.stageEvidenceAt=row.stageEvidenceAt||row.eventDate;row.ageHours=Number((Math.abs(REF-ms(row.eventDate))/36e5).toFixed(1));return row}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
+  const products=Array.from(grouped.entries()).map(function(entry){const row=normalizeConfidenceTier(entry[1]),canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''});row.id=hash(entry[0]);row.brand=canonical.brand||row.brand||'';row.sources=Array.from(new Map((row.sources||[]).map(function(source){return[sourceKey(source),source]})).values());row.sourceCount=row.sources.length;row.eligibleSources=unique(row.sources.filter(function(source){return source.decisionEligible!==false}).map(function(source){return source.sourceType})).length;row.firstPublicEvidenceAt=row.firstPublicEvidenceAt||earliestIso(row.sources.map(function(source){return source.eventDate}))||row.eventDate;row.stageEvidenceAt=row.stageEvidenceAt||row.eventDate;row.ageHours=Number((Math.abs(REF-ms(row.eventDate))/36e5).toFixed(1));return row}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
   const publishedIdentities=new Set(products.map(function(row){return canonicalizeProduct({product:row.productName||'',brand:row.brand||''}).key})),queueMap=new Map();
   for(const candidate of Array.isArray(doc.verificationQueue)?doc.verificationQueue:[]){const productName=candidate.productName||candidate.product||'',identity=canonicalizeProduct({product:productName,brand:candidate.brand||''}).key;if(!productName||!identity||publishedIdentities.has(identity)||queueMap.has(identity))continue;queueMap.set(identity,candidate)}
   const verificationQueue=Array.from(queueMap.values()),events=products.filter(isEvent),signals=products.filter(function(row){return !isEvent(row)}),categories={};for(const row of events)categories[row.category]=(categories[row.category]||0)+1;
@@ -122,7 +136,7 @@ function consolidate(doc,file){
   }else if(!isPodFile){
     scan.categoryCoverage=Object.fromEntries(['RTA','MODURI','ACCESORII'].map(function(category){const categoryProducts=products.filter(function(row){return row.category===category}),categoryEvents=categoryProducts.filter(isEvent);return[category,{monitored:categoryProducts.length,events:categoryEvents.length,signals:categoryProducts.length-categoryEvents.length,queued:verificationQueue.filter(function(item){return item.category===category}).length}]}));
   }
-  return{...doc,schemaVersion:Math.max(30,Number(doc.schemaVersion||0)),generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),pendingRefresh:false,truth:{...(doc.truth||{}),eventDatesSeparatedFromCoverageDates:true,canonicalCrossSourceDeduplication:true,crossWindowLifecycleDeduplication:true,categoryRevalidatedBeforePublish:true,retailPromotionIsNotRelease:true,priorExistenceDemotesRetailRelisting:true,singleRetailerListingNeedsCorroboration:true,verificationQueueReconciledWithPublishedProducts:true,finalSegmentAndCategoryCoverageReconciled:true},scan,products,verificationQueue,summary};
+  return{...doc,schemaVersion:Math.max(30,Number(doc.schemaVersion||0)),generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),pendingRefresh:false,truth:{...(doc.truth||{}),eventDatesSeparatedFromCoverageDates:true,canonicalCrossSourceDeduplication:true,crossWindowLifecycleDeduplication:true,categoryRevalidatedBeforePublish:true,retailPromotionIsNotRelease:true,priorExistenceDemotesRetailRelisting:true,singleRetailerListingNeedsCorroboration:true,confidenceTierNormalizedAtPublish:true,verificationQueueReconciledWithPublishedProducts:true,finalSegmentAndCategoryCoverageReconciled:true},scan,products,verificationQueue,summary};
 }
 
 for(const file of FILES){const output=consolidate(read(file),file);if(WRITE)save(file,output);console.log(`${file}: ${output.summary.total} dated events, ${output.summary.publicSignals} public signals, ${output.summary.allConcrete} concrete products.`)}

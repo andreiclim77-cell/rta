@@ -23,7 +23,7 @@ need(Number(radar.hypeWindowDays)===30&&Number(radar.lookbackHours)===720,'Globa
 need(Number(products.schemaVersion)>=28&&products.scope==='GLOBAL RTA + clone RTA'&&Number(products.windowDays)===30&&products.pendingRefresh!==true,'Final RTA/MOD Hype snapshot is invalid');
 need(products.snapshotReferenceAt===refIso,`RTA/MOD snapshot reference mismatch: expected ${refIso}`);
 need(products.truth&&products.truth.productLevelOnly===true&&products.truth.newArrivalIsNotRelease===true&&products.truth.relistingIsNotRelease===true,'Product-level/relisting contract is missing');
-need(products.truth.eventDatesSeparatedFromCoverageDates===true&&products.truth.canonicalCrossSourceDeduplication===true&&products.truth.crossWindowLifecycleDeduplication===true&&products.truth.categoryRevalidatedBeforePublish===true&&products.truth.retailPromotionIsNotRelease===true,'Final Hype arbitration contract is missing');
+need(products.truth.eventDatesSeparatedFromCoverageDates===true&&products.truth.canonicalCrossSourceDeduplication===true&&products.truth.crossWindowLifecycleDeduplication===true&&products.truth.categoryRevalidatedBeforePublish===true&&products.truth.retailPromotionIsNotRelease===true&&products.truth.confidenceTierNormalizedAtPublish===true,'Final Hype arbitration contract is missing');
 need(products.scan&&products.scan.directCatalogs&&products.scan.datedNews&&products.scan.retailCampaigns,'Final multi-source Hype collectors did not run');
 need((products.products||[]).length>0,'Final RTA/MOD Hype product list is empty');
 
@@ -31,6 +31,7 @@ function dated(row){if(row.confidenceTier)return row.confidenceTier==='confirmed
 const identities=new Set();
 for(const row of products.products||[]){
   need(row&&row.id&&row.productName&&['RTA','MODURI','ACCESORII'].includes(row.category)&&row.typology&&['before','after'].includes(row.window),`Incomplete Hype row: ${row&&row.productName||'unnamed'}`);
+  need(['confirmed','reported','public-signal'].includes(row.confidenceTier),`Invalid confidence tier: ${row.productName}`);
   need(Array.isArray(row.sources)&&row.sources.length>0,`Sources missing: ${row.productName}`);
   for(const source of row.sources)need(!banned.test(String(source.host||source.url||'')),`Generic false positive leaked: ${source.host||source.url}`);
   const identity=row.category+'|'+canonicalizeProduct({product:row.productName,brand:row.brand||''}).key;
