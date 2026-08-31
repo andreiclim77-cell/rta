@@ -3,12 +3,14 @@
 
 const fs=require('fs');
 const crypto=require('crypto');
+const zlib=require('zlib');
 const {snapshotReferenceMs}=require('./hype-window-reference-2026.js');
 const {classifyPodProduct,decode,norm}=require('./market-pod-classifier-2026.js');
 const {canonicalizeProduct}=require('./market-product-canonical-2026.js');
 const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js');
 
 const WRITE=process.argv.includes('--write');
+const SUMMARY_ONLY=process.argv.includes('--summary-only');
 const SOURCE_FILE='data/market-hype-sources-2026.json';
 const RTA_FILE='data/market-hype-products-2026.json';
 const POD_FILE='data/market-hype-pods-2026.json';
@@ -78,7 +80,8 @@ async function fetchText(url,timeout=18000){
   const controller=new AbortController(),timer=setTimeout(function(){controller.abort()},timeout);
   try{
     const response=await fetch(url,{redirect:'follow',headers:{'user-agent':'Ghid-RTA-Direct-Catalog/1.1 (+https://ghid-rta.ro/)','accept':'text/html,application/xhtml+xml,*/*;q=.6','cache-control':'no-cache'},signal:controller.signal});
-    const text=await response.text();
+    const bytes=Buffer.from(await response.arrayBuffer()),gzip=/\.gz(?:\?|$)/i.test(response.url||url)||bytes.length>2&&bytes[0]===0x1f&&bytes[1]===0x8b;
+    const text=(gzip?zlib.gunzipSync(bytes):bytes).toString('utf8');
     if(!response.ok)throw new Error('HTTP '+response.status);
     return{url:response.url||url,text};
   }finally{clearTimeout(timer)}
@@ -86,6 +89,31 @@ async function fetchText(url,timeout=18000){
 
 function wait(ms){return new Promise(function(resolve){setTimeout(resolve,ms)})}
 async function fetchTextWithRetry(url,attempts=3){let lastError=null;for(let attempt=1;attempt<=attempts;attempt++){try{return await fetchText(url)}catch(error){lastError=error;if(attempt<attempts)await wait(attempt*700)}}throw lastError||new Error('fetch-failed')}
+async function pool(items,width,worker){let cursor=0;const output=new Array(items.length);async function run(){for(;;){const index=cursor++;if(index>=items.length)return;try{output[index]=await worker(items[index])}catch(error){output[index]={ok:false,error:String(error&&error.message||error)}}}}await Promise.all(Array.from({length:Math.min(width,Math.max(1,items.length))},run));return output}
+function xmlLocs(value){return Array.from(String(value||'').matchAll(/<loc>\s*([^<]+)\s*<\/loc>/gi),function(match){return decode(match[1])}).filter(Boolean)}
+function safeRegex(value){try{return new RegExp(String(value),'i')}catch(_){return null}}
+function patterns(values){return(values||[]).map(safeRegex).filter(Boolean)}
+function pageTitleFromUrl(value){try{const url=new URL(value),parts=url.pathname.split('/').filter(Boolean).filter(function(part){return !/^(?:en|de|fr|es|it|ro|ru|pl|id|ar|vi|ja|ko|th|pt|fil)$/i.test(part)}),last=parts.pop()||'';return cleanTitle(decodeURIComponent(last).replace(/\.(?:html?|php|aspx?)$/i,'').replace(/(mtl|rdl|dl)?rta\b/gi,' $1 rta ').replace(/\brdta\b/gi,' rdta ').replace(/modv(?=\d)/gi,' mod v').replace(/[-_]+/g,' '))}catch(_){return''}}
+function metaContent(html,key){const escaped=String(key).replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),patterns=[new RegExp(`<meta[^>]+(?:property|name)=["']${escaped}["'][^>]+content=["']([^"']*)["'][^>]*>`,'i'),new RegExp(`<meta[^>]+content=["']([^"']*)["'][^>]+(?:property|name)=["']${escaped}["'][^>]*>`,'i')];for(const pattern of patterns){const match=String(html||'').match(pattern);if(match)return decode(match[1])}return''}
+function jsonLdProducts(html){const output=[];function visit(value){if(Array.isArray(value)){value.forEach(visit);return}if(!value||typeof value!=='object')return;const types=Array.isArray(value['@type'])?value['@type']:[value['@type']];if(types.some(function(type){return String(type).toLowerCase()==='product'}))output.push(value);for(const key of ['@graph','mainEntity','itemListElement','subjectOf'])if(value[key])visit(value[key])}for(const match of String(html||'').matchAll(/<script\b[^>]*type=["']application\/ld\+json[^"']*["'][^>]*>([\s\S]*?)<\/script>/gi)){try{visit(JSON.parse(match[1].replace(/^\s*<!--|-->\s*$/g,'')))}catch(_){}}return output}
+function firstValue(value){if(Array.isArray(value))return firstValue(value[0]);if(value&&typeof value==='object')return value.url||value.contentUrl||value.name||'';return value||''}
+function productFromPage(source,url,html){
+  const structured=jsonLdProducts(html)[0]||{},offers=Array.isArray(structured.offers)?structured.offers[0]:structured.offers||{},availabilityText=String(offers.availability||''),available=/InStock|PreOrder|PreSale|LimitedAvailability/i.test(availabilityText)?true:/OutOfStock|SoldOut|Discontinued/i.test(availabilityText)?false:null;
+  const title=cleanTitle(structured.name||metaContent(html,'og:title')||metaContent(html,'twitter:title')||pageTitleFromUrl(url)),brand=firstValue(structured.brand)||source.brandHint||source.label,description=decode(structured.description||metaContent(html,'og:description')||metaContent(html,'description')||''),imageUrl=firstValue(structured.image)||metaContent(html,'og:image')||metaContent(html,'twitter:image')||'',price=Number(offers.price||offers.lowPrice||metaContent(html,'product:price:amount')),currency=offers.priceCurrency||metaContent(html,'product:price:currency')||source.currency||null,category=firstValue(structured.category)||source.defaultProductType||'';
+  return{id:hash(source.id+'|'+url),title,handle:'',vendor:brand,product_type:category,body_html:description,url,published_at:null,created_at:null,updated_at:null,variants:Number.isFinite(price)?[{price,available}]:available==null?[]:[{price:null,available}],images:imageUrl?[{src:imageUrl}]:[],__catalogListing:true,__sitemapListing:true};
+}
+function likelyProductUrl(source,value){
+  let url;try{url=new URL(value)}catch(_){return false}const path=url.pathname,include=patterns(source.includeUrlPatterns),exclude=patterns(source.excludeUrlPatterns||['/(?:blog|news|article|video|support|about|contact|faq|download|store-locator|privacy|terms|category|tag|author)/','\.(?:jpg|jpeg|png|webp|gif|svg|pdf|zip)$']);if(exclude.some(function(pattern){return pattern.test(path)}))return false;if(include.length)return include.some(function(pattern){return pattern.test(path)});
+  if(/\/(?:products?|shop|pod-systems?|pod-kits?|mods?|atomizers?|atomisers?|rta|devices?|kits?)\//i.test(path))return true;
+  const title=pageTitleFromUrl(value);return Boolean(title&&classifyProduct(source,{title,vendor:source.brandHint||'',product_type:source.defaultProductType||'',body_html:''}));
+}
+function productUrlPriority(source,value){const scopes=source.scopes||[],text=norm(pageTitleFromUrl(value)+' '+value);let score=0;if(scopes.includes('RTA')&&/\b(?:rta|rebuildable tank|atomizer|atomiser|kayfun|aromamizer)\b/.test(text))score+=12;if(scopes.includes('MODURI')&&/\b(?:mod|sbs|side by side|squonk)\b/.test(text))score+=10;if(scopes.includes('POD')&&/\b(?:pod|aio|starter kit|device)\b/.test(text))score+=8;if(scopes.includes('ACCESORII')&&/\b(?:deck|air pin|airflow|insert|chamber|chimney|tank|glass|drip tip|accessor)\b/.test(text))score+=5;if(/\/products?\//i.test(value))score+=2;return score}
+async function collectSitemapSource(source){
+  const initial=(source.sitemapPaths&&source.sitemapPaths.length?source.sitemapPaths:['/sitemap.xml','/sitemap_index.xml','/wp-sitemap.xml']).map(function(value){return new URL(value,source.baseUrl).toString()}),queue=initial.slice(),seen=new Set(),pageUrls=new Set(),sitemapRuns=[],maxFiles=Number(source.maxSitemapFiles||12);
+  while(queue.length&&seen.size<maxFiles){const target=queue.shift();if(seen.has(target))continue;seen.add(target);try{const response=await fetchTextWithRetry(target,2),locs=xmlLocs(response.text),isIndex=/<sitemapindex\b/i.test(response.text)||locs.length&&locs.every(function(url){return /(?:sitemap|\.xml(?:\.gz)?)(?:\?|$)/i.test(url)});sitemapRuns.push({url:target,ok:true,locations:locs.length});if(isIndex){const nested=locs.filter(function(url){return /(?:sitemap|\.xml(?:\.gz)?)(?:\?|$)/i.test(url)}).sort(function(a,b){return Number(/product|shop|pod|rta|mod/i.test(b))-Number(/product|shop|pod|rta|mod/i.test(a))});for(const url of nested)if(!seen.has(url)&&!queue.includes(url))queue.push(url)}else for(const url of locs)pageUrls.add(url)}catch(error){sitemapRuns.push({url:target,ok:false,error:String(error&&error.message||error)})}}
+  const candidates=Array.from(pageUrls).filter(function(url){return likelyProductUrl(source,url)}).sort(function(a,b){return productUrlPriority(source,b)-productUrlPriority(source,a)||a.localeCompare(b)}).slice(0,Number(source.maxProductPages||120)),pageRuns=await pool(candidates,Number(source.pageConcurrency||6),async function(url){try{const response=await fetchTextWithRetry(url,2),product=productFromPage(source,response.url,response.text);if(classifyProduct(source,product))return{ok:true,product};const fallback=productFromPage(source,url,'');return classifyProduct(source,fallback)?{ok:true,product:fallback,fallback:true}:{ok:false,error:'not-target-product'}}catch(error){const product=productFromPage(source,url,'');return classifyProduct(source,product)?{ok:true,product,fallback:true}:{ok:false,error:String(error&&error.message||error)}}}),products=pageRuns.filter(function(run){return run&&run.ok&&run.product}).map(function(run){return run.product});
+  if(!products.length)throw new Error('no-target-products-from-sitemap');products.adapterUsed='sitemap-jsonld-products';products.pageStats={sitemapsTried:seen.size,sitemapsWorking:sitemapRuns.filter(function(run){return run.ok}).length,urlsDiscovered:pageUrls.size,productCandidates:candidates.length,productPagesWorking:pageRuns.filter(function(run){return run&&run.ok}).length,failedSitemaps:sitemapRuns.filter(function(run){return!run.ok})};return products;
+}
 function htmlListings(source,html,pageUrl){
   const rows=[];
   for(const match of String(html||'').matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)){
@@ -100,13 +128,15 @@ function htmlListings(source,html,pageUrl){
   return Array.from(new Map(rows.map(function(row){return[row.url,row]})).values());
 }
 
-async function collectSource(source){
+async function collectPrimarySource(source){
+  if(source.catalogType==='sitemap-jsonld-products')return collectSitemapSource(source);
   if(source.catalogType==='html-listings'){
     const pages=Array.isArray(source.pages)&&source.pages.length?source.pages:['/'];
     const rows=[],pageRuns=[];
     for(const page of pages){const target=new URL(page,source.baseUrl).toString();try{const response=await fetchTextWithRetry(target);rows.push(...htmlListings(source,response.text,response.url));pageRuns.push({url:target,ok:true})}catch(error){pageRuns.push({url:target,ok:false,error:String(error&&error.message||error)})}}
     const pagesWorking=pageRuns.filter(function(run){return run.ok}).length;if(!pagesWorking)throw new Error('all-html-listing-pages-failed');
     rows.pageStats={pages:pages.length,pagesWorking,coveragePct:Number((pagesWorking/pages.length*100).toFixed(1)),failedPages:pageRuns.filter(function(run){return!run.ok})};
+    rows.adapterUsed='html-listings';
     return rows;
   }
   if(source.catalogType==='wordpress-products-json'){
@@ -121,6 +151,7 @@ async function collectSource(source){
       }
       if(rows.length<100)break;
     }
+    products.adapterUsed='wordpress-products-json';
     return products;
   }
   const products=[];
@@ -130,7 +161,22 @@ async function collectSource(source){
     products.push(...rows);
     if(rows.length<250)break;
   }
+  products.adapterUsed='shopify-products-json';
   return products;
+}
+
+async function collectSource(source){
+  try{
+    const products=await collectPrimarySource(source);
+    if(products.length)return products;
+    throw new Error('empty-primary-catalog');
+  }catch(primaryError){
+    if(source.catalogType==='sitemap-jsonld-products'||source.sitemapFallback===false)throw primaryError;
+    const products=await collectSitemapSource(source);
+    products.fallbackUsed=true;
+    products.fallbackReason=String(primaryError&&primaryError.message||primaryError);
+    return products;
+  }
 }
 
 function accessoryOnly(value){
@@ -181,19 +227,19 @@ function canonicalKey(item){const identity=cleanTitle(item.productName).replace(
 
 function catalogEvent(source,product,classification,observedAt){
   if(product.__catalogListing){
-    const title=cleanTitle(product.title),canonical=canonicalizeProduct({product:title,brand:classification.brand||source.brandHint||''});
-    return{item:{id:hash(source.id+'|'+product.url),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,official:source.official===true,productId:String(product.id||product.url||''),productName:title,canonicalKey:classification.category+'|'+canonical.key,brand:canonical.brand||classification.brand||source.brandHint||'',category:classification.category,segment:classification.segment||null,typology:classification.typology||null,url:product.url,image:'',price:null,currency:null,available:null,availabilityStatus:'listing-observed',publishedAt:null,createdAt:null,updatedAt:null,firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication:false,freshIdentity:false,relisted:false,pending:false},event:null};
+    const title=cleanTitle(product.title),titleCanonical=canonicalizeProduct({product:title,brand:''}),brand=titleCanonical.brand||classification.brand||source.brandHint||product.vendor||'',canonical=canonicalizeProduct({product:title,brand});
+    return{item:{id:hash(source.id+'|'+product.url),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,official:source.official===true,productId:String(product.id||product.url||''),productName:title,canonicalKey:classification.category+'|'+canonical.key,brand:canonical.brand||classification.brand||source.brandHint||'',category:classification.category,segment:classification.segment||null,typology:classification.typology||null,url:product.url,image:image(product),price:variantPrice(product),currency:(product.variants||[]).length?source.currency||null:null,available:null,availabilityStatus:'listing-observed',publishedAt:null,createdAt:null,updatedAt:null,firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication:false,freshIdentity:false,relisted:false,pending:false},event:null};
   }
-  const publishedAt=iso(product.published_at),createdAt=iso(product.created_at),updatedAt=iso(product.updated_at),body=decode(product.body_html||''),title=cleanTitle(product.title),listingOnly=product.__wordpressListing===true,dateConfidence=listingOnly&&source.official?'official-product-published-at':'catalog-published-at';
+  const publishedAt=iso(product.published_at),createdAt=iso(product.created_at),updatedAt=iso(product.updated_at),body=decode(product.body_html||''),title=cleanTitle(product.title),titleCanonical=canonicalizeProduct({product:title,brand:''}),resolvedBrand=titleCanonical.brand||classification.brand||source.brandHint||product.vendor||'',listingOnly=product.__wordpressListing===true,dateConfidence=listingOnly&&source.official?'official-product-published-at':'catalog-published-at';
   const publishedAge=ageDays(publishedAt),createdGap=publishedAt&&createdAt?Math.abs(Date.parse(publishedAt)-Date.parse(createdAt))/DAY:null;
   const recentPublication=inPast(publishedAt,PUBLIC_DAYS),freshIdentity=createdAt&&inPast(createdAt,PUBLIC_DAYS+7)&&createdGap!=null&&createdGap<=14;
   const pending=/coming soon|comming soon|pre[- ]?order|preorder|pre[- ]?sale|notify me|waitlist/i.test(title+' '+body.slice(0,5000));
   const relisted=Boolean(recentPublication&&!freshIdentity);
   const item={
     id:hash(source.id+'|'+product.id),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,official:source.official===true,
-    productId:String(product.id||''),productName:title,brand:classification.brand||source.brandHint||product.vendor||'',category:classification.category,
+    productId:String(product.id||''),productName:title,brand:resolvedBrand,category:classification.category,
     segment:classification.segment||null,typology:classification.typology||null,url:product.url||productUrl(source,product),image:image(product),
-    canonicalKey:classification.category+'|'+canonicalizeProduct({product:title,brand:classification.brand||source.brandHint||product.vendor||''}).key,
+    canonicalKey:classification.category+'|'+canonicalizeProduct({product:title,brand:resolvedBrand}).key,
     price:variantPrice(product),currency:source.currency||null,available:listingOnly?null:availability(product),availabilityStatus:listingOnly?'listing-observed':availability(product)?'available-observed':'unavailable-observed',publishedAt,createdAt,updatedAt,
     firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication,freshIdentity,relisted,pending
   };
@@ -232,7 +278,7 @@ function removeOwnedSignals(target){
 
 function finalize(target,stats){
   target.generatedAt=new Date().toISOString();target.discoveryContextDays=CONTEXT_DAYS;
-  target.truth={...(target.truth||{}),directCatalogPublicationDates:true,shopifyPublishedAtIsListingEvidenceNotGlobalLaunch:true,wordpressOfficialPublicationDates:true,republishedOldProductsExcludedFromRecentLaunches:true};
+  target.truth={...(target.truth||{}),directCatalogPublicationDates:true,shopifyPublishedAtIsListingEvidenceNotGlobalLaunch:true,wordpressOfficialPublicationDates:true,sitemapLastmodIsNeverUsedAsLaunchDate:true,jsonLdCatalogCoverageDoesNotCreateLaunchEvents:true,republishedOldProductsExcludedFromRecentLaunches:true};
   target.scan={...(target.scan||{}),directCatalogs:stats};
   target.products=(target.products||[]).filter(function(row){return row&&row.eventDate&&((row.window==='before'&&(inPast(row.eventDate,PUBLIC_DAYS)||inFuture(row.eventDate,PUBLIC_DAYS)))||(row.window==='after'&&inPast(row.eventDate,PUBLIC_DAYS)))}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
   const events=target.products.filter(function(row){return row.confidenceTier==='confirmed'||row.confidenceTier==='reported'||['explicit','catalog-published-at','official-product-published-at','release-observed','first-retail-observation'].includes(row.dateConfidence)}),signals=target.products.filter(function(row){return !events.includes(row)});
@@ -241,7 +287,7 @@ function finalize(target,stats){
 
 async function main(){
   const cfg=read(SOURCE_FILE,{}),sources=(cfg.directCatalogSources||DEFAULT_SOURCES).filter(function(source){return source&&source.baseUrl}),old=read(OUT_FILE,{items:[]}),oldMap=new Map((old.items||[]).map(function(item){return[sourceKey(item),item]})),observedAt=new Date().toISOString();
-  const runs=await Promise.all(sources.map(async function(source){try{return{source,products:await collectSource(source),ok:true}}catch(error){return{source,products:[],ok:false,error:String(error&&error.message||error)}}}));
+  const runs=await pool(sources,8,async function(source){try{return{source,products:await collectSource(source),ok:true}}catch(error){return{source,products:[],ok:false,error:String(error&&error.message||error)}}});
   const items=[],events=[];let classified=0,relisted=0;
   for(const run of runs){
     for(const product of run.products){
@@ -256,10 +302,10 @@ async function main(){
   const groupedEvents=new Map();for(const event of events){const key=canonicalKey(event)+'|'+event.window,old=groupedEvents.get(key);if(!old){groupedEvents.set(key,event);continue}const sourceMap=new Map((old.sources||[]).map(function(source){return[source.url,source]}));for(const source of event.sources||[])sourceMap.set(source.url,source);old.sources=Array.from(sourceMap.values());old.sourceCount=old.sources.length;old.eligibleSources=unique(old.sources.map(function(source){return source.sourceType})).length;if(Date.parse(event.eventDate)<Date.parse(old.eventDate))Object.assign(old,{eventDate:event.eventDate,stage:event.stage,stageLabel:event.stageLabel,dateConfidence:event.dateConfidence})}
   const dedupEvents=Array.from(groupedEvents.values()),rta=read(RTA_FILE,{products:[]}),pods=read(POD_FILE,{products:[]});removeOwnedSignals(rta);removeOwnedSignals(pods);let rtaAdded=0,podsAdded=0;
   for(const event of dedupEvents){if(event.category==='POD'){if(mergeProduct(pods,event))podsAdded++}else if(mergeProduct(rta,event))rtaAdded++}
-  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),sourceMix=dedupItems.reduce(function(acc,item){const kind=/^clone-/.test(String(item.sourceType||''))?'clone':item.official===true||/^manufacturer-official/.test(String(item.sourceType||''))?'official':'original-retailer';acc[kind]=(acc[kind]||0)+1;return acc},{official:0,'original-retailer':0,clone:0}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded,sourceMix,categoryEvents:{RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0}};
+  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),sourceMix=dedupItems.reduce(function(acc,item){const kind=/^clone-/.test(String(item.sourceType||''))?'clone':item.official===true||/^manufacturer-official/.test(String(item.sourceType||''))?'official':'original-retailer';acc[kind]=(acc[kind]||0)+1;return acc},{official:0,'original-retailer':0,clone:0}),adapterMix=runs.reduce(function(acc,run){const adapter=run.products.adapterUsed||run.source.catalogType||'shopify-products-json';acc[adapter]=(acc[adapter]||0)+Number(run.ok);return acc},{}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,sourcesUsingFallback:runs.filter(function(run){return run.products.fallbackUsed}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded,sourceMix,adapterMix,categoryEvents:{RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0}};
   finalize(rta,stats);finalize(pods,stats);
-  const output={schemaVersion:5,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,oldRepublishedProductsAreNotRecentEvents:true,availabilityIsSeparateFromReleaseChronology:true,currentAvailabilityIncludesOlderCatalogItems:true,htmlCatalogListingsDoNotClaimStock:true,officialOriginalAndCloneSourcesSeparated:true},scan:stats,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,sourceType:run.source.sourceType||'',official:run.source.official===true,scopes:run.source.scopes||[],catalogType:run.source.catalogType||'shopify-products-json',ok:run.ok,products:run.products.length,pages:run.products.pageStats||null,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted,sourceMix},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.slice(0,3000)};
-  if(WRITE){save(RTA_FILE,rta);save(POD_FILE,pods);save(OUT_FILE,output)}else console.log(JSON.stringify(output,null,2));
+  const output={schemaVersion:6,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,sitemapLastmodIsNeverUsedAsLaunchDate:true,jsonLdCatalogCoverageDoesNotCreateLaunchEvents:true,oldRepublishedProductsAreNotRecentEvents:true,availabilityIsSeparateFromReleaseChronology:true,currentAvailabilityIncludesOlderCatalogItems:true,htmlCatalogListingsDoNotClaimStock:true,officialOriginalAndCloneSourcesSeparated:true},scan:stats,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,sourceType:run.source.sourceType||'',official:run.source.official===true,scopes:run.source.scopes||[],catalogType:run.source.catalogType||'shopify-products-json',adapterUsed:run.products.adapterUsed||null,fallbackUsed:run.products.fallbackUsed===true,fallbackReason:run.products.fallbackReason||null,ok:run.ok,products:run.products.length,pages:run.products.pageStats||null,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted,sourceMix,adapterMix},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.slice(0,3000)};
+  if(WRITE){save(RTA_FILE,rta);save(POD_FILE,pods);save(OUT_FILE,output)}else if(!SUMMARY_ONLY)console.log(JSON.stringify(output,null,2));
   console.log(`Direct catalogs: ${stats.sourcesWorking}/${stats.sourcesConfigured} sources; ${stats.productsFetched} products; ${classified} classified; recent RTA ${counts.RTA||0}; MODURI ${counts.MODURI||0}; ACCESORII ${counts.ACCESORII||0}; POD ${counts.POD||0}; relisted excluded ${relisted}.`);
 }
 

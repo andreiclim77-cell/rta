@@ -77,6 +77,8 @@ async function snapshot(page,mode){
       state:root.querySelector('.hype-state b')?.textContent.trim(),
       progress:Boolean(root.querySelector('.hype-state .hype-progress')),
       sourceHealth:Boolean(root.querySelector('.hype-source-health')),
+      guideItems:root.querySelectorAll('.hype-reading-guide>div').length,
+      guideText:root.querySelector('.hype-reading-guide')?.textContent.trim()||'',
       layerTabs:root.querySelectorAll('[data-hype-layer]').length,
       activeLayer:root.querySelector('[data-hype-layer].active')?.getAttribute('data-hype-layer'),
       visiblePanel:root.querySelector('.hype-layer-panel:not([hidden])')?.getAttribute('data-hype-panel'),
@@ -98,11 +100,13 @@ function requireState(result,expected){
   if(result.cards!==expected.cards||result.events!==expected.events||result.signals!==expected.signals)throw new Error(`${expected.label}: expected ${expected.cards}/${expected.events}/${expected.signals}, got ${result.cards}/${result.events}/${result.signals}`);
   if(result.tabs!==2||result.active!==expected.mode)throw new Error(`${expected.label}: mode switch is incomplete`);
   if(!result.progress||!result.sourceHealth)throw new Error(`${expected.label}: live progress or source coverage is missing`);
+  if(result.guideItems!==4||!/URMEAZĂ|COMING/.test(result.guideText)||!/INDICIU|SIGNAL/.test(result.guideText)||!/CATALOG/.test(result.guideText))throw new Error(`${expected.label}: plain-language reading guide is incomplete`);
   if(result.layerTabs!==3||result.activeLayer!==expected.layer||result.visiblePanel!==expected.layer)throw new Error(`${expected.label}: evidence layer switch is incomplete`);
   if(result.emptyCategoryAccordions!==0)throw new Error(`${expected.label}: empty zero-count categories still clutter the launch windows`);
   if(result.availabilityRows!==expected.availability.shown||result.availabilityTotal!==expected.availability.total)throw new Error(`${expected.label}: availability expected ${expected.availability.shown}/${expected.availability.total}, got ${result.availabilityRows}/${result.availabilityTotal}`);
   for(const kind of ['official','original','clone'])if(result.provenanceTotals[kind]!==expected.availability.kindTotals[kind])throw new Error(`${expected.label}: ${kind} provenance expected ${expected.availability.kindTotals[kind]}, got ${result.provenanceTotals[kind]}`);
   if(/Semnale monitorizate|Monitored signals/.test(result.signalTitle||''))throw new Error(`${expected.label}: ambiguous monitored-signal title remains`);
+  if(!/Hype:/.test(result.title||''))throw new Error(`${expected.label}: explicit Hype title is missing`);
   if(result.docOverflow>3||result.clipped||result.vertical)throw new Error(`${expected.label}: layout overflow or vertical text detected`);
   if(result.eventNames.some(name=>/Prime Minister|AF5000|Sonder Q3|Paramour V2|Nitrous Pocket|Pinnacle Colossus/i.test(name)))throw new Error(`${expected.label}: known old model leaked into dated events`);
 }
