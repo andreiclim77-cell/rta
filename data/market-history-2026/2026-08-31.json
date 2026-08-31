@@ -1,421 +1,8 @@
 {
   "schemaVersion": 1,
-  "scope": "Romania RTA market observatory",
   "scopeYear": 2026,
-  "updatedAt": "2026-08-31T09:09:54.641Z",
-  "currency": "RON",
-  "methodology": {
-    "publicDataOnly": true,
-    "salesClaimAllowed": false,
-    "description": "Observator de oferta publica 2026. Masoara produse/SKU-uri listate, preturi, disponibilitate, aparitii/disparitii si restocari observate. Nu echivaleaza disponibilitatea sau disparitia din stoc cu vanzari reale.",
-    "historyPolicy": "Strict 2026: se colecteaza, se calculeaza si se afiseaza exclusiv observatii din anul de referinta.",
-    "dicodesPolicy": "Dispozitivele/modurile Dicodes finite sunt excluse din monitorizarea 2026 a modurilor. Placile/chipseturile Dicodes raman categorie separata de urmarit, inclusiv BF60, FL80 sau succesoare, numai cand exista listari verificabile.",
-    "coverageNote": "Valorile initiale reprezinta un seed verificabil si nu pretind acoperire exhaustiva a pietei nationale. Acoperirea creste numai prin surse publice validate."
-  },
-  "retailers": [
-    {
-      "id": "smokee",
-      "name": "Smokee",
-      "url": "https://smokee.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "sarme",
-        "coiluri prebuilt",
-        "bumbac",
-        "moduri/chipseturi",
-        "acumulatori/incarcatoare",
-        "unelte",
-        "componente RTA",
-        "lichide tutunoase/NET/DIY"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vaperia",
-      "name": "Vaperia",
-      "url": "https://vaperia.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RBA",
-        "sarme",
-        "coiluri",
-        "bumbac",
-        "componente RTA",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "unelte"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vapepoint",
-      "name": "VapePoint",
-      "url": "https://vapepoint.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RDA/RDTA",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "accesorii",
-        "lichide tutunoase"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vapetronic",
-      "name": "Vapetronic",
-      "url": "https://vapetronic.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "coiluri",
-        "bumbac",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "unelte",
-        "componente"
-      ],
-      "note": "Collector activ; 1 pagini au necesitat retry/verificare la ultima rulare."
-    },
-    {
-      "id": "smokemania",
-      "name": "SmokeMania",
-      "url": "https://www.smokemania.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "sarme/coiluri",
-        "bumbac",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "accesorii",
-        "componente",
-        "lichide"
-      ],
-      "note": "Collector activ; 3 pagini au necesitat retry/verificare la ultima rulare."
-    },
-    {
-      "id": "vapez",
-      "name": "Vapez",
-      "url": "https://www.vapez.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RDA",
-        "consumabile",
-        "accesorii/piese",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "truse"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "justvape",
-      "name": "JustVape",
-      "url": "https://www.justvape.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RDA servisabile",
-        "sarme",
-        "bumbac",
-        "rezistente preconstruite",
-        "geamuri",
-        "acumulatori",
-        "incarcatoare",
-        "unelte",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "epotion",
-      "name": "e-Potion",
-      "url": "https://e-potion.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RDA",
-        "sarme",
-        "bumbac",
-        "moduri",
-        "accesorii",
-        "lichide tutunoase/DIY"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "nouatigaraelectronica",
-      "name": "Noua Tigara Electronica",
-      "url": "https://www.nouatigaraelectronica.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "atomizoare",
-        "moduri",
-        "baterii/acumulatori",
-        "incarcatoare",
-        "bumbac/sarma/unelte",
-        "lichide tutunoase"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "voore",
-      "name": "Voore",
-      "url": "https://www.voore.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RDTA/RDA servisabile",
-        "sarme",
-        "bumbac",
-        "acumulatori",
-        "incarcatoare",
-        "componente",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vapersparadise",
-      "name": "Vaper's Paradise",
-      "url": "https://www.vapersparadise.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "atomizoare",
-        "moduri",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "viciishop",
-      "name": "Vicii Shop",
-      "url": "https://vicii-shop.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RDA/RDTA",
-        "componente",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "tigaraego",
-      "name": "TigaraEgo",
-      "url": "https://tigaraego.com/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RDA/RDTA",
-        "atomizoare",
-        "componente",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "geekvapero",
-      "name": "Geekvape.ro",
-      "url": "https://geekvape.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "RBA",
-        "sarme",
-        "coiluri",
-        "moduri",
-        "componente"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vaps",
-      "name": "VAPS",
-      "url": "https://vaps.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RBA/RTA/RDTA",
-        "moduri",
-        "DIY/accesorii",
-        "lichide tutun natural"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vapshop",
-      "name": "Vapshop.ro",
-      "url": "https://www.vapshop.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "bumbac",
-        "sarma Kanthal",
-        "unelte",
-        "moduri",
-        "acumulatori",
-        "incarcatoare",
-        "atomizoare"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "steamfactory",
-      "name": "SteamFactory",
-      "url": "https://steamfactory.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "atomizoare",
-        "moduri",
-        "acumulatori/incarcatoare",
-        "lichide tutunoase"
-      ],
-      "note": "Collector activ; 1 pagini au necesitat retry/verificare la ultima rulare."
-    },
-    {
-      "id": "ecigvapo",
-      "name": "Ecig Vapo",
-      "url": "https://ecig-vapo.com/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RBA/RDA servisabile",
-        "sarme Kanthal",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "merlin",
-      "name": "Merlin.ro",
-      "url": "https://merlin.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA",
-        "atomizoare servisabile",
-        "moduri/accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "vapero",
-      "name": "Vape.ro",
-      "url": "https://vape.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RBA/RDTA",
-        "atomizoare servisabile",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "alphavape",
-      "name": "AlphaVape",
-      "url": "https://alphavape.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RBA/RDTA",
-        "atomizoare servisabile",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    },
-    {
-      "id": "smartvape",
-      "name": "SmartVape",
-      "url": "https://smartvape.ro/",
-      "country": "RO",
-      "status": "monitored",
-      "coverage": [
-        "RTA/RBA/RDTA",
-        "atomizoare servisabile",
-        "accesorii"
-      ],
-      "note": "Collector public 2026 activ."
-    }
-  ],
-  "categorySnapshots": [
-    {
-      "retailerId": "vaperia",
-      "category": "RTA",
-      "listed": 32,
-      "observedAt": "2026-08-31",
-      "source": "https://vaperia.ro/rta",
-      "confidence": "rta-specific-category-total"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "source:atomizers",
-      "listed": 179,
-      "observedAt": "2026-08-31",
-      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=76",
-      "confidence": "woo-store-api-total"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "source:mods",
-      "listed": 73,
-      "observedAt": "2026-08-31",
-      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=75",
-      "confidence": "woo-store-api-total"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "source:tobacco",
-      "listed": 481,
-      "observedAt": "2026-08-31",
-      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=270",
-      "confidence": "woo-store-api-total"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "source:consumables-wire",
-      "listed": 66,
-      "observedAt": "2026-08-31",
-      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=198",
-      "confidence": "woo-store-api-total"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "source:consumables-diy",
-      "listed": 86,
-      "observedAt": "2026-08-31",
-      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=293",
-      "confidence": "woo-store-api-total"
-    },
-    {
-      "retailerId": "smokee",
-      "category": "source:accessories",
-      "listed": 99,
-      "observedAt": "2026-08-31",
-      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=77",
-      "confidence": "woo-store-api-total"
-    }
-  ],
+  "date": "2026-08-31",
+  "generatedAt": "2026-08-31T09:09:54.641Z",
   "observations": [
     {
       "retailerId": "alphavape",
@@ -20196,383 +19783,183 @@
       "sourceMode": "html-anchor"
     }
   ],
-  "boardWatch": [
+  "categorySnapshots": [
     {
-      "maker": "Dicodes",
-      "product": "BF60 board",
-      "category": "chipset/board",
-      "scope": "reference-only-until-romanian-listing",
-      "source": "https://www.cremedevape.com/Dicodes-BF60-board",
-      "note": "Urmarit ca placa/chipset, nu ca mod Dicodes finit."
+      "retailerId": "vaperia",
+      "category": "RTA",
+      "listed": 32,
+      "observedAt": "2026-08-31",
+      "source": "https://vaperia.ro/rta",
+      "confidence": "rta-specific-category-total"
     },
     {
-      "maker": "Dicodes",
-      "product": "FL80 board",
-      "category": "chipset/board",
-      "scope": "reference-only-until-romanian-listing",
-      "source": "https://www.cremedevape.com/Modders",
-      "note": "Urmarit ca placa/chipset, nu ca mod Dicodes finit."
+      "retailerId": "smokee",
+      "category": "source:atomizers",
+      "listed": 179,
+      "observedAt": "2026-08-31",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=76",
+      "confidence": "woo-store-api-total"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "source:mods",
+      "listed": 73,
+      "observedAt": "2026-08-31",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=75",
+      "confidence": "woo-store-api-total"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "source:tobacco",
+      "listed": 481,
+      "observedAt": "2026-08-31",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=270",
+      "confidence": "woo-store-api-total"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "source:consumables-wire",
+      "listed": 66,
+      "observedAt": "2026-08-31",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=198",
+      "confidence": "woo-store-api-total"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "source:consumables-diy",
+      "listed": 86,
+      "observedAt": "2026-08-31",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=293",
+      "confidence": "woo-store-api-total"
+    },
+    {
+      "retailerId": "smokee",
+      "category": "source:accessories",
+      "listed": 99,
+      "observedAt": "2026-08-31",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?category=77",
+      "confidence": "woo-store-api-total"
     }
   ],
-  "trendSnapshots": [
-    {
-      "date": "2026-08-29",
-      "observations": 1785,
-      "retailersWithObservations": 22,
-      "categories": {
-        "RTA": {
-          "listed": 375,
-          "inStock": 110,
-          "outOfStock": 201,
-          "unknownStock": 64,
-          "retailers": 15
-        },
-        "coil prebuilt": {
-          "listed": 84,
-          "inStock": 45,
-          "outOfStock": 37,
-          "unknownStock": 2,
-          "retailers": 7
-        },
-        "RBA/bridge": {
-          "listed": 29,
-          "inStock": 12,
-          "outOfStock": 15,
-          "unknownStock": 2,
-          "retailers": 9
-        },
-        "RDA/RDTA": {
-          "listed": 96,
-          "inStock": 39,
-          "outOfStock": 30,
-          "unknownStock": 27,
-          "retailers": 11
-        },
-        "sarma": {
-          "listed": 54,
-          "inStock": 20,
-          "outOfStock": 12,
-          "unknownStock": 22,
-          "retailers": 7
-        },
-        "bumbac/wick": {
-          "listed": 35,
-          "inStock": 10,
-          "outOfStock": 5,
-          "unknownStock": 20,
-          "retailers": 6
-        },
-        "lichid tutunos/NET/DIY": {
-          "listed": 552,
-          "inStock": 450,
-          "outOfStock": 61,
-          "unknownStock": 41,
-          "retailers": 6
-        },
-        "mod": {
-          "listed": 334,
-          "inStock": 122,
-          "outOfStock": 188,
-          "unknownStock": 24,
-          "retailers": 10
-        },
-        "accesoriu acumulator": {
-          "listed": 5,
-          "inStock": 0,
-          "outOfStock": 0,
-          "unknownStock": 5,
-          "retailers": 2
-        },
-        "acumulator": {
-          "listed": 30,
-          "inStock": 9,
-          "outOfStock": 10,
-          "unknownStock": 11,
-          "retailers": 4
-        },
-        "componente RTA": {
-          "listed": 46,
-          "inStock": 12,
-          "outOfStock": 8,
-          "unknownStock": 26,
-          "retailers": 4
-        },
-        "accesoriu RTA/mod": {
-          "listed": 130,
-          "inStock": 29,
-          "outOfStock": 12,
-          "unknownStock": 89,
-          "retailers": 5
-        },
-        "incarcator": {
-          "listed": 1,
-          "inStock": 1,
-          "outOfStock": 0,
-          "unknownStock": 0,
-          "retailers": 1
-        },
-        "unelte build": {
-          "listed": 8,
-          "inStock": 4,
-          "outOfStock": 4,
-          "unknownStock": 0,
-          "retailers": 3
-        },
-        "chipset/board": {
-          "listed": 4,
-          "inStock": 1,
-          "outOfStock": 3,
-          "unknownStock": 0,
-          "retailers": 2
-        },
-        "RTA/RDA mixed": {
-          "listed": 2,
-          "inStock": 2,
-          "outOfStock": 0,
-          "unknownStock": 0,
-          "retailers": 1
-        }
-      }
-    },
-    {
-      "date": "2026-08-30",
-      "observations": 1776,
-      "retailersWithObservations": 21,
-      "categories": {
-        "RTA": {
-          "listed": 371,
-          "inStock": 109,
-          "outOfStock": 198,
-          "unknownStock": 64,
-          "retailers": 14
-        },
-        "coil prebuilt": {
-          "listed": 84,
-          "inStock": 45,
-          "outOfStock": 37,
-          "unknownStock": 2,
-          "retailers": 7
-        },
-        "RBA/bridge": {
-          "listed": 29,
-          "inStock": 12,
-          "outOfStock": 15,
-          "unknownStock": 2,
-          "retailers": 9
-        },
-        "RDA/RDTA": {
-          "listed": 96,
-          "inStock": 39,
-          "outOfStock": 30,
-          "unknownStock": 27,
-          "retailers": 11
-        },
-        "sarma": {
-          "listed": 52,
-          "inStock": 20,
-          "outOfStock": 10,
-          "unknownStock": 22,
-          "retailers": 6
-        },
-        "bumbac/wick": {
-          "listed": 35,
-          "inStock": 10,
-          "outOfStock": 5,
-          "unknownStock": 20,
-          "retailers": 6
-        },
-        "lichid tutunos/NET/DIY": {
-          "listed": 552,
-          "inStock": 449,
-          "outOfStock": 61,
-          "unknownStock": 42,
-          "retailers": 6
-        },
-        "mod": {
-          "listed": 331,
-          "inStock": 119,
-          "outOfStock": 188,
-          "unknownStock": 24,
-          "retailers": 9
-        },
-        "accesoriu acumulator": {
-          "listed": 5,
-          "inStock": 0,
-          "outOfStock": 0,
-          "unknownStock": 5,
-          "retailers": 2
-        },
-        "acumulator": {
-          "listed": 30,
-          "inStock": 9,
-          "outOfStock": 10,
-          "unknownStock": 11,
-          "retailers": 4
-        },
-        "componente RTA": {
-          "listed": 46,
-          "inStock": 12,
-          "outOfStock": 8,
-          "unknownStock": 26,
-          "retailers": 4
-        },
-        "accesoriu RTA/mod": {
-          "listed": 130,
-          "inStock": 29,
-          "outOfStock": 12,
-          "unknownStock": 89,
-          "retailers": 5
-        },
-        "incarcator": {
-          "listed": 1,
-          "inStock": 1,
-          "outOfStock": 0,
-          "unknownStock": 0,
-          "retailers": 1
-        },
-        "unelte build": {
-          "listed": 8,
-          "inStock": 4,
-          "outOfStock": 4,
-          "unknownStock": 0,
-          "retailers": 3
-        },
-        "chipset/board": {
-          "listed": 4,
-          "inStock": 1,
-          "outOfStock": 3,
-          "unknownStock": 0,
-          "retailers": 2
-        },
-        "RTA/RDA mixed": {
-          "listed": 2,
-          "inStock": 2,
-          "outOfStock": 0,
-          "unknownStock": 0,
-          "retailers": 1
-        }
-      }
-    },
-    {
-      "date": "2026-08-31",
-      "observations": 1778,
-      "retailersWithObservations": 21,
-      "categories": {
-        "RTA": {
-          "listed": 371,
-          "inStock": 109,
-          "outOfStock": 198,
-          "unknownStock": 64,
-          "retailers": 14
-        },
-        "coil prebuilt": {
-          "listed": 84,
-          "inStock": 45,
-          "outOfStock": 37,
-          "unknownStock": 2,
-          "retailers": 7
-        },
-        "RBA/bridge": {
-          "listed": 29,
-          "inStock": 12,
-          "outOfStock": 15,
-          "unknownStock": 2,
-          "retailers": 9
-        },
-        "RDA/RDTA": {
-          "listed": 96,
-          "inStock": 39,
-          "outOfStock": 30,
-          "unknownStock": 27,
-          "retailers": 11
-        },
-        "sarma": {
-          "listed": 52,
-          "inStock": 20,
-          "outOfStock": 10,
-          "unknownStock": 22,
-          "retailers": 6
-        },
-        "bumbac/wick": {
-          "listed": 35,
-          "inStock": 10,
-          "outOfStock": 5,
-          "unknownStock": 20,
-          "retailers": 6
-        },
-        "lichid tutunos/NET/DIY": {
-          "listed": 553,
-          "inStock": 458,
-          "outOfStock": 53,
-          "unknownStock": 42,
-          "retailers": 6
-        },
-        "mod": {
-          "listed": 332,
-          "inStock": 120,
-          "outOfStock": 188,
-          "unknownStock": 24,
-          "retailers": 9
-        },
-        "accesoriu acumulator": {
-          "listed": 5,
-          "inStock": 0,
-          "outOfStock": 0,
-          "unknownStock": 5,
-          "retailers": 2
-        },
-        "acumulator": {
-          "listed": 30,
-          "inStock": 9,
-          "outOfStock": 10,
-          "unknownStock": 11,
-          "retailers": 4
-        },
-        "componente RTA": {
-          "listed": 46,
-          "inStock": 12,
-          "outOfStock": 8,
-          "unknownStock": 26,
-          "retailers": 4
-        },
-        "accesoriu RTA/mod": {
-          "listed": 130,
-          "inStock": 29,
-          "outOfStock": 12,
-          "unknownStock": 89,
-          "retailers": 5
-        },
-        "incarcator": {
-          "listed": 1,
-          "inStock": 1,
-          "outOfStock": 0,
-          "unknownStock": 0,
-          "retailers": 1
-        },
-        "unelte build": {
-          "listed": 8,
-          "inStock": 4,
-          "outOfStock": 4,
-          "unknownStock": 0,
-          "retailers": 3
-        },
-        "chipset/board": {
-          "listed": 4,
-          "inStock": 1,
-          "outOfStock": 3,
-          "unknownStock": 0,
-          "retailers": 2
-        },
-        "RTA/RDA mixed": {
-          "listed": 2,
-          "inStock": 2,
-          "outOfStock": 0,
-          "unknownStock": 0,
-          "retailers": 1
-        }
+  "summary": {
+    "date": "2026-08-31",
+    "observations": 1778,
+    "retailersWithObservations": 21,
+    "categories": {
+      "RTA": {
+        "listed": 371,
+        "inStock": 109,
+        "outOfStock": 198,
+        "unknownStock": 64,
+        "retailers": 14
+      },
+      "coil prebuilt": {
+        "listed": 84,
+        "inStock": 45,
+        "outOfStock": 37,
+        "unknownStock": 2,
+        "retailers": 7
+      },
+      "RBA/bridge": {
+        "listed": 29,
+        "inStock": 12,
+        "outOfStock": 15,
+        "unknownStock": 2,
+        "retailers": 9
+      },
+      "RDA/RDTA": {
+        "listed": 96,
+        "inStock": 39,
+        "outOfStock": 30,
+        "unknownStock": 27,
+        "retailers": 11
+      },
+      "sarma": {
+        "listed": 52,
+        "inStock": 20,
+        "outOfStock": 10,
+        "unknownStock": 22,
+        "retailers": 6
+      },
+      "bumbac/wick": {
+        "listed": 35,
+        "inStock": 10,
+        "outOfStock": 5,
+        "unknownStock": 20,
+        "retailers": 6
+      },
+      "lichid tutunos/NET/DIY": {
+        "listed": 553,
+        "inStock": 458,
+        "outOfStock": 53,
+        "unknownStock": 42,
+        "retailers": 6
+      },
+      "mod": {
+        "listed": 332,
+        "inStock": 120,
+        "outOfStock": 188,
+        "unknownStock": 24,
+        "retailers": 9
+      },
+      "accesoriu acumulator": {
+        "listed": 5,
+        "inStock": 0,
+        "outOfStock": 0,
+        "unknownStock": 5,
+        "retailers": 2
+      },
+      "acumulator": {
+        "listed": 30,
+        "inStock": 9,
+        "outOfStock": 10,
+        "unknownStock": 11,
+        "retailers": 4
+      },
+      "componente RTA": {
+        "listed": 46,
+        "inStock": 12,
+        "outOfStock": 8,
+        "unknownStock": 26,
+        "retailers": 4
+      },
+      "accesoriu RTA/mod": {
+        "listed": 130,
+        "inStock": 29,
+        "outOfStock": 12,
+        "unknownStock": 89,
+        "retailers": 5
+      },
+      "incarcator": {
+        "listed": 1,
+        "inStock": 1,
+        "outOfStock": 0,
+        "unknownStock": 0,
+        "retailers": 1
+      },
+      "unelte build": {
+        "listed": 8,
+        "inStock": 4,
+        "outOfStock": 4,
+        "unknownStock": 0,
+        "retailers": 3
+      },
+      "chipset/board": {
+        "listed": 4,
+        "inStock": 1,
+        "outOfStock": 3,
+        "unknownStock": 0,
+        "retailers": 2
+      },
+      "RTA/RDA mixed": {
+        "listed": 2,
+        "inStock": 2,
+        "outOfStock": 0,
+        "unknownStock": 0,
+        "retailers": 1
       }
     }
-  ],
+  },
   "collectorStatus": {
     "date": "2026-08-31",
     "generatedAt": "2026-08-31T09:06:24.813Z",
@@ -20763,989 +20150,6 @@
         "collectionComplete": true,
         "fallbackUsed": false,
         "fallbackGeneratedAt": null
-      }
-    ]
-  },
-  "specializedCollectorStatus": {
-    "date": "2026-08-31",
-    "generatedAt": "2026-08-31T09:08:20.555Z",
-    "byRetailer": [
-      {
-        "retailerId": "vapshop",
-        "parser": "opencart",
-        "pagesFetched": 5,
-        "seedsConfigured": 3,
-        "seedsSucceeded": 3,
-        "seedsFailed": 0,
-        "observations": 71,
-        "errors": [],
-        "collectionComplete": true
-      },
-      {
-        "retailerId": "viciishop",
-        "parser": "woo",
-        "pagesFetched": 8,
-        "seedsConfigured": 2,
-        "seedsSucceeded": 2,
-        "seedsFailed": 0,
-        "observations": 52,
-        "errors": [],
-        "collectionComplete": true
-      },
-      {
-        "retailerId": "tigaraego",
-        "parser": "woo",
-        "pagesFetched": 8,
-        "seedsConfigured": 2,
-        "seedsSucceeded": 2,
-        "seedsFailed": 0,
-        "observations": 58,
-        "errors": [],
-        "collectionComplete": true
-      },
-      {
-        "retailerId": "vapersparadise",
-        "parser": "woo",
-        "pagesFetched": 6,
-        "seedsConfigured": 3,
-        "seedsSucceeded": 3,
-        "seedsFailed": 0,
-        "observations": 11,
-        "errors": [],
-        "collectionComplete": true
-      },
-      {
-        "retailerId": "vapetronic",
-        "parser": "woo",
-        "pagesFetched": 10,
-        "seedsConfigured": 4,
-        "seedsSucceeded": 4,
-        "seedsFailed": 0,
-        "observations": 294,
-        "errors": [],
-        "collectionComplete": true
-      },
-      {
-        "retailerId": "steamfactory",
-        "parser": "woo",
-        "pagesFetched": 12,
-        "seedsConfigured": 3,
-        "seedsSucceeded": 3,
-        "seedsFailed": 0,
-        "observations": 0,
-        "errors": [],
-        "collectionComplete": false
-      },
-      {
-        "retailerId": "ecigvapo",
-        "parser": "woo",
-        "pagesFetched": 5,
-        "seedsConfigured": 2,
-        "seedsSucceeded": 2,
-        "seedsFailed": 0,
-        "observations": 0,
-        "errors": [],
-        "collectionComplete": false
-      },
-      {
-        "retailerId": "merlin",
-        "parser": "woo",
-        "pagesFetched": 6,
-        "seedsConfigured": 2,
-        "seedsSucceeded": 2,
-        "seedsFailed": 0,
-        "observations": 0,
-        "errors": [],
-        "collectionComplete": false
-      }
-    ]
-  },
-  "priceVerificationStatus": {
-    "date": "2026-08-31",
-    "generatedAt": "2026-08-31T09:09:54.493Z",
-    "targets": 110,
-    "corrected": 110,
-    "failed": 0,
-    "results": [
-      {
-        "retailerId": "tigaraego",
-        "product": "Tank RTA 7.5ML By Scottua Argintiu – Clona",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Vapor Storm Hawk Tank RTA – 0.5 Ohm",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 6,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Vision Eternity RBA",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 4.85,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor HOBO V2 RDA",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Tobeco ERE RDA – Black",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Wotofo Faris RDTA – Black",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "DERRINGER RDA EHPRO STAINLESS STEEL",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Gorgon RDTA – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "HELLBOY RDA",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "KENNEDY V2 RDA + DEMON CAP BLACK (clona)",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 1.27,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Mutank RDTA Silver by Indulgence",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 10,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Steam Crave Aromamizer RDTA",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 14.25,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Tobeco Cloud Champ RDA – SILVER – Clona",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Tobeco Hollowpoint V2 RDA – Clona",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Tobeco Mutation X V5 RDA – Clona",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Tobeco Turbo V3 RDA Autentic – Clona",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Twisted Messes Mini RDA",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "UD ANZU RDA – SILVER",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 3.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "US1 V2 RDA by Trinity Clona – Black",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 3.25,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "US1 V2 RDA by Trinity Clona – Silver",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 3.25,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Vandy Vape Berserker MTL RDA – Black",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 8.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Vandy Vape Berserker MTL RDA – Rainbow",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 8.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Vandy Vape GoVad BF RDA – BLACK",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 3.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Wotofo Lush RDA – Black",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Advken MANTA RTA – Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "AnyVape SegaTank RTA Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Bastard RTA by YFTK (clona) – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Caiman MTL RTA by YFTK (clona)",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 9.25,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Dotmod Petri 24mm RTA (clona) – Stainless Steel",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 2.8,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor EHPRO Bachelor X RTA – Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 8.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor HellVape Dead Rabbit RTA – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 8.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Nibiru RTA SXK – Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 7.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor NOI MTL RTA – Silver (clona)",
-        "source": "https://tigaraego.com/rda-dripp/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Purity MTL RTA by Ambition Mods – Black",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 9.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Purity MTL RTA by Ambition Mods – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 9.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor RTA Manta Advken – Blue",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Sine MTL RTA – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Vandy Vape Berserker V3 MTL RTA – Black",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 11.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Vandy Vape Berserker V3 MTL RTA – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 11.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Vandy Vape Mesh 24 RTA 2ml Stainless Steel",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 10.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor Vaporesso iTank2 8ml – Black",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 8,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Atomizor WISMEC Cylin RTA 3.5ml – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 4.95,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "BILLOW RTA EHPRO V1 Black",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 2.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "BILLOW RTA EHPRO V1 Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 2.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "CoilArt Salt RTA MTL – Black (clona)",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "CoilArt Salt RTA MTL – Silver (clona)",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Eleaf Lemo 2 RTA",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "EVIL EYE RTA EHPRO",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Footoon Aqua Master RTA – Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 7,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Hellvape Dead Rabbit MTL 2 RTA – Gunmetal",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 9.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Hellvape Dead Rabbit MTL 2 RTA – Matte Black",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 9.5,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "RSST SMOK GENESIS TANK",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 7,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Short Kit Purity Plus MTL RTA by Ambition Mods",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 3.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "Smok TFV12 Tank Cloud Beast King 6ml – Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 8.75,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "SQuape E[c] RTA – Black",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 8,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "TopFill pentru Dvarw MTL RTA – Silver",
-        "source": "https://tigaraego.com/rta-tank/",
-        "oldPriceRon": 3,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "WOTOFO Gear V2 RTA 3.5ml – Black",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 9.25,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "tigaraego",
-        "product": "WOTOFO Gear V2 RTA 3.5ml – Silver",
-        "source": "https://tigaraego.com/clearomizoare-servisabile/",
-        "oldPriceRon": 9.25,
-        "verifiedPriceRon": 40,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Tank RTA 7.5ML By Scottua Argintiu – Clona",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Vapor Storm Hawk Tank RTA – 0.5 Ohm",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 6,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Vision Eternity RBA",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 4.85,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Dotmod RDA Single Coil (clona) – Black",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 1.53,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Dotmod RDA Single Coil (clona) – Blue",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 1.53,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Dotmod RDA Single Coil (clona) – Red",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 1.53,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor HOBO V2 RDA",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Tobeco ERE RDA – Black",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Wotofo Faris RDTA – Black",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "DERRINGER RDA EHPRO STAINLESS STEEL",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Gorgon RDTA – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "HELLBOY RDA",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "KENNEDY V2 RDA + DEMON CAP BLACK (clona)",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 1.27,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Mutank RDTA Silver by Indulgence",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 10,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Steam Crave Aromamizer RDTA",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 14.25,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "UD ANZU RDA – SILVER",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 3.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Vandy Vape Berserker MTL RDA – Black",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 8.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Vandy Vape Berserker MTL RDA – Rainbow",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 8.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Vandy Vape GoVad BF RDA – BLACK",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 3.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Wotofo Lush RDA – Black",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Advken MANTA RTA – Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "AnyVape SegaTank RTA Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Bastard RTA by YFTK (clona) – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Caiman MTL RTA by YFTK (clona)",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 9.25,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Dotmod Petri 24mm RTA (clona) – Stainless Steel",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 2.8,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor EHPRO Bachelor X RTA – Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 8.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor HellVape Dead Rabbit RTA – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 8.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Nibiru RTA SXK – Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 7.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor NOI MTL RTA – Silver (clona)",
-        "source": "https://vicii-shop.ro/rda-dripp/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Purity MTL RTA by Ambition Mods – Black",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 9.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Purity MTL RTA by Ambition Mods – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 9.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor RTA Manta Advken – Blue",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 7.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Sine MTL RTA – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Vandy Vape Berserker V3 MTL RTA – Black",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 11.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Vandy Vape Berserker V3 MTL RTA – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 11.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Vandy Vape Mesh 24 RTA 2ml Stainless Steel",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 10.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor Vaporesso iTank2 8ml – Black",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 8,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Atomizor WISMEC Cylin RTA 3.5ml – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 4.95,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "BILLOW RTA EHPRO V1 Black",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 2.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "BILLOW RTA EHPRO V1 Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 2.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "CoilArt Salt RTA MTL – Black (clona)",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "CoilArt Salt RTA MTL – Silver (clona)",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 6.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Eleaf Lemo 2 RTA",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "EVIL EYE RTA EHPRO",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 4.5,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Footoon Aqua Master RTA – Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 7,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "RSST SMOK GENESIS TANK",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 7,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Short Kit Purity Plus MTL RTA by Ambition Mods",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 3.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "Smok TFV12 Tank Cloud Beast King 6ml – Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 8.75,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "SQuape E[c] RTA – Black",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 8,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "TopFill pentru Dvarw MTL RTA – Silver",
-        "source": "https://vicii-shop.ro/rta-tank/",
-        "oldPriceRon": 3,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "WOTOFO Gear V2 RTA 3.5ml – Black",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 9.25,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
-      },
-      {
-        "retailerId": "viciishop",
-        "product": "WOTOFO Gear V2 RTA 3.5ml – Silver",
-        "source": "https://vicii-shop.ro/clearomizoare-servisabile/",
-        "oldPriceRon": 9.25,
-        "verifiedPriceRon": 25,
-        "status": "corrected"
       }
     ]
   }
