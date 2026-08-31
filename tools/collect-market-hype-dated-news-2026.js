@@ -6,6 +6,7 @@ const crypto=require('crypto');
 const {snapshotReferenceMs}=require('./hype-window-reference-2026.js');
 const {classifyPodProduct,decode,norm}=require('./market-pod-classifier-2026.js');
 const {canonicalizeProduct}=require('./market-product-canonical-2026.js');
+const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js');
 
 const WRITE=process.argv.includes('--write');
 const RTA_FILE='data/market-hype-products-2026.json';
@@ -48,6 +49,8 @@ const BASE_QUERIES=[
   {category:'MODURI',query:'(Dicodes OR YiHi OR DNA250C OR "high end mod") (announced OR launch OR released OR review OR "first look") vape when:30d'},
   {category:'MODURI',query:'(Geekvape OR VOOPOO OR Dovpo OR "Lost Vape" OR SMOK OR Vaporesso) (Aegis OR DRAG OR Odin OR Centaurus OR X-Priv OR Armour) (review OR launch OR announced OR "first look") when:30d'},
   {category:'MODURI',query:'"vape mod" review hardware when:30d'},
+  {category:'ACCESORII',query:'("RTA accessory" OR "MTL drip tip" OR "RTA air pin" OR "replacement glass RTA") (announced OR released OR "new arrival" OR review OR preorder) when:30d'},
+  {category:'ACCESORII',query:'("vape wire" OR NiFe30 OR SS316L OR Ni80 OR "vape cotton" OR "coil jig") (new OR launched OR released OR review) when:30d'},
   {category:'POD',query:'("pod system" OR "pod kit") vape (announced OR unveils OR launches OR released OR "first look" OR preview) when:30d'},
   {category:'POD',query:'(OXVA OR Vaporesso OR VOOPOO OR Uwell OR SMOK OR Geekvape OR Lost Vape OR Aspire OR Innokin) (pod OR Xlim OR XROS OR VMATE OR Caliburn OR Argus OR VPrime OR Nexlim) (new OR launch OR announced OR review) when:30d'},
   {category:'POD',query:'(RELX OR Vuse OR JUUL2 OR VEEV OR Elfbar OR Lost Mary OR KIWI OR IVG) (pod system OR pod kit) (launch OR announced OR released OR review) when:30d'},
@@ -127,7 +130,9 @@ function accessory(value){
 }
 function nonTargetDevice(value){const t=norm(value);return /\b(?:e liquid|e juice|vape juice|flavour concentrate|flavor concentrate|nicotine pouches?|heated tobacco|dab pen|dry herb|smartphone|tablet|gaming mouse|planning permission|excise|tax)\b/.test(t)||/\bdisposable\b/.test(t)&&!/\b(?:replaceable pod|refillable pod|pod system|pod kit)\b/.test(t)}
 function strictClassify(value,preferred,allowGenericPod=false,meta={}){
-  const text=decode(value),t=norm(text),url=String(meta.url||'');if(accessory(meta.identity||text)||nonTargetDevice(meta.identity||text))return null;
+  const text=decode(value),t=norm(text),url=String(meta.url||''),accessoryClassification=classifyRtaAccessory(meta.identity||text);if(nonTargetDevice(meta.identity||text))return null;
+  if(accessoryClassification&&(preferred==='ACCESORII'||accessory(meta.identity||text)))return accessoryClassification;
+  if(accessory(meta.identity||text))return null;
   const explicitPod=classifyPodProduct(text);if(explicitPod&&explicitPod.confidence==='brand-series-match'&&/\bpod\b/.test(t))return explicitPod;
   const knownMod=/\b(?:aegis legend|aegis mini|drag 6|odin v?2|centaurus(?:\s+n\d+)?|x priv|armour ultra|pinnacle colossus|khonsu|thelema|dotbox|sxmini|yihi|istick|illusia|zoe|mood v?2)\b/.test(t),modPath=/\/(?:products?|shop)\/(?:mods?|mech-mods?|18650|21700)\//i.test(url);
   const explicitMod=/\b(?:box mod|vape mod|mechanical mod|regulated mod|tube mod|sbs mod|squonk mod|side by side)\b|\bsbs\b|\bbf60\b|\bdna\s*\d/.test(t);
@@ -275,7 +280,7 @@ async function main(){
   const queries=buildQueries(),newsRuns=await pool(queries,8,collectQuery),wpRuns=await pool(WP_SOURCES,6,collectWpSource),runs=newsRuns.concat(wpRuns),rows=Array.from(new Map(runs.flatMap(function(run){return run.rows||[]}).filter(function(row){return inPast(row.publishedAt)}).map(function(row){return[row.query.category+'|'+row.url,row]})).values()),candidates=candidateUniverse(),signals=[],rejected=[];
   for(const row of rows){
     if(/^(?:the\s+)?(?:\d+\s+)?best\b|\btop\s+\d+\b|buying guide|ranked picks/i.test(row.headline)){rejected.push({headline:row.headline,source:row.sourceName,publishedAt:row.publishedAt,reason:'generic-listicle-not-product-event'});continue}
-    if(accessory(row.headline)||nonTargetDevice(row.headline)){rejected.push({headline:row.headline,source:row.sourceName,publishedAt:row.publishedAt,reason:'accessory-liquid-or-disposable'});continue}
+    if((accessory(row.headline)&&!classifyRtaAccessory(row.headline))||nonTargetDevice(row.headline)){rejected.push({headline:row.headline,source:row.sourceName,publishedAt:row.publishedAt,reason:'non-target-accessory-liquid-or-disposable'});continue}
     const context=[row.sourceName||'',row.headline,row.description||'',row.url||''].join(' '),identityContext=[row.sourceName||'',row.headline,row.url||''].join(' '),fallbackClass=strictClassify(identityContext,row.query.category,true,{identity:row.headline,url:row.url,isProductListing:row.isProductListing}),names=fallbackClass?extractedNames(row.headline,fallbackClass,{url:row.url}):[],products=[];
     for(const extracted of names){
       const name=extracted.name,classification=extracted.classification;if(!classification)continue;
@@ -292,9 +297,9 @@ async function main(){
   const grouped=new Map();for(const signal of signals){const key=candidateKey(signal)+'|'+signal.window,old=grouped.get(key);if(!old){signal.stageEvidenceAt=signal.eventDate;grouped.set(key,signal);continue}absorbEvent(old,signal)}
   const rta=read(RTA_FILE,{products:[]}),pods=read(POD_FILE,{products:[]});removeOwnedSignals(rta);removeOwnedSignals(pods);let rtaAdded=0,podsAdded=0;for(const event of grouped.values()){if(event.category==='POD'){if(mergeProduct(pods,event))podsAdded++}else if(mergeProduct(rta,event))rtaAdded++}
   const stats={newsQueries:queries.length,newsQueriesWorking:newsRuns.filter(function(run){return run.ok}).length,wordpressSources:WP_SOURCES.length,wordpressSourcesWorking:wpRuns.filter(function(run){return run.ok}).length,wordpressRequestsWorking:wpRuns.reduce(function(sum,run){return sum+Number(run.requestsWorking||0)},0),datedItems:rows.length,concreteSignals:grouped.size,rejected:rejected.length,rtaModAdded:rtaAdded,podsAdded};finalize(rta,stats);finalize(pods,stats);
-  const counts=Array.from(grouped.values()).reduce(function(acc,row){acc[row.category]=(acc[row.category]||0)+1;return acc},{}),output={schemaVersion:2,generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),windowDays:WINDOW_DAYS,truth:{publicationDateIsDirectlyProvidedByGoogleNewsFeed:true,wordpressPublicationDateIsDirectSourceData:true,articleDateIsPublicSignalNotAutomaticProductLaunch:true,officialProductDateIsListingEvidence:true,concreteProductIdentityRequired:true,headlineIdentityTakesPriority:true},scan:stats,summary:{signals:grouped.size,RTA:counts.RTA||0,MODURI:counts.MODURI||0,POD:counts.POD||0,rejected:rejected.length},signals:Array.from(grouped.values()).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),rejectedSample:rejected.slice(0,120),queryRuns:runs.map(function(run){return{category:run.meta.category,query:run.meta.query,ok:run.ok,items:run.rows.length,error:run.error||null}})};
+  const counts=Array.from(grouped.values()).reduce(function(acc,row){acc[row.category]=(acc[row.category]||0)+1;return acc},{}),output={schemaVersion:3,generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),windowDays:WINDOW_DAYS,truth:{publicationDateIsDirectlyProvidedByGoogleNewsFeed:true,wordpressPublicationDateIsDirectSourceData:true,articleDateIsPublicSignalNotAutomaticProductLaunch:true,officialProductDateIsListingEvidence:true,concreteProductIdentityRequired:true,headlineIdentityTakesPriority:true,rtaAccessoriesClassifiedSeparately:true},scan:stats,summary:{signals:grouped.size,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,rejected:rejected.length},signals:Array.from(grouped.values()).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),rejectedSample:rejected.slice(0,120),queryRuns:runs.map(function(run){return{category:run.meta.category,query:run.meta.query,ok:run.ok,items:run.rows.length,error:run.error||null}})};
   if(WRITE){save(RTA_FILE,rta);save(POD_FILE,pods);save(OUT_FILE,output)}else console.log(JSON.stringify(output,null,2));
-  console.log(`Dated publications: news ${stats.newsQueriesWorking}/${stats.newsQueries}; WordPress ${stats.wordpressSourcesWorking}/${stats.wordpressSources}; ${stats.datedItems} dated items; concrete RTA ${counts.RTA||0}; MODURI ${counts.MODURI||0}; POD ${counts.POD||0}; rejected ${rejected.length}.`);
+  console.log(`Dated publications: news ${stats.newsQueriesWorking}/${stats.newsQueries}; WordPress ${stats.wordpressSourcesWorking}/${stats.wordpressSources}; ${stats.datedItems} dated items; concrete RTA ${counts.RTA||0}; MODURI ${counts.MODURI||0}; ACCESORII ${counts.ACCESORII||0}; POD ${counts.POD||0}; rejected ${rejected.length}.`);
 }
 
 main().catch(function(error){console.error(error&&error.stack||error);process.exit(1)});

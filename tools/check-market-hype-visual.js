@@ -20,6 +20,18 @@ function expectedSnapshot(file){
 }
 const expectedRta=expectedSnapshot('data/market-hype-products-2026.json');
 const expectedPod=expectedSnapshot('data/market-hype-pods-2026.json');
+const direct=JSON.parse(fs.readFileSync(path.resolve('data/market-hype-direct-catalogs-2026.json'),'utf8'));
+function expectedAvailability(mode){
+  const groups=mode==='pod'?['mass-market-open-pod','mid-tier-regional','closed-prefilled-hybrid','premium-high-end-aio']:['RTA','MODURI','ACCESORII'];
+  const seen=new Set(),counts=Object.fromEntries(groups.map(group=>[group,0]));
+  for(const item of direct.items||[]){
+    if(item.available!==true&&item.availabilityStatus!=='listing-observed'||mode==='pod'&&item.category!=='POD'||mode!=='pod'&&item.category==='POD')continue;
+    const key=item.canonicalKey||[item.category,item.segment,String(item.productName||'').trim().toLowerCase()].join('|');if(seen.has(key))continue;seen.add(key);
+    const group=mode==='pod'?item.segment:item.category;if(group in counts)counts[group]++;
+  }
+  return{total:Object.values(counts).reduce((sum,value)=>sum+value,0),shown:Object.values(counts).reduce((sum,value)=>sum+Math.min(24,value),0)};
+}
+const expectedRtaAvailability=expectedAvailability('rta'),expectedPodAvailability=expectedAvailability('pod');
 
 async function openMarket(page,lang){
   await page.goto(`${baseUrl}/?lang=${lang}&hypeQa=${Date.now()}`,{waitUntil:'domcontentloaded'});
@@ -55,6 +67,12 @@ async function snapshot(page,mode){
       tabs:tabs.length,
       active:root.querySelector('[data-hype-view].active')?.getAttribute('data-hype-view'),
       state:root.querySelector('.hype-state b')?.textContent.trim(),
+      progress:Boolean(root.querySelector('.hype-state .hype-progress')),
+      sourceHealth:Boolean(root.querySelector('.hype-source-health')),
+      availabilityRows:root.querySelectorAll('.hype-catalog-row').length,
+      availabilityOpen:root.querySelectorAll('.hype-catalog-group[open]').length,
+      availabilityTotal:Number((root.querySelector('.hype-window.availability .hype-window-count b')?.textContent||'0').replace(/\D/g,'')),
+      signalTitle:root.querySelector('.hype-window.signals h3')?.textContent.trim(),
       docOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
       clipped,
       vertical,
@@ -67,6 +85,10 @@ async function snapshot(page,mode){
 function requireState(result,expected){
   if(result.cards!==expected.cards||result.events!==expected.events||result.signals!==expected.signals)throw new Error(`${expected.label}: expected ${expected.cards}/${expected.events}/${expected.signals}, got ${result.cards}/${result.events}/${result.signals}`);
   if(result.tabs!==2||result.active!==expected.mode)throw new Error(`${expected.label}: mode switch is incomplete`);
+  if(!result.progress||!result.sourceHealth)throw new Error(`${expected.label}: live progress or source coverage is missing`);
+  if(result.availabilityRows!==expected.availability.shown||result.availabilityTotal!==expected.availability.total)throw new Error(`${expected.label}: availability expected ${expected.availability.shown}/${expected.availability.total}, got ${result.availabilityRows}/${result.availabilityTotal}`);
+  if(result.availabilityOpen!==1)throw new Error(`${expected.label}: availability groups are not compact and independently expandable`);
+  if(/Semnale monitorizate|Monitored signals/.test(result.signalTitle||''))throw new Error(`${expected.label}: ambiguous monitored-signal title remains`);
   if(result.docOverflow>3||result.clipped||result.vertical)throw new Error(`${expected.label}: layout overflow or vertical text detected`);
   if(result.eventNames.some(name=>/Prime Minister|AF5000|Sonder Q3|Paramour V2|Nitrous Pocket|Pinnacle Colossus/i.test(name)))throw new Error(`${expected.label}: known old model leaked into dated events`);
 }
@@ -76,12 +98,14 @@ async function runViewport(browser,viewport,lang){
   const errors=[];
   page.on('pageerror',error=>{const detail=error.stack||error.message;if(!errors.includes(detail))errors.push(detail)});
   await openMarket(page,lang);
+  await page.locator('.hype-catalog-group').first().locator('summary').click();
   const rta=await snapshot(page,'rta');
-  requireState(rta,{label:`${lang}-${viewport.width}-rta`,mode:'rta',...expectedRta});
+  requireState(rta,{label:`${lang}-${viewport.width}-rta`,mode:'rta',availability:expectedRtaAvailability,...expectedRta});
   if(!rta.signalNames.some(name=>/Prime Minister/i.test(name)))throw new Error('Prime Minister should remain visible only as a monitored signal');
   await page.locator('[data-hype-view="pod"]').click();
+  await page.locator('.hype-catalog-group').first().locator('summary').click();
   const pod=await snapshot(page,'pod');
-  requireState(pod,{label:`${lang}-${viewport.width}-pod`,mode:'pod',...expectedPod});
+  requireState(pod,{label:`${lang}-${viewport.width}-pod`,mode:'pod',availability:expectedPodAvailability,...expectedPod});
   if(!pod.signalNames.some(name=>/AF5000/i.test(name)))throw new Error('AF5000 should remain visible only as a monitored signal');
   if(errors.length)throw new Error(`${lang}-${viewport.width}: ${errors.join(' | ')}`);
   await page.screenshot({path:path.join(output,`hype-${lang}-${viewport.width}.png`),fullPage:true});

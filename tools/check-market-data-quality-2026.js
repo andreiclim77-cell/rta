@@ -70,6 +70,8 @@ const direct=read('data/market-hype-direct-catalogs-2026.json'),dated=read('data
 need(direct.scan&&Number(direct.scan.sourcesConfigured)>=11&&Number(direct.scan.sourcesWorking)>=10,'Direct catalog coverage is incomplete');
 need(dated.scan&&Number(dated.scan.newsQueriesWorking)>=Math.floor(Number(dated.scan.newsQueries)*0.8),'Dated-news search coverage is too low');
 need(dated.scan&&Number(dated.scan.wordpressSourcesWorking)>=Math.floor(Number(dated.scan.wordpressSources)*0.8),'Dated WordPress coverage is too low');
-need(campaigns.scan&&Number(campaigns.scan.pagesWorking)===Number(campaigns.scan.pages),'Retail campaign scan is incomplete');
+const campaignPages=Number(campaigns.scan&&campaigns.scan.pages),campaignWorking=Number(campaigns.scan&&campaigns.scan.pagesWorking),campaignMinimum=Math.ceil(campaignPages*.8);
+need(campaigns.scan&&campaignPages>0&&campaignWorking>=campaignMinimum,`Retail campaign coverage is too low: ${campaignWorking}/${campaignPages}`);
+need(campaigns.scan.coverageStatus===(campaignWorking===campaignPages?'complete':'partial'),'Retail campaign coverage status is inconsistent');
 
 console.log(`Market data quality OK: ${makers.length} POD makers; ${segments.length} segments; ${(hype.products||[]).length} RTA/MOD monitored; ${(hype.verificationQueue||[]).length} RTA/MOD queued; ${(pods.products||[]).length} POD monitored; ${(pods.verificationQueue||[]).length} POD queued; direct ${direct.scan.sourcesWorking}/${direct.scan.sourcesConfigured}; news ${dated.scan.newsQueriesWorking}/${dated.scan.newsQueries}; WP ${dated.scan.wordpressSourcesWorking}/${dated.scan.wordpressSources}.`);

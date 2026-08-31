@@ -6,6 +6,7 @@ const crypto=require('crypto');
 const {snapshotReferenceMs}=require('./hype-window-reference-2026.js');
 const {classifyPodProduct,decode,norm}=require('./market-pod-classifier-2026.js');
 const {canonicalizeProduct}=require('./market-product-canonical-2026.js');
+const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js');
 
 const WRITE=process.argv.includes('--write');
 const SOURCE_FILE='data/market-hype-sources-2026.json';
@@ -18,15 +19,17 @@ const PUBLIC_DAYS=30;
 const CONTEXT_DAYS=180;
 
 const DEFAULT_SOURCES=[
-  {id:'beast-clone-catalog',baseUrl:'https://beast-8888.myshopify.com',label:'BEAST clone catalog',sourceType:'clone-retailer-direct',official:false,scopes:['RTA','MODURI']},
+  {id:'2fdeal-rta-listings',baseUrl:'https://www.2fdeal.com',label:'2FDeal RTA listings',sourceType:'clone-retailer-listing',catalogType:'html-listings',official:false,scopes:['RTA'],pages:Array.from({length:8},function(_,index){return'/c/rta_0376/'+(index+1)+'.html'})},
+  {id:'3fvape-rta-listings',baseUrl:'https://www.3fvape.com',label:'3FVape RTA listings',sourceType:'clone-retailer-listing',catalogType:'html-listings',official:false,scopes:['RTA'],pages:['/115-rta?n=383']},
+  {id:'beast-clone-catalog',baseUrl:'https://beast-8888.myshopify.com',label:'BEAST clone catalog',sourceType:'clone-retailer-direct',official:false,scopes:['RTA','MODURI','ACCESORII']},
   {id:'oxva-official-store',baseUrl:'https://store.oxva.com',label:'OXVA official store',brandHint:'OXVA',sourceType:'manufacturer-official-store',official:true,scopes:['POD']},
   {id:'vaporesso-official-store',baseUrl:'https://store.vaporesso.com',label:'Vaporesso official store',brandHint:'Vaporesso',sourceType:'manufacturer-official-store',official:true,scopes:['POD','MODURI']},
   {id:'geekvape-official-store',baseUrl:'https://store.geekvape.com',label:'Geekvape official store',brandHint:'Geekvape',sourceType:'manufacturer-official-store',official:true,scopes:['POD','MODURI','RTA']},
-  {id:'dotmod-official-store',baseUrl:'https://www.dotmod.com',label:'dotMod official store',brandHint:'DotMod',sourceType:'manufacturer-official-store',official:true,scopes:['POD','MODURI','RTA']},
-  {id:'wotofo-official-store',baseUrl:'https://wotofo.com',label:'Wotofo official store',brandHint:'Wotofo',sourceType:'manufacturer-official-store',official:true,scopes:['POD','MODURI','RTA']},
-  {id:'naturevape-retail-catalog',baseUrl:'https://naturevape.co.uk',label:'NatureVape catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD']},
-  {id:'vaping-gentlemen-direct',baseUrl:'https://thevapinggentlemen.club',label:'The Vaping Gentlemen Club catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD']},
-  {id:'vaping101-direct',baseUrl:'https://vaping101.co.uk',label:'Vaping 101 catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD']},
+  {id:'dotmod-official-store',baseUrl:'https://www.dotmod.com',label:'dotMod official store',brandHint:'DotMod',sourceType:'manufacturer-official-store',official:true,scopes:['POD','MODURI','RTA','ACCESORII']},
+  {id:'wotofo-official-store',baseUrl:'https://wotofo.com',label:'Wotofo official store',brandHint:'Wotofo',sourceType:'manufacturer-official-store',official:true,scopes:['POD','MODURI','RTA','ACCESORII']},
+  {id:'naturevape-retail-catalog',baseUrl:'https://naturevape.co.uk',label:'NatureVape catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD','ACCESORII']},
+  {id:'vaping-gentlemen-direct',baseUrl:'https://thevapinggentlemen.club',label:'The Vaping Gentlemen Club catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD','ACCESORII']},
+  {id:'vaping101-direct',baseUrl:'https://vaping101.co.uk',label:'Vaping 101 catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD','ACCESORII']},
   {id:'vape-superstore-direct',baseUrl:'https://vapesuperstore.co.uk',label:'Vape Superstore catalog',sourceType:'retailer-direct',official:false,scopes:['MODURI','POD']},
   {id:'uk-ecig-store-direct',baseUrl:'https://ukecigstore.com',label:'UK ECIG STORE catalog',sourceType:'retailer-direct',official:false,scopes:['MODURI','POD']}
 ];
@@ -54,7 +57,41 @@ async function fetchJson(url,timeout=15000){
   }finally{clearTimeout(timer)}
 }
 
+async function fetchText(url,timeout=18000){
+  const controller=new AbortController(),timer=setTimeout(function(){controller.abort()},timeout);
+  try{
+    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':'Ghid-RTA-Direct-Catalog/1.1 (+https://ghid-rta.ro/)','accept':'text/html,application/xhtml+xml,*/*;q=.6','cache-control':'no-cache'},signal:controller.signal});
+    const text=await response.text();
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    return{url:response.url||url,text};
+  }finally{clearTimeout(timer)}
+}
+
+function wait(ms){return new Promise(function(resolve){setTimeout(resolve,ms)})}
+async function fetchTextWithRetry(url,attempts=3){let lastError=null;for(let attempt=1;attempt<=attempts;attempt++){try{return await fetchText(url)}catch(error){lastError=error;if(attempt<attempts)await wait(attempt*700)}}throw lastError||new Error('fetch-failed')}
+function htmlListings(source,html,pageUrl){
+  const rows=[];
+  for(const match of String(html||'').matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)){
+    let url;try{url=new URL(decode(match[1]),pageUrl)}catch(_){continue}
+    const title=cleanTitle(match[2]);if(!title)continue;
+    const host=url.hostname.replace(/^www\./,'').toLowerCase(),path=url.pathname;
+    const is3f=host==='3fvape.com'&&/^\/rta\//.test(path),is2f=host==='2fdeal.com'&&/_p\d+\.html$/i.test(path);
+    if(!is3f&&!is2f||!/\brta\b|rebuildable tank (?:atomizer|atomiser)/i.test(title))continue;
+    if(accessoryOnly(title))continue;
+    rows.push({id:hash(source.id+'|'+url.origin+path),title,handle:'',vendor:'',product_type:'',body_html:'',url:url.origin+path,__catalogListing:true});
+  }
+  return Array.from(new Map(rows.map(function(row){return[row.url,row]})).values());
+}
+
 async function collectSource(source){
+  if(source.catalogType==='html-listings'){
+    const pages=Array.isArray(source.pages)&&source.pages.length?source.pages:['/'];
+    const rows=[],pageRuns=[];
+    for(const page of pages){const target=new URL(page,source.baseUrl).toString();try{const response=await fetchTextWithRetry(target);rows.push(...htmlListings(source,response.text,response.url));pageRuns.push({url:target,ok:true})}catch(error){pageRuns.push({url:target,ok:false,error:String(error&&error.message||error)})}}
+    const pagesWorking=pageRuns.filter(function(run){return run.ok}).length;if(!pagesWorking)throw new Error('all-html-listing-pages-failed');
+    rows.pageStats={pages:pages.length,pagesWorking,coveragePct:Number((pagesWorking/pages.length*100).toFixed(1)),failedPages:pageRuns.filter(function(run){return!run.ok})};
+    return rows;
+  }
   const products=[];
   for(let page=1;page<=8;page++){
     const url=source.baseUrl.replace(/\/$/,'')+'/products.json?limit=250&page='+page;
@@ -85,7 +122,10 @@ function classifyMod(title){
 
 function classifyProduct(source,product){
   const title=cleanTitle(product.title),body=decode(product.body_html||''),identity=[source.brandHint||'',product.vendor||'',product.product_type||'',title].join(' ');
-  if(!title||accessoryOnly(identity)||/\b(?:e[- ]?liquid|nic salts?|shortfill|longfill|nicotine shot|replacement pods?|refill packs?|cartridges?)\b/i.test(identity))return null;
+  if(!title||/\b(?:e[- ]?liquid|nic salts?|shortfill|longfill|nicotine shot|replacement pods?|refill packs?|cartridges?)\b/i.test(identity))return null;
+  const accessory=classifyRtaAccessory(identity);
+  if(accessory&&(source.scopes||[]).includes('ACCESORII'))return accessory;
+  if(accessoryOnly(identity))return null;
   if(/\b(?:prefilled pods|pre-filled pods|pod refills?|prefilled pod\s*\+\s*refill)\b/i.test(identity)&&!/\b(?:kit|device|system)\b/i.test(title))return null;
   const rta=classifyRta(title);
   if(rta&&(source.scopes||[]).includes('RTA'))return rta;
@@ -109,6 +149,10 @@ function image(product){const first=(product.images||[])[0];return first&&first.
 function canonicalKey(item){const identity=cleanTitle(item.productName).replace(/\b(?:pod mod kit|pod system kit|pod system|pod kit|starter kit|mod kit|vape mod|box mod|regulated mod|mechanical mod|sbs mod)\b/gi,' ').replace(/\s+(?:pod|kit)\s*$/i,' ').replace(/\s+/g,' ').trim(),canonical=canonicalizeProduct({product:identity,brand:item.brand||''});return item.category+'|'+canonical.key}
 
 function catalogEvent(source,product,classification,observedAt){
+  if(product.__catalogListing){
+    const title=cleanTitle(product.title),canonical=canonicalizeProduct({product:title,brand:classification.brand||source.brandHint||''});
+    return{item:{id:hash(source.id+'|'+product.url),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,productId:String(product.id||product.url||''),productName:title,canonicalKey:classification.category+'|'+canonical.key,brand:canonical.brand||classification.brand||source.brandHint||'',category:classification.category,segment:classification.segment||null,typology:classification.typology||null,url:product.url,image:'',price:null,currency:null,available:null,availabilityStatus:'listing-observed',publishedAt:null,createdAt:null,updatedAt:null,firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication:false,freshIdentity:false,relisted:false,pending:false},event:null};
+  }
   const publishedAt=iso(product.published_at),createdAt=iso(product.created_at),updatedAt=iso(product.updated_at),body=decode(product.body_html||''),title=cleanTitle(product.title);
   const publishedAge=ageDays(publishedAt),createdGap=publishedAt&&createdAt?Math.abs(Date.parse(publishedAt)-Date.parse(createdAt))/DAY:null;
   const recentPublication=inPast(publishedAt,PUBLIC_DAYS),freshIdentity=createdAt&&inPast(createdAt,PUBLIC_DAYS+7)&&createdGap!=null&&createdGap<=14;
@@ -118,7 +162,8 @@ function catalogEvent(source,product,classification,observedAt){
     id:hash(source.id+'|'+product.id),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,
     productId:String(product.id||''),productName:title,brand:classification.brand||source.brandHint||product.vendor||'',category:classification.category,
     segment:classification.segment||null,typology:classification.typology||null,url:productUrl(source,product),image:image(product),
-    price:variantPrice(product),currency:source.currency||null,available:availability(product),publishedAt,createdAt,updatedAt,
+    canonicalKey:classification.category+'|'+canonicalizeProduct({product:title,brand:classification.brand||source.brandHint||product.vendor||''}).key,
+    price:variantPrice(product),currency:source.currency||null,available:availability(product),availabilityStatus:availability(product)?'available-observed':'unavailable-observed',publishedAt,createdAt,updatedAt,
     firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication,freshIdentity,relisted,pending
   };
   if(!recentPublication||relisted)return{item,event:null};
@@ -180,11 +225,11 @@ async function main(){
   const groupedEvents=new Map();for(const event of events){const key=canonicalKey(event)+'|'+event.window,old=groupedEvents.get(key);if(!old){groupedEvents.set(key,event);continue}const sourceMap=new Map((old.sources||[]).map(function(source){return[source.url,source]}));for(const source of event.sources||[])sourceMap.set(source.url,source);old.sources=Array.from(sourceMap.values());old.sourceCount=old.sources.length;old.eligibleSources=unique(old.sources.map(function(source){return source.sourceType})).length;if(Date.parse(event.eventDate)<Date.parse(old.eventDate))Object.assign(old,{eventDate:event.eventDate,stage:event.stage,stageLabel:event.stageLabel,dateConfidence:event.dateConfidence})}
   const dedupEvents=Array.from(groupedEvents.values()),rta=read(RTA_FILE,{products:[]}),pods=read(POD_FILE,{products:[]});removeOwnedSignals(rta);removeOwnedSignals(pods);let rtaAdded=0,podsAdded=0;
   for(const event of dedupEvents){if(event.category==='POD'){if(mergeProduct(pods,event))podsAdded++}else if(mergeProduct(rta,event))rtaAdded++}
-  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded};
+  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded,categoryEvents:{RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0}};
   finalize(rta,stats);finalize(pods,stats);
-  const output={schemaVersion:1,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,oldRepublishedProductsAreNotRecentEvents:true},scan:stats,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,ok:run.ok,products:run.products.length,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.filter(function(item){return inPast(item.publishedAt,CONTEXT_DAYS)}).slice(0,600)};
+  const output={schemaVersion:4,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,oldRepublishedProductsAreNotRecentEvents:true,availabilityIsSeparateFromReleaseChronology:true,currentAvailabilityIncludesOlderCatalogItems:true,htmlCatalogListingsDoNotClaimStock:true},scan:stats,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,catalogType:run.source.catalogType||'shopify-products-json',ok:run.ok,products:run.products.length,pages:run.products.pageStats||null,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.slice(0,3000)};
   if(WRITE){save(RTA_FILE,rta);save(POD_FILE,pods);save(OUT_FILE,output)}else console.log(JSON.stringify(output,null,2));
-  console.log(`Direct catalogs: ${stats.sourcesWorking}/${stats.sourcesConfigured} sources; ${stats.productsFetched} products; ${classified} classified; recent RTA ${counts.RTA||0}; MODURI ${counts.MODURI||0}; POD ${counts.POD||0}; relisted excluded ${relisted}.`);
+  console.log(`Direct catalogs: ${stats.sourcesWorking}/${stats.sourcesConfigured} sources; ${stats.productsFetched} products; ${classified} classified; recent RTA ${counts.RTA||0}; MODURI ${counts.MODURI||0}; ACCESORII ${counts.ACCESORII||0}; POD ${counts.POD||0}; relisted excluded ${relisted}.`);
 }
 
 function sourceKey(item){return String(item.sourceId||'')+'|'+String(item.productId||item.url||'')}

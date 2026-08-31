@@ -6,6 +6,7 @@ const crypto=require('crypto');
 const {snapshotReferenceMs}=require('./hype-window-reference-2026.js');
 const {canonicalizeProduct,norm}=require('./market-product-canonical-2026.js');
 const {classifyPodProduct}=require('./market-pod-classifier-2026.js');
+const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js');
 
 const WRITE=process.argv.includes('--write');
 const FILES=['data/market-hype-products-2026.json','data/market-hype-pods-2026.json'];
@@ -102,6 +103,7 @@ function validTarget(row,isPodFile){
   if(isPodFile)return row.category==='POD'&&Boolean(classifyPodProduct(name,row.brand||''));
   if(row.category==='RTA')return /\brta\b|rebuildable tank (?:atomizer|atomiser)/i.test(name)&&!/\brda\b|\brdta\b/i.test(name);
   if(row.category==='MODURI')return /\b(?:mod|sbs|squonk|bf60|dna\s*\d|yihi|istick|drag\s*6|aegis|armour)\b/i.test(name);
+  if(row.category==='ACCESORII')return Boolean(classifyRtaAccessory(name));
   return false;
 }
 

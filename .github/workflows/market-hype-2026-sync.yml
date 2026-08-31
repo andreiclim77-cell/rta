@@ -39,6 +39,7 @@ on:
       - "tools/validate-market-hype-pods-2026.js"
       - "tools/check-market-data-quality-2026.js"
       - "tools/market-product-canonical-2026.js"
+      - "tools/market-hype-accessory-classifier-2026.js"
       - "tools/enforce-market-hype-symmetric-window-2026.js"
       - "tools/merge-market-hype-upstream-products-v2-2026.js"
       - "tools/finalize-market-hype-category-relevance-2026.js"
@@ -254,6 +255,7 @@ jobs:
           node --check tools/validate-market-hype-pods-2026.js
           node --check tools/check-market-data-quality-2026.js
           node --check tools/market-product-canonical-2026.js
+          node --check tools/market-hype-accessory-classifier-2026.js
           node --check tools/enforce-market-hype-symmetric-window-2026.js
           node --check tools/merge-market-hype-upstream-products-v2-2026.js
           node --check tools/finalize-market-hype-category-relevance-2026.js

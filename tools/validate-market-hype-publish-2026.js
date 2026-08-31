@@ -4,6 +4,7 @@
 const fs=require('fs');
 const {snapshotReferenceMs,windowAgeHours}=require('./hype-window-reference-2026.js');
 const {canonicalizeProduct}=require('./market-product-canonical-2026.js');
+const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js');
 
 const json=file=>JSON.parse(fs.readFileSync(file,'utf8'));
 const need=(condition,message)=>{if(!condition)throw new Error(message)};
@@ -29,7 +30,7 @@ need((products.products||[]).length>0,'Final RTA/MOD Hype product list is empty'
 function dated(row){if(row.confidenceTier)return row.confidenceTier==='confirmed'||row.confidenceTier==='reported';return strongDates.has(row.dateConfidence)}
 const identities=new Set();
 for(const row of products.products||[]){
-  need(row&&row.id&&row.productName&&['RTA','MODURI'].includes(row.category)&&row.typology&&['before','after'].includes(row.window),`Incomplete Hype row: ${row&&row.productName||'unnamed'}`);
+  need(row&&row.id&&row.productName&&['RTA','MODURI','ACCESORII'].includes(row.category)&&row.typology&&['before','after'].includes(row.window),`Incomplete Hype row: ${row&&row.productName||'unnamed'}`);
   need(Array.isArray(row.sources)&&row.sources.length>0,`Sources missing: ${row.productName}`);
   for(const source of row.sources)need(!banned.test(String(source.host||source.url||'')),`Generic false positive leaked: ${source.host||source.url}`);
   const identity=row.category+'|'+canonicalizeProduct({product:row.productName,brand:row.brand||''}).key;
@@ -38,6 +39,7 @@ for(const row of products.products||[]){
   if(row.window==='before')need(Math.abs(event-ref)<=windowMs,`Before event outside 30 days: ${row.productName}`);
   else need(event<=ref&&ref-event<=windowMs,`After event outside 30 days: ${row.productName}`);
   if(row.category==='RTA')need(/\bRTA\b|rebuildable\s+(?:tank\s+)?atomiz/i.test(row.productName),`Non-RTA product leaked into RTA: ${row.productName}`);
+  if(row.category==='ACCESORII')need(classifyRtaAccessory(row.productName),`Non-RTA accessory leaked into accessories: ${row.productName}`);
   if(row.window==='after'&&dated(row))need(allowedAfterDates.has(row.dateConfidence),`Invalid dated after-event confidence: ${row.productName}`);
   if(!dated(row))need(row.confidenceTier==='public-signal'||['dated-public-evidence','dated-retail-campaign','signal-publication'].includes(row.dateConfidence),`Unlabelled public signal: ${row.productName}`);
 }
