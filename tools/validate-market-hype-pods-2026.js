@@ -15,6 +15,7 @@ need(Number.isFinite(reference),'POD Hype snapshot reference missing');
 need((reg.makers||[]).length>=60,'POD discovery registry is incomplete');
 need(data.scan&&Number(data.scan.queriesRun)>0,'POD Hype collector did not run');
 need(data.scan&&data.scan.rejections&&Number.isFinite(Number(data.scan.rejections.notConcretePodProduct)),'POD Hype rejection audit missing');
+need(data.truth&&data.truth.verificationQueueReconciledWithPublishedProducts===true,'POD verification queue was not reconciled after publication');
 const keys=new Set();
 for(const product of data.products||[]){
   need(product.category==='POD',`Non-POD category leaked: ${product.productName}`);
@@ -32,4 +33,5 @@ const dated=(data.products||[]).filter(product=>product.confidenceTier?product.c
 need(Number(data.summary&&data.summary.total)===dated.length,'POD dated-event summary is inconsistent');
 need(Number(data.summary&&data.summary.publicSignals)===(data.products||[]).length-dated.length,'POD public-signal summary is inconsistent');
 for(const candidate of data.verificationQueue||[]){const key='POD|'+canonicalizeProduct({product:candidate.productName||candidate.product||'',brand:candidate.brand||''}).key;need(!keys.has(key),`Published POD event also leaked into verification queue: ${candidate.productName}`)}
+need(Number(data.summary&&data.summary.candidatesUnderVerification)===(data.verificationQueue||[]).length,'POD verification-queue summary is inconsistent');
 console.log(`POD Hype gate OK: ${(reg.makers||[]).length} makers; ${data.scan.candidateDocuments} documents; ${data.scan.concreteProducts} concrete; ${(data.products||[]).length} monitored; ${(data.verificationQueue||[]).length} queued.`);
