@@ -12,6 +12,14 @@ const chromePath='C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
 const baseUrl=process.env.RTA_BASE_URL||'http://127.0.0.1:8794';
 const output=path.resolve('audit-market');
 fs.mkdirSync(output,{recursive:true});
+function expectedSnapshot(file){
+  const doc=JSON.parse(fs.readFileSync(path.resolve(file),'utf8'));
+  const products=doc.products||[];
+  const events=products.filter(row=>row.confidenceTier==='confirmed'||row.confidenceTier==='reported');
+  return{cards:products.length,events:events.length,signals:products.length-events.length};
+}
+const expectedRta=expectedSnapshot('data/market-hype-products-2026.json');
+const expectedPod=expectedSnapshot('data/market-hype-pods-2026.json');
 
 async function openMarket(page,lang){
   await page.goto(`${baseUrl}/?lang=${lang}&hypeQa=${Date.now()}`,{waitUntil:'domcontentloaded'});
@@ -66,14 +74,14 @@ function requireState(result,expected){
 async function runViewport(browser,viewport,lang){
   const page=await browser.newPage({viewport});
   const errors=[];
-  page.on('pageerror',error=>errors.push(error.message));
+  page.on('pageerror',error=>{const detail=error.stack||error.message;if(!errors.includes(detail))errors.push(detail)});
   await openMarket(page,lang);
   const rta=await snapshot(page,'rta');
-  requireState(rta,{label:`${lang}-${viewport.width}-rta`,mode:'rta',cards:19,events:4,signals:15});
+  requireState(rta,{label:`${lang}-${viewport.width}-rta`,mode:'rta',...expectedRta});
   if(!rta.signalNames.some(name=>/Prime Minister/i.test(name)))throw new Error('Prime Minister should remain visible only as a monitored signal');
   await page.locator('[data-hype-view="pod"]').click();
   const pod=await snapshot(page,'pod');
-  requireState(pod,{label:`${lang}-${viewport.width}-pod`,mode:'pod',cards:33,events:4,signals:29});
+  requireState(pod,{label:`${lang}-${viewport.width}-pod`,mode:'pod',...expectedPod});
   if(!pod.signalNames.some(name=>/AF5000/i.test(name)))throw new Error('AF5000 should remain visible only as a monitored signal');
   if(errors.length)throw new Error(`${lang}-${viewport.width}: ${errors.join(' | ')}`);
   await page.screenshot({path:path.join(output,`hype-${lang}-${viewport.width}.png`),fullPage:true});
@@ -88,6 +96,6 @@ async function runViewport(browser,viewport,lang){
     results.push(await runViewport(browser,{width:390,height:844},'ro'));
     results.push(await runViewport(browser,{width:1366,height:900},'ro'));
     results.push(await runViewport(browser,{width:390,height:844},'en'));
-    console.log(`Market Hype visual OK: ${results.length} viewports; RTA 19 monitored / 4 dated; POD 33 monitored / 4 dated.`);
+    console.log(`Market Hype visual OK: ${results.length} viewports; RTA ${expectedRta.cards} monitored / ${expectedRta.events} dated; POD ${expectedPod.cards} monitored / ${expectedPod.events} dated.`);
   }finally{await browser.close()}
 })().catch(error=>{console.error(error.stack||error);process.exit(1)});
