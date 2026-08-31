@@ -1,11 +1,26 @@
 #!/usr/bin/env node
 'use strict';
 const fs=require('fs'),path=require('path');
+const {classifyPodProduct}=require('./market-pod-classifier-2026.js');
 const ROOT=path.resolve(__dirname,'..'),REGISTRY=path.join(ROOT,'data','market-retailers-2026.json'),SOURCES=path.join(ROOT,'data','market-sales-sources-2026.json'),OUT=path.join(ROOT,'data','market-sales-2026.json'),WRITE=process.argv.includes('--write');
 function read(p){return JSON.parse(fs.readFileSync(p,'utf8'))}function write(p,v){fs.writeFileSync(p,JSON.stringify(v,null,2)+'\n','utf8')}
 function day(){const p=Object.fromEntries(new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).map(x=>[x.type,x.value]));return`${p.year}-${p.month}-${p.day}`}
 function clean(v){return String(v||'').replace(/<script\b[\s\S]*?<\/script>/gi,' ').replace(/<style\b[\s\S]*?<\/style>/gi,' ').replace(/<[^>]+>/g,' ').replace(/&nbsp;|&#160;/gi,' ').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#039;|&apos;/g,"'").replace(/\s+/g,' ').trim()}function norm(v){return clean(v).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
-function classify(x){const t=norm(x);if(/\brta\b/.test(t)&&!/\brda\b|\brdta\b/.test(t))return'RTA';if(/\brba\b|\bbridge\b/.test(t))return'RBA/bridge';if(/\bkanthal\b|\bni80\b|\bnife\b|\bss316\b|\bwire\b|\bsarma\b/.test(t))return/\bcoil|rezistent/.test(t)?'coil prebuilt':'sarma';if(/\bbumbac\b|\bcotton\b|\bwick\b|\bvata\b/.test(t))return'bumbac/wick';if(/\bmod\b|\bsbs\b|side by side/.test(t))return'mod';if(/\bbf60\b|\bfl80\b|\bboard\b|\bchipset\b|\bpcb\b/.test(t))return'chipset/board';if(/\b18650\b|\b21700\b|\bacumulator\b|\bbattery\b/.test(t))return'acumulator';if(/\bcharger\b|\bincarcator\b/.test(t))return'incarcator';if(/\btutun\b|\btobacco\b|\bvirginia\b|\blatakia\b|\bburley\b|\bkentucky\b|\bnet\b/.test(t))return'lichid tutunos/NET/DIY';return''}
+function classify(x){
+  const t=norm(x);
+  if(/\brta\b/.test(t)&&!/\brda\b|\brdta\b/.test(t))return'RTA';
+  if(/\brba\b|\bbridge\b/.test(t))return'RBA/bridge';
+  const pod=classifyPodProduct(x);
+  if(pod)return pod.category;
+  if(/\bkanthal\b|\bni80\b|\bnife\b|\bss316\b|\bwire\b|\bsarma\b/.test(t))return/\bcoil|rezistent/.test(t)?'coil prebuilt':'sarma';
+  if(/\bbumbac\b|\bcotton\b|\bwick\b|\bvata\b/.test(t))return'bumbac/wick';
+  if(/\bmod\b|\bsbs\b|side by side/.test(t))return'mod';
+  if(/\bbf60\b|\bfl80\b|\bboard\b|\bchipset\b|\bpcb\b/.test(t))return'chipset/board';
+  if(/\b18650\b|\b21700\b|\bacumulator\b|\bbattery\b/.test(t))return'acumulator';
+  if(/\bcharger\b|\bincarcator\b/.test(t))return'incarcator';
+  if(/\btutun\b|\btobacco\b|\bvirginia\b|\blatakia\b|\bburley\b|\bkentucky\b|\bnet\b/.test(t))return'lichid tutunos/NET/DIY';
+  return'';
+}
 async function req(url,ua,type){const c=new AbortController(),tm=setTimeout(()=>c.abort(),10000);try{const r=await fetch(url,{headers:{'user-agent':ua,'accept':type==='json'?'application/json':'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8','accept-language':'ro-RO,ro;q=0.9,en;q=0.7'},signal:c.signal,redirect:'follow'});if(!r.ok)throw new Error(`HTTP ${r.status}`);return type==='json'?await r.json():{url:r.url||url,text:await r.text()}}finally{clearTimeout(tm)}}
 function explicitUnits(p){for(const v of[p&&p.total_sales,p&&p.totalSales,p&&p.sales_count,p&&p.sold_count,p&&p.units_sold]){const n=Number(v);if(Number.isFinite(n)&&n>=0)return n}return null}
 async function woo(r,ua,date){let origin;try{origin=new URL(r.url).origin}catch(_){return null}const source=`${origin}/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1`;try{const rows=await req(source,ua,'json');if(!Array.isArray(rows))throw new Error('non-array');const rankings=[],units=[];let rank=0;for(const p of rows){rank++;const product=clean(p&&p.name),category=classify(product);if(!category)continue;const base={retailerId:r.id,category,product,rank,observedAt:date,source,productUrl:String(p&&p.permalink||''),evidence:'woocommerce-public-popularity-order',evidenceTier:'B'};rankings.push(base);const sold=explicitUnits(p);if(sold!=null)units.push({...base,unitsSold:sold,counterType:'cumulative_public_counter',evidence:'public-explicit-unit-sales-counter',evidenceTier:'A'})}return{retailerId:r.id,method:'woo-popularity-api',source,rankings,units,error:null}}catch(e){return{retailerId:r.id,method:'woo-popularity-api',source,rankings:[],units:[],error:String(e&&e.message||e).slice(0,180)}}}

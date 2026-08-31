@@ -21,7 +21,7 @@ function waitForMarket(){
   load('/assets/market-loading-guard.js?v=15');
   load('/assets/market-ui-recovery.js?v=8');
   load('/assets/market-management-v2.js?v=4',function(){load('/assets/market-analysis-synthesis.js?v=1')});
-  load('/assets/market-hype-ui.js?v=7');
+  load('/assets/market-hype-ui.js?v=8');
   load('/assets/market-view-switcher.js?v=7');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }

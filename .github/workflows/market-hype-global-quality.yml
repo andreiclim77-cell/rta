@@ -4,7 +4,11 @@ on:
   pull_request:
     paths:
       - 'data/market-hype-*.json'
+      - 'data/market-pod-universe-2026.json'
       - 'tools/*market-hype*2026.js'
+      - 'tools/market-pod-classifier-2026.js'
+      - 'tools/market-product-canonical-2026.js'
+      - 'tools/check-market-data-quality-2026.js'
       - 'assets/market-hype-*.js'
       - 'assets/market-hype-*.css'
       - 'assets/market-loading-guard.js'
@@ -21,7 +25,11 @@ on:
     branches: [main]
     paths:
       - 'data/market-hype-*.json'
+      - 'data/market-pod-universe-2026.json'
       - 'tools/*market-hype*2026.js'
+      - 'tools/market-pod-classifier-2026.js'
+      - 'tools/market-product-canonical-2026.js'
+      - 'tools/check-market-data-quality-2026.js'
       - 'assets/market-hype-*.js'
       - 'assets/market-hype-*.css'
       - 'assets/market-loading-guard.js'
@@ -57,6 +65,16 @@ jobs:
           node --check tools/collect-market-hype-vendor-pagination-2026.js
           node --check tools/collect-market-hype-vendor-profiles-v2-2026.js
           node --check tools/merge-market-hype-upstream-products-2026.js
+          node --check tools/collect-market-hype-pods-2026.js
+          node --check tools/market-pod-classifier-2026.js
+          node --check tools/observe-market-hype-retail-first-seen-2026.js
+          node --check tools/collect-market-hype-direct-catalogs-2026.js
+          node --check tools/collect-market-hype-dated-news-2026.js
+          node --check tools/collect-market-hype-retail-campaigns-2026.js
+          node --check tools/backfill-market-hype-product-evidence-2026.js
+          node --check tools/consolidate-market-hype-2026.js
+          node --check tools/validate-market-hype-pods-2026.js
+          node --check tools/check-market-data-quality-2026.js
           node --check assets/market-hype-ui.js
           node --check assets/market-loading-guard.js
           node --check assets/market-access-policy.js
@@ -88,7 +106,7 @@ jobs:
           need(Array.isArray(vendors.profiles)&&vendors.profiles.length>=5,'Multi-vendor profile coverage too small');
           for(const d of ['3fvape.com','2fdeal.com','shareavape.com','ecigone.co.uk','sourcemore.com'])need(vendors.profiles.some(x=>x.domain===d),'Missing direct vendor profile '+d);
           need((vendors.searchOnlyDomains||[]).includes('3avape.com')&&(vendors.searchOnlyDomains||[]).includes('vapingbest.com'),'Search-only vendor coverage missing');
-          need(flow.includes('collect-market-hype-vendor-profiles-v2-2026.js --write')&&flow.includes('data/market-hype-products-2026.json'),'Product-title multi-vendor pass/publish missing');
+          need(flow.includes('collect-market-hype-vendor-profiles-v2-2026.js --write')&&flow.includes('collect-market-hype-pods-2026.js --write')&&flow.includes('consolidate-market-hype-2026.js --write')&&flow.includes('data/market-hype-pods-2026.json'),'RTA/MOD/POD multi-source pass/publish missing');
           need(products.includes('newArrivalIsNotRelease:true')&&products.includes('relistingIsNotRelease:true'),'Release/relisting protection missing');
           need(multi.includes('vendorProfileScan:true')&&multi.includes('transportRtaRejected:true')&&multi.includes('multiVendor:true'),'Multi-vendor truth protections missing');
           need(v2.includes('concreteProductTitles:true')&&v2.includes('genericVendorTitlesRejected:true'),'Concrete title resolver missing');
@@ -97,8 +115,8 @@ jobs:
           need(merge.includes('upstreamEvidenceMerged:true')&&merge.includes('release-observed')&&merge.includes('observedReleaseIsNotClaimedAsExactReleaseDate:true'),'Truthful upstream/release-observed merge missing');
           need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel')&&ui.includes('release-observed'),'Expandable observed-release Hype UI missing');
           need(!ui.includes('hype-direct')&&!ui.includes("t('Acum','Now')"),'Old automatic conclusion returned');
-          need(guard.includes("key:'hypeProducts'")&&guard.includes('validAfterProduct')&&guard.includes('release-observed'),'Atomic loader does not validate observed releases');
+          need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('validAfterProduct')&&guard.includes('catalog-published-at'),'Atomic loader does not validate final RTA/MOD/POD data');
           need(access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password may be prefilled');
-          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('ghid-rta-static-v37-hype-upstream-merge'),'Product Hype cache/data contract missing');
-          console.log('Hype Global gate OK: GLOBAL 30d; multi-vendor profiles; concrete products; upstream merge ready; observed releases truthful; expandable UI; false-positive/relisting protection; 06:00 only.');
+          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('ghid-rta-static-v38-hype-pod-arbiter'),'Product Hype cache/data contract missing');
+          console.log('Hype Global gate OK: GLOBAL 30d; RTA/MOD/POD; dated events separated from public signals; anti-relisting memory; 06:00 + 06:20 recovery.');
           NODE

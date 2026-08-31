@@ -3,6 +3,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { classifyPodProduct } = require('./market-pod-classifier-2026.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const REGISTRY_PATH = path.join(ROOT, 'data', 'market-retailers-2026.json');
@@ -162,6 +163,9 @@ function classify(title, hint) {
   if (hasRta && (hasRda || hasRdta)) return 'RTA/RDA mixed';
   if (!hasRta && (hasRda || hasRdta)) return 'RDA/RDTA';
   if (/\b(?:bridge|rba)\b/.test(t)) return 'RBA/bridge';
+
+  const pod = classifyPodProduct(title, hint);
+  if (pod) return pod.category;
 
   if (/\b(?:bf60|fl80)\b/.test(t) && /dicodes/.test(t)) return 'chipset/board';
   if (/\b(?:board|pcb|chipset|dna60|dna60c|dna75|dna75c|dna100c|evolv)\b/.test(t) && !/atomizor|rta|rda|rdta/.test(t)) return 'chipset/board';
@@ -406,7 +410,18 @@ async function collectRetailer(retailer, registry, date) {
   let pagesFetched = 0;
   const visited = new Set();
 
-  for (const seed of retailer.seeds || []) {
+  const seeds = [...(retailer.seeds || [])];
+  try {
+    const base = new URL(retailer.url);
+    const podUrl = /geekvape\.ro$/i.test(base.hostname)
+      ? `${base.origin}/index.php?route=product/search&search=pod`
+      : `${base.origin}/?s=pod&post_type=product`;
+    if (!seeds.some(seed => canonicalUrl(seed.url) === canonicalUrl(podUrl))) {
+      seeds.push({ url: podUrl, categoryHint: 'POD', maxPages: 2, discovery: 'pod-systems' });
+    }
+  } catch (_) { }
+
+  for (const seed of seeds) {
     const queue = [seed.url];
     const maxPages = Math.max(1, Math.min(Number(seed.maxPages || registry.collectorPolicy.maxPagesPerSeed || 1), 4));
     let seedPages = 0;
@@ -497,13 +512,14 @@ function summaryByCategory(observations) {
 }
 
 function retailerPublicShape(retailer, result) {
+  const coverage = Array.from(new Set([...(retailer.coverage || []), ...((result && result.observations || []).some(row => row.category === 'POD') ? ['POD'] : [])]));
   return {
     id: retailer.id,
     name: retailer.name,
     url: retailer.url,
     country: retailer.country || 'RO',
     status: retailer.status || 'monitored',
-    coverage: retailer.coverage || [],
+    coverage,
     note: retailer.mode === 'existing-feed'
       ? 'Date integrate prin feedul deja existent al ghidului; collectorul public extern nu dubleaza feedul.'
       : result && result.errors && result.errors.length

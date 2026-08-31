@@ -1,5 +1,5 @@
 {
-  "schemaVersion": 6,
+  "schemaVersion": 7,
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "timezone": "Europe/Bucharest",
@@ -77,8 +77,21 @@
   "forumDomains": ["e-cigarette-forum.com","vapingunderground.com","forum.planetofthevapes.co.uk","forum-ecigarette.com","worldofkrazzy.forum-ecigarette.com","forum.e-liquid-recipes.com","rovapers.eu","sigarettaelettronicaforum.com","ecigssa.co.za","vapoo.de","vape.to","dampfer-board.de","dampferzuflucht.de","vapingcommunity.co.uk","forum.belvaping.com","ecigtalk.org","vapeforums.lv"],
   "independentNewsDomains": ["vaping360.com","ecigclick.co.uk","vapingpost.com","vapouround.co.uk","en.2firsts.com","spinfuel.com","cloumix.com","levapelier.com"],
   "originalSellerDiscoveryDomains": ["cremedevape.com","intaste.de","pipeline-store.net","lepetitvapoteur.com","naturevape.co.uk","ecigone.co.uk","vapesourcing.com","sovap.id","vapeordr.com"],
-  "cloneSellerDiscoveryDomains": ["2fdeal.com","3fvape.com","shareavape.com","sourcemore.com","vapingbest.com","3avape.com"],
-  "discoveryCommercialDomains": ["cremedevape.com","intaste.de","pipeline-store.net","lepetitvapoteur.com","naturevape.co.uk","ecigone.co.uk","2fdeal.com","3fvape.com","shareavape.com","sourcemore.com","vapingbest.com","3avape.com","vapesourcing.com","sovap.id","vapeordr.com"],
+  "cloneSellerDiscoveryDomains": ["2fdeal.com","3fvape.com","shareavape.com","sourcemore.com","vapingbest.com","3avape.com","beast-8888.myshopify.com"],
+  "discoveryCommercialDomains": ["cremedevape.com","intaste.de","pipeline-store.net","lepetitvapoteur.com","naturevape.co.uk","ecigone.co.uk","2fdeal.com","3fvape.com","shareavape.com","sourcemore.com","vapingbest.com","3avape.com","beast-8888.myshopify.com","vapesourcing.com","sovap.id","vapeordr.com"],
+  "directCatalogSources": [
+    {"id":"beast-clone-catalog","baseUrl":"https://beast-8888.myshopify.com","label":"BEAST clone catalog","sourceType":"clone-retailer-direct","official":false,"scopes":["RTA","MODURI"]},
+    {"id":"oxva-official-store","baseUrl":"https://store.oxva.com","label":"OXVA official store","brandHint":"OXVA","sourceType":"manufacturer-official-store","official":true,"scopes":["POD"]},
+    {"id":"vaporesso-official-store","baseUrl":"https://store.vaporesso.com","label":"Vaporesso official store","brandHint":"Vaporesso","sourceType":"manufacturer-official-store","official":true,"scopes":["POD","MODURI"]},
+    {"id":"geekvape-official-store","baseUrl":"https://store.geekvape.com","label":"Geekvape official store","brandHint":"Geekvape","sourceType":"manufacturer-official-store","official":true,"scopes":["POD","MODURI","RTA"]},
+    {"id":"dotmod-official-store","baseUrl":"https://www.dotmod.com","label":"dotMod official store","brandHint":"DotMod","sourceType":"manufacturer-official-store","official":true,"scopes":["POD","MODURI","RTA"]},
+    {"id":"wotofo-official-store","baseUrl":"https://wotofo.com","label":"Wotofo official store","brandHint":"Wotofo","sourceType":"manufacturer-official-store","official":true,"scopes":["POD","MODURI","RTA"]},
+    {"id":"naturevape-retail-catalog","baseUrl":"https://naturevape.co.uk","label":"NatureVape catalog","sourceType":"retailer-direct","official":false,"scopes":["RTA","MODURI","POD"]},
+    {"id":"vaping-gentlemen-direct","baseUrl":"https://thevapinggentlemen.club","label":"The Vaping Gentlemen Club catalog","sourceType":"retailer-direct","official":false,"scopes":["RTA","MODURI","POD"]},
+    {"id":"vaping101-direct","baseUrl":"https://vaping101.co.uk","label":"Vaping 101 catalog","sourceType":"retailer-direct","official":false,"scopes":["RTA","MODURI","POD"]},
+    {"id":"vape-superstore-direct","baseUrl":"https://vapesuperstore.co.uk","label":"Vape Superstore catalog","sourceType":"retailer-direct","official":false,"scopes":["MODURI","POD"]},
+    {"id":"uk-ecig-store-direct","baseUrl":"https://ukecigstore.com","label":"UK ECIG STORE catalog","sourceType":"retailer-direct","official":false,"scopes":["MODURI","POD"]}
+  ],
   "socialDiscoveryDomains": ["facebook.com","instagram.com","threads.net","tiktok.com","x.com","twitter.com","youtube.com","youtu.be","t.me","telegram.me","discord.com","discord.gg"],
   "redditScopes": ["reddit.com/r/electronic_cigarette","reddit.com/r/Vaping","reddit.com/r/Vaping101","reddit.com"],
   "openWebDiscoveryQueries": [

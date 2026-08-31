@@ -2,10 +2,9 @@ name: Market 2026 Hype Radar
 
 on:
   schedule:
-    # Primary 06:00 Europe/Bucharest + 07:00 fallback; DST gated below.
-    - cron: '0 3 * * *'
-    - cron: '0 4 * * *'
-    - cron: '0 5 * * *'
+    # 06:00 and 06:20 Europe/Bucharest in summer and winter; local-time gated below.
+    - cron: '0,20 3 * * *'
+    - cron: '0,20 4 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -29,14 +28,30 @@ on:
       - "tools/augment-market-hype-recent-release-observer-2026.js"
       - "tools/augment-market-hype-current-vendor-rta-events-2026.js"
       - "tools/augment-market-hype-preorder-card-events-2026.js"
+      - "tools/collect-market-hype-pods-2026.js"
+      - "tools/market-pod-classifier-2026.js"
+      - "tools/observe-market-hype-retail-first-seen-2026.js"
+      - "tools/collect-market-hype-direct-catalogs-2026.js"
+      - "tools/collect-market-hype-dated-news-2026.js"
+      - "tools/collect-market-hype-retail-campaigns-2026.js"
+      - "tools/backfill-market-hype-product-evidence-2026.js"
+      - "tools/consolidate-market-hype-2026.js"
+      - "tools/validate-market-hype-pods-2026.js"
+      - "tools/check-market-data-quality-2026.js"
+      - "tools/market-product-canonical-2026.js"
       - "tools/enforce-market-hype-symmetric-window-2026.js"
       - "tools/merge-market-hype-upstream-products-v2-2026.js"
       - "tools/finalize-market-hype-category-relevance-2026.js"
       - "tools/merge-market-hype-upstream-products-2026.js"
       - "tools/validate-market-hype-publish-2026.js"
       - "data/market-hype-sources-2026.json"
+      - "data/market-hype-known-history-2026.json"
+      - "data/market-pod-universe-2026.json"
       - "data/market-hype-active-makers-extra-2026.json"
       - "data/market-hype-vendor-profiles-2026.json"
+      - "data/market-pod-universe-2026.json"
+      - "assets/market-hype-ui.js"
+      - "assets/market-hype-ui.css"
       - ".github/workflows/market-hype-2026-sync.yml"
 
 permissions:
@@ -44,34 +59,24 @@ permissions:
 
 concurrency:
   group: market-2026-hype-radar
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   collect-hype-radar:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 75
     steps:
-      - name: Gate 06:00 Bucharest and 07:00 fallback
+      - name: Gate exact 06:00 and 06:20 Bucharest runs
         id: gate
         shell: bash
         run: |
           run_sync=true
           fallback=false
           if [ "${{ github.event_name }}" = "schedule" ]; then
-            offset="$(TZ=Europe/Bucharest date +%z)"
-            cron="${{ github.event.schedule }}"
-            if [ "$offset" = "+0300" ]; then
-              if [ "$cron" = "0 3 * * *" ]; then fallback=false
-              elif [ "$cron" = "0 4 * * *" ]; then fallback=true
-              else run_sync=false
-              fi
-            elif [ "$offset" = "+0200" ]; then
-              if [ "$cron" = "0 4 * * *" ]; then fallback=false
-              elif [ "$cron" = "0 5 * * *" ]; then fallback=true
-              else run_sync=false
-              fi
-            else
-              run_sync=false
+            local_time="$(TZ=Europe/Bucharest date +%H:%M)"
+            if [ "$local_time" = "06:00" ]; then fallback=false
+            elif [ "$local_time" = "06:20" ]; then fallback=true
+            else run_sync=false
             fi
           fi
           echo "run_sync=$run_sync" >> "$GITHUB_OUTPUT"
@@ -94,15 +99,15 @@ jobs:
           const fs=require('fs');
           const {referenceIso}=require('./tools/hype-window-reference-2026.js');
           try{
-            const p=JSON.parse(fs.readFileSync('data/market-hype-products-2026.json','utf8'));
-            const d=JSON.parse(fs.readFileSync('data/market-hype-radar-2026.json','utf8'));
+            const files=['data/market-hype-products-2026.json','data/market-hype-pods-2026.json','data/market-hype-radar-2026.json','data/market-hype-direct-catalogs-2026.json','data/market-hype-dated-news-2026.json','data/market-hype-retail-campaigns-2026.json'];
             const expected=referenceIso();
-            if(p.snapshotReferenceAt===expected&&d.snapshotReferenceAt===expected&&p.pendingRefresh!==true)process.exit(0);
+            const docs=files.map(file=>JSON.parse(fs.readFileSync(file,'utf8')));
+            if(docs.every(doc=>doc.snapshotReferenceAt===expected&&doc.pendingRefresh!==true))process.exit(0);
           }catch(_){ }
           process.exit(1);
           NODE
             then
-              echo "06:00 Hype snapshot is already fresh; 07:00 fallback is not needed."
+              echo "06:00 Hype snapshot is complete; the 06:20 recovery run is not needed."
               run_hype=false
             fi
           fi
@@ -176,10 +181,6 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/collect-market-hype-active-makers-2026.js --write
 
-      - name: Recover explicit RTA ETA and batch events from Pre-Order cards
-        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
-        run: node tools/augment-market-hype-preorder-card-events-2026.js --write
-
       - name: Merge global, direct-release and vendor product signals
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/merge-market-hype-upstream-products-2026.js --write
@@ -187,6 +188,38 @@ jobs:
       - name: Enforce exact 30 days before and 30 days after
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/enforce-market-hype-symmetric-window-2026.js --write
+
+      - name: Discover POD announcements, launches and dated public signals
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/collect-market-hype-pods-2026.js --write
+
+      - name: Update 180-day retailer memory and first-seen observations
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/observe-market-hype-retail-first-seen-2026.js --write
+
+      - name: Scan direct official and retailer product catalogs
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/collect-market-hype-direct-catalogs-2026.js --write
+
+      - name: Collect dated manufacturer, press and product publications
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/collect-market-hype-dated-news-2026.js --write
+
+      - name: Recover explicit future batch and preorder dates
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/augment-market-hype-preorder-card-events-2026.js --write
+
+      - name: Record dated retail promotions only as public signals
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/collect-market-hype-retail-campaigns-2026.js --write
+
+      - name: Backfill product-level dated evidence across public sources
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/backfill-market-hype-product-evidence-2026.js --write
+
+      - name: Final category, chronology and cross-source arbitration
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/consolidate-market-hype-2026.js --write
 
       - name: Validate Hype global 30-day truth rules
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
@@ -210,6 +243,17 @@ jobs:
           node --check tools/augment-market-hype-recent-release-observer-2026.js
           node --check tools/augment-market-hype-current-vendor-rta-events-2026.js
           node --check tools/augment-market-hype-preorder-card-events-2026.js
+          node --check tools/collect-market-hype-pods-2026.js
+          node --check tools/market-pod-classifier-2026.js
+          node --check tools/observe-market-hype-retail-first-seen-2026.js
+          node --check tools/collect-market-hype-direct-catalogs-2026.js
+          node --check tools/collect-market-hype-dated-news-2026.js
+          node --check tools/collect-market-hype-retail-campaigns-2026.js
+          node --check tools/backfill-market-hype-product-evidence-2026.js
+          node --check tools/consolidate-market-hype-2026.js
+          node --check tools/validate-market-hype-pods-2026.js
+          node --check tools/check-market-data-quality-2026.js
+          node --check tools/market-product-canonical-2026.js
           node --check tools/enforce-market-hype-symmetric-window-2026.js
           node --check tools/merge-market-hype-upstream-products-v2-2026.js
           node --check tools/finalize-market-hype-category-relevance-2026.js
@@ -224,17 +268,19 @@ jobs:
           console.log(`Active-maker registry gate: ${names.size} supplemental makers, deduplicated.`);
           NODE
           node tools/validate-market-hype-publish-2026.js
+          node tools/validate-market-hype-pods-2026.js
+          node tools/check-market-data-quality-2026.js
 
       - name: Publish complete Hype, product and heartbeat snapshots
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         shell: bash
         run: |
-          files="data/market-hype-radar-2026.json data/market-hype-evidence-2026.json data/market-hype-heartbeat-2026.json data/market-hype-heartbeat-evidence-2026.json data/market-hype-products-2026.json"
+          files="data/market-hype-radar-2026.json data/market-hype-evidence-2026.json data/market-hype-heartbeat-2026.json data/market-hype-heartbeat-evidence-2026.json data/market-hype-products-2026.json data/market-hype-pods-2026.json data/market-hype-direct-catalogs-2026.json data/market-hype-dated-news-2026.json data/market-hype-retail-campaigns-2026.json data/market-hype-retail-memory-2026.json data/market-hype-discovery-ledger-2026.json"
           if [ -z "$(git status --porcelain -- $files)" ]; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add $files
-          git commit -m "Snapshot product-level global 30-day Hype Radar 2026"
+          git commit -m "Refresh verified RTA, mod and POD Hype radar"
           for attempt in 1 2 3 4 5; do
             git fetch origin main
             git rebase origin/main

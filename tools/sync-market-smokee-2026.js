@@ -4,6 +4,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
+const { classifyPodProduct, searchTerms: podSearchTerms } = require('./market-pod-classifier-2026.js');
 
 const ROOT = path.resolve(__dirname, '..');
 const MARKET_PATH = path.join(ROOT, 'data', 'market-2026.json');
@@ -27,7 +28,8 @@ const CATEGORY_GROUPS = [
 const SEARCH_TERMS = [
   'RTA', 'MTL RTA', 'Kanthal', 'Ni80', 'SS316L', 'NiFe30', 'NiFe52', 'Clapton',
   'bumbac', 'cotton', 'tool kit', 'coil jig', 'ohm meter', 'air pin RTA', 'chamber RTA',
-  'glass RTA', 'tank kit RTA', '18650', '21700', 'incarcator', 'BF60', 'FL80', 'Dicodes board'
+  'glass RTA', 'tank kit RTA', '18650', '21700', 'incarcator', 'BF60', 'FL80', 'Dicodes board',
+  ...podSearchTerms(30)
 ];
 
 function readJson(file) {
@@ -71,6 +73,8 @@ function norm(value) {
 }
 
 function inferBrand(title) {
+  const pod=classifyPodProduct(title);
+  if(pod&&pod.brand)return pod.brand;
   const known = [
     'Ambition Mods','Arcana Mods','BP Mods','Centenary Mods','Cthulhu','Dicodes','Damn Vape','Dovpo',
     'Early Bird','Ennequadro Mods','Geekvape','Hellvape','Innokin','KHW Mods','Lost Vape','SvoeMesto',
@@ -96,6 +100,9 @@ function classify(title, hint) {
   if (hasRta && (hasRda || hasRdta)) return 'RTA/RDA mixed';
   if (!hasRta && (hasRda || hasRdta)) return 'RDA/RDTA';
   if (/\b(?:bridge|rba)\b/.test(t)) return 'RBA/bridge';
+
+  const pod=classifyPodProduct(title,hint);
+  if(pod)return pod.category;
 
   if (/\b(?:bf60|fl80)\b/.test(t) && /dicodes/.test(t)) return 'chipset/board';
   if (/\b(?:board|pcb|chipset|dna60|dna60c|dna75|dna75c|dna100c|evolv)\b/.test(t) && !/\b(?:kit|atomizor|atomizer|rta|rda|rdta)\b/.test(t)) return 'chipset/board';
