@@ -1,10 +1,10 @@
 {
-  "schemaVersion": 29,
+  "schemaVersion": 30,
   "scopeYear": 2026,
   "scope": "GLOBAL POD SYSTEMS",
   "windowDays": 30,
   "discoveryContextDays": 180,
-  "generatedAt": "2026-08-31T11:34:27.271Z",
+  "generatedAt": "2026-08-31T12:50:56.357Z",
   "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest",
   "pendingRefresh": false,
@@ -18,12 +18,14 @@
     "publicOfficialSocialForumNewsRetailDiscovery": true,
     "retailFirstSeenIsHandledOnlyByCatalogObserver": true,
     "retailMemoryContextDays": 180,
+    "segmentCoverageIsMeasured": true,
     "retailFirstSeenUsesPersistentMemory": true,
     "retailFirstSeenIsDiscoveryOnly": true,
     "firstCatalogRunIsBaselineOnly": true,
     "colourVariantsAreOneProduct": true,
     "directCatalogPublicationDates": true,
     "shopifyPublishedAtIsListingEvidenceNotGlobalLaunch": true,
+    "wordpressOfficialPublicationDates": true,
     "republishedOldProductsExcludedFromRecentLaunches": true,
     "datedNewsProductSignals": true,
     "newsPublicationDateIsPublicSignalNotAutomaticLaunchDate": true,
@@ -42,30 +44,81 @@
     "retailPromotionIsNotRelease": true,
     "priorExistenceDemotesRetailRelisting": true,
     "singleRetailerListingNeedsCorroboration": true,
-    "verificationQueueReconciledWithPublishedProducts": true
+    "verificationQueueReconciledWithPublishedProducts": true,
+    "finalSegmentAndCategoryCoverageReconciled": true
   },
   "scan": {
     "makersConfigured": 60,
     "segmentsConfigured": 4,
     "queriesRun": 227,
     "queriesWorking": 227,
-    "searchDocuments": 1639,
-    "candidateDocuments": 317,
-    "pagesProcessed": 317,
-    "concreteProducts": 23,
-    "retailProductsObserved": 6,
+    "searchDocuments": 1640,
+    "candidateDocuments": 321,
+    "pagesProcessed": 321,
+    "concreteProducts": 20,
+    "retailProductsObserved": 4,
     "firstRetailEvents": 0,
     "verifiedSignals": 0,
+    "segmentCoverage": {
+      "mass-market-open-pod": {
+        "label": "Open-pod si pod-mod",
+        "makers": 9,
+        "queries": 36,
+        "queriesWorking": 36,
+        "indexedDocuments": 242,
+        "candidateDocuments": 63,
+        "events": 4,
+        "queued": 6,
+        "monitored": 37,
+        "signals": 33
+      },
+      "mid-tier-regional": {
+        "label": "Mid-tier si regional",
+        "makers": 24,
+        "queries": 90,
+        "queriesWorking": 90,
+        "indexedDocuments": 783,
+        "candidateDocuments": 111,
+        "events": 0,
+        "queued": 3,
+        "monitored": 2,
+        "signals": 2
+      },
+      "closed-prefilled-hybrid": {
+        "label": "Closed, pre-filled si hibrid",
+        "makers": 20,
+        "queries": 74,
+        "queriesWorking": 74,
+        "indexedDocuments": 445,
+        "candidateDocuments": 119,
+        "events": 0,
+        "queued": 9,
+        "monitored": 4,
+        "signals": 4
+      },
+      "premium-high-end-aio": {
+        "label": "Premium, high-end si AIO",
+        "makers": 7,
+        "queries": 27,
+        "queriesWorking": 27,
+        "indexedDocuments": 170,
+        "candidateDocuments": 28,
+        "events": 0,
+        "queued": 1,
+        "monitored": 0,
+        "signals": 0
+      }
+    },
     "rejections": {
       "fetchFailed": 54,
       "makerMismatch": 0,
-      "notConcretePodProduct": 294,
-      "noDateOrEvent": 23,
+      "notConcretePodProduct": 301,
+      "noDateOrEvent": 20,
       "sourceNotDecisionEligible": 0,
       "outsideWindow": 0,
       "duplicate": 0
     },
-    "candidatesUnderVerification": 23,
+    "candidatesUnderVerification": 20,
     "rejectedSample": [
       {
         "brand": "SMOK",
@@ -75,24 +128,6 @@
         "reason": "noDateOrEvent",
         "url": "https://www.elementvape.com/smoktech",
         "publishedAt": "2026-08-30T23:05:00.000Z"
-      },
-      {
-        "brand": "Voopoo",
-        "productName": "VOOPOO - Vape Mod Kits & Pod Systems",
-        "segment": "mass-market-open-pod",
-        "typology": "open-pod / pod-mod",
-        "reason": "noDateOrEvent",
-        "url": "https://www.elementvape.com/voopoo-tech",
-        "publishedAt": "2026-08-28T20:08:00.000Z"
-      },
-      {
-        "brand": "Geekvape",
-        "productName": "Geek Vape - GeekVape Starter Kits & Pod Systems",
-        "segment": "mass-market-open-pod",
-        "typology": "open-pod / pod-mod",
-        "reason": "noDateOrEvent",
-        "url": "https://www.elementvape.com/geek-vape",
-        "publishedAt": "2026-08-30T15:19:00.000Z"
       },
       {
         "brand": "Uwell",
@@ -258,15 +293,6 @@
       },
       {
         "brand": "LVE",
-        "productName": "LVE Vapor | ORION II PRO+ and Precision Vapor Devices",
-        "segment": "premium-high-end-aio",
-        "typology": "premium / high-end / AIO",
-        "reason": "noDateOrEvent",
-        "url": "https://lvevapor.com/",
-        "publishedAt": "2026-08-30T10:19:00.000Z"
-      },
-      {
-        "brand": "LVE",
         "productName": "ORION II PRO | LVE",
         "segment": "premium-high-end-aio",
         "typology": "premium / high-end / AIO",
@@ -279,32 +305,37 @@
     "retailObserverNewCandidates": 0,
     "retailObserverFirstSaleEvents": 0,
     "directCatalogs": {
-      "sourcesConfigured": 13,
-      "sourcesWorking": 13,
-      "productsFetched": 8350,
-      "productsClassified": 1477,
-      "recentEvents": 11,
+      "sourcesConfigured": 20,
+      "sourcesWorking": 19,
+      "productsFetched": 11661,
+      "productsClassified": 1702,
+      "recentEvents": 20,
       "relistedExcluded": 0,
-      "rtaModAdded": 6,
-      "podsAdded": 5,
+      "rtaModAdded": 8,
+      "podsAdded": 12,
+      "sourceMix": {
+        "official": 267,
+        "original-retailer": 1061,
+        "clone": 367
+      },
       "categoryEvents": {
         "RTA": 1,
-        "MODURI": 5,
+        "MODURI": 7,
         "ACCESORII": 0,
-        "POD": 5
+        "POD": 12
       }
     },
     "datedNews": {
       "newsQueries": 48,
       "newsQueriesWorking": 48,
-      "wordpressSources": 18,
-      "wordpressSourcesWorking": 18,
-      "wordpressRequestsWorking": 69,
-      "datedItems": 70,
-      "concreteSignals": 45,
+      "wordpressSources": 23,
+      "wordpressSourcesWorking": 23,
+      "wordpressRequestsWorking": 89,
+      "datedItems": 74,
+      "concreteSignals": 49,
       "rejected": 12,
       "rtaModAdded": 7,
-      "podsAdded": 37
+      "podsAdded": 40
     },
     "retailCampaigns": {
       "sources": 1,
@@ -323,17 +354,17 @@
       "podsAdded": 0
     },
     "productBackfill": {
-      "candidates": 199,
-      "queries": 398,
-      "queriesWorking": 398,
-      "indexedMatches": 37,
-      "pagesFetched": 33,
-      "pagesMatched": 33,
+      "candidates": 207,
+      "queries": 414,
+      "queriesWorking": 414,
+      "indexedMatches": 26,
+      "pagesFetched": 25,
+      "pagesMatched": 25,
       "datedEvents": 0,
       "groupedEvents": 0,
       "rtaModAdded": 0,
       "podsAdded": 0,
-      "undated": 33
+      "undated": 25
     }
   },
   "verificationQueue": [
@@ -345,24 +376,6 @@
       "reason": "noDateOrEvent",
       "url": "https://www.elementvape.com/smoktech",
       "publishedAt": "2026-08-30T23:05:00.000Z"
-    },
-    {
-      "brand": "Voopoo",
-      "productName": "VOOPOO - Vape Mod Kits & Pod Systems",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/voopoo-tech",
-      "publishedAt": "2026-08-28T20:08:00.000Z"
-    },
-    {
-      "brand": "Geekvape",
-      "productName": "Geek Vape - GeekVape Starter Kits & Pod Systems",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/geek-vape",
-      "publishedAt": "2026-08-30T15:19:00.000Z"
     },
     {
       "brand": "Uwell",
@@ -519,15 +532,6 @@
     },
     {
       "brand": "LVE",
-      "productName": "LVE Vapor | ORION II PRO+ and Precision Vapor Devices",
-      "segment": "premium-high-end-aio",
-      "typology": "premium / high-end / AIO",
-      "reason": "noDateOrEvent",
-      "url": "https://lvevapor.com/",
-      "publishedAt": "2026-08-30T10:19:00.000Z"
-    },
-    {
-      "brand": "LVE",
       "productName": "ORION II PRO | LVE",
       "segment": "premium-high-end-aio",
       "typology": "premium / high-end / AIO",
@@ -552,8 +556,8 @@
       "stageEvidenceAt": "2026-08-26T08:40:36.000Z",
       "firstPublicEvidenceAt": "2026-08-26T08:40:36.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 114.3,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -571,7 +575,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/elf_bar_-_af5500_-_blue-razz-lemonade_3.webp?v=1787748011",
           "price": 11.95,
           "currency": null,
@@ -609,8 +613,8 @@
       "stageEvidenceAt": "2026-08-24T05:49:37.000Z",
       "firstPublicEvidenceAt": "2026-08-24T05:49:37.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.227Z",
-      "lastSeenAt": "2026-08-31T11:32:03.760Z",
+      "firstSeenAt": "2026-08-31T12:49:37.038Z",
+      "lastSeenAt": "2026-08-31T12:49:37.594Z",
       "ageHours": 165.2,
       "sourceCount": 2,
       "eligibleSources": 2,
@@ -630,7 +634,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.227Z"
+          "observedAt": "2026-08-31T12:49:37.038Z"
         },
         {
           "host": "igeekphone.com",
@@ -647,7 +651,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.760Z"
+          "observedAt": "2026-08-31T12:49:37.594Z"
         }
       ],
       "id": "493ee902610fc36c68d1"
@@ -667,8 +671,8 @@
       "stageEvidenceAt": "2026-08-24T04:56:29.000Z",
       "firstPublicEvidenceAt": "2026-08-24T04:56:29.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.809Z",
-      "lastSeenAt": "2026-08-31T11:32:03.809Z",
+      "firstSeenAt": "2026-08-31T12:49:37.645Z",
+      "lastSeenAt": "2026-08-31T12:49:37.645Z",
       "ageHours": 166.1,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -688,7 +692,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.808Z"
+          "observedAt": "2026-08-31T12:49:37.645Z"
         }
       ],
       "id": "3b773d0b9bce16befe5c"
@@ -708,8 +712,8 @@
       "stageEvidenceAt": "2026-08-24T04:56:29.000Z",
       "firstPublicEvidenceAt": "2026-08-24T04:56:29.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.809Z",
-      "lastSeenAt": "2026-08-31T11:32:03.809Z",
+      "firstSeenAt": "2026-08-31T12:49:37.645Z",
+      "lastSeenAt": "2026-08-31T12:49:37.645Z",
       "ageHours": 166.1,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -729,7 +733,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.809Z"
+          "observedAt": "2026-08-31T12:49:37.645Z"
         }
       ],
       "id": "02ac3909ea9d63811dfb"
@@ -749,8 +753,8 @@
       "stageEvidenceAt": "2026-08-24T02:04:03.000Z",
       "firstPublicEvidenceAt": "2026-08-24T02:04:03.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.834Z",
-      "lastSeenAt": "2026-08-31T11:32:03.834Z",
+      "firstSeenAt": "2026-08-31T12:49:37.672Z",
+      "lastSeenAt": "2026-08-31T12:49:37.672Z",
       "ageHours": 168.9,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -770,7 +774,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.834Z"
+          "observedAt": "2026-08-31T12:49:37.672Z"
         }
       ],
       "id": "8b612b9e14db9aa3674b"
@@ -790,8 +794,8 @@
       "stageEvidenceAt": "2026-08-20T13:48:57.000Z",
       "firstPublicEvidenceAt": "2026-08-20T13:48:57.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.415Z",
-      "lastSeenAt": "2026-08-31T11:32:04.415Z",
+      "firstSeenAt": "2026-08-31T12:49:38.280Z",
+      "lastSeenAt": "2026-08-31T12:49:38.280Z",
       "ageHours": 253.2,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -811,7 +815,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.415Z"
+          "observedAt": "2026-08-31T12:49:38.280Z"
         }
       ],
       "id": "f7df6b8dc9eb6966bb2f"
@@ -831,8 +835,8 @@
       "stageEvidenceAt": "2026-08-20T13:20:42.000Z",
       "firstPublicEvidenceAt": "2026-08-10T12:25:39.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 253.7,
       "sourceCount": 4,
       "eligibleSources": 4,
@@ -850,7 +854,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 34.95,
           "currency": null,
@@ -871,7 +875,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.254Z"
+          "observedAt": "2026-08-31T12:49:37.065Z"
         },
         {
           "host": "igeekphone.com",
@@ -888,7 +892,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.709Z"
+          "observedAt": "2026-08-31T12:49:37.542Z"
         },
         {
           "host": "store.oxva.com",
@@ -903,7 +907,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "anunt / disponibilitate in pregatire",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0703/9739/5251/files/BlackCarbon.png?v=1787215957",
           "price": 39.9,
           "currency": null,
@@ -917,6 +921,264 @@
         "before",
         "IMMINENT"
       ]
+    },
+    {
+      "productName": "Uwell Caliburn G5 Lite Zero Nicotine Vape Bundle",
+      "brand": "Uwell",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-19T14:26:19.000Z",
+      "stageEvidenceAt": "2026-08-19T14:26:19.000Z",
+      "firstPublicEvidenceAt": "2026-08-19T14:26:19.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 276.6,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/uwell-caliburn-g5-lite-zero-nicotine-vape-bundle",
+          "title": "Uwell Caliburn G5 Lite Zero Nicotine Vape Bundle",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-19T14:26:19.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Uwell-Caliburn-G5-Lite-bundle-deal-zero-nicotine-vape_12c32214-2dfe-43d4-af80-f02899e6a34b.webp?v=1787149579",
+          "price": 22.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "f0df1e7c159c70ed46b1"
+    },
+    {
+      "productName": "OXVA Xlim GO 2 Zero Nicotine Vape Bundle",
+      "brand": "OXVA",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-19T14:25:08.000Z",
+      "stageEvidenceAt": "2026-08-19T14:25:08.000Z",
+      "firstPublicEvidenceAt": "2026-08-19T14:25:08.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 276.6,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/oxva-xlim-go-2-zero-nicotine-vape-bundle",
+          "title": "OXVA Xlim GO 2 Zero Nicotine Vape Bundle",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-19T14:25:08.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/OXVA-Xlim-Go-2-bundle-deal-zero-nicotine-vape_9727953c-de82-4681-b7f3-d28f52971006.webp?v=1787149489",
+          "price": 19.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "ae742d59c3214f1dc9a7"
+    },
+    {
+      "productName": "OXVA NeXlim 2 Mini Zero Nicotine Vape Bundle",
+      "brand": "OXVA",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-19T14:25:00.000Z",
+      "stageEvidenceAt": "2026-08-19T14:25:00.000Z",
+      "firstPublicEvidenceAt": "2026-08-19T14:25:00.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 276.6,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/oxva-nexlim-2-mini-zero-nicotine-vape-bundle",
+          "title": "OXVA NeXlim 2 Mini Zero Nicotine Vape Bundle",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-19T14:25:00.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Oxva-Nexlim-2-Mini-bundle-deal-zero-nicotine-vape_362bafec-6ea6-43c8-b21a-73f8d8fb0c27.webp?v=1787149490",
+          "price": 24.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "522668cb96e4bec8a0d9"
+    },
+    {
+      "productName": "VooPoo Argus G4 Mini Zero Nicotine Vape Bundle",
+      "brand": "Voopoo",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-19T14:24:05.000Z",
+      "stageEvidenceAt": "2026-08-19T14:24:05.000Z",
+      "firstPublicEvidenceAt": "2026-08-19T14:24:05.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 276.6,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/voopoo-argus-g4-mini-zero-nicotine-vape-bundle",
+          "title": "VooPoo Argus G4 Mini Zero Nicotine Vape Bundle",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-19T14:24:05.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Voopoo-argus-g4-Mini-bundle-deal-zero-nicotine-vape_281b99b8-85dc-4674-89a0-09b2824ff2cb.webp?v=1787149436",
+          "price": 25.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "b134440f4c1a916591f7"
+    },
+    {
+      "productName": "Vaporesso XROS 6 Mini Zero Nicotine Vape Bundle",
+      "brand": "Vaporesso",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-19T12:59:15.000Z",
+      "stageEvidenceAt": "2026-08-19T12:59:15.000Z",
+      "firstPublicEvidenceAt": "2026-08-19T12:59:15.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 278,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/vaporesso-xros-6-mini-zero-nicotine-vape-bundle",
+          "title": "Vaporesso XROS 6 Mini Zero Nicotine Vape Bundle",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-19T12:59:15.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Vapresso-xros-6-Mini-bundle-deal-zero-nicotine-vape_df71dda8-ffd9-4900-8648-a029ac9ed0cd.webp?v=1787144331",
+          "price": 29.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "6385bedb0e1c53e578d9"
+    },
+    {
+      "productName": "SKE Bar 600 Zero Nicotine Prefilled Pod Kit",
+      "brand": "SKE",
+      "category": "POD",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-19T09:17:29.000Z",
+      "stageEvidenceAt": "2026-08-19T09:17:29.000Z",
+      "firstPublicEvidenceAt": "2026-08-19T09:17:29.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 281.7,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/ske-bar-600-zero-nicotine-prefilled-pod-kit",
+          "title": "SKE Bar 600 Zero Nicotine Prefilled Pod Kit",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-19T09:17:29.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/SKE-Bar-600-Zero-Nicotine-Prefilled-Pod-Kit_9f46ceb9-81ef-4a16-a70b-7841ad9a59ca.webp?v=1787128476",
+          "price": 3.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "073ca92d0f6e102cc779"
     },
     {
       "productName": "Smoant Racer Flex Pod System Kit",
@@ -933,8 +1195,8 @@
       "stageEvidenceAt": "2026-08-19T05:41:10.000Z",
       "firstPublicEvidenceAt": "2026-08-19T05:41:10.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.914Z",
-      "lastSeenAt": "2026-08-31T11:32:03.914Z",
+      "firstSeenAt": "2026-08-31T12:49:37.756Z",
+      "lastSeenAt": "2026-08-31T12:49:37.756Z",
       "ageHours": 285.3,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -954,7 +1216,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.914Z"
+          "observedAt": "2026-08-31T12:49:37.756Z"
         }
       ],
       "id": "7ab1cf4034f144c670cf"
@@ -974,8 +1236,8 @@
       "stageEvidenceAt": "2026-08-19T05:41:10.000Z",
       "firstPublicEvidenceAt": "2026-08-19T05:41:10.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.572Z",
-      "lastSeenAt": "2026-08-31T11:32:03.914Z",
+      "firstSeenAt": "2026-08-31T12:49:37.399Z",
+      "lastSeenAt": "2026-08-31T12:49:37.755Z",
       "ageHours": 285.3,
       "sourceCount": 3,
       "eligibleSources": 1,
@@ -995,7 +1257,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.572Z"
+          "observedAt": "2026-08-31T12:49:37.399Z"
         },
         {
           "host": "igeekphone.com",
@@ -1012,7 +1274,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.621Z"
+          "observedAt": "2026-08-31T12:49:37.450Z"
         },
         {
           "host": "igeekphone.com",
@@ -1029,7 +1291,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.914Z"
+          "observedAt": "2026-08-31T12:49:37.755Z"
         }
       ],
       "id": "e69f9edd1bf612fb0b86"
@@ -1049,8 +1311,8 @@
       "stageEvidenceAt": "2026-08-19T02:25:50.000Z",
       "firstPublicEvidenceAt": "2026-08-19T02:25:50.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.001Z",
-      "lastSeenAt": "2026-08-31T11:32:03.864Z",
+      "firstSeenAt": "2026-08-31T12:49:36.801Z",
+      "lastSeenAt": "2026-08-31T12:49:37.704Z",
       "ageHours": 288.6,
       "sourceCount": 2,
       "eligibleSources": 2,
@@ -1070,7 +1332,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T11:32:03.001Z"
+          "observedAt": "2026-08-31T12:49:36.801Z"
         },
         {
           "host": "igeekphone.com",
@@ -1087,7 +1349,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T11:32:03.864Z"
+          "observedAt": "2026-08-31T12:49:37.704Z"
         }
       ],
       "id": "9eb8a79954fb5dceacc9"
@@ -1107,8 +1369,8 @@
       "stageEvidenceAt": "2026-08-18T14:05:27.000Z",
       "firstPublicEvidenceAt": "2026-08-18T14:05:27.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.062Z",
-      "lastSeenAt": "2026-08-31T11:32:03.939Z",
+      "firstSeenAt": "2026-08-31T12:49:36.865Z",
+      "lastSeenAt": "2026-08-31T12:49:37.782Z",
       "ageHours": 300.9,
       "sourceCount": 3,
       "eligibleSources": 2,
@@ -1128,7 +1390,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T11:32:03.062Z"
+          "observedAt": "2026-08-31T12:49:36.865Z"
         },
         {
           "host": "igeekphone.com",
@@ -1145,7 +1407,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.279Z"
+          "observedAt": "2026-08-31T12:49:37.092Z"
         },
         {
           "host": "igeekphone.com",
@@ -1162,7 +1424,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.939Z"
+          "observedAt": "2026-08-31T12:49:37.782Z"
         }
       ],
       "id": "4a91bff52a0a093760de"
@@ -1182,8 +1444,8 @@
       "stageEvidenceAt": "2026-08-17T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-17T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.419Z",
-      "lastSeenAt": "2026-08-31T11:32:03.419Z",
+      "firstSeenAt": "2026-08-31T12:49:37.240Z",
+      "lastSeenAt": "2026-08-31T12:49:37.240Z",
       "ageHours": 326,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1203,7 +1465,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.419Z"
+          "observedAt": "2026-08-31T12:49:37.240Z"
         }
       ],
       "id": "6f811cf1523e3c3fe8d5"
@@ -1223,8 +1485,8 @@
       "stageEvidenceAt": "2026-08-16T10:36:56.000Z",
       "firstPublicEvidenceAt": "2026-08-16T10:36:56.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.995Z",
-      "lastSeenAt": "2026-08-31T11:32:03.995Z",
+      "firstSeenAt": "2026-08-31T12:49:37.840Z",
+      "lastSeenAt": "2026-08-31T12:49:37.840Z",
       "ageHours": 352.4,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1244,7 +1506,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.995Z"
+          "observedAt": "2026-08-31T12:49:37.840Z"
         }
       ],
       "id": "2f80942535bb6fe9151b"
@@ -1264,8 +1526,8 @@
       "stageEvidenceAt": "2026-08-15T11:27:57.000Z",
       "firstPublicEvidenceAt": "2026-08-15T11:27:57.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.177Z",
-      "lastSeenAt": "2026-08-31T11:32:04.273Z",
+      "firstSeenAt": "2026-08-31T12:49:36.985Z",
+      "lastSeenAt": "2026-08-31T12:49:38.131Z",
       "ageHours": 375.5,
       "sourceCount": 4,
       "eligibleSources": 2,
@@ -1285,7 +1547,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.177Z"
+          "observedAt": "2026-08-31T12:49:36.985Z"
         },
         {
           "host": "igeekphone.com",
@@ -1302,7 +1564,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.621Z"
+          "observedAt": "2026-08-31T12:49:37.450Z"
         },
         {
           "host": "igeekphone.com",
@@ -1319,7 +1581,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.115Z"
+          "observedAt": "2026-08-31T12:49:37.966Z"
         },
         {
           "host": "igeekphone.com",
@@ -1336,7 +1598,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.273Z"
+          "observedAt": "2026-08-31T12:49:38.131Z"
         }
       ],
       "id": "9f220d0c58fa1ee30a34"
@@ -1356,8 +1618,8 @@
       "stageEvidenceAt": "2026-08-15T08:03:21.000Z",
       "firstPublicEvidenceAt": "2026-08-15T08:03:21.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.164Z",
-      "lastSeenAt": "2026-08-31T11:32:04.164Z",
+      "firstSeenAt": "2026-08-31T12:49:38.018Z",
+      "lastSeenAt": "2026-08-31T12:49:38.018Z",
       "ageHours": 378.9,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1377,7 +1639,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.164Z"
+          "observedAt": "2026-08-31T12:49:38.018Z"
         }
       ],
       "id": "44efd741915121c5760c"
@@ -1397,8 +1659,8 @@
       "stageEvidenceAt": "2026-08-15T08:03:21.000Z",
       "firstPublicEvidenceAt": "2026-08-15T08:03:21.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.164Z",
-      "lastSeenAt": "2026-08-31T11:32:04.164Z",
+      "firstSeenAt": "2026-08-31T12:49:38.018Z",
+      "lastSeenAt": "2026-08-31T12:49:38.018Z",
       "ageHours": 378.9,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1418,7 +1680,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.164Z"
+          "observedAt": "2026-08-31T12:49:38.018Z"
         }
       ],
       "id": "154aff4922bf47b72523"
@@ -1438,8 +1700,8 @@
       "stageEvidenceAt": "2026-08-13T14:22:05.000Z",
       "firstPublicEvidenceAt": "2026-08-13T14:22:05.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 420.6,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -1457,7 +1719,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/geekvape-sonder-q3-pod-kit-main.jpg?v=1786629641",
           "price": 12.99,
           "currency": null,
@@ -1495,8 +1757,8 @@
       "stageEvidenceAt": "2026-08-11T15:33:28.000Z",
       "firstPublicEvidenceAt": "2026-08-11T15:33:28.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.477Z",
-      "lastSeenAt": "2026-08-31T11:32:04.477Z",
+      "firstSeenAt": "2026-08-31T12:49:38.345Z",
+      "lastSeenAt": "2026-08-31T12:49:38.345Z",
       "ageHours": 467.4,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1516,7 +1778,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.477Z"
+          "observedAt": "2026-08-31T12:49:38.345Z"
         }
       ],
       "id": "7066839a123cf355e29a"
@@ -1536,8 +1798,8 @@
       "stageEvidenceAt": "2026-08-11T13:54:37.000Z",
       "firstPublicEvidenceAt": "2026-08-11T13:54:37.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.227Z",
-      "lastSeenAt": "2026-08-31T11:32:04.217Z",
+      "firstSeenAt": "2026-08-31T12:49:37.038Z",
+      "lastSeenAt": "2026-08-31T12:49:38.073Z",
       "ageHours": 469.1,
       "sourceCount": 3,
       "eligibleSources": 2,
@@ -1557,7 +1819,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.227Z"
+          "observedAt": "2026-08-31T12:49:37.038Z"
         },
         {
           "host": "igeekphone.com",
@@ -1574,7 +1836,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.760Z"
+          "observedAt": "2026-08-31T12:49:37.594Z"
         },
         {
           "host": "igeekphone.com",
@@ -1591,10 +1853,51 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.217Z"
+          "observedAt": "2026-08-31T12:49:38.073Z"
         }
       ],
       "id": "ea8a08716de1151c49ca"
+    },
+    {
+      "productName": "Pixo Ultra par Aspire",
+      "brand": "Aspire",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-10T08:00:04.000Z",
+      "stageEvidenceAt": "2026-08-10T08:00:04.000Z",
+      "firstPublicEvidenceAt": "2026-08-10T08:00:04.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-08-31T12:49:38.672Z",
+      "lastSeenAt": "2026-08-31T12:49:38.672Z",
+      "ageHours": 499,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "levapelier.com",
+          "url": "https://www.levapelier.com/pixo-ultra-par-aspire/",
+          "title": "Pixo Ultra par Aspire",
+          "sourceName": "Le Vapelier",
+          "sourceUrl": "https://www.levapelier.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-10T08:00:04.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-08-31T12:49:38.672Z"
+        }
+      ],
+      "id": "d1022c93c369ce39b391"
     },
     {
       "productName": "Vaporesso Luxe XR Max 2",
@@ -1611,8 +1914,8 @@
       "stageEvidenceAt": "2026-08-09T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-09T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.344Z",
-      "lastSeenAt": "2026-08-31T11:32:03.344Z",
+      "firstSeenAt": "2026-08-31T12:49:37.160Z",
+      "lastSeenAt": "2026-08-31T12:49:37.160Z",
       "ageHours": 518,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1632,7 +1935,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.344Z"
+          "observedAt": "2026-08-31T12:49:37.160Z"
         }
       ],
       "id": "7fe5e0787ded60c35547"
@@ -1652,8 +1955,8 @@
       "stageEvidenceAt": "2026-08-09T12:43:32.000Z",
       "firstPublicEvidenceAt": "2026-08-09T12:43:32.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.500Z",
-      "lastSeenAt": "2026-08-31T11:32:04.500Z",
+      "firstSeenAt": "2026-08-31T12:49:38.370Z",
+      "lastSeenAt": "2026-08-31T12:49:38.370Z",
       "ageHours": 518.3,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1673,7 +1976,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.500Z"
+          "observedAt": "2026-08-31T12:49:38.370Z"
         }
       ],
       "id": "d133d301673d2e3c3434"
@@ -1693,8 +1996,8 @@
       "stageEvidenceAt": "2026-08-08T12:44:27.000Z",
       "firstPublicEvidenceAt": "2026-08-08T12:44:27.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.527Z",
-      "lastSeenAt": "2026-08-31T11:32:04.527Z",
+      "firstSeenAt": "2026-08-31T12:49:38.398Z",
+      "lastSeenAt": "2026-08-31T12:49:38.398Z",
       "ageHours": 542.3,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1714,7 +2017,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.527Z"
+          "observedAt": "2026-08-31T12:49:38.398Z"
         }
       ],
       "id": "5b57d3f7cb52583b8e3b"
@@ -1734,8 +2037,8 @@
       "stageEvidenceAt": "2026-08-07T14:21:08.000Z",
       "firstPublicEvidenceAt": "2026-08-07T14:21:08.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.419Z",
-      "lastSeenAt": "2026-08-31T11:32:04.453Z",
+      "firstSeenAt": "2026-08-31T12:49:37.240Z",
+      "lastSeenAt": "2026-08-31T12:49:38.320Z",
       "ageHours": 564.6,
       "sourceCount": 4,
       "eligibleSources": 1,
@@ -1755,7 +2058,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.419Z"
+          "observedAt": "2026-08-31T12:49:37.240Z"
         },
         {
           "host": "vapingpost.com",
@@ -1772,7 +2075,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.447Z"
+          "observedAt": "2026-08-31T12:49:37.268Z"
         },
         {
           "host": "igeekphone.com",
@@ -1789,7 +2092,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.322Z"
+          "observedAt": "2026-08-31T12:49:38.183Z"
         },
         {
           "host": "smoketastic.com",
@@ -1806,7 +2109,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.453Z"
+          "observedAt": "2026-08-31T12:49:38.320Z"
         }
       ],
       "id": "ab91d3fb5d1ec9cd7d42"
@@ -1826,8 +2129,8 @@
       "stageEvidenceAt": "2026-08-07T14:16:25.000Z",
       "firstPublicEvidenceAt": "2026-08-07T14:16:25.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.474Z",
-      "lastSeenAt": "2026-08-31T11:32:03.474Z",
+      "firstSeenAt": "2026-08-31T12:49:37.296Z",
+      "lastSeenAt": "2026-08-31T12:49:37.296Z",
       "ageHours": 564.7,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1847,7 +2150,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.474Z"
+          "observedAt": "2026-08-31T12:49:37.296Z"
         }
       ],
       "id": "3669491ec306541d521f"
@@ -1867,8 +2170,8 @@
       "stageEvidenceAt": "2026-08-07T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-07T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.369Z",
-      "lastSeenAt": "2026-08-31T11:32:04.084Z",
+      "firstSeenAt": "2026-08-31T12:49:37.187Z",
+      "lastSeenAt": "2026-08-31T12:49:37.934Z",
       "ageHours": 566,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -1888,7 +2191,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.369Z"
+          "observedAt": "2026-08-31T12:49:37.187Z"
         },
         {
           "host": "igeekphone.com",
@@ -1905,7 +2208,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.084Z"
+          "observedAt": "2026-08-31T12:49:37.934Z"
         }
       ],
       "id": "e7ea3531f9534241d7e6"
@@ -1925,8 +2228,8 @@
       "stageEvidenceAt": "2026-08-07T12:02:17.000Z",
       "firstPublicEvidenceAt": "2026-08-07T12:02:17.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.552Z",
-      "lastSeenAt": "2026-08-31T11:32:04.552Z",
+      "firstSeenAt": "2026-08-31T12:49:38.425Z",
+      "lastSeenAt": "2026-08-31T12:49:38.425Z",
       "ageHours": 567,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1946,10 +2249,94 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.552Z"
+          "observedAt": "2026-08-31T12:49:38.425Z"
         }
       ],
       "id": "71dda3cd9ccec839f36f"
+    },
+    {
+      "productName": "Spark 2 par Kiwi",
+      "brand": "KIWI Vapor",
+      "category": "POD",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-07T08:00:04.000Z",
+      "stageEvidenceAt": "2026-08-07T08:00:04.000Z",
+      "firstPublicEvidenceAt": "2026-08-07T08:00:04.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-08-31T12:49:38.699Z",
+      "lastSeenAt": "2026-08-31T12:49:38.699Z",
+      "ageHours": 571,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "levapelier.com",
+          "url": "https://www.levapelier.com/spark-2-par-kiwi/",
+          "title": "Spark 2 par Kiwi",
+          "sourceName": "Le Vapelier",
+          "sourceUrl": "https://www.levapelier.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-07T08:00:04.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-08-31T12:49:38.699Z"
+        }
+      ],
+      "id": "1884bb529be345cfcead"
+    },
+    {
+      "productName": "OXVA VPrime 2 Pod Vape Kit",
+      "brand": "OXVA",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-06T20:14:48.000Z",
+      "stageEvidenceAt": "2026-08-06T20:14:48.000Z",
+      "firstPublicEvidenceAt": "2026-08-06T20:14:48.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 582.8,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/oxva-vprime-2-pod-vape-kit",
+          "title": "OXVA VPrime 2 Pod Vape Kit",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-06T20:14:48.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/OXVA-VPrime-2-Pod-Vape-Kit.webp?v=1786084418",
+          "price": 29.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "07385256f98347f206f1"
     },
     {
       "productName": "VOOPOO DRAG H40 Pro",
@@ -1966,8 +2353,8 @@
       "stageEvidenceAt": "2026-08-05T11:24:38.000Z",
       "firstPublicEvidenceAt": "2026-08-05T11:24:38.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:02.968Z",
-      "lastSeenAt": "2026-08-31T11:32:04.579Z",
+      "firstSeenAt": "2026-08-31T12:49:36.767Z",
+      "lastSeenAt": "2026-08-31T12:49:38.452Z",
       "ageHours": 615.6,
       "sourceCount": 3,
       "eligibleSources": 2,
@@ -1987,7 +2374,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:02.968Z"
+          "observedAt": "2026-08-31T12:49:36.767Z"
         },
         {
           "host": "igeekphone.com",
@@ -2004,7 +2391,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.031Z"
+          "observedAt": "2026-08-31T12:49:37.879Z"
         },
         {
           "host": "smoketastic.com",
@@ -2021,7 +2408,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.579Z"
+          "observedAt": "2026-08-31T12:49:38.452Z"
         }
       ],
       "id": "1d02ed76d685e2594d59"
@@ -2041,8 +2428,8 @@
       "stageEvidenceAt": "2026-08-04T10:48:44.000Z",
       "firstPublicEvidenceAt": "2026-08-04T10:48:44.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.512Z",
-      "lastSeenAt": "2026-08-31T11:32:04.604Z",
+      "firstSeenAt": "2026-08-31T12:49:37.335Z",
+      "lastSeenAt": "2026-08-31T12:49:38.479Z",
       "ageHours": 640.2,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -2062,7 +2449,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.512Z"
+          "observedAt": "2026-08-31T12:49:37.335Z"
         },
         {
           "host": "smoketastic.com",
@@ -2079,10 +2466,51 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.604Z"
+          "observedAt": "2026-08-31T12:49:38.479Z"
         }
       ],
       "id": "681f407294ce28257a3b"
+    },
+    {
+      "productName": "Sonder Q3 par Geek Vape",
+      "brand": "Geekvape",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-04T08:03:21.000Z",
+      "stageEvidenceAt": "2026-08-04T08:03:21.000Z",
+      "firstPublicEvidenceAt": "2026-08-04T08:03:21.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-08-31T12:49:38.727Z",
+      "lastSeenAt": "2026-08-31T12:49:38.727Z",
+      "ageHours": 642.9,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "levapelier.com",
+          "url": "https://www.levapelier.com/sonder-q3-par-geek-vape/",
+          "title": "Sonder Q3 par Geek Vape",
+          "sourceName": "Le Vapelier",
+          "sourceUrl": "https://www.levapelier.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-04T08:03:21.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-08-31T12:49:38.727Z"
+        }
+      ],
+      "id": "0a88d5618eecc5a5f10d"
     },
     {
       "productName": "Al Fakher Hypermax Prime 50K Prefilled Pod Kit",
@@ -2099,8 +2527,8 @@
       "stageEvidenceAt": "2026-08-03T14:58:57.000Z",
       "firstPublicEvidenceAt": "2026-08-03T14:58:57.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 660,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -2118,7 +2546,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/Al_Fakher_Hypermax_Prime_50K_Prefilled_Pod_Kit_Device_01.jpg?v=1787064858",
           "price": 14.95,
           "currency": null,
@@ -2156,8 +2584,8 @@
       "stageEvidenceAt": "2026-08-03T13:20:55.000Z",
       "firstPublicEvidenceAt": "2026-08-03T13:20:55.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.631Z",
-      "lastSeenAt": "2026-08-31T11:32:04.631Z",
+      "firstSeenAt": "2026-08-31T12:49:38.506Z",
+      "lastSeenAt": "2026-08-31T12:49:38.506Z",
       "ageHours": 661.7,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -2177,7 +2605,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.631Z"
+          "observedAt": "2026-08-31T12:49:38.506Z"
         }
       ],
       "id": "5a7a9c5edbd88e36cc75"
@@ -2197,8 +2625,8 @@
       "stageEvidenceAt": "2026-08-03T09:28:18.000Z",
       "firstPublicEvidenceAt": "2026-08-03T09:28:18.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.348Z",
-      "lastSeenAt": "2026-08-31T11:32:04.348Z",
+      "firstSeenAt": "2026-08-31T12:49:38.210Z",
+      "lastSeenAt": "2026-08-31T12:49:38.210Z",
       "ageHours": 665.5,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -2218,7 +2646,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.348Z"
+          "observedAt": "2026-08-31T12:49:38.210Z"
         }
       ],
       "id": "9e4ec2f16659a4b8b151"
@@ -2238,8 +2666,8 @@
       "stageEvidenceAt": "2026-08-03T08:46:21.000Z",
       "firstPublicEvidenceAt": "2026-08-03T08:46:21.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.306Z",
-      "lastSeenAt": "2026-08-31T11:32:04.375Z",
+      "firstSeenAt": "2026-08-31T12:49:37.120Z",
+      "lastSeenAt": "2026-08-31T12:49:38.238Z",
       "ageHours": 666.2,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -2259,7 +2687,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.306Z"
+          "observedAt": "2026-08-31T12:49:37.120Z"
         },
         {
           "host": "igeekphone.com",
@@ -2276,7 +2704,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T11:32:04.375Z"
+          "observedAt": "2026-08-31T12:49:38.238Z"
         }
       ],
       "id": "9f8591c656675c29a5a6"
@@ -2296,8 +2724,8 @@
       "stageEvidenceAt": "2026-08-01T12:22:01.000Z",
       "firstPublicEvidenceAt": "2026-08-01T12:22:01.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.322Z",
-      "lastSeenAt": "2026-08-31T11:32:04.658Z",
+      "firstSeenAt": "2026-08-31T12:49:38.183Z",
+      "lastSeenAt": "2026-08-31T12:49:38.534Z",
       "ageHours": 710.6,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -2317,7 +2745,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.322Z"
+          "observedAt": "2026-08-31T12:49:38.183Z"
         },
         {
           "host": "smoketastic.com",
@@ -2334,7 +2762,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.658Z"
+          "observedAt": "2026-08-31T12:49:38.534Z"
         }
       ],
       "id": "540cc26a482f67993657"
@@ -2342,14 +2770,14 @@
   ],
   "summary": {
     "total": 4,
-    "allConcrete": 33,
+    "allConcrete": 43,
     "before": 1,
     "after": 3,
     "explicitDatedAfter": 0,
     "confirmed": 0,
     "reported": 4,
-    "publicSignals": 29,
-    "candidatesUnderVerification": 22,
+    "publicSignals": 39,
+    "candidatesUnderVerification": 19,
     "categoryEvents": {
       "POD": 4
     }

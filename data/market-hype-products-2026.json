@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 29,
+  "schemaVersion": 30,
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-31T11:34:27.200Z",
+  "generatedAt": "2026-08-31T12:50:56.268Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -64,6 +64,7 @@
     "colourVariantsAreOneProduct": true,
     "directCatalogPublicationDates": true,
     "shopifyPublishedAtIsListingEvidenceNotGlobalLaunch": true,
+    "wordpressOfficialPublicationDates": true,
     "republishedOldProductsExcludedFromRecentLaunches": true,
     "datedNewsProductSignals": true,
     "newsPublicationDateIsPublicSignalNotAutomaticLaunchDate": true,
@@ -87,15 +88,16 @@
     "retailPromotionIsNotRelease": true,
     "priorExistenceDemotesRetailRelisting": true,
     "singleRetailerListingNeedsCorroboration": true,
-    "verificationQueueReconciledWithPublishedProducts": true
+    "verificationQueueReconciledWithPublishedProducts": true,
+    "finalSegmentAndCategoryCoverageReconciled": true
   },
   "scan": {
     "queries": 90,
     "working": 90,
     "rawDocs": 463,
-    "preCandidates": 10,
-    "resolvedVendorPages": 7,
-    "pagesFetched": 7,
+    "preCandidates": 11,
+    "resolvedVendorPages": 8,
+    "pagesFetched": 8,
     "events": 0,
     "samplePre": [
       {
@@ -115,7 +117,7 @@
         "title": "Best MTL RTA 2026 - Top Picks for Flavor - m.2fdeal.com"
       },
       {
-        "url": "https://www.2fdeal.com/New-Arrivals/81.html",
+        "url": "https://www.2fdeal.com/New-Arrivals/60.html",
         "title": "New Arrivals Vape Products - Latest RTA RDA Kits Mods 2026 | 2FDeal"
       }
     ],
@@ -198,7 +200,7 @@
     "profilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 24,
+        "catalogFetched": 23,
         "productLinks": 186,
         "productPages": 185,
         "events": 3,
@@ -268,83 +270,22 @@
     "activeMakerOfficialRegistry": 44,
     "activeMakerSupplementalRegistry": 42,
     "activeMakerCloneRegistry": 14,
-    "activeMakerQueries": 575,
-    "activeMakerQueriesWorking": 575,
-    "activeMakerSearchDocuments": 3852,
-    "activeMakerCandidatePages": 117,
-    "activeMakerConcreteProducts": 6,
+    "activeMakerQueries": 578,
+    "activeMakerQueriesWorking": 578,
+    "activeMakerSearchDocuments": 3945,
+    "activeMakerCandidatePages": 108,
+    "activeMakerConcreteProducts": 0,
     "activeMakerAcceptedSignals": 0,
     "activeMakerOfficialSignals": 0,
     "activeMakerEligibleSignals": 0,
     "activeMakerRejections": {
-      "fetchFailed": 29,
+      "fetchFailed": 21,
       "makerMismatch": 0,
-      "nonProductTitle": 111,
-      "noEventOrDate": 6,
+      "nonProductTitle": 108,
+      "noEventOrDate": 0,
       "ineligibleAfterSource": 0
     },
-    "activeMakerRejectedSample": [
-      {
-        "maker": "Geekvape",
-        "product": "Geek Vape",
-        "category": "MODURI",
-        "typology": "single battery",
-        "reason": "noEventOrDate",
-        "channel": "dated-discovery",
-        "url": "https://www.elementvape.com/geek-vape",
-        "publishedAt": "2026-08-30T15:19:00.000Z"
-      },
-      {
-        "maker": "OXVA",
-        "product": "OXVA Vapes: XLIM, Nexlim, VPrime, Slimstick - Pod System & Prefilled Vape Kit",
-        "category": "MODURI",
-        "typology": "single battery",
-        "reason": "noEventOrDate",
-        "channel": "dated-discovery",
-        "url": "https://www.oxva.com/pages/products",
-        "publishedAt": "2026-08-29T08:54:00.000Z"
-      },
-      {
-        "maker": "OXVA",
-        "product": "OXVA",
-        "category": "MODURI",
-        "typology": "single battery",
-        "reason": "noEventOrDate",
-        "channel": "dated-discovery",
-        "url": "https://www.elementvape.com/oxva",
-        "publishedAt": "2026-08-30T21:10:00.000Z"
-      },
-      {
-        "maker": "VOOPOO",
-        "product": "VooPoo",
-        "category": "MODURI",
-        "typology": "single battery",
-        "reason": "noEventOrDate",
-        "channel": "dated-discovery",
-        "url": "https://vape.com/collections/voopoo",
-        "publishedAt": "2026-08-30T01:22:00.000Z"
-      },
-      {
-        "maker": "VOOPOO",
-        "product": "VOOPOO - Vape Mod Kits & Pod Systems",
-        "category": "MODURI",
-        "typology": "single battery",
-        "reason": "noEventOrDate",
-        "channel": "dated-discovery",
-        "url": "https://www.elementvape.com/voopoo-tech",
-        "publishedAt": "2026-08-28T20:08:00.000Z"
-      },
-      {
-        "maker": "SMOK",
-        "product": "SMOKTech",
-        "category": "MODURI",
-        "typology": "single battery",
-        "reason": "noEventOrDate",
-        "channel": "dated-discovery",
-        "url": "https://www.elementvape.com/smoktech",
-        "publishedAt": "2026-08-30T23:05:00.000Z"
-      }
-    ],
+    "activeMakerRejectedSample": [],
     "activeMakerSample": [],
     "currentVendorPagination": [
       {
@@ -979,27 +920,26 @@
       }
     ],
     "currentVendorEvents": 3,
-    "upstreamEvidenceEvents": 50,
-    "upstreamEventsAccepted": 3,
-    "upstreamRejectedTitle": 54,
+    "upstreamEvidenceEvents": 48,
+    "upstreamEventsAccepted": 2,
+    "upstreamRejectedTitle": 49,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
-    "finalCategoryRejected": 3,
+    "finalCategoryRejected": 2,
     "finalCategoryRejectedSample": [
-      "Show up where your customers make decisions with Reddit Pro",
       "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "OXVA New Theme - v4.3.0-黑五后更换回去"
     ],
     "recentReleaseObserver": {
       "reference": "2026-08-31T03:00:00.000Z",
       "profiles": 4,
-      "indexWorking": 3,
-      "links": 49,
-      "pagesFetched": 49,
+      "indexWorking": 2,
+      "links": 8,
+      "pagesFetched": 8,
       "candidates": 0,
       "eventsAppended": 0,
-      "rejectedDate": 46,
+      "rejectedDate": 5,
       "rejectedReleaseTerm": 3,
       "rejectedTitle": 0
     },
@@ -1007,39 +947,59 @@
     "retailObserverNewCandidates": 0,
     "retailObserverFirstSaleEvents": 0,
     "directCatalogs": {
-      "sourcesConfigured": 13,
-      "sourcesWorking": 13,
-      "productsFetched": 8350,
-      "productsClassified": 1477,
-      "recentEvents": 11,
+      "sourcesConfigured": 20,
+      "sourcesWorking": 19,
+      "productsFetched": 11661,
+      "productsClassified": 1702,
+      "recentEvents": 20,
       "relistedExcluded": 0,
-      "rtaModAdded": 6,
-      "podsAdded": 5,
+      "rtaModAdded": 8,
+      "podsAdded": 12,
+      "sourceMix": {
+        "official": 267,
+        "original-retailer": 1061,
+        "clone": 367
+      },
       "categoryEvents": {
         "RTA": 1,
-        "MODURI": 5,
+        "MODURI": 7,
         "ACCESORII": 0,
-        "POD": 5
+        "POD": 12
       }
     },
     "datedNews": {
       "newsQueries": 48,
       "newsQueriesWorking": 48,
-      "wordpressSources": 18,
-      "wordpressSourcesWorking": 18,
-      "wordpressRequestsWorking": 69,
-      "datedItems": 70,
-      "concreteSignals": 45,
+      "wordpressSources": 23,
+      "wordpressSourcesWorking": 23,
+      "wordpressRequestsWorking": 89,
+      "datedItems": 74,
+      "concreteSignals": 49,
       "rejected": 12,
       "rtaModAdded": 7,
-      "podsAdded": 37
+      "podsAdded": 40
     },
     "preorderCatalogsRequested": 52,
-    "preorderPagesFetched": 29,
-    "preorderRtaLinks": 129,
+    "preorderPagesFetched": 39,
+    "preorderRtaLinks": 138,
     "preorderContextEvents": 0,
-    "preorderPageFallbackEvents": 0,
-    "preorderRecoveredSample": [],
+    "preorderPageFallbackEvents": 2,
+    "preorderRecoveredSample": [
+      {
+        "name": "RekaVape Ghost Ring Style RTA",
+        "eventDate": "2026-09-30T00:00:00.000Z",
+        "stage": "ETA / precomandă",
+        "url": "https://www.3fvape.com/rta/74530-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pctg-4ml-22mm-diamter.html",
+        "from": "product-page"
+      },
+      {
+        "name": "YFTK Flash e-Vapor V4.5S+ Style RTA",
+        "eventDate": "2026-09-10T00:00:00.000Z",
+        "stage": "batch viitor",
+        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
+        "from": "product-page"
+      }
+    ],
     "retailCampaigns": {
       "sources": 1,
       "pages": 6,
@@ -1057,17 +1017,37 @@
       "podsAdded": 0
     },
     "productBackfill": {
-      "candidates": 199,
-      "queries": 398,
-      "queriesWorking": 398,
-      "indexedMatches": 37,
-      "pagesFetched": 33,
-      "pagesMatched": 33,
+      "candidates": 207,
+      "queries": 414,
+      "queriesWorking": 414,
+      "indexedMatches": 26,
+      "pagesFetched": 25,
+      "pagesMatched": 25,
       "datedEvents": 0,
       "groupedEvents": 0,
       "rtaModAdded": 0,
       "podsAdded": 0,
-      "undated": 33
+      "undated": 25
+    },
+    "categoryCoverage": {
+      "RTA": {
+        "monitored": 7,
+        "events": 3,
+        "signals": 4,
+        "queued": 0
+      },
+      "MODURI": {
+        "monitored": 14,
+        "events": 1,
+        "signals": 13,
+        "queued": 0
+      },
+      "ACCESORII": {
+        "monitored": 0,
+        "events": 0,
+        "signals": 0,
+        "queued": 0
+      }
     }
   },
   "products": [
@@ -1082,22 +1062,26 @@
       "stageLabel": "ETA / precomandă",
       "eventDate": "2026-09-30T00:00:00.000Z",
       "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-31T11:29:12.888Z",
-      "lastSeenAt": "2026-08-31T11:30:40.924Z",
+      "firstSeenAt": "2026-08-31T12:46:28.200Z",
+      "lastSeenAt": "2026-08-31T12:50:25.629Z",
       "ageHours": 717,
       "sourceCount": 2,
-      "eligibleSources": 0,
+      "eligibleSources": 1,
       "sources": [
         {
           "host": "3fvape.com",
           "url": "https://www.3fvape.com/rta/74530-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pctg-4ml-22mm-diamter.html",
-          "title": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer - Silver, 316SS + PCTG, 4ml, 22mm Diamter",
-          "sourceType": "clone-original-vendor",
-          "decisionEligible": false,
-          "discoveryOnly": true,
+          "title": "RekaVape Ghost Ring Style RTA",
+          "sourceType": "clone-retailer-direct",
+          "collector": "preorder-card",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "explicit-vendor-eta",
           "eventDate": "2026-09-30T00:00:00.000Z",
-          "dateConfidence": "explicit",
-          "stage": "ETA / precomandă"
+          "dateConfidence": "explicit-vendor-eta",
+          "stage": "ETA / precomandă",
+          "observedAt": "2026-08-31T12:50:25.629Z",
+          "catalogEvidence": "product-page"
         },
         {
           "host": "3fvape.com",
@@ -1112,8 +1096,8 @@
         }
       ],
       "stageEvidenceAt": "2026-09-30T00:00:00.000Z",
-      "confidenceTier": "reported",
       "signalKind": "explicit-vendor-eta",
+      "confidenceTier": "reported",
       "firstPublicEvidenceAt": "2026-09-30T00:00:00.000Z"
     },
     {
@@ -1126,28 +1110,32 @@
       "stage": "BATCH",
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
-      "dateConfidence": "explicit",
-      "firstSeenAt": "2026-08-31T11:29:13.269Z",
-      "lastSeenAt": "2026-08-31T11:30:40.924Z",
+      "dateConfidence": "explicit-vendor-eta",
+      "firstSeenAt": "2026-08-31T12:46:28.569Z",
+      "lastSeenAt": "2026-08-31T12:50:25.629Z",
       "ageHours": 237,
       "sourceCount": 1,
-      "eligibleSources": 0,
+      "eligibleSources": 1,
       "sources": [
         {
           "host": "3fvape.com",
           "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
-          "title": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
-          "sourceType": "clone-original-vendor",
-          "decisionEligible": false,
-          "discoveryOnly": true,
+          "title": "YFTK Flash e-Vapor V4.5S+ Style RTA",
+          "sourceType": "clone-retailer-direct",
+          "collector": "preorder-card",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "explicit-vendor-eta",
           "eventDate": "2026-09-10T00:00:00.000Z",
-          "dateConfidence": "explicit",
-          "stage": "batch viitor"
+          "dateConfidence": "explicit-vendor-eta",
+          "stage": "batch viitor",
+          "observedAt": "2026-08-31T12:50:25.629Z",
+          "catalogEvidence": "product-page"
         }
       ],
       "stageEvidenceAt": "2026-09-10T00:00:00.000Z",
-      "confidenceTier": "reported",
       "signalKind": "explicit-vendor-eta",
+      "confidenceTier": "reported",
       "firstPublicEvidenceAt": "2026-09-10T00:00:00.000Z"
     },
     {
@@ -1165,8 +1153,8 @@
       "stageEvidenceAt": "2026-08-26T13:37:52.000Z",
       "firstPublicEvidenceAt": "2026-08-26T13:37:52.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.389Z",
-      "lastSeenAt": "2026-08-31T11:32:04.389Z",
+      "firstSeenAt": "2026-08-31T12:49:38.252Z",
+      "lastSeenAt": "2026-08-31T12:49:38.252Z",
       "ageHours": 109.4,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1186,7 +1174,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.389Z"
+          "observedAt": "2026-08-31T12:49:38.252Z"
         }
       ],
       "id": "d3addce032414d7ec81b"
@@ -1206,8 +1194,8 @@
       "stageEvidenceAt": "2026-08-26T11:36:47.000Z",
       "firstPublicEvidenceAt": "2026-08-26T11:36:47.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 111.4,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -1225,7 +1213,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/reload-squonk-mod-main.webp?v=1787744197",
           "price": 0,
           "currency": null,
@@ -1263,8 +1251,8 @@
       "stageEvidenceAt": "2026-08-23T19:59:40.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:02.904Z",
-      "lastSeenAt": "2026-08-31T11:34:15.494Z",
+      "firstSeenAt": "2026-08-31T12:49:36.700Z",
+      "lastSeenAt": "2026-08-31T12:50:44.827Z",
       "ageHours": 175,
       "sourceCount": 2,
       "eligibleSources": 2,
@@ -1284,7 +1272,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:02.904Z"
+          "observedAt": "2026-08-31T12:49:36.700Z"
         },
         {
           "host": "3fvape.com",
@@ -1301,7 +1289,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T11:34:15.494Z"
+          "observedAt": "2026-08-31T12:50:44.827Z"
         }
       ],
       "id": "7ad3df9a5b50e516c29f"
@@ -1321,8 +1309,8 @@
       "stageEvidenceAt": "2026-08-21T09:53:16.000Z",
       "firstPublicEvidenceAt": "2026-08-21T09:53:16.000Z",
       "dateConfidence": "official-product-published-at",
-      "firstSeenAt": "2026-08-31T11:32:04.677Z",
-      "lastSeenAt": "2026-08-31T11:32:04.677Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:49:38.745Z",
       "ageHours": 233.1,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1342,7 +1330,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-08-31T11:32:04.677Z"
+          "observedAt": "2026-08-31T12:49:38.745Z"
         }
       ],
       "id": "065312b606a221173190"
@@ -1362,8 +1350,8 @@
       "stageEvidenceAt": "2026-08-20T14:52:15.000Z",
       "firstPublicEvidenceAt": "2026-08-20T14:52:15.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 252.1,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1381,7 +1369,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0043/9189/5140/files/mod-mq-plus-100w-217002070018650-sxmini_1.webp?v=1787237273",
           "price": 68.9,
           "currency": null,
@@ -1405,8 +1393,8 @@
       "stageEvidenceAt": "2026-08-18T14:10:48.000Z",
       "firstPublicEvidenceAt": "2026-08-18T14:10:48.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:04.427Z",
-      "lastSeenAt": "2026-08-31T11:32:04.427Z",
+      "firstSeenAt": "2026-08-31T12:49:38.293Z",
+      "lastSeenAt": "2026-08-31T12:49:38.293Z",
       "ageHours": 300.8,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1426,7 +1414,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.427Z"
+          "observedAt": "2026-08-31T12:49:38.293Z"
         }
       ],
       "id": "83dec5c9fc43b2abb25b"
@@ -1446,8 +1434,8 @@
       "stageEvidenceAt": "2026-08-17T08:27:22.000Z",
       "firstPublicEvidenceAt": "2026-08-17T08:27:22.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 330.5,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -1465,7 +1453,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mechvape-x-nitrous-pocket-80w-box-mod-nitro-tone-peek.webp?v=1786953356",
           "price": 29.99,
           "currency": null,
@@ -1503,8 +1491,8 @@
       "stageEvidenceAt": "2026-08-16T09:50:17.000Z",
       "firstPublicEvidenceAt": "2026-08-16T09:50:17.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:02.968Z",
-      "lastSeenAt": "2026-08-31T11:32:04.031Z",
+      "firstSeenAt": "2026-08-31T12:49:36.767Z",
+      "lastSeenAt": "2026-08-31T12:49:37.879Z",
       "ageHours": 353.2,
       "sourceCount": 2,
       "eligibleSources": 2,
@@ -1524,7 +1512,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:02.968Z"
+          "observedAt": "2026-08-31T12:49:36.767Z"
         },
         {
           "host": "igeekphone.com",
@@ -1541,7 +1529,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:04.031Z"
+          "observedAt": "2026-08-31T12:49:37.879Z"
         }
       ],
       "id": "4bf85a9e4e25d472a04e"
@@ -1561,8 +1549,8 @@
       "stageEvidenceAt": "2026-08-13T17:29:17.000Z",
       "firstPublicEvidenceAt": "2026-08-13T17:29:17.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:03.487Z",
-      "lastSeenAt": "2026-08-31T11:32:03.487Z",
+      "firstSeenAt": "2026-08-31T12:49:37.309Z",
+      "lastSeenAt": "2026-08-31T12:49:37.309Z",
       "ageHours": 417.5,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1582,10 +1570,51 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.486Z"
+          "observedAt": "2026-08-31T12:49:37.309Z"
         }
       ],
       "id": "d4ea4bab38bbb3757fc1"
+    },
+    {
+      "productName": "AN RTA par Thunder Cloud",
+      "brand": "ThunderCloud",
+      "category": "RTA",
+      "segment": null,
+      "typology": "RDL single",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-13T08:10:19.000Z",
+      "stageEvidenceAt": "2026-08-13T08:10:19.000Z",
+      "firstPublicEvidenceAt": "2026-08-13T08:10:19.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-08-31T12:49:38.645Z",
+      "lastSeenAt": "2026-08-31T12:49:38.645Z",
+      "ageHours": 426.8,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "levapelier.com",
+          "url": "https://www.levapelier.com/an-rta-par-thunder-cloud/",
+          "title": "AN RTA par Thunder Cloud",
+          "sourceName": "Le Vapelier",
+          "sourceUrl": "https://www.levapelier.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-13T08:10:19.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-08-31T12:49:38.645Z"
+        }
+      ],
+      "id": "e555e5256007c8b0f023"
     },
     {
       "productName": "Mechvape Paramour V2 SBS 100W 18650/21700",
@@ -1602,8 +1631,8 @@
       "stageEvidenceAt": "2026-08-10T13:14:35.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:34:15.494Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:50:44.827Z",
       "ageHours": 493.8,
       "sourceCount": 3,
       "eligibleSources": 2,
@@ -1621,7 +1650,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mech-vape-paramour-v2-sbs-mod-black-gray.webp?v=1786358528",
           "price": 54.99,
           "currency": null,
@@ -1642,7 +1671,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T11:34:15.494Z"
+          "observedAt": "2026-08-31T12:50:44.827Z"
         },
         {
           "host": "vaping360.com",
@@ -1676,8 +1705,8 @@
       "stageEvidenceAt": "2026-08-10T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-10T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T11:32:02.917Z",
-      "lastSeenAt": "2026-08-31T11:32:03.317Z",
+      "firstSeenAt": "2026-08-31T12:49:36.716Z",
+      "lastSeenAt": "2026-08-31T12:49:37.132Z",
       "ageHours": 494,
       "sourceCount": 2,
       "eligibleSources": 2,
@@ -1697,7 +1726,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:02.917Z"
+          "observedAt": "2026-08-31T12:49:36.716Z"
         },
         {
           "host": "vapoteurs.net",
@@ -1714,10 +1743,53 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T11:32:03.317Z"
+          "observedAt": "2026-08-31T12:49:37.131Z"
         }
       ],
       "id": "e42f2fb7147fe73034fe"
+    },
+    {
+      "productName": "SXmini MQ Plus 100W Box Mod",
+      "brand": "SX MINI",
+      "category": "MODURI",
+      "segment": null,
+      "typology": "single battery",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-06T10:32:57.000Z",
+      "stageEvidenceAt": "2026-08-06T10:32:57.000Z",
+      "firstPublicEvidenceAt": "2026-08-06T10:32:57.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
+      "ageHours": 592.5,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "ecigone.co.uk",
+          "url": "https://www.ecigone.co.uk/products/sxmini-mq-plus-100w-box-mod",
+          "title": "SXmini MQ Plus 100W Box Mod",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-06T10:32:57.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-08-31T12:48:52.179Z",
+          "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Sxmini-MQ-Plus-Box-Mod.webp?v=1784536995",
+          "price": 59.99,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "923bcfd0dac1182f4970"
     },
     {
       "productName": "AMIGO Style Boro Mechanical Mod",
@@ -1734,8 +1806,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T11:34:15.494Z",
-      "lastSeenAt": "2026-08-31T11:34:15.494Z",
+      "firstSeenAt": "2026-08-31T12:50:44.827Z",
+      "lastSeenAt": "2026-08-31T12:50:44.827Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1755,7 +1827,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T11:34:15.494Z"
+          "observedAt": "2026-08-31T12:50:44.827Z"
         }
       ],
       "id": "f9283bd172e28b8da567"
@@ -1775,8 +1847,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T11:34:15.494Z",
-      "lastSeenAt": "2026-08-31T11:34:15.494Z",
+      "firstSeenAt": "2026-08-31T12:50:44.827Z",
+      "lastSeenAt": "2026-08-31T12:50:44.827Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1796,7 +1868,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T11:34:15.494Z"
+          "observedAt": "2026-08-31T12:50:44.827Z"
         }
       ],
       "id": "5adcff08a02094f0d715"
@@ -1816,8 +1888,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T11:34:15.494Z",
-      "lastSeenAt": "2026-08-31T11:34:15.494Z",
+      "firstSeenAt": "2026-08-31T12:50:44.827Z",
+      "lastSeenAt": "2026-08-31T12:50:44.827Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1837,7 +1909,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T11:34:15.494Z"
+          "observedAt": "2026-08-31T12:50:44.827Z"
         }
       ],
       "id": "31bfcfd2d59acf5ff9ff"
@@ -1857,8 +1929,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T11:34:15.494Z",
-      "lastSeenAt": "2026-08-31T11:34:15.494Z",
+      "firstSeenAt": "2026-08-31T12:50:44.827Z",
+      "lastSeenAt": "2026-08-31T12:50:44.827Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1878,7 +1950,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T11:34:15.494Z"
+          "observedAt": "2026-08-31T12:50:44.827Z"
         }
       ],
       "id": "e694e95fe9639ddb14df"
@@ -1898,8 +1970,8 @@
       "stageEvidenceAt": "2026-08-02T11:46:50.000Z",
       "firstPublicEvidenceAt": "2026-08-02T11:46:50.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 687.2,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -1917,7 +1989,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/233C95DF-BD63-4C4E-B6AD-EF4503ECAC10.jpg?v=1785671157",
           "price": 380,
           "currency": null,
@@ -1955,8 +2027,8 @@
       "stageEvidenceAt": "2026-08-02T11:34:50.000Z",
       "firstPublicEvidenceAt": "2026-08-02T11:34:50.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T11:31:21.392Z",
-      "lastSeenAt": "2026-08-31T11:31:21.392Z",
+      "firstSeenAt": "2026-08-31T12:48:52.179Z",
+      "lastSeenAt": "2026-08-31T12:48:52.179Z",
       "ageHours": 687.4,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1974,7 +2046,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T11:31:21.392Z",
+          "observedAt": "2026-08-31T12:48:52.179Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/DEE2CF9A-45DD-4754-B9DB-99ACBF7DF501.jpg?v=1785670503",
           "price": 280,
           "currency": null,
@@ -1986,82 +2058,21 @@
   ],
   "summary": {
     "total": 4,
-    "allConcrete": 19,
+    "allConcrete": 21,
     "before": 2,
     "after": 2,
     "explicitDatedAfter": 2,
     "confirmed": 1,
     "reported": 3,
-    "publicSignals": 15,
-    "candidatesUnderVerification": 6,
+    "publicSignals": 17,
+    "candidatesUnderVerification": 0,
     "categoryEvents": {
       "RTA": 3,
       "MODURI": 1
     }
   },
   "discoveryContextDays": 180,
-  "verificationQueue": [
-    {
-      "maker": "Geekvape",
-      "product": "Geek Vape",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.elementvape.com/geek-vape",
-      "publishedAt": "2026-08-30T15:19:00.000Z"
-    },
-    {
-      "maker": "OXVA",
-      "product": "OXVA Vapes: XLIM, Nexlim, VPrime, Slimstick - Pod System & Prefilled Vape Kit",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.oxva.com/pages/products",
-      "publishedAt": "2026-08-29T08:54:00.000Z"
-    },
-    {
-      "maker": "OXVA",
-      "product": "OXVA",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.elementvape.com/oxva",
-      "publishedAt": "2026-08-30T21:10:00.000Z"
-    },
-    {
-      "maker": "VOOPOO",
-      "product": "VooPoo",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://vape.com/collections/voopoo",
-      "publishedAt": "2026-08-30T01:22:00.000Z"
-    },
-    {
-      "maker": "VOOPOO",
-      "product": "VOOPOO - Vape Mod Kits & Pod Systems",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.elementvape.com/voopoo-tech",
-      "publishedAt": "2026-08-28T20:08:00.000Z"
-    },
-    {
-      "maker": "SMOK",
-      "product": "SMOKTech",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.elementvape.com/smoktech",
-      "publishedAt": "2026-08-30T23:05:00.000Z"
-    }
-  ],
+  "verificationQueue": [],
   "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
 }
