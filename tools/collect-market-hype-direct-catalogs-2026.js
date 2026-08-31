@@ -31,7 +31,14 @@ const DEFAULT_SOURCES=[
   {id:'vaping-gentlemen-direct',baseUrl:'https://thevapinggentlemen.club',label:'The Vaping Gentlemen Club catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD','ACCESORII']},
   {id:'vaping101-direct',baseUrl:'https://vaping101.co.uk',label:'Vaping 101 catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD','ACCESORII']},
   {id:'vape-superstore-direct',baseUrl:'https://vapesuperstore.co.uk',label:'Vape Superstore catalog',sourceType:'retailer-direct',official:false,scopes:['MODURI','POD']},
-  {id:'uk-ecig-store-direct',baseUrl:'https://ukecigstore.com',label:'UK ECIG STORE catalog',sourceType:'retailer-direct',official:false,scopes:['MODURI','POD']}
+  {id:'uk-ecig-store-direct',baseUrl:'https://ukecigstore.com',label:'UK ECIG STORE catalog',sourceType:'retailer-direct',official:false,scopes:['MODURI','POD']},
+  {id:'ecigone-direct',baseUrl:'https://www.ecigone.co.uk',label:'Ecigone catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD','ACCESORII']},
+  {id:'atmizoo-official-catalog',baseUrl:'https://www.atmizoo.com',label:'Atmizoo official catalog',brandHint:'Atmizoo',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','POD','ACCESORII']},
+  {id:'cthulhu-official-catalog',baseUrl:'https://www.cthulhumod.com',label:'Cthulhu Mod official catalog',brandHint:'Cthulhu Mod',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','POD','ACCESORII']},
+  {id:'fakirs-official-catalog',baseUrl:'https://www.fakirsmods.com',label:'Fakirs Mods official catalog',brandHint:'Fakirs Mods',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','ACCESORII']},
+  {id:'centenary-official-catalog',baseUrl:'https://centenarymods.com',label:'Centenary Mods official catalog',brandHint:'Centenary Mods',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','ACCESORII']},
+  {id:'gus-official-catalog',baseUrl:'https://www.gus-mod.com',label:'GUS Mods official catalog',brandHint:'GUS Mods',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','ACCESORII']},
+  {id:'lost-vape-official-catalog',baseUrl:'https://lostvape.com',label:'Lost Vape official catalog',brandHint:'Lost Vape',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['MODURI','POD','ACCESORII']}
 ];
 
 function read(file,fallback={}){try{return JSON.parse(fs.readFileSync(file,'utf8'))}catch(_){return fallback}}
@@ -54,6 +61,16 @@ async function fetchJson(url,timeout=15000){
     const parsed=JSON.parse(text);
     if(!parsed||!Array.isArray(parsed.products))throw new Error('not-shopify-products-json');
     return parsed.products;
+  }finally{clearTimeout(timer)}
+}
+
+async function fetchJsonDocument(url,timeout=15000){
+  const controller=new AbortController(),timer=setTimeout(function(){controller.abort()},timeout);
+  try{
+    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':'Ghid-RTA-Direct-Catalog/1.2 (+https://ghid-rta.ro/)','accept':'application/json,text/plain;q=.8,*/*;q=.5','cache-control':'no-cache'},signal:controller.signal});
+    const text=await response.text();
+    if(!response.ok)throw new Error('HTTP '+response.status);
+    return JSON.parse(text);
   }finally{clearTimeout(timer)}
 }
 
@@ -91,6 +108,20 @@ async function collectSource(source){
     const pagesWorking=pageRuns.filter(function(run){return run.ok}).length;if(!pagesWorking)throw new Error('all-html-listing-pages-failed');
     rows.pageStats={pages:pages.length,pagesWorking,coveragePct:Number((pagesWorking/pages.length*100).toFixed(1)),failedPages:pageRuns.filter(function(run){return!run.ok})};
     return rows;
+  }
+  if(source.catalogType==='wordpress-products-json'){
+    const products=[],endpoint=source.endpoint||'/wp-json/wp/v2/product';
+    for(let page=1;page<=Number(source.maxPages||8);page++){
+      const separator=endpoint.includes('?')?'&':'?',url=source.baseUrl.replace(/\/$/,'')+endpoint+separator+'per_page=100&page='+page+'&_fields=id,date_gmt,modified_gmt,link,slug,title,content';
+      let rows;try{rows=await fetchJsonDocument(url)}catch(error){if(page===1)throw error;break}
+      if(!Array.isArray(rows))throw new Error('not-wordpress-products-json');
+      for(const row of rows){
+        const published=row.date_gmt?row.date_gmt+'Z':null,updated=row.modified_gmt?row.modified_gmt+'Z':published;
+        products.push({id:row.id,title:row.title&&row.title.rendered||row.slug||'',handle:row.slug||'',vendor:source.brandHint||source.label,product_type:'',body_html:row.content&&row.content.rendered||'',url:row.link||'',published_at:published,created_at:published,updated_at:updated,variants:[],images:[],__wordpressListing:true});
+      }
+      if(rows.length<100)break;
+    }
+    return products;
   }
   const products=[];
   for(let page=1;page<=8;page++){
@@ -151,25 +182,25 @@ function canonicalKey(item){const identity=cleanTitle(item.productName).replace(
 function catalogEvent(source,product,classification,observedAt){
   if(product.__catalogListing){
     const title=cleanTitle(product.title),canonical=canonicalizeProduct({product:title,brand:classification.brand||source.brandHint||''});
-    return{item:{id:hash(source.id+'|'+product.url),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,productId:String(product.id||product.url||''),productName:title,canonicalKey:classification.category+'|'+canonical.key,brand:canonical.brand||classification.brand||source.brandHint||'',category:classification.category,segment:classification.segment||null,typology:classification.typology||null,url:product.url,image:'',price:null,currency:null,available:null,availabilityStatus:'listing-observed',publishedAt:null,createdAt:null,updatedAt:null,firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication:false,freshIdentity:false,relisted:false,pending:false},event:null};
+    return{item:{id:hash(source.id+'|'+product.url),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,official:source.official===true,productId:String(product.id||product.url||''),productName:title,canonicalKey:classification.category+'|'+canonical.key,brand:canonical.brand||classification.brand||source.brandHint||'',category:classification.category,segment:classification.segment||null,typology:classification.typology||null,url:product.url,image:'',price:null,currency:null,available:null,availabilityStatus:'listing-observed',publishedAt:null,createdAt:null,updatedAt:null,firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication:false,freshIdentity:false,relisted:false,pending:false},event:null};
   }
-  const publishedAt=iso(product.published_at),createdAt=iso(product.created_at),updatedAt=iso(product.updated_at),body=decode(product.body_html||''),title=cleanTitle(product.title);
+  const publishedAt=iso(product.published_at),createdAt=iso(product.created_at),updatedAt=iso(product.updated_at),body=decode(product.body_html||''),title=cleanTitle(product.title),listingOnly=product.__wordpressListing===true,dateConfidence=listingOnly&&source.official?'official-product-published-at':'catalog-published-at';
   const publishedAge=ageDays(publishedAt),createdGap=publishedAt&&createdAt?Math.abs(Date.parse(publishedAt)-Date.parse(createdAt))/DAY:null;
   const recentPublication=inPast(publishedAt,PUBLIC_DAYS),freshIdentity=createdAt&&inPast(createdAt,PUBLIC_DAYS+7)&&createdGap!=null&&createdGap<=14;
   const pending=/coming soon|comming soon|pre[- ]?order|preorder|pre[- ]?sale|notify me|waitlist/i.test(title+' '+body.slice(0,5000));
   const relisted=Boolean(recentPublication&&!freshIdentity);
   const item={
-    id:hash(source.id+'|'+product.id),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,
+    id:hash(source.id+'|'+product.id),sourceId:source.id,sourceLabel:source.label,sourceType:source.sourceType,official:source.official===true,
     productId:String(product.id||''),productName:title,brand:classification.brand||source.brandHint||product.vendor||'',category:classification.category,
-    segment:classification.segment||null,typology:classification.typology||null,url:productUrl(source,product),image:image(product),
+    segment:classification.segment||null,typology:classification.typology||null,url:product.url||productUrl(source,product),image:image(product),
     canonicalKey:classification.category+'|'+canonicalizeProduct({product:title,brand:classification.brand||source.brandHint||product.vendor||''}).key,
-    price:variantPrice(product),currency:source.currency||null,available:availability(product),availabilityStatus:availability(product)?'available-observed':'unavailable-observed',publishedAt,createdAt,updatedAt,
+    price:variantPrice(product),currency:source.currency||null,available:listingOnly?null:availability(product),availabilityStatus:listingOnly?'listing-observed':availability(product)?'available-observed':'unavailable-observed',publishedAt,createdAt,updatedAt,
     firstObservedAt:observedAt,lastObservedAt:observedAt,recentPublication,freshIdentity,relisted,pending
   };
   if(!recentPublication||relisted)return{item,event:null};
   const window=pending?'before':'after',stage=pending?'IMMINENT':'FIRST_RETAIL',stageLabel=pending?'anunt / disponibilitate in pregatire':source.official?'prima listare oficiala datata':'prima listare comerciala datata';
-  const evidence={host:new URL(source.baseUrl).hostname.replace(/^www\./,''),url:item.url,title,sourceType:source.sourceType,collector:'direct-catalog',decisionEligible:true,discoveryOnly:false,evidenceScope:'catalog-publication-date',eventDate:publishedAt,dateConfidence:'catalog-published-at',dateQuality:'shopify-published-at',stage:stageLabel,observedAt,image:item.image,price:item.price,currency:item.currency,available:item.available};
-  return{item,event:{productName:title,brand:item.brand,category:item.category,segment:item.segment,typology:item.typology,window,stage,stageLabel,signalKind:pending?'dated-pre-market-listing':'dated-retail-listing',confidenceTier:source.official?'confirmed':'reported',eventDate:publishedAt,stageEvidenceAt:publishedAt,firstPublicEvidenceAt:publishedAt,dateConfidence:'catalog-published-at',firstSeenAt:observedAt,lastSeenAt:observedAt,ageHours:Number(Math.abs(publishedAge*24).toFixed(1)),sourceCount:1,eligibleSources:1,sources:[evidence]}};
+  const evidence={host:new URL(source.baseUrl).hostname.replace(/^www\./,''),url:item.url,title,sourceType:source.sourceType,collector:'direct-catalog',decisionEligible:true,discoveryOnly:false,evidenceScope:'catalog-publication-date',eventDate:publishedAt,dateConfidence,dateQuality:listingOnly?'wordpress-product-date-gmt':'shopify-published-at',stage:stageLabel,observedAt,image:item.image,price:item.price,currency:item.currency,available:item.available};
+  return{item,event:{productName:title,brand:item.brand,category:item.category,segment:item.segment,typology:item.typology,window,stage,stageLabel,signalKind:pending?'dated-pre-market-listing':'dated-retail-listing',confidenceTier:source.official?'confirmed':'reported',eventDate:publishedAt,stageEvidenceAt:publishedAt,firstPublicEvidenceAt:publishedAt,dateConfidence,firstSeenAt:observedAt,lastSeenAt:observedAt,ageHours:Number(Math.abs(publishedAge*24).toFixed(1)),sourceCount:1,eligibleSources:1,sources:[evidence]}};
 }
 
 const TIER_RANK={confirmed:3,reported:2,'public-signal':1};
@@ -201,7 +232,7 @@ function removeOwnedSignals(target){
 
 function finalize(target,stats){
   target.generatedAt=new Date().toISOString();target.discoveryContextDays=CONTEXT_DAYS;
-  target.truth={...(target.truth||{}),directCatalogPublicationDates:true,shopifyPublishedAtIsListingEvidenceNotGlobalLaunch:true,republishedOldProductsExcludedFromRecentLaunches:true};
+  target.truth={...(target.truth||{}),directCatalogPublicationDates:true,shopifyPublishedAtIsListingEvidenceNotGlobalLaunch:true,wordpressOfficialPublicationDates:true,republishedOldProductsExcludedFromRecentLaunches:true};
   target.scan={...(target.scan||{}),directCatalogs:stats};
   target.products=(target.products||[]).filter(function(row){return row&&row.eventDate&&((row.window==='before'&&(inPast(row.eventDate,PUBLIC_DAYS)||inFuture(row.eventDate,PUBLIC_DAYS)))||(row.window==='after'&&inPast(row.eventDate,PUBLIC_DAYS)))}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
   const events=target.products.filter(function(row){return row.confidenceTier==='confirmed'||row.confidenceTier==='reported'||['explicit','catalog-published-at','official-product-published-at','release-observed','first-retail-observation'].includes(row.dateConfidence)}),signals=target.products.filter(function(row){return !events.includes(row)});
@@ -225,9 +256,9 @@ async function main(){
   const groupedEvents=new Map();for(const event of events){const key=canonicalKey(event)+'|'+event.window,old=groupedEvents.get(key);if(!old){groupedEvents.set(key,event);continue}const sourceMap=new Map((old.sources||[]).map(function(source){return[source.url,source]}));for(const source of event.sources||[])sourceMap.set(source.url,source);old.sources=Array.from(sourceMap.values());old.sourceCount=old.sources.length;old.eligibleSources=unique(old.sources.map(function(source){return source.sourceType})).length;if(Date.parse(event.eventDate)<Date.parse(old.eventDate))Object.assign(old,{eventDate:event.eventDate,stage:event.stage,stageLabel:event.stageLabel,dateConfidence:event.dateConfidence})}
   const dedupEvents=Array.from(groupedEvents.values()),rta=read(RTA_FILE,{products:[]}),pods=read(POD_FILE,{products:[]});removeOwnedSignals(rta);removeOwnedSignals(pods);let rtaAdded=0,podsAdded=0;
   for(const event of dedupEvents){if(event.category==='POD'){if(mergeProduct(pods,event))podsAdded++}else if(mergeProduct(rta,event))rtaAdded++}
-  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded,categoryEvents:{RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0}};
+  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),sourceMix=dedupItems.reduce(function(acc,item){const kind=/^clone-/.test(String(item.sourceType||''))?'clone':item.official===true||/^manufacturer-official/.test(String(item.sourceType||''))?'official':'original-retailer';acc[kind]=(acc[kind]||0)+1;return acc},{official:0,'original-retailer':0,clone:0}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded,sourceMix,categoryEvents:{RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0}};
   finalize(rta,stats);finalize(pods,stats);
-  const output={schemaVersion:4,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,oldRepublishedProductsAreNotRecentEvents:true,availabilityIsSeparateFromReleaseChronology:true,currentAvailabilityIncludesOlderCatalogItems:true,htmlCatalogListingsDoNotClaimStock:true},scan:stats,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,catalogType:run.source.catalogType||'shopify-products-json',ok:run.ok,products:run.products.length,pages:run.products.pageStats||null,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.slice(0,3000)};
+  const output={schemaVersion:5,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,oldRepublishedProductsAreNotRecentEvents:true,availabilityIsSeparateFromReleaseChronology:true,currentAvailabilityIncludesOlderCatalogItems:true,htmlCatalogListingsDoNotClaimStock:true,officialOriginalAndCloneSourcesSeparated:true},scan:stats,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,sourceType:run.source.sourceType||'',official:run.source.official===true,scopes:run.source.scopes||[],catalogType:run.source.catalogType||'shopify-products-json',ok:run.ok,products:run.products.length,pages:run.products.pageStats||null,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted,sourceMix},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.slice(0,3000)};
   if(WRITE){save(RTA_FILE,rta);save(POD_FILE,pods);save(OUT_FILE,output)}else console.log(JSON.stringify(output,null,2));
   console.log(`Direct catalogs: ${stats.sourcesWorking}/${stats.sourcesConfigured} sources; ${stats.productsFetched} products; ${classified} classified; recent RTA ${counts.RTA||0}; MODURI ${counts.MODURI||0}; ACCESORII ${counts.ACCESORII||0}; POD ${counts.POD||0}; relisted excluded ${relisted}.`);
 }
