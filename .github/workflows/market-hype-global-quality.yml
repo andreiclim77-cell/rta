@@ -114,9 +114,9 @@ jobs:
           need(products.includes('BANNED_HOSTS')&&products.includes('steampowered')&&products.includes('dictionary'),'False-positive blacklist missing');
           need(merge.includes('upstreamEvidenceMerged:true')&&merge.includes('release-observed')&&merge.includes('observedReleaseIsNotClaimedAsExactReleaseDate:true'),'Truthful upstream/release-observed merge missing');
           need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel')&&ui.includes('release-observed'),'Expandable observed-release Hype UI missing');
-          need(!ui.includes('hype-direct')&&!ui.includes("t('Acum','Now')"),'Old automatic conclusion returned');
+          need(!ui.includes('class="hype-direct"')&&!ui.includes("t('Acum','Now')")&&ui.includes('data-hype-layer="launches"')&&ui.includes('data-hype-layer="signals"')&&ui.includes('data-hype-layer="catalog"'),'Evidence layers or legacy automatic conclusion regression');
           need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('validAfterProduct')&&guard.includes('catalog-published-at'),'Atomic loader does not validate final RTA/MOD/POD data');
           need(access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password may be prefilled');
-          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('ghid-rta-static-v38-hype-pod-arbiter'),'Product Hype cache/data contract missing');
+          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('ghid-rta-static-v40-hype-source-layers'),'Product Hype cache/data contract missing');
           console.log('Hype Global gate OK: GLOBAL 30d; RTA/MOD/POD; dated events separated from public signals; anti-relisting memory; 06:00 + 06:20 recovery.');
           NODE
