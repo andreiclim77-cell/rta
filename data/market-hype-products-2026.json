@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-08-31T14:24:39.642Z",
+  "generatedAt": "2026-08-31T14:36:05.302Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -65,6 +65,8 @@
     "directCatalogPublicationDates": true,
     "shopifyPublishedAtIsListingEvidenceNotGlobalLaunch": true,
     "wordpressOfficialPublicationDates": true,
+    "sitemapLastmodIsNeverUsedAsLaunchDate": true,
+    "jsonLdCatalogCoverageDoesNotCreateLaunchEvents": true,
     "republishedOldProductsExcludedFromRecentLaunches": true,
     "datedNewsProductSignals": true,
     "newsPublicationDateIsPublicSignalNotAutomaticLaunchDate": true,
@@ -88,45 +90,43 @@
     "retailPromotionIsNotRelease": true,
     "priorExistenceDemotesRetailRelisting": true,
     "singleRetailerListingNeedsCorroboration": true,
+    "confidenceTierNormalizedAtPublish": true,
     "verificationQueueReconciledWithPublishedProducts": true,
-    "finalSegmentAndCategoryCoverageReconciled": true,
-    "sitemapLastmodIsNeverUsedAsLaunchDate": true,
-    "jsonLdCatalogCoverageDoesNotCreateLaunchEvents": true,
-    "confidenceTierNormalizedAtPublish": true
+    "finalSegmentAndCategoryCoverageReconciled": true
   },
   "scan": {
     "queries": 90,
     "working": 90,
-    "rawDocs": 626,
-    "preCandidates": 24,
-    "resolvedVendorPages": 11,
-    "pagesFetched": 15,
+    "rawDocs": 791,
+    "preCandidates": 20,
+    "resolvedVendorPages": 10,
+    "pagesFetched": 19,
     "events": 0,
     "samplePre": [
       {
-        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
-        "title": "Buy YFTK Flash e-Vapor V4.5S+ Style RTA 316SS 23mm Tank Atomizer"
+        "url": "https://rta.com/",
+        "title": "RTA Brand: Luxury Streetwear Clothing for Men & Women"
       },
       {
-        "url": "https://www.3fvape.com/new-arrivals/71400-rekavape-vwm-intensa-style-rta-atomizer-silver-translucent-316ss-pctg-52ml-10-pcs-air-pins-22mm-diameter.html",
-        "title": "Buy Rekavape VWM Intensa Style RTA Atomizer Silver Translucent"
-      },
-      {
-        "url": "https://www.3fvape.com/new-arrivals/71399-rekavape-vwm-intensa-style-rta-atomizer-silver-brown-316ss-pei-52ml-10-pcs-air-pins-22mm-diameter.html",
-        "title": "Buy Rekavape VWM Intensa Style RTA Atomizer Silver Brown"
-      },
-      {
-        "url": "https://www.3fvape.com/content/9-coupon-discount",
-        "title": "Coupon & Discount - 3FVape"
+        "url": "https://app.rtafleet.com/",
+        "title": "RTA Fleet - fmis-web"
       },
       {
         "url": "https://www.rta.ae/wps/portal/rta/ae/home/",
         "title": "Roads & Transport Authority - Home"
+      },
+      {
+        "url": "https://www.thertastore.com/",
+        "title": "RTA Cabinets Online - Cabinets For Less - The RTA Store"
+      },
+      {
+        "url": "https://www.riderta.com/",
+        "title": "Homepage | RideRTA"
       }
     ],
     "explicitQueries": 48,
     "explicitWorking": 48,
-    "explicitRaw": 336,
+    "explicitRaw": 480,
     "explicitCandidates": 0,
     "explicitPages": 0,
     "explicitPhraseHits": 0,
@@ -139,23 +139,12 @@
       "3fvape.com",
       "2fdeal.com"
     ],
-    "searchIndexEtaCandidates": 5,
+    "searchIndexEtaCandidates": 0,
     "searchIndexEtaPages": 0,
-    "searchIndexEtaPhraseHits": 3,
-    "searchIndexEtaSnippetFallbacks": 1,
-    "searchIndexEtaEvents": 1,
-    "searchIndexEtaSample": [
-      {
-        "name": "YFTK Flash e-Vapor V4.5S+ Style RTA",
-        "eventDate": "2026-09-10T00:00:00.000Z",
-        "stage": "batch viitor",
-        "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html",
-        "evidenceMode": "search-index-snippet",
-        "queryMode": "domain",
-        "queryMaker": null,
-        "vendorDomain": null
-      }
-    ],
+    "searchIndexEtaPhraseHits": 0,
+    "searchIndexEtaSnippetFallbacks": 0,
+    "searchIndexEtaEvents": 0,
+    "searchIndexEtaSample": [],
     "newArrivalCatalogPages": 16,
     "newArrivalRtaLinks": 68,
     "newArrivalProductPages": 67,
@@ -165,7 +154,7 @@
       {
         "id": "3fvape",
         "catalogPages": 44,
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 181,
         "productPages": 180,
         "events": 0,
@@ -208,7 +197,7 @@
         "samples": []
       }
     ],
-    "catalogPagesFetched": 51,
+    "catalogPagesFetched": 52,
     "productLinks": 469,
     "productPagesFetched": 468,
     "profilesV2": [
@@ -216,9 +205,9 @@
         "id": "3fvape",
         "catalogFetched": 24,
         "productLinks": 186,
-        "productPages": 185,
+        "productPages": 184,
         "events": 3,
-        "titleFallbacks": 8,
+        "titleFallbacks": 7,
         "samples": [
           {
             "name": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer - Silver, 316SS + PCTG, 4ml, 22mm Diamter",
@@ -278,7 +267,7 @@
       }
     ],
     "productLinksV2": 475,
-    "productPagesV2": 474,
+    "productPagesV2": 473,
     "eventsV2": 3,
     "activeMakerRegistry": 100,
     "activeMakerOfficialRegistry": 44,
@@ -286,16 +275,16 @@
     "activeMakerCloneRegistry": 14,
     "activeMakerQueries": 578,
     "activeMakerQueriesWorking": 578,
-    "activeMakerSearchDocuments": 3615,
-    "activeMakerCandidatePages": 138,
-    "activeMakerConcreteProducts": 4,
-    "activeMakerAcceptedSignals": 1,
+    "activeMakerSearchDocuments": 3675,
+    "activeMakerCandidatePages": 134,
+    "activeMakerConcreteProducts": 3,
+    "activeMakerAcceptedSignals": 0,
     "activeMakerOfficialSignals": 0,
     "activeMakerEligibleSignals": 0,
     "activeMakerRejections": {
-      "fetchFailed": 15,
+      "fetchFailed": 21,
       "makerMismatch": 0,
-      "nonProductTitle": 134,
+      "nonProductTitle": 131,
       "noEventOrDate": 3,
       "ineligibleAfterSource": 0
     },
@@ -311,36 +300,27 @@
         "publishedAt": "2026-08-30T18:11:00.000Z"
       },
       {
-        "maker": "dotMod",
-        "product": "dotmod Vaping - Box Mod, Atomizer, Vape Mod",
+        "maker": "Eleaf",
+        "product": "Best Ecig Store, Box Mod Manufacturer",
         "category": "MODURI",
         "typology": "single battery",
         "reason": "noEventOrDate",
         "channel": "dated-discovery",
-        "url": "https://dotmod.com/",
-        "publishedAt": "2026-08-30T17:57:00.000Z"
+        "url": "https://www.eleafworld.com/",
+        "publishedAt": "2026-08-30T19:51:00.000Z"
       },
       {
-        "maker": "SXK",
-        "product": "SXK RDA / RTA / RDTA Atomizer, Mod - 3FVape",
-        "category": "RTA",
-        "typology": "RDL single",
+        "maker": "Eleaf",
+        "product": "Eleaf - Vape Mod Kits & Pod Systems",
+        "category": "MODURI",
+        "typology": "single battery",
         "reason": "noEventOrDate",
         "channel": "dated-discovery",
-        "url": "https://www.3fvape.com/108-sxk",
-        "publishedAt": "2026-08-30T18:47:00.000Z"
+        "url": "https://www.elementvape.com/eleaf",
+        "publishedAt": "2026-08-30T17:50:00.000Z"
       }
     ],
-    "activeMakerSample": [
-      {
-        "maker": "SXK",
-        "product": "SXK APEX Style Boro Box Mod Black - 3FVape.com",
-        "category": "MODURI",
-        "eventDate": "2026-08-28T08:34:00.000Z",
-        "window": "before",
-        "sourceType": "vendor-discovery"
-      }
-    ],
+    "activeMakerSample": [],
     "currentVendorPagination": [
       {
         "base": "https://www.3fvape.com/39-new-arrivals",
@@ -549,7 +529,7 @@
             "resolvedUrl": "https://www.3fvape.com/57-preorder"
           },
           {
-            "page": 3,
+            "page": 2,
             "fetched": true,
             "links": 6,
             "newLinks": 0,
@@ -974,59 +954,57 @@
       }
     ],
     "currentVendorEvents": 3,
-    "upstreamEvidenceEvents": 57,
-    "upstreamEventsAccepted": 5,
+    "upstreamEvidenceEvents": 54,
+    "upstreamEventsAccepted": 4,
     "upstreamRejectedTitle": 56,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
-    "finalCategoryRejected": 5,
+    "finalCategoryRejected": 3,
     "finalCategoryRejectedSample": [
       "VAPORESSO » Premium Vape Brand Manufacture",
-      "MOVE BEYOND ORDINARY - Vaporesso",
-      "Aegis Legend 5 Kit - Z Sub-Ohm Tank 5 \\/ Turbo Red \\/ USA Local",
       "vaporesso| By YIGUO SEO Perf.Opt v1.0",
-      "OXVA New Theme - v4.3.0-黑五后更换回去"
+      "MOVE BEYOND ORDINARY - Vaporesso"
     ],
     "recentReleaseObserver": {
       "reference": "2026-08-31T03:00:00.000Z",
       "profiles": 4,
-      "indexWorking": 2,
-      "links": 8,
-      "pagesFetched": 8,
+      "indexWorking": 3,
+      "links": 49,
+      "pagesFetched": 49,
       "candidates": 0,
       "eventsAppended": 0,
-      "rejectedDate": 5,
+      "rejectedDate": 46,
       "rejectedReleaseTerm": 3,
       "rejectedTitle": 0
     },
     "retailObserverCatalogProducts": 297,
-    "retailObserverNewCandidates": 0,
+    "retailObserverNewCandidates": 7,
     "retailObserverFirstSaleEvents": 0,
     "directCatalogs": {
       "sourcesConfigured": 49,
       "sourcesWorking": 49,
-      "sourcesUsingFallback": 2,
-      "productsFetched": 13614,
-      "productsClassified": 2332,
-      "recentEvents": 21,
+      "sourcesUsingFallback": 4,
+      "productsFetched": 12348,
+      "productsClassified": 2204,
+      "recentEvents": 18,
       "relistedExcluded": 0,
-      "rtaModAdded": 6,
-      "podsAdded": 4,
+      "rtaModAdded": 7,
+      "podsAdded": 11,
       "sourceMix": {
-        "official": 892,
-        "original-retailer": 1061,
+        "official": 829,
+        "original-retailer": 996,
         "clone": 367
       },
       "adapterMix": {
         "html-listings": 2,
-        "shopify-products-json": 21,
-        "wordpress-products-json": 10,
-        "sitemap-jsonld-products": 16
+        "shopify-products-json": 20,
+        "sitemap-jsonld-products": 18,
+        "wordpress-products-json": 9
       },
       "categoryEvents": {
         "RTA": 1,
-        "MODURI": 8,
+        "MODURI": 5,
         "ACCESORII": 1,
         "POD": 11
       }
@@ -1041,11 +1019,11 @@
       "concreteSignals": 49,
       "rejected": 12,
       "rtaModAdded": 7,
-      "podsAdded": 40
+      "podsAdded": 37
     },
     "preorderCatalogsRequested": 52,
-    "preorderPagesFetched": 34,
-    "preorderRtaLinks": 135,
+    "preorderPagesFetched": 35,
+    "preorderRtaLinks": 144,
     "preorderContextEvents": 0,
     "preorderPageFallbackEvents": 3,
     "preorderRecoveredSample": [
@@ -1084,34 +1062,34 @@
       "RTA": 3,
       "MODURI": 3,
       "POD": 0,
-      "rtaModAdded": 4,
+      "rtaModAdded": 6,
       "podsAdded": 0
     },
     "productBackfill": {
-      "candidates": 211,
-      "queries": 422,
-      "queriesWorking": 422,
-      "indexedMatches": 65,
-      "pagesFetched": 60,
-      "pagesMatched": 60,
+      "candidates": 210,
+      "queries": 420,
+      "queriesWorking": 420,
+      "indexedMatches": 70,
+      "pagesFetched": 65,
+      "pagesMatched": 65,
       "datedEvents": 1,
       "groupedEvents": 1,
       "rtaModAdded": 0,
       "podsAdded": 0,
-      "undated": 59
+      "undated": 64
     },
     "categoryCoverage": {
       "RTA": {
-        "monitored": 7,
+        "monitored": 8,
         "events": 3,
-        "signals": 4,
-        "queued": 1
+        "signals": 5,
+        "queued": 0
       },
       "MODURI": {
-        "monitored": 16,
+        "monitored": 14,
         "events": 2,
-        "signals": 14,
-        "queued": 2
+        "signals": 12,
+        "queued": 3
       },
       "ACCESORII": {
         "monitored": 1,
@@ -1133,8 +1111,8 @@
       "stageLabel": "ETA / precomandă",
       "eventDate": "2026-09-30T00:00:00.000Z",
       "dateConfidence": "explicit-vendor-eta",
-      "firstSeenAt": "2026-08-31T13:07:46.854Z",
-      "lastSeenAt": "2026-08-31T13:11:45.017Z",
+      "firstSeenAt": "2026-08-31T14:30:55.809Z",
+      "lastSeenAt": "2026-08-31T14:35:27.889Z",
       "ageHours": 717,
       "sourceCount": 2,
       "eligibleSources": 1,
@@ -1151,7 +1129,7 @@
           "eventDate": "2026-09-30T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "ETA / precomandă",
-          "observedAt": "2026-08-31T13:11:45.017Z",
+          "observedAt": "2026-08-31T14:35:27.889Z",
           "catalogEvidence": "product-page"
         },
         {
@@ -1166,7 +1144,7 @@
           "eventDate": "2026-09-30T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "ETA / precomandă",
-          "observedAt": "2026-08-31T13:11:45.017Z",
+          "observedAt": "2026-08-31T14:35:27.889Z",
           "catalogEvidence": "product-page"
         }
       ],
@@ -1176,17 +1154,18 @@
       "firstPublicEvidenceAt": "2026-09-30T00:00:00.000Z"
     },
     {
-      "productName": "YFTK Flash e-Vapor V4.5S+ Style RTA",
+      "id": "bfbe64ee676a84784012",
+      "productName": "YFTK Flash e-Vapor V4.5S+ Style RTA Rebuildable Tank Atomizer - Silver, 316 Stainless Steel + Glass, 4.5ml, 23mm Diameter",
       "brand": "YFTK",
       "category": "RTA",
-      "typology": "MTL single",
+      "typology": "RDL single",
       "window": "before",
       "stage": "BATCH",
       "stageLabel": "batch viitor",
       "eventDate": "2026-09-10T00:00:00.000Z",
       "dateConfidence": "explicit-vendor-eta",
-      "firstSeenAt": "2026-08-31T13:06:05.511Z",
-      "lastSeenAt": "2026-08-31T13:11:45.017Z",
+      "firstSeenAt": "2026-08-31T14:30:56.109Z",
+      "lastSeenAt": "2026-08-31T14:35:27.889Z",
       "ageHours": 237,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1203,28 +1182,28 @@
           "eventDate": "2026-09-10T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "batch viitor",
-          "observedAt": "2026-08-31T13:11:45.017Z",
+          "observedAt": "2026-08-31T14:35:27.889Z",
           "catalogEvidence": "product-page"
         }
       ],
-      "id": "bfbe64ee676a84784012",
       "stageEvidenceAt": "2026-09-10T00:00:00.000Z",
       "signalKind": "explicit-vendor-eta",
       "confidenceTier": "reported",
       "firstPublicEvidenceAt": "2026-09-10T00:00:00.000Z"
     },
     {
-      "productName": "SXK APEX Style Boro Box Mod Black - 3FVape.com",
+      "id": "8d1e4e6ba3fee9256e06",
+      "productName": "SXK APEX Style Boro Box Mod Black",
       "brand": "SXK",
       "category": "MODURI",
       "typology": "single battery",
       "window": "before",
-      "stage": "TEASER",
+      "stage": "SIGNAL",
       "stageLabel": "teaser",
       "eventDate": "2026-08-28T08:34:00.000Z",
-      "dateConfidence": "signal-publication",
-      "firstSeenAt": "2026-08-31T13:08:21.972Z",
-      "lastSeenAt": "2026-08-31T13:08:21.972Z",
+      "dateConfidence": "signal",
+      "firstSeenAt": "2026-08-28T08:34:00.000Z",
+      "lastSeenAt": "2026-08-31T14:28:15.640Z",
       "ageHours": 66.4,
       "sourceCount": 1,
       "eligibleSources": 0,
@@ -1238,16 +1217,13 @@
           "discoveryOnly": true,
           "publishedAt": "2026-08-28T08:34:00.000Z",
           "eventDate": "2026-08-28T08:34:00.000Z",
-          "dateConfidence": "signal-publication",
-          "stage": "teaser",
-          "observedAt": "2026-08-31T13:08:21.972Z"
+          "dateConfidence": "signal"
         }
       ],
-      "id": "5e37a3d905e569707875",
       "stageEvidenceAt": "2026-08-28T08:34:00.000Z",
-      "firstPublicEvidenceAt": "2026-08-28T08:34:00.000Z",
       "confidenceTier": "public-signal",
-      "signalKind": "dated-public-signal"
+      "signalKind": "dated-public-signal",
+      "firstPublicEvidenceAt": "2026-08-28T08:34:00.000Z"
     },
     {
       "productName": "Eleaf iStick XC100 Vape Mod",
@@ -1264,8 +1240,8 @@
       "stageEvidenceAt": "2026-08-26T13:37:52.000Z",
       "firstPublicEvidenceAt": "2026-08-26T13:37:52.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T13:10:55.947Z",
-      "lastSeenAt": "2026-08-31T13:10:55.947Z",
+      "firstSeenAt": "2026-08-31T14:34:35.942Z",
+      "lastSeenAt": "2026-08-31T14:34:35.942Z",
       "ageHours": 109.4,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1285,67 +1261,51 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:55.947Z"
+          "observedAt": "2026-08-31T14:34:35.942Z"
         }
       ],
       "id": "d3addce032414d7ec81b"
     },
     {
-      "productName": "Reload Squonk Mod Dual 18650",
-      "brand": "Reload Vapor",
-      "category": "MODURI",
+      "productName": "Baby Blaze Build! Thundercloud Blaze MTL RTA",
+      "brand": "ThunderCloud",
+      "category": "RTA",
       "segment": null,
-      "typology": "squonk",
+      "typology": "MTL single",
       "window": "after",
-      "stage": "RETAIL_PROMOTION",
-      "stageLabel": "listare recentă pentru model existent, nu lansare",
-      "signalKind": "recent-listing-known-model",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
       "confidenceTier": "public-signal",
-      "eventDate": "2026-08-26T11:36:47.000Z",
-      "stageEvidenceAt": "2026-08-26T11:36:47.000Z",
-      "firstPublicEvidenceAt": "2026-08-26T11:36:47.000Z",
-      "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T13:10:11.229Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
-      "ageHours": 111.4,
-      "sourceCount": 2,
+      "eventDate": "2026-08-24T11:32:16.000Z",
+      "stageEvidenceAt": "2026-08-24T11:32:16.000Z",
+      "firstPublicEvidenceAt": "2026-08-24T11:32:16.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-08-31T14:34:34.539Z",
+      "lastSeenAt": "2026-08-31T14:34:34.539Z",
+      "ageHours": 159.5,
+      "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
         {
-          "host": "health.belgium.be",
-          "url": "https://www.health.belgium.be/sites/default/files/uploads/fields/fpshealth_theme_file/euceg_be_negativelist_251.pdf",
-          "title": "Regulatory product identifier 04044-19-00005",
-          "sourceType": "prior-existence-evidence",
-          "decisionEligible": false,
-          "discoveryOnly": true,
-          "eventDate": "2019-01-01T00:00:00.000Z",
-          "dateConfidence": "prior-public-evidence",
-          "stage": "model existent înaintea ferestrei active",
-          "collector": "known-history"
-        },
-        {
-          "host": "vaping101.co.uk",
-          "url": "https://vaping101.co.uk/products/reload-squonk-mod",
-          "title": "Reload Squonk Mod Dual 18650",
-          "sourceType": "retailer-direct",
-          "collector": "direct-catalog",
+          "host": "vaping360.com",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9kSzhWVVYwZC1BSG5UMC04LVU3d3VwU09uckVOM3NWVDJud2ktZTJGOHdVaW9WcldVekRfVllyXzV6SDhFanVxUXJRWXpFUHVTbG5UTjRlWmZvYUY2MHBqTHZ2LUZtc3lo?oc=5",
+          "title": "Baby Blaze Build! Thundercloud Blaze MTL RTA - Vaping360",
+          "sourceName": "Vaping360",
+          "sourceUrl": "https://vaping360.com",
+          "sourceType": "dated-publication",
+          "collector": "dated-publication",
           "decisionEligible": true,
           "discoveryOnly": false,
-          "evidenceScope": "catalog-publication-date",
-          "eventDate": "2026-08-26T11:36:47.000Z",
-          "dateConfidence": "catalog-published-at",
-          "dateQuality": "shopify-published-at",
-          "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
-          "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/reload-squonk-mod-main.webp?v=1787744197",
-          "price": 0,
-          "currency": null,
-          "available": false
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-24T11:32:16.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "google-news-rss-pubdate",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-08-31T14:34:34.539Z"
         }
       ],
-      "id": "d1d1de4cbaa0993b4d69",
-      "knownBeforeWindowAt": "2019-01-01T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://www.health.belgium.be/sites/default/files/uploads/fields/fpshealth_theme_file/euceg_be_negativelist_251.pdf"
+      "id": "6ad56892ba095635cd4e"
     },
     {
       "productName": "Blaze Organic Wicking Cotton",
@@ -1362,8 +1322,8 @@
       "stageEvidenceAt": "2026-08-24T02:55:06.000Z",
       "firstPublicEvidenceAt": "2026-08-24T02:55:06.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:00:15.545Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
+      "firstSeenAt": "2026-08-31T14:33:20.003Z",
+      "lastSeenAt": "2026-08-31T14:33:20.003Z",
       "ageHours": 168.1,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1381,7 +1341,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
+          "observedAt": "2026-08-31T14:33:20.003Z",
           "image": "https://cdn.shopify.com/s/files/1/0616/2441/8393/files/6a0f48436f03bf48e8c7f28f9f150b4c_ffbb1c58-560e-4695-ae4b-7ef15f3558d4.png?v=1787539816",
           "price": 4.9,
           "currency": null,
@@ -1389,64 +1349,6 @@
         }
       ],
       "id": "ba600c9aa1445d76e3a1"
-    },
-    {
-      "productName": "ThunderCloud x Coilturd AN RTA",
-      "brand": "CoilTurd",
-      "category": "RTA",
-      "segment": null,
-      "typology": "RDL single",
-      "window": "after",
-      "stage": "RETAIL_PROMOTION",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-retail-promotion",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-23T19:59:40.000Z",
-      "stageEvidenceAt": "2026-08-23T19:59:40.000Z",
-      "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T13:10:54.378Z",
-      "lastSeenAt": "2026-08-31T13:12:05.100Z",
-      "ageHours": 175,
-      "sourceCount": 2,
-      "eligibleSources": 2,
-      "sources": [
-        {
-          "host": "vaping360.com",
-          "url": "https://news.google.com/rss/articles/CBMiZEFVX3lxTFBQd3p5TmRWQ3Q4Q0syb3dkSkE3cnIxSWZVX3ZKYTdPZUlZcVJFcUZvbDNicEdzZ05fN05NZDFhdi16WEpNaGdKMUVvSHVZb3dydmVsQ0VRX1V6eDU1bDhDWmxaMFo?oc=5",
-          "title": "Building AN RTA FOR VAPING By ThunderCloud and Coilturd - Vaping360",
-          "sourceName": "Vaping360",
-          "sourceUrl": "https://vaping360.com",
-          "sourceType": "dated-publication",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-23T19:59:40.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "google-news-rss-pubdate",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:54.378Z"
-        },
-        {
-          "host": "3fvape.com",
-          "url": "https://www.3fvape.com/73893-.html",
-          "title": "CoilTurd An RTA",
-          "sourceName": "3FVape public campaigns",
-          "sourceUrl": "https://www.3fvape.com",
-          "sourceType": "retailer-direct-promotion",
-          "collector": "retail-campaign",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-retail-promotion",
-          "eventDate": "2026-08-05T12:00:00.000Z",
-          "dateConfidence": "dated-retail-campaign",
-          "dateQuality": "utm-campaign-date",
-          "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T13:12:05.100Z"
-        }
-      ],
-      "id": "7ad3df9a5b50e516c29f"
     },
     {
       "productName": "004-ZOE SBS BF60",
@@ -1463,8 +1365,8 @@
       "stageEvidenceAt": "2026-08-21T09:53:16.000Z",
       "firstPublicEvidenceAt": "2026-08-21T09:53:16.000Z",
       "dateConfidence": "official-product-published-at",
-      "firstSeenAt": "2026-08-31T14:00:15.545Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
+      "firstSeenAt": "2026-08-31T14:33:20.003Z",
+      "lastSeenAt": "2026-08-31T14:34:36.375Z",
       "ageHours": 233.1,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1473,20 +1375,18 @@
           "host": "fakirsmods.com",
           "url": "https://fakirsmods.com/products/mods/004-zoe-sbs-bf60/",
           "title": "004-ZOE SBS BF60",
-          "sourceType": "manufacturer-official-catalog",
-          "collector": "direct-catalog",
+          "sourceName": "Fakirs Mods",
+          "sourceUrl": "https://www.fakirsmods.com",
+          "sourceType": "manufacturer-official",
+          "collector": "dated-publication",
           "decisionEligible": true,
           "discoveryOnly": false,
-          "evidenceScope": "catalog-publication-date",
+          "evidenceScope": "official-product-listing",
           "eventDate": "2026-08-21T09:53:16.000Z",
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
-          "image": "",
-          "price": null,
-          "currency": null,
-          "available": null
+          "observedAt": "2026-08-31T14:34:36.375Z"
         }
       ],
       "id": "065312b606a221173190"
@@ -1506,8 +1406,8 @@
       "stageEvidenceAt": "2026-08-20T14:52:15.000Z",
       "firstPublicEvidenceAt": "2026-08-20T14:52:15.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:00:15.545Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
+      "firstSeenAt": "2026-08-31T14:33:20.003Z",
+      "lastSeenAt": "2026-08-31T14:33:20.003Z",
       "ageHours": 252.1,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1525,7 +1425,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
+          "observedAt": "2026-08-31T14:33:20.003Z",
           "image": "https://cdn.shopify.com/s/files/1/0043/9189/5140/files/mod-mq-plus-100w-217002070018650-sxmini_1.webp?v=1787237273",
           "price": 68.9,
           "currency": null,
@@ -1549,8 +1449,8 @@
       "stageEvidenceAt": "2026-08-18T14:10:48.000Z",
       "firstPublicEvidenceAt": "2026-08-18T14:10:48.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T13:10:55.988Z",
-      "lastSeenAt": "2026-08-31T13:10:55.988Z",
+      "firstSeenAt": "2026-08-31T14:34:35.979Z",
+      "lastSeenAt": "2026-08-31T14:34:35.979Z",
       "ageHours": 300.8,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1570,7 +1470,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:55.988Z"
+          "observedAt": "2026-08-31T14:34:35.979Z"
         }
       ],
       "id": "83dec5c9fc43b2abb25b"
@@ -1590,8 +1490,8 @@
       "stageEvidenceAt": "2026-08-18T03:31:19.000Z",
       "firstPublicEvidenceAt": "2026-08-18T03:31:19.000Z",
       "dateConfidence": "official-product-published-at",
-      "firstSeenAt": "2026-08-31T14:00:15.545Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
+      "firstSeenAt": "2026-08-31T14:33:20.003Z",
+      "lastSeenAt": "2026-08-31T14:33:20.003Z",
       "ageHours": 311.5,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1609,7 +1509,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
+          "observedAt": "2026-08-31T14:33:20.003Z",
           "image": "",
           "price": null,
           "currency": null,
@@ -1617,63 +1517,6 @@
         }
       ],
       "id": "80a1593a234601245c8d"
-    },
-    {
-      "productName": "MechVape x Nitrous Pocket 80W Box Mod",
-      "brand": "MechVape",
-      "category": "MODURI",
-      "segment": null,
-      "typology": "single battery",
-      "window": "after",
-      "stage": "RETAIL_PROMOTION",
-      "stageLabel": "listare recentă pentru model existent, nu lansare",
-      "signalKind": "recent-listing-known-model",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-17T08:27:22.000Z",
-      "stageEvidenceAt": "2026-08-17T08:27:22.000Z",
-      "firstPublicEvidenceAt": "2026-08-17T08:27:22.000Z",
-      "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T13:10:11.229Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
-      "ageHours": 330.5,
-      "sourceCount": 2,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "plaza.rakuten.co.jp",
-          "url": "https://plaza.rakuten.co.jp/vapeaction/diary/202607300000/",
-          "title": "Dated product presentation",
-          "sourceType": "prior-existence-evidence",
-          "decisionEligible": false,
-          "discoveryOnly": true,
-          "eventDate": "2026-07-30T00:00:00.000Z",
-          "dateConfidence": "prior-public-evidence",
-          "stage": "model existent înaintea ferestrei active",
-          "collector": "known-history"
-        },
-        {
-          "host": "vaping101.co.uk",
-          "url": "https://vaping101.co.uk/products/mechvape-x-nitrous-pocket-80w-box-mod",
-          "title": "MechVape x Nitrous Pocket 80W Box Mod",
-          "sourceType": "retailer-direct",
-          "collector": "direct-catalog",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "catalog-publication-date",
-          "eventDate": "2026-08-17T08:27:22.000Z",
-          "dateConfidence": "catalog-published-at",
-          "dateQuality": "shopify-published-at",
-          "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
-          "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mechvape-x-nitrous-pocket-80w-box-mod-nitro-tone-peek.webp?v=1786953356",
-          "price": 29.99,
-          "currency": null,
-          "available": true
-        }
-      ],
-      "id": "c4b1deb5a1495d5f8fba",
-      "knownBeforeWindowAt": "2026-07-30T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://plaza.rakuten.co.jp/vapeaction/diary/202607300000/"
     },
     {
       "productName": "Voopoo DRAG 6",
@@ -1690,8 +1533,8 @@
       "stageEvidenceAt": "2026-08-16T09:50:17.000Z",
       "firstPublicEvidenceAt": "2026-08-16T09:50:17.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T13:10:54.450Z",
-      "lastSeenAt": "2026-08-31T13:10:55.570Z",
+      "firstSeenAt": "2026-08-31T14:34:34.598Z",
+      "lastSeenAt": "2026-08-31T14:34:35.603Z",
       "ageHours": 353.2,
       "sourceCount": 2,
       "eligibleSources": 2,
@@ -1711,7 +1554,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:54.450Z"
+          "observedAt": "2026-08-31T14:34:34.598Z"
         },
         {
           "host": "igeekphone.com",
@@ -1728,7 +1571,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:55.570Z"
+          "observedAt": "2026-08-31T14:34:35.603Z"
         }
       ],
       "id": "4bf85a9e4e25d472a04e"
@@ -1748,8 +1591,8 @@
       "stageEvidenceAt": "2026-08-13T17:29:17.000Z",
       "firstPublicEvidenceAt": "2026-08-13T17:29:17.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T13:10:54.995Z",
-      "lastSeenAt": "2026-08-31T13:10:54.995Z",
+      "firstSeenAt": "2026-08-31T14:34:35.085Z",
+      "lastSeenAt": "2026-08-31T14:34:35.085Z",
       "ageHours": 417.5,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1769,7 +1612,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:54.995Z"
+          "observedAt": "2026-08-31T14:34:35.085Z"
         }
       ],
       "id": "d4ea4bab38bbb3757fc1"
@@ -1789,8 +1632,8 @@
       "stageEvidenceAt": "2026-08-13T08:10:19.000Z",
       "firstPublicEvidenceAt": "2026-08-13T08:10:19.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T13:10:56.346Z",
-      "lastSeenAt": "2026-08-31T13:10:56.346Z",
+      "firstSeenAt": "2026-08-31T14:34:36.284Z",
+      "lastSeenAt": "2026-08-31T14:34:36.284Z",
       "ageHours": 426.8,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1810,84 +1653,10 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:56.346Z"
+          "observedAt": "2026-08-31T14:34:36.284Z"
         }
       ],
       "id": "e555e5256007c8b0f023"
-    },
-    {
-      "productName": "Mechvape Paramour V2 SBS 100W 18650/21700",
-      "brand": "MechVape",
-      "category": "MODURI",
-      "segment": null,
-      "typology": "side by side",
-      "window": "after",
-      "stage": "RETAIL_PROMOTION",
-      "stageLabel": "listare recentă pentru model existent, nu lansare",
-      "signalKind": "recent-listing-known-model",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-10T13:14:35.000Z",
-      "stageEvidenceAt": "2026-08-10T13:14:35.000Z",
-      "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
-      "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T13:10:11.229Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
-      "ageHours": 493.8,
-      "sourceCount": 3,
-      "eligibleSources": 2,
-      "sources": [
-        {
-          "host": "3fvape.com",
-          "url": "https://www.3fvape.com/74176-.html",
-          "title": "MECHVAPE Paramour V2 100W VW SBS Box Mod",
-          "sourceName": "3FVape public campaigns",
-          "sourceUrl": "https://www.3fvape.com",
-          "sourceType": "retailer-direct-promotion",
-          "collector": "retail-campaign",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-retail-promotion",
-          "eventDate": "2026-08-05T12:00:00.000Z",
-          "dateConfidence": "dated-retail-campaign",
-          "dateQuality": "utm-campaign-date",
-          "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T13:12:05.100Z"
-        },
-        {
-          "host": "vaping360.com",
-          "url": "https://vaping360.com/ko/vape-products/mechvape-paramour-v2/",
-          "title": "Product database release month",
-          "sourceType": "prior-existence-evidence",
-          "decisionEligible": false,
-          "discoveryOnly": true,
-          "eventDate": "2026-06-01T00:00:00.000Z",
-          "dateConfidence": "prior-public-evidence",
-          "stage": "model existent înaintea ferestrei active",
-          "collector": "known-history"
-        },
-        {
-          "host": "vaping101.co.uk",
-          "url": "https://vaping101.co.uk/products/mechvape-paramour-v2-sbs-100w-box-mod",
-          "title": "Mechvape Paramour V2 SBS 100W 18650/21700",
-          "sourceType": "retailer-direct",
-          "collector": "direct-catalog",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "catalog-publication-date",
-          "eventDate": "2026-08-10T13:14:35.000Z",
-          "dateConfidence": "catalog-published-at",
-          "dateQuality": "shopify-published-at",
-          "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
-          "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mech-vape-paramour-v2-sbs-mod-black-gray.webp?v=1786358528",
-          "price": 54.99,
-          "currency": null,
-          "available": true
-        }
-      ],
-      "id": "7362cde6960480b75104",
-      "knownBeforeWindowAt": "2026-06-01T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://vaping360.com/ko/vape-products/mechvape-paramour-v2/"
     },
     {
       "productName": "VAPORESSO Armour Ultra Kit",
@@ -1904,8 +1673,8 @@
       "stageEvidenceAt": "2026-08-10T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-10T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T13:10:54.394Z",
-      "lastSeenAt": "2026-08-31T13:10:54.815Z",
+      "firstSeenAt": "2026-08-31T14:34:34.553Z",
+      "lastSeenAt": "2026-08-31T14:34:34.923Z",
       "ageHours": 494,
       "sourceCount": 2,
       "eligibleSources": 2,
@@ -1925,7 +1694,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:54.394Z"
+          "observedAt": "2026-08-31T14:34:34.553Z"
         },
         {
           "host": "vapoteurs.net",
@@ -1942,7 +1711,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T13:10:54.815Z"
+          "observedAt": "2026-08-31T14:34:34.923Z"
         }
       ],
       "id": "e42f2fb7147fe73034fe"
@@ -1962,8 +1731,8 @@
       "stageEvidenceAt": "2026-08-06T10:32:57.000Z",
       "firstPublicEvidenceAt": "2026-08-06T10:32:57.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:00:15.545Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
+      "firstSeenAt": "2026-08-31T14:33:20.003Z",
+      "lastSeenAt": "2026-08-31T14:33:20.003Z",
       "ageHours": 592.5,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -1981,7 +1750,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
+          "observedAt": "2026-08-31T14:33:20.003Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Sxmini-MQ-Plus-Box-Mod.webp?v=1784536995",
           "price": 59.99,
           "currency": null,
@@ -2005,8 +1774,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T13:12:05.100Z",
-      "lastSeenAt": "2026-08-31T13:12:05.100Z",
+      "firstSeenAt": "2026-08-31T14:35:47.808Z",
+      "lastSeenAt": "2026-08-31T14:35:47.808Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -2026,10 +1795,51 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T13:12:05.100Z"
+          "observedAt": "2026-08-31T14:35:47.808Z"
         }
       ],
       "id": "f9283bd172e28b8da567"
+    },
+    {
+      "productName": "CoilTurd An RTA",
+      "brand": "CoilTurd",
+      "category": "RTA",
+      "segment": null,
+      "typology": "RDL single",
+      "window": "after",
+      "stage": "RETAIL_PROMOTION",
+      "stageLabel": "promovare recenta pentru model existent, nu lansare",
+      "signalKind": "dated-retail-promotion",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-05T12:00:00.000Z",
+      "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
+      "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
+      "dateConfidence": "dated-retail-campaign",
+      "firstSeenAt": "2026-08-31T14:35:47.808Z",
+      "lastSeenAt": "2026-08-31T14:35:47.808Z",
+      "ageHours": 615,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "3fvape.com",
+          "url": "https://www.3fvape.com/73893-.html",
+          "title": "CoilTurd An RTA",
+          "sourceName": "3FVape public campaigns",
+          "sourceUrl": "https://www.3fvape.com",
+          "sourceType": "retailer-direct-promotion",
+          "collector": "retail-campaign",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-retail-promotion",
+          "eventDate": "2026-08-05T12:00:00.000Z",
+          "dateConfidence": "dated-retail-campaign",
+          "dateQuality": "utm-campaign-date",
+          "stage": "promovare recenta pentru model existent, nu lansare",
+          "observedAt": "2026-08-31T14:35:47.808Z"
+        }
+      ],
+      "id": "7ad3df9a5b50e516c29f"
     },
     {
       "productName": "SXK Prime Minister Style RDL RTA",
@@ -2046,8 +1856,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T13:12:05.100Z",
-      "lastSeenAt": "2026-08-31T13:12:05.100Z",
+      "firstSeenAt": "2026-08-31T14:35:47.808Z",
+      "lastSeenAt": "2026-08-31T14:35:47.808Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -2067,10 +1877,51 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T13:12:05.100Z"
+          "observedAt": "2026-08-31T14:35:47.808Z"
         }
       ],
       "id": "5adcff08a02094f0d715"
+    },
+    {
+      "productName": "MECHVAPE Paramour V2 100W VW SBS Box Mod",
+      "brand": "MechVape",
+      "category": "MODURI",
+      "segment": null,
+      "typology": "side by side",
+      "window": "after",
+      "stage": "RETAIL_PROMOTION",
+      "stageLabel": "promovare recenta pentru model existent, nu lansare",
+      "signalKind": "dated-retail-promotion",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-05T12:00:00.000Z",
+      "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
+      "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
+      "dateConfidence": "dated-retail-campaign",
+      "firstSeenAt": "2026-08-31T14:35:47.808Z",
+      "lastSeenAt": "2026-08-31T14:35:47.808Z",
+      "ageHours": 615,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "3fvape.com",
+          "url": "https://www.3fvape.com/74176-.html",
+          "title": "MECHVAPE Paramour V2 100W VW SBS Box Mod",
+          "sourceName": "3FVape public campaigns",
+          "sourceUrl": "https://www.3fvape.com",
+          "sourceType": "retailer-direct-promotion",
+          "collector": "retail-campaign",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-retail-promotion",
+          "eventDate": "2026-08-05T12:00:00.000Z",
+          "dateConfidence": "dated-retail-campaign",
+          "dateQuality": "utm-campaign-date",
+          "stage": "promovare recenta pentru model existent, nu lansare",
+          "observedAt": "2026-08-31T14:35:47.808Z"
+        }
+      ],
+      "id": "7362cde6960480b75104"
     },
     {
       "productName": "SXK PRC CUDA Mod",
@@ -2087,8 +1938,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T13:12:05.100Z",
-      "lastSeenAt": "2026-08-31T13:12:05.100Z",
+      "firstSeenAt": "2026-08-31T14:35:47.808Z",
+      "lastSeenAt": "2026-08-31T14:35:47.808Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -2108,7 +1959,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T13:12:05.100Z"
+          "observedAt": "2026-08-31T14:35:47.808Z"
         }
       ],
       "id": "31bfcfd2d59acf5ff9ff"
@@ -2128,8 +1979,8 @@
       "stageEvidenceAt": "2026-08-05T12:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-05T12:00:00.000Z",
       "dateConfidence": "dated-retail-campaign",
-      "firstSeenAt": "2026-08-31T13:12:05.100Z",
-      "lastSeenAt": "2026-08-31T13:12:05.100Z",
+      "firstSeenAt": "2026-08-31T14:35:47.808Z",
+      "lastSeenAt": "2026-08-31T14:35:47.808Z",
       "ageHours": 615,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -2149,7 +2000,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-08-31T13:12:05.100Z"
+          "observedAt": "2026-08-31T14:35:47.808Z"
         }
       ],
       "id": "e694e95fe9639ddb14df"
@@ -2169,24 +2020,12 @@
       "stageEvidenceAt": "2026-08-02T11:46:50.000Z",
       "firstPublicEvidenceAt": "2026-08-02T11:46:50.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T13:10:11.229Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
+      "firstSeenAt": "2026-08-31T14:33:20.003Z",
+      "lastSeenAt": "2026-08-31T14:33:20.003Z",
       "ageHours": 687.2,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
-        {
-          "host": "e-cigarette-forum.com",
-          "url": "https://www.e-cigarette-forum.com/threads/yftk-pinnacle-colossus-side-by-side-sbs-18350-18650-mech-mod-with-short-circuit-protection-compatible-with-22mm-24mm-diameter-atomizer.994388/",
-          "title": "Dated vendor forum announcement",
-          "sourceType": "prior-existence-evidence",
-          "decisionEligible": false,
-          "discoveryOnly": true,
-          "eventDate": "2026-06-09T00:00:00.000Z",
-          "dateConfidence": "prior-public-evidence",
-          "stage": "model existent înaintea ferestrei active",
-          "collector": "known-history"
-        },
         {
           "host": "beast-8888.myshopify.com",
           "url": "https://beast-8888.myshopify.com/products/yftk-pinnacle-colossus-sbs-mechanical-mod",
@@ -2200,11 +2039,23 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
+          "observedAt": "2026-08-31T14:33:20.003Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/233C95DF-BD63-4C4E-B6AD-EF4503ECAC10.jpg?v=1785671157",
           "price": 380,
           "currency": null,
           "available": true
+        },
+        {
+          "host": "e-cigarette-forum.com",
+          "url": "https://www.e-cigarette-forum.com/threads/yftk-pinnacle-colossus-side-by-side-sbs-18350-18650-mech-mod-with-short-circuit-protection-compatible-with-22mm-24mm-diameter-atomizer.994388/",
+          "title": "Dated vendor forum announcement",
+          "sourceType": "prior-existence-evidence",
+          "decisionEligible": false,
+          "discoveryOnly": true,
+          "eventDate": "2026-06-09T00:00:00.000Z",
+          "dateConfidence": "prior-public-evidence",
+          "stage": "model existent înaintea ferestrei active",
+          "collector": "known-history"
         }
       ],
       "id": "9431c46a0b8b40c38132",
@@ -2226,8 +2077,8 @@
       "stageEvidenceAt": "2026-08-02T11:34:50.000Z",
       "firstPublicEvidenceAt": "2026-08-02T11:34:50.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:00:15.545Z",
-      "lastSeenAt": "2026-08-31T14:00:15.545Z",
+      "firstSeenAt": "2026-08-31T14:33:20.003Z",
+      "lastSeenAt": "2026-08-31T14:33:20.003Z",
       "ageHours": 687.4,
       "sourceCount": 1,
       "eligibleSources": 1,
@@ -2245,7 +2096,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:00:15.545Z",
+          "observedAt": "2026-08-31T14:33:20.003Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/DEE2CF9A-45DD-4754-B9DB-99ACBF7DF501.jpg?v=1785670503",
           "price": 280,
           "currency": null,
@@ -2257,13 +2108,13 @@
   ],
   "summary": {
     "total": 6,
-    "allConcrete": 24,
+    "allConcrete": 23,
     "before": 2,
     "after": 4,
     "explicitDatedAfter": 4,
     "confirmed": 2,
     "reported": 4,
-    "publicSignals": 18,
+    "publicSignals": 17,
     "candidatesUnderVerification": 3,
     "categoryEvents": {
       "RTA": 3,
@@ -2284,24 +2135,24 @@
       "publishedAt": "2026-08-30T18:11:00.000Z"
     },
     {
-      "maker": "dotMod",
-      "product": "dotmod Vaping - Box Mod, Atomizer, Vape Mod",
+      "maker": "Eleaf",
+      "product": "Best Ecig Store, Box Mod Manufacturer",
       "category": "MODURI",
       "typology": "single battery",
       "reason": "noEventOrDate",
       "channel": "dated-discovery",
-      "url": "https://dotmod.com/",
-      "publishedAt": "2026-08-30T17:57:00.000Z"
+      "url": "https://www.eleafworld.com/",
+      "publishedAt": "2026-08-30T19:51:00.000Z"
     },
     {
-      "maker": "SXK",
-      "product": "SXK RDA / RTA / RDTA Atomizer, Mod - 3FVape",
-      "category": "RTA",
-      "typology": "RDL single",
+      "maker": "Eleaf",
+      "product": "Eleaf - Vape Mod Kits & Pod Systems",
+      "category": "MODURI",
+      "typology": "single battery",
       "reason": "noEventOrDate",
       "channel": "dated-discovery",
-      "url": "https://www.3fvape.com/108-sxk",
-      "publishedAt": "2026-08-30T18:47:00.000Z"
+      "url": "https://www.elementvape.com/eleaf",
+      "publishedAt": "2026-08-30T17:50:00.000Z"
     }
   ],
   "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
