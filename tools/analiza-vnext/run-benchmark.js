@@ -164,7 +164,15 @@ function verifyBaseline(){
   assert(fs.existsSync(BASELINE_FILE),'Baseline file is missing');
   const expected=fs.readFileSync(BASELINE_FILE,'utf8').replace(/\r\n/g,'\n');
   const current=buildBaseline();
-  assert(expected===stableBaseline(current),'Baseline drift detected');
+  const actual=stableBaseline(current);
+  if(expected!==actual){
+    const expectedLines=expected.split('\n');
+    const actualLines=actual.split('\n');
+    const line=Math.max(0,Array.from({length:Math.max(expectedLines.length,actualLines.length)},(_,index)=>index)
+      .find(index=>expectedLines[index]!==actualLines[index])??0);
+    assert(false,`Baseline drift detected at line ${line+1}\nexpected: ${expectedLines[line]??'<missing>'}\nactual:   ${actualLines[line]??'<missing>'}`);
+  }
+  assert(expected===actual,'Baseline snapshot matches current protected behavior');
   assert(current.uiScreenshots.length>=2,'Desktop and mobile baseline screenshots are required');
   assert(current.currentOutputs.sales.benchmarkTruth==='RANKING_AND_PROXY_ONLY','Sales anomaly resolution is unsafe');
   assert(current.currentOutputs.sales.actualSales===0,'Phase 0 unexpectedly found Tier-A sales rows; re-audit before changing the benchmark');
