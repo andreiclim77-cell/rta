@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "phase": "ANALIZA ROMANIA vNext Phase 0",
+  "bindings": [
+    {
+      "id": "listing-is-not-sale",
+      "file": "data/market-2026.json",
+      "token": "Nu echivaleaza disponibilitatea sau disparitia din stoc cu vanzari reale."
+    },
+    {
+      "id": "stock-is-not-sale",
+      "file": "data/market-sales-2026.json",
+      "token": "\"noStockInference\": true"
+    },
+    {
+      "id": "national-units-disabled-without-full-tier-a",
+      "file": "data/market-sales-2026.json",
+      "token": "\"nationalUnitsSoldAvailable\": false"
+    },
+    {
+      "id": "national-share-disabled-without-full-tier-a",
+      "file": "data/market-sales-2026.json",
+      "token": "\"nationalMarketShareAvailable\": false"
+    },
+    {
+      "id": "explicit-product-counter-only",
+      "file": "tools/probe-market-sales-counters-2026.js",
+      "token": "explicit-public-product-page-sales-counter"
+    },
+    {
+      "id": "generic-order-counter-rejected",
+      "file": "tools/probe-market-sales-counters-2026.js",
+      "token": "validHistoricCounter"
+    },
+    {
+      "id": "counter-decrease-not-a-delta",
+      "file": "tools/probe-market-sales-counters-2026.js",
+      "token": "d!=null&&d>=0?d:null"
+    },
+    {
+      "id": "operator-id-retained",
+      "file": "data/market-retailers-2026.json",
+      "token": "\"operatorId\""
+    },
+    {
+      "id": "presence-counts-operators-separately",
+      "file": "tools/build-market-product-presence-2026.js",
+      "token": "listedOperators"
+    },
+    {
+      "id": "demand-is-not-sales",
+      "file": "data/market-demand-intelligence-2026.json",
+      "token": "Search volume is demand, never sales."
+    },
+    {
+      "id": "management-share-is-rank-index",
+      "file": "data/market-management-2026.json",
+      "token": "Pondere în indicele bestseller observat, nu cotă reală de piață pe unități."
+    },
+    {
+      "id": "public-authorized-community-only",
+      "file": "data/market-demand-intelligence-2026.json",
+      "token": "No bypass of Meta group access restrictions."
+    },
+    {
+      "id": "national-100-percent-claim-disabled",
+      "file": "data/market-coverage-2026.json",
+      "token": "\"allowed\": false"
+    },
+    {
+      "id": "market-json-network-first",
+      "file": "sw.js",
+      "token": "market-2026.json"
+    }
+  ],
+  "intentionalDivergences": [
+    {
+      "id": "universe-certification-too-weak",
+      "current": "Two consecutive clean public-search passes can set the gate to pass.",
+      "target": "Dated source-family certification, candidate resolution and operator/storefront reconciliation."
+    },
+    {
+      "id": "tier-b-rank-semantics-incomplete",
+      "current": "Reciprocal ranks are aggregated without the required source semantic and visible-depth contract.",
+      "target": "Each Tier-B source declares semantics, scope, visible depth and comparable cohort."
+    },
+    {
+      "id": "demand-universe-rta-only",
+      "current": "Demand collection starts from RTA/RBA/RDTA observations and RTA review models.",
+      "target": "RTA, mods, POD devices and linked POD consumables have explicit entity and geography coverage."
+    },
+    {
+      "id": "pod-consumables-dropped",
+      "current": "Accessory-only replacement pods, cartridges and coils return null.",
+      "target": "Retain consumable entities and compatibility edges without showing them as devices."
+    },
+    {
+      "id": "clone-authentic-collapse-risk",
+      "current": "Style, clone and authentic tokens are removed before the canonical key is built.",
+      "target": "Clone and authentic products remain separate linked identities."
+    },
+    {
+      "id": "mutable-projection-state",
+      "current": "Collectors rewrite public JSON projections and production workflows push directly to main.",
+      "target": "Immutable attempts/evidence plus generated backward-compatible projections."
+    },
+    {
+      "id": "source-failure-not-ledgered",
+      "current": "Current summaries expose errors but not an immutable attempt/outcome ledger.",
+      "target": "Every source attempt records health, completeness, parser version and truth status."
+    }
+  ]
+}

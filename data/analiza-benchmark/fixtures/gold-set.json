@@ -1,0 +1,628 @@
+{
+  "schemaVersion": 1,
+  "fixtureSet": "analiza-phase0-gold",
+  "asOf": "2026-08-31T21:00:00.000Z",
+  "syntheticDeterministic": true,
+  "cases": [
+    {
+      "id": "gold-retail-001",
+      "family": "retail-source",
+      "requirement": "active-retailer",
+      "title": "Active Romanian consumer retailer",
+      "adversarial": false,
+      "input": {
+        "storefront": "Vape Exemplu",
+        "country": "RO",
+        "consumerCheckout": true,
+        "statusCode": 200
+      },
+      "expected": {
+        "scope": "ELIGIBLE",
+        "storefrontState": "ACTIVE",
+        "operatorCount": 1
+      }
+    },
+    {
+      "id": "gold-retail-002",
+      "family": "retail-source",
+      "requirement": "same-operator-two-storefronts",
+      "title": "Two storefronts share one legal operator",
+      "adversarial": false,
+      "input": {
+        "storefronts": [
+          {
+            "id": "shop-a",
+            "operatorId": "operator-a"
+          },
+          {
+            "id": "shop-b",
+            "operatorId": "operator-a"
+          }
+        ]
+      },
+      "expected": {
+        "storefrontCount": 2,
+        "operatorCount": 1,
+        "noOperatorInflation": true
+      }
+    },
+    {
+      "id": "gold-retail-003",
+      "family": "retail-source",
+      "requirement": "cross-border",
+      "title": "Foreign retailer shipping to Romania stays outside the national core",
+      "adversarial": false,
+      "input": {
+        "country": "DE",
+        "shipsToRomania": true,
+        "localEntity": false
+      },
+      "expected": {
+        "scope": "CROSS_BORDER_CONTEXT",
+        "nationalCore": false
+      }
+    },
+    {
+      "id": "gold-retail-004",
+      "family": "retail-source",
+      "requirement": "moved-url",
+      "title": "Moved category URL is recovered without inventing delisting",
+      "adversarial": false,
+      "input": {
+        "oldUrlStatus": 301,
+        "newUrlStatus": 200,
+        "canonicalUrl": "/collections/rta"
+      },
+      "expected": {
+        "sourceState": "MOVED",
+        "availability": "UNKNOWN_UNTIL_REPARSE"
+      }
+    },
+    {
+      "id": "gold-product-001",
+      "family": "product-identity",
+      "requirement": "canonical-product",
+      "title": "Exact canonical product identity",
+      "adversarial": false,
+      "input": {
+        "brand": "Vaporesso",
+        "title": "Vaporesso XROS 4 Pod Kit"
+      },
+      "expected": {
+        "brand": "Vaporesso",
+        "model": "XROS 4",
+        "entityType": "POD_DEVICE"
+      }
+    },
+    {
+      "id": "gold-product-002",
+      "family": "product-identity",
+      "requirement": "brand-alias",
+      "title": "Brand alias resolves to canonical brand",
+      "adversarial": false,
+      "input": {
+        "brand": "SMOKTECH",
+        "title": "Smoktech Nord 5 Kit"
+      },
+      "expected": {
+        "brand": "SMOK",
+        "model": "Nord 5"
+      }
+    },
+    {
+      "id": "gold-product-003",
+      "family": "product-identity",
+      "requirement": "seo-noise",
+      "title": "SEO suffix does not create a product",
+      "adversarial": false,
+      "input": {
+        "title": "Kayfun X MTL RTA - best price Romania, original, 22mm"
+      },
+      "expected": {
+        "model": "Kayfun X",
+        "noiseRemoved": true
+      }
+    },
+    {
+      "id": "gold-product-004",
+      "family": "product-identity",
+      "requirement": "color-variant",
+      "title": "Colour variants share a product identity",
+      "adversarial": false,
+      "input": {
+        "offers": [
+          "OXVA Xlim Pro 2 Black",
+          "OXVA Xlim Pro 2 Silver"
+        ]
+      },
+      "expected": {
+        "canonicalProducts": 1,
+        "offers": 2
+      }
+    },
+    {
+      "id": "gold-product-005",
+      "family": "product-identity",
+      "requirement": "bundle",
+      "title": "Bundle stays a distinct commercial offer",
+      "adversarial": false,
+      "input": {
+        "offers": [
+          "XROS 4 device",
+          "XROS 4 device + 2 pods bundle"
+        ]
+      },
+      "expected": {
+        "canonicalProducts": 1,
+        "commercialOffers": 2,
+        "bundleNormalized": true
+      }
+    },
+    {
+      "id": "gold-product-006",
+      "family": "product-identity",
+      "requirement": "revision",
+      "title": "V2 remains distinct from V1",
+      "adversarial": false,
+      "input": {
+        "offers": [
+          "Diplomat MTL RTA V1.5",
+          "Diplomat MTL RTA V2"
+        ]
+      },
+      "expected": {
+        "canonicalProducts": 2,
+        "revisionPreserved": true
+      }
+    },
+    {
+      "id": "gold-product-007",
+      "family": "product-identity",
+      "requirement": "clone-authentic",
+      "title": "Clone and authentic lifecycles are linked but separate",
+      "adversarial": false,
+      "input": {
+        "offers": [
+          "Centenary Mods Diplomat V1.5",
+          "SXK Diplomat V1.5 Style RTA"
+        ]
+      },
+      "expected": {
+        "canonicalProducts": 2,
+        "relationship": "CLONE_OF",
+        "collapsed": false
+      }
+    },
+    {
+      "id": "gold-product-008",
+      "family": "product-identity",
+      "requirement": "same-family-different-product",
+      "title": "Products in one family remain distinct",
+      "adversarial": false,
+      "input": {
+        "offers": [
+          "OXVA Xlim Pro 2",
+          "OXVA Xlim SQ Pro 2"
+        ]
+      },
+      "expected": {
+        "canonicalProducts": 2,
+        "family": "Xlim"
+      }
+    },
+    {
+      "id": "gold-sales-001",
+      "family": "sales-ranking",
+      "requirement": "explicit-counter",
+      "title": "Explicit product units-sold counter is Tier A evidence",
+      "adversarial": false,
+      "input": {
+        "text": "S-au vandut 124 bucati",
+        "previousCounter": 119
+      },
+      "expected": {
+        "tier": "A",
+        "counter": 124,
+        "delta": 5
+      }
+    },
+    {
+      "id": "gold-sales-002",
+      "family": "sales-ranking",
+      "requirement": "counter-baseline",
+      "title": "First cumulative counter is a baseline, not daily sales",
+      "adversarial": false,
+      "input": {
+        "counter": 124,
+        "previousCounter": null
+      },
+      "expected": {
+        "tier": "A",
+        "baseline": true,
+        "delta": null
+      }
+    },
+    {
+      "id": "gold-sales-003",
+      "family": "sales-ranking",
+      "requirement": "counter-delta",
+      "title": "Positive cumulative counter delta is measured units",
+      "adversarial": false,
+      "input": {
+        "counter": 130,
+        "previousCounter": 124
+      },
+      "expected": {
+        "tier": "A",
+        "baseline": false,
+        "delta": 6
+      }
+    },
+    {
+      "id": "gold-sales-004",
+      "family": "sales-ranking",
+      "requirement": "bestseller",
+      "title": "Retailer-labelled bestseller is ranking evidence",
+      "adversarial": false,
+      "input": {
+        "label": "Cele mai vandute",
+        "visibleDepth": 24,
+        "rank": 3
+      },
+      "expected": {
+        "tier": "B",
+        "units": null,
+        "rank": 3,
+        "semantics": "RETAILER_BESTSELLER"
+      }
+    },
+    {
+      "id": "gold-sales-005",
+      "family": "sales-ranking",
+      "requirement": "category-rank-vs-store",
+      "title": "Category rank and store-wide rank retain different scopes",
+      "adversarial": false,
+      "input": {
+        "categoryRank": 2,
+        "storeRank": 18
+      },
+      "expected": {
+        "tier": "B",
+        "scopes": [
+          "CATEGORY",
+          "STORE_WIDE"
+        ],
+        "mergeAsSameRank": false
+      }
+    },
+    {
+      "id": "gold-price-001",
+      "family": "price",
+      "requirement": "regular-price",
+      "title": "Regular RON price",
+      "adversarial": false,
+      "input": {
+        "text": "249,90 lei"
+      },
+      "expected": {
+        "currency": "RON",
+        "regularPrice": 249.9,
+        "currentPrice": 249.9
+      }
+    },
+    {
+      "id": "gold-price-002",
+      "family": "price",
+      "requirement": "promo-price",
+      "title": "Promo and regular price remain separate",
+      "adversarial": false,
+      "input": {
+        "regularText": "299,90 lei",
+        "promoText": "249,90 lei"
+      },
+      "expected": {
+        "currency": "RON",
+        "regularPrice": 299.9,
+        "currentPrice": 249.9,
+        "promo": true
+      }
+    },
+    {
+      "id": "gold-price-003",
+      "family": "price",
+      "requirement": "strikethrough-price",
+      "title": "Crossed-out price is regular price",
+      "adversarial": false,
+      "input": {
+        "struck": "349,00 lei",
+        "visible": "299,00 lei"
+      },
+      "expected": {
+        "regularPrice": 349,
+        "currentPrice": 299,
+        "promo": true
+      }
+    },
+    {
+      "id": "gold-price-004",
+      "family": "price",
+      "requirement": "ron-decimal",
+      "title": "Romanian decimal separators are parsed correctly",
+      "adversarial": false,
+      "input": {
+        "values": [
+          "1.299,90 lei",
+          "1299,90 RON"
+        ]
+      },
+      "expected": {
+        "parsed": [
+          1299.9,
+          1299.9
+        ]
+      }
+    },
+    {
+      "id": "gold-price-005",
+      "family": "price",
+      "requirement": "pod-pack-normalization",
+      "title": "POD packs normalize to comparable unit price",
+      "adversarial": false,
+      "input": {
+        "offers": [
+          {
+            "pack": 2,
+            "price": 49.9
+          },
+          {
+            "pack": 4,
+            "price": 89.9
+          }
+        ]
+      },
+      "expected": {
+        "unitPrices": [
+          24.95,
+          22.475
+        ],
+        "comparableGroup": "REPLACEMENT_POD"
+      }
+    },
+    {
+      "id": "gold-stock-001",
+      "family": "availability",
+      "requirement": "in-stock",
+      "title": "Explicit in-stock state",
+      "adversarial": false,
+      "input": {
+        "text": "In stoc"
+      },
+      "expected": {
+        "availability": "IN_STOCK",
+        "sourceHealth": "OK"
+      }
+    },
+    {
+      "id": "gold-stock-002",
+      "family": "availability",
+      "requirement": "out-of-stock",
+      "title": "Explicit out-of-stock state",
+      "adversarial": false,
+      "input": {
+        "text": "Stoc epuizat"
+      },
+      "expected": {
+        "availability": "OUT_OF_STOCK",
+        "sourceHealth": "OK"
+      }
+    },
+    {
+      "id": "gold-stock-003",
+      "family": "availability",
+      "requirement": "preorder",
+      "title": "Preorder is distinct from stock",
+      "adversarial": false,
+      "input": {
+        "text": "Precomanda - livrare estimata 15 septembrie"
+      },
+      "expected": {
+        "availability": "PREORDER"
+      }
+    },
+    {
+      "id": "gold-stock-004",
+      "family": "availability",
+      "requirement": "backorder",
+      "title": "Backorder is distinct from stock-out",
+      "adversarial": false,
+      "input": {
+        "text": "Disponibil la comanda furnizor"
+      },
+      "expected": {
+        "availability": "BACKORDER"
+      }
+    },
+    {
+      "id": "gold-pod-001",
+      "family": "pod",
+      "requirement": "pod-device",
+      "title": "Open POD device",
+      "adversarial": false,
+      "input": {
+        "title": "Vaporesso XROS 4 Pod Kit"
+      },
+      "expected": {
+        "entityType": "POD_DEVICE",
+        "platform": "XROS",
+        "segment": "MASS_MARKET_OPEN_POD"
+      }
+    },
+    {
+      "id": "gold-pod-002",
+      "family": "pod",
+      "requirement": "integrated-coil-pod",
+      "title": "Integrated-coil replacement pod links to device family",
+      "adversarial": false,
+      "input": {
+        "title": "XROS Series Pod 0.8 ohm 2-pack"
+      },
+      "expected": {
+        "entityType": "INTEGRATED_COIL_POD",
+        "platform": "XROS",
+        "packQuantity": 2
+      }
+    },
+    {
+      "id": "gold-pod-003",
+      "family": "pod",
+      "requirement": "closed-platform",
+      "title": "Closed prefilled platform",
+      "adversarial": false,
+      "input": {
+        "title": "Vuse ePod 2 device"
+      },
+      "expected": {
+        "entityType": "POD_DEVICE",
+        "platform": "ePod",
+        "segment": "CLOSED_PREFILLED_HYBRID"
+      }
+    },
+    {
+      "id": "gold-pod-004",
+      "family": "pod",
+      "requirement": "aio",
+      "title": "AIO host is not flattened into a generic POD",
+      "adversarial": false,
+      "input": {
+        "title": "Cthulhu AIO Box"
+      },
+      "expected": {
+        "entityType": "AIO_HOST",
+        "segment": "PREMIUM_HIGH_END_AIO"
+      }
+    },
+    {
+      "id": "gold-pod-005",
+      "family": "pod",
+      "requirement": "boro-host",
+      "title": "Boro host remains distinct from bridge",
+      "adversarial": false,
+      "input": {
+        "title": "Billet Box style Boro host"
+      },
+      "expected": {
+        "entityType": "BORO_HOST"
+      }
+    },
+    {
+      "id": "gold-pod-006",
+      "family": "pod",
+      "requirement": "boro-bridge",
+      "title": "Boro bridge remains distinct from host",
+      "adversarial": false,
+      "input": {
+        "title": "Mission XV Orbit RBA bridge"
+      },
+      "expected": {
+        "entityType": "BORO_BRIDGE"
+      }
+    },
+    {
+      "id": "gold-pod-007",
+      "family": "pod",
+      "requirement": "broad-consumables",
+      "title": "Device has broad compatible consumables",
+      "adversarial": false,
+      "input": {
+        "device": "OXVA Xlim Pro 2",
+        "compatibleConsumables": 12,
+        "activeOffers": 10
+      },
+      "expected": {
+        "ecosystemHealth": "BROAD",
+        "edgeCount": 12
+      }
+    },
+    {
+      "id": "gold-pod-008",
+      "family": "pod",
+      "requirement": "narrow-consumables",
+      "title": "Device has narrow compatible consumables",
+      "adversarial": false,
+      "input": {
+        "device": "Example Closed Pod",
+        "compatibleConsumables": 1,
+        "activeOffers": 1
+      },
+      "expected": {
+        "ecosystemHealth": "NARROW",
+        "edgeCount": 1
+      }
+    },
+    {
+      "id": "gold-demand-001",
+      "family": "demand",
+      "requirement": "romania-google",
+      "title": "Romania-targeted Google Ads signal",
+      "adversarial": false,
+      "input": {
+        "source": "GOOGLE_ADS",
+        "geo": "RO",
+        "avgMonthlySearches": 720
+      },
+      "expected": {
+        "eligibleForRomanianDemand": true,
+        "sales": false
+      }
+    },
+    {
+      "id": "gold-demand-002",
+      "family": "demand",
+      "requirement": "romanian-community",
+      "title": "Public Romanian community mention",
+      "adversarial": false,
+      "input": {
+        "source": "PUBLIC_COMMUNITY",
+        "language": "ro",
+        "countryEvidence": "RO",
+        "mentions": 4
+      },
+      "expected": {
+        "eligibleForRomanianDemand": true,
+        "sales": false
+      }
+    },
+    {
+      "id": "gold-demand-003",
+      "family": "demand",
+      "requirement": "guide-intent",
+      "title": "Anonymous first-party guide intent",
+      "adversarial": false,
+      "input": {
+        "source": "GUIDE_INTENT",
+        "audience": "ghid-rta.ro",
+        "searches30d": 18
+      },
+      "expected": {
+        "eligibleForRomanianDemand": true,
+        "nationalDemand": false,
+        "sales": false
+      }
+    },
+    {
+      "id": "gold-demand-004",
+      "family": "demand",
+      "requirement": "romanian-demand-without-local",
+      "title": "Romanian demand can exist without a local listing",
+      "adversarial": false,
+      "input": {
+        "romanianDemand": true,
+        "localListings": 0
+      },
+      "expected": {
+        "state": "DEMAND_WHITE_SPACE",
+        "buyClaim": "CONTROLLED_TEST_ONLY"
+      }
+    }
+  ]
+}

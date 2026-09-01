@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "phase": "ANALIZA ROMANIA vNext Phase 0",
+  "asOf": "2026-08-31T21:00:00.000Z",
+  "status": "PASS",
+  "assertions": 495,
+  "fixtures": {
+    "total": 72,
+    "adversarial": 34,
+    "adversarialPct": 47.2,
+    "families": 7,
+    "requirements": 63
+  },
+  "protectionBindings": {
+    "bindings": 14,
+    "intentionalDivergences": 7
+  },
+  "currentSemantics": {
+    "checks": 26,
+    "names": [
+      "explicit-product-units-counter-detected",
+      "generic-site-order-count-rejected",
+      "first-demand-counter-is-baseline",
+      "positive-demand-counter-delta",
+      "counter-reset-yields-null-deltas",
+      "generic-order-history-is-invalid",
+      "explicit-unit-history-is-valid",
+      "colour-variants-share-current-key",
+      "current-clone-authentic-collapse-risk-is-frozen",
+      "current-pod-device-classifies",
+      "current-replacement-pod-is-dropped",
+      "current-coil-is-dropped",
+      "storefront-and-operator-units-are-distinct",
+      "sales-file-is-valid-and-nonempty",
+      "current-tier-a-is-zero",
+      "national-units-and-share-remain-disabled",
+      "tier-b-rankings-remain-labelled-tier-b",
+      "national-100-percent-claim-is-disabled",
+      "source-errors-are-visible",
+      "demand-currently-has-no-google-volume",
+      "demand-currently-has-no-community-product-evidence",
+      "demand-is-rta-centric",
+      "management-discloses-rank-index-not-market-share",
+      "ranking-only-small-test-risk-is-frozen",
+      "first-ranked-product-has-current-presence-mismatch",
+      "current-universe-gate-state-is-frozen"
+    ]
+  },
+  "baseline": {
+    "files": 73,
+    "dataContracts": 14,
+    "screenshots": 2,
+    "anomalyVerdict": "VALID_NONEMPTY_RANKING_PROXY_FILE_WITH_ZERO_TIER_A_SALES"
+  },
+  "note": "Target fixture expectations freeze the vNext contract. Production vNext entities, scoring and projections are intentionally not implemented in Phase 0."
+}

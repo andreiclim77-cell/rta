@@ -1,0 +1,2518 @@
+{
+  "schemaVersion": 1,
+  "phase": "ANALIZA ROMANIA vNext Phase 0",
+  "baselineDate": "2026-09-01",
+  "baselineCodeCommit": "5363ddb1cd4276e472fb230105e46994fb8ae2b8",
+  "comparisonMainCommit": "2113765a4fadc3bc292050ac26e9609199eb83fe",
+  "dataSnapshotAt": "2026-08-31T14:17:43.204Z",
+  "invariants": {
+    "publicBehaviorChanged": false,
+    "currentCollectorsChanged": false,
+    "currentPublicDataChanged": false,
+    "currentWorkflowsChanged": false,
+    "benchmarkDeterministic": true
+  },
+  "inventory": {
+    "files": 73,
+    "bytes": 16480103,
+    "byRole": {
+      "analysis-ui-reader": 18,
+      "cache-contract": 1,
+      "collector-or-transform": 20,
+      "integration-input": 1,
+      "orchestration-or-quality": 5,
+      "public-analysis-state": 14,
+      "public-entry-integration": 3,
+      "quality-or-audit": 5,
+      "source-or-entity-registry": 6
+    },
+    "entries": [
+      {
+        "path": ".github/workflows/market-2026-quality.yml",
+        "role": "orchestration-or-quality",
+        "bytes": 13096,
+        "lines": 159,
+        "sha256": "dbdca876fef9cb2c3d063c23871437bbe06448b790aca11e368e2bf2e7c7c00e"
+      },
+      {
+        "path": ".github/workflows/market-2026-sync.yml",
+        "role": "orchestration-or-quality",
+        "bytes": 5904,
+        "lines": 142,
+        "sha256": "c17cd15568612af28ca9c9493b02e75ec7a1d4827ef021ee01f3bff4b163728e"
+      },
+      {
+        "path": ".github/workflows/market-report-final-quality.yml",
+        "role": "orchestration-or-quality",
+        "bytes": 1093,
+        "lines": 38,
+        "sha256": "630fd65c75d4e2b26a36a6dcde2e5dd8f20fb3e3dfbccef00d6ad8a502a35d1a"
+      },
+      {
+        "path": ".github/workflows/market-sales-2026-sync.yml",
+        "role": "orchestration-or-quality",
+        "bytes": 14767,
+        "lines": 236,
+        "sha256": "82f23b85bc660c917e933555d49dc3c641cfe944df8ffabf1eb161e04d4d8c4e"
+      },
+      {
+        "path": ".github/workflows/market-universe-audit-2026.yml",
+        "role": "orchestration-or-quality",
+        "bytes": 3325,
+        "lines": 87,
+        "sha256": "a2fc3db70a17711ebf61669ed6620e7799feb1cd98e9285abc58c5aeb801bf54"
+      },
+      {
+        "path": "assets/enhancements.js",
+        "role": "public-entry-integration",
+        "bytes": 2396,
+        "lines": 31,
+        "sha256": "945ad8807f81fe708915a30dbc99c38e327b0f2e764a1933d3389413f315c0c5"
+      },
+      {
+        "path": "assets/market-2026-report.js",
+        "role": "analysis-ui-reader",
+        "bytes": 23455,
+        "lines": 226,
+        "sha256": "4b1451f2d620cf250acdaf788fac8f7a7ab4665c40cc1ddd12afee38ff772b0e"
+      },
+      {
+        "path": "assets/market-2026.js",
+        "role": "analysis-ui-reader",
+        "bytes": 29588,
+        "lines": 405,
+        "sha256": "0cbff047d1ab83bd30f38429a316e7b676e8d00ef7b1f1f1d027caebb7050be2"
+      },
+      {
+        "path": "assets/market-access-policy.js",
+        "role": "analysis-ui-reader",
+        "bytes": 1902,
+        "lines": 43,
+        "sha256": "c3a9373f96ff9a700cd16aedd056b5ef9aa98708a45f119c99059adfdb9fae4e"
+      },
+      {
+        "path": "assets/market-analysis-synthesis.js",
+        "role": "analysis-ui-reader",
+        "bytes": 11781,
+        "lines": 18,
+        "sha256": "fa0e35ad7031a659ff0748f43c1c69643a15c8c1382f9f3f558932d8e7705527"
+      },
+      {
+        "path": "assets/market-coverage-ui.js",
+        "role": "analysis-ui-reader",
+        "bytes": 5105,
+        "lines": 53,
+        "sha256": "63a5d04e16c941c801f58b04543615cf626ecffb8327a8854b702229fedf2f0c"
+      },
+      {
+        "path": "assets/market-demand-ui.js",
+        "role": "analysis-ui-reader",
+        "bytes": 8972,
+        "lines": 25,
+        "sha256": "df32cc5feb9e5da7bbe47da01794a36e2d6df3c22c6d28764eab6db00e305cfe"
+      },
+      {
+        "path": "assets/market-executive-report-v2.js",
+        "role": "analysis-ui-reader",
+        "bytes": 7577,
+        "lines": 21,
+        "sha256": "71d4009defadcbbbf028285c7414aff9e8199730b74219c07169afe8bb3ac3da"
+      },
+      {
+        "path": "assets/market-executive-report.js",
+        "role": "analysis-ui-reader",
+        "bytes": 15370,
+        "lines": 42,
+        "sha256": "71e8843cd7570c6f9681cc4825452a2db77889fa1af128419885d8222cc35fa7"
+      },
+      {
+        "path": "assets/market-loading-guard.js",
+        "role": "analysis-ui-reader",
+        "bytes": 12020,
+        "lines": 45,
+        "sha256": "6aab1a4090894d531085b6a63ac28c28aa75d61a248584aca1229ff17117747f"
+      },
+      {
+        "path": "assets/market-management-augment.js",
+        "role": "analysis-ui-reader",
+        "bytes": 8223,
+        "lines": 22,
+        "sha256": "0c20b408ed14d8186fd3b8fbaf2ce505f5fe347ef7b0db43482fa101708a2d39"
+      },
+      {
+        "path": "assets/market-management-v2.js",
+        "role": "analysis-ui-reader",
+        "bytes": 28451,
+        "lines": 55,
+        "sha256": "2959eb04644a4e8b8ed0f27e4b64c8748ff1142c8d0e9b55c9c6f7cbde0b9ec2"
+      },
+      {
+        "path": "assets/market-management.js",
+        "role": "analysis-ui-reader",
+        "bytes": 14112,
+        "lines": 29,
+        "sha256": "581d0fec5043763e7e00e3cf1ac8a09857e923e164b848c060986794d067f931"
+      },
+      {
+        "path": "assets/market-sales-explorer.js",
+        "role": "analysis-ui-reader",
+        "bytes": 12285,
+        "lines": 38,
+        "sha256": "70ceff1f8d87e6b87815f17ef1e8a4e2fb75fea7391f4127f20c64704c4c6e8f"
+      },
+      {
+        "path": "assets/market-sales-retailer-ui.js",
+        "role": "analysis-ui-reader",
+        "bytes": 4691,
+        "lines": 11,
+        "sha256": "8d39289d947a38b1b35199312dcdb1d9cecd38dba23493b49c91aceeeca68fc6"
+      },
+      {
+        "path": "assets/market-sales-ui.js",
+        "role": "analysis-ui-reader",
+        "bytes": 6850,
+        "lines": 13,
+        "sha256": "9d8f47db167f0d492530eef552b58979de9a8509da6d3e376f9e41c438ff0f78"
+      },
+      {
+        "path": "assets/market-source-info.js",
+        "role": "analysis-ui-reader",
+        "bytes": 13120,
+        "lines": 25,
+        "sha256": "f627a4e1c4f389d4c77fd50f852ce6662d7f5324ce03bac0b2034428788f4a01"
+      },
+      {
+        "path": "assets/market-ui-recovery.js",
+        "role": "analysis-ui-reader",
+        "bytes": 1451,
+        "lines": 27,
+        "sha256": "8fabba44f39b145a90788aa2dd5f25488933f2b2d2d4f6b13399095ea3d226db"
+      },
+      {
+        "path": "assets/market-view-switcher.js",
+        "role": "analysis-ui-reader",
+        "bytes": 6747,
+        "lines": 25,
+        "sha256": "d3b6a51f3de58ffbc5ba6899aca0469452b7436c3a67a55a7ef5ccec95c621fa"
+      },
+      {
+        "path": "data/market-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 988128,
+        "lines": 28916,
+        "sha256": "15ac7ad8ee352e0171ccbab4a84719f22b81bdea910356422b048e7b435f04f5"
+      },
+      {
+        "path": "data/market-coverage-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 10319,
+        "lines": 365,
+        "sha256": "0431f9bacded88667988cf6c9cc9cc15c5a4b1a51c78cc170e47d4c13841ca72"
+      },
+      {
+        "path": "data/market-demand-intelligence-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 974903,
+        "lines": 34045,
+        "sha256": "0a15e3ebe475adeaef26b571bde271b6161bf14ae170ae8d452f60acbeb5af5f"
+      },
+      {
+        "path": "data/market-discovery-protocol-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 3404,
+        "lines": 82,
+        "sha256": "d1e1bfc508f7c6898cac28a520b72c1bdadf0dd354fbc4a0e77b4ea2e63bc2c6"
+      },
+      {
+        "path": "data/market-external-intelligence-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 118953,
+        "lines": 3864,
+        "sha256": "d3a4b8a119ab920122a932fa2bd7278169fd4ba5ff7122a69a9eb5687b4fbc5a"
+      },
+      {
+        "path": "data/market-history-2026/2026-08-29.json",
+        "role": "public-analysis-state",
+        "bytes": 701187,
+        "lines": 20225,
+        "sha256": "83e4cd0a2533000ebe0498a38e83f2c5455b7934acc354ad5d76521eaa5514d9"
+      },
+      {
+        "path": "data/market-history-2026/2026-08-30.json",
+        "role": "public-analysis-state",
+        "bytes": 698535,
+        "lines": 20135,
+        "sha256": "1c89abf251bb5c39850356d9b53eeceae8c69881e819e5ced8e9eae59c134e83"
+      },
+      {
+        "path": "data/market-history-2026/2026-08-31.json",
+        "role": "public-analysis-state",
+        "bytes": 941377,
+        "lines": 27303,
+        "sha256": "c6373ca53d15d7dcada598c1925145bd64f4974dbf7ad115c93cd8e53b6643c1"
+      },
+      {
+        "path": "data/market-management-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 5251411,
+        "lines": 135915,
+        "sha256": "1c0d0f761a5b0704963322742a2af744492e956cf411ff57acc829b5d9e1e3e5"
+      },
+      {
+        "path": "data/market-pod-universe-2026.json",
+        "role": "source-or-entity-registry",
+        "bytes": 8859,
+        "lines": 79,
+        "sha256": "6e000e32be8b7ffa48d37ed2e58587ffc196d5d05738a08dd041dbeb4ff23e77"
+      },
+      {
+        "path": "data/market-product-presence-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 1137629,
+        "lines": 46432,
+        "sha256": "cf031b24c7d34a080096c403be831d11b0455c2fd73a5ab6cbf4f56d3eca372d"
+      },
+      {
+        "path": "data/market-retailers-2026.json",
+        "role": "source-or-entity-registry",
+        "bytes": 12052,
+        "lines": 50,
+        "sha256": "1183c8582b12fcf6ff1c91a4cff5896f05916d031b464b519d87839e6fc27ddf"
+      },
+      {
+        "path": "data/market-retailers-national-2026.json",
+        "role": "source-or-entity-registry",
+        "bytes": 11358,
+        "lines": 85,
+        "sha256": "71c19a08a2dbd36cc7945623f66b73bf0cc792c132070ee9828f30f654811de1"
+      },
+      {
+        "path": "data/market-sales-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 2853609,
+        "lines": 62654,
+        "sha256": "cf172b08bed4b53069f3b51085d4db5ee8f0568b5402419e2217d4a50fb1ff0d"
+      },
+      {
+        "path": "data/market-sales-sources-2026.json",
+        "role": "source-or-entity-registry",
+        "bytes": 3186,
+        "lines": 106,
+        "sha256": "7512d0d3dba3b511edf12fcde2556f1cc303d6a25d7d7589c849e3330bc8693e"
+      },
+      {
+        "path": "data/market-sales-sources-discovered-2026.json",
+        "role": "source-or-entity-registry",
+        "bytes": 35206,
+        "lines": 1011,
+        "sha256": "9a3a5f1c2756b914d6c825f4a802bc0c5e2d7dd9b380447557a74d08a353384b"
+      },
+      {
+        "path": "data/market-signal-sources-2026.json",
+        "role": "source-or-entity-registry",
+        "bytes": 4550,
+        "lines": 110,
+        "sha256": "90867287de06928ce8652e7c85eb59031b9a329b2285757ddd7458b9998254c6"
+      },
+      {
+        "path": "data/market-source-scope-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 1975,
+        "lines": 40,
+        "sha256": "cd2e6e9b4d7da5c3e3a5e6da2e3518069e5e5958a9387333548ee16f998d6939"
+      },
+      {
+        "path": "data/market-universe-audit-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 77218,
+        "lines": 3370,
+        "sha256": "fda4560dc43c24267466edf24d726513101ebcbe35c872a0466171d458233998"
+      },
+      {
+        "path": "data/market-universe-discovery-2026.json",
+        "role": "public-analysis-state",
+        "bytes": 3040,
+        "lines": 70,
+        "sha256": "e4888ea51fd8a45c981a2ac15d1a04fbc65776089930eace1fb145943476b6e3"
+      },
+      {
+        "path": "data/youtube-reviews.js",
+        "role": "integration-input",
+        "bytes": 85076,
+        "lines": 2,
+        "sha256": "759dd6f99988a40b0c40f83a465ba05487d40f1933b48f9ec95f8e33de5b8af9"
+      },
+      {
+        "path": "en/index.html",
+        "role": "public-entry-integration",
+        "bytes": 1040123,
+        "lines": 5208,
+        "sha256": "12ce62dcbf4fb2539a1fc0adaa17d01f6df9124a6829c537e1f1f221e6bd6854"
+      },
+      {
+        "path": "index.html",
+        "role": "public-entry-integration",
+        "bytes": 1040329,
+        "lines": 5208,
+        "sha256": "7a4948e6af713f75861a9e4022ff077229397b19f5eac0d6a8bd2527c571c949"
+      },
+      {
+        "path": "sw.js",
+        "role": "cache-contract",
+        "bytes": 4138,
+        "lines": 11,
+        "sha256": "ec28bc1be644062a8d4e6799142c8ceee840f4ff4f8ed775d9bc1110ec42cb6e"
+      },
+      {
+        "path": "tools/audit-market-universe-2026.js",
+        "role": "quality-or-audit",
+        "bytes": 8531,
+        "lines": 22,
+        "sha256": "28d4b4d1d6fcceddf73f6e91fbb6b5c03f352c7fdf85d23c46dfc77506ff3a4a"
+      },
+      {
+        "path": "tools/augment-market-management-external-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 5101,
+        "lines": 15,
+        "sha256": "cd82b99ac850ab715dd5559cac46a34635266a7e4d665c3a929ef93bb2b03197"
+      },
+      {
+        "path": "tools/augment-market-management-presence-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 2114,
+        "lines": 11,
+        "sha256": "c8e7e44df1c99e571ee01ba6c8cc2ee295f380c6630313380f306f4caf0caa2b"
+      },
+      {
+        "path": "tools/build-market-external-intelligence-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 6980,
+        "lines": 17,
+        "sha256": "9e972ea4d2f19b53406f08f77bcd9130e50b278d93c2ee8b0c39d7ae854a8c86"
+      },
+      {
+        "path": "tools/build-market-management-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 17194,
+        "lines": 31,
+        "sha256": "e8a743e73340e10d9da089fb74a088eee8709c64ce528e6359d7c6b13c87ace6"
+      },
+      {
+        "path": "tools/build-market-product-presence-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 2911,
+        "lines": 12,
+        "sha256": "cb53c342964e5d14653916128d4d27f3da50273c4063845247ee03ad65c33395"
+      },
+      {
+        "path": "tools/build-market-sales-summary-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 5353,
+        "lines": 27,
+        "sha256": "eced774ad2b4d79844abf561a2469f00a32e0bf468c97c936764cd9cfaac343d"
+      },
+      {
+        "path": "tools/canonicalize-market-demand-products-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 3370,
+        "lines": 13,
+        "sha256": "871b0fa3b7d10bf3a979e4ef1baa37175a66f5b7d69e166823a1259b0ec1d01d"
+      },
+      {
+        "path": "tools/canonicalize-market-sales-products-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 3249,
+        "lines": 14,
+        "sha256": "0decce3bb74f22a2fe7d870d7bc5f0cbd47dfbeccf34eb26401d9c6c4f18724d"
+      },
+      {
+        "path": "tools/check-market-data-quality-2026.js",
+        "role": "quality-or-audit",
+        "bytes": 9611,
+        "lines": 92,
+        "sha256": "bcd9e40e3a1761a8ff545eabbd4cdc22394f774995ed7a59eec004e1d150db26"
+      },
+      {
+        "path": "tools/check-market-report-final.js",
+        "role": "quality-or-audit",
+        "bytes": 11228,
+        "lines": 86,
+        "sha256": "7ceb21c4872d2b1cb8d96a6c7311024d3fe476b67a916999551c4cf02aa930b1"
+      },
+      {
+        "path": "tools/collect-discovered-market-sales-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 5513,
+        "lines": 15,
+        "sha256": "50a6b3df66ad9343dea0862996a596871e0c637f01b36f4d660883e7afd5b687"
+      },
+      {
+        "path": "tools/collect-market-demand-intelligence-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 18062,
+        "lines": 30,
+        "sha256": "bf2ec83c325f0e83577ae99b0d976706bffecd9f4c4bee89a3eecb4048b5a187"
+      },
+      {
+        "path": "tools/discover-market-sales-sources-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 3748,
+        "lines": 12,
+        "sha256": "0c870fbf71b299af1d2dc3fcce2d48fdad1a7be1194561d1a0b35c4b47044df8"
+      },
+      {
+        "path": "tools/market-coverage-audit-2026.js",
+        "role": "quality-or-audit",
+        "bytes": 6738,
+        "lines": 161,
+        "sha256": "473f8f1742addc51635bc62814c6856f96f3858c351ed126b2a958646fe1276a"
+      },
+      {
+        "path": "tools/market-pod-classifier-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 5214,
+        "lines": 107,
+        "sha256": "7d31e26c715729570957d7ff79da015c1d9383f09cb4dcd354f5f1a30ce4bec6"
+      },
+      {
+        "path": "tools/market-product-canonical-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 5753,
+        "lines": 29,
+        "sha256": "b44d118e8a40a57b27e4c4b63803287cbbc5be80b215dfbc02930508fa44aade"
+      },
+      {
+        "path": "tools/normalize-market-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 13327,
+        "lines": 280,
+        "sha256": "833ed36c04c9374df5459c7df3f649a7bd3fcbfd36cb8ee1c3526815628238dc"
+      },
+      {
+        "path": "tools/probe-market-sales-counters-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 8514,
+        "lines": 21,
+        "sha256": "e00af372e3a9d413a3a6eed8550055bb5f6b10dd675c273d3658280d9a6a64ab"
+      },
+      {
+        "path": "tools/sync-market-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 26093,
+        "lines": 645,
+        "sha256": "be3a37454206bd5debdd541f68810e222ae10d6650104f59a6c81a93640dc502"
+      },
+      {
+        "path": "tools/sync-market-sales-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 11113,
+        "lines": 37,
+        "sha256": "02924afa70de1d08f90b5967b05b1b7fd19c4ccae218acae12e0cd6ba4896d7a"
+      },
+      {
+        "path": "tools/sync-market-smokee-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 18843,
+        "lines": 442,
+        "sha256": "19b2b1c25ec41007f8b80807de07aee60aa33c5d39e4b96414e93231ee9fd488"
+      },
+      {
+        "path": "tools/sync-market-specialized-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 13374,
+        "lines": 119,
+        "sha256": "2d46f88bcf2d69e830b6aebf7dc94536fb425b55a399561f42b5ed9cc0e4b023"
+      },
+      {
+        "path": "tools/validate-market-daily-2026.js",
+        "role": "quality-or-audit",
+        "bytes": 2443,
+        "lines": 25,
+        "sha256": "0bc652e15aa567118bd1add4e5e11aade3a1e4ff510057809780dd5aada7b01b"
+      },
+      {
+        "path": "tools/verify-market-prices-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 6880,
+        "lines": 130,
+        "sha256": "1d7963258889ea5d861ca835e32d5ac1e2d378564933c9265082b6ff1f04ecb7"
+      }
+    ]
+  },
+  "dataContracts": {
+    "data/market-retailers-2026.json": {
+      "bytes": 12052,
+      "sha256": "1183c8582b12fcf6ff1c91a4cff5896f05916d031b464b519d87839e6fc27ddf",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "collectorPolicy",
+          "nationalAudit",
+          "retailers",
+          "schemaVersion",
+          "scopeYear",
+          "timezone"
+        ],
+        "fields": {
+          "collectorPolicy": {
+            "type": "object",
+            "keys": [
+              "coverageRule",
+              "coverageTarget",
+              "dailyRefresh",
+              "maxPagesPerSeed",
+              "noSalesInference",
+              "notes",
+              "publicPagesOnly",
+              "refreshTarget",
+              "requestsPerSecondMax",
+              "userAgent"
+            ]
+          },
+          "nationalAudit": {
+            "type": "object",
+            "keys": [
+              "claimRule",
+              "discoveryCertified",
+              "lastAuditedAt",
+              "status",
+              "unitOperator",
+              "unitStorefront"
+            ]
+          },
+          "retailers": {
+            "type": "array",
+            "length": 22,
+            "itemKeys": [
+              "country",
+              "coverage",
+              "id",
+              "mode",
+              "name",
+              "operatorId",
+              "seeds",
+              "status",
+              "url"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "timezone": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data/market-retailers-national-2026.json": {
+      "bytes": 11358,
+      "sha256": "71c19a08a2dbd36cc7945623f66b73bf0cc792c132070ee9828f30f654811de1",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "collectorPolicy",
+          "nationalAudit",
+          "retailers",
+          "schemaVersion",
+          "scopeYear",
+          "timezone"
+        ],
+        "fields": {
+          "collectorPolicy": {
+            "type": "object",
+            "keys": [
+              "coverageRule",
+              "coverageTarget",
+              "dailyRefresh",
+              "maxPagesPerSeed",
+              "noSalesInference",
+              "notes",
+              "publicPagesOnly",
+              "refreshTarget",
+              "requestsPerSecondMax",
+              "userAgent"
+            ]
+          },
+          "nationalAudit": {
+            "type": "object",
+            "keys": [
+              "claimRule",
+              "discoveryCertified",
+              "lastAuditedAt",
+              "status",
+              "unitOperator",
+              "unitStorefront"
+            ]
+          },
+          "retailers": {
+            "type": "array",
+            "length": 19,
+            "itemKeys": [
+              "country",
+              "coverage",
+              "id",
+              "mode",
+              "name",
+              "operatorId",
+              "seeds",
+              "status",
+              "url"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "timezone": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data/market-universe-audit-2026.json": {
+      "bytes": 77218,
+      "sha256": "fda4560dc43c24267466edf24d726513101ebcbe35c872a0466171d458233998",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "allCandidates",
+          "auditHistory",
+          "consecutiveCleanAudits",
+          "currentAuditClean",
+          "domainsDiscovered",
+          "generatedAt",
+          "nationalUniverseGate",
+          "queriesRun",
+          "registryStorefronts",
+          "schemaVersion",
+          "scopePolicy",
+          "scopeYear",
+          "searchEnginesConfigured",
+          "searchEnginesWorking",
+          "searchStatus",
+          "unresolvedCandidates",
+          "validatedNewRetailers"
+        ],
+        "fields": {
+          "allCandidates": {
+            "type": "array",
+            "length": 126,
+            "itemKeys": [
+              "engines",
+              "fetchError",
+              "host",
+              "known",
+              "queries",
+              "reasons",
+              "score",
+              "signals",
+              "url",
+              "validated"
+            ]
+          },
+          "auditHistory": {
+            "type": "array",
+            "length": 6,
+            "itemKeys": [
+              "at",
+              "clean",
+              "domains",
+              "enginesWorking",
+              "newRetailers",
+              "unresolved"
+            ]
+          },
+          "consecutiveCleanAudits": {
+            "type": "number"
+          },
+          "currentAuditClean": {
+            "type": "boolean"
+          },
+          "domainsDiscovered": {
+            "type": "number"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "nationalUniverseGate": {
+            "type": "object",
+            "keys": [
+              "pass",
+              "reason"
+            ]
+          },
+          "queriesRun": {
+            "type": "number"
+          },
+          "registryStorefronts": {
+            "type": "number"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopePolicy": {
+            "type": "object",
+            "keys": [
+              "excludeB2BOnly",
+              "excludeEditorialOnly",
+              "excludeMarketplaceOnly",
+              "unit"
+            ]
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "searchEnginesConfigured": {
+            "type": "number"
+          },
+          "searchEnginesWorking": {
+            "type": "number"
+          },
+          "searchStatus": {
+            "type": "array",
+            "length": 51,
+            "itemKeys": [
+              "engine",
+              "error",
+              "ok",
+              "query",
+              "urls"
+            ]
+          },
+          "unresolvedCandidates": {
+            "type": "array",
+            "length": 0,
+            "itemKeys": []
+          },
+          "validatedNewRetailers": {
+            "type": "array",
+            "length": 0,
+            "itemKeys": []
+          }
+        }
+      }
+    },
+    "data/market-universe-discovery-2026.json": {
+      "bytes": 3040,
+      "sha256": "e4888ea51fd8a45c981a2ac15d1a04fbc65776089930eace1fb145943476b6e3",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "candidateValidation",
+          "country",
+          "discoveryTerms",
+          "manufacturerSignals",
+          "purpose",
+          "schemaVersion",
+          "scopeYear",
+          "searchEndpoints",
+          "searchQueries"
+        ],
+        "fields": {
+          "candidateValidation": {
+            "type": "object",
+            "keys": [
+              "excludeB2BOnly",
+              "excludeEditorialOnly",
+              "excludeForeignRetailerWithoutRomanianStorefront",
+              "excludeMarketplaceOnly",
+              "mustBeConsumerRetail",
+              "mustHavePublicOnlineCatalog",
+              "mustServeRomania",
+              "mustShowRtaOrRebuildableEvidence"
+            ]
+          },
+          "country": {
+            "type": "string"
+          },
+          "discoveryTerms": {
+            "type": "array",
+            "length": 28,
+            "itemKeys": []
+          },
+          "manufacturerSignals": {
+            "type": "array",
+            "length": 7,
+            "itemKeys": [
+              "kind",
+              "maker",
+              "url"
+            ]
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "searchEndpoints": {
+            "type": "array",
+            "length": 2,
+            "itemKeys": [
+              "id",
+              "kind",
+              "nonAuthoritative",
+              "urlTemplate"
+            ]
+          },
+          "searchQueries": {
+            "type": "array",
+            "length": 25,
+            "itemKeys": []
+          }
+        }
+      }
+    },
+    "data/market-source-scope-2026.json": {
+      "bytes": 1975,
+      "sha256": "cd2e6e9b4d7da5c3e3a5e6da2e3518069e5e5958a9387333548ee16f998d6939",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "claimPolicy",
+          "consumerRetailDefinition",
+          "excludedOrSeparate",
+          "includedUnits",
+          "schemaVersion",
+          "scopeYear",
+          "updatedAt"
+        ],
+        "fields": {
+          "claimPolicy": {
+            "type": "string"
+          },
+          "consumerRetailDefinition": {
+            "type": "string"
+          },
+          "excludedOrSeparate": {
+            "type": "array",
+            "length": 4,
+            "itemKeys": [
+              "id",
+              "name",
+              "reason",
+              "retailKpiIncluded",
+              "scope",
+              "url"
+            ]
+          },
+          "includedUnits": {
+            "type": "object",
+            "keys": [
+              "operator",
+              "storefront"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data/market-sales-sources-2026.json": {
+      "bytes": 3186,
+      "sha256": "7512d0d3dba3b511edf12fcde2556f1cc303d6a25d7d7589c849e3330bc8693e",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "discoveryPatterns",
+          "schemaVersion",
+          "scopeYear",
+          "sources"
+        ],
+        "fields": {
+          "discoveryPatterns": {
+            "type": "array",
+            "length": 13,
+            "itemKeys": []
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "sources": {
+            "type": "array",
+            "length": 12,
+            "itemKeys": [
+              "evidence",
+              "retailerId",
+              "scope",
+              "type",
+              "url"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-sales-sources-discovered-2026.json": {
+      "bytes": 35206,
+      "sha256": "9a3a5f1c2756b914d6c825f4a802bc0c5e2d7dd9b380447557a74d08a353384b",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "generatedAt",
+          "schemaVersion",
+          "scopeYear",
+          "sources",
+          "status"
+        ],
+        "fields": {
+          "generatedAt": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "sources": {
+            "type": "array",
+            "length": 108,
+            "itemKeys": [
+              "discoveredAt",
+              "evidence",
+              "retailerId",
+              "scope",
+              "type",
+              "url"
+            ]
+          },
+          "status": {
+            "type": "array",
+            "length": 22,
+            "itemKeys": [
+              "errors",
+              "found",
+              "retailerId"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-2026.json": {
+      "bytes": 988128,
+      "sha256": "15ac7ad8ee352e0171ccbab4a84719f22b81bdea910356422b048e7b435f04f5",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "boardWatch",
+          "categorySnapshots",
+          "collectorStatus",
+          "currency",
+          "methodology",
+          "observations",
+          "priceVerificationStatus",
+          "retailers",
+          "schemaVersion",
+          "scope",
+          "scopeYear",
+          "specializedCollectorStatus",
+          "trendSnapshots",
+          "updatedAt"
+        ],
+        "fields": {
+          "boardWatch": {
+            "type": "array",
+            "length": 2,
+            "itemKeys": [
+              "category",
+              "maker",
+              "note",
+              "product",
+              "scope",
+              "source"
+            ]
+          },
+          "categorySnapshots": {
+            "type": "array",
+            "length": 7,
+            "itemKeys": [
+              "category",
+              "confidence",
+              "listed",
+              "observedAt",
+              "retailerId",
+              "source"
+            ]
+          },
+          "collectorStatus": {
+            "type": "object",
+            "keys": [
+              "byRetailer",
+              "date",
+              "errors",
+              "externalRetailersAttempted",
+              "generatedAt",
+              "observations",
+              "pagesFetched",
+              "retailersConfigured"
+            ]
+          },
+          "currency": {
+            "type": "string"
+          },
+          "methodology": {
+            "type": "object",
+            "keys": [
+              "coverageNote",
+              "description",
+              "dicodesPolicy",
+              "historyPolicy",
+              "publicDataOnly",
+              "salesClaimAllowed"
+            ]
+          },
+          "observations": {
+            "type": "array",
+            "length": 2426,
+            "itemKeys": [
+              "brand",
+              "category",
+              "observedAt",
+              "priceRon",
+              "product",
+              "retailerId",
+              "source",
+              "sourceMode",
+              "stock"
+            ]
+          },
+          "priceVerificationStatus": {
+            "type": "object",
+            "keys": [
+              "corrected",
+              "date",
+              "failed",
+              "generatedAt",
+              "results",
+              "targets"
+            ]
+          },
+          "retailers": {
+            "type": "array",
+            "length": 22,
+            "itemKeys": [
+              "country",
+              "coverage",
+              "id",
+              "name",
+              "note",
+              "status",
+              "url"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "specializedCollectorStatus": {
+            "type": "object",
+            "keys": [
+              "byRetailer",
+              "date",
+              "generatedAt"
+            ]
+          },
+          "trendSnapshots": {
+            "type": "array",
+            "length": 3,
+            "itemKeys": [
+              "categories",
+              "date",
+              "observations",
+              "retailersWithObservations"
+            ]
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data/market-coverage-2026.json": {
+      "bytes": 10319,
+      "sha256": "0431f9bacded88667988cf6c9cc9cc15c5a4b1a51c78cc170e47d4c13841ca72",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "coverage",
+          "date",
+          "generatedAt",
+          "nationalClaim",
+          "qualityState",
+          "schemaVersion",
+          "scopeYear",
+          "storefronts"
+        ],
+        "fields": {
+          "coverage": {
+            "type": "object",
+            "keys": [
+              "fallbackStorefronts",
+              "notAttemptedStorefronts",
+              "observationsToday",
+              "sourceErrorStorefronts",
+              "storefrontsConfigured",
+              "storefrontsWithObservationsToday",
+              "uniqueOperatorsConfigured",
+              "zeroObservationStorefronts"
+            ]
+          },
+          "date": {
+            "type": "string"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "nationalClaim": {
+            "type": "object",
+            "keys": [
+              "allStorefrontsExhaustive",
+              "allowed",
+              "discoveryCertified",
+              "label",
+              "reason"
+            ]
+          },
+          "qualityState": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "storefronts": {
+            "type": "array",
+            "length": 22,
+            "itemKeys": [
+              "captureState",
+              "errors",
+              "exhaustiveCertified",
+              "fallbackUsed",
+              "name",
+              "observationsToday",
+              "operatorKey",
+              "pagesFetched",
+              "parserComplete",
+              "retailerId",
+              "skippedMode",
+              "sourceAttemptedToday",
+              "url"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-sales-2026.json": {
+      "bytes": 2853609,
+      "sha256": "cf172b08bed4b53069f3b51085d4db5ee8f0568b5402419e2217d4a50fb1ff0d",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "actualSales",
+          "actualSalesHistory",
+          "canonicalization",
+          "coverage",
+          "demandProbeStatus",
+          "demandSignalHistory",
+          "demandSignals",
+          "discoveredSourceStatus",
+          "methodology",
+          "productCounterProbeStatus",
+          "rankingHistory",
+          "rankings",
+          "retailerStatus",
+          "schemaVersion",
+          "scopeYear",
+          "summary",
+          "today",
+          "updatedAt"
+        ],
+        "fields": {
+          "actualSales": {
+            "type": "array",
+            "length": 0,
+            "itemKeys": []
+          },
+          "actualSalesHistory": {
+            "type": "array",
+            "length": 3,
+            "itemKeys": [
+              "date",
+              "rows"
+            ]
+          },
+          "canonicalization": {
+            "type": "object",
+            "keys": [
+              "after",
+              "before",
+              "generatedAt",
+              "rule",
+              "schemaVersion"
+            ]
+          },
+          "coverage": {
+            "type": "object",
+            "keys": [
+              "actualUnitSalesCoveragePct",
+              "demandProxyCoveragePct",
+              "nationalMarketShareAvailable",
+              "nationalUnitsSoldAvailable",
+              "rankingCoveragePct",
+              "storefrontsConfigured",
+              "storefrontsWithActualUnitSales",
+              "storefrontsWithDemandProxy",
+              "storefrontsWithRetailerSalesRanking"
+            ]
+          },
+          "demandProbeStatus": {
+            "type": "object",
+            "keys": [
+              "date",
+              "generatedAt",
+              "retailersWithSignals",
+              "reviewSignals",
+              "signalsFound",
+              "viewSignals",
+              "wishlistSignals"
+            ]
+          },
+          "demandSignalHistory": {
+            "type": "array",
+            "length": 1,
+            "itemKeys": [
+              "date",
+              "rows"
+            ]
+          },
+          "demandSignals": {
+            "type": "array",
+            "length": 51,
+            "itemKeys": [
+              "baseline",
+              "brand",
+              "canonicalProductKey",
+              "category",
+              "evidence",
+              "evidenceTier",
+              "latestReviewDate",
+              "observedAt",
+              "product",
+              "productUrl",
+              "rank",
+              "ratingValue",
+              "rawProduct",
+              "rawProducts",
+              "retailerId",
+              "reviewCount",
+              "reviewCountDelta",
+              "source",
+              "variantCount",
+              "viewCount",
+              "viewCountDelta",
+              "wishlistCount",
+              "wishlistCountDelta"
+            ]
+          },
+          "discoveredSourceStatus": {
+            "type": "object",
+            "keys": [
+              "bySource",
+              "date",
+              "generatedAt",
+              "rankingsAdded",
+              "totalCandidates",
+              "verifiedSources"
+            ]
+          },
+          "methodology": {
+            "type": "object",
+            "keys": [
+              "actualSalesOnly",
+              "evidenceTiers",
+              "marketShareRule",
+              "noStockInference",
+              "rankingRule",
+              "unitsSoldRule"
+            ]
+          },
+          "productCounterProbeStatus": {
+            "type": "object",
+            "keys": [
+              "byProduct",
+              "countersFound",
+              "date",
+              "generatedAt",
+              "pagesProbed",
+              "rejectedGenericOrderCounters",
+              "retailersWithCounters"
+            ]
+          },
+          "rankingHistory": {
+            "type": "array",
+            "length": 3,
+            "itemKeys": [
+              "date",
+              "rows"
+            ]
+          },
+          "rankings": {
+            "type": "array",
+            "length": 831,
+            "itemKeys": [
+              "brand",
+              "canonicalProductKey",
+              "category",
+              "evidence",
+              "evidenceTier",
+              "observedAt",
+              "product",
+              "productUrl",
+              "rank",
+              "rawProduct",
+              "rawProducts",
+              "retailerId",
+              "source",
+              "variantCount"
+            ]
+          },
+          "retailerStatus": {
+            "type": "array",
+            "length": 37,
+            "itemKeys": [
+              "actualSalesCount",
+              "error",
+              "method",
+              "rankingCount",
+              "retailerId",
+              "source"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "generatedAt",
+              "measuredUnitSales",
+              "observedBestsellerIndex",
+              "publicDemandSignals",
+              "rankMovers"
+            ]
+          },
+          "today": {
+            "type": "object",
+            "keys": [
+              "dailyUnitsObserved",
+              "date",
+              "productsWithDelta"
+            ]
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data/market-demand-intelligence-2026.json": {
+      "bytes": 974903,
+      "sha256": "0a15e3ebe475adeaef26b571bde271b6161bf14ae170ae8d452f60acbeb5af5f",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "canonicalization",
+          "coverage",
+          "generatedAt",
+          "history",
+          "methodology",
+          "products",
+          "refreshTarget",
+          "schemaVersion",
+          "scopeYear",
+          "sourceStatus"
+        ],
+        "fields": {
+          "canonicalization": {
+            "type": "object",
+            "keys": [
+              "canonicalProducts",
+              "generatedAt",
+              "mergedGroups",
+              "rawProducts",
+              "rule",
+              "schemaVersion"
+            ]
+          },
+          "coverage": {
+            "type": "object",
+            "keys": [
+              "productsInRomanianMarket",
+              "productsTracked",
+              "productsWithCommunityEvidence",
+              "productsWithGoogleVolume",
+              "productsWithGuideIntent"
+            ]
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "history": {
+            "type": "array",
+            "length": 3,
+            "itemKeys": [
+              "date",
+              "products"
+            ]
+          },
+          "methodology": {
+            "type": "object",
+            "keys": [
+              "facebook",
+              "forums",
+              "google",
+              "guide",
+              "reddit",
+              "truthRule"
+            ]
+          },
+          "products": {
+            "type": "array",
+            "length": 445,
+            "itemKeys": [
+              "aliases",
+              "brand",
+              "category",
+              "communityObservedMentions",
+              "communityScore",
+              "corroboratingSources",
+              "corroborationScore",
+              "externalDemandScore",
+              "facebook",
+              "forums",
+              "google",
+              "googleSearchScore",
+              "guide",
+              "guideIntentScore",
+              "inRomanianMarket",
+              "key",
+              "name",
+              "rawNames",
+              "reddit"
+            ]
+          },
+          "refreshTarget": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "sourceStatus": {
+            "type": "object",
+            "keys": [
+              "facebook",
+              "forums",
+              "googleAds",
+              "guide",
+              "reddit"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-product-presence-2026.json": {
+      "bytes": 1137629,
+      "sha256": "cf031b24c7d34a080096c403be831d11b0455c2fd73a5ab6cbf4f56d3eca372d",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "configuredOperators",
+          "configuredStorefronts",
+          "generatedAt",
+          "methodology",
+          "products",
+          "schemaVersion",
+          "scopeYear",
+          "summary"
+        ],
+        "fields": {
+          "configuredOperators": {
+            "type": "number"
+          },
+          "configuredStorefronts": {
+            "type": "number"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "methodology": {
+            "type": "object",
+            "keys": [
+              "truthRule",
+              "variantRule"
+            ]
+          },
+          "products": {
+            "type": "array",
+            "length": 1993,
+            "itemKeys": [
+              "brand",
+              "categories",
+              "key",
+              "listedOperatorPct",
+              "listedOperators",
+              "listedStorefrontPct",
+              "listedStorefronts",
+              "name",
+              "operators",
+              "rawTitleCount",
+              "rawTitles",
+              "sourceCount",
+              "storefronts"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "canonicalProducts",
+              "canonicalProductsInMultipleStorefronts",
+              "canonicalProductsInOneStorefront",
+              "groupsWithMergedAliasesOrVariants",
+              "rawDistinctTitles"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-management-2026.json": {
+      "bytes": 5251411,
+      "sha256": "1c0d0f761a5b0704963322742a2af744492e956cf411ff57acc829b5d9e1e3e5",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "coverage",
+          "executivePulse",
+          "generatedAt",
+          "methodology",
+          "periods",
+          "presenceAudit",
+          "refreshTarget",
+          "schemaVersion",
+          "scopeYear"
+        ],
+        "fields": {
+          "coverage": {
+            "type": "object",
+            "keys": [
+              "configuredStores",
+              "demandProductsTracked",
+              "demandProductsWithCommunity",
+              "demandProductsWithGoogle",
+              "demandProductsWithGuideIntent",
+              "demandSources",
+              "rankingSnapshots",
+              "tierACoveragePct",
+              "tierAStores",
+              "tierBCoveragePct",
+              "tierBStores",
+              "tierCCoveragePct",
+              "tierCStores"
+            ]
+          },
+          "executivePulse": {
+            "type": "object",
+            "keys": [
+              "concentration",
+              "fastestGrowingBrand",
+              "leadingBrand",
+              "strongestCategory",
+              "topDeclineRisk",
+              "topWhiteSpace"
+            ]
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "methodology": {
+            "type": "object",
+            "keys": [
+              "breadth",
+              "confidence",
+              "decisionFrame",
+              "externalDemand",
+              "inventoryDepth",
+              "listingBreadth",
+              "momentum",
+              "observedShare",
+              "priorityScore",
+              "truthRule"
+            ]
+          },
+          "periods": {
+            "type": "object",
+            "keys": [
+              "30",
+              "7",
+              "9999"
+            ]
+          },
+          "presenceAudit": {
+            "type": "object",
+            "keys": [
+              "canonicalProducts",
+              "configuredOperators",
+              "configuredStorefronts",
+              "generatedAt",
+              "mergedGroups"
+            ]
+          },
+          "refreshTarget": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-pod-universe-2026.json": {
+      "bytes": 8859,
+      "sha256": "6e000e32be8b7ffa48d37ed2e58587ffc196d5d05738a08dd041dbeb4ff23e77",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "makers",
+          "schemaVersion",
+          "scope",
+          "scopeYear",
+          "segments",
+          "status",
+          "truthRule"
+        ],
+        "fields": {
+          "makers": {
+            "type": "array",
+            "length": 60,
+            "itemKeys": [
+              "aliases",
+              "domains",
+              "name",
+              "segment",
+              "series"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "segments": {
+            "type": "array",
+            "length": 4,
+            "itemKeys": [
+              "id",
+              "labelEn",
+              "labelRo"
+            ]
+          },
+          "status": {
+            "type": "string"
+          },
+          "truthRule": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "currentOutputs": {
+    "retailerRegistry": {
+      "schemaVersion": 5,
+      "status": "in_progress",
+      "discoveryCertified": false,
+      "storefronts": 22,
+      "operators": 21,
+      "operatorsWithMultipleStorefronts": 1,
+      "duplicateOperatorGroups": [
+        {
+          "operatorId": "biansi-ego-ro29921968",
+          "storefronts": [
+            "viciishop",
+            "tigaraego"
+          ]
+        }
+      ]
+    },
+    "universe": {
+      "generatedAt": "2026-08-31T08:38:33.193Z",
+      "registryStorefronts": 22,
+      "domainsDiscovered": 126,
+      "queriesRun": 51,
+      "validatedNewRetailers": 0,
+      "unresolvedCandidates": 0,
+      "consecutiveCleanAudits": 3,
+      "nationalUniverseGate": {
+        "pass": true,
+        "reason": "two consecutive clean universe audits with no uncovered retailer"
+      }
+    },
+    "market": {
+      "updatedAt": "2026-08-31T10:10:55.707Z",
+      "retailers": 22,
+      "observations": 2426,
+      "distinctProducts": 2364,
+      "categorySnapshots": 7,
+      "trendSnapshots": 3,
+      "categoryCounts": {
+        "POD": 576,
+        "RBA/bridge": 37,
+        "RDA/RDTA": 96,
+        "RTA": 373,
+        "RTA/RDA mixed": 2,
+        "accesoriu RTA/mod": 149,
+        "accesoriu acumulator": 10,
+        "acumulator": 32,
+        "bumbac/wick": 37,
+        "chipset/board": 4,
+        "coil prebuilt": 84,
+        "componente RTA": 47,
+        "incarcator": 1,
+        "kit RTA/mod": 5,
+        "lichid tutunos/NET/DIY": 572,
+        "mod": 339,
+        "sarma": 52,
+        "unelte build": 10
+      }
+    },
+    "coverage": {
+      "generatedAt": "2026-08-31T10:10:55.808Z",
+      "qualityState": "national-audit-in-progress-with-source-gaps",
+      "nationalClaim": {
+        "label": "ROMANIA 100%",
+        "allowed": false,
+        "discoveryCertified": false,
+        "allStorefrontsExhaustive": false,
+        "reason": "Nu este permisa afirmarea 100% Romania pana la certificarea separata a universului national si a colectarii exhaustive pentru fiecare storefront."
+      },
+      "coverage": {
+        "storefrontsConfigured": 22,
+        "uniqueOperatorsConfigured": 21,
+        "storefrontsWithObservationsToday": 21,
+        "zeroObservationStorefronts": [
+          "smokemania"
+        ],
+        "sourceErrorStorefronts": [
+          "vapetronic",
+          "smokemania",
+          "steamfactory"
+        ],
+        "fallbackStorefronts": [],
+        "notAttemptedStorefronts": [
+          "smokemania"
+        ],
+        "observationsToday": 2426
+      }
+    },
+    "sales": {
+      "file": "data/market-sales-2026.json",
+      "exists": true,
+      "bytes": 2853609,
+      "parses": true,
+      "updatedAt": "2026-08-31T14:17:32.661Z",
+      "rankings": 831,
+      "rankingEvidenceTiers": {
+        "B": 831
+      },
+      "rankingStorefronts": 21,
+      "actualSales": 0,
+      "actualSalesStorefronts": 0,
+      "demandSignals": 51,
+      "demandStorefronts": 6,
+      "actualUnitSalesCoveragePct": 0,
+      "rankingCoveragePct": 95.5,
+      "demandProxyCoveragePct": 27.3,
+      "nationalUnitsSoldAvailable": false,
+      "nationalMarketShareAvailable": false,
+      "heuristicSuspectRankingTitles": 296,
+      "heuristicSuspectExamples": [
+        "BP Mods Bumbac Pro",
+        "Acumulator X Power 20A",
+        "Lichid Tigara Electronica Zeus Juice , nicotina 18 mg - Smooth Tobacco",
+        "Lichid Dinner Lady Select Tobacco 20mg nicotina, - Rich",
+        "Pad Bumbac Muji",
+        "Acumulator Sony VTC6",
+        "Folie Acumulator - Negru",
+        "Folie Acumulator - Gri",
+        "Folie Acumulator Coil Master",
+        "Cloud 9 Cotton",
+        "Guerrilla Ops Tobacco NET 0MG",
+        "DotMod Folie Acumulator"
+      ],
+      "anomalyResolution": "The file is valid, non-empty and current as a Tier-B ranking/Tier-C proxy projection. It contains zero Tier-A sales rows and must not be used as unit-sales or national-market-share benchmark truth.",
+      "benchmarkTruth": "RANKING_AND_PROXY_ONLY"
+    },
+    "demand": {
+      "generatedAt": "2026-08-31T14:17:42.076Z",
+      "coverage": {
+        "productsTracked": 445,
+        "productsInRomanianMarket": 535,
+        "productsWithGoogleVolume": 0,
+        "productsWithCommunityEvidence": 0,
+        "productsWithGuideIntent": 0
+      },
+      "sourceStatus": {
+        "googleAds": {
+          "available": false,
+          "status": "credentials-missing-using-last-valid",
+          "cached": true,
+          "lastSuccessfulAt": null,
+          "lastSuccessfulMonth": null,
+          "source": "Google Ads Keyword Planner historical metrics"
+        },
+        "reddit": {
+          "available": true,
+          "mode": "public-index-fallback",
+          "documents": 27,
+          "error": null
+        },
+        "facebook": {
+          "available": true,
+          "mode": "public-index-only",
+          "documents": 20,
+          "error": null
+        },
+        "forums": {
+          "available": true,
+          "mode": "public-pages-and-index",
+          "documents": 8,
+          "error": null
+        },
+        "guide": {
+          "available": false,
+          "mode": "metrics-no-canonical-intent-yet",
+          "totalSearches30d": 0,
+          "error": null
+        }
+      },
+      "products": 445,
+      "categories": {
+        "RBA/bridge": 21,
+        "RDA/RDTA": 43,
+        "RTA": 240,
+        "accesoriu RTA/mod": 95,
+        "componente RTA": 42,
+        "kit RTA/mod": 4
+      },
+      "historySnapshots": 3
+    },
+    "presence": {
+      "generatedAt": "2026-08-31T14:17:33.055Z",
+      "configuredStorefronts": 22,
+      "configuredOperators": 21,
+      "summary": {
+        "rawDistinctTitles": 2364,
+        "canonicalProducts": 1993,
+        "canonicalProductsInMultipleStorefronts": 106,
+        "canonicalProductsInOneStorefront": 1887,
+        "groupsWithMergedAliasesOrVariants": 235
+      },
+      "products": 1993
+    },
+    "management": {
+      "generatedAt": "2026-08-31T14:17:43.204Z",
+      "periods": [
+        "7",
+        "30",
+        "9999"
+      ],
+      "period30": {
+        "categories": 11,
+        "brands": 41,
+        "products": 767,
+        "actionCounts": {
+          "LOW": 535,
+          "WATCH": 50,
+          "WHITE_SPACE": 182
+        }
+      },
+      "tierAStores": 0,
+      "tierBStores": 21,
+      "decisionsWithoutTierA": 182,
+      "firstDecision": {
+        "name": "Vaporesso Armour G",
+        "observedSharePct": 1.32,
+        "strength": 90.4,
+        "breadthStores": 2,
+        "breadthPct": 9.5,
+        "bestRank": 1,
+        "momentumPct": 100,
+        "breadthChange": 2,
+        "baselineDate": "2026-08-29",
+        "unitsObserved": 0,
+        "demandActivity": 0,
+        "reviewDelta": 0,
+        "viewDelta": 0,
+        "wishlistDelta": 0,
+        "googleAvgMonthlySearches": 0,
+        "googleLast12MonthsSearches": 0,
+        "googleSearchScore": 0,
+        "guideSearches30d": 0,
+        "guideIntentScore": 0,
+        "communityObservedMentions": 0,
+        "communityScore": 0,
+        "externalDemandScore": 0,
+        "corroboratingSources": [],
+        "confidence": 62.2,
+        "priorityScore": 59,
+        "whiteSpaceScore": 63.4,
+        "tierA": false,
+        "tierC": false,
+        "action": {
+          "code": "WHITE_SPACE",
+          "label": "TESTEAZĂ / WHITE-SPACE",
+          "why": "semnal comercial în creștere, dar penetrare încă redusă"
+        },
+        "buyDepth": {
+          "code": "SMALL_TEST",
+          "label": "TEST MIC",
+          "why": "oportunitate emergentă; intrare controlată până când cererea se confirmă prin vânzare locală repetabilă"
+        },
+        "bestsellerStorefronts": 2,
+        "bestsellerBreadthPct": 9.5,
+        "bestsellerOperators": null,
+        "breadthBasis": "verified retailer bestseller/popularity signal; not retail availability",
+        "listedStorefronts": 0,
+        "listedOperators": 0,
+        "listedStorefrontPct": 0,
+        "listedOperatorPct": 0,
+        "listingBreadthBasis": "canonicalized public product listings in the Romanian retail registry",
+        "rawTitleCount": 1,
+        "rawTitles": [
+          "Vaporesso Armour G"
+        ]
+      },
+      "firstDecisionPresenceMismatch": {
+        "name": "Vaporesso Armour G",
+        "bestsellerStorefronts": 2,
+        "listedStorefronts": 0,
+        "action": "WHITE_SPACE"
+      },
+      "semanticRisk": "RECIPROCAL_RANK_AND_PROXY_ONLY"
+    },
+    "pods": {
+      "makers": 60,
+      "segments": 4,
+      "marketPodObservations": 576,
+      "marketPodDistinctTitles": 576,
+      "samples": [
+        {
+          "title": "Vaporesso XROS 4 Pod Kit",
+          "result": {
+            "category": "POD",
+            "segment": "mass-market-open-pod",
+            "typology": "open-pod / pod-mod",
+            "brand": "Vaporesso",
+            "series": "XROS",
+            "confidence": "brand-series-match"
+          }
+        },
+        {
+          "title": "OXVA Xlim Pro 2 Pod System",
+          "result": {
+            "category": "POD",
+            "segment": "mass-market-open-pod",
+            "typology": "open-pod / pod-mod",
+            "brand": "OXVA",
+            "series": "Xlim",
+            "confidence": "brand-series-match"
+          }
+        },
+        {
+          "title": "Uwell Caliburn G3 replacement pod 0.8 ohm",
+          "result": null
+        },
+        {
+          "title": "Voopoo PnP X coil 0.3 ohm 5-pack",
+          "result": null
+        },
+        {
+          "title": "Cthulhu AIO Pod System",
+          "result": {
+            "category": "POD",
+            "segment": "premium-high-end-aio",
+            "typology": "premium / high-end / AIO",
+            "brand": "Cthulhu Mod",
+            "series": "",
+            "confidence": "brand-and-pod"
+          }
+        }
+      ],
+      "deviceSamplesClassified": 3,
+      "consumableSamplesRetained": 0,
+      "currentLimitation": "The current classifier returns null for accessory-only POD consumables instead of retaining and linking cartridge/pod/coil entities to a platform."
+    }
+  },
+  "sourceHealth": {
+    "market": {
+      "generatedAt": "2026-08-31T10:07:24.415Z",
+      "pagesFetched": 193,
+      "errors": 6,
+      "observations": 2426
+    },
+    "storefronts": {
+      "qualityState": "national-audit-in-progress-with-source-gaps",
+      "captureStates": {
+        "captured": 19,
+        "captured-with-source-errors": 2,
+        "source-error-no-observations": 1
+      },
+      "zeroObservationStorefronts": [
+        "smokemania"
+      ],
+      "sourceErrorStorefronts": [
+        "vapetronic",
+        "smokemania",
+        "steamfactory"
+      ],
+      "notAttemptedStorefronts": [
+        "smokemania"
+      ]
+    },
+    "sales": {
+      "retailerStatusRows": 37,
+      "retailerStatusErrors": 19
+    },
+    "demand": {
+      "googleAds": {
+        "available": false,
+        "status": "credentials-missing-using-last-valid",
+        "cached": true,
+        "lastSuccessfulAt": null,
+        "lastSuccessfulMonth": null,
+        "source": "Google Ads Keyword Planner historical metrics"
+      },
+      "reddit": {
+        "available": true,
+        "mode": "public-index-fallback",
+        "documents": 27,
+        "error": null
+      },
+      "facebook": {
+        "available": true,
+        "mode": "public-index-only",
+        "documents": 20,
+        "error": null
+      },
+      "forums": {
+        "available": true,
+        "mode": "public-pages-and-index",
+        "documents": 8,
+        "error": null
+      },
+      "guide": {
+        "available": false,
+        "mode": "metrics-no-canonical-intent-yet",
+        "totalSearches30d": 0,
+        "error": null
+      }
+    },
+    "universe": {
+      "enginesConfigured": 2,
+      "enginesWorking": 2,
+      "queriesRun": 51,
+      "currentAuditClean": true
+    }
+  },
+  "workflows": [
+    {
+      "file": ".github/workflows/market-2026-sync.yml",
+      "schedules": [
+        "0 3 * * *",
+        "0 4 * * *",
+        "0 5 * * *"
+      ],
+      "timeoutMinutes": 45,
+      "concurrencyGroup": "market-2026-daily-sync",
+      "steps": [
+        "Gate 06:00 Bucharest and 07:00 fallback",
+        "Checkout",
+        "Decide whether fallback Market refresh is needed",
+        "Setup Node",
+        "Collect national storefronts",
+        "Collect Smokee API families",
+        "Run dedicated storefront parsers",
+        "Verify suspicious prices at source",
+        "Normalize observations",
+        "Audit national coverage",
+        "Validate truth and freshness",
+        "Publish daily market snapshot"
+      ],
+      "nodeTools": [
+        "tools/sync-market-2026.js",
+        "tools/sync-market-smokee-2026.js",
+        "tools/sync-market-specialized-2026.js",
+        "tools/verify-market-prices-2026.js",
+        "tools/normalize-market-2026.js",
+        "tools/market-coverage-audit-2026.js",
+        "tools/validate-market-daily-2026.js"
+      ],
+      "writesDirectlyToMain": true,
+      "hasBucharestGate": true,
+      "hasFallbackGate": true
+    },
+    {
+      "file": ".github/workflows/market-sales-2026-sync.yml",
+      "schedules": [
+        "30 4 * * *",
+        "30 5 * * *"
+      ],
+      "timeoutMinutes": 38,
+      "concurrencyGroup": "market-2026-sales-signals",
+      "steps": [
+        "Gate chained or fallback Analysis refresh",
+        "Checkout",
+        "Decide whether Analysis should run",
+        "Setup Node",
+        "Require fresh 06:00 Market base for Analysis",
+        "Discover retailer sales-ranking sources",
+        "Collect public sales evidence",
+        "Verify dynamically discovered rankings",
+        "Probe explicit product sales counters and demand signals",
+        "Canonicalize product identities before aggregation",
+        "Build canonical Romanian product presence",
+        "Build sales synthesis",
+        "Build external demand and manufacturer radar",
+        "Collect Google and community demand intelligence",
+        "Canonicalize Google and community product identities",
+        "Build management decision intelligence",
+        "Add real listing breadth to management report",
+        "Validate sales, management and daily Analysis freshness",
+        "Publish sales and management snapshot"
+      ],
+      "nodeTools": [
+        "tools/discover-market-sales-sources-2026.js",
+        "tools/sync-market-sales-2026.js",
+        "tools/collect-discovered-market-sales-2026.js",
+        "tools/probe-market-sales-counters-2026.js",
+        "tools/canonicalize-market-sales-products-2026.js",
+        "tools/build-market-product-presence-2026.js",
+        "tools/build-market-sales-summary-2026.js",
+        "tools/build-market-external-intelligence-2026.js",
+        "tools/collect-market-demand-intelligence-2026.js",
+        "tools/canonicalize-market-demand-products-2026.js",
+        "tools/build-market-management-2026.js",
+        "tools/augment-market-management-presence-2026.js"
+      ],
+      "writesDirectlyToMain": true,
+      "hasBucharestGate": true,
+      "hasFallbackGate": true
+    },
+    {
+      "file": ".github/workflows/market-universe-audit-2026.yml",
+      "schedules": [
+        "10 2 * * *",
+        "10 3 * * *"
+      ],
+      "timeoutMinutes": 25,
+      "concurrencyGroup": "market-2026-romania-universe",
+      "steps": [
+        "Gate 05:10 Bucharest",
+        "Checkout",
+        "Setup Node",
+        "Audit Romanian online RTA retail universe",
+        "Validate audit integrity",
+        "Publish universe audit"
+      ],
+      "nodeTools": [
+        "tools/audit-market-universe-2026.js"
+      ],
+      "writesDirectlyToMain": true,
+      "hasBucharestGate": true,
+      "hasFallbackGate": false
+    },
+    {
+      "file": ".github/workflows/market-2026-quality.yml",
+      "schedules": [
+        "0 3 * * *",
+        "0 4 * * *",
+        "0 5 * * *",
+        "0,20 3 * * *",
+        "0,20 4 * * *",
+        "30 4 * * *",
+        "30 5 * * *"
+      ],
+      "timeoutMinutes": 8,
+      "concurrencyGroup": null,
+      "steps": [
+        "Syntax",
+        "Validate Market and Hype contracts"
+      ],
+      "nodeTools": [
+        "tools/normalize-market-2026.js",
+        "tools/check-market-report-final.js"
+      ],
+      "writesDirectlyToMain": false,
+      "hasBucharestGate": false,
+      "hasFallbackGate": true
+    },
+    {
+      "file": ".github/workflows/market-report-final-quality.yml",
+      "schedules": [],
+      "timeoutMinutes": 0,
+      "concurrencyGroup": null,
+      "steps": [
+        "Syntax",
+        "Final report contract"
+      ],
+      "nodeTools": [
+        "tools/check-market-report-final.js"
+      ],
+      "writesDirectlyToMain": false,
+      "hasBucharestGate": false,
+      "hasFallbackGate": false
+    }
+  ],
+  "lastObservedFullRuns": [
+    {
+      "workflow": "Market 2026 Daily Sync",
+      "runId": 33380468080,
+      "runNumber": null,
+      "event": "push",
+      "startedAt": "2026-08-31T10:01:17.000Z",
+      "completedAt": "2026-08-31T10:11:00.000Z",
+      "durationSeconds": 583,
+      "headSha": "35114b865bcf12a1ed81fba4f26532ba360eec57",
+      "executedCollectors": true,
+      "url": "https://github.com/andreiclim77-cell/rta/actions/runs/33380468080"
+    },
+    {
+      "workflow": "Market 2026 Sales Signals",
+      "runId": 33400963224,
+      "runNumber": 41,
+      "event": "push",
+      "startedAt": "2026-08-31T14:09:12.000Z",
+      "completedAt": "2026-08-31T14:17:50.000Z",
+      "durationSeconds": 518,
+      "headSha": "fe1ab73d76d5cd06e1e3c9bd4c02bd348801df33",
+      "executedCollectors": true,
+      "url": "https://github.com/andreiclim77-cell/rta/actions/runs/33400963224"
+    },
+    {
+      "workflow": "Market 2026 Romania Universe Audit",
+      "runId": 33373677302,
+      "runNumber": 9,
+      "event": "schedule",
+      "startedAt": "2026-08-31T08:36:12.000Z",
+      "completedAt": "2026-08-31T08:38:38.000Z",
+      "durationSeconds": 146,
+      "headSha": "3fb5bb13d157b59ece345b4cc587a6a3df316aff",
+      "executedCollectors": true,
+      "url": "https://github.com/andreiclim77-cell/rta/actions/runs/33373677302"
+    }
+  ],
+  "ui": {
+    "files": [
+      "assets/enhancements.js",
+      "assets/market-2026-report.js",
+      "assets/market-2026.js",
+      "assets/market-access-policy.js",
+      "assets/market-analysis-synthesis.js",
+      "assets/market-coverage-ui.js",
+      "assets/market-demand-ui.js",
+      "assets/market-executive-report-v2.js",
+      "assets/market-executive-report.js",
+      "assets/market-loading-guard.js",
+      "assets/market-management-augment.js",
+      "assets/market-management-v2.js",
+      "assets/market-management.js",
+      "assets/market-sales-explorer.js",
+      "assets/market-sales-retailer-ui.js",
+      "assets/market-sales-ui.js",
+      "assets/market-source-info.js",
+      "assets/market-ui-recovery.js",
+      "assets/market-view-switcher.js",
+      "en/index.html",
+      "index.html",
+      "sw.js"
+    ],
+    "dataPaths": [
+      "data/market-2026.json",
+      "data/market-coverage-2026.json",
+      "data/market-demand-intelligence-2026.json",
+      "data/market-external-intelligence-2026.json",
+      "data/market-management-2026.json",
+      "data/market-product-presence-2026.json",
+      "data/market-retailers-2026.json",
+      "data/market-sales-2026.json",
+      "data/market-universe-audit-2026.json"
+    ],
+    "selectors": [
+      "market2026Body",
+      "market2026Error",
+      "market2026FullReport",
+      "market2026Modal",
+      "market2026Password",
+      "market2026ReportStyles",
+      "market2026Root",
+      "market2026Styles",
+      "marketAnalysisSynthesis",
+      "marketAnalysisSynthesisCss",
+      "marketBootStabilizer",
+      "marketCategoryFilter",
+      "marketDemandCss",
+      "marketDemandIntelligence",
+      "marketExecutiveReport",
+      "marketExecutiveReportCss",
+      "marketLoadingGuard",
+      "marketLoadingGuardStyle",
+      "marketManagementAugment",
+      "marketManagementAugmentCss",
+      "marketManagementCockpit",
+      "marketManagementCss",
+      "marketNationalCertification",
+      "marketProductsTable",
+      "marketSalesByRetailer",
+      "marketSalesExplorer",
+      "marketSalesExplorerCss",
+      "marketSalesIntelligence",
+      "marketSourceBody",
+      "marketSourceInfo",
+      "marketSourceInfoCss",
+      "marketSourceLoading",
+      "marketSourceSearch",
+      "marketViewSwitcher",
+      "marketViewSwitcherCss"
+    ],
+    "accessKey": "rtaMarket2026Access",
+    "privatePasswordHashPresent": true,
+    "primaryViews": [
+      "Analiza",
+      "Hype",
+      "Surse"
+    ],
+    "analysisSubViews": [
+      "Piata",
+      "Produse",
+      "Trend",
+      "Oportunitati"
+    ],
+    "serviceWorkerNetworkFirst": true,
+    "currentDataContractPreserved": true
+  },
+  "uiScreenshots": [
+    {
+      "path": "data/analiza-benchmark/screenshots/analiza-current-access-desktop-1366.png",
+      "role": "integration-input",
+      "bytes": 91385,
+      "lines": 0,
+      "sha256": "aae456694f441694b885a8cbb129c2023f4a0fc1be227bfe7ef62d203ec9d44b"
+    },
+    {
+      "path": "data/analiza-benchmark/screenshots/analiza-current-access-mobile-390.png",
+      "role": "integration-input",
+      "bytes": 86646,
+      "lines": 0,
+      "sha256": "bd98faaa2cdc3cfcfa398b505ef61a1c864eca25b4576c81c0123b593b881f57"
+    }
+  ],
+  "anomalyResolution": {
+    "marketSalesConnectorObservation": "Connector representation issue, not an empty/corrupt local file.",
+    "safeBenchmarkUse": "Schema, ranking rows, demand proxies, flags and known gaps may be frozen. Unit-sales and national market-share results may not be inferred because actualSales is empty.",
+    "verdict": "VALID_NONEMPTY_RANKING_PROXY_FILE_WITH_ZERO_TIER_A_SALES"
+  },
+  "knownStructuralGaps": [
+    {
+      "id": "no-tier-a-sales",
+      "evidence": "market-sales-2026.json contains zero actualSales rows and 0% Tier-A coverage"
+    },
+    {
+      "id": "rank-index-presented-as-share",
+      "evidence": "build-market-management-2026.js derives observedSharePct from reciprocal rank totals"
+    },
+    {
+      "id": "ranking-semantics-not-normalized-by-visible-depth",
+      "evidence": "ranking rows retain rank but no required source-relative visible-depth contract"
+    },
+    {
+      "id": "management-action-without-tier-a-or-c",
+      "evidence": "the first 30-day product can receive WHITE_SPACE/SMALL_TEST from ranking momentum alone"
+    },
+    {
+      "id": "ranking-title-contamination",
+      "evidence": "heuristic audit finds non-device/accessory/liquid titles in Tier-B rankings"
+    },
+    {
+      "id": "demand-universe-is-rta-centric",
+      "evidence": "collect-market-demand-intelligence-2026.js productUniverse includes RTA/RBA/RDTA observations and RTA YouTube models only"
+    },
+    {
+      "id": "pod-consumables-are-discarded",
+      "evidence": "market-pod-classifier-2026.js accessoryOnly returns null before entity retention or compatibility linkage"
+    },
+    {
+      "id": "clone-authentic-canonical-risk",
+      "evidence": "market-product-canonical-2026.js strips style, clone and authentic tokens before key generation"
+    },
+    {
+      "id": "universe-gate-is-two-clean-searches",
+      "evidence": "audit-market-universe-2026.js passes after two clean public-search audits"
+    },
+    {
+      "id": "mutable-json-direct-main",
+      "evidence": "production workflows rewrite projection JSON and push directly to main"
+    },
+    {
+      "id": "source-failure-not-first-class-observation",
+      "evidence": "current snapshots summarize errors but lack immutable attempt/evidence ledgers"
+    },
+    {
+      "id": "presence-label-match-can-miss",
+      "evidence": "management presence augmentation can leave a ranked product at zero listed storefronts when canonical labels diverge"
+    }
+  ]
+}
