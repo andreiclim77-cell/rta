@@ -1,0 +1,49 @@
+name: Market ANALIZA vNext Quality
+
+on:
+  pull_request:
+    paths:
+      - 'data/analiza-benchmark/**'
+      - 'tools/analiza-vnext/**'
+      - 'docs/ANALIZA_VNEXT_IMPLEMENTATION_STATUS.md'
+      - '.github/workflows/market-analiza-vnext-quality.yml'
+      - 'data/market-2026.json'
+      - 'data/market-sales-2026.json'
+      - 'data/market-demand-intelligence-2026.json'
+      - 'data/market-management-2026.json'
+      - 'data/market-product-presence-2026.json'
+      - 'data/market-retailers-2026.json'
+      - 'data/market-universe-audit-2026.json'
+      - 'data/market-pod-universe-2026.json'
+      - 'tools/market-*.js'
+      - 'assets/market-*.js'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: market-analiza-vnext-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phase-zero:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check Phase 0 tools
+        run: |
+          node --check tools/analiza-vnext/build-fixtures.js
+          node --check tools/analiza-vnext/capture-baseline.js
+          node --check tools/analiza-vnext/run-benchmark.js
+
+      - name: Verify deterministic baseline and regression contract
+        run: node tools/analiza-vnext/run-benchmark.js

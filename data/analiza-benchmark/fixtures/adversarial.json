@@ -1,0 +1,555 @@
+{
+  "schemaVersion": 1,
+  "fixtureSet": "analiza-phase0-adversarial",
+  "asOf": "2026-08-31T21:00:00.000Z",
+  "syntheticDeterministic": true,
+  "cases": [
+    {
+      "id": "adv-retail-001",
+      "family": "retail-source",
+      "requirement": "dead-retailer",
+      "title": "Dead retailer must not remain active",
+      "adversarial": true,
+      "input": {
+        "statusCode": 410,
+        "lastHealthyAt": "2025-11-01T00:00:00.000Z"
+      },
+      "expected": {
+        "scope": "RETIRED",
+        "availabilityInference": false
+      }
+    },
+    {
+      "id": "adv-retail-002",
+      "family": "retail-source",
+      "requirement": "marketplace-only",
+      "title": "Marketplace-only seller is not a national core storefront",
+      "adversarial": true,
+      "input": {
+        "host": "marketplace.example",
+        "sellerPageOnly": true
+      },
+      "expected": {
+        "scope": "MARKETPLACE_CONTEXT",
+        "nationalCore": false
+      }
+    },
+    {
+      "id": "adv-retail-003",
+      "family": "retail-source",
+      "requirement": "b2b-only",
+      "title": "B2B-only distributor is not a consumer storefront",
+      "adversarial": true,
+      "input": {
+        "wholesaleOnly": true,
+        "consumerCheckout": false
+      },
+      "expected": {
+        "scope": "B2B_CONTEXT",
+        "nationalCore": false
+      }
+    },
+    {
+      "id": "adv-retail-004",
+      "family": "retail-source",
+      "requirement": "source-outage",
+      "title": "Source outage is unknown coverage, not zero",
+      "adversarial": true,
+      "input": {
+        "timeout": true,
+        "priorProducts": 320
+      },
+      "expected": {
+        "sourceState": "OUTAGE",
+        "observedProducts": null,
+        "zeroIsTrustworthy": false
+      }
+    },
+    {
+      "id": "adv-retail-005",
+      "family": "retail-source",
+      "requirement": "parser-drift",
+      "title": "Parser drift is not a market disappearance",
+      "adversarial": true,
+      "input": {
+        "statusCode": 200,
+        "expectedCards": 40,
+        "parsedCards": 0,
+        "layoutFingerprintChanged": true
+      },
+      "expected": {
+        "sourceState": "PARSER_DRIFT",
+        "availability": "UNKNOWN",
+        "decline": false
+      }
+    },
+    {
+      "id": "adv-retail-006",
+      "family": "retail-source",
+      "requirement": "same-operator-two-storefronts",
+      "title": "Duplicate operator storefronts cannot inflate breadth",
+      "adversarial": true,
+      "input": {
+        "storefronts": [
+          {
+            "id": "a",
+            "operatorId": "same"
+          },
+          {
+            "id": "b",
+            "operatorId": "same"
+          }
+        ],
+        "productOnBoth": true
+      },
+      "expected": {
+        "storefrontBreadth": 2,
+        "operatorBreadth": 1
+      }
+    },
+    {
+      "id": "adv-product-001",
+      "family": "product-identity",
+      "requirement": "brand-alias",
+      "title": "Unknown alias must not be guessed from substring",
+      "adversarial": true,
+      "input": {
+        "title": "Air Pro protective case",
+        "brandText": "Air"
+      },
+      "expected": {
+        "brand": null,
+        "manualReview": true
+      }
+    },
+    {
+      "id": "adv-product-002",
+      "family": "product-identity",
+      "requirement": "seo-noise",
+      "title": "Liquid marketing text mentioning RTA is not an atomizer",
+      "adversarial": true,
+      "input": {
+        "title": "Premium RTA Tobacco Longfill 20ml"
+      },
+      "expected": {
+        "entityType": "E_LIQUID",
+        "atomizer": false
+      }
+    },
+    {
+      "id": "adv-product-003",
+      "family": "product-identity",
+      "requirement": "color-variant",
+      "title": "Colour-only offer cannot create momentum",
+      "adversarial": true,
+      "input": {
+        "offersToday": 8,
+        "offersYesterday": 1,
+        "allSameModelDifferentColours": true
+      },
+      "expected": {
+        "canonicalProducts": 1,
+        "productMomentumFromVariants": false
+      }
+    },
+    {
+      "id": "adv-product-004",
+      "family": "product-identity",
+      "requirement": "clone-authentic",
+      "title": "Style/clone token cannot be discarded from identity",
+      "adversarial": true,
+      "input": {
+        "offers": [
+          "Diplomat V1.5 authentic",
+          "SXK Diplomat V1.5 Style"
+        ]
+      },
+      "expected": {
+        "canonicalProducts": 2,
+        "collapsed": false
+      }
+    },
+    {
+      "id": "adv-sales-001",
+      "family": "sales-ranking",
+      "requirement": "listing-not-sale",
+      "title": "A listing is not a sale",
+      "adversarial": true,
+      "input": {
+        "listed": true,
+        "stock": "IN_STOCK",
+        "unitsCounter": null
+      },
+      "expected": {
+        "tier": null,
+        "units": null,
+        "forbiddenClaims": [
+          "SOLD",
+          "MARKET_SHARE"
+        ]
+      }
+    },
+    {
+      "id": "adv-sales-002",
+      "family": "sales-ranking",
+      "requirement": "stock-not-sale",
+      "title": "Stock state is not sales velocity",
+      "adversarial": true,
+      "input": {
+        "stock": "OUT_OF_STOCK",
+        "priorStock": "IN_STOCK"
+      },
+      "expected": {
+        "units": null,
+        "decline": null
+      }
+    },
+    {
+      "id": "adv-sales-003",
+      "family": "sales-ranking",
+      "requirement": "counter-reset",
+      "title": "Counter reset cannot create fake units",
+      "adversarial": true,
+      "input": {
+        "counter": 4,
+        "previousCounter": 980
+      },
+      "expected": {
+        "tier": "A",
+        "delta": null,
+        "warning": "COUNTER_RESET_OR_IDENTITY_CHANGE"
+      }
+    },
+    {
+      "id": "adv-sales-004",
+      "family": "sales-ranking",
+      "requirement": "generic-order",
+      "title": "Generic site order count is not product sales",
+      "adversarial": true,
+      "input": {
+        "text": "Peste 25.000 comenzi livrate"
+      },
+      "expected": {
+        "tier": null,
+        "counter": null,
+        "rejected": true
+      }
+    },
+    {
+      "id": "adv-sales-005",
+      "family": "sales-ranking",
+      "requirement": "unclear-ranking",
+      "title": "Popularity order with unclear semantics is not Tier B",
+      "adversarial": true,
+      "input": {
+        "sortLabel": "Popularitate",
+        "documentedSemantics": false,
+        "visibleRank": 1
+      },
+      "expected": {
+        "tier": null,
+        "rankContext": "UNKNOWN",
+        "decisionEligible": false
+      }
+    },
+    {
+      "id": "adv-sales-006",
+      "family": "sales-ranking",
+      "requirement": "category-rank-vs-store",
+      "title": "Category and store-wide rank cannot be averaged blindly",
+      "adversarial": true,
+      "input": {
+        "categoryRank": 1,
+        "storeRank": 200
+      },
+      "expected": {
+        "aggregateRank": null,
+        "retainRawEvidence": true
+      }
+    },
+    {
+      "id": "adv-price-001",
+      "family": "price",
+      "requirement": "installment-false-price",
+      "title": "Monthly installment is not product price",
+      "adversarial": true,
+      "input": {
+        "text": "de la 29,90 lei/luna",
+        "cashPrice": "899,00 lei"
+      },
+      "expected": {
+        "currentPrice": 899,
+        "installment": 29.9
+      }
+    },
+    {
+      "id": "adv-price-002",
+      "family": "price",
+      "requirement": "bundle-price",
+      "title": "Bundle price is not device-only price",
+      "adversarial": true,
+      "input": {
+        "title": "Device + 10 pods",
+        "price": 399.9
+      },
+      "expected": {
+        "comparableGroup": "BUNDLE",
+        "deviceUnitPrice": null
+      }
+    },
+    {
+      "id": "adv-price-003",
+      "family": "price",
+      "requirement": "oos-stale-price",
+      "title": "Stale out-of-stock price is not current market price",
+      "adversarial": true,
+      "input": {
+        "availability": "OUT_OF_STOCK",
+        "price": 199.9,
+        "lastSeenInStockDays": 120
+      },
+      "expected": {
+        "currentPriceEligible": false,
+        "lastKnownPrice": 199.9
+      }
+    },
+    {
+      "id": "adv-price-004",
+      "family": "price",
+      "requirement": "pod-pack-normalization",
+      "title": "Two-pack and four-pack totals are not directly comparable",
+      "adversarial": true,
+      "input": {
+        "twoPack": 49.9,
+        "fourPack": 89.9
+      },
+      "expected": {
+        "compareByUnit": true,
+        "rawTotalComparison": false
+      }
+    },
+    {
+      "id": "adv-stock-001",
+      "family": "availability",
+      "requirement": "removed-page",
+      "title": "Removed page is not automatic discontinuation",
+      "adversarial": true,
+      "input": {
+        "statusCode": 404,
+        "storeHealthy": true,
+        "alternativeUrlUnknown": true
+      },
+      "expected": {
+        "availability": "REMOVED_OR_MOVED",
+        "discontinued": false
+      }
+    },
+    {
+      "id": "adv-stock-002",
+      "family": "availability",
+      "requirement": "parser-failure-not-oos",
+      "title": "Parser failure cannot emit out-of-stock",
+      "adversarial": true,
+      "input": {
+        "statusCode": 200,
+        "parserError": "selector missing"
+      },
+      "expected": {
+        "availability": "UNKNOWN",
+        "sourceState": "PARSER_DRIFT"
+      }
+    },
+    {
+      "id": "adv-stock-003",
+      "family": "availability",
+      "requirement": "retailer-outage-not-oos",
+      "title": "Retailer-wide outage cannot emit product stock-out",
+      "adversarial": true,
+      "input": {
+        "statusCode": 503,
+        "affectedPages": 200
+      },
+      "expected": {
+        "availability": "UNKNOWN",
+        "sourceState": "OUTAGE"
+      }
+    },
+    {
+      "id": "adv-pod-001",
+      "family": "pod",
+      "requirement": "replacement-pod",
+      "title": "Replacement pod is a consumable, not a device",
+      "adversarial": true,
+      "input": {
+        "title": "Vaporesso XROS replacement pod 0.8 ohm"
+      },
+      "expected": {
+        "entityType": "REPLACEMENT_POD",
+        "device": false,
+        "platform": "XROS"
+      }
+    },
+    {
+      "id": "adv-pod-002",
+      "family": "pod",
+      "requirement": "cartridge",
+      "title": "Empty cartridge is not a device",
+      "adversarial": true,
+      "input": {
+        "title": "Caliburn G3 empty cartridge 2ml"
+      },
+      "expected": {
+        "entityType": "CARTRIDGE",
+        "device": false
+      }
+    },
+    {
+      "id": "adv-pod-003",
+      "family": "pod",
+      "requirement": "coil",
+      "title": "Coil is not a POD device",
+      "adversarial": true,
+      "input": {
+        "title": "Voopoo PnP X coil 0.3 ohm 5-pack"
+      },
+      "expected": {
+        "entityType": "COIL",
+        "device": false,
+        "packQuantity": 5
+      }
+    },
+    {
+      "id": "adv-pod-004",
+      "family": "pod",
+      "requirement": "incompatible-generations",
+      "title": "Similar family names do not prove compatibility",
+      "adversarial": true,
+      "input": {
+        "device": "Caliburn G3 Pro",
+        "consumable": "Caliburn G2 cartridge"
+      },
+      "expected": {
+        "compatible": false,
+        "edgeStatus": "REJECTED"
+      }
+    },
+    {
+      "id": "adv-pod-005",
+      "family": "pod",
+      "requirement": "integrated-coil-pod",
+      "title": "Resistance variants do not inflate device breadth",
+      "adversarial": true,
+      "input": {
+        "offers": [
+          "XROS pod 0.4",
+          "XROS pod 0.6",
+          "XROS pod 0.8",
+          "XROS pod 1.0"
+        ]
+      },
+      "expected": {
+        "devices": 0,
+        "consumableProducts": 1,
+        "offers": 4
+      }
+    },
+    {
+      "id": "adv-demand-001",
+      "family": "demand",
+      "requirement": "global-youtube",
+      "title": "Global YouTube views are not Romanian demand",
+      "adversarial": true,
+      "input": {
+        "source": "YOUTUBE",
+        "geo": "GLOBAL",
+        "views": 250000
+      },
+      "expected": {
+        "eligibleForRomanianDemand": false,
+        "contextOnly": true
+      }
+    },
+    {
+      "id": "adv-demand-002",
+      "family": "demand",
+      "requirement": "global-community",
+      "title": "Global community mention is not Romanian demand",
+      "adversarial": true,
+      "input": {
+        "source": "REDDIT",
+        "geo": "GLOBAL",
+        "mentions": 200
+      },
+      "expected": {
+        "eligibleForRomanianDemand": false,
+        "contextOnly": true
+      }
+    },
+    {
+      "id": "adv-demand-003",
+      "family": "demand",
+      "requirement": "hype-without-ro",
+      "title": "HYPE without Romanian corroboration cannot become local BUY",
+      "adversarial": true,
+      "input": {
+        "hypeStage": "RELEASED",
+        "romanianDemand": false,
+        "localListings": 0
+      },
+      "expected": {
+        "buyClaim": false,
+        "context": "GLOBAL_HYPE_ONLY"
+      }
+    },
+    {
+      "id": "adv-demand-004",
+      "family": "demand",
+      "requirement": "source-onboarding-no-momentum",
+      "title": "New retailer onboarding cannot create momentum",
+      "adversarial": true,
+      "input": {
+        "day1Stores": 10,
+        "day2Stores": 15,
+        "newStores": 5,
+        "sameStoreRanksUnchanged": true
+      },
+      "expected": {
+        "momentum": 0,
+        "cohortInstability": true
+      }
+    },
+    {
+      "id": "adv-demand-005",
+      "family": "demand",
+      "requirement": "source-offboarding-no-decline",
+      "title": "Lost source cannot create market decline",
+      "adversarial": true,
+      "input": {
+        "day1Stores": 15,
+        "day2Stores": 10,
+        "lostStores": 5,
+        "sameStoreRanksUnchanged": true
+      },
+      "expected": {
+        "decline": 0,
+        "cohortInstability": true
+      }
+    },
+    {
+      "id": "adv-demand-006",
+      "family": "demand",
+      "requirement": "romanian-demand-without-local",
+      "title": "Romanian interest without listing is not a national sale",
+      "adversarial": true,
+      "input": {
+        "romanianDemand": true,
+        "localListings": 0
+      },
+      "expected": {
+        "sales": false,
+        "marketShare": false,
+        "whiteSpaceOnly": true
+      }
+    }
+  ]
+}
