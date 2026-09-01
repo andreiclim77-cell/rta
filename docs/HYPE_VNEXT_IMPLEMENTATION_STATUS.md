@@ -1,7 +1,7 @@
 # HYPE vNext implementation status
 
 **Phase:** 0 - current baseline and regression contract
-**Status:** implemented on `codex/hype-vnext-00-baseline`; PR pending
+**Status:** implemented on `codex/hype-vnext-00-baseline`; draft PR #18 under audit
 **Date:** 2026-09-01
 **Rollback point:** `6bf2acc68ec8af7c44db4b5c6e78f0ab771bb1df`
 
@@ -160,7 +160,7 @@ records. It will not switch the public UI or production workflow.
 
 ## Next gate
 
-Open a separate Phase 0 PR against the frozen specification branch. Audit the
-complete diff, rerun old validators and the new deterministic suite, and verify
-that no existing HYPE/runtime file changed. Begin Phase 1 only after that audit
-has no unresolved material finding and the user approves continuation.
+Draft PR #18 targets the frozen specification branch. Audit the complete diff,
+rerun old validators and the new deterministic suite, and verify that no
+existing HYPE/runtime file changed. Begin Phase 1 only after that audit has no
+unresolved material finding and the user approves continuation.
