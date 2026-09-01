@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Freeze current truth protections before HYPE vNext refactoring.",
+  "bindings": [
+    {
+      "id": "new-arrival-is-not-release",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"newArrivalIsNotRelease\": true"
+    },
+    {
+      "id": "relisting-is-not-release",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"relistingIsNotRelease\": true"
+    },
+    {
+      "id": "prior-history-demotes-relisting",
+      "file": "tools/consolidate-market-hype-2026.js",
+      "token": "knownBeforeWindowAt"
+    },
+    {
+      "id": "single-retailer-needs-corroboration",
+      "file": "tools/consolidate-market-hype-2026.js",
+      "token": "retailHosts.length>=2"
+    },
+    {
+      "id": "retail-promotion-is-not-release",
+      "file": "tools/consolidate-market-hype-2026.js",
+      "token": "signalKind='dated-retail-promotion'"
+    },
+    {
+      "id": "sitemap-lastmod-is-not-launch",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"sitemapLastmodIsNeverUsedAsLaunchDate\": true"
+    },
+    {
+      "id": "jsonld-coverage-is-not-launch",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"jsonLdCatalogCoverageDoesNotCreateLaunchEvents\": true"
+    },
+    {
+      "id": "first-catalog-run-is-baseline",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"firstCatalogRunIsBaselineOnly\": true"
+    },
+    {
+      "id": "colour-variants-share-product",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"colourVariantsAreOneProduct\": true"
+    },
+    {
+      "id": "category-revalidated-before-publish",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"categoryRevalidatedBeforePublish\": true"
+    },
+    {
+      "id": "bucharest-0600-reference",
+      "file": "tools/hype-window-reference-2026.js",
+      "token": "const TZ='Europe/Bucharest'"
+    },
+    {
+      "id": "private-content-requires-authorization",
+      "file": "data/market-hype-sources-2026.json",
+      "token": "\"privateContentWithoutAuthorization\""
+    }
+  ],
+  "intentionalDivergences": [
+    {
+      "id": "future-eta-over-30-days",
+      "current": "Excluded by the symmetric +/-30 day filter.",
+      "vNext": "Retained in RADAR when the material signal was observed in the last 30 days."
+    },
+    {
+      "id": "independent-origin-count",
+      "current": "eligibleSources counts unique sourceType values.",
+      "vNext": "Corroboration counts independent origin lineages."
+    },
+    {
+      "id": "lifecycle-preservation",
+      "current": "Consolidation chooses one dominant row/eventDate.",
+      "vNext": "Every evidence claim and lifecycle event remains immutable."
+    },
+    {
+      "id": "zero-semantics",
+      "current": "Zero can be shown without a complete coverage audit object.",
+      "vNext": "True zero is distinct from unknown caused by incomplete scans."
+    }
+  ]
+}

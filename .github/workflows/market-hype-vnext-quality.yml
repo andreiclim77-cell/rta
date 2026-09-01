@@ -1,0 +1,64 @@
+name: HYPE vNext quality
+
+on:
+  pull_request:
+    paths:
+      - 'data/hype-benchmark/**'
+      - 'data/hype-vnext/**'
+      - 'docs/HYPE_**'
+      - 'tools/hype-vnext/**'
+      - 'tools/*market-hype*'
+      - 'tools/hype-*'
+      - 'tools/market-pod-*'
+      - '.github/workflows/market-hype-vnext-quality.yml'
+  push:
+    branches:
+      - hype-global-intelligence-blueprint-v1
+      - 'codex/hype-vnext-*'
+    paths:
+      - 'data/hype-benchmark/**'
+      - 'data/hype-vnext/**'
+      - 'docs/HYPE_**'
+      - 'tools/hype-vnext/**'
+      - 'tools/*market-hype*'
+      - 'tools/hype-*'
+      - 'tools/market-pod-*'
+      - '.github/workflows/market-hype-vnext-quality.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hype-vnext-quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  phase-0-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check Phase 0 tool syntax
+        run: |
+          node --check tools/hype-vnext/build-fixtures.js
+          node --check tools/hype-vnext/capture-baseline.js
+          node --check tools/hype-vnext/run-benchmark.js
+
+      - name: Verify frozen baseline
+        run: node tools/hype-vnext/capture-baseline.js --check
+
+      - name: Run deterministic benchmark and current protection regressions
+        run: node tools/hype-vnext/run-benchmark.js
+
+      - name: Run current HYPE publication validators
+        run: |
+          node tools/validate-market-hype-publish-2026.js
+          node tools/validate-market-hype-pods-2026.js
+          node tools/check-market-data-quality-2026.js

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "phase": "HYPE vNext Phase 0",
+  "asOf": "2026-08-31T03:00:00.000Z",
+  "status": "PASS",
+  "assertions": 635,
+  "fixtures": {
+    "total": 44,
+    "adversarial": 26,
+    "adversarialPct": 59.1,
+    "classes": 33
+  },
+  "protectionBindings": {
+    "bindings": 12,
+    "intentionalDivergences": 4
+  },
+  "currentProtections": {
+    "checks": 12,
+    "names": [
+      "event-inside-past-window",
+      "future-event-inside-legacy-window",
+      "future-eta-over-30-days-is-currently-excluded",
+      "past-event-over-30-days-is-excluded",
+      "single-retailer-is-public-signal",
+      "two-retailer-hosts-survive-current-gate",
+      "prior-history-demotes-relisting",
+      "retail-campaign-is-public-signal",
+      "explicit-date-normalizes-to-reported",
+      "current-merge-records-only-compact-lifecycle-list",
+      "valid-rta-product-survives-category-gate",
+      "liquid-with-rta-copy-is-rejected"
+    ]
+  },
+  "windowReference": {
+    "checks": 4,
+    "names": [
+      "winter-0600-bucharest-is-0400-utc",
+      "summer-0600-bucharest-is-0300-utc",
+      "before-0600-uses-previous-calendar-day",
+      "dst-start-day-reference-is-stable"
+    ]
+  },
+  "baseline": "HYPE Phase 0 baseline matches current implementation and data contracts.",
+  "note": "Target fixture expectations freeze the vNext contract; production vNext scoring is intentionally not implemented in Phase 0."
+}
