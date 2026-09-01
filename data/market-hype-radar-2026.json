@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-08-31T14:32:34.164Z",
+  "generatedAt": "2026-09-01T08:09:32.840Z",
   "lookbackHours": 720,
   "cacheMaxHours": 24,
   "pendingRefresh": false,
@@ -42,8 +42,8 @@
     "queriesWorking": 194,
     "redditAuthorized": false,
     "redditMode": "credentials-or-approval-missing",
-    "rawDocuments": 631,
-    "qualifiedPrelaunchSignals": 1,
+    "rawDocuments": 569,
+    "qualifiedPrelaunchSignals": 2,
     "trendSignals7d": 0,
     "complaintSignals7d": 0,
     "sourceTypes": {
@@ -55,12 +55,12 @@
       "manufacturer-social-public": {
         "queries": 44,
         "working": 44,
-        "documents": 430
+        "documents": 404
       },
       "manufacturer-community": {
         "queries": 44,
         "working": 44,
-        "documents": 421
+        "documents": 404
       },
       "vaping-forum-prelaunch": {
         "queries": 51,
@@ -79,41 +79,41 @@
       }
     },
     "verifiedDateSignals": 0,
-    "indexDateSignals": 1,
+    "indexDateSignals": 2,
     "deepQueriesRun": 115,
     "deepQueriesWorking": 115,
-    "deepCandidateDocuments": 608,
+    "deepCandidateDocuments": 588,
     "deepWarningsAdded": 0,
     "deepScan": true,
     "deepStrictHostValidated": true,
-    "deepWrongHostRejected": 15,
+    "deepWrongHostRejected": 21,
     "wideQueriesRun": 181,
     "wideQueriesWorking": 181,
-    "wideCandidateDocuments": 855,
-    "wideSignalsAccepted": 59,
-    "wideUpcomingSignals": 6,
-    "wideReleasedSignals": 53,
-    "wideRememberedUpcomingSignals": 7,
-    "wideRememberedReleasedSignals": 53,
-    "wideDiscoveryOnlySignals": 54,
-    "wideDecisionEligibleSignals": 5,
-    "wideCloneSignals": 0,
+    "wideCandidateDocuments": 793,
+    "wideSignalsAccepted": 62,
+    "wideUpcomingSignals": 4,
+    "wideReleasedSignals": 58,
+    "wideRememberedUpcomingSignals": 5,
+    "wideRememberedReleasedSignals": 58,
+    "wideDiscoveryOnlySignals": 51,
+    "wideDecisionEligibleSignals": 11,
+    "wideCloneSignals": 1,
     "wideScan": true,
     "scope": "GLOBAL",
     "finalRelevantProductsBefore": 1,
     "productQueriesRun": 91,
     "productQueriesWorking": 91,
     "productCandidates": 0,
-    "directVendorPages": 34,
-    "directVendorProductLinks": 173,
-    "directVendorProductPagesFetched": 172,
+    "directVendorPages": 35,
+    "directVendorProductLinks": 180,
+    "directVendorProductPagesFetched": 179,
     "directVendorPhraseHits": 170,
     "directVendorEvents": 0,
     "targetedVendorQueries": 90,
     "targetedVendorQueriesWorking": 90,
-    "targetedVendorRawDocs": 791,
+    "targetedVendorRawDocs": 677,
     "targetedVendorPreCandidates": 20,
-    "targetedVendorResolvedPages": 10,
+    "targetedVendorResolvedPages": 11,
     "targetedVendorEvents": 0,
     "explicitVendorDatePass": true,
     "explicitVendorEvents": 0,
@@ -174,7 +174,7 @@
     "vendorProfilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 24,
+        "catalogFetched": 23,
         "productLinks": 186,
         "productPages": 184,
         "events": 3,
@@ -206,7 +206,7 @@
         "productLinks": 180,
         "productPages": 180,
         "events": 0,
-        "titleFallbacks": 46,
+        "titleFallbacks": 47,
         "samples": []
       },
       {
@@ -241,7 +241,7 @@
     "finalConcreteProducts": 3,
     "finalBeforeProducts": 3,
     "finalAfterProducts": 0,
-    "upstreamProductEvents": 4
+    "upstreamProductEvents": 6
   },
   "categories": {
     "RTA": [
@@ -290,7 +290,7 @@
         "typology": "single battery",
         "mentions30d": 1,
         "sourceTypeCount": 0,
-        "newestSignalHours": 66.43333333333334,
+        "newestSignalHours": 90.43333333333334,
         "maturityStage": "SIGNAL",
         "maturityLabel": "teaser",
         "confidence": 37,
@@ -381,9 +381,34 @@
           "decision": "PREPARE"
         }
       ]
+    },
+    {
+      "date": "2026-09-01",
+      "events": [
+        {
+          "kind": "pre",
+          "eventId": "d24304b280e6f1a8db7c",
+          "category": "ACCESORII",
+          "typology": "tool-uri",
+          "mentions": 1,
+          "engagement": 0,
+          "sourceTypeCount": 1,
+          "decision": "PREPARE"
+        },
+        {
+          "kind": "pre",
+          "eventId": "c155d624094204e8601b",
+          "category": "RTA",
+          "typology": "RDL single",
+          "mentions": 1,
+          "engagement": 0,
+          "sourceTypeCount": 1,
+          "decision": "PREPARE"
+        }
+      ]
     }
   ],
   "hypeWindowDays": 30,
-  "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
+  "snapshotReferenceAt": "2026-09-01T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
 }
