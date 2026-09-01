@@ -12,13 +12,14 @@ No implementation may treat a single older Market/Analysis file as the complete 
 1. `ANALIZA_ROMANIA_CANONICAL_SPEC_INDEX.md` — this entry point.
 2. `ANALIZA_ROMANIA_VNEXT_BLUEPRINT.md` — mission, truth rules, taxonomy, market-universe model, scoring and migration.
 3. `ANALIZA_ROMANIA_SOURCE_MAP_MAXIMUM.md` — Romanian storefront/source universe and discovery semantics.
-4. `ANALIZA_ROMANIA_POD_ECOSYSTEM_SPEC.md` — POD/AIO/Boro devices, consumables, compatibility and EHS.
-5. `ANALIZA_ROMANIA_DATA_MODEL_SCORING_PIPELINE.md` — implementable data model, features, scores and pipeline contracts.
-6. `ANALIZA_ROMANIA_MAXIMUM_OPERATING_PROCEDURES.md` — 96 operating procedures.
-7. `ANALIZA_ROMANIA_CURRENT_TECHNICAL_AUDIT_2026-09-01.md` — current system assets/gaps and migration priorities.
-8. `ANALIZA_ROMANIA_EXTERNAL_SOURCE_VALIDATION_2026-09-01.md` — validated current external-source semantics.
-9. `ANALIZA_ROMANIA_ACCEPTANCE_BACKTEST_AND_CUTOVER.md` — QA, gold set, shadow run and cutover gates.
-10. `CODEX_ANALIZA_ROMANIA_VNEXT_IMPLEMENTATION_BRIEF.md` — implementation sequence and constraints.
+4. `ANALIZA_ROMANIA_RETAILER_CANDIDATE_REGISTRY_MAXIMUM.md` — current 22-store seeds plus new Romanian/cross-border candidates found through adversarial discovery.
+5. `ANALIZA_ROMANIA_POD_ECOSYSTEM_SPEC.md` — POD/AIO/Boro devices, consumables, compatibility and EHS.
+6. `ANALIZA_ROMANIA_DATA_MODEL_SCORING_PIPELINE.md` — implementable data model, features, scores and pipeline contracts.
+7. `ANALIZA_ROMANIA_MAXIMUM_OPERATING_PROCEDURES.md` — 96 operating procedures.
+8. `ANALIZA_ROMANIA_CURRENT_TECHNICAL_AUDIT_2026-09-01.md` — current system assets/gaps and migration priorities.
+9. `ANALIZA_ROMANIA_EXTERNAL_SOURCE_VALIDATION_2026-09-01.md` — validated current external-source semantics.
+10. `ANALIZA_ROMANIA_ACCEPTANCE_BACKTEST_AND_CUTOVER.md` — QA, gold set, shadow run and cutover gates.
+11. `CODEX_ANALIZA_ROMANIA_VNEXT_IMPLEMENTATION_BRIEF.md` — implementation sequence and constraints.
 
 ---
 
@@ -32,6 +33,7 @@ ANALIZA ROMÂNIA vNext is considered **maximally specified at architecture/SOP l
 - POD devices + replacement pods/cartridges/coils as separate linked entities;
 - storefront vs operator separation;
 - dynamically rediscovered Romanian retailer universe;
+- current seed registry plus explicit candidate/quarantine registry;
 - dated/expiring national-universe certification;
 - Tier A explicit sales;
 - Tier B commercial rankings;
