@@ -211,7 +211,7 @@ function salesAudit(sales){
   return{
     file,
     exists:fs.existsSync(absolute(file)),
-    bytes:fs.statSync(absolute(file)).size,
+    bytes:Buffer.byteLength(readText(file).replace(/\r\n/g,'\n')),
     parses:true,
     updatedAt:sales.updatedAt||null,
     rankings:rankings.length,
