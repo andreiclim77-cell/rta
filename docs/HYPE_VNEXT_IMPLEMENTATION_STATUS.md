@@ -1,7 +1,7 @@
 # HYPE vNext implementation status
 
 **Phase:** 0 - current baseline and regression contract
-**Status:** implemented on `codex/hype-vnext-00-baseline`; draft PR #18 under audit
+**Status:** implemented and self-audited on `codex/hype-vnext-00-baseline`; draft PR #18 awaits approval
 **Date:** 2026-09-01
 **Rollback point:** `6bf2acc68ec8af7c44db4b5c6e78f0ab771bb1df`
 
@@ -113,6 +113,24 @@ The final cutover requirement of at least 100 manually labeled retrospective
 cases is intentionally not claimed in Phase 0. It belongs to the third
 milestone after the vNext event and scoring engines exist.
 
+## Phase 0 PR audit
+
+Audit result: no unresolved material finding.
+
+- GitHub PR #18 is mergeable and targets only the frozen specification branch.
+- The complete PR file list contains additions only; no current HYPE/runtime
+  file is modified.
+- New and current validators pass in a clean detached worktree.
+- GitHub HYPE vNext, Market 2026 and RTA Guide checks pass.
+- Baseline hashes are newline-normalized so Windows and Linux CI agree.
+- One review finding was fixed: feature-branch pushes initially started the new
+  CI both as `push` and `pull_request`; the duplicate branch trigger was removed.
+
+Residual limits are explicit rather than hidden: Phase 0 fixtures are
+deterministic synthetic evidence cases, the operational run observation is a
+dated snapshot, and the 100-case retrospective corpus remains a later cutover
+gate.
+
 ## Risks found
 
 1. The current symmetric window deletes fresh signals whose ETA is farther than
@@ -160,7 +178,6 @@ records. It will not switch the public UI or production workflow.
 
 ## Next gate
 
-Draft PR #18 targets the frozen specification branch. Audit the complete diff,
-rerun old validators and the new deterministic suite, and verify that no
-existing HYPE/runtime file changed. Begin Phase 1 only after that audit has no
-unresolved material finding and the user approves continuation.
+Draft PR #18 targets the frozen specification branch and has passed the Phase 0
+technical audit. Begin Phase 1 only after the user approves continuation; do
+not merge or alter the public HYPE path automatically.
