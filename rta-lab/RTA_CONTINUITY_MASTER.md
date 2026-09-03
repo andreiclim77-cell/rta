@@ -17,7 +17,7 @@
 
 ## 0. Frază de pornire
 
-> Continuăm proiectul Rta. Lucrăm prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → spire → contact/spaced → poziție → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 / 620 repere face parte din contextul master. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 spire** principal, **K1 28 GA / Ø2,5 / 5** secundar, fără să anuleze excepțiile validate de platformă. Pentru TC, regula canonică actuală este: **Dicodes RESISTHERM NiFe30 · TCR320 · rola personală 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Pentru Clapton, păstrează perechile dedicate Chariot→K1 și Dvarw FL→SS, plus preferințele de platformă salvate la 03.09.2026: **415→K1 Clapton/5** și **Asylum V3→SS316L Clapton/5**, cu K1 Clapton secundar pe Asylum.
+> Continuăm proiectul Rta. Lucrăm prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → spire → contact/spaced → poziție → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 / 620 repere face parte din contextul master. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 spire** principal, **K1 28 GA / Ø2,5 / 5** secundar, fără să anuleze excepțiile validate de platformă. Pentru TC, regula canonică actuală este: **Dicodes RESISTHERM NiFe30 · TCR320 · rola personală 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Pentru Clapton, păstrează perechile dedicate Chariot→K1 și Dvarw FL→SS, plus preferințele de platformă salvate la 03.09.2026: **415→K1 Clapton/5** și **Asylum V3→SS316L Clapton/5**, cu K1 Clapton secundar pe Asylum. Pentru **Asylum V3 Flat + SS316L Clapton/5**, plaja de lucru canonică este **12–14 W**, iar **13 W** este sweet spot-ul practic confirmat curent.
 
 ## 1. Bloc rapid de context
 
@@ -32,10 +32,11 @@
 9. Benchmark-ul istoric K Prime + NiFe30 pentru 80% trabuc / 20% cireșe rămâne benchmark de aliaj/platformă, dar geometria lui este actualizată la **NiFe30/6**.
 10. Perechi Clapton dedicate: **Chariot → K1 Clapton 2×30+38 / Ø2,5 / 5**; **Dvarw MTL FL → SS316L Clapton 2×30+38 / Ø2,5 / 5**.
 11. Preferințe Clapton suplimentare salvate 03.09.2026: **415 → K1 Clapton 2×30+38 / Ø2,5 / 5**; **Asylum V3 → SS316L Clapton 2×30+38 / Ø2,5 / 5** ca alegere Clapton principală, iar **K1 Clapton/5 rămâne compatibil secundar** pe Asylum.
-12. Inventar: 41 atomizoare fizice, 17 platforme.
-13. Sloturi active: K1 28, K1 29, K1 Clapton, SS316L Clapton, familia NiFe TC. NiFe30/NiFe52 sunt două variante în același slot TC.
-14. Regula generală de spire: K1 28 = 5; K1 29 = 5 ca prior personal, 6 doar justificat; ambele Claptonuri = 5; **Dicodes NiFe30 = 6; Zivipf NiFe52 = 6**.
-15. RTA Lab: V10, 620 repere = 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex; 120 Hall of Fame.
+12. **Asylum V3 Flat + SS316L Clapton/5:** **12–14 W** plajă de lucru; **13 W** sweet spot practic confirmat, cu ramp-up bun și fără aromă gătită în testul curent.
+13. Inventar: 41 atomizoare fizice, 17 platforme.
+14. Sloturi active: K1 28, K1 29, K1 Clapton, SS316L Clapton, familia NiFe TC. NiFe30/NiFe52 sunt două variante în același slot TC.
+15. Regula generală de spire: K1 28 = 5; K1 29 = 5 ca prior personal, 6 doar justificat; ambele Claptonuri = 5; **Dicodes NiFe30 = 6; Zivipf NiFe52 = 6**.
+16. RTA Lab: V10, 620 repere = 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex; 120 Hall of Fame.
 
 ## 2. Paradigma: ADN de platformă, nu TOP global
 
@@ -61,7 +62,7 @@
 | Diplomat v1.5 | 3 | Camerele schimbă specializarea aromatică; calibrare separată; 29/5 prior personal. |
 | Kayfun X / KX | 4 | 28/5 + Dicodes RESISTHERM NiFe30 320/6 TC; daily premium, foarte purtabil. |
 | KLP / Kayfun Lite Plus 2021 | 5 | K1 29 GA nativ; 29/5 default personal, 29/6 alternativă validată; neschimbat de harta TC. |
-| Asylum V3 SS/DLC | 2 | Flat mai analitic; Dome mai rotund; 29/5 prior personal; **SS316L Clapton/5 preferința Clapton principală, K1 Clapton/5 secundar compatibil**. |
+| Asylum V3 SS/DLC | 2 | Flat mai analitic; Dome mai rotund; 29/5 prior personal; **SS316L Clapton/5 preferința Clapton principală, K1 Clapton/5 secundar compatibil; Flat + SS Clapton: 12–14 W, 13 W sweet spot practic**. |
 | Prime Minister Freehand | 2 | NET specialist; 28/5 și 29/6 validate. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; calibrare separată de Freehand; 29/5 prior personal. |
 | By-Ka V11 | 1 | Echilibru corp–claritate; airflow unic; 29/5 prior personal. |
@@ -129,6 +130,7 @@
 
 - Flat = ușor preferat pentru claritate/separare; Dome = corp/integrare.
 - **SS316L Clapton 2×30+38 / Ø2,5 / 5 = preferința Clapton principală salvată la 03.09.2026**, pentru claritate, top-notes, separare și layering.
+- **Asylum V3 Flat + SS316L Clapton/5 = 12–14 W plajă de lucru; 13 W sweet spot practic confirmat.** La 13 W, ramp-up-ul este bun, iar în testul curent aroma nu este încă „gătită”.
 - **K1 Clapton 2×30+38 / Ø2,5 / 5 rămâne compatibil secundar**, pentru corp, densitate și integrare.
 - În scoring, SS Clapton primește prior moderat față de K1 Clapton; lichidul și obiectivul pot totuși schimba ordinea finală.
 
@@ -148,7 +150,7 @@
 | K1 28 GA round | Ø2,5 · 5 | echilibru, corp curat, mouthfeel, completitudine |
 | K1 29 GA round | Ø2,5 · 5 prior; 6 justificat | tobacco-first, TH, dry, precizie, viteză |
 | K1 Clapton 2×30+38 | Ø2,5 · 5 | corp, densitate, mouthfeel, TH, integrare; dedicat Chariot, preferat și pe 415 |
-| SS316L Clapton 2×30+38 | Ø2,5 · 5 | claritate, top-notes, layering; dedicat Dvarw FL, preferat pe Asylum V3 |
+| SS316L Clapton 2×30+38 | Ø2,5 · 5 | claritate, top-notes, layering; dedicat Dvarw FL, preferat pe Asylum V3; Asylum Flat 12–14 W, 13 W sweet spot |
 | Dicodes RESISTHERM NiFe30 | **TCR320 · 5,5 Ω/m · Ø2,5 · 6** | TC: finețe, smoothness, consistență, layering |
 | Zivipf NiFe52 | **TCR310 · Ø2,5 · 6** | TC: variantă de aliaj în același slot |
 
@@ -181,6 +183,7 @@
 - Baseline TC activ: **Dicodes NiFe30 320/6; Zivipf NiFe52 310/6**, ambele Ø2,5.
 - Alegerea aliajului se face per platformă, în interiorul aceluiași slot TC.
 - Preferințele Clapton de platformă sunt bonusuri moderate de compatibilitate, nu forțări ale locului #1.
+- Wattajele validate pe o cameră anume se păstrează ca plajă + sweet spot și nu se transferă automat pe altă cameră; exemplu: **Asylum Flat + SS Clapton/5 = 12–14 W, 13 W sweet spot**, fără extrapolare automată la Dome.
 
 ## 8. Calibrări istorice păstrate
 
@@ -188,7 +191,7 @@
 | --- | --- |
 | Chariot + Cronos Tab Plus | K1 Clapton 2×30+38 = #1 practic în watt; K1 28 aproape egal; NiFe30 = foarte complet aromatic, dar TC nu este filosofia naturală preferată a Chariot. |
 | Muted+ | Leak după refill: nu supra-umple; wick standard până la marginea deckului; side/triple-air = tuning aromatic. |
-| Asylum V3 | Flat ușor preferat pentru claritate/separare, Dome pentru corp/integrare; din 03.09.2026 SS316L Clapton/5 = Clapton principal, K1 Clapton/5 = secundar compatibil. |
+| Asylum V3 | Flat ușor preferat pentru claritate/separare, Dome pentru corp/integrare; din 03.09.2026 SS316L Clapton/5 = Clapton principal, K1 Clapton/5 = secundar compatibil; **Flat + SS Clapton/5 = 12–14 W, 13 W sweet spot practic**. |
 | 415 | Din 03.09.2026 K1 Clapton/5 este preferință Clapton de platformă pentru corp/densitate/integrare; round-wire-urile își păstrează rolurile validate. |
 | Kayfun X refill | Ridicare completă top-cap până la clickuri pentru închiderea LC; după refill se împinge complet în jos. |
 | Prime Minister refill/JFC | Top-capul se închide complet după refill pentru redeschiderea corectă a juice-flow-ului. |
@@ -212,7 +215,7 @@
 | NiFe baseline | **Dicodes RESISTHERM NiFe30 320 / 5,5 Ω/m / 6; Zivipf NiFe52 310 / 6; ambele Ø2,5** |
 | Hartă TC | GTR/KX → NiFe30/320/6; K Prime → NiFe52/310/6; KLP neschimbat |
 | Clapton dedicat | Chariot → K1 Clapton/5; Dvarw FL → SS Clapton/5 |
-| Clapton preferat suplimentar | **415 → K1 Clapton/5; Asylum V3 → SS Clapton/5, K1 Clapton secundar** |
+| Clapton preferat suplimentar | **415 → K1 Clapton/5; Asylum V3 → SS Clapton/5, K1 Clapton secundar; Asylum Flat + SS = 12–14 W, sweet spot 13 W** |
 
 ### 9.2. Fișiere relevante
 
@@ -225,8 +228,8 @@
 | `rta-lab/data/tc-platform-map.js` | Hartă aliaj/platformă; GTR/KX = Dicodes NiFe30/6, K Prime = NiFe52/6. |
 | `rta-lab/data/tc-sixwrap-global.js` | **Overlay canonic global:** forțează outputul activ NiFe TC la 6 spire pe Ø2,5 pe toate platformele și curăță outputurile legacy 7. |
 | `rta-lab/data/wires.js` | Metadate sârme; NiFe30/6 + NiFe52/6, 5,5 Ω/m salvat pentru Dicodes. |
-| `rta-lab/data/clapton-platform-map.js` | Perechi Clapton dedicate + preferințe 415→K1 și Asylum→SS; aplică bonusuri moderate și texte Explorer. |
-| `rta-lab/sw.js` | PWA/network-first; cache actualizat pentru `tc-sixwrap-global.js`; la schimbări de overlay se poate revizui markerul cache. |
+| `rta-lab/data/clapton-platform-map.js` | Perechi Clapton dedicate + preferințe 415→K1 și Asylum→SS; pentru Asylum Flat păstrează **12–14 W / sweet spot 13 W** și aplică bonusuri moderate + texte Explorer. |
+| `rta-lab/sw.js` | PWA/network-first; cache actualizat pentru overlay-urile active. |
 | `rta-lab/RTA_CONTINUITY_MASTER.md` | Sursa canonică de adevăr. |
 
 ### 9.3. Ordinea de încărcare relevantă
@@ -244,6 +247,7 @@
 - `012df47bb62a7eb950e41863b529f2d5731659f8` — UI `index.html` aliniat la 6 și overlay încărcat.
 - `8363e5799b933bd710087a1550330c114ab79daa` — PWA cache actualizat.
 - `26f139ad887a42afb696da2c1fc4a7737495f6e1` — 03.09.2026: `clapton-platform-map.js` actualizat cu **415→K1 Clapton/5** și **Asylum→SS Clapton/5**, K1 secundar pe Asylum.
+- `ae4e318ccc54925e0452d1619b3ae33c7a7a26c4` — 03.09.2026: Asylum Flat + SS316L Clapton/5 salvat la **12–14 W**, cu **13 W sweet spot practic confirmat**.
 
 ## 10. Catalog 620 / Hall of Fame
 
@@ -266,6 +270,7 @@
 | K Prime NiFe30/7 benchmark | **DEPĂȘIT ca geometrie** | benchmark NiFe30 = 6; preferință curentă NiFe52/6 |
 | Claptonuri fără platformă principală | DEPĂȘIT | Chariot + K1 Clapton/5; Dvarw FL + SS Clapton/5 |
 | Asylum K1/SS tratate egal ca preferință | **REFINAT 03.09.2026** | SS316L Clapton/5 = preferința principală; K1 Clapton/5 = secundar compatibil |
+| Asylum SS Clapton doar cu watt generic 11–13 W | **REFINAT 03.09.2026 pentru Flat** | **Asylum Flat + SS Clapton/5 = 12–14 W; 13 W sweet spot practic** |
 | 415 K1 Clapton doar compatibil generic | **REFINAT 03.09.2026** | K1 Clapton/5 = preferință Clapton de platformă |
 | Dvarw CL/FL tratate identic | INTERZIS | rămân distincte |
 
@@ -311,6 +316,8 @@ Descrie întâi piesele în spațiu și mișcarea: airflow, porțiunea de coil s
 
 - **415 → K1 Clapton 2×30+38 / Ø2,5 / 5 spire**. Rol: corp, densitate, mouthfeel, integrare; nu înlocuiește automat 29/5 spaced pentru tobacco-first sau 28/5 pentru echilibru/layering.
 - **Asylum V3 → SS316L Clapton 2×30+38 / Ø2,5 / 5 spire** = preferința Clapton principală. Rol: claritate, top-notes, separare, layering.
+- **Asylum V3 Flat + SS316L Clapton/5 → 12–14 W**, cu **13 W sweet spot practic confirmat**. La 13 W, ramp-up-ul este bun și aroma nu este încă gătită în testul curent.
 - **Asylum V3 → K1 Clapton 2×30+38 / Ø2,5 / 5 spire** rămâne compatibil secundar pentru corp/densitate/integrare.
+- Nu transfera automat plaja de 12–14 W / sweet spot 13 W de la Flat la Dome; Dome se testează separat.
 - Perechile dedicate istorice rămân neschimbate: Chariot→K1 Clapton/5 și Dvarw FL→SS Clapton/5.
 - Implementare: `data/clapton-platform-map.js` aplică bonus moderat 415+K1 și bonus mai mare Asylum+SS decât Asylum+K1; lichidul și obiectivul rămân criteriile finale.
