@@ -5,6 +5,7 @@
  * Preferințe suplimentare de platformă salvate de utilizator:
  * - 415 -> K1 Clapton 2x30+38 / Ø2,5 / 5 wraps
  * - Asylum V3 -> SS316L Clapton 2x30+38 / Ø2,5 / 5 wraps; K1 Clapton rămâne compatibil secundar
+ * - Asylum V3 Flat + SS316L Clapton/5: 12–14 W plajă de lucru; 13 W sweet spot practic confirmat
  * Overlay-ul nu forțează un Clapton pe locul #1 pentru un lichid incompatibil.
  */
 (() => {
@@ -43,8 +44,11 @@
         alternateWire: "K1 Clapton 2×30+38",
         diam: "Ø2,5 mm",
         wraps: 5,
+        power: "12–14 W",
+        sweetSpotW: 13,
+        chamberValidated: "Flat",
         tier: "preferred",
-        status: "SS316L Clapton este preferința Clapton principală pe Asylum V3; K1 Clapton rămâne compatibil secundar"
+        status: "SS316L Clapton este preferința Clapton principală pe Asylum V3; pe camera Flat, 12–14 W este plaja de lucru, cu 13 W sweet spot practic confirmat; K1 Clapton rămâne compatibil secundar"
       }
     }
   };
@@ -101,9 +105,10 @@
 
     if (atom.id === "asylum" && wire.id === "ssclap") {
       output.wraps = "5";
-      output.status = "Preferință platformă · Asylum V3 · SS Clapton";
+      output.power = "12–14 W";
+      output.status = "Preferință platformă · Asylum V3 Flat · SS Clapton";
       output.noteClass = "valid";
-      output.note = "SS316L Clapton 2×30+38 · Ø2,5 mm · 5 spire este preferința Clapton principală pe Asylum V3: claritate, top-notes, separare și layering. K1 Clapton rămâne compatibil secundar când se caută mai mult corp și integrare.";
+      output.note = "SS316L Clapton 2×30+38 · Ø2,5 mm · 5 spire este preferința Clapton principală pe Asylum V3. Pe camera Flat, plaja de lucru salvată este 12–14 W, cu 13 W sweet spot practic confirmat: ramp-up bun, claritate și layering, fără aromă gătită în testul curent. K1 Clapton rămâne compatibil secundar când se caută mai mult corp și integrare.";
       return output;
     }
 
@@ -133,7 +138,7 @@
         return "415 are acum K1 Clapton/5 ca preferință Clapton de platformă atunci când lichidul cere corp, densitate, mouthfeel și integrare";
       }
       if (atom.id === "asylum" && wire.id === "ssclap") {
-        return "Asylum V3 preferă SS316L Clapton/5 pentru claritate, top-notes, separare și layering; acesta este Clapton-ul principal al platformei";
+        return "Asylum V3 preferă SS316L Clapton/5 pentru claritate, top-notes, separare și layering; pe Flat, 12–14 W este plaja de lucru, cu 13 W sweet spot practic confirmat";
       }
       if (atom.id === "asylum" && wire.id === "k1clap") {
         return "Asylum V3 acceptă și K1 Clapton/5 pentru corp și integrare, dar ca opțiune secundară față de SS316L Clapton";
@@ -156,7 +161,7 @@
         return "+ preferință Clapton 415: mai mult corp, densitate și integrare; − mai puțin rapid/direct decât round-wire 29/5 și mai puțin aerisit în layering decât 28/5.";
       }
       if (atom.id === "asylum" && wire.id === "ssclap") {
-        return "+ preferința Clapton principală pe Asylum: claritate, top-notes și layering; K1 Clapton rămâne alternativa mai densă și mai rotundă.";
+        return "+ preferința Clapton principală pe Asylum: claritate, top-notes și layering; pe Flat, 13 W este sweet spot-ul practic actual în plaja 12–14 W. K1 Clapton rămâne alternativa mai densă și mai rotundă.";
       }
       if (atom.id === "asylum" && wire.id === "k1clap") {
         return "+ alternativă Asylum pentru corp, densitate și integrare; − SS316L Clapton rămâne preferat pentru claritate și separare.";
@@ -178,7 +183,7 @@
         return "PREFERINȚĂ CLAPTON: K1 Clapton 2×30+38 / 5 spire pentru corp, densitate, mouthfeel și integrare.";
       }
       if (atom.id === "asylum" && wire.id === "ssclap") {
-        return "PREFERINȚĂ CLAPTON PRINCIPALĂ: SS316L Clapton 2×30+38 / 5 spire pentru claritate, top-notes și layering.";
+        return "PREFERINȚĂ CLAPTON PRINCIPALĂ: SS316L Clapton 2×30+38 / 5 spire; Flat 12–14 W, cu 13 W sweet spot practic confirmat pentru claritate și layering fără aromă gătită.";
       }
       if (atom.id === "asylum" && wire.id === "k1clap") {
         return "CLAPTON SECUNDAR COMPATIBIL: K1 Clapton 2×30+38 / 5 spire pentru corp și integrare.";
