@@ -35,7 +35,8 @@
     (marketData&&marketData.retailers||[]).forEach(function(r){out[r.id]=r});
     return out
   }
-  function is2026(date){return /^2026(?:-|$)/.test(String(date||''))}
+  function analysisStart(){return String(marketData&&marketData.analysisStart||'2026-01-01')}
+  function inAnalysisWindow(date){var d=String(date||'');return /^\d{4}-\d{2}-\d{2}/.test(d)&&d.slice(0,10)>=analysisStart()}
   function safeSource(url){return /^https:\/\//i.test(String(url||''))?String(url):''}
   function unique(values){return Array.from(new Set(values.filter(Boolean)))}
   function bucharestToday(){
@@ -135,7 +136,7 @@
       overlay.innerHTML='<form class="market-modal-dialog" autocomplete="off">'+
         '<div class="market-lock-icon">🔐</div>'+
         '<h2>'+escHtml(word('Acces PIAȚA RTA ROMÂNIA','ROMANIA RTA MARKET access'))+'</h2>'+
-        '<p>'+escHtml(word('Introdu parola de acces pentru modulul privat 2026.','Enter the access password for the private 2026 module.'))+'</p>'+
+        '<p>'+escHtml(word('Introdu parola de acces pentru modulul privat de analiză.','Enter the access password for the private analysis module.'))+'</p>'+
         '<input id="market2026Password" type="password" autocomplete="current-password" aria-label="'+escHtml(word('Parolă','Password'))+'" />'+
         '<div class="market-error" id="market2026Error"></div>'+
         '<div class="market-modal-actions"><button type="button" class="mini-link" data-market-cancel>'+escHtml(word('Anulează','Cancel'))+'</button><button type="submit" class="mini-link">'+escHtml(word('Deblochează','Unlock'))+'</button></div>'+
@@ -200,7 +201,7 @@
     }
     var previousTitle=window.routeTitle;
     window.routeTitle=function(id,atom){
-      if(id===ROUTE)return word('Piața RTA România 2026 - Ghid RTA MTL','Romania RTA Market 2026 - MTL RTA Guide');
+      if(id===ROUTE)return word('Piața RTA România - Ghid RTA MTL','Romania RTA Market - MTL RTA Guide');
       return previousTitle(id,atom)
     };
     var previousEnsure=window.ensureSectionRendered;
@@ -210,7 +211,7 @@
   function renderLocked(){
     var root=byId('market2026Root');
     if(!root)return;
-    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">🔒</div><span class="market-kicker">PRIVATE · 2026</span><h2>'+escHtml(word('PIAȚA RTA ROMÂNIA','ROMANIA RTA MARKET'))+'</h2><p>'+escHtml(word('Modulul de analiză este protejat. Datele sunt limitate strict la 2026.','The analysis module is protected. Data is strictly limited to 2026.'))+'</p><button class="mini-link" type="button" data-market-unlock>'+escHtml(word('Introdu parola','Enter password'))+'</button></div>';
+    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">🔒</div><span class="market-kicker">PRIVATE · 01.01.2026 → PREZENT</span><h2>'+escHtml(word('PIAȚA RTA ROMÂNIA','ROMANIA RTA MARKET'))+'</h2><p>'+escHtml(word('Modulul separă strict datele cerute din 01.01.2026 de capturile care există efectiv. Golurile istorice nu sunt estimate.','The module strictly separates the requested window from 01.01.2026 from snapshots that actually exist. Historical gaps are not estimated.'))+'</p><button class="mini-link" type="button" data-market-unlock>'+escHtml(word('Introdu parola','Enter password'))+'</button></div>';
     root.querySelector('[data-market-unlock]').addEventListener('click',function(){requestAccess().then(function(ok){if(ok)initMarket(true)})})
   }
 
@@ -219,14 +220,14 @@
     loadingPromise=fetch('/data/market-2026.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('market-data');return r.json()}).then(function(value){
       marketData=value;
       if(Number(marketData.scopeYear)!==2026)throw new Error('invalid-market-year');
-      marketData.observations=(marketData.observations||[]).filter(function(o){return is2026(o.observedAt)});
-      marketData.trendSnapshots=(marketData.trendSnapshots||[]).filter(function(o){return is2026(o.date)});
+      marketData.observations=(marketData.observations||[]).filter(function(o){return inAnalysisWindow(o.observedAt)});
+      marketData.trendSnapshots=(marketData.trendSnapshots||[]).filter(function(o){return inAnalysisWindow(o.date)});
       return marketData
     }).finally(function(){loadingPromise=null});
     return loadingPromise
   }
 
-  function observations(){return (marketData&&marketData.observations||[]).filter(function(o){return is2026(o.observedAt)})}
+  function observations(){return (marketData&&marketData.observations||[]).filter(function(o){return inAnalysisWindow(o.observedAt)})}
   function counts(){
     var obs=observations();
     var retailerIds=unique(obs.map(function(o){return o.retailerId}));
@@ -244,7 +245,7 @@
     var c=counts();
     var fresh=freshness();
     return '<div class="market-hero">'+
-      '<div class="market-hero-top"><span class="market-kicker">PRIVATE MARKET INTELLIGENCE</span><span class="market-year">2026 ONLY</span><span class="market-fresh '+(fresh.fresh?'ok':'warn')+'">'+escHtml(fresh.fresh?word('● ACTUALIZAT AZI','● UPDATED TODAY'):word('● NECESITĂ ACTUALIZARE','● REFRESH NEEDED'))+'</span><span class="market-year">'+escHtml(word('zilnic · 07:00 RO','daily · 07:00 RO'))+'</span></div>'+
+      '<div class="market-hero-top"><span class="market-kicker">PRIVATE MARKET INTELLIGENCE</span><span class="market-year">01.01.2026 → PREZENT</span><span class="market-fresh '+(fresh.fresh?'ok':'warn')+'">'+escHtml(fresh.fresh?word('● ACTUALIZAT AZI','● UPDATED TODAY'):word('● NECESITĂ ACTUALIZARE','● REFRESH NEEDED'))+'</span><span class="market-year">'+escHtml(word('zilnic · 06:00 RO','daily · 06:00 RO'))+'</span></div>'+
       '<h1>'+escHtml(word('PIAȚA RTA ROMÂNIA','ROMANIA RTA MARKET'))+'</h1>'+
       '<p>'+escHtml(word('Observator de ofertă publică pentru ecosistemul rebuildable: RTA, sârme/coiluri, bumbac, moduri și chipseturi, acumulatori, încărcătoare, unelte, componente, accesorii și lichide tutunoase/NET. Toate sursele configurate sunt verificate zilnic. Stocul public nu este tratat drept vânzare.','Public-offer observatory for the rebuildable ecosystem: RTAs, wires/coils, cotton, mods and chipsets, batteries, chargers, tools, parts, accessories and tobacco/NET liquids. Every configured source is checked daily. Public stock is not treated as sales.'))+'</p>'+
       '<div class="market-metrics">'+
@@ -275,8 +276,8 @@
     var status=marketData.collectorStatus||{};
     var fresh=freshness();
     return '<div class="market-grid">'+
-      '<article class="market-card"><h3>'+escHtml(word('Regula de interpretare','Interpretation rule'))+'</h3><p>'+escHtml(marketData.methodology.description)+'</p><div class="market-note" style="margin-top:12px"><strong>2026:</strong> '+escHtml(marketData.methodology.historyPolicy)+'</div></article>'+
-      '<article class="market-card"><h3>'+escHtml(word('Actualizare zilnică','Daily refresh'))+'</h3><p><strong>'+escHtml(fresh.date||'—')+'</strong> · '+escHtml(fmtNumber(status.pagesFetched||0))+' '+escHtml(word('pagini/API verificate · ','pages/API calls checked · '))+escHtml(fmtNumber(status.errors||0))+' '+escHtml(word('erori raportate.','reported errors.'))+'</p><div class="market-note" style="margin-top:12px">'+escHtml(word('Țintă operațională: o captură completă în fiecare zi, la 07:00 ora României; dashboardul semnalizează dacă snapshotul nu este din ziua curentă.','Operational target: one complete capture every day at 07:00 Romania time; the dashboard flags a snapshot that is not from the current day.'))+'</div></article>'+
+      '<article class="market-card"><h3>'+escHtml(word('Regula de interpretare','Interpretation rule'))+'</h3><p>'+escHtml(marketData.methodology.description)+'</p><div class="market-note" style="margin-top:12px"><strong>'+escHtml(word('Interval cerut:','Requested window:'))+'</strong> '+escHtml(marketData.methodology.historyPolicy)+'</div></article>'+
+      '<article class="market-card"><h3>'+escHtml(word('Actualizare zilnică','Daily refresh'))+'</h3><p><strong>'+escHtml(fresh.date||'—')+'</strong> · '+escHtml(fmtNumber(status.pagesFetched||0))+' '+escHtml(word('pagini/API verificate · ','pages/API calls checked · '))+escHtml(fmtNumber(status.errors||0))+' '+escHtml(word('erori raportate.','reported errors.'))+'</p><div class="market-note" style="margin-top:12px">'+escHtml(word('Țintă operațională: o captură completă în fiecare zi, la 06:00 ora României; dashboardul semnalizează dacă snapshotul nu este din ziua curentă.','Operational target: one complete capture every day at 06:00 Romania time; the dashboard flags a snapshot that is not from the current day.'))+'</div></article>'+
       '<article class="market-card"><h3>'+escHtml(word('Familii monitorizate','Monitored families'))+'</h3><p>'+escHtml(word('Semnul ✓ arată că familia a produs cel puțin o observație în snapshotul curent.','✓ means the family produced at least one observation in the current snapshot.'))+'</p>'+familyCoverageHtml()+'</article>'+
       '<article class="market-card"><h3>'+escHtml(word('Dicodes: tratament separat','Dicodes: separate treatment'))+'</h3><p>'+escHtml(marketData.methodology.dicodesPolicy)+'</p></article>'+
       retailers.map(function(r){return '<article class="market-card"><h3>'+escHtml(r.name)+'</h3><p>'+escHtml(r.note||'')+'</p><div class="market-coverage">'+(r.coverage||[]).map(function(x){return '<span>'+escHtml(x)+'</span>'}).join('')+'</div><p style="margin-top:10px"><a class="market-source-link" target="_blank" rel="noreferrer" href="'+escHtml(safeSource(r.url))+'">'+escHtml(word('Sursa publică','Public source'))+'</a></p></article>'}).join('')+
@@ -292,7 +293,7 @@
     var map=retailerMap();
     var obs=observations();
     return '<div class="market-shell">'+
-      '<div class="market-toolbar"><div><strong>'+escHtml(word('Snapshot public zilnic 2026','Daily public 2026 snapshot'))+'</strong><div style="color:var(--muted);font-size:12px">'+escHtml(word('Fiecare rând păstrează retailerul, sursa și data observației.','Every row keeps the retailer, source and observation date.'))+'</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><select id="marketCategoryFilter">'+categoryOptions()+'</select><button type="button" class="mini-link" data-market-csv>'+escHtml(word('Export CSV','Export CSV'))+'</button></div></div>'+
+      '<div class="market-toolbar"><div><strong>'+escHtml(word('Snapshot public zilnic','Daily public snapshot'))+'</strong><div style="color:var(--muted);font-size:12px">'+escHtml(word('Fiecare rând păstrează retailerul, sursa și data observației.','Every row keeps the retailer, source and observation date.'))+'</div></div><div style="display:flex;gap:8px;flex-wrap:wrap"><select id="marketCategoryFilter">'+categoryOptions()+'</select><button type="button" class="mini-link" data-market-csv>'+escHtml(word('Export CSV','Export CSV'))+'</button></div></div>'+
       '<div id="marketProductsTable">'+productsTable(obs,map,'')+'</div>'+
     '</div>'
   }
@@ -331,7 +332,7 @@
       var ratio=listed?Math.round(out/listed*100):0;
       return '<article class="market-card"><h3>'+escHtml(cat)+deltaHtml(listed,Number(before.listed||0))+'</h3><p><strong>'+escHtml(fmtNumber(listed))+'</strong> '+escHtml(word('poziții · ','positions · '))+escHtml(fmtNumber(now.retailers||0))+' '+escHtml(word('retaileri · ','retailers · '))+escHtml(fmtNumber(ratio))+'% '+escHtml(word('marcate stoc epuizat.','marked out of stock.'))+'</p><div class="market-bar"><span style="width:'+Math.min(100,ratio)+'%"></span></div></article>'
     }).join('');
-    return '<div class="market-note"><strong>'+escHtml(word('Trend longitudinal 2026: ','2026 longitudinal trend: '))+'</strong>'+escHtml(enough?word('comparăm automat ultima captură cu ziua precedentă disponibilă.','the latest capture is automatically compared with the previous available day.'):word('prima captură este baseline; diferențele apar după următoarea actualizare zilnică.','the first capture is the baseline; differences appear after the next daily refresh.'))+' '+escHtml(word('Ultima zi: ','Latest day: ')+group.latest.date)+'.</div><div class="market-grid">'+body+'</div>'
+    return '<div class="market-note"><strong>'+escHtml(word('Trend de la prima măsurare: ','Trend since first observation: '))+'</strong>'+escHtml(enough?word('comparăm automat ultima captură cu ziua precedentă disponibilă.','the latest capture is automatically compared with the previous available day.'):word('prima captură este baseline; diferențele apar după următoarea actualizare zilnică.','the first capture is the baseline; differences appear after the next daily refresh.'))+' '+escHtml(word('Ultima zi: ','Latest day: ')+group.latest.date)+'.</div><div class="market-grid">'+body+'</div>'
   }
 
   function renderOpportunitiesTab(){
@@ -372,7 +373,7 @@
     var lines=[header.join(',')].concat(rows.map(function(o){return [map[o.retailerId]&&map[o.retailerId].name||o.retailerId,o.category,o.brand,o.product,o.priceRon,o.stock,o.observedAt,o.source].map(quote).join(',')}));
     var blob=new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8'});
     var url=URL.createObjectURL(blob);
-    var a=document.createElement('a');a.href=url;a.download='piata-rta-romania-2026.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},500)
+    var a=document.createElement('a');a.href=url;a.download='piata-rta-romania-observatii.csv';document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url)},500)
   }
 
   function renderUnlocked(){
@@ -388,8 +389,8 @@
     if(!hasAccess()&&!force){renderLocked();return}
     var root=byId('market2026Root');
     if(!root)return;
-    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⌛</div><h2>'+escHtml(word('Se încarcă observațiile zilnice 2026…','Loading daily 2026 observations…'))+'</h2></div>';
-    loadData().then(renderUnlocked).catch(function(error){root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⚠️</div><h2>'+escHtml(word('Date indisponibile','Data unavailable'))+'</h2><p>'+escHtml(word('Modulul nu a putut încărca datasetul 2026. Reîncearcă după refresh.','The module could not load the 2026 dataset. Retry after refresh.'))+'</p><small>'+escHtml(String(error&&error.message||error))+'</small></div>'})
+    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⌛</div><h2>'+escHtml(word('Se încarcă observațiile zilnice…','Loading daily observations…'))+'</h2></div>';
+    loadData().then(renderUnlocked).catch(function(error){root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⚠️</div><h2>'+escHtml(word('Date indisponibile','Data unavailable'))+'</h2><p>'+escHtml(word('Modulul nu a putut încărca datasetul. Reîncearcă după refresh.','The module could not load the dataset. Retry after refresh.'))+'</p><small>'+escHtml(String(error&&error.message||error))+'</small></div>'})
   }
 
   function boot(){

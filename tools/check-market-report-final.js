@@ -36,13 +36,13 @@ need(view.includes("replace(/\\bNaN\\b/g,'—')"),'NaN display sanitizer missing
 need(view.includes('__rtaMarketPrimaryView')&&view.includes('rememberedMode(root)'),'Market primary view can be reset by duplicate hydration');
 need(css.includes('#market2026Root:not([data-market-primary-view="sources"])>#market2026Body'),'Base body can leak into Analysis/Hype');
 for(const label of ['Analiza','Hype','Info surse'])need(view.includes(label),`Missing primary view ${label}`);
-need(mgmt.includes('May be?...'),'May be?... heading missing');
-need(view.includes('ANALIZĂ · ROMÂNIA · ACTUALIZARE 06:00 · Ce se vinde cel mai bine'),'Requested Analysis kicker missing');
-for(const label of ['Top România','Rotație','Sinteză','Management'])need(synth.includes(label),`Missing analysis block ${label}`);
+need(mgmt.includes('Ce știm cu adevărat din datele publice')&&mgmt.includes('INTERVAL CERUT')&&mgmt.includes('Nu există date retroactive'),'Truthful Analysis heading/window missing');
+need(view.includes('ANALIZĂ · ROMÂNIA · ACTUALIZARE 06:00 · Semnale publice verificate'),'Truthful Analysis kicker missing');
+for(const label of ['Top semnal public România','Mișcare observată','Sinteză prudentă','Ce este prudent să faci'])need(synth.includes(label),`Missing truthful analysis block ${label}`);
 need(source.includes('Dovezi și trimiteri'),'Source evidence section missing');
-for(const asset of ['/assets/market-loading-guard.js?v=16','/assets/market-ui-recovery.js?v=9','/assets/market-hype-ui.js?v=12','/assets/market-view-switcher.js?v=8','/assets/market-access-policy.js?v=2'])need(enhancements.includes(asset),`Loader is not on final asset ${asset}`);
-for(const asset of ['/assets/market-loading-guard.js?v=16','/assets/market-ui-recovery.js?v=9','/assets/market-hype-ui.js?v=12','/assets/market-hype-ui.css?v=10','/assets/market-view-switcher.js?v=8','/assets/market-source-info.js?v=3','/assets/market-access-policy.js?v=2'])need(sw.includes(asset),`Service worker is not on final asset ${asset}`);
-need(sw.includes('ghid-rta-static-v43-hype-heartbeat-guard'),'Final service worker cache version missing');
+for(const asset of ['/assets/market-2026.js?v=5','/assets/market-loading-guard.js?v=17','/assets/market-ui-recovery.js?v=10','/assets/market-management-v2.js?v=5','/assets/market-analysis-synthesis.js?v=2','/assets/market-analysis-truth.css?v=1','/assets/market-hype-ui.js?v=12','/assets/market-view-switcher.js?v=9','/assets/market-access-policy.js?v=2'])need(enhancements.includes(asset),`Loader is not on final asset ${asset}`);
+for(const asset of ['/assets/market-2026.js?v=5','/assets/market-loading-guard.js?v=17','/assets/market-ui-recovery.js?v=10','/assets/market-management-v2.js?v=5','/assets/market-analysis-synthesis.js?v=2','/assets/market-analysis-truth.css?v=1','/assets/market-hype-ui.js?v=12','/assets/market-hype-ui.css?v=10','/assets/market-view-switcher.js?v=9','/assets/market-source-info.js?v=4','/assets/market-access-policy.js?v=2'])need(sw.includes(asset),`Service worker is not on final asset ${asset}`);
+need(sw.includes('ghid-rta-static-v44-analysis-truth'),'Final service worker cache version missing');
 for(const dateConfidence of ['catalog-published-at','official-product-published-at','first-retail-observation','dated-public-evidence'])need(guard.includes(`'${dateConfidence}'`),`Heartbeat guard does not accept ${dateConfidence}`);
 const heartbeatValidatorSource=guard.match(/function validHeartbeatRow\(x\)\{[^\n]+\}/);
 need(heartbeatValidatorSource,'Heartbeat row validator missing');
@@ -51,7 +51,7 @@ need(validateHeartbeatRow({confidenceTier:'reported',dateConfidence:'catalog-pub
 need(validateHeartbeatRow({confidenceTier:'confirmed',dateConfidence:'official-product-published-at',publishedAt:'2026-09-03T12:13:44.000Z',eligibleSourceCount:1,status:'CONFIRMED'}),'A dated official heartbeat row is rejected');
 need(!validateHeartbeatRow({confidenceTier:'public-signal',dateConfidence:'unknown',eligibleSourceCount:1,status:'EARLY'}),'An undated public signal is accepted as a launch');
 for(const file of ['/data/market-hype-products-2026.json','/data/market-hype-pods-2026.json','/data/market-hype-direct-catalogs-2026.json'])need(sw.includes(file),`Atomic Hype data are not network-first: ${file}`);
-need(recovery.includes('market-hype-ui.js?v=12'),'Recovery can inject old Hype UI');
+need(recovery.includes('market-hype-ui.js?v=12')&&recovery.includes('market-management-v2.js?v=5'),'Recovery can inject an old Market UI');
 need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('freshProducts')&&guard.includes('canonicalCrossSourceDeduplication'),'Atomic guard does not validate both Hype catalogs and source arbitration');
 need(access.includes("sessionStorage.removeItem(KEY)")&&access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password must be cleared and anti-autofill on every entry');
 need(Number(cfg.hypeWindowDays)===30&&Number(cfg.lookbackHours)===720&&cfg.scope==='GLOBAL RTA + clone RTA','Hype config is not global 30 days');
@@ -89,4 +89,4 @@ for(const token of ['collect-market-hype-products-2026.js --write','collect-mark
 for(const token of ['collect-market-hype-pods-2026.js --write','observe-market-hype-retail-first-seen-2026.js --write','collect-market-hype-direct-catalogs-2026.js --write','collect-market-hype-dated-news-2026.js --write','collect-market-hype-retail-campaigns-2026.js --write','backfill-market-hype-product-evidence-2026.js --write','consolidate-market-hype-2026.js --write','reconcile-market-hype-public-2026.js --write'])need(hypeFlow.includes(token),`Arbitrated Hype pipeline missing: ${token}`);
 for(const file of ['data/market-hype-products-2026.json','data/market-hype-pods-2026.json'])need(hypeFlow.includes(file),`Product snapshot is not atomically published: ${file}`);
 need(hypeFlow.includes("cron: '0,20 3 * * *'")&&hypeFlow.includes("cron: '0,20 4 * * *'")&&hypeFlow.includes('Europe/Bucharest')&&hypeFlow.includes('06:20'),'Hype 06:00 primary + 06:20 recovery schedule missing');
-console.log('Market final gate OK: Analysis=Romania; Hype=GLOBAL exact ±30d, RTA/MOD/ACCESSORIES+POD, dated launches separated from signals and catalog, official/original/clone provenance enforced, source arbitration and canonical deduplication enforced, plain-language UI, 06:00 primary + 06:20 recovery; password every entry; cache v43.');
+console.log('Market final gate OK: Analysis=Romania with explicit evidence window and no inferred sales; Hype=GLOBAL exact ±30d, RTA/MOD/ACCESSORIES+POD, dated launches separated from signals and catalog; 06:00 primary + 06:20 recovery; cache v44.');

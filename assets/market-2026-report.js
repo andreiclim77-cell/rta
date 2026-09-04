@@ -19,7 +19,7 @@
   function min(values){var a=(values||[]).map(Number).filter(Number.isFinite);return a.length?Math.min.apply(Math,a):null}
   function max(values){var a=(values||[]).map(Number).filter(Number.isFinite);return a.length?Math.max.apply(Math,a):null}
   function today(){try{return new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date())}catch(e){return ''}}
-  function is2026(value){return /^2026-/.test(String(value||''))}
+  function inAnalysisWindow(value,start){var d=String(value||'').slice(0,10);return /^\d{4}-\d{2}-\d{2}$/.test(d)&&d>=String(start||'2026-01-01')}
   function safeUrl(value){return /^https:\/\//i.test(String(value||''))?String(value):''}
   function norm(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim()}
   function canonicalProduct(value){
@@ -39,7 +39,7 @@
   function load(){
     if(dataPromise)return dataPromise;
     dataPromise=fetch(DATA_URL+'?live='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('market-data-'+r.status);return r.json()}).then(function(data){
-      data.observations=(data.observations||[]).filter(function(row){return is2026(row.observedAt)});
+      data.observations=(data.observations||[]).filter(function(row){return inAnalysisWindow(row.observedAt,data.analysisStart)});
       return data
     }).catch(function(error){dataPromise=null;throw error});
     return dataPromise
@@ -197,7 +197,7 @@
     report.id=REPORT_ID;
     report.className='market-full-report';
     report.innerHTML=''+
-      '<div class="market-report-head"><div class="market-report-status"><span class="market-report-pill '+(fresh?'ok':'warn')+'">'+esc(fresh?t('● snapshot de azi','● today snapshot'):t('● snapshot neactualizat azi','● snapshot not from today'))+'</span><span class="market-report-pill">'+esc(t('surse publice verificabile','verifiable public sources'))+'</span><span class="market-report-pill">2026 ONLY</span></div><h2>'+esc(t('Raport complet · Piața RTA România','Full report · Romania RTA Market'))+'</h2><p>'+esc(t('Fiecare cifră de mai jos este calculată exclusiv din observațiile păstrate cu retailer, URL-sursă și dată. Lipsa accesului la un magazin este raportată ca lipsă/eroare, nu completată prin estimare.','Every figure below is calculated only from observations carrying retailer, source URL and date. If a store cannot be read, that is reported as missing/error rather than estimated.'))+'</p></div>'+
+      '<div class="market-report-head"><div class="market-report-status"><span class="market-report-pill '+(fresh?'ok':'warn')+'">'+esc(fresh?t('● snapshot de azi','● today snapshot'):t('● snapshot neactualizat azi','● snapshot not from today'))+'</span><span class="market-report-pill">'+esc(t('surse publice verificabile','verifiable public sources'))+'</span><span class="market-report-pill">01.01.2026 → '+esc(String(data.analysisEnd||data.updatedAt||'prezent').slice(0,10))+'</span></div><h2>'+esc(t('Raport complet · Piața RTA România','Full report · Romania RTA Market'))+'</h2><p>'+esc(t('Fiecare cifră de mai jos este calculată exclusiv din observațiile păstrate cu retailer, URL-sursă și dată. Intervalele fără capturi reale sunt declarate lipsă, nu completate prin estimare.','Every figure below is calculated only from observations carrying retailer, source URL and date. Intervals without real snapshots are declared missing, not estimated.'))+'</p></div>'+
       '<div class="market-report-kpis">'+
         '<div class="market-report-kpi"><b>'+n(withData)+' / '+n(retailers.length)+'</b><span>'+esc(t('retaileri cu date / monitorizați','retailers with data / monitored'))+'</span></div>'+
         '<div class="market-report-kpi"><b>'+pct(retailers.length?withData/retailers.length:0)+'</b><span>'+esc(t('acoperire de colectare','collection coverage'))+'</span></div>'+

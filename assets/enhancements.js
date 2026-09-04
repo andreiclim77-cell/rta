@@ -17,14 +17,15 @@ function waitForMarket(){
   if(!root||!root.querySelector('.market-hero')){setTimeout(waitForMarket,100);return}
   marketUiStarted=true;
   style('/assets/market-management-v4-extra.css?v=1');
+  style('/assets/market-analysis-truth.css?v=1');
   style('/assets/market-hype-warnings.css?v=2');
-  load('/assets/market-loading-guard.js?v=16');
-  load('/assets/market-ui-recovery.js?v=9');
-  load('/assets/market-management-v2.js?v=4',function(){load('/assets/market-analysis-synthesis.js?v=1')});
+  load('/assets/market-loading-guard.js?v=17');
+  load('/assets/market-ui-recovery.js?v=10');
+  load('/assets/market-management-v2.js?v=5',function(){load('/assets/market-analysis-synthesis.js?v=2')});
   load('/assets/market-hype-ui.js?v=12');
-  load('/assets/market-view-switcher.js?v=8');
+  load('/assets/market-view-switcher.js?v=9');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
-function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-access-policy.js?v=2',function(){load('/assets/market-2026.js?v=4',function(){waitForMarket()})})}
+function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-access-policy.js?v=2',function(){load('/assets/market-2026.js?v=5',function(){waitForMarket()})})}
 load('/assets/enhancements-core.js?v=8',function(){loadMarket()});
 })();

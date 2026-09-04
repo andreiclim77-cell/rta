@@ -9,6 +9,7 @@ const MARKET_PATH=path.join(ROOT,'data','market-2026.json');
 const WRITE=process.argv.includes('--write');
 const TARGET_RETAILERS=new Set(['viciishop','tigaraego']);
 const MAX_ATTEMPTS=3;
+const ANALYSIS_START='2026-01-01';
 
 function readJson(file){return JSON.parse(fs.readFileSync(file,'utf8'))}
 function writeJson(file,value){fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n','utf8')}
@@ -102,7 +103,7 @@ async function fetchText(url){
 
 async function main(){
   const market=readJson(MARKET_PATH);const date=today();
-  if(Number(market.scopeYear)!==2026||!/^2026-/.test(date)){console.log('Price verifier locked to 2026.');return}
+  if(Number(market.scopeYear)!==2026||date<ANALYSIS_START){console.log(`Price verifier starts at ${ANALYSIS_START}.`);return}
   const rows=market.observations||[];
   const suspicious=rows.filter(row=>TARGET_RETAILERS.has(row.retailerId)&&row.observedAt===date&&Number(row.priceRon)>0&&Number(row.priceRon)<20&&/^https:\/\//i.test(String(row.source||'')));
   const results=[];

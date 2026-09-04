@@ -15,6 +15,7 @@ const CHECK = process.argv.includes('--check');
 const PER_PAGE = 100;
 const MAX_CATEGORY_PAGES = 6;
 const MAX_ATTEMPTS = 4;
+const ANALYSIS_START = '2026-01-01';
 
 const CATEGORY_GROUPS = [
   { id: 'atomizers', categoryId: 76, hint: 'atomizer' },
@@ -287,8 +288,8 @@ function sameDaySmokeeFallback(date) {
 async function main() {
   const market = readJson(MARKET_PATH);
   const date = bucharestDate();
-  if (Number(market.scopeYear) !== 2026 || !/^2026-/.test(date)) {
-    console.log(`Smokee Market collector is locked to 2026; current Bucharest date is ${date}.`);
+  if (Number(market.scopeYear) !== 2026 || date < ANALYSIS_START) {
+    console.log(`Smokee Market collector starts at ${ANALYSIS_START}; current Bucharest date is ${date}.`);
     return;
   }
 
@@ -357,12 +358,12 @@ async function main() {
   const collectionComplete = liveObservations.length > 0 && errors.length === 0;
 
   market.observations = [
-    ...(market.observations || []).filter(row => row.retailerId !== 'smokee' && /^2026-/.test(String(row.observedAt || ''))),
+    ...(market.observations || []).filter(row => row.retailerId !== 'smokee' && String(row.observedAt || '') >= ANALYSIS_START),
     ...observations
   ].sort((a, b) => `${a.retailerId}|${a.category}|${a.product}`.localeCompare(`${b.retailerId}|${b.category}|${b.product}`, 'ro'));
 
   market.categorySnapshots = [
-    ...(market.categorySnapshots || []).filter(row => row.retailerId !== 'smokee' && /^2026-/.test(String(row.observedAt || ''))),
+    ...(market.categorySnapshots || []).filter(row => row.retailerId !== 'smokee' && String(row.observedAt || '') >= ANALYSIS_START),
     ...effectiveSnapshots
   ];
 
@@ -387,6 +388,8 @@ async function main() {
   });
   market.collectorStatus = status;
   market.updatedAt = status.generatedAt;
+  market.analysisStart = ANALYSIS_START;
+  market.analysisEnd = date;
 
   const trend = {
     date,
@@ -394,12 +397,13 @@ async function main() {
     retailersWithObservations: new Set(market.observations.map(o => o.retailerId)).size,
     categories: summaryByCategory(market.observations)
   };
-  market.trendSnapshots = (market.trendSnapshots || []).filter(item => item.date !== date && /^2026-/.test(String(item.date || '')));
+  market.trendSnapshots = (market.trendSnapshots || []).filter(item => item.date !== date && String(item.date || '') >= ANALYSIS_START);
   market.trendSnapshots.push(trend);
   market.trendSnapshots.sort((a, b) => a.date.localeCompare(b.date));
 
   const historyPath = path.join(HISTORY_DIR, `${date}.json`);
-  const history = fs.existsSync(historyPath) ? readJson(historyPath) : { schemaVersion: 1, scopeYear: 2026, date };
+  const history = fs.existsSync(historyPath) ? readJson(historyPath) : { schemaVersion: 1, scopeYear: 2026, analysisStart: ANALYSIS_START, date };
+  history.analysisStart = ANALYSIS_START;
   history.generatedAt = status.generatedAt;
   history.observations = market.observations;
   history.categorySnapshots = market.categorySnapshots;
