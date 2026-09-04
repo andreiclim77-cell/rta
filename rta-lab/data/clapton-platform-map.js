@@ -1,21 +1,19 @@
 /* RTA Lab — Clapton platform map, actualizat 04.09.2026.
- * Perechi active în Lab:
+ * Perechi Clapton active:
  * - Chariot -> K1 Clapton 2x30+38 / Ø2,5 / 5 (dedicată, validată direct)
  * - 415 -> K1 Clapton 2x30+38 / Ø2,5 / 5 (preferință de platformă)
  * - Dvarw MTL FL -> SS316L Clapton 2x30+38 / Ø2,5 / 5 (dedicată)
- * - Asylum V3 -> SS316L Clapton 2x30+38 / Ø2,5 / 5 (preferință de platformă; Flat 12–14 W, 13 W sweet spot)
- * Asylum păstrează K1 Clapton ca opțiune secundară.
- * Triangularea este contextuală: lichid + obiectiv + ADN platformă + Clapton preferat.
+ * Asylum V3 păstrează doar K1 Clapton ca opțiune contextuală de corp/integrare.
+ * Triangularea este contextuală: lichid + obiectiv + ADN platformă + build activ.
  */
 (() => {
   window.RTA_LAB_CLAPTON_PLATFORM_MAP = {
     date: "2026-09-04",
-    principle: "Cele patru perechi Clapton active influențează triangularea lichid + obiectiv + ADN platformă fără a forța un rezultat incompatibil.",
+    principle: "Cele trei perechi Clapton active influențează triangularea lichid + obiectiv + ADN platformă fără a forța un rezultat incompatibil.",
     activePairs: [
       "Chariot -> K1 Clapton/5",
       "415 -> K1 Clapton/5",
-      "Dvarw MTL FL -> SS316L Clapton/5",
-      "Asylum V3 -> SS316L Clapton/5"
+      "Dvarw MTL FL -> SS316L Clapton/5"
     ],
     map: {
       chariot: {
@@ -43,22 +41,26 @@
         status: "pereche dedicată canonică; claritate, top-notes și layering"
       },
       asylum: {
-        wireId: "ssclap",
-        wire: "SS316L Clapton 2×30+38",
-        alternateWireId: "k1clap",
-        alternateWire: "K1 Clapton 2×30+38",
+        wireId: "k1clap",
+        wire: "K1 Clapton 2×30+38",
         diam: "Ø2,5 mm",
         wraps: 5,
-        power: "12–14 W",
-        sweetSpotW: 13,
-        chamberValidated: "Flat",
-        tier: "preferred",
-        status: "SS316L Clapton este preferința principală pe Asylum V3; Flat 12–14 W, 13 W sweet spot practic; K1 Clapton secundar pentru corp/integrare"
+        tier: "compatible",
+        status: "opțiune contextuală pentru corp, densitate și integrare; nu este pereche dedicată sau preferată"
       }
     }
   };
 
   if (typeof buildOutput !== "function") return;
+
+  /* Autoritatea finală de compatibilitate Clapton este acest overlay. */
+  const baseClaptonPlatformScore = typeof claptonPlatformScore === "function" ? claptonPlatformScore : null;
+  if (baseClaptonPlatformScore) {
+    claptonPlatformScore = function(atom, wireId) {
+      if (atom && atom.id === "asylum" && wireId === "ssclap") return -100;
+      return baseClaptonPlatformScore(atom, wireId);
+    };
+  }
 
   const baseWireBonus = typeof wireBonus === "function" ? wireBonus : null;
   const baseBuildOutput = buildOutput;
@@ -76,7 +78,6 @@
       complex: has(ax || [], "layers") || cls.includes("complex"),
       dark: ["dark", "burley", "kentucky", "latakia", "cigar"].some(key => has(ax || [], key)),
       rich: ["pipe", "sweet", "alcohol", "nuts", "coffeeCocoa"].some(key => has(ax || [], key)),
-      bright: ["bright", "oriental", "perique", "citrus"].some(key => has(ax || [], key)),
       drySimple: has(ax || [], "dry") || has(ax || [], "simple") || cls.includes("simplu"),
       objective: objectiveNow(objective)
     };
@@ -87,6 +88,9 @@
       let bonus = baseWireBonus(atom, wire, ax, objective, liquid);
       if (!atom || !wire) return bonus;
 
+      /* Excludere efectivă din triangulare și TOP 3 pe Asylum. */
+      if (atom.id === "asylum" && wire.id === "ssclap") return -1000;
+
       const f = profileFlags(ax, objective, liquid);
 
       if (atom.id === "415" && wire.id === "k1clap") {
@@ -94,13 +98,6 @@
         if (f.complex || f.dark || f.rich) bonus += 0.35;
         if (["body", "th", "complete"].includes(f.objective)) bonus += 0.25;
         if (f.objective === "tobacco" && f.drySimple) bonus -= 0.45;
-      }
-
-      if (atom.id === "asylum" && wire.id === "ssclap") {
-        bonus += 0.80;
-        if (f.complex || f.bright) bonus += 0.35;
-        if (["layers", "complete", "smooth"].includes(f.objective)) bonus += 0.30;
-        if (f.objective === "tobacco" && f.drySimple) bonus -= 0.35;
       }
 
       if (atom.id === "asylum" && wire.id === "k1clap") {
@@ -140,20 +137,11 @@
       return output;
     }
 
-    if (atom.id === "asylum" && wire.id === "ssclap") {
-      output.wraps = "5";
-      output.power = "12–14 W";
-      output.status = "Pereche Clapton preferată · Asylum V3 Flat · SS";
-      output.noteClass = "valid";
-      output.note = "SS316L Clapton 2×30+38 · Ø2,5 mm · 5 spire este perechea Clapton principală pe Asylum V3. Pe Flat: 12–14 W, cu 13 W sweet spot practic confirmat; ramp-up bun, claritate și layering, fără aromă gătită în testul curent. Triangularea îi acordă prior pe profile bright/complex și pe layers/complete/smooth.";
-      return output;
-    }
-
     if (atom.id === "asylum" && wire.id === "k1clap") {
       output.wraps = "5";
-      output.status = "Clapton secundar · Asylum V3 · K1";
+      output.status = "Clapton contextual · Asylum V3 · K1";
       output.noteClass = "context";
-      output.note = "K1 Clapton 2×30+38 · Ø2,5 mm · 5 spire rămâne compatibil secundar pe Asylum V3 pentru corp, densitate și integrare; SS316L Clapton este perechea principală.";
+      output.note = "K1 Clapton 2×30+38 · Ø2,5 mm · 5 spire rămâne opțiunea Clapton contextuală pe Asylum V3 când se caută corp, densitate și integrare.";
       return output;
     }
 
@@ -166,21 +154,10 @@
       const atom = (typeof state !== "undefined" && state && state.atom) || null;
       if (!atom || !wire) return base;
 
-      if (atom.id === "chariot" && wire.id === "k1clap") {
-        return "Chariot are K1 Clapton/5 ca pereche dedicată; lichidul și obiectivul decid intensitatea avantajului";
-      }
-      if (atom.id === "415" && wire.id === "k1clap") {
-        return "415 are K1 Clapton/5 ca pereche preferată pentru corp, densitate, mouthfeel și integrare, cu bonus contextual pe profile dark/rich/complex";
-      }
-      if (atom.id === "dvarwfl" && wire.id === "ssclap") {
-        return "Dvarw MTL FL are SS316L Clapton/5 ca pereche dedicată pentru claritate, top-notes și layering";
-      }
-      if (atom.id === "asylum" && wire.id === "ssclap") {
-        return "Asylum V3 are SS316L Clapton/5 ca pereche principală; pe Flat, 12–14 W cu 13 W sweet spot, iar triangularea favorizează bright/complex/layers";
-      }
-      if (atom.id === "asylum" && wire.id === "k1clap") {
-        return "Asylum V3 acceptă K1 Clapton/5 ca opțiune secundară pentru corp și integrare";
-      }
+      if (atom.id === "chariot" && wire.id === "k1clap") return "Chariot are K1 Clapton/5 ca pereche dedicată; lichidul și obiectivul decid intensitatea avantajului";
+      if (atom.id === "415" && wire.id === "k1clap") return "415 are K1 Clapton/5 ca pereche preferată pentru corp, densitate, mouthfeel și integrare, cu bonus contextual pe profile dark/rich/complex";
+      if (atom.id === "dvarwfl" && wire.id === "ssclap") return "Dvarw MTL FL are SS316L Clapton/5 ca pereche dedicată pentru claritate, top-notes și layering";
+      if (atom.id === "asylum" && wire.id === "k1clap") return "Asylum V3 poate folosi K1 Clapton/5 contextual pentru corp și integrare";
       return base;
     };
   }
@@ -190,21 +167,10 @@
       const base = baseComparisonText(atom, wire, output);
       if (!atom || !wire) return base;
 
-      if (atom.id === "chariot" && wire.id === "k1clap") {
-        return "+ pereche dedicată Chariot: K1 Clapton/5 pentru corp, densitate, mouthfeel și tutun complex; validare directă Cronos Tab Plus.";
-      }
-      if (atom.id === "415" && wire.id === "k1clap") {
-        return "+ pereche preferată 415: corp, densitate și integrare; round-wire-ul rămâne disponibil pentru redare mai directă/dry.";
-      }
-      if (atom.id === "dvarwfl" && wire.id === "ssclap") {
-        return "+ pereche dedicată Dvarw FL: SS316L Clapton/5 pentru claritate, top-notes, Oriental/Perique și layering.";
-      }
-      if (atom.id === "asylum" && wire.id === "ssclap") {
-        return "+ pereche principală Asylum: claritate, top-notes și layering; Flat 13 W sweet spot în plaja 12–14 W. K1 Clapton rămâne alternativa mai densă/rotundă.";
-      }
-      if (atom.id === "asylum" && wire.id === "k1clap") {
-        return "+ alternativă Asylum pentru corp, densitate și integrare; − SS316L Clapton rămâne preferat pentru claritate și separare.";
-      }
+      if (atom.id === "chariot" && wire.id === "k1clap") return "+ pereche dedicată Chariot: K1 Clapton/5 pentru corp, densitate, mouthfeel și tutun complex; validare directă Cronos Tab Plus.";
+      if (atom.id === "415" && wire.id === "k1clap") return "+ pereche preferată 415: corp, densitate și integrare; round-wire-ul rămâne disponibil pentru redare mai directă/dry.";
+      if (atom.id === "dvarwfl" && wire.id === "ssclap") return "+ pereche dedicată Dvarw FL: SS316L Clapton/5 pentru claritate, top-notes, Oriental/Perique și layering.";
+      if (atom.id === "asylum" && wire.id === "k1clap") return "+ opțiune contextuală Asylum pentru corp, densitate și integrare; nu este forțată ca #1.";
       return base;
     };
   }
@@ -213,39 +179,79 @@
     explorerVapeText = function(atom, wire, output) {
       if (!atom || !wire) return baseExplorerVapeText(atom, wire, output);
 
-      if (atom.id === "chariot" && wire.id === "k1clap") {
-        return "PERECHE DEDICATĂ: K1 Clapton 2×30+38 / 5 spire; validare practică directă pe Cronos Tab Plus.";
-      }
-      if (atom.id === "415" && wire.id === "k1clap") {
-        return "PERECHE PREFERATĂ: K1 Clapton 2×30+38 / 5 spire pentru corp, densitate, mouthfeel și integrare.";
-      }
-      if (atom.id === "dvarwfl" && wire.id === "ssclap") {
-        return "PERECHE DEDICATĂ: SS316L Clapton 2×30+38 / 5 spire pentru claritate și layering.";
-      }
-      if (atom.id === "asylum" && wire.id === "ssclap") {
-        return "PERECHE PREFERATĂ: SS316L Clapton 2×30+38 / 5 spire; Flat 12–14 W, 13 W sweet spot practic pentru claritate și layering.";
-      }
-      if (atom.id === "asylum" && wire.id === "k1clap") {
-        return "CLAPTON SECUNDAR: K1 Clapton 2×30+38 / 5 spire pentru corp și integrare.";
-      }
+      if (atom.id === "chariot" && wire.id === "k1clap") return "PERECHE DEDICATĂ: K1 Clapton 2×30+38 / 5 spire; validare practică directă pe Cronos Tab Plus.";
+      if (atom.id === "415" && wire.id === "k1clap") return "PERECHE PREFERATĂ: K1 Clapton 2×30+38 / 5 spire pentru corp, densitate, mouthfeel și integrare.";
+      if (atom.id === "dvarwfl" && wire.id === "ssclap") return "PERECHE DEDICATĂ: SS316L Clapton 2×30+38 / 5 spire pentru claritate și layering.";
+      if (atom.id === "asylum" && wire.id === "k1clap") return "CLAPTON CONTEXTUAL: K1 Clapton 2×30+38 / 5 spire pentru corp și integrare.";
       return baseExplorerVapeText(atom, wire, output);
     };
   }
 
   if (baseGeometrySummary) {
     geometrySummary = function(atom) {
-      const base = baseGeometrySummary(atom);
-      if (!atom) return base;
+      if (!atom) return baseGeometrySummary(atom);
 
       if (atom.id === "asylum") {
-        return base + `<div class="geometry-rule"><h5>Asylum V3 · Clapton DNA</h5><div class="geometry-grid geometry-grid-five"><span><b>#1 SS316L Clapton</b>2×30+38 · 5 spire</span><span><b>Flat</b>12–14 W</span><span><b>Sweet spot</b>13 W confirmat</span><span><b>Rol</b>claritate + layering</span><span><b>K1 Clapton</b>secundar · corp/integrare</span></div></div>`;
+        const rule = BUILD_RULES[atom.id] || { k128: 5, k129: 6 };
+        return `<div class="geometry-rule"><h5>Asylum V3 · ADN activ</h5><div class="geometry-grid geometry-grid-five"><span><b>K1 28 GA</b>${rule.k128} spire</span><span><b>K1 29 GA</b>${rule.k129} spire contact</span><span><b>K1 Clapton</b>2×30+38 · 5 spire · contextual</span><span><b>NiFe TC</b>6 spire · contextual</span></div><p>Flat rămâne orientat spre claritate/separare, iar Dome spre corp/integrare. Recomandarea se decide prin lichid + obiectiv + ADN platformă.</p></div>`;
       }
 
-      if (atom.id === "415") {
-        return base + `<div class="geometry-rule"><h5>415 · Clapton DNA</h5><div class="geometry-grid geometry-grid-five"><span><b>#1 Clapton</b>K1 2×30+38</span><span><b>Build</b>Ø2,5 · 5 spire</span><span><b>Rol</b>corp + densitate</span><span><b>Integrare</b>profile complexe</span><span><b>Triangulare</b>bonus contextual, nu forțare</span></div></div>`;
-      }
-
-      return base;
+      return baseGeometrySummary(atom);
     };
   }
+
+  /* Autoritate finală pentru Explorer: 415 păstrează K1 Clapton primul; Asylum exclude firul dezactivat. */
+  if (typeof renderAtomExplorer === "function") {
+    renderAtomExplorer = function() {
+      const id = $("atomExplorer").value;
+      const atom = ATOMS.find(item => item.id === id);
+      const target = $("atomExplorerResult");
+      if (!atom) {
+        target.innerHTML = '<div class="empty">Selectează oricare dintre atomizoare pentru ADN-ul platformei și comparația buildurilor active.</div>';
+        return;
+      }
+
+      const neutralLiquid = {
+        class: "Tutun simplu",
+        brand: "Explorer",
+        name: "Profil neutru",
+        line: "comparație de platformă",
+        kind: "profil generic",
+        profile: "tutun neutru",
+        tags: ["simple"]
+      };
+
+      let orderedWires = atom.id === "asylum" ? WIRES.filter(wire => wire.id !== "ssclap") : [...WIRES];
+      if (atom.id === "415") {
+        const order = ["k1clap", "k128", "k129", "nife30", "ssclap"];
+        orderedWires = orderedWires.sort((left, right) => order.indexOf(left.id) - order.indexOf(right.id));
+      }
+
+      const cards = orderedWires.map((wire, index) => {
+        const output = buildOutput(atom, wire, neutralLiquid);
+        const preferredClass = atom.id === "415" && wire.id === "k1clap";
+        return `<article class="build explorer-build ${preferredClass ? "best" : wire.id === "k128" ? "baseline-build" : ""}">
+          <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span>${preferredClass ? '<span class="besttxt">PREFERINȚĂ PLATFORMĂ</span>' : ""}</div>
+          <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
+          <div class="why"><b>Vape pe această platformă:</b> ${escapeHtml(explorerVapeText(atom, wire, output))}</div>
+          <div class="note"><b>Airflow:</b> ${escapeHtml(footprintText(atom, wire, output))}</div>
+          <div class="note ${output.noteClass}"><b>${escapeHtml(output.status)}:</b> ${escapeHtml(output.note)}</div>
+        </article>`;
+      }).join("");
+
+      target.innerHTML = `<div class="explorer-head">
+          <div><span class="explorer-kicker">ADN DE PLATFORMĂ · FĂRĂ CLASAMENT GLOBAL</span><h4>${escapeHtml(atom.short)}</h4></div>
+          <span class="pill cyan">${escapeHtml(atom.airflow.system)}</span>
+        </div>
+        <p class="explorer-air"><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
+        ${geometrySummary(atom)}
+        <div class="explorer-builds explorer-builds-five">${cards}</div>
+        <div class="explorer-tip"><b>Cum folosești rezultatul:</b> pe 415, K1 Clapton este afișat primul; pe celelalte platforme apar numai buildurile active și compatibilitatea este decisă de ADN-ul platformei.</div>`;
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const explorerText = document.querySelector(".explorer-panel .ptitle p");
+    if (explorerText) explorerText.textContent = "Alege platforma și vezi ADN-ul ei și buildurile active. Pe 415, K1 Clapton este afișat primul; restul urmează regulile active de platformă.";
+  });
 })();
