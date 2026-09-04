@@ -1,0 +1,72 @@
+{
+  "clocks": {
+    "forecastHorizonDays": 180,
+    "historyMemoryDays": 730,
+    "recentReleaseWindowDays": 30,
+    "signalObservationWindowDays": 30
+  },
+  "counts": {
+    "event-claims": 112,
+    "evidence": 112,
+    "products": 74
+  },
+  "entitySchemaVersion": 1,
+  "generatedAt": "2026-09-04T07:39:56.478Z",
+  "legacyProjectionSources": {
+    "pods": "data/market-hype-pods-2026.json",
+    "products": "data/market-hype-products-2026.json"
+  },
+  "mode": "ADDITIVE_SHADOW",
+  "phase": 1,
+  "phaseLimitations": [
+    "Full source lineage clustering begins in Phase 2.",
+    "Resolved lifecycle events and novelty gates begin in Phase 2.",
+    "Phase 1 preserves claims and publishes byte-compatible shadow projections only."
+  ],
+  "productionCollectorCutover": false,
+  "publicUiCutover": false,
+  "referenceAt": "2026-09-04T03:00:00.000Z",
+  "schemaVersion": "hype-vnext.phase1.v1",
+  "scoringCutover": false,
+  "sourceSnapshots": {
+    "data/market-hype-evidence-2026.json": {
+      "sha256": "3662fa96065cf2fb48cf4fef8b745bc8e993f8655aab769d728b7ada6fa260a9"
+    },
+    "data/market-hype-heartbeat-2026.json": {
+      "sha256": "ed42a8f56a18866ad9b4ee8c6f0b16558c9132136577584ce60bfbfd50ad1890"
+    },
+    "data/market-hype-heartbeat-evidence-2026.json": {
+      "sha256": "2b6115800f810488e82fb26c50921f71bdc40db0faf20397276bdc56adf59197"
+    },
+    "data/market-hype-known-history-2026.json": {
+      "sha256": "f7ca724f48cf1879541a213ca86da523dd1b600e88cb8ad7c6deb21afdc8d774"
+    },
+    "data/market-hype-pods-2026.json": {
+      "sha256": "71930f29e5b71f2090a75b1ec22f9849096813ddf7c588259305a73ecbf3ee8b"
+    },
+    "data/market-hype-products-2026.json": {
+      "sha256": "c93f367b41229b4f8720d430a0c00c2d5d71c4de03481eff617a8ef97a305e94"
+    },
+    "data/market-hype-radar-2026.json": {
+      "sha256": "bff71ac540bb65bd49344e53562bd7962d3fb0e946988434eb6bde5345dc7c06"
+    },
+    "data/market-hype-retail-memory-2026.json": {
+      "sha256": "2194aa423dd459776e0d0ff209d91b1593d32cbcb4f5e5ef06314f6881918df9"
+    },
+    "data/market-hype-sources-2026.json": {
+      "sha256": "88607fb6468ff383c4c7e6f0b3ea2aaf9254ca200fcc240c868c640b421c9d06"
+    }
+  },
+  "truthInvariants": [
+    "observation_date_is_not_release_date",
+    "first_seen_is_not_exact_release",
+    "retail_listing_is_not_automatic_release",
+    "new_arrival_is_not_release",
+    "relisting_restock_batch_and_variant_are_distinct",
+    "clone_release_is_not_original_release",
+    "derivative_pages_are_not_independent_origins",
+    "source_failure_is_incomplete_not_zero",
+    "evidence_and_claims_are_immutable",
+    "global_hype_is_not_romanian_sales_truth"
+  ]
+}

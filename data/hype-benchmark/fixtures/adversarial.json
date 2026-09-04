@@ -1,0 +1,1450 @@
+{
+  "schemaVersion": 1,
+  "fixtureSet": "phase0-adversarial",
+  "asOf": "2026-08-31T03:00:00.000Z",
+  "syntheticDeterministic": true,
+  "cases": [
+    {
+      "id": "adv-001-known-relisting",
+      "class": "FALSE_RELISTING",
+      "adversarial": true,
+      "title": "Known old product receives a recent catalog date",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Archive MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a001-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-a",
+          "host": "retailer-a.example",
+          "url": "https://retailer-a.example/a001-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "DISTRIBUTOR_LISTING",
+          "dateSemantic": "catalog-published-at",
+          "claimedEventAt": "2026-08-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-a:DISTRIBUTOR_LISTING"
+        },
+        {
+          "id": "a001-o2",
+          "sourceFamily": "archive",
+          "originId": "historic-page",
+          "host": "archive.example",
+          "url": "https://archive.example/a001-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PRIOR_EXISTENCE",
+          "dateSemantic": "archive-capture-date",
+          "claimedEventAt": "2025-02-10T00:00:00.000Z",
+          "decisionEligible": false,
+          "textFingerprint": "historic-page:PRIOR_EXISTENCE"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "RELISTING",
+        "eventTypes": [
+          "DISTRIBUTOR_LISTING",
+          "PRIOR_EXISTENCE"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "day",
+        "warnings": [
+          "KNOWN_BEFORE_WINDOW",
+          "NOT_A_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-002-restock",
+      "class": "FALSE_RESTOCK",
+      "adversarial": true,
+      "title": "Restock of an existing model",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Archive SBS Mod",
+        "category": "MODURI",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a002-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-b",
+          "host": "retailer-b.example",
+          "url": "https://retailer-b.example/a002-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "IN_STOCK",
+          "dateSemantic": "retailer-observed-at",
+          "claimedEventAt": "2026-08-29T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-b:IN_STOCK"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "RESTOCK",
+        "eventTypes": [
+          "IN_STOCK"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "NOT_A_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-003-new-arrival-old-product",
+      "class": "FALSE_NEW_ARRIVAL_RELEASE",
+      "adversarial": true,
+      "title": "New-arrival navigation contains an old product",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Classic MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a003-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-c",
+          "host": "retailer-c.example",
+          "url": "https://retailer-c.example/a003-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "DISTRIBUTOR_LISTING",
+          "dateSemantic": "new-arrival-page-date",
+          "claimedEventAt": "2026-08-30T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-c:DISTRIBUTOR_LISTING"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "DISTRIBUTOR_LISTING"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "NEW_ARRIVAL_IS_NOT_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-004-date-modified",
+      "class": "FALSE_DATE_MODIFIED_RELEASE",
+      "adversarial": true,
+      "title": "Page dateModified changes on an old product",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Classic DNA Mod",
+        "category": "MODURI",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a004-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a004-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PAGE_MODIFIED",
+          "dateSemantic": "date-modified",
+          "claimedEventAt": "2026-08-29T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:PAGE_MODIFIED"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "PAGE_MODIFIED"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "DATE_MODIFIED_IS_NOT_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-005-sitemap-lastmod",
+      "class": "FALSE_SITEMAP_RELEASE",
+      "adversarial": true,
+      "title": "Sitemap lastmod alone",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Classic RDL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a005-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a005-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PAGE_MODIFIED",
+          "dateSemantic": "sitemap-lastmod",
+          "claimedEventAt": "2026-08-28T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:PAGE_MODIFIED"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "PAGE_MODIFIED"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "SITEMAP_LASTMOD_IS_NOT_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-006-jsonld-coverage",
+      "class": "FALSE_JSONLD_RELEASE",
+      "adversarial": true,
+      "title": "JSON-LD product coverage without event language",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Catalog Pod",
+        "category": "POD",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL",
+        "segment": "mass-market-open-pod"
+      },
+      "observations": [
+        {
+          "id": "a006-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-d",
+          "host": "retailer-d.example",
+          "url": "https://retailer-d.example/a006-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "CATALOG_OBSERVED",
+          "dateSemantic": "jsonld-date",
+          "claimedEventAt": "2026-08-27T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-d:CATALOG_OBSERVED"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "CATALOG_OBSERVED"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "CATALOG_COVERAGE_IS_NOT_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-007-search-snippet",
+      "class": "FALSE_SEARCH_SNIPPET_RELEASE",
+      "adversarial": true,
+      "title": "Search snippet says released but source page is unavailable",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Snippet MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a007-o1",
+          "sourceFamily": "search-index",
+          "originId": "search-provider",
+          "host": "search.example",
+          "url": "https://search.example/a007-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "SEARCH_SNIPPET",
+          "dateSemantic": "index-crawl-date",
+          "claimedEventAt": "2026-08-26T00:00:00.000Z",
+          "decisionEligible": false,
+          "textFingerprint": "search-provider:SEARCH_SNIPPET"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "SEARCH_SNIPPET"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "SNIPPET_ONLY",
+          "NO_SOURCE_PAGE"
+        ],
+        "disposition": "verification"
+      }
+    },
+    {
+      "id": "adv-008-first-seen",
+      "class": "FALSE_FIRST_SEEN_RELEASE",
+      "adversarial": true,
+      "title": "First observation by collector is not launch date",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Observed MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a008-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-e",
+          "host": "retailer-e.example",
+          "url": "https://retailer-e.example/a008-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "FIRST_RETAIL_OBSERVATION",
+          "dateSemantic": "collector-first-seen",
+          "claimedEventAt": "2026-08-30T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-e:FIRST_RETAIL_OBSERVATION"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "FIRST_RETAIL_OBSERVATION"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "FIRST_SEEN_IS_NOT_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-009-single-retailer",
+      "class": "FALSE_SINGLE_RETAILER_RELEASE",
+      "adversarial": true,
+      "title": "One retailer listing has no corroboration",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Solo Listing RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a009-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-f",
+          "host": "retailer-f.example",
+          "url": "https://retailer-f.example/a009-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "DISTRIBUTOR_LISTING",
+          "dateSemantic": "catalog-published-at",
+          "claimedEventAt": "2026-08-22T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-f:DISTRIBUTOR_LISTING"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "DISTRIBUTOR_LISTING"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "SINGLE_RETAILER"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-010-copied-press-release",
+      "class": "FALSE_COPIED_CORROBORATION",
+      "adversarial": true,
+      "title": "Twenty copied pages are one origin",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Echo MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a010-o1",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-1.example",
+          "url": "https://copy-1.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o2",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-2.example",
+          "url": "https://copy-2.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o3",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-3.example",
+          "url": "https://copy-3.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o4",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-4.example",
+          "url": "https://copy-4.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o5",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-5.example",
+          "url": "https://copy-5.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o6",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-6.example",
+          "url": "https://copy-6.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o7",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-7.example",
+          "url": "https://copy-7.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o8",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-8.example",
+          "url": "https://copy-8.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o9",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-9.example",
+          "url": "https://copy-9.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o10",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-10.example",
+          "url": "https://copy-10.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o11",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-11.example",
+          "url": "https://copy-11.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o12",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-12.example",
+          "url": "https://copy-12.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o13",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-13.example",
+          "url": "https://copy-13.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o14",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-14.example",
+          "url": "https://copy-14.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o15",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-15.example",
+          "url": "https://copy-15.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o16",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-16.example",
+          "url": "https://copy-16.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o17",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-17.example",
+          "url": "https://copy-17.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o18",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-18.example",
+          "url": "https://copy-18.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o19",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-19.example",
+          "url": "https://copy-19.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        },
+        {
+          "id": "a010-o20",
+          "sourceFamily": "news-syndication",
+          "originId": "press-release-origin",
+          "host": "copy-20.example",
+          "url": "https://copy-20.example/echo",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "same-press-release-hash"
+        }
+      ],
+      "expected": {
+        "hStage": "H4",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_ANNOUNCEMENT"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "COPIED_SYNDICATION"
+        ],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "adv-011-reviewer-crosspost",
+      "class": "FALSE_COPIED_CORROBORATION",
+      "adversarial": true,
+      "title": "One reviewer cross-posts on three platforms",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Crosspost RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a011-o1",
+          "sourceFamily": "reviewer",
+          "originId": "reviewer-charlie",
+          "host": "youtube.example",
+          "url": "https://youtube.example/a011-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "REVIEW_SAMPLE_RECEIVED",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "reviewer-charlie-same-sample"
+        },
+        {
+          "id": "a011-o2",
+          "sourceFamily": "reviewer",
+          "originId": "reviewer-charlie",
+          "host": "instagram.example",
+          "url": "https://instagram.example/a011-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "REVIEW_SAMPLE_RECEIVED",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "reviewer-charlie-same-sample"
+        },
+        {
+          "id": "a011-o3",
+          "sourceFamily": "reviewer",
+          "originId": "reviewer-charlie",
+          "host": "forum.example",
+          "url": "https://forum.example/a011-o3",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "REVIEW_SAMPLE_RECEIVED",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "reviewer-charlie-same-sample"
+        }
+      ],
+      "expected": {
+        "hStage": "H4",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "REVIEW_SAMPLE_RECEIVED"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "unknown",
+        "warnings": [
+          "SAME_CREATOR_CROSSPOST"
+        ],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "adv-012-stale-eta",
+      "class": "STALE_ETA",
+      "adversarial": true,
+      "title": "ETA passed without release confirmation",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Delayed MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a012-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-g",
+          "host": "retailer-g.example",
+          "url": "https://retailer-g.example/a012-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-06-10T08:00:00.000Z",
+          "claimType": "PREORDER_OPEN",
+          "dateSemantic": "retailer-eta",
+          "claimedEventAt": "2026-07-10T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-g:PREORDER_OPEN"
+        }
+      ],
+      "expected": {
+        "hStage": "H2",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "PREORDER_OPEN"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "STALE_ETA",
+          "NO_RELEASE_CONFIRMATION"
+        ],
+        "disposition": "verification"
+      }
+    },
+    {
+      "id": "adv-013-fresh-signal-far-eta",
+      "class": "FUTURE_ETA_OUTSIDE_30D",
+      "adversarial": true,
+      "title": "Fresh credible signal has ETA ninety days away",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Winter MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a013-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a013-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-30T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "expected-date",
+          "claimedEventAt": "2026-11-29T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_ANNOUNCEMENT"
+        }
+      ],
+      "expected": {
+        "hStage": "H5",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_ANNOUNCEMENT"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "month",
+        "warnings": [
+          "OUTSIDE_LEGACY_WINDOW"
+        ],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "adv-014-colour-variant",
+      "class": "FALSE_VARIANT_AS_NEW_MODEL",
+      "adversarial": true,
+      "title": "Colour-only variant is not a new model",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Spectrum MTL RTA Blue",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL",
+        "parentModel": "Spectrum MTL RTA"
+      },
+      "observations": [
+        {
+          "id": "a014-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-h",
+          "host": "retailer-h.example",
+          "url": "https://retailer-h.example/a014-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "VARIANT_RELEASE",
+          "dateSemantic": "catalog-published-at",
+          "claimedEventAt": "2026-08-21T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-h:VARIANT_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "COLOR_VARIANT",
+        "eventTypes": [
+          "VARIANT_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "SAME_PRODUCT_IDENTITY",
+          "NOT_NEW_MODEL"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-015-batch-as-model",
+      "class": "FALSE_BATCH_AS_NEW_MODEL",
+      "adversarial": true,
+      "title": "Batch is not a new model release",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Legacy MTL RTA Batch 4",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a015-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a015-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "BATCH",
+          "dateSemantic": "official-batch-date",
+          "claimedEventAt": "2026-08-28T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:BATCH"
+        }
+      ],
+      "expected": {
+        "hStage": "H5",
+        "novelty": "BATCH",
+        "eventTypes": [
+          "BATCH"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "NOT_NEW_MODEL"
+        ],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "adv-016-identity-conflict",
+      "class": "IDENTITY_CONFLICT",
+      "adversarial": true,
+      "title": "Two model tokens conflict",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Vector or Vertex MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a016-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-i",
+          "host": "retailer-i.example",
+          "url": "https://retailer-i.example/a016-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "DISTRIBUTOR_LISTING",
+          "dateSemantic": "catalog-published-at",
+          "claimedEventAt": "2026-08-24T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-i:DISTRIBUTOR_LISTING"
+        },
+        {
+          "id": "a016-o2",
+          "sourceFamily": "reviewer",
+          "originId": "reviewer-delta",
+          "host": "reviewer-d.example",
+          "url": "https://reviewer-d.example/a016-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "REVIEW_SAMPLE_RECEIVED",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "reviewer-delta:REVIEW_SAMPLE_RECEIVED"
+        }
+      ],
+      "expected": {
+        "hStage": "H2",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "DISTRIBUTOR_LISTING",
+          "REVIEW_SAMPLE_RECEIVED"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "unknown",
+        "warnings": [
+          "IDENTITY_CONFLICT"
+        ],
+        "disposition": "verification"
+      }
+    },
+    {
+      "id": "adv-017-date-conflict",
+      "class": "DATE_CONFLICT",
+      "adversarial": true,
+      "title": "Official and retailer dates disagree materially",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Calendar MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a017-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a017-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "official-announcement-date",
+          "claimedEventAt": "2026-09-30T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_ANNOUNCEMENT"
+        },
+        {
+          "id": "a017-o2",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-j",
+          "host": "retailer-j.example",
+          "url": "https://retailer-j.example/a017-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PREORDER_OPEN",
+          "dateSemantic": "retailer-eta",
+          "claimedEventAt": "2026-09-05T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-j:PREORDER_OPEN"
+        }
+      ],
+      "expected": {
+        "hStage": "H4",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_ANNOUNCEMENT",
+          "PREORDER_OPEN"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "interval",
+        "warnings": [
+          "DATE_CONFLICT"
+        ],
+        "disposition": "verification"
+      }
+    },
+    {
+      "id": "adv-018-generic-category-page",
+      "class": "FALSE_GENERIC_PAGE",
+      "adversarial": true,
+      "title": "Generic RTA category page",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "RTA New Arrivals",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a018-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-k",
+          "host": "retailer-k.example",
+          "url": "https://retailer-k.example/a018-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "CATALOG_OBSERVED",
+          "dateSemantic": "page-publication-date",
+          "claimedEventAt": "2026-08-29T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-k:CATALOG_OBSERVED"
+        }
+      ],
+      "expected": {
+        "hStage": "H0",
+        "novelty": "UNKNOWN",
+        "eventTypes": [],
+        "independentOrigins": 1,
+        "datePrecision": "unknown",
+        "warnings": [
+          "NO_CONCRETE_PRODUCT"
+        ],
+        "disposition": "reject"
+      }
+    },
+    {
+      "id": "adv-019-trademark",
+      "class": "IP_SIGNAL_NOT_RELEASE",
+      "adversarial": true,
+      "title": "Trademark filing is an artifact, not launch",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Cipher Pod",
+        "category": "POD",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL",
+        "segment": "premium-high-end-aio"
+      },
+      "observations": [
+        {
+          "id": "a019-o1",
+          "sourceFamily": "ip-registry",
+          "originId": "ip-office",
+          "host": "ip.example",
+          "url": "https://ip.example/a019-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "TRADEMARK_FILED",
+          "dateSemantic": "filing-date",
+          "claimedEventAt": "2026-08-18T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "ip-office:TRADEMARK_FILED"
+        }
+      ],
+      "expected": {
+        "hStage": "H2",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "TRADEMARK_FILED"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "IP_IS_NOT_RELEASE"
+        ],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "adv-020-regulatory",
+      "class": "REGULATORY_SIGNAL_NOT_RELEASE",
+      "adversarial": true,
+      "title": "Regulatory notification is not market release",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Regula Pod",
+        "category": "POD",
+        "authenticity": "AUTHENTIC",
+        "region": "EU",
+        "segment": "closed-prefilled-hybrid"
+      },
+      "observations": [
+        {
+          "id": "a020-o1",
+          "sourceFamily": "regulatory",
+          "originId": "regulator-eu",
+          "host": "regulator.example",
+          "url": "https://regulator.example/a020-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "REGULATORY_NOTIFICATION",
+          "dateSemantic": "notification-publication-date",
+          "claimedEventAt": "2026-08-17T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "regulator-eu:REGULATORY_NOTIFICATION"
+        }
+      ],
+      "expected": {
+        "hStage": "H3",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "REGULATORY_NOTIFICATION"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "REGULATORY_IS_NOT_RELEASE"
+        ],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "adv-021-retail-campaign",
+      "class": "FALSE_RETAIL_CAMPAIGN_RELEASE",
+      "adversarial": true,
+      "title": "Dated promotion does not prove release",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Campaign MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a021-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-l",
+          "host": "retailer-l.example",
+          "url": "https://retailer-l.example/a021-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PROMOTION",
+          "dateSemantic": "campaign-date",
+          "claimedEventAt": "2026-08-26T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-l:PROMOTION"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "PROMOTION"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "PROMOTION_IS_NOT_RELEASE"
+        ],
+        "disposition": "signal-only"
+      }
+    },
+    {
+      "id": "adv-022-real-zero-complete",
+      "class": "TRUE_ZERO_COMPLETE",
+      "adversarial": true,
+      "title": "Zero results with complete healthy scan",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "No matching product",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [],
+      "coverage": {
+        "planned": 20,
+        "succeeded": 20,
+        "policyBlocked": 0,
+        "parserFailed": 0
+      },
+      "expected": {
+        "hStage": "H0",
+        "novelty": "NONE",
+        "eventTypes": [],
+        "independentOrigins": 0,
+        "datePrecision": "none",
+        "warnings": [],
+        "disposition": "true-zero"
+      }
+    },
+    {
+      "id": "adv-023-zero-incomplete-scan",
+      "class": "UNKNOWN_INCOMPLETE_SCAN",
+      "adversarial": true,
+      "title": "Zero results caused by incomplete scan",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Unknown coverage",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [],
+      "coverage": {
+        "planned": 20,
+        "succeeded": 3,
+        "policyBlocked": 9,
+        "parserFailed": 8
+      },
+      "expected": {
+        "hStage": "H0",
+        "novelty": "UNKNOWN",
+        "eventTypes": [],
+        "independentOrigins": 0,
+        "datePrecision": "none",
+        "warnings": [
+          "INCOMPLETE_SCAN",
+          "ZERO_NOT_TRUSTWORTHY"
+        ],
+        "disposition": "unknown"
+      }
+    },
+    {
+      "id": "adv-024-wrong-category",
+      "class": "FALSE_CATEGORY_MATCH",
+      "adversarial": true,
+      "title": "E-liquid page containing RTA in marketing copy",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "RTA Tobacco Longfill",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a024-o1",
+          "sourceFamily": "retailer",
+          "originId": "retailer-feed-m",
+          "host": "retailer-m.example",
+          "url": "https://retailer-m.example/a024-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "DISTRIBUTOR_LISTING",
+          "dateSemantic": "catalog-published-at",
+          "claimedEventAt": "2026-08-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "retailer-feed-m:DISTRIBUTOR_LISTING"
+        }
+      ],
+      "expected": {
+        "hStage": "H0",
+        "novelty": "UNKNOWN",
+        "eventTypes": [],
+        "independentOrigins": 1,
+        "datePrecision": "unknown",
+        "warnings": [
+          "WRONG_CATEGORY"
+        ],
+        "disposition": "reject"
+      }
+    },
+    {
+      "id": "adv-025-authentic-clone-conflict",
+      "class": "IDENTITY_CONFLICT",
+      "adversarial": true,
+      "title": "Authentic and styled clone must not merge",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Original Atlas and Atlas Style RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a025-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a025-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-20T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_RELEASE"
+        },
+        {
+          "id": "a025-o2",
+          "sourceFamily": "clone-retailer",
+          "originId": "clone-retailer-z",
+          "host": "clone-z.example",
+          "url": "https://clone-z.example/a025-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "CLONE_RELEASE",
+          "dateSemantic": "catalog-published-at",
+          "claimedEventAt": "2026-08-24T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "clone-retailer-z:CLONE_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "MIXED",
+        "eventTypes": [
+          "OFFICIAL_RELEASE",
+          "CLONE_RELEASE"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "day",
+        "warnings": [
+          "AUTHENTIC_CLONE_SPLIT_REQUIRED"
+        ],
+        "disposition": "split-identities"
+      }
+    },
+    {
+      "id": "adv-026-cancellation",
+      "class": "NEGATIVE_CORRECTION",
+      "adversarial": true,
+      "title": "Cancellation must supersede projected release",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Cancelled MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "a026-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a026-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "official-announcement-date",
+          "claimedEventAt": "2026-09-12T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_ANNOUNCEMENT"
+        },
+        {
+          "id": "a026-o2",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/a026-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-30T08:00:00.000Z",
+          "claimType": "CANCELLED",
+          "dateSemantic": "official-correction-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:CANCELLED"
+        }
+      ],
+      "expected": {
+        "hStage": "H1",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_ANNOUNCEMENT",
+          "CANCELLED"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "unknown",
+        "warnings": [
+          "CANCELLED"
+        ],
+        "disposition": "closed"
+      }
+    }
+  ]
+}

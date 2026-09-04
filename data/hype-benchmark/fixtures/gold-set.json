@@ -1,0 +1,812 @@
+{
+  "schemaVersion": 1,
+  "fixtureSet": "phase0-gold",
+  "asOf": "2026-08-31T03:00:00.000Z",
+  "syntheticDeterministic": true,
+  "cases": [
+    {
+      "id": "gold-001-official-rta-release",
+      "class": "TRUE_NEW_RELEASE",
+      "adversarial": false,
+      "title": "Official RTA release with explicit date",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Aurora MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g001-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g001-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-22T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-002-official-mod-release",
+      "class": "TRUE_NEW_RELEASE",
+      "adversarial": false,
+      "title": "Official mod release with explicit date",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Vertex DNA80 Mod",
+        "category": "MODURI",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g002-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g002-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-19T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-003-official-pod-release",
+      "class": "TRUE_NEW_RELEASE",
+      "adversarial": false,
+      "title": "Official open-pod release",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Pulse X Pod",
+        "category": "POD",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL",
+        "segment": "mass-market-open-pod"
+      },
+      "observations": [
+        {
+          "id": "g003-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g003-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-004-accessory-release",
+      "class": "ACCESSORY_RELEASE",
+      "adversarial": false,
+      "title": "RTA chamber accessory released separately",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Aurora Nano Chamber",
+        "category": "ACCESORII",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g004-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g004-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "ACCESSORY_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-18T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:ACCESSORY_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "ACCESSORY",
+        "eventTypes": [
+          "ACCESSORY_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-005-long-range-teaser",
+      "class": "TRUE_PRELAUNCH",
+      "adversarial": false,
+      "title": "Fresh teaser with launch expected beyond 30 days",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Orion MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g005-o1",
+          "sourceFamily": "manufacturer-social",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g005-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "TEASER",
+          "dateSemantic": "expected-date",
+          "claimedEventAt": "2026-11-20T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:TEASER"
+        }
+      ],
+      "expected": {
+        "hStage": "H3",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "TEASER"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "month",
+        "warnings": [],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-006-preorder-corroborated",
+      "class": "TRUE_PRELAUNCH",
+      "adversarial": false,
+      "title": "Official announcement and independent preorder",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Ion SBS Mod",
+        "category": "MODURI",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g006-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g006-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "official-announcement-date",
+          "claimedEventAt": "2026-09-18T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_ANNOUNCEMENT"
+        },
+        {
+          "id": "g006-o2",
+          "sourceFamily": "retailer",
+          "originId": "independent-retailer-a",
+          "host": "retailer-a.example",
+          "url": "https://retailer-a.example/g006-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PREORDER_OPEN",
+          "dateSemantic": "retailer-eta",
+          "claimedEventAt": "2026-09-18T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "independent-retailer-a:PREORDER_OPEN"
+        }
+      ],
+      "expected": {
+        "hStage": "H5",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_ANNOUNCEMENT",
+          "PREORDER_OPEN"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-007-production-start",
+      "class": "TRUE_PRELAUNCH",
+      "adversarial": false,
+      "title": "Direct production start signal",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Forge RDL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g007-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g007-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PRODUCTION_START",
+          "dateSemantic": "official-statement-date",
+          "claimedEventAt": "2026-10-12T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:PRODUCTION_START"
+        }
+      ],
+      "expected": {
+        "hStage": "H4",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "PRODUCTION_START"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "month",
+        "warnings": [],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-008-review-sample",
+      "class": "TRUE_PRELAUNCH",
+      "adversarial": false,
+      "title": "Independent reviewer confirms a physical sample",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Needle MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g008-o1",
+          "sourceFamily": "reviewer",
+          "originId": "reviewer-alice",
+          "host": "reviewer.example",
+          "url": "https://reviewer.example/g008-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "REVIEW_SAMPLE_RECEIVED",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "reviewer-alice:REVIEW_SAMPLE_RECEIVED"
+        }
+      ],
+      "expected": {
+        "hStage": "H4",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "REVIEW_SAMPLE_RECEIVED"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "unknown",
+        "warnings": [],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-009-independent-rumor",
+      "class": "TRUE_RUMOR_RESOLVED_TRUE",
+      "adversarial": false,
+      "title": "Two genuinely independent early rumors",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Helix AIO",
+        "category": "POD",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL",
+        "segment": "premium-high-end-aio"
+      },
+      "observations": [
+        {
+          "id": "g009-o1",
+          "sourceFamily": "community",
+          "originId": "forum-author-a",
+          "host": "forum-a.example",
+          "url": "https://forum-a.example/g009-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "RUMOR",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "forum-author-a:RUMOR"
+        },
+        {
+          "id": "g009-o2",
+          "sourceFamily": "reviewer",
+          "originId": "reviewer-bob",
+          "host": "reviewer-b.example",
+          "url": "https://reviewer-b.example/g009-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "RUMOR",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "reviewer-bob:RUMOR"
+        }
+      ],
+      "expected": {
+        "hStage": "H2",
+        "novelty": "UNKNOWN",
+        "eventTypes": [
+          "RUMOR"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "unknown",
+        "warnings": [
+          "UNCONFIRMED"
+        ],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-010-rumor-confirmed-timeline",
+      "class": "TRUE_RUMOR_RESOLVED_TRUE",
+      "adversarial": false,
+      "title": "Rumor later confirmed without losing the earlier event",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Atlas MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g010-o1",
+          "sourceFamily": "community",
+          "originId": "forum-author-c",
+          "host": "forum-author-c.example",
+          "url": "https://forum-author-c.example/g010-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-05T08:00:00.000Z",
+          "claimType": "RUMOR",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "forum-author-c:RUMOR"
+        },
+        {
+          "id": "g010-o2",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g010-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "official-announcement-date",
+          "claimedEventAt": "2026-09-25T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_ANNOUNCEMENT"
+        }
+      ],
+      "expected": {
+        "hStage": "H5",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "RUMOR",
+          "OFFICIAL_ANNOUNCEMENT"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-011-clone-release",
+      "class": "CLONE_RELEASE",
+      "adversarial": false,
+      "title": "Clone is a distinct lifecycle linked to authentic model",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Atlas Style MTL RTA",
+        "category": "RTA",
+        "authenticity": "CLONE",
+        "region": "GLOBAL",
+        "relatedAuthentic": "Benchmark Labs Atlas MTL RTA"
+      },
+      "observations": [
+        {
+          "id": "g011-o1",
+          "sourceFamily": "clone-retailer",
+          "originId": "clone-retailer-a",
+          "host": "clone-shop.example",
+          "url": "https://clone-shop.example/g011-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "CLONE_RELEASE",
+          "dateSemantic": "catalog-published-at",
+          "claimedEventAt": "2026-08-27T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "clone-retailer-a:CLONE_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "CLONE",
+        "eventTypes": [
+          "CLONE_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-012-regional-release",
+      "class": "REGIONAL_RELEASE",
+      "adversarial": false,
+      "title": "Release limited to one region",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Localis Pod",
+        "category": "POD",
+        "authenticity": "AUTHENTIC",
+        "region": "EU",
+        "segment": "closed-prefilled-hybrid"
+      },
+      "observations": [
+        {
+          "id": "g012-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs-eu",
+          "host": "eu.benchmark.example",
+          "url": "https://eu.benchmark.example/g012-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "REGIONAL_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-20T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs-eu:REGIONAL_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "REGIONAL",
+        "eventTypes": [
+          "REGIONAL_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-013-batch-event",
+      "class": "TRUE_BATCH",
+      "adversarial": false,
+      "title": "New production batch of an existing high-end atomizer",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Legacy MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g013-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g013-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "BATCH",
+          "dateSemantic": "official-batch-date",
+          "claimedEventAt": "2026-09-15T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:BATCH"
+        }
+      ],
+      "expected": {
+        "hStage": "H5",
+        "novelty": "BATCH",
+        "eventTypes": [
+          "BATCH"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-014-variant-release",
+      "class": "TRUE_VARIANT",
+      "adversarial": false,
+      "title": "Material variant linked to parent model",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Legacy MTL RTA Titanium",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL",
+        "parentModel": "Legacy MTL RTA"
+      },
+      "observations": [
+        {
+          "id": "g014-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g014-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "VARIANT_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-24T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:VARIANT_RELEASE"
+        }
+      ],
+      "expected": {
+        "hStage": "H6",
+        "novelty": "VARIANT",
+        "eventTypes": [
+          "VARIANT_RELEASE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-015-waitlist",
+      "class": "TRUE_PRELAUNCH",
+      "adversarial": false,
+      "title": "Official waitlist opens without a release date",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Circuit Boro Mod",
+        "category": "MODURI",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g015-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g015-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "WAITLIST_OPEN",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:WAITLIST_OPEN"
+        }
+      ],
+      "expected": {
+        "hStage": "H4",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "WAITLIST_OPEN"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "unknown",
+        "warnings": [],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-016-prototype",
+      "class": "TRUE_PRELAUNCH",
+      "adversarial": false,
+      "title": "Public prototype shown by manufacturer",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Arc MTL RTA",
+        "category": "RTA",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g016-o1",
+          "sourceFamily": "manufacturer-social",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g016-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "PROTOTYPE",
+          "dateSemantic": "source-publication-date",
+          "claimedEventAt": null,
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:PROTOTYPE"
+        }
+      ],
+      "expected": {
+        "hStage": "H3",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "PROTOTYPE"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "unknown",
+        "warnings": [],
+        "disposition": "radar"
+      }
+    },
+    {
+      "id": "gold-017-release-and-stock",
+      "class": "TRUE_NEW_RELEASE",
+      "adversarial": false,
+      "title": "Release and stock remain separate lifecycle events",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Nova SBS Mod",
+        "category": "MODURI",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL"
+      },
+      "observations": [
+        {
+          "id": "g017-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g017-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_RELEASE",
+          "dateSemantic": "official-release-date",
+          "claimedEventAt": "2026-08-14T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_RELEASE"
+        },
+        {
+          "id": "g017-o2",
+          "sourceFamily": "retailer",
+          "originId": "independent-retailer-b",
+          "host": "retailer-b.example",
+          "url": "https://retailer-b.example/g017-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "IN_STOCK",
+          "dateSemantic": "retailer-observed-at",
+          "claimedEventAt": "2026-08-17T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "independent-retailer-b:IN_STOCK"
+        }
+      ],
+      "expected": {
+        "hStage": "H7",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_RELEASE",
+          "IN_STOCK"
+        ],
+        "independentOrigins": 2,
+        "datePrecision": "day",
+        "warnings": [],
+        "disposition": "retain"
+      }
+    },
+    {
+      "id": "gold-018-corrected-release-date",
+      "class": "DATE_CORRECTION",
+      "adversarial": false,
+      "title": "Manufacturer corrects an announced date",
+      "product": {
+        "brand": "Benchmark Labs",
+        "model": "Delta Pod",
+        "category": "POD",
+        "authenticity": "AUTHENTIC",
+        "region": "GLOBAL",
+        "segment": "mid-tier-regional"
+      },
+      "observations": [
+        {
+          "id": "g018-o1",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g018-o1",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-28T08:00:00.000Z",
+          "claimType": "OFFICIAL_ANNOUNCEMENT",
+          "dateSemantic": "official-announcement-date",
+          "claimedEventAt": "2026-09-05T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:OFFICIAL_ANNOUNCEMENT"
+        },
+        {
+          "id": "g018-o2",
+          "sourceFamily": "manufacturer",
+          "originId": "benchmark-labs",
+          "host": "benchmark-labs.example",
+          "url": "https://benchmark-labs.example/g018-o2",
+          "observedAt": "2026-08-28T09:00:00.000Z",
+          "publishedAt": "2026-08-30T08:00:00.000Z",
+          "claimType": "CORRECTION",
+          "dateSemantic": "corrected-official-date",
+          "claimedEventAt": "2026-09-19T00:00:00.000Z",
+          "decisionEligible": true,
+          "textFingerprint": "benchmark-labs:CORRECTION"
+        }
+      ],
+      "expected": {
+        "hStage": "H5",
+        "novelty": "NEW_MODEL",
+        "eventTypes": [
+          "OFFICIAL_ANNOUNCEMENT",
+          "CORRECTION"
+        ],
+        "independentOrigins": 1,
+        "datePrecision": "day",
+        "warnings": [
+          "DATE_CORRECTED"
+        ],
+        "disposition": "radar"
+      }
+    }
+  ]
+}

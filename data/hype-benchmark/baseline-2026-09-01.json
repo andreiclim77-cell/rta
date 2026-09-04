@@ -1,0 +1,3161 @@
+{
+  "schemaVersion": 1,
+  "phase": "HYPE vNext Phase 0",
+  "baselineDate": "2026-09-01",
+  "baselineCodeCommit": "6bf2acc68ec8af7c44db4b5c6e78f0ab771bb1df",
+  "comparisonMainCommit": "2113765a4fadc3bc292050ac26e9609199eb83fe",
+  "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
+  "dataSnapshotAt": "2026-08-31T14:36:05.366Z",
+  "invariants": {
+    "publicBehaviorChanged": false,
+    "currentCollectorsChanged": false,
+    "currentPublicDataChanged": false,
+    "benchmarkIsDeterministic": true
+  },
+  "inventory": {
+    "files": 76,
+    "bytes": 17261635,
+    "byRole": {
+      "cache-contract": 1,
+      "collector-or-transform": 33,
+      "manual-refresh-worker": 2,
+      "market-integration-data": 8,
+      "market-integration-ui": 4,
+      "orchestration": 4,
+      "public-entry-point": 2,
+      "public-hype-ui": 3,
+      "public-state-or-memory": 12,
+      "quality-gate": 3,
+      "source-registry": 4
+    },
+    "entries": [
+      {
+        "path": ".github/workflows/market-hype-2026-sync.yml",
+        "role": "orchestration",
+        "bytes": 16144,
+        "lines": 295,
+        "sha256": "cf58a36bca2040755df26d4b32d9bb74f85c7af6049cee770696970729360828"
+      },
+      {
+        "path": ".github/workflows/market-hype-global-quality.yml",
+        "role": "orchestration",
+        "bytes": 8085,
+        "lines": 123,
+        "sha256": "7bb38d14c4d61237f3a8a56333c03f7d1fa9df6602e4ef95f122972305b215c9"
+      },
+      {
+        "path": ".github/workflows/market-hype-host-quality.yml",
+        "role": "orchestration",
+        "bytes": 2640,
+        "lines": 52,
+        "sha256": "8c5211a84b6a4675967fd37339028bc4a72cd67c3f7304c79bc168c086bc43c9"
+      },
+      {
+        "path": ".github/workflows/market-hype-worker-deploy.yml",
+        "role": "orchestration",
+        "bytes": 2246,
+        "lines": 54,
+        "sha256": "2faac8c32080876b473aa561445fdb2193e0858b4eb1b31077ae7d4210e63f46"
+      },
+      {
+        "path": "assets/enhancements.js",
+        "role": "market-integration-ui",
+        "bytes": 2396,
+        "lines": 31,
+        "sha256": "945ad8807f81fe708915a30dbc99c38e327b0f2e764a1933d3389413f315c0c5"
+      },
+      {
+        "path": "assets/market-access-policy.js",
+        "role": "market-integration-ui",
+        "bytes": 1902,
+        "lines": 43,
+        "sha256": "c3a9373f96ff9a700cd16aedd056b5ef9aa98708a45f119c99059adfdb9fae4e"
+      },
+      {
+        "path": "assets/market-analysis-synthesis.js",
+        "role": "market-integration-ui",
+        "bytes": 11781,
+        "lines": 18,
+        "sha256": "fa0e35ad7031a659ff0748f43c1c69643a15c8c1382f9f3f558932d8e7705527"
+      },
+      {
+        "path": "assets/market-hype-ui.css",
+        "role": "public-hype-ui",
+        "bytes": 21582,
+        "lines": 11,
+        "sha256": "144a58de97fda68ad73eae9a9f5035d9019ccfcffb336d9ede4c88e135824c61"
+      },
+      {
+        "path": "assets/market-hype-ui.js",
+        "role": "public-hype-ui",
+        "bytes": 35132,
+        "lines": 101,
+        "sha256": "3adab84470660eef605ab4bf1173f4e64990fb7a3d01ed9d39ad88485a18fc6c"
+      },
+      {
+        "path": "assets/market-hype-warnings.css",
+        "role": "public-hype-ui",
+        "bytes": 3441,
+        "lines": 2,
+        "sha256": "4a2cd83c90ea09f0bdeaefe716a2c314a804cedf8457d90adccbb7f826b277a8"
+      },
+      {
+        "path": "assets/market-loading-guard.js",
+        "role": "market-integration-ui",
+        "bytes": 12020,
+        "lines": 45,
+        "sha256": "6aab1a4090894d531085b6a63ac28c28aa75d61a248584aca1229ff17117747f"
+      },
+      {
+        "path": "cloudflare/market-hype-refresh/worker.mjs",
+        "role": "manual-refresh-worker",
+        "bytes": 5290,
+        "lines": 19,
+        "sha256": "16c4df9c434640580281f94180ca742ed430f4023431edac46f4941afbf041d7"
+      },
+      {
+        "path": "cloudflare/market-hype-refresh/wrangler.toml",
+        "role": "manual-refresh-worker",
+        "bytes": 416,
+        "lines": 18,
+        "sha256": "16e909d1cb4a3e9d3c674301de838c1a03eece5c874e1d385fd29ddf83dedbff"
+      },
+      {
+        "path": "data/market-2026.json",
+        "role": "market-integration-data",
+        "bytes": 988128,
+        "lines": 28916,
+        "sha256": "15ac7ad8ee352e0171ccbab4a84719f22b81bdea910356422b048e7b435f04f5"
+      },
+      {
+        "path": "data/market-demand-intelligence-2026.json",
+        "role": "market-integration-data",
+        "bytes": 974903,
+        "lines": 34045,
+        "sha256": "0a15e3ebe475adeaef26b571bde271b6161bf14ae170ae8d452f60acbeb5af5f"
+      },
+      {
+        "path": "data/market-hype-active-makers-extra-2026.json",
+        "role": "source-registry",
+        "bytes": 6210,
+        "lines": 60,
+        "sha256": "560174f1bd00f2918c6fa7ffc3b7f885433fb0550f9669033b1d6d98ec23e0fc"
+      },
+      {
+        "path": "data/market-hype-dated-news-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 125085,
+        "lines": 3040,
+        "sha256": "8918dca7bb6ecb1026da2fc66eaeb0fbe7ca6d0119e4c678c146546099c47e59"
+      },
+      {
+        "path": "data/market-hype-direct-catalogs-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 2530422,
+        "lines": 65496,
+        "sha256": "ace64090fbcc49036d55e7fb7e9a90524192fb13d4caa89d9c6dc74c3c25deba"
+      },
+      {
+        "path": "data/market-hype-discovery-ledger-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 27792,
+        "lines": 757,
+        "sha256": "07bad9a7dae7cfa8e363aba45291bb81c090b0f0d904971e8ed18093392bfaea"
+      },
+      {
+        "path": "data/market-hype-evidence-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 4714,
+        "lines": 131,
+        "sha256": "489226537ffdfca5b5cca5d119653401eb9a9179203cd7f7e207780c12657fac"
+      },
+      {
+        "path": "data/market-hype-heartbeat-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 584,
+        "lines": 21,
+        "sha256": "c6ce99730d3728147e33c4d66bd5df357ca7df68fae634b4a30540d0741a9e4b"
+      },
+      {
+        "path": "data/market-hype-heartbeat-evidence-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 4396,
+        "lines": 105,
+        "sha256": "18dcc0a4c284d1791c7832a78c9d4c229a9261c08d05c63671def8c131de9626"
+      },
+      {
+        "path": "data/market-hype-known-history-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 2554,
+        "lines": 60,
+        "sha256": "f7ca724f48cf1879541a213ca86da523dd1b600e88cb8ad7c6deb21afdc8d774"
+      },
+      {
+        "path": "data/market-hype-pods-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 115557,
+        "lines": 2853,
+        "sha256": "56ee27348e93f7a808dfbe513777202238194b2a7007a817eca1f82ce815231f"
+      },
+      {
+        "path": "data/market-hype-products-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 74712,
+        "lines": 2161,
+        "sha256": "af455012ba168c489ef083433dde999728bc1a40786411cde526fd50847a6e64"
+      },
+      {
+        "path": "data/market-hype-radar-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 11612,
+        "lines": 390,
+        "sha256": "e9ee7fc1cd4a950395c0f622a11297ddd21880301d7d2206e485fedd5c0ca797"
+      },
+      {
+        "path": "data/market-hype-retail-campaigns-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 10117,
+        "lines": 275,
+        "sha256": "11fee748339ab2f0319d00878020c2c7cafd313ee4fc70f6f5ba497d937fc1ee"
+      },
+      {
+        "path": "data/market-hype-retail-memory-2026.json",
+        "role": "public-state-or-memory",
+        "bytes": 339236,
+        "lines": 6814,
+        "sha256": "520a4a14bf3846563c288f7663ff8bcfc97af18b3c809cbab64009cb8cbb7194"
+      },
+      {
+        "path": "data/market-hype-sources-2026.json",
+        "role": "source-registry",
+        "bytes": 24636,
+        "lines": 169,
+        "sha256": "88607fb6468ff383c4c7e6f0b3ea2aaf9254ca200fcc240c868c640b421c9d06"
+      },
+      {
+        "path": "data/market-hype-vendor-profiles-2026.json",
+        "role": "source-registry",
+        "bytes": 2204,
+        "lines": 79,
+        "sha256": "669f0298d8815d7ea990d4d5d89eaadb32be34ad56ca3b73178d869d5cc7ae04"
+      },
+      {
+        "path": "data/market-management-2026.json",
+        "role": "market-integration-data",
+        "bytes": 5251411,
+        "lines": 135915,
+        "sha256": "1c0d0f761a5b0704963322742a2af744492e956cf411ff57acc829b5d9e1e3e5"
+      },
+      {
+        "path": "data/market-pod-universe-2026.json",
+        "role": "source-registry",
+        "bytes": 8859,
+        "lines": 79,
+        "sha256": "6e000e32be8b7ffa48d37ed2e58587ffc196d5d05738a08dd041dbeb4ff23e77"
+      },
+      {
+        "path": "data/market-product-presence-2026.json",
+        "role": "market-integration-data",
+        "bytes": 1137629,
+        "lines": 46432,
+        "sha256": "cf031b24c7d34a080096c403be831d11b0455c2fd73a5ab6cbf4f56d3eca372d"
+      },
+      {
+        "path": "data/market-sales-2026.json",
+        "role": "market-integration-data",
+        "bytes": 2853609,
+        "lines": 62654,
+        "sha256": "cf172b08bed4b53069f3b51085d4db5ee8f0568b5402419e2217d4a50fb1ff0d"
+      },
+      {
+        "path": "data/market-signal-sources-2026.json",
+        "role": "market-integration-data",
+        "bytes": 4550,
+        "lines": 110,
+        "sha256": "90867287de06928ce8652e7c85eb59031b9a329b2285757ddd7458b9998254c6"
+      },
+      {
+        "path": "data/market-source-scope-2026.json",
+        "role": "market-integration-data",
+        "bytes": 1975,
+        "lines": 40,
+        "sha256": "cd2e6e9b4d7da5c3e3a5e6da2e3518069e5e5958a9387333548ee16f998d6939"
+      },
+      {
+        "path": "data/market-universe-audit-2026.json",
+        "role": "market-integration-data",
+        "bytes": 77218,
+        "lines": 3370,
+        "sha256": "fda4560dc43c24267466edf24d726513101ebcbe35c872a0466171d458233998"
+      },
+      {
+        "path": "en/index.html",
+        "role": "public-entry-point",
+        "bytes": 1040123,
+        "lines": 5208,
+        "sha256": "12ce62dcbf4fb2539a1fc0adaa17d01f6df9124a6829c537e1f1f221e6bd6854"
+      },
+      {
+        "path": "index.html",
+        "role": "public-entry-point",
+        "bytes": 1040329,
+        "lines": 5208,
+        "sha256": "7a4948e6af713f75861a9e4022ff077229397b19f5eac0d6a8bd2527c571c949"
+      },
+      {
+        "path": "sw.js",
+        "role": "cache-contract",
+        "bytes": 4138,
+        "lines": 11,
+        "sha256": "ec28bc1be644062a8d4e6799142c8ceee840f4ff4f8ed775d9bc1110ec42cb6e"
+      },
+      {
+        "path": "tools/augment-market-hype-3fvape-newarrival-rta-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 10355,
+        "lines": 24,
+        "sha256": "ea183774be9e86f2285f6a7f4b75281f498bd1784a158263f44036020edb5695"
+      },
+      {
+        "path": "tools/augment-market-hype-current-vendor-rta-events-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 10663,
+        "lines": 35,
+        "sha256": "f9c5ec4290fee2390a909ef9cba4ca2d25ffca5921cee573014fb1186cf2ce2a"
+      },
+      {
+        "path": "tools/augment-market-hype-explicit-vendor-dates-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 13492,
+        "lines": 43,
+        "sha256": "1f56f13af5b699e40125c3a1448615b61470774078ea2b01878810b521b3c4c6"
+      },
+      {
+        "path": "tools/augment-market-hype-preorder-card-events-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 10078,
+        "lines": 48,
+        "sha256": "cb53d81ecce123adc4030b44e17a4c6ba3251c28e40bb4ac875eaa3de1138008"
+      },
+      {
+        "path": "tools/augment-market-hype-recent-release-observer-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 11177,
+        "lines": 103,
+        "sha256": "1fe82979cd449c107d683f3a4aeeb3d45e653ee2ea211ad45b54e7f3963bdcb4"
+      },
+      {
+        "path": "tools/augment-market-hype-search-index-eta-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 13488,
+        "lines": 79,
+        "sha256": "01a19a39d38aed0f25a17872f4a2cc1c29a323ae1b41025261180cfe28c975db"
+      },
+      {
+        "path": "tools/backfill-market-hype-product-evidence-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 20966,
+        "lines": 141,
+        "sha256": "1d2cdf1a4928551dfdb3a491702a8a7863406f29a863b24e1edb966ba273eafb"
+      },
+      {
+        "path": "tools/check-market-hype-visual.js",
+        "role": "quality-gate",
+        "bytes": 12556,
+        "lines": 157,
+        "sha256": "3707afc2887614297ac180e7e3d206d9c9dee5cd419866e732453f2447eb83b3"
+      },
+      {
+        "path": "tools/collect-market-hype-active-makers-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 22871,
+        "lines": 90,
+        "sha256": "7f4595cb6c3a0db10e35b221105da7c6d7e23d957cf14fdb416471a938367e93"
+      },
+      {
+        "path": "tools/collect-market-hype-dated-news-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 35960,
+        "lines": 311,
+        "sha256": "3836fd2cb520df1a57ca5417f655acf6e3cbbeb2a2c69c4de7d33f330fe4b8e9"
+      },
+      {
+        "path": "tools/collect-market-hype-deep-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 12103,
+        "lines": 17,
+        "sha256": "7e7767fe304b9bf5ea11f8c766a2a8d967f167c1165c3f3c61354fa18e665575"
+      },
+      {
+        "path": "tools/collect-market-hype-direct-catalogs-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 38567,
+        "lines": 315,
+        "sha256": "b39f003c0669300e9227ffa20db61f42371b6565134dca78a5773eb506070630"
+      },
+      {
+        "path": "tools/collect-market-hype-pods-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 19323,
+        "lines": 116,
+        "sha256": "6d6d40b501f341af8a43d49306f973e0a60c892b48c30bafa67a280ce07f57ee"
+      },
+      {
+        "path": "tools/collect-market-hype-products-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 19355,
+        "lines": 67,
+        "sha256": "de01ed3816f93cd29e47658dd96e65e07be524860375cb4b90b38baa149557f6"
+      },
+      {
+        "path": "tools/collect-market-hype-radar-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 28749,
+        "lines": 67,
+        "sha256": "3952f27521675dd11e68a7d2c71909373f8ae105a3146b9119ca1349dc5fcb9e"
+      },
+      {
+        "path": "tools/collect-market-hype-retail-campaigns-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 12718,
+        "lines": 77,
+        "sha256": "938c5f21070eada134a58e6f73eb040834ed5d43860217eeb6a82be3aeb63c95"
+      },
+      {
+        "path": "tools/collect-market-hype-targeted-vendor-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 15149,
+        "lines": 40,
+        "sha256": "4e5e3b02294ddad0465a79a43dd4e67fa4649aa21082542c4ece2a7a5f8798e3"
+      },
+      {
+        "path": "tools/collect-market-hype-vendor-catalogs-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 11905,
+        "lines": 46,
+        "sha256": "5bedfee6b4609c8c7541fc2035fac002ea73fca53eae6cc6c1856d65128b24fd"
+      },
+      {
+        "path": "tools/collect-market-hype-vendor-direct-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 16807,
+        "lines": 40,
+        "sha256": "d153aa0510ad0b7640b26030c90da5817f4891a500c716076aec7a76c24b24e0"
+      },
+      {
+        "path": "tools/collect-market-hype-vendor-pagination-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 15745,
+        "lines": 32,
+        "sha256": "8683e71cec5b315e40e0162dbfd60c5661308e4a29c1972a35537d19dc7fe0d3"
+      },
+      {
+        "path": "tools/collect-market-hype-vendor-profiles-v2-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 16133,
+        "lines": 35,
+        "sha256": "30d10b4264827fa85c1da9de131784369516e7edad7619158c6889ceac51abfb"
+      },
+      {
+        "path": "tools/collect-market-hype-wide-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 26322,
+        "lines": 245,
+        "sha256": "03fd378ce2ecb7e060550a96b0059e55fd6f5b97944d8051113eb1fa8ed16923"
+      },
+      {
+        "path": "tools/consolidate-market-hype-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 14623,
+        "lines": 143,
+        "sha256": "f036e4ef885dc6388625fa9c720a68ee16cc69979beb8083f2372439870766b2"
+      },
+      {
+        "path": "tools/enforce-market-hype-symmetric-window-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 3111,
+        "lines": 26,
+        "sha256": "df09f9067093ff49810c1f321ac2913f0152b788e09b74779f6ab56bdaf27b03"
+      },
+      {
+        "path": "tools/filter-market-hype-evidence-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 5016,
+        "lines": 17,
+        "sha256": "53a9d4f3b7ea7a7908d7a273814e5a31a4d76d8d7bb2f32e99c2744a23512a65"
+      },
+      {
+        "path": "tools/finalize-market-hype-category-relevance-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 3593,
+        "lines": 12,
+        "sha256": "d6c290b3d2a335d5900169fe9af04032683962fd3f5d3e4eb21d25d4c23d5a98"
+      },
+      {
+        "path": "tools/hype-upstream-page-title-resolver.js",
+        "role": "collector-or-transform",
+        "bytes": 7134,
+        "lines": 62,
+        "sha256": "26561f89df4f615dca022c7f5a9cbd57425bc02ddaa6f6d8299e7a52d1fdee7a"
+      },
+      {
+        "path": "tools/hype-window-reference-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 2098,
+        "lines": 82,
+        "sha256": "63e4b3a525d8b3f6442624c303eb1c3ac2354fea3da360a63d33ece9e18fb6d4"
+      },
+      {
+        "path": "tools/market-hype-accessory-classifier-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 1563,
+        "lines": 26,
+        "sha256": "dd52e1829214a9e153ce440e899383fcc45501d8b3886c6f3c90c97177b5a0e9"
+      },
+      {
+        "path": "tools/market-pod-classifier-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 5214,
+        "lines": 107,
+        "sha256": "7d31e26c715729570957d7ff79da015c1d9383f09cb4dcd354f5f1a30ce4bec6"
+      },
+      {
+        "path": "tools/merge-market-hype-upstream-products-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 3333,
+        "lines": 74,
+        "sha256": "8a40a66632dd266fbfd7b8a0be56d67c1dd793f52c260b9f678785c7c07c4952"
+      },
+      {
+        "path": "tools/merge-market-hype-upstream-products-v2-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 16895,
+        "lines": 61,
+        "sha256": "e65f45b27c0b05b8c17c1819dd026952fa7d44bdd4bcddf0acc897b32688449f"
+      },
+      {
+        "path": "tools/observe-market-hype-retail-first-seen-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 8522,
+        "lines": 51,
+        "sha256": "65b22b0171e152cbc6fd85104b7112bf501fdaf6668051848bacb73f486fd890"
+      },
+      {
+        "path": "tools/run-market-hype-radar-2026.js",
+        "role": "collector-or-transform",
+        "bytes": 1037,
+        "lines": 40,
+        "sha256": "105bb14570e2b0f39427588d178f7cbbd2a2da356d697af8fcd73a9a2b510446"
+      },
+      {
+        "path": "tools/validate-market-hype-pods-2026.js",
+        "role": "quality-gate",
+        "bytes": 3478,
+        "lines": 38,
+        "sha256": "d72fb6b2331db338c579d6d3481a6dacb82f28f81e7027f3e350933186fa882b"
+      },
+      {
+        "path": "tools/validate-market-hype-publish-2026.js",
+        "role": "quality-gate",
+        "bytes": 5758,
+        "lines": 58,
+        "sha256": "f9c0d246f2784b5d4a5b97473dc78e78c0de25bacd436edf05ddb34097ba6809"
+      }
+    ]
+  },
+  "dataContracts": {
+    "data/market-hype-products-2026.json": {
+      "sha256": "af455012ba168c489ef083433dde999728bc1a40786411cde526fd50847a6e64",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "dailyWindowTimezone",
+          "discoveryContextDays",
+          "generatedAt",
+          "pendingRefresh",
+          "products",
+          "scan",
+          "schemaVersion",
+          "scope",
+          "scopeYear",
+          "snapshotReferenceAt",
+          "summary",
+          "truth",
+          "verificationQueue",
+          "windowDays"
+        ],
+        "fields": {
+          "dailyWindowTimezone": {
+            "type": "string"
+          },
+          "discoveryContextDays": {
+            "type": "number"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "pendingRefresh": {
+            "type": "boolean"
+          },
+          "products": {
+            "type": "array",
+            "length": 23,
+            "itemKeys": [
+              "ageHours",
+              "brand",
+              "category",
+              "confidenceTier",
+              "dateConfidence",
+              "eligibleSources",
+              "eventDate",
+              "firstPublicEvidenceAt",
+              "firstSeenAt",
+              "id",
+              "knownBeforeWindowAt",
+              "knownBeforeWindowSource",
+              "lastSeenAt",
+              "productName",
+              "segment",
+              "signalKind",
+              "sourceCount",
+              "sources",
+              "stage",
+              "stageEvidenceAt",
+              "stageLabel",
+              "typology",
+              "window"
+            ]
+          },
+          "scan": {
+            "type": "object",
+            "keys": [
+              "activeMakerAcceptedSignals",
+              "activeMakerCandidatePages",
+              "activeMakerCloneRegistry",
+              "activeMakerConcreteProducts",
+              "activeMakerEligibleSignals",
+              "activeMakerOfficialRegistry",
+              "activeMakerOfficialSignals",
+              "activeMakerQueries",
+              "activeMakerQueriesWorking",
+              "activeMakerRegistry",
+              "activeMakerRejectedSample",
+              "activeMakerRejections",
+              "activeMakerSample",
+              "activeMakerSearchDocuments",
+              "activeMakerSupplementalRegistry",
+              "catalogPagesFetched",
+              "categoryCoverage",
+              "currentVendorCatalogPages",
+              "currentVendorEvents",
+              "currentVendorPagination",
+              "currentVendorPhraseHits",
+              "currentVendorPhraseSample",
+              "currentVendorProductPages",
+              "currentVendorRtaLinks",
+              "datedNews",
+              "directCatalogs",
+              "events",
+              "eventsV2",
+              "explicitCandidates",
+              "explicitEvents",
+              "explicitPages",
+              "explicitPhraseHits",
+              "explicitQueries",
+              "explicitRaw",
+              "explicitWorking",
+              "finalCategoryRejected",
+              "finalCategoryRejectedSample",
+              "newArrivalCatalogPages",
+              "newArrivalEvents",
+              "newArrivalPhraseHits",
+              "newArrivalProductPages",
+              "newArrivalRtaLinks",
+              "pagesFetched",
+              "preCandidates",
+              "preorderCatalogsRequested",
+              "preorderContextEvents",
+              "preorderPageFallbackEvents",
+              "preorderPagesFetched",
+              "preorderRecoveredSample",
+              "preorderRtaLinks",
+              "productBackfill",
+              "productLinks",
+              "productLinksV2",
+              "productPagesFetched",
+              "productPagesV2",
+              "profiles",
+              "profilesV2",
+              "queries",
+              "rawDocs",
+              "recentReleaseObserver",
+              "resolvedVendorPages",
+              "retailCampaigns",
+              "retailObserverCatalogProducts",
+              "retailObserverFirstSaleEvents",
+              "retailObserverNewCandidates",
+              "samplePre",
+              "searchIndexEtaCandidates",
+              "searchIndexEtaCloneMakerRegistry",
+              "searchIndexEtaEvents",
+              "searchIndexEtaMakerTargets",
+              "searchIndexEtaMakerVendorDomains",
+              "searchIndexEtaPages",
+              "searchIndexEtaPhraseHits",
+              "searchIndexEtaQueries",
+              "searchIndexEtaSample",
+              "searchIndexEtaSnippetFallbacks",
+              "searchIndexEtaWorking",
+              "upstreamEventsAccepted",
+              "upstreamEvidenceEvents",
+              "upstreamRejectedAfterCorroboration",
+              "upstreamRejectedAfterSource",
+              "upstreamRejectedOld",
+              "upstreamRejectedTitle",
+              "working"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "after",
+              "allConcrete",
+              "before",
+              "candidatesUnderVerification",
+              "categoryEvents",
+              "confirmed",
+              "explicitDatedAfter",
+              "publicSignals",
+              "reported",
+              "total"
+            ]
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "activeMakerRegistryDeduplicated",
+              "activeMakerRtaAndMods",
+              "activeMakerSupplementScan",
+              "afterReleaseRequiresExplicitDate",
+              "beforeAndAfterWindowsRemainThirtyDays",
+              "bingRedirectDecoded",
+              "boundedWideListDiscovery",
+              "canonicalCrossSourceDeduplication",
+              "categoryRevalidatedBeforePublish",
+              "colourVariantsAreOneProduct",
+              "concreteProductTitles",
+              "confidenceTierNormalizedAtPublish",
+              "crossWindowLifecycleDeduplication",
+              "currentVendorPaginationExpanded",
+              "currentVendorPaginationProbed",
+              "currentVendorPreorderCatalog",
+              "currentVendorProductTitleResolved",
+              "currentVendorRtaEtaScan",
+              "dailyWindowAnchoredAt0600Bucharest",
+              "datedNewsProductSignals",
+              "datedRetailCampaignIsPublicSignalNotRelease",
+              "directCatalogPublicationDates",
+              "directPublicationDateRequired",
+              "directVendorPages",
+              "eligibleTrustedContextCanCarryProductClassification",
+              "etaPastIsNotRelease",
+              "eventDatesSeparatedFromCoverageDates",
+              "expandedCommercialCatalogDiscovery",
+              "explicitVendorPhrasePass",
+              "finalCategoryAnchorValidated",
+              "finalSegmentAndCategoryCoverageReconciled",
+              "firstCatalogRunIsBaselineOnly",
+              "futureEtaMayExceed30Days",
+              "genericCatalogAndHomepageTitlesRejected",
+              "genericPagesRejected",
+              "genericVendorTitlesRejected",
+              "headlineIdentityTakesPriorityOverCatalogGuessing",
+              "indexCrawlDateAloneIsNotRelease",
+              "internalAtomizerSearchDiscovery",
+              "jsonLdCatalogCoverageDoesNotCreateLaunchEvents",
+              "multiVendor",
+              "newArrivalIsNotRelease",
+              "newArrivalPathOnlyForDiscovery",
+              "newsPublicationDateIsPublicSignalNotAutomaticLaunchDate",
+              "nonRtaProductTitlesRejected",
+              "observedReleaseIsNotClaimedAsExactReleaseDate",
+              "officialProductPublicationIsDirectListingEvidence",
+              "outboundHtmlSearch",
+              "paginatedCommercialCatalogDiscovery",
+              "pastEtaIsNotRelease",
+              "preorderCardEtaRecovery",
+              "priorExistenceDemotesRetailRelisting",
+              "productCentricEvidenceBackfill",
+              "productLevelOnly",
+              "publicOfficialSocialForumNewsRetailDiscovery",
+              "publicWindowDays",
+              "recentReleaseRequiresExplicitWording",
+              "recentReviewAloneIsNotRelease",
+              "rejectedCandidatesAreNotPublishedAsLaunches",
+              "releaseRequiresDatedEvidence",
+              "relistingIsNotRelease",
+              "republishedOldProductsExcludedFromRecentLaunches",
+              "researchContextDays",
+              "retailFirstSeenIsDiscoveryOnly",
+              "retailFirstSeenUsesPersistentMemory",
+              "retailMemoryContextDays",
+              "retailPromotionIsNotRelease",
+              "searchIndexCloneMakerTargeting",
+              "searchIndexMakerTargeting",
+              "searchIndexMakerVendorTargeting",
+              "searchIndexSnippetDiscoveryOnly",
+              "searchIndexSnippetFallback",
+              "searchIndexSnippetRequiresExplicitDate",
+              "searchIndexVendorEtaRecovery",
+              "shopifyPublishedAtIsListingEvidenceNotGlobalLaunch",
+              "signalLookback30dEtaHorizon365d",
+              "singleRetailerListingNeedsCorroboration",
+              "sitemapLastmodIsNeverUsedAsLaunchDate",
+              "symmetric30DayEventWindow",
+              "targetedVendorSearch",
+              "transportRtaRejected",
+              "unifiedOfficialSupplementalAndCloneRegistry",
+              "upstreamEvidenceMerged",
+              "vendorProfileScan",
+              "vendorRelistingIsNotRelease",
+              "verificationQueueReconciledWithPublishedProducts",
+              "wordpressOfficialPublicationDates"
+            ]
+          },
+          "verificationQueue": {
+            "type": "array",
+            "length": 3,
+            "itemKeys": [
+              "category",
+              "channel",
+              "maker",
+              "product",
+              "publishedAt",
+              "reason",
+              "typology",
+              "url"
+            ]
+          },
+          "windowDays": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-hype-pods-2026.json": {
+      "sha256": "56ee27348e93f7a808dfbe513777202238194b2a7007a817eca1f82ce815231f",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "dailyWindowTimezone",
+          "discoveryContextDays",
+          "generatedAt",
+          "pendingRefresh",
+          "products",
+          "scan",
+          "schemaVersion",
+          "scope",
+          "scopeYear",
+          "snapshotReferenceAt",
+          "summary",
+          "truth",
+          "verificationQueue",
+          "windowDays"
+        ],
+        "fields": {
+          "dailyWindowTimezone": {
+            "type": "string"
+          },
+          "discoveryContextDays": {
+            "type": "number"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "pendingRefresh": {
+            "type": "boolean"
+          },
+          "products": {
+            "type": "array",
+            "length": 40,
+            "itemKeys": [
+              "ageHours",
+              "brand",
+              "category",
+              "confidenceTier",
+              "dateConfidence",
+              "eligibleSources",
+              "eventDate",
+              "firstPublicEvidenceAt",
+              "firstSeenAt",
+              "id",
+              "knownBeforeWindowAt",
+              "knownBeforeWindowSource",
+              "lastSeenAt",
+              "lifecycleEvidence",
+              "productName",
+              "segment",
+              "signalKind",
+              "sourceCount",
+              "sources",
+              "stage",
+              "stageEvidenceAt",
+              "stageLabel",
+              "typology",
+              "window"
+            ]
+          },
+          "scan": {
+            "type": "object",
+            "keys": [
+              "candidateDocuments",
+              "candidatesUnderVerification",
+              "concreteProducts",
+              "datedNews",
+              "directCatalogs",
+              "firstRetailEvents",
+              "makersConfigured",
+              "pagesProcessed",
+              "productBackfill",
+              "queriesRun",
+              "queriesWorking",
+              "rejectedSample",
+              "rejections",
+              "retailCampaigns",
+              "retailObserverCatalogProducts",
+              "retailObserverFirstSaleEvents",
+              "retailObserverNewCandidates",
+              "retailProductsObserved",
+              "searchDocuments",
+              "segmentCoverage",
+              "segmentsConfigured",
+              "verifiedSignals"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "after",
+              "allConcrete",
+              "before",
+              "candidatesUnderVerification",
+              "categoryEvents",
+              "confirmed",
+              "explicitDatedAfter",
+              "publicSignals",
+              "reported",
+              "total"
+            ]
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "beforeAndAfterWindowsAreThirtyDays",
+              "canonicalCrossSourceDeduplication",
+              "categoryRevalidatedBeforePublish",
+              "colourVariantsAreOneProduct",
+              "concreteProductRequired",
+              "confidenceTierNormalizedAtPublish",
+              "crossWindowLifecycleDeduplication",
+              "datedNewsProductSignals",
+              "datedRetailCampaignIsPublicSignalNotRelease",
+              "directCatalogPublicationDates",
+              "directPublicationDateRequired",
+              "eventDatesSeparatedFromCoverageDates",
+              "explicitOrDatedEventRequired",
+              "finalSegmentAndCategoryCoverageReconciled",
+              "firstCatalogRunIsBaselineOnly",
+              "headlineIdentityTakesPriorityOverCatalogGuessing",
+              "indexCrawlDateAloneIsNotRelease",
+              "jsonLdCatalogCoverageDoesNotCreateLaunchEvents",
+              "newsPublicationDateIsPublicSignalNotAutomaticLaunchDate",
+              "officialProductPublicationIsDirectListingEvidence",
+              "priorExistenceDemotesRetailRelisting",
+              "productCentricEvidenceBackfill",
+              "publicOfficialSocialForumNewsRetailDiscovery",
+              "publicWindowDays",
+              "registryIsDiscoveryOnly",
+              "rejectedCandidatesAreNotPublishedAsLaunches",
+              "republishedOldProductsExcludedFromRecentLaunches",
+              "researchContextDays",
+              "retailFirstSeenIsDiscoveryOnly",
+              "retailFirstSeenIsHandledOnlyByCatalogObserver",
+              "retailFirstSeenUsesPersistentMemory",
+              "retailMemoryContextDays",
+              "retailPromotionIsNotRelease",
+              "segmentCoverageIsMeasured",
+              "shopifyPublishedAtIsListingEvidenceNotGlobalLaunch",
+              "singleRetailerListingNeedsCorroboration",
+              "sitemapLastmodIsNeverUsedAsLaunchDate",
+              "vendorRelistingIsNotRelease",
+              "verificationQueueReconciledWithPublishedProducts",
+              "wordpressOfficialPublicationDates"
+            ]
+          },
+          "verificationQueue": {
+            "type": "array",
+            "length": 26,
+            "itemKeys": [
+              "brand",
+              "productName",
+              "publishedAt",
+              "reason",
+              "segment",
+              "typology",
+              "url"
+            ]
+          },
+          "windowDays": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-hype-radar-2026.json": {
+      "sha256": "e9ee7fc1cd4a950395c0f622a11297ddd21880301d7d2206e485fedd5c0ca797",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "cacheMaxHours",
+          "categories",
+          "dailyWindowTimezone",
+          "generatedAt",
+          "hypeWindowDays",
+          "internalHistory",
+          "lookbackHours",
+          "methodology",
+          "mode",
+          "pendingRefresh",
+          "schemaVersion",
+          "scopeYear",
+          "snapshotReferenceAt",
+          "sourceStatus",
+          "summary",
+          "truth"
+        ],
+        "fields": {
+          "cacheMaxHours": {
+            "type": "number"
+          },
+          "categories": {
+            "type": "object",
+            "keys": [
+              "ACCESORII",
+              "MODURI",
+              "RTA"
+            ]
+          },
+          "dailyWindowTimezone": {
+            "type": "string"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "hypeWindowDays": {
+            "type": "number"
+          },
+          "internalHistory": {
+            "type": "array",
+            "length": 3,
+            "itemKeys": [
+              "date",
+              "events"
+            ]
+          },
+          "lookbackHours": {
+            "type": "number"
+          },
+          "methodology": {
+            "type": "object",
+            "keys": [
+              "classification",
+              "memory",
+              "recency",
+              "scope",
+              "separation",
+              "wideDiscovery"
+            ]
+          },
+          "mode": {
+            "type": "string"
+          },
+          "pendingRefresh": {
+            "type": "boolean"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "sourceStatus": {
+            "type": "object",
+            "keys": [
+              "complaintSignals7d",
+              "deepCandidateDocuments",
+              "deepQueriesRun",
+              "deepQueriesWorking",
+              "deepScan",
+              "deepStrictHostValidated",
+              "deepWarningsAdded",
+              "deepWrongHostRejected",
+              "directVendorEvents",
+              "directVendorPages",
+              "directVendorPhraseHits",
+              "directVendorProductLinks",
+              "directVendorProductPagesFetched",
+              "explicitVendorDatePass",
+              "explicitVendorEvents",
+              "finalAfterProducts",
+              "finalBeforeProducts",
+              "finalConcreteProducts",
+              "finalRelevantProductsBefore",
+              "indexDateSignals",
+              "newArrivalPathEvents",
+              "productCandidates",
+              "productQueriesRun",
+              "productQueriesWorking",
+              "qualifiedPrelaunchSignals",
+              "queriesRun",
+              "queriesWorking",
+              "rawDocuments",
+              "redditAuthorized",
+              "redditMode",
+              "scope",
+              "sourceTypes",
+              "targetedVendorEvents",
+              "targetedVendorPreCandidates",
+              "targetedVendorQueries",
+              "targetedVendorQueriesWorking",
+              "targetedVendorRawDocs",
+              "targetedVendorResolvedPages",
+              "trendSignals7d",
+              "upstreamProductEvents",
+              "vendorCatalogPages",
+              "vendorEvents",
+              "vendorEventsV2",
+              "vendorProductLinks",
+              "vendorProductPages",
+              "vendorProfileScan",
+              "vendorProfileScanV2",
+              "vendorProfiles",
+              "vendorProfilesV2",
+              "verifiedDateSignals",
+              "wideCandidateDocuments",
+              "wideCloneSignals",
+              "wideDecisionEligibleSignals",
+              "wideDiscoveryOnlySignals",
+              "wideQueriesRun",
+              "wideQueriesWorking",
+              "wideReleasedSignals",
+              "wideRememberedReleasedSignals",
+              "wideRememberedUpcomingSignals",
+              "wideScan",
+              "wideSignalsAccepted",
+              "wideUpcomingSignals"
+            ]
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "ACCESORII",
+              "MODURI",
+              "RTA"
+            ]
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "brandsExposed",
+              "buyHypeRequiresAllConditions",
+              "buyTrendRequiresDistinctAccounts",
+              "classificationUsesNavigation",
+              "commercialPagesRejected",
+              "complaintStopRequiresIndependentSources",
+              "concreteProductTitles",
+              "dailyWindowAnchoredAt0600Bucharest",
+              "discoveryCommercialSourcesCanEscalate",
+              "discoveryCommercialSourcesUsed",
+              "finalCategoryAnchorValidated",
+              "globalScope",
+              "pricesExposed",
+              "productRelevanceValidated",
+              "releaseObservedTruthful",
+              "retailSourcesUsed",
+              "rule",
+              "shopLinksExposed",
+              "symmetric30DayEventWindow",
+              "upstreamEvidenceMerged",
+              "wideDiscoveryWindowDays"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-hype-evidence-2026.json": {
+      "sha256": "489226537ffdfca5b5cca5d119653401eb9a9179203cd7f7e207780c12657fac",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "dailyWindowTimezone",
+          "events",
+          "generatedAt",
+          "mode",
+          "scan",
+          "schemaVersion",
+          "scopeYear",
+          "snapshotReferenceAt",
+          "truth"
+        ],
+        "fields": {
+          "dailyWindowTimezone": {
+            "type": "string"
+          },
+          "events": {
+            "type": "array",
+            "length": 3,
+            "itemKeys": [
+              "brand",
+              "category",
+              "eventId",
+              "kind",
+              "productName",
+              "sourceHostCount",
+              "sourceTypeCount",
+              "sources",
+              "stages",
+              "typology"
+            ]
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "scan": {
+            "type": "object",
+            "keys": [
+              "acceptedEvidenceEvents",
+              "acceptedUpstreamSignals",
+              "candidateDocuments",
+              "directVendorProducts",
+              "queriesRun",
+              "queriesWorking",
+              "rejectedWrongHostSignals",
+              "scope",
+              "wideEvidenceEvents",
+              "wideQueriesRun",
+              "wideQueriesWorking",
+              "wideSignals"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "commercialDiscoveryDoesNotEscalate",
+              "commercialPagesRejected",
+              "concreteProductTitles",
+              "dailyWindowAnchoredAt0600Bucharest",
+              "evidenceDoesNotEscalateDecision",
+              "finalCategoryAnchorValidated",
+              "globalScope",
+              "productRelevanceValidated",
+              "publicHypeRemainsTypologyOnly",
+              "retailUsedAsHype",
+              "searchEngineHostLabelsNotTrusted",
+              "strictHostValidated",
+              "symmetric30DayEventWindow",
+              "upstreamEvidenceMerged",
+              "wideDiscoveryStrictValidated"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-hype-heartbeat-2026.json": {
+      "sha256": "c6ce99730d3728147e33c4d66bd5df357ca7df68fae634b4a30540d0741a9e4b",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "dailyWindowAnchoredAt0600Bucharest",
+          "dailyWindowTimezone",
+          "finalCategoryAnchorValidated",
+          "generatedAt",
+          "lookbackHours",
+          "mode",
+          "publicTypologiesOnly",
+          "refreshTarget",
+          "releasedLast30Days",
+          "schemaVersion",
+          "scope",
+          "scopeYear",
+          "snapshotReferenceAt",
+          "summary",
+          "windowDays"
+        ],
+        "fields": {
+          "dailyWindowAnchoredAt0600Bucharest": {
+            "type": "boolean"
+          },
+          "dailyWindowTimezone": {
+            "type": "string"
+          },
+          "finalCategoryAnchorValidated": {
+            "type": "boolean"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "lookbackHours": {
+            "type": "number"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "publicTypologiesOnly": {
+            "type": "boolean"
+          },
+          "refreshTarget": {
+            "type": "string"
+          },
+          "releasedLast30Days": {
+            "type": "array",
+            "length": 0,
+            "itemKeys": []
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "productRelevanceValidated",
+              "releasedLast30Days"
+            ]
+          },
+          "windowDays": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-hype-heartbeat-evidence-2026.json": {
+      "sha256": "18dcc0a4c284d1791c7832a78c9d4c229a9261c08d05c63671def8c131de9626",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "dailyWindowAnchoredAt0600Bucharest",
+          "dailyWindowTimezone",
+          "events",
+          "finalCategoryAnchorValidated",
+          "generatedAt",
+          "mode",
+          "productRelevanceValidated",
+          "queriesRun",
+          "queriesWorking",
+          "refreshTarget",
+          "schemaVersion",
+          "scope",
+          "scopeYear",
+          "snapshotReferenceAt",
+          "symmetric30DayEventWindow",
+          "upcomingEvents",
+          "windowDays"
+        ],
+        "fields": {
+          "dailyWindowAnchoredAt0600Bucharest": {
+            "type": "boolean"
+          },
+          "dailyWindowTimezone": {
+            "type": "string"
+          },
+          "events": {
+            "type": "array",
+            "length": 0,
+            "itemKeys": []
+          },
+          "finalCategoryAnchorValidated": {
+            "type": "boolean"
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "mode": {
+            "type": "string"
+          },
+          "productRelevanceValidated": {
+            "type": "boolean"
+          },
+          "queriesRun": {
+            "type": "number"
+          },
+          "queriesWorking": {
+            "type": "number"
+          },
+          "refreshTarget": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "scope": {
+            "type": "string"
+          },
+          "scopeYear": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "symmetric30DayEventWindow": {
+            "type": "boolean"
+          },
+          "upcomingEvents": {
+            "type": "array",
+            "length": 4,
+            "itemKeys": [
+              "brand",
+              "category",
+              "dateQuality",
+              "decisionEligible",
+              "discoveryOnly",
+              "eventDate",
+              "firstSeenAt",
+              "kind",
+              "lastSeenAt",
+              "maturityLabel",
+              "maturityStage",
+              "productName",
+              "publishedAt",
+              "sourceBucket",
+              "sourceHost",
+              "sourceType",
+              "title",
+              "typology",
+              "url"
+            ]
+          },
+          "windowDays": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-hype-direct-catalogs-2026.json": {
+      "sha256": "ace64090fbcc49036d55e7fb7e9a90524192fb13d4caa89d9c6dc74c3c25deba",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "events",
+          "generatedAt",
+          "items",
+          "publicWindowDays",
+          "researchContextDays",
+          "scan",
+          "schemaVersion",
+          "snapshotReferenceAt",
+          "sourceRuns",
+          "summary",
+          "truth"
+        ],
+        "fields": {
+          "events": {
+            "type": "array",
+            "length": 18,
+            "itemKeys": [
+              "ageHours",
+              "brand",
+              "category",
+              "confidenceTier",
+              "dateConfidence",
+              "eligibleSources",
+              "eventDate",
+              "firstPublicEvidenceAt",
+              "firstSeenAt",
+              "id",
+              "lastSeenAt",
+              "productName",
+              "segment",
+              "signalKind",
+              "sourceCount",
+              "sources",
+              "stage",
+              "stageEvidenceAt",
+              "stageLabel",
+              "typology",
+              "window"
+            ]
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "items": {
+            "type": "array",
+            "length": 2192,
+            "itemKeys": [
+              "availabilityStatus",
+              "available",
+              "brand",
+              "canonicalKey",
+              "category",
+              "createdAt",
+              "currency",
+              "firstObservedAt",
+              "freshIdentity",
+              "id",
+              "image",
+              "lastObservedAt",
+              "official",
+              "pending",
+              "price",
+              "productId",
+              "productName",
+              "publishedAt",
+              "recentPublication",
+              "relisted",
+              "segment",
+              "sourceId",
+              "sourceLabel",
+              "sourceType",
+              "typology",
+              "updatedAt",
+              "url"
+            ]
+          },
+          "publicWindowDays": {
+            "type": "number"
+          },
+          "researchContextDays": {
+            "type": "number"
+          },
+          "scan": {
+            "type": "object",
+            "keys": [
+              "adapterMix",
+              "categoryEvents",
+              "podsAdded",
+              "productsClassified",
+              "productsFetched",
+              "recentEvents",
+              "relistedExcluded",
+              "rtaModAdded",
+              "sourceMix",
+              "sourcesConfigured",
+              "sourcesUsingFallback",
+              "sourcesWorking"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "sourceRuns": {
+            "type": "array",
+            "length": 49,
+            "itemKeys": [
+              "adapterUsed",
+              "catalogType",
+              "error",
+              "fallbackReason",
+              "fallbackUsed",
+              "id",
+              "label",
+              "official",
+              "ok",
+              "pages",
+              "products",
+              "scopes",
+              "sourceType"
+            ]
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "ACCESORII",
+              "MODURI",
+              "POD",
+              "RTA",
+              "adapterMix",
+              "events",
+              "monitored",
+              "relistedExcluded",
+              "sourceMix"
+            ]
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "availabilityIsSeparateFromReleaseChronology",
+              "currentAvailabilityIncludesOlderCatalogItems",
+              "directCatalogDatesAreSourceListingEvidence",
+              "htmlCatalogListingsDoNotClaimStock",
+              "jsonLdCatalogCoverageDoesNotCreateLaunchEvents",
+              "listingDateIsNotClaimedAsGlobalLaunch",
+              "officialOriginalAndCloneSourcesSeparated",
+              "oldRepublishedProductsAreNotRecentEvents",
+              "sitemapLastmodIsNeverUsedAsLaunchDate"
+            ]
+          }
+        }
+      }
+    },
+    "data/market-hype-dated-news-2026.json": {
+      "sha256": "8918dca7bb6ecb1026da2fc66eaeb0fbe7ca6d0119e4c678c146546099c47e59",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "generatedAt",
+          "queryRuns",
+          "rejectedSample",
+          "scan",
+          "schemaVersion",
+          "signals",
+          "snapshotReferenceAt",
+          "summary",
+          "truth",
+          "windowDays"
+        ],
+        "fields": {
+          "generatedAt": {
+            "type": "string"
+          },
+          "queryRuns": {
+            "type": "array",
+            "length": 71,
+            "itemKeys": [
+              "category",
+              "error",
+              "items",
+              "ok",
+              "query"
+            ]
+          },
+          "rejectedSample": {
+            "type": "array",
+            "length": 12,
+            "itemKeys": [
+              "headline",
+              "publishedAt",
+              "reason",
+              "source"
+            ]
+          },
+          "scan": {
+            "type": "object",
+            "keys": [
+              "concreteSignals",
+              "datedItems",
+              "newsQueries",
+              "newsQueriesWorking",
+              "podsAdded",
+              "rejected",
+              "rtaModAdded",
+              "wordpressRequestsWorking",
+              "wordpressSources",
+              "wordpressSourcesWorking"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "signals": {
+            "type": "array",
+            "length": 49,
+            "itemKeys": [
+              "ageHours",
+              "brand",
+              "category",
+              "confidenceTier",
+              "dateConfidence",
+              "eligibleSources",
+              "eventDate",
+              "firstPublicEvidenceAt",
+              "firstSeenAt",
+              "id",
+              "lastSeenAt",
+              "productName",
+              "segment",
+              "signalKind",
+              "sourceCount",
+              "sources",
+              "stage",
+              "stageEvidenceAt",
+              "stageLabel",
+              "typology",
+              "window"
+            ]
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "summary": {
+            "type": "object",
+            "keys": [
+              "ACCESORII",
+              "MODURI",
+              "POD",
+              "RTA",
+              "rejected",
+              "signals"
+            ]
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "articleDateIsPublicSignalNotAutomaticProductLaunch",
+              "concreteProductIdentityRequired",
+              "headlineIdentityTakesPriority",
+              "officialProductDateIsListingEvidence",
+              "publicationDateIsDirectlyProvidedByGoogleNewsFeed",
+              "rtaAccessoriesClassifiedSeparately",
+              "wordpressPublicationDateIsDirectSourceData"
+            ]
+          },
+          "windowDays": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-hype-retail-campaigns-2026.json": {
+      "sha256": "11fee748339ab2f0319d00878020c2c7cafd313ee4fc70f6f5ba497d937fc1ee",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "generatedAt",
+          "scan",
+          "schemaVersion",
+          "signals",
+          "snapshotReferenceAt",
+          "truth",
+          "windowDays"
+        ],
+        "fields": {
+          "generatedAt": {
+            "type": "string"
+          },
+          "scan": {
+            "type": "object",
+            "keys": [
+              "MODURI",
+              "POD",
+              "RTA",
+              "attempts",
+              "coveragePct",
+              "coverageStatus",
+              "failedPages",
+              "minimumPages",
+              "pages",
+              "pagesWorking",
+              "podsAdded",
+              "rtaModAdded",
+              "signals",
+              "sources"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "signals": {
+            "type": "array",
+            "length": 6,
+            "itemKeys": [
+              "ageHours",
+              "brand",
+              "category",
+              "confidenceTier",
+              "dateConfidence",
+              "eligibleSources",
+              "eventDate",
+              "firstPublicEvidenceAt",
+              "firstSeenAt",
+              "id",
+              "lastSeenAt",
+              "productName",
+              "segment",
+              "signalKind",
+              "sourceCount",
+              "sources",
+              "stage",
+              "stageEvidenceAt",
+              "stageLabel",
+              "typology",
+              "window"
+            ]
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "campaignDateIsPublicPromotionEvidenceNotReleaseDate",
+              "productIdentityRequired"
+            ]
+          },
+          "windowDays": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-hype-retail-memory-2026.json": {
+      "sha256": "520a4a14bf3846563c288f7663ff8bcfc97af18b3c809cbab64009cb8cbb7194",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "catalogBaselines",
+          "contextDays",
+          "historyPolicy",
+          "initializedAt",
+          "items",
+          "schemaVersion",
+          "updatedAt"
+        ],
+        "fields": {
+          "catalogBaselines": {
+            "type": "object",
+            "keys": [
+              "2fdeal.com",
+              "3fvape.com"
+            ]
+          },
+          "contextDays": {
+            "type": "number"
+          },
+          "historyPolicy": {
+            "type": "string"
+          },
+          "initializedAt": {
+            "type": "string"
+          },
+          "items": {
+            "type": "object",
+            "keys": [
+              "0060d76dbdae4271ba7a",
+              "006729cb0bae7617ecfd",
+              "00c452a1f9ace0355ccd",
+              "00ca477def40fa966a68",
+              "0191729aeb9d9574fb9e",
+              "0284d68d2e3005fefeed",
+              "02fc13d160a2ed759d25",
+              "049b943ef14b30910428",
+              "04efcaaf88df5ae9d3e4",
+              "051f2816c6902bfdab92",
+              "059f7d33641399e0a512",
+              "05de8e7044fbf83fa5c1",
+              "0610b7cae11edc3162e9",
+              "061b89db4512fbbad50d",
+              "06d7e722d0d85d32c5b4",
+              "06dfd681a61416db6d72",
+              "073009e9306cfb80dc23",
+              "09474643d40a86c0ea81",
+              "09e68e9ca841802554ca",
+              "0a280c5b7c9767bdb55b",
+              "0a370cfa0a91de9ad1bf",
+              "0a9a13ec2a750be6b352",
+              "0aeb0562b7a552db4849",
+              "0beb4244b300a808ea21",
+              "0d44822913027ec3c755",
+              "0d8fb18a8c92ec3d85ba",
+              "0e6baeb818989e6aae7c",
+              "0e8449b6361bbc0733e5",
+              "0efd89727c6aa0cf158c",
+              "0f13718f790dbd3a0775",
+              "0f4c204f75d7dfd1a277",
+              "0f61cbbc70e7f317fd7d",
+              "0fd670f6d883c159067f",
+              "0fe88d11f1efda44ea15",
+              "104281ece8fd1f3d7424",
+              "10b81aa6f94936a3d910",
+              "12a2b5b90ce4f9439c58",
+              "12a2c5f1acd3d5e9e3f0",
+              "1340400bb1f5c097addd",
+              "136122f71d80fb3218f5",
+              "13cb0b783f1c3638f21d",
+              "13d4eb22403ebc240aa2",
+              "1412fd5576d5cf721ea5",
+              "1455b9a6c8fd41e36002",
+              "14c90022ada96044d725",
+              "1508443af6fc134df2bc",
+              "152dcbd6699c64371686",
+              "1565808f2ddcfb2070bb",
+              "1585657601c5e3d30a11",
+              "158c8d92b7f1bb51ccaf",
+              "15a9f04f06fbe2c03aa4",
+              "16a9ac0a9d878d8ff6db",
+              "16aa92d37f38c7e6a417",
+              "16fc3431421af9ae9cbf",
+              "1709dcab5339990b966c",
+              "173b2446b376e0ed4a87",
+              "173b80123ba4a9374321",
+              "173d88e8aef46fdd1672",
+              "180737b9e4bfdec1edc8",
+              "18522fe7d4f140323dfb",
+              "18cadf7f9e8884c799ef",
+              "18f2eb688dbf58dfbd6f",
+              "1932c3312267c35ae3cb",
+              "19a47e95f4c843dac9f7",
+              "19ca2cd9f15544a26594",
+              "19dccaa9b83101bdc6b2",
+              "19e42fd787973ea0a3f6",
+              "1a04e00836762b5e49e8",
+              "1a2f1a5168a8a01c0a03",
+              "1a3a5bfafb3e7a2b62fe",
+              "1a6a969e1b3441d209f7",
+              "1a9d73855150b419c70c",
+              "1ab5f93213f5aa4e1abe",
+              "1ab5f9e5ea9eda5a4da2",
+              "1ae64ff1a3fc7b710b9e",
+              "1b0681ec6f09c0a9d9eb",
+              "1c8d0ba7e99bd02f5527",
+              "1cdfb2258b5f36545ab3",
+              "1d02ed76d685e2594d59",
+              "1d113b5d9b8b33bfe85b",
+              "1d5b077b46d6b7d700ff",
+              "1d8f8153bedef3174420",
+              "1da88798800c08183d6d",
+              "1dc7910935344b2387f7",
+              "1e3162ca0dc770b46c01",
+              "1e5f5f3a2db914cabc74",
+              "1e92275c6de775289922",
+              "1eb0976976d34e2815e5",
+              "1ec51955b1aa06d7243b",
+              "1f0ca7010bd359bae3bd",
+              "1f0e784b2c566ccdef29",
+              "1f4261f90442ba5111e0",
+              "1f5807f9714c9a1d7520",
+              "1fd6c8b3a9355b848d87",
+              "2032c1d374adbb45eef1",
+              "2049390f1e93cca13719",
+              "2064f41c0b57b4fb8786",
+              "2169e7a830fec51c29e4",
+              "220ac23162c7a30ad7e7",
+              "22167db2303c4ac0430c",
+              "221b2a4ef4eb3b696c7e",
+              "22eb3fff4948e01b828d",
+              "23186e6a13421139e5d9",
+              "235085d4e6ab27f14a37",
+              "23e0780ccaf261b58f7f",
+              "23e371a62deedcce261a",
+              "2413ccf8979954d71cfa",
+              "24218090665d6d87a701",
+              "251d513499bdd3de19e3",
+              "25568ccab860250a24a9",
+              "25730613a8e254ba9113",
+              "2576ade52fbc48611cb3",
+              "25e8a0bbdcff4460e800",
+              "25f269171cea0c1df6d4",
+              "26a74f4d416192da00c2",
+              "27296782487fc7fbccde",
+              "27db91c7c4b1138783f9",
+              "281976070fe698324024",
+              "28ddfb8fcc500150a2b6",
+              "29c5fce7b1f86a6807a9",
+              "29c9b24d48e5d257b62c",
+              "29e2e22eba351b9f8e1c",
+              "29f5f7c612df3dc6fbae",
+              "2ab4fbbd204d5d43367f",
+              "2ac81f1daee25269e4e7",
+              "2b1fc736b4622aab514f",
+              "2b246642e0074384f822",
+              "2b7dd3da2f1e22524759",
+              "2c319a44fafbf9128ed4",
+              "2c9da91b01d206da7e8f",
+              "2d714e080b4d1fe1b68c",
+              "2d71787143b8abfe46dd",
+              "2ded0cf0d50516f321c1",
+              "2e7a767e99075b13c052",
+              "2e7b669c59bc21fe2df9",
+              "2eb1325ae285f6884142",
+              "30081d4740490fb911ce",
+              "302111ab0956ed151011",
+              "3034b379932c264ea1b7",
+              "3038e7b283921c787ded",
+              "30a9d4cf5d41b10bbc54",
+              "30bc432b09af666d6728",
+              "30ea97e7f589b0c6efc5",
+              "316ed710db97c50a4137",
+              "31d8f199afc1fd6846d5",
+              "31e47037bfb20304cd34",
+              "3217e1ab03bbc16384c7",
+              "3346a44af488da3b4e32",
+              "334fdc11f6e5431eaa62",
+              "3368e9cbeb47042b0802",
+              "3382aa46c7e8bb7e4612",
+              "339067d165ebb31110be",
+              "34ea1760578607f842ec",
+              "34f470951d1f97e77610",
+              "352340337c270c072c81",
+              "35a2722d39cf8593fd5c",
+              "35daeae752d99a30f4f6",
+              "362b125fc2be7bea3a7e",
+              "369276fb981ac233cd36",
+              "3718cdd121eee9bfb8fa",
+              "37df042dfd001de0fec5",
+              "38222d1a5cc3458ab8e3",
+              "3849d86636ba3a0e1d80",
+              "38727e21b0db18bab6f6",
+              "388f7b199892777c46ae",
+              "38e45e3129b32c30e8c2",
+              "395d2d941ca7529db073",
+              "39cda41050cd9796ca27",
+              "39d4e72395b022fa9251",
+              "3a03147d6a6b41356b14",
+              "3a0ebef0e770a2f5b650",
+              "3a1c295fe331fff3ac55",
+              "3a57737ba3a95d3c2767",
+              "3a5e334ab7519618669d",
+              "3abc4e4789834fc0fedd",
+              "3ad753a015093ed12cb4",
+              "3afb10b35db460589424",
+              "3b2de341ed09e8faf3d8",
+              "3b31858bafb5d62db2b3",
+              "3bbd6a9307d5957e04a9",
+              "3be9352567883fe4dfe6",
+              "3c4ac0f09606de6bb232",
+              "3ccbdf65f2a6a1002c26",
+              "3d2dadb47bb3c892b2fc",
+              "3dbcf8525bd61207be80",
+              "3e2ad121fbd39dae996c",
+              "3e5bcc9590de00c2df61",
+              "3e70d9c1aa2437bef692",
+              "3eed458813704d952601",
+              "3f7e615892a299ce3d86",
+              "3f8d2967a78a62b3c36b",
+              "40371ac23abdf37a9119",
+              "403b27387f6ba868ae03",
+              "409a350646361b8cc0c2",
+              "40aa451b5c26bb35fb2b",
+              "41257d0eec326e36994b",
+              "41c1e96a9b45811ac79e",
+              "4223b3d309e5fab6d9ea",
+              "422486567d18de5d6712",
+              "424a4b32c93f53ef290c",
+              "428fc2b25497dc3f798f",
+              "43c97d57f90df2be5aab",
+              "43d4417e7860ce243046",
+              "443a03d04cd322d7ee1a",
+              "4444124dde311e6cb049",
+              "44499951f5231af9e6f3",
+              "447bd626d80624794f5e",
+              "44971d1fb808ac43796c",
+              "44aa41bbb30668ebd7f9",
+              "44efd741915121c5760c",
+              "459174912ef8a13b3b8f",
+              "465aa2c481c8beea93cb",
+              "47dbfbb9a57edb355792",
+              "47f890925c40f7cd2ec5",
+              "4905aad99599cdd2d65d",
+              "492306340bc7f3e9a7c7",
+              "494746df0f1d4a66b565",
+              "4a6d36862369ce99a21a",
+              "4bae7fd6eea9c802b267",
+              "4bbb29074402d41e9832",
+              "4bed69256e291c8ed253",
+              "4c9582b0a6184495432d",
+              "4d78c79910262a9f5177",
+              "4deaa4d168fa2b3603f7",
+              "4eb07da197774076927a",
+              "4f8197a1a12b38c9679a",
+              "4fad728c488fafcc2d00",
+              "4fbbf4f738a0a0f19384",
+              "4fdd68324dbee42cbfac",
+              "4ff628f87bf86dae68c6",
+              "5040f3ce3145efe39b03",
+              "5041810abcb94cfe194c",
+              "50a7234a8ca47e34bd0e",
+              "5106a83d8304c0506831",
+              "51330b1a8072dc36301d",
+              "51d13587844b20ec08e8",
+              "5258fe43e1b88f51745d",
+              "53c6252c76cabdc2e020",
+              "5402d509bcfa257d97b0",
+              "543277495adefd4011dd",
+              "545c6ec2d11d0a647d15",
+              "54b046f68bb2927a3e54",
+              "551861e6db1073714b88",
+              "55315a2550011077f895",
+              "554791bea42232f12b3e",
+              "5682f22d529e532d35e2",
+              "5689af132a18f9e70b5e",
+              "56ae1e82b73db491ef0b",
+              "56c5c2f20d38b1f132dd",
+              "56cb17aeca91fbb3790c",
+              "56e91cbcddf32833e524",
+              "578e60ae5d1844ecc597",
+              "57b83fdc1e9ec0745e7e",
+              "57bfa1f3996194ec8c01",
+              "57c4d1485e0b701eb091",
+              "5826c868d93a4d98b93c",
+              "5914d757318618be5c5b",
+              "59509010b3ea4cc12ee7",
+              "5955b5692817354b49a7",
+              "599c4d27fd695ad2bbf1",
+              "59cf53bf1eb8e0458de2",
+              "59d0357fe50835170e81",
+              "5ac06817b3ccca3ab121",
+              "5b52d8d1b56fa134d59a",
+              "5b9c09c85ad14bb03e3f",
+              "5bf7a15be7f0d690ddc9",
+              "5c63b46ab1b78d658b84",
+              "5d26ef072cd25ffbc240",
+              "5d2bcd309e7a86e75d46",
+              "5d469f50052587fd3eb9",
+              "5da68652339217997412",
+              "5e3758218db0f3bcefce",
+              "5f0aa935050816324597",
+              "5f97d00149bd46a358f1",
+              "5fa8d0a92796184e3d2b",
+              "60148a0fc25bd524db1f",
+              "607c178c2903740e703f",
+              "6089080c2516198bfe6a",
+              "60f927254669cf0c51a7",
+              "6149710e0e5fe7bf8f82",
+              "61ad76b461d5c0ef14ef",
+              "61c3e48b5aa630acfb90",
+              "61e81e33731708e1dc18",
+              "6214a011f4e7fd9edbc7",
+              "62d79205460a82e3b58d",
+              "632eb69aba1ab07bc475",
+              "6330970f8c602c2aeef3",
+              "63f1cf45bf42b5cf7907",
+              "63f37f594da2ae529fc7",
+              "646680aaa363ed9798c0",
+              "6479730c11024f6cf2a5",
+              "649aa8431603607d3043",
+              "64ab6be84d962359579a",
+              "651b4463aebeb5fe67d5",
+              "65a249c5e42f1220b3fa",
+              "65c5b2b839a64c6aaa2c",
+              "65f55a418275398d7b4b",
+              "666609f42f13f76008ae",
+              "66aab7a98f797e96d585",
+              "66dcd1796719f9648cb3",
+              "67585099b614022242f2",
+              "681f407294ce28257a3b",
+              "68fe9bc600b2b9a8cd7b",
+              "691b8d1272466e6e2deb",
+              "6958995178d7db729c86",
+              "69e5c3719493bf68033f",
+              "6a0e6b8d8905a5886347",
+              "6b1f71931db3f82b3ddc",
+              "6b8b33d00078dde801b4",
+              "6c6e2b07e43fc25c9363",
+              "6c8d5e638d3fb4a9e28a",
+              "6d6844dafde29e3f2a6a",
+              "6e1b0fb341e426388303",
+              "6e59f19170c0f1fdd7dd",
+              "6eb2d9881ee01ba4ae18",
+              "6f91f1c722837366df48",
+              "710c817e3eaf095bd6cc",
+              "7129a6cbe6994341c08a",
+              "713726bc204f7bae9bb6",
+              "713eee96ace0ad303180",
+              "7142db001c8a335d8e10",
+              "72159877ba56420f1f62",
+              "726efedbd760397f21cc",
+              "734aa7f099c7f9ab9b90",
+              "7362cde6960480b75104",
+              "73a3cfabe9618ce09c7f",
+              "73eee28a8127e2ffbb17",
+              "745d82ed1e3c60d410a2",
+              "76692a7abb8354016337",
+              "768429c9c482dd408d0f",
+              "76ba851e951694a6d9c3",
+              "76f7aa7fab2c9192b889",
+              "770e6d1a8c83eaebcdf6",
+              "7764f88f33fa2fd277c4",
+              "7765e9fde06a40b584dd",
+              "778e7bb137f3a92fca80",
+              "77d3692867e438bda89b",
+              "77e8573fa52408a1bb86",
+              "78dfe58e453af7af734c",
+              "78ff80f1c1a687798ce4",
+              "7952757762b8c0e875de",
+              "798a0fd3442841599210",
+              "7a63f5dcdd746289f282",
+              "7a8c8191ebf266a2239f",
+              "7ad3df9a5b50e516c29f",
+              "7bd5e9c3087b757cdf1d",
+              "7c424be865cde9ee0c49",
+              "7c7454c9e216d7166cae",
+              "7e367c191be8e7c9d6bb",
+              "7ebac9ddc34fbc8fea2a",
+              "7f23a47936f76ca9a52d",
+              "7f2d675f94ca2c5f51cd",
+              "80d121112610029c5fc1",
+              "80d1a2e2e1880ae28fd5",
+              "80f7863bb34b010ae2f2",
+              "811d88b233f342424008",
+              "81b8311f53abe86bbda6",
+              "8239c17cc7c65bcce662",
+              "82ade58bd1cfef572327",
+              "82ca7626ed28dbcdd2ee",
+              "82ea29db644c87647f22",
+              "82eb43bf10b05b6ffe52",
+              "83290f6d8c4a6fe821a5",
+              "8337d6c7bcfd9bbbbec7",
+              "8374ca5a625c6b9acc39",
+              "8400d64147d95346ea0d",
+              "8518a60ac125265731cd",
+              "8577260f29dce24a1314",
+              "85e83e8b388e1f3babca",
+              "85e8ca10659379fb304c",
+              "863b4f436d686a3b632a",
+              "86a5b54a9ba817641f71",
+              "86f1efad3301b7446665",
+              "870692b3fd51758c9eec",
+              "877bd8219c38015c4bb9",
+              "87dcff8d49c4f22a8cfe",
+              "881286602c4f40f266d2",
+              "88866ffdec2ffcb8c6c4",
+              "88bb8c0b3ff4ce88148c",
+              "88cebb1d13dbea00f2e8",
+              "891f591fc5e3090bed7e",
+              "899abde00d7ee5175a3c",
+              "899eb97397b37317bf20",
+              "8aa00bc40030e58070bb",
+              "8abe278ef056b56ad579",
+              "8b2c01824c449085b167",
+              "8bd9740293ba224caad1",
+              "8c3721d4e5f5a1c10c04",
+              "8c93ce04e588da893669",
+              "8dbcc902a109faafa775",
+              "8ebca42b77addaceb6d0",
+              "8fea7066376bb9eb4a46",
+              "909300c85e3929f3114c",
+              "90a045130f1a17b72436",
+              "90b45fa1d47b6a754580",
+              "9129d13b6f0a7dd41455",
+              "916fccafe509f38187f5",
+              "91802bb31d0e82ee6bc5",
+              "91d28cbd4caf7fe84afa",
+              "91fa9f779c58ce55af2d",
+              "9242d6fd64001843dcb1",
+              "92768fbddcdc731c9a7d",
+              "92ad79382aa51dbe733c",
+              "92df9aed6b2fb5217ef4",
+              "92e3470c608ef04d71c8",
+              "92f85373e7c04714f82d",
+              "9395d819b64747382917",
+              "93971f4f560849fd6abf",
+              "93bea0d53395b4165156",
+              "9455bf2c1a79eae0ad3f",
+              "952d1dd7bd4dd5b5bb30",
+              "9582e652a77ed2c3836f",
+              "958e5e9752886b935917",
+              "95a879f66922784fc69b",
+              "95f05b8ca2c33ace6815",
+              "960b74585be2a460d93b",
+              "97321d37cf3a9519e0fb",
+              "9741ddb9d912f82d4c01",
+              "976d1df9f861ba788e84",
+              "97ab578aebc97c78f197",
+              "98cf5464f11047f44c63",
+              "98e2fafeeb1402f32a40",
+              "991c0eb8899db6dd786c",
+              "997c782e4fe637250e8b",
+              "9985596dde9c9656ce0f",
+              "99bcd37deaa663642609",
+              "99f7fcfd006ea04a84b2",
+              "9a3a534b1b267779b706",
+              "9a7ee8828efa0e536474",
+              "9aeecc58d33f73a7378b",
+              "9b366b44f0cf4c74a61f",
+              "9b3b81f0a6cc29caaa3d",
+              "9b909aff7d5d042227ed",
+              "9c1808bf21fcdf4fa5fc",
+              "9ce95e96b889791c9e17",
+              "9d678af6ec98baa3e0d8",
+              "9dc863021dbd724602c1",
+              "9e4ca633af09104d502a",
+              "a020d06610d083e33aab",
+              "a0bc7554b126f83bbd8a",
+              "a0e10637f9a47d0a3816",
+              "a10bcfa8b8744b405f59",
+              "a123d6a00607beaff907",
+              "a15254851718aef25318",
+              "a1f3f154372e1e316847",
+              "a3b2f674b19a2c08562e",
+              "a43014c8c0f3341befbc",
+              "a4363423e0cc6ceab9ae",
+              "a482472f6d034e56b7df",
+              "a485e13d70c59f88f69b",
+              "a490184da82af9687988",
+              "a4b2d916e0ae049b7774",
+              "a581916eac1d24441762",
+              "a598b9109dd07b0b1d93",
+              "a5c291a4d2f492042fa5",
+              "a64a4f2a06ecd1111181",
+              "a68dd95b102e2cc61ad0",
+              "a69ea85b7ab810ee221d",
+              "a6e890b10514d63dc7ed",
+              "a72a8c3e81a19e9d2a5c",
+              "a7cda6a1521ec4e28b12",
+              "a8295e3cbdd8676f68b5",
+              "a82a7f1dc500ec0041b8",
+              "a8721b7e4191df2eec42",
+              "a87731b6a9ca5291d809",
+              "a979cb9ec2293b2350e8",
+              "aa12e9b58fb192745b8e",
+              "aa13cf338dab7f022ca7",
+              "ab28386a0650954f7b96",
+              "ab91d3fb5d1ec9cd7d42",
+              "aba07340d3c3066cad29",
+              "ac625c2ba4fb109b221f",
+              "ac8de7f106498e17a6f5",
+              "ad5e01d67309771ff69f",
+              "ae28852286354af730f8",
+              "aea60a480ba839916092",
+              "aeb84c0f1671c99df64f",
+              "af515f863c07e27be06d",
+              "af7264de275df4f039af",
+              "af8bf4e9167a952ed62e",
+              "af8caed4a433a5671f2f",
+              "b064bd13a1fe45ac587b",
+              "b19ad863964acb8ac861",
+              "b23603021afceabc0260",
+              "b266cc61150538e93f28",
+              "b2eb74f2e2cc417f32c8",
+              "b33f5e374e8795dda51e",
+              "b396f5a2602973635b05",
+              "b40d742dde7bbc8c5c18",
+              "b430cd7d4d47bb7daf12",
+              "b44fcd3ef1bf03c1295c",
+              "b55ba1971f3d6c724467",
+              "b5946d4511c6c8778313",
+              "b5b60b7760a66563ea55",
+              "b621b909b64283d0678d",
+              "b7867d3126209c0d00a9",
+              "b7ee4fb50019fb3874e2",
+              "b80b5fb2103e6a90f04d",
+              "b83e9be0f4c72f02b6c3",
+              "b85bcd0f48e500fc2472",
+              "b8cee9416af8a6a1e459",
+              "b942a0d552b3ee958308",
+              "b9665a7ce0ec40985ca4",
+              "ba2e333773d023357cd4",
+              "bad83486456b3f42c8fa",
+              "bb046f2d39cd041729ee",
+              "bb38b5defc3d7eca5038",
+              "bd026e1135e832c9f705",
+              "bd2052f171859c7d3d5c",
+              "bd8a6112e44edd874de2",
+              "bddd46731743982914e6",
+              "be07ec7ec7ffa822be6f",
+              "be450f75afc7775c48d2",
+              "be64b08c09af9739583a",
+              "be6f2a097616dbab4bba",
+              "be7dc88e32f874ee53e5",
+              "beb927941d325ee1c1bc",
+              "bfbe64ee676a84784012",
+              "c00d953f726be7ad6900",
+              "c04f709c4328c3904f2a",
+              "c05ab7356a9cdc1fb110",
+              "c0a12d3bf5efd3d5f2f6",
+              "c169c45ff6a3ed74013d",
+              "c1f46635da0a94eafa7d",
+              "c20281daf12fdbebe567",
+              "c23ae7c29bcc3761f042",
+              "c2979952f3b467b06bbf",
+              "c339b551203b72199183",
+              "c37e218d3b39cdfb780a",
+              "c3ca8410e2d8a16c727c",
+              "c3f7a8f205a438c64f10",
+              "c425e6f52b0814fbec35",
+              "c48fea4b1e0cd09e7ff8",
+              "c4c7b25ab142eb1161e2",
+              "c4cff49a962428dd59cd",
+              "c5bac203ef0ec1141167",
+              "c668eed2d430a603abac",
+              "c66f5c36bb13d99bead6",
+              "c68023918612855238c9",
+              "c76f907f1028d0c42ebc",
+              "c79e0e87f8e04b8bf6f2",
+              "c7a3c78c01f34d71ba3b",
+              "c7ea4b4f59cbbdeb8a61",
+              "c7fc200accda13cb8594",
+              "c808ad1573b42e045a97",
+              "c8a954dac63d954450af",
+              "c8db825973ac0b17cb72",
+              "ca0440b893f074357775",
+              "cad5baa9f99b2d736b79",
+              "cbb06cca635a1c9f9f70",
+              "cc5b6f32ccc28ea9fd08",
+              "ccab3c9becb28f93faef",
+              "ccc0f362395c0f5dd8be",
+              "cd0f2b295f06a6567e2b",
+              "cda08793b64d27859f6f",
+              "cdb1512bfef592e41465",
+              "cdb903fede2ec72d30d7",
+              "cde8efa64f2a031321f3",
+              "ce44206e2d3c1cf9f034",
+              "ceefee83895f7966cbf6",
+              "cf4de6ca6365507f3263",
+              "cf83a79fb034635ca7bc",
+              "cfde1a0c93f7c888b1bf",
+              "d03a0e27613bc2ceb6c6",
+              "d040831306d2647c307f",
+              "d06f35fceb9c0aae14f3",
+              "d08cad6c48d9315dca4d",
+              "d0a9ceb761a75f1aca1f",
+              "d10e208bce7606f47014",
+              "d13cccc4bdd9d4831d1a",
+              "d28189f96e42a04fdfef",
+              "d2e5638bbb7e8e867171",
+              "d3fffcdb58b078041752",
+              "d40c37595a1103bcee5a",
+              "d4f2b463edd74c8ccb95",
+              "d50eaefa507e169ca93e",
+              "d52b61a932d346eacffa",
+              "d536c95be19aa4320a0c",
+              "d542ed9decc9cb57a52e",
+              "d547c7146852159a5eb2",
+              "d57938bf2f87d8f72151",
+              "d61a10b7f23125e984c5",
+              "d6ebf3e65db8740a0313",
+              "d71774d010867a033484",
+              "d7c8d50715870f902d0f",
+              "d7ef6f74123e8345a26b",
+              "d89bf5b1715b5e1a1e27",
+              "d8e7e64b2b9d97e467f0",
+              "d9ae7fcbf9344b80d7e4",
+              "d9f6fef36805df8d5784",
+              "da44c262bea1a6e68d3c",
+              "daf2ddc594975670fccb",
+              "db1e7109ce774ad80fb2",
+              "dc978090385e5b51970d",
+              "dcf0f6eda5f3ab76e983",
+              "dddd2550c93b0c2ee9f2",
+              "decdf2946cef147b06b7",
+              "df1792d8608dc411c074",
+              "df2a93d37867c8c7f0b7",
+              "df4aa8ba348dd6c16469",
+              "e03a0db9b19ce4a95e30",
+              "e04b3b7cba696cf90a79",
+              "e09e67db0ef5bad67c96",
+              "e128728b74bf55b70703",
+              "e143156fa90e8dedc472",
+              "e207b401f3a342fcee67",
+              "e2109a52ba0a256554e5",
+              "e242830a4cdc9b814af0",
+              "e2b06821f11069422b65",
+              "e2c905a8489b76cda85d",
+              "e32cbe8f0c9770ee7e95",
+              "e3bed27e95434d3ed8b6",
+              "e45219365c951243c702",
+              "e48b439a1f2d7ad4a302",
+              "e4cbac612cfa6029d703",
+              "e4f84c7e187a3bc720b5",
+              "e5c9221c45a1dc1cec8e",
+              "e694e95fe9639ddb14df",
+              "e69f9edd1bf612fb0b86",
+              "e76786c6b544c778eda7",
+              "e7ea3531f9534241d7e6",
+              "e7f3937743b21934dec2",
+              "e92cac98d304ce01593f",
+              "e92e635430a2af92d5aa",
+              "e93914722f673377db79",
+              "e967f98799ba3dbfb66a",
+              "e986c7de37c5df8f0f4e",
+              "eaa57487db573aae0120",
+              "eac6c3a08e22a016ff12",
+              "eb552f1da599f321490f",
+              "eb55e20777f9883ec2c7",
+              "eb5d9a0edea7962d70c8",
+              "ebf8898f65e41e57c950",
+              "ec1d6c5cd548ee06953a",
+              "ed2c08272f153cf0936f",
+              "ed8684c6b568ab8b6216",
+              "ee1297ca386e7a6ad9bc",
+              "ee2255334609aea51847",
+              "eeee7c6bb26700240a5a",
+              "ef914afa474bd53499a9",
+              "f04b9a1cf030a255f401",
+              "f067c611ba784e3f56fb",
+              "f0ff2f672284d7e628bc",
+              "f167703461aa15c5ee9f",
+              "f19122e2c1fa6ff8944e",
+              "f1a0bcb99f4bc0546863",
+              "f231b90819038050328d",
+              "f240bf8f279c15c885c1",
+              "f2855c49fd1a48aa764d",
+              "f2ac7db8375ae4b8ff7f",
+              "f343e6625a0054cd6846",
+              "f34911bd031ce2a2f70d",
+              "f38dbbc968ec41c06c89",
+              "f46a46ab62a04370a8e0",
+              "f4b8765cb16055d59617",
+              "f518a7885632e386006b",
+              "f58f2e85146bc7e5df1f",
+              "f5a6abd1271435663407",
+              "f5b2e85c4e8a00d97c9d",
+              "f5bceb781c0cdf70f082",
+              "f5d8ac7a55951deb5c2b",
+              "f7462fd61748fe6f90d9",
+              "f7b1ad8bace24cfab1d7",
+              "f7df1495602ae0f6dcc8",
+              "f7f2d509ab0e704cdf72",
+              "f961a360e350312d869e",
+              "f9b55a6d7978252444e3",
+              "f9c79f583ff9cebecc9e",
+              "f9fc29f716c89fbe6739",
+              "f9fee3a9bb709d507af8",
+              "fb8d84fb94186487a62a",
+              "fcaf69c88a0b6b06305e",
+              "fce75354056b55cbe5a4",
+              "fd0235d194e021fadfe2",
+              "fd3515c9a63afa7fadea",
+              "fdd82472d7d399eed370",
+              "fe4e334c7ec064e60db8",
+              "fe52c06e851de3690407",
+              "ff553d7d00198cfdb41d",
+              "ffdc8d94f3cdb22a711b"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data/market-hype-known-history-2026.json": {
+      "sha256": "f7ca724f48cf1879541a213ca86da523dd1b600e88cb8ad7c6deb21afdc8d774",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "entries",
+          "generatedAt",
+          "purpose",
+          "schemaVersion"
+        ],
+        "fields": {
+          "entries": {
+            "type": "array",
+            "length": 7,
+            "itemKeys": [
+              "brand",
+              "category",
+              "earliestKnownAt",
+              "evidence",
+              "productName",
+              "sourceUrl"
+            ]
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "purpose": {
+            "type": "string"
+          },
+          "schemaVersion": {
+            "type": "number"
+          }
+        }
+      }
+    },
+    "data/market-hype-discovery-ledger-2026.json": {
+      "sha256": "07bad9a7dae7cfa8e363aba45291bb81c090b0f0d904971e8ed18093392bfaea",
+      "shape": {
+        "type": "object",
+        "keys": [
+          "events",
+          "generatedAt",
+          "matchedSample",
+          "publicWindowDays",
+          "researchContextDays",
+          "scan",
+          "schemaVersion",
+          "snapshotReferenceAt",
+          "truth",
+          "undatedCandidates"
+        ],
+        "fields": {
+          "events": {
+            "type": "array",
+            "length": 1,
+            "itemKeys": [
+              "ageHours",
+              "brand",
+              "category",
+              "dateConfidence",
+              "eligibleSources",
+              "eventDate",
+              "firstSeenAt",
+              "lastSeenAt",
+              "productName",
+              "segment",
+              "sourceCount",
+              "sources",
+              "stage",
+              "stageLabel",
+              "typology",
+              "window"
+            ]
+          },
+          "generatedAt": {
+            "type": "string"
+          },
+          "matchedSample": {
+            "type": "array",
+            "length": 70,
+            "itemKeys": [
+              "productName",
+              "publishedAt",
+              "searchName",
+              "title",
+              "url"
+            ]
+          },
+          "publicWindowDays": {
+            "type": "number"
+          },
+          "researchContextDays": {
+            "type": "number"
+          },
+          "scan": {
+            "type": "object",
+            "keys": [
+              "candidates",
+              "datedEvents",
+              "groupedEvents",
+              "indexedMatches",
+              "pagesFetched",
+              "pagesMatched",
+              "podsAdded",
+              "queries",
+              "queriesWorking",
+              "rtaModAdded",
+              "undated"
+            ]
+          },
+          "schemaVersion": {
+            "type": "number"
+          },
+          "snapshotReferenceAt": {
+            "type": "string"
+          },
+          "truth": {
+            "type": "object",
+            "keys": [
+              "directPublicationDateRequired",
+              "indexCrawlDateAloneIsNotRelease",
+              "retailDiscoveryIsNotOfficialLaunch"
+            ]
+          },
+          "undatedCandidates": {
+            "type": "array",
+            "length": 29,
+            "itemKeys": [
+              "brand",
+              "category",
+              "productName",
+              "reason",
+              "url"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "generatedDataTimestamps": [
+    {
+      "file": "data/market-hype-products-2026.json",
+      "generatedAt": "2026-08-31T14:36:05.302Z"
+    },
+    {
+      "file": "data/market-hype-pods-2026.json",
+      "generatedAt": "2026-08-31T14:36:05.366Z"
+    },
+    {
+      "file": "data/market-hype-radar-2026.json",
+      "generatedAt": "2026-08-31T14:32:34.164Z"
+    },
+    {
+      "file": "data/market-hype-evidence-2026.json",
+      "generatedAt": "2026-08-31T14:32:34.164Z"
+    },
+    {
+      "file": "data/market-hype-heartbeat-2026.json",
+      "generatedAt": "2026-08-31T14:32:34.164Z"
+    },
+    {
+      "file": "data/market-hype-heartbeat-evidence-2026.json",
+      "generatedAt": "2026-08-31T14:32:34.164Z"
+    },
+    {
+      "file": "data/market-hype-direct-catalogs-2026.json",
+      "generatedAt": "2026-08-31T14:33:20.003Z"
+    },
+    {
+      "file": "data/market-hype-dated-news-2026.json",
+      "generatedAt": "2026-08-31T14:34:36.442Z"
+    },
+    {
+      "file": "data/market-hype-retail-campaigns-2026.json",
+      "generatedAt": "2026-08-31T14:35:47.808Z"
+    },
+    {
+      "file": "data/market-hype-retail-memory-2026.json",
+      "generatedAt": "2026-08-31T03:00:00.000Z"
+    },
+    {
+      "file": "data/market-hype-known-history-2026.json",
+      "generatedAt": "2026-08-31T03:00:00.000Z"
+    },
+    {
+      "file": "data/market-hype-discovery-ledger-2026.json",
+      "generatedAt": "2026-08-31T14:36:05.220Z"
+    }
+  ],
+  "currentOutputs": {
+    "products": {
+      "schemaVersion": 30,
+      "generatedAt": "2026-08-31T14:36:05.302Z",
+      "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
+      "concreteProducts": 23,
+      "datedEvents": 6,
+      "publicSignals": 17,
+      "before": 2,
+      "after": 4,
+      "verificationQueue": 3,
+      "byDimension": {
+        "ACCESORII": 1,
+        "MODURI": 14,
+        "RTA": 8
+      },
+      "confidenceTiers": {
+        "confirmed": 2,
+        "public-signal": 17,
+        "reported": 4
+      }
+    },
+    "pods": {
+      "schemaVersion": 30,
+      "generatedAt": "2026-08-31T14:36:05.366Z",
+      "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
+      "concreteProducts": 40,
+      "datedEvents": 5,
+      "publicSignals": 35,
+      "before": 0,
+      "after": 5,
+      "verificationQueue": 26,
+      "byDimension": {
+        "closed-prefilled-hybrid": 4,
+        "mass-market-open-pod": 33,
+        "mid-tier-regional": 3
+      },
+      "confidenceTiers": {
+        "public-signal": 35,
+        "reported": 5
+      }
+    },
+    "radar": {
+      "generatedAt": "2026-08-31T14:32:34.164Z",
+      "categories": {
+        "RTA": 2,
+        "MODURI": 1,
+        "ACCESORII": 0
+      },
+      "summary": {
+        "RTA": {
+          "signals": 0,
+          "events": 0,
+          "buyHype": 0,
+          "buyTrend": 0,
+          "prepareAccessories": 0,
+          "prepare": 0,
+          "watch": 0,
+          "stop": 0
+        },
+        "MODURI": {
+          "signals": 1,
+          "events": 1,
+          "buyHype": 0,
+          "buyTrend": 0,
+          "prepareAccessories": 0,
+          "prepare": 0,
+          "watch": 1,
+          "stop": 0
+        },
+        "ACCESORII": {
+          "signals": 0,
+          "events": 0,
+          "buyHype": 0,
+          "buyTrend": 0,
+          "prepareAccessories": 0,
+          "prepare": 0,
+          "watch": 0,
+          "stop": 0
+        }
+      }
+    },
+    "directCatalogs": {
+      "generatedAt": "2026-08-31T14:33:20.003Z",
+      "sourcesConfigured": 49,
+      "sourcesWorking": 49,
+      "productsClassified": 2204,
+      "recentEvents": 18,
+      "categoryEvents": {
+        "RTA": 1,
+        "MODURI": 5,
+        "ACCESORII": 1,
+        "POD": 11
+      },
+      "sourceMix": {
+        "official": 829,
+        "original-retailer": 996,
+        "clone": 367
+      }
+    },
+    "datedNews": {
+      "generatedAt": "2026-08-31T14:34:36.442Z",
+      "signals": 49,
+      "summary": {
+        "signals": 49,
+        "RTA": 2,
+        "MODURI": 6,
+        "ACCESORII": 0,
+        "POD": 41,
+        "rejected": 12
+      },
+      "queries": 48,
+      "queriesWorking": 48
+    },
+    "retailCampaigns": {
+      "generatedAt": "2026-08-31T14:35:47.808Z",
+      "signals": 6,
+      "scan": {
+        "sources": 1,
+        "pages": 6,
+        "pagesWorking": 6,
+        "minimumPages": 5,
+        "coveragePct": 100,
+        "coverageStatus": "complete",
+        "attempts": 7,
+        "failedPages": [],
+        "signals": 6,
+        "RTA": 3,
+        "MODURI": 3,
+        "POD": 0,
+        "rtaModAdded": 6,
+        "podsAdded": 0
+      }
+    }
+  },
+  "sourceUniverse": {
+    "officialMakers": 44,
+    "cloneMakers": 14,
+    "forumDomains": 17,
+    "independentNewsDomains": 8,
+    "originalSellerDomains": 9,
+    "cloneSellerDomains": 7,
+    "directCatalogSources": 49,
+    "supplementalActiveMakers": 42,
+    "podMakers": 60,
+    "podSegments": 4
+  },
+  "workflow": {
+    "file": ".github/workflows/market-hype-2026-sync.yml",
+    "schedules": [
+      "0,20 3 * * *",
+      "0,20 4 * * *"
+    ],
+    "timeoutMinutes": 75,
+    "concurrencyGroup": "market-2026-hype-radar",
+    "steps": [
+      "Gate intended 06:00 and 06:20 Bucharest runs",
+      "Checkout",
+      "Decide whether fallback Hype refresh is needed",
+      "Setup Node",
+      "Collect strict upstream pre-announcement trend and risk signals",
+      "Deep upstream second pass",
+      "Strictly validate upstream evidence hosts",
+      "Global 30-day wide discovery and After the first heart-beat",
+      "Preserve global upstream evidence before product enrichment",
+      "Resolve concrete products and reject relistings / generic false positives",
+      "Direct vendor product pages - ETA batch and release verification",
+      "Targeted vendor search - next batch ETA pre-sale",
+      "Explicit vendor date phrases - verified ETA and batch",
+      "Public search-index ETA recovery - batch and delayed product dates",
+      "3FVape RTA catalog - resolve dated new-arrival product paths",
+      "Global multi-vendor profiles - catalog pagination and product verification",
+      "Robust concrete product titles - final multi-vendor resolver",
+      "Supplemental active makers - RTA and MODURI",
+      "Merge global, direct-release and vendor product signals",
+      "Enforce exact 30 days before and 30 days after",
+      "Discover POD announcements, launches and dated public signals",
+      "Update 180-day retailer memory and first-seen observations",
+      "Scan direct official and retailer product catalogs",
+      "Collect dated manufacturer, press and product publications",
+      "Recover explicit future batch and preorder dates",
+      "Record dated retail promotions only as public signals",
+      "Backfill product-level dated evidence across public sources",
+      "Final category, chronology and cross-source arbitration",
+      "Validate Hype global 30-day truth rules",
+      "Publish complete Hype, product and heartbeat snapshots"
+    ],
+    "nodeTools": [
+      "tools/run-market-hype-radar-2026.js",
+      "tools/collect-market-hype-deep-2026.js",
+      "tools/filter-market-hype-evidence-2026.js",
+      "tools/collect-market-hype-wide-2026.js",
+      "tools/collect-market-hype-products-2026.js",
+      "tools/collect-market-hype-vendor-direct-2026.js",
+      "tools/collect-market-hype-targeted-vendor-2026.js",
+      "tools/augment-market-hype-explicit-vendor-dates-2026.js",
+      "tools/augment-market-hype-search-index-eta-2026.js",
+      "tools/augment-market-hype-3fvape-newarrival-rta-2026.js",
+      "tools/collect-market-hype-vendor-pagination-2026.js",
+      "tools/collect-market-hype-vendor-profiles-v2-2026.js",
+      "tools/collect-market-hype-active-makers-2026.js",
+      "tools/merge-market-hype-upstream-products-2026.js",
+      "tools/enforce-market-hype-symmetric-window-2026.js",
+      "tools/collect-market-hype-pods-2026.js",
+      "tools/observe-market-hype-retail-first-seen-2026.js",
+      "tools/collect-market-hype-direct-catalogs-2026.js",
+      "tools/collect-market-hype-dated-news-2026.js",
+      "tools/augment-market-hype-preorder-card-events-2026.js",
+      "tools/collect-market-hype-retail-campaigns-2026.js",
+      "tools/backfill-market-hype-product-evidence-2026.js",
+      "tools/consolidate-market-hype-2026.js",
+      "tools/validate-market-hype-publish-2026.js",
+      "tools/validate-market-hype-pods-2026.js",
+      "tools/check-market-data-quality-2026.js"
+    ],
+    "writesDirectlyToMain": true,
+    "fallbackSkipsCompletedSnapshot": true
+  },
+  "lastObservedSuccessfulRun": {
+    "runNumber": 55,
+    "runId": 33402605198,
+    "startedAt": "2026-08-31T14:26:09.000Z",
+    "completedAt": "2026-08-31T14:36:10.000Z",
+    "durationSeconds": 601,
+    "headSha": "2068ba22a9856c2da22d38a61381af02ba5f9631",
+    "outputCommit": "4f43d64ebc0f2e57585954f682e0fbfdfdaf522d"
+  },
+  "worker": {
+    "file": "cloudflare/market-hype-refresh/worker.mjs",
+    "endpoint": "/__market-hype-refresh",
+    "workflow": "market-hype-2026-sync.yml",
+    "ref": "main",
+    "throttleMs": 600000,
+    "dispatchesWholeWorkflow": true,
+    "originRestricted": true
+  },
+  "ui": {
+    "files": [
+      "assets/market-hype-ui.js",
+      "assets/market-loading-guard.js",
+      "assets/market-analysis-synthesis.js",
+      "sw.js",
+      "index.html",
+      "en/index.html"
+    ],
+    "dataPaths": [
+      "data/market-2026.json",
+      "data/market-coverage-2026.json",
+      "data/market-demand-intelligence-2026.json",
+      "data/market-external-intelligence-2026.json",
+      "data/market-hype-direct-catalogs-2026.json",
+      "data/market-hype-evidence-2026.json",
+      "data/market-hype-heartbeat-2026.json",
+      "data/market-hype-heartbeat-evidence-2026.json",
+      "data/market-hype-pods-2026.json",
+      "data/market-hype-products-2026.json",
+      "data/market-hype-radar-2026.json",
+      "data/market-management-2026.json",
+      "data/market-product-presence-2026.json",
+      "data/market-sales-2026.json",
+      "data/market-universe-audit-2026.json"
+    ],
+    "selectors": [
+      "market2026Root",
+      "marketHypeRadar"
+    ],
+    "readyFlag": true,
+    "serviceWorkerNetworkFirst": true,
+    "currentPublicModes": [
+      "RTA/MODURI/ACCESORII",
+      "POD"
+    ],
+    "currentEvidenceLayers": [
+      "launches",
+      "signals",
+      "catalog"
+    ]
+  },
+  "uiScreenshots": [
+    {
+      "path": "data/hype-benchmark/screenshots/hype-current-desktop-1366.png",
+      "role": "baseline-ui-screenshot",
+      "bytes": 952802,
+      "lines": 0,
+      "sha256": "768cbf68f667a9b019715ff48a2878b98204c58d4089b8c91588206a36641e9b"
+    },
+    {
+      "path": "data/hype-benchmark/screenshots/hype-current-mobile-390.png",
+      "role": "baseline-ui-screenshot",
+      "bytes": 661655,
+      "lines": 0,
+      "sha256": "0b15fa96eab73795624cee0fce3e398dbc7e687aeb35fabf88045fc26d9746e8"
+    }
+  ],
+  "protections": [
+    {
+      "id": "new-arrival-is-not-release",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"newArrivalIsNotRelease\": true",
+      "present": true
+    },
+    {
+      "id": "relisting-is-not-release",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"relistingIsNotRelease\": true",
+      "present": true
+    },
+    {
+      "id": "prior-history-demotes-relisting",
+      "file": "tools/consolidate-market-hype-2026.js",
+      "token": "knownBeforeWindowAt",
+      "present": true
+    },
+    {
+      "id": "single-retailer-needs-corroboration",
+      "file": "tools/consolidate-market-hype-2026.js",
+      "token": "retailHosts.length>=2",
+      "present": true
+    },
+    {
+      "id": "retail-promotion-is-not-release",
+      "file": "tools/consolidate-market-hype-2026.js",
+      "token": "signalKind='dated-retail-promotion'",
+      "present": true
+    },
+    {
+      "id": "sitemap-lastmod-is-not-launch",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"sitemapLastmodIsNeverUsedAsLaunchDate\": true",
+      "present": true
+    },
+    {
+      "id": "jsonld-coverage-is-not-launch",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"jsonLdCatalogCoverageDoesNotCreateLaunchEvents\": true",
+      "present": true
+    },
+    {
+      "id": "first-catalog-run-is-baseline",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"firstCatalogRunIsBaselineOnly\": true",
+      "present": true
+    },
+    {
+      "id": "colour-variants-share-product",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"colourVariantsAreOneProduct\": true",
+      "present": true
+    },
+    {
+      "id": "category-revalidated-before-publish",
+      "file": "data/market-hype-products-2026.json",
+      "token": "\"categoryRevalidatedBeforePublish\": true",
+      "present": true
+    },
+    {
+      "id": "bucharest-0600-reference",
+      "file": "tools/hype-window-reference-2026.js",
+      "token": "const TZ='Europe/Bucharest'",
+      "present": true
+    },
+    {
+      "id": "private-content-requires-authorization",
+      "file": "data/market-hype-sources-2026.json",
+      "token": "\"privateContentWithoutAuthorization\"",
+      "present": true
+    }
+  ],
+  "knownStructuralGaps": [
+    {
+      "id": "future-signal-horizon-collapsed",
+      "evidence": "enforce-market-hype-symmetric-window-2026.js sets futureEtaMayExceed30Days=false"
+    },
+    {
+      "id": "fixed-global-query-cap",
+      "evidence": "collect-market-hype-products-2026.js returns q.slice(0,150)"
+    },
+    {
+      "id": "lifecycle-collapsed-to-dominant-row",
+      "evidence": "consolidate-market-hype-2026.js mergeRows selects one dominant eventDate"
+    },
+    {
+      "id": "source-types-counted-as-confirmations",
+      "evidence": "eligibleSources is unique sourceType count, not independent origins"
+    },
+    {
+      "id": "mutable-json-is-canonical-state",
+      "evidence": "workflow collectors rewrite current public projection files"
+    },
+    {
+      "id": "monolithic-manual-refresh",
+      "evidence": "Cloudflare worker dispatches the full GitHub workflow"
+    },
+    {
+      "id": "search-provider-concentration",
+      "evidence": "generic discovery uses Bing RSS and no provider abstraction"
+    }
+  ]
+}
