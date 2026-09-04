@@ -1,14 +1,14 @@
 {
   "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-09-04T14:17:25.126Z",
+  "generatedAt": "2026-09-04T14:33:59.003Z",
   "lookbackHours": 720,
   "cacheMaxHours": 24,
   "pendingRefresh": false,
   "mode": "pre-market-upstream-only",
   "methodology": {
     "classification": "Product category is inferred only from search title/snippet and narrow context windows around relevant signal phrases after navigation/header/footer removal. Whole-page navigation is never used to choose a category.",
-    "recency": "Source/API publication time preferred; search-index time is accepted only as lower-confidence evidence and cannot by itself satisfy comment velocity or distinct-account rules.",
+    "recency": "Source/API publication time preferred; undated but identifiable announcements are preserved with first-observed time in the verification queue, never promoted to a dated launch.",
     "separation": "Hype = before market; Trend = repeated demand without a recent pre-announcement; Sales = current commercial evidence.",
     "scope": "GLOBAL RTA + clone RTA",
     "wideDiscovery": "30-day global public/indexable discovery across original manufacturers, original sellers, clone makers, clone sellers, social, communities, forums, news, creators and open web. Commercial discovery never validates BUY_HYPE.",
@@ -24,7 +24,12 @@
     "buyHypeRequiresAllConditions": true,
     "buyTrendRequiresDistinctAccounts": true,
     "complaintStopRequiresIndependentSources": true,
-    "rule": "Only upstream pre-announcement evidence may enter Hype. Store/product/cart/price pages are rejected. Missing corroboration, velocity or distinct-account evidence always downgrades the decision.",
+    "fixedGlobalQueryCapRemoved": true,
+    "undatedIdentifiableProductsPreserved": true,
+    "undatedCandidatesAreNotLaunches": true,
+    "publicSocialNetworksQueriedSeparately": true,
+    "relevantDocumentsPreselectedWithoutGlobalCap": true,
+    "rule": "Only upstream pre-announcement evidence may enter dated Hype. Identifiable undated evidence stays visible in verification until a date or ETA is proven.",
     "discoveryCommercialSourcesUsed": true,
     "discoveryCommercialSourcesCanEscalate": false,
     "wideDiscoveryWindowDays": 30,
@@ -41,12 +46,20 @@
     "undatedSignalsPreservedInVerificationQueue": true
   },
   "sourceStatus": {
-    "queriesRun": 194,
-    "queriesWorking": 194,
+    "queriesRun": 414,
+    "queriesWorking": 414,
+    "queryPlan": {
+      "prelaunch": 370,
+      "trend": 18,
+      "complaint": 26
+    },
     "redditAuthorized": false,
     "redditMode": "credentials-or-approval-missing",
-    "rawDocuments": 597,
-    "qualifiedPrelaunchSignals": 1,
+    "rawDocuments": 1414,
+    "relevantDocuments": 0,
+    "qualifiedPrelaunchSignals": 0,
+    "undatedPrelaunchCandidates": 0,
+    "verificationQueue": 0,
     "trendSignals7d": 0,
     "complaintSignals7d": 0,
     "sourceTypes": {
@@ -56,14 +69,19 @@
         "documents": 360
       },
       "manufacturer-social-public": {
+        "queries": 220,
+        "working": 220,
+        "documents": 2150
+      },
+      "creator-prelaunch": {
         "queries": 44,
         "working": 44,
-        "documents": 395
+        "documents": 430
       },
       "manufacturer-community": {
         "queries": 44,
         "working": 44,
-        "documents": 406
+        "documents": 436
       },
       "vaping-forum-prelaunch": {
         "queries": 51,
@@ -82,41 +100,42 @@
       }
     },
     "verifiedDateSignals": 0,
-    "indexDateSignals": 1,
+    "indexDateSignals": 0,
     "deepQueriesRun": 115,
     "deepQueriesWorking": 115,
-    "deepCandidateDocuments": 586,
+    "deepCandidateDocuments": 608,
     "deepWarningsAdded": 1,
     "deepScan": true,
     "deepStrictHostValidated": true,
-    "deepWrongHostRejected": 20,
+    "deepWrongHostRejected": 15,
     "wideQueriesRun": 181,
     "wideQueriesWorking": 181,
-    "wideCandidateDocuments": 770,
-    "wideSignalsAccepted": 50,
-    "wideUpcomingSignals": 7,
-    "wideReleasedSignals": 43,
-    "wideRememberedUpcomingSignals": 9,
-    "wideRememberedReleasedSignals": 43,
-    "wideDiscoveryOnlySignals": 41,
-    "wideDecisionEligibleSignals": 9,
+    "wideCandidateDocuments": 839,
+    "wideSignalsAccepted": 55,
+    "wideUpcomingSignals": 4,
+    "wideReleasedSignals": 51,
+    "wideRememberedUpcomingSignals": 4,
+    "wideRememberedReleasedSignals": 51,
+    "wideDiscoveryOnlySignals": 44,
+    "wideDecisionEligibleSignals": 11,
     "wideCloneSignals": 0,
     "wideScan": true,
     "scope": "GLOBAL",
-    "finalRelevantProductsBefore": 2,
-    "productQueriesRun": 91,
-    "productQueriesWorking": 91,
+    "finalRelevantProductsBefore": 0,
+    "productQueriesRun": 231,
+    "productQueriesWorking": 231,
     "productCandidates": 0,
+    "undatedProductCandidates": 0,
     "directVendorPages": 34,
     "directVendorProductLinks": 176,
-    "directVendorProductPagesFetched": 175,
+    "directVendorProductPagesFetched": 173,
     "directVendorPhraseHits": 170,
     "directVendorEvents": 0,
     "targetedVendorQueries": 90,
     "targetedVendorQueriesWorking": 90,
-    "targetedVendorRawDocs": 558,
-    "targetedVendorPreCandidates": 11,
-    "targetedVendorResolvedPages": 2,
+    "targetedVendorRawDocs": 689,
+    "targetedVendorPreCandidates": 25,
+    "targetedVendorResolvedPages": 13,
     "targetedVendorEvents": 0,
     "explicitVendorDatePass": true,
     "explicitVendorEvents": 0,
@@ -144,9 +163,9 @@
       {
         "id": "shareavape",
         "catalogPages": 2,
-        "catalogFetched": 2,
-        "productLinks": 68,
-        "productPages": 49,
+        "catalogFetched": 1,
+        "productLinks": 42,
+        "productPages": 25,
         "events": 0,
         "samples": []
       },
@@ -169,15 +188,15 @@
         "samples": []
       }
     ],
-    "vendorCatalogPages": 51,
-    "vendorProductLinks": 470,
-    "vendorProductPages": 450,
+    "vendorCatalogPages": 50,
+    "vendorProductLinks": 444,
+    "vendorProductPages": 426,
     "vendorEvents": 0,
     "vendorProfileScanV2": true,
     "vendorProfilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 23,
+        "catalogFetched": 24,
         "productLinks": 189,
         "productPages": 188,
         "events": 6,
@@ -234,9 +253,9 @@
         "id": "shareavape",
         "catalogFetched": 2,
         "productLinks": 69,
-        "productPages": 61,
+        "productPages": 51,
         "events": 0,
-        "titleFallbacks": 8,
+        "titleFallbacks": 7,
         "samples": []
       },
       {
@@ -259,12 +278,12 @@
       }
     ],
     "vendorEventsV2": 6,
-    "finalConcreteProducts": 32,
-    "finalBeforeProducts": 4,
+    "finalConcreteProducts": 30,
+    "finalBeforeProducts": 2,
     "finalAfterProducts": 28,
-    "upstreamProductEvents": 5,
+    "upstreamProductEvents": 4,
     "finalDatedEvents": 12,
-    "finalPublicSignals": 20,
+    "finalPublicSignals": 18,
     "finalUndatedCandidates": 0
   },
   "categories": {
@@ -324,6 +343,7 @@
       "stop": 0
     }
   },
+  "verificationQueue": [],
   "internalHistory": [
     {
       "date": "2026-08-29",
@@ -401,22 +421,10 @@
     },
     {
       "date": "2026-09-04",
-      "events": [
-        {
-          "kind": "pre",
-          "eventId": "c155d624094204e8601b",
-          "category": "RTA",
-          "typology": "RDL single",
-          "mentions": 1,
-          "engagement": 0,
-          "sourceTypeCount": 1,
-          "decision": "PREPARE"
-        }
-      ]
+      "events": []
     }
   ],
   "hypeWindowDays": 30,
   "snapshotReferenceAt": "2026-09-04T03:00:00.000Z",
-  "dailyWindowTimezone": "Europe/Bucharest",
-  "verificationQueue": []
+  "dailyWindowTimezone": "Europe/Bucharest"
 }
