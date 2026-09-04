@@ -45,6 +45,9 @@ on:
       - "tools/finalize-market-hype-category-relevance-2026.js"
       - "tools/merge-market-hype-upstream-products-2026.js"
       - "tools/validate-market-hype-publish-2026.js"
+      - "tools/hype-vnext/**"
+      - "docs/HYPE_VNEXT_IMPLEMENTATION_STATUS.md"
+      - ".github/workflows/market-hype-vnext-quality.yml"
       - "data/market-hype-sources-2026.json"
       - "data/market-hype-known-history-2026.json"
       - "data/market-pod-universe-2026.json"
@@ -224,6 +227,10 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/consolidate-market-hype-2026.js --write
 
+      - name: Build additive HYPE vNext evidence and event claims
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/hype-vnext/build-phase1.js
+
       - name: Validate Hype global 30-day truth rules
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: |
@@ -274,12 +281,16 @@ jobs:
           node tools/validate-market-hype-publish-2026.js
           node tools/validate-market-hype-pods-2026.js
           node tools/check-market-data-quality-2026.js
+          node tools/hype-vnext/run-benchmark.js
+          node tools/hype-vnext/build-phase1.js --check
+          node tools/hype-vnext/tests/core-schema.test.js
+          node tools/hype-vnext/tests/legacy-compat.test.js
 
       - name: Publish complete Hype, product and heartbeat snapshots
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         shell: bash
         run: |
-          files="data/market-hype-radar-2026.json data/market-hype-evidence-2026.json data/market-hype-heartbeat-2026.json data/market-hype-heartbeat-evidence-2026.json data/market-hype-products-2026.json data/market-hype-pods-2026.json data/market-hype-direct-catalogs-2026.json data/market-hype-dated-news-2026.json data/market-hype-retail-campaigns-2026.json data/market-hype-retail-memory-2026.json data/market-hype-discovery-ledger-2026.json"
+          files="data/market-hype-radar-2026.json data/market-hype-evidence-2026.json data/market-hype-heartbeat-2026.json data/market-hype-heartbeat-evidence-2026.json data/market-hype-products-2026.json data/market-hype-pods-2026.json data/market-hype-direct-catalogs-2026.json data/market-hype-dated-news-2026.json data/market-hype-retail-campaigns-2026.json data/market-hype-retail-memory-2026.json data/market-hype-discovery-ledger-2026.json data/hype-vnext"
           if [ -z "$(git status --porcelain -- $files)" ]; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"

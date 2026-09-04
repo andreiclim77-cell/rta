@@ -1,0 +1,4881 @@
+{
+  "count": 112,
+  "entitySchemaVersion": 1,
+  "entityType": "event_claim",
+  "eventTypes": {
+    "BATCH": 1,
+    "FIRST_RETAIL_OBSERVATION": 37,
+    "PREORDER_OPEN": 5,
+    "PRIOR_EXISTENCE": 5,
+    "PUBLIC_SIGNAL": 2,
+    "REGIONAL_RELEASE_CLAIM": 1,
+    "RETAIL_PROMOTION": 11,
+    "REVIEWER_FIRST_LOOK": 48,
+    "TEASER": 2
+  },
+  "generatedAt": "2026-09-04T07:39:56.478Z",
+  "recentReleaseWindowActive": 0,
+  "rows": [
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch oneo pro oxva",
+      "claimedEventAt": "2026-08-25T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.981Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_c36a05976bbd446cc23fcc5f",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_093dab4c048efe4811dc8947",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.981Z",
+      "productId": "pr_e0dd3d75d0462985f92e2a58",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata oxva vprime 2 pod kit",
+      "claimedEventAt": "2026-08-10T12:25:39.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_d9a2d01916dd3f5134c33b94",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_0a2d6d4f66d284e0ed5c6626",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_3f7160619f673f4558171420",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vmate max 2 vs argus z3 which pod system fits your vaping style",
+      "claimedEventAt": "2026-08-25T08:00:13.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.260Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_0709ccca62178de297413c4a",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_0a3ac561b7030fc86060dd5c",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.260Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata prima listare comerciala datata oxva vprime 2 review 3400mah pod mod kit with 60w output - igeekphone.com",
+      "claimedEventAt": "2026-08-24T12:44:01.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.790Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_47bbab6e54b5af55376e15bd",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_0c914a015c728d33a12e48d4",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.790Z",
+      "productId": "pr_3f7160619f673f4558171420",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata radiator mtl rta 22mm 4ml",
+      "claimedEventAt": "2026-09-01T12:39:31.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_04929526d9af911fe2cb36f9",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_0d0ce177c3532394f627c86e",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_a373885f7fd6416db3805bfd",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "teaser svoemesto kayfun rebuildable atomisers rta",
+      "claimedEventAt": "2026-08-28T23:36:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-08-28T23:36:00.000Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": true
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 20,
+        "semantic": "UNKNOWN_DATE_SEMANTIC"
+      },
+      "entityType": "event_claim",
+      "eventType": "TEASER",
+      "evidenceId": "ev_2f585ac8e0deed72c2332d0d",
+      "expectedEndAt": "2026-08-28T23:36:00.000Z",
+      "expectedStartAt": "2026-08-28T23:36:00.000Z",
+      "id": "cl_124d04a8ef62229ece54102a",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "signal",
+        "legacyStage": "SIGNAL",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-08-28T23:36:00.000Z",
+      "productId": "pr_f654ec92961d3a7664a9d6a2",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": "2026-08-28T23:36:00.000Z",
+      "warnings": [
+        "DISCOVERY_ONLY"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare voopoo argus g4 mini vs argus g3 mini pod vape review which mini pod system is better",
+      "claimedEventAt": "2026-08-15T08:03:21.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.665Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_e9be2dd480767efdce1d8105",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_152b9d42b17566f7bfff0c31",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.665Z",
+      "productId": "pr_d0b4a186c5d322288c0ef64c",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare oficiala datata prima listare oficiala datata 004-zoe sbs bf60",
+      "claimedEventAt": "2026-08-21T09:53:16.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:36.114Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 85,
+        "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_c5a19d5306d0f353c1d762ab",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_16b30662d5c1503b95b932b7",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "official-product-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:36.114Z",
+      "productId": "pr_9652443c575b43f89f20ad8f",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata aspire pixo aura 2 review compact pod system with great flavor convenience",
+      "claimedEventAt": "2026-08-24T02:04:03.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.402Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_7d23c5d4e3c03b2b5550b5ca",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_16b65b6027778d39dd0397e7",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.402Z",
+      "productId": "pr_dc1531ab0f3e405a221cb391",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare oficiala datata prima listare oficiala datata rayden 220 limited edition box mod by bd vape",
+      "claimedEventAt": "2026-08-18T03:31:19.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 85,
+        "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_2a376627192137ea622edc32",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_175989534388eda6ccb8afba",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "official-product-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_25c600ff284e566c6f5d0188",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata eleaf istick xc100 vape mod review",
+      "claimedEventAt": "2026-08-26T13:37:52.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.798Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_e885b9ac4699a166bea4c390",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_18d95c110cfddd398c06c7ac",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.798Z",
+      "productId": "pr_21bc9008281eb03f3128e5d4",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "promovare recenta pentru model existent nu lansare promovare recenta pentru model existent nu lansare sxk prc cuda mod",
+      "claimedEventAt": "2026-08-05T12:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:39:43.368Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 35,
+        "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_4524909d6b49aaa650cd7f45",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_1a7174294c84cf3ea8b545ce",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-retail-campaign",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:39:43.368Z",
+      "productId": "pr_e19c605f1e6952ebd540f92e",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch nexlim 2 nexlim 2 mini oxva",
+      "claimedEventAt": "2026-08-31T08:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.961Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_346df6b34cb28f2e1a56db8c",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_1c528524e90dcbd14827e687",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.961Z",
+      "productId": "pr_7b153d467d9c1606827f7d65",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "eta precomanda eta precomanda ghost ring style rta",
+      "claimedEventAt": "2026-09-30T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "NEXT_30_DAYS",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:39:23.727Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
+      },
+      "entityType": "event_claim",
+      "eventType": "PREORDER_OPEN",
+      "evidenceId": "ev_41b58521f4d3b53e0bb85969",
+      "expectedEndAt": "2026-09-30T00:00:00.000Z",
+      "expectedStartAt": "2026-09-30T00:00:00.000Z",
+      "id": "cl_23e0f7210a502bdba37aa8e2",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "explicit-vendor-eta",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:39:23.727Z",
+      "productId": "pr_d2686a732243bbd3897a1613",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "promovare recenta pentru model existent nu lansare promovare recenta pentru model existent nu lansare amigo style boro mechanical mod",
+      "claimedEventAt": "2026-08-05T12:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:39:43.368Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 35,
+        "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_b89cc95f6b3086a7df60978b",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_258db4d71c509122977c916b",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-retail-campaign",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:39:43.368Z",
+      "productId": "pr_ce15ba950532017f39b55a0c",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare recenta pentru model existent nu lansare geekvape sonder q3 pod kit",
+      "claimedEventAt": "2026-08-13T14:22:05.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_d0dec38ebc6fab79f40a9c93",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_298886ef9098e1c0abadc796",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_e8342d8cfaeca1b8db2dda14",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE",
+        "RELISTING"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "anunt disponibilitate in pregatire prima listare comerciala datata vprime 2",
+      "claimedEventAt": "2026-08-20T13:20:42.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_7f0bc164ff3e4d3ae6443b46",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_30e19584fdeb23fe9dfbaea3",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_3f7160619f673f4558171420",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso prix pod system kit review ergonomic pros and cons of the 2600mah battery",
+      "claimedEventAt": "2026-08-18T14:05:27.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.494Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_35abf2938831f751128ebd38",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_325bf77da039edfee208fef0",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.494Z",
+      "productId": "pr_714f43255589bdd55e29072f",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata oxva xlim 3 ultra review",
+      "claimedEventAt": "2026-08-20T13:48:57.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.819Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_ce3d2397dfad1cb191b2d1ea",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_35e84ce0938da020a2dcb8bf",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.819Z",
+      "productId": "pr_f581cfdc164ce62c20108e73",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "model existent inaintea ferestrei active listare recenta pentru model existent nu lansare regulatory product identifier 04044-19-00005",
+      "claimedEventAt": "2019-01-01T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 20,
+        "semantic": "UNKNOWN_DATE_SEMANTIC"
+      },
+      "entityType": "event_claim",
+      "eventType": "PRIOR_EXISTENCE",
+      "evidenceId": "ev_85dbd35ebcd1e71f0ba17e90",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_3680ada9c248601e0a611b62",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_0a883bdc3541b7971acba3b2",
+      "region": "GLOBAL",
+      "relation": "establishes_prior_existence",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "DISCOVERY_ONLY",
+        "KNOWN_BEFORE_WINDOW",
+        "RELISTING"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata smok tfos pod review",
+      "claimedEventAt": "2026-08-11T15:33:28.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.869Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_982d50915031e3a8ae89ab15",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_378743990495f6ec3ccf4d65",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.869Z",
+      "productId": "pr_1116454e65a986ab11ef9863",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo drag h40 pro review",
+      "claimedEventAt": "2026-08-05T11:24:38.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.950Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_e51d8205ffa04508a4c4b198",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_391379f04f58c53c62b1e751",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.950Z",
+      "productId": "pr_4a9fcad769e4d6070884f25b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "batch viitor batch viitor yftk flash e-vapor v4.5s+ style rta",
+      "claimedEventAt": "2026-09-10T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "NEXT_30_DAYS",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:39:23.727Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
+      },
+      "entityType": "event_claim",
+      "eventType": "BATCH",
+      "evidenceId": "ev_5877bec33bd750262dcbc788",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_3cebd456925548fa750dd216",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "explicit-vendor-eta",
+        "legacyStage": "BATCH",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:39:23.727Z",
+      "productId": "pr_9213c33222528f7249d9cb2f",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "teaser sxk apex style boro box mod black - 3fvape.com",
+      "claimedEventAt": "2026-08-28T08:34:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-08-28T08:34:00.000Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": true
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 20,
+        "semantic": "UNKNOWN_DATE_SEMANTIC"
+      },
+      "entityType": "event_claim",
+      "eventType": "TEASER",
+      "evidenceId": "ev_44840e478a3c35c99bfc7d50",
+      "expectedEndAt": "2026-08-28T08:34:00.000Z",
+      "expectedStartAt": "2026-08-28T08:34:00.000Z",
+      "id": "cl_3d6769754bb502d2c49b2b26",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "signal",
+        "legacyStage": "SIGNAL",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-08-28T08:34:00.000Z",
+      "productId": "pr_c7a1e3e63f05bb1c02dc82d5",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": "2026-08-28T08:34:00.000Z",
+      "warnings": [
+        "DISCOVERY_ONLY"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata rekavape by-ka v9 rta kit 22mm 316ss 1.2 1.4 1.7mm air pins",
+      "claimedEventAt": "2026-09-02T13:39:06.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_e6cce3ab688272551979b7e8",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_48c6b1fd5d9bf3ff17641d2e",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_8ab28a1260f5589e57945064",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare vaporesso xros 6 mini review",
+      "claimedEventAt": "2026-08-13T12:58:40.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.850Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_48be119d9828a7a3e17c1a75",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_4b9d413707ce42c11de0e9db",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.850Z",
+      "productId": "pr_0608f5c25e48d60314a2d847",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata oxva vprime 2 pod vape kit",
+      "claimedEventAt": "2026-08-06T20:14:48.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_9eb214cc78747313c0026ffe",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_4beef3dbd9abf75b50ddd044",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_3f7160619f673f4558171420",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata oxva nexlim 2 mini vs oxva nexlim go review 2026 pod system showdown",
+      "claimedEventAt": "2026-08-24T05:49:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.345Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_2c5f6bd633921960108934d0",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_4c52a77fde34a7f1ac5f066c",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.345Z",
+      "productId": "pr_3521627e2a8c2a7b4eaa86e9",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch xros 6 mini vibe se 2 vaporesso",
+      "claimedEventAt": "2026-08-17T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.068Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_3ac5e581a2136edff2cb6cd6",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_4cc02aac41a8a6ff046dfe71",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.068Z",
+      "productId": "pr_39d8fcd8b973bbab4f4e2900",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata rekavape pneumatyca rta",
+      "claimedEventAt": "2026-09-03T12:13:44.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_e8c9174eabe870d64ec91a30",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_4ed720b1eed3721fc2b2a5a7",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_bb6fbfa538744a5efe4ab3f6",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "eta precomanda eta precomanda ghost ring style rta",
+      "claimedEventAt": "2026-09-30T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "NEXT_30_DAYS",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:39:23.727Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
+      },
+      "entityType": "event_claim",
+      "eventType": "PREORDER_OPEN",
+      "evidenceId": "ev_255af6de3b33d23e9104c6ba",
+      "expectedEndAt": "2026-09-30T00:00:00.000Z",
+      "expectedStartAt": "2026-09-30T00:00:00.000Z",
+      "id": "cl_4f80aeebddfe5a705c537119",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "explicit-vendor-eta",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:39:23.727Z",
+      "productId": "pr_d2686a732243bbd3897a1613",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare oficiala datata prima listare oficiala datata idot rba 510 drip tip",
+      "claimedEventAt": "2026-09-03T03:21:47.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 85,
+        "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_fc06e78f294b51e677605c55",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_504eb7a8ccba88ed3f52d905",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "official-product-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_3ea88e965ffdc5c25ef029f5",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata oneo pro par oxva",
+      "claimedEventAt": "2026-09-01T08:00:05.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.992Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_132de43665ed3aa2bcaa4e07",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_50acf1f19a8580451360d580",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.992Z",
+      "productId": "pr_748669e6a2f702aede64716a",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch xros 6 vaporesso",
+      "claimedEventAt": "2026-09-01T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.915Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_620107ff5256eda4120eaebe",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_5101356d7539e96ec5952186",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.915Z",
+      "productId": "pr_10959e9b1efa413c81c83f1b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata smok sinch pod system kit review compact power smart features and exceptional flavor",
+      "claimedEventAt": "2026-08-16T10:36:56.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.536Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_8e0e637117c1a0e0d78436b8",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_5311f826e8c202c0c3628c34",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.536Z",
+      "productId": "pr_e1d9f8acd277f5c35c2e87a9",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vmate max 2 vs smoant racer flex pod system kit battery or ai chip",
+      "claimedEventAt": "2026-08-19T05:41:10.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.463Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_59b81709b1b6222f58acc14f",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_561d486e8fadc4d655e691fb",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.463Z",
+      "productId": "pr_265a47f8afc1ef0897598be6",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare info batch xros 6 mini vibe se 2 vaporesso",
+      "claimedEventAt": "2026-08-17T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.068Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_061867633b63294f6178bb26",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_5a337b6aaf746f34a117e753",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.068Z",
+      "productId": "pr_0608f5c25e48d60314a2d847",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare review xros 6 mini vaporesso",
+      "claimedEventAt": "2026-08-07T14:21:08.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.092Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_7b4abd15d0c73251128db456",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_5bcb9e91e0a6de1f8cdfba32",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.092Z",
+      "productId": "pr_0608f5c25e48d60314a2d847",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare uwell caliburn g5 lite zero nicotine vape bundle",
+      "claimedEventAt": "2026-08-19T14:26:19.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_54bcf1ef14d74668ec09f239",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_5d082458a2ee59f9ed6df4ff",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_9bb88331d3c621a977746c48",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare oxva xlim go 2 zero nicotine vape bundle",
+      "claimedEventAt": "2026-08-19T14:25:08.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_31cafd2760bada9a3856907e",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_5f30bc7fe9d28f0ff09b40b5",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_ab75d8e2f98c4ffd2425317a",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso xros 6 review bigger battery same xros draw",
+      "claimedEventAt": "2026-09-02T19:33:55.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.150Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_516e7427723ee1a2d1dfff04",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_60cc141bbfde87c57c3b8db3",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.150Z",
+      "productId": "pr_10959e9b1efa413c81c83f1b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare ske bar 600 zero nicotine prefilled pod kit",
+      "claimedEventAt": "2026-08-19T09:17:29.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_119a88c4fabdcdbf44e80714",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_61e3e58e2fcbb6ef6a889951",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_93cf34592c2aaf970d698422",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare sxmini mq plus 100w box mod",
+      "claimedEventAt": "2026-08-06T10:32:57.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_a01af8afbb3ed785c9aa454c",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_63d3211632d135a9a7c2ab53",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_85278809625ada3f53862563",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare recenta pentru model existent nu lansare mechvape x nitrous pocket 80w box mod",
+      "claimedEventAt": "2026-08-17T08:27:22.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_0064b91c46ce111e36600d7e",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_6773de68fd3e84e09d42d2e2",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_d1e61b3df1f2dfd547f6e1a4",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE",
+        "RELISTING"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "model existent inaintea ferestrei active listare recenta pentru model existent nu lansare dated product presentation",
+      "claimedEventAt": "2026-07-30T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 20,
+        "semantic": "UNKNOWN_DATE_SEMANTIC"
+      },
+      "entityType": "event_claim",
+      "eventType": "PRIOR_EXISTENCE",
+      "evidenceId": "ev_cc36dc677709b17d39eaec21",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_6cf85b17c26c44ebbec9d171",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_d1e61b3df1f2dfd547f6e1a4",
+      "region": "GLOBAL",
+      "relation": "establishes_prior_existence",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "DISCOVERY_ONLY",
+        "KNOWN_BEFORE_WINDOW",
+        "RELISTING"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare oficiala datata prima listare oficiala datata 2026 nexlim labor day bundle",
+      "claimedEventAt": "2026-09-01T10:56:53.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_f173474208d3716f757452c5",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_706d4aeb97752521821bd7f3",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_570d0e65ede41b009e8f5750",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "promovare recenta pentru model existent nu lansare promovare recenta pentru model existent nu lansare rekavape menelaus polish style rta",
+      "claimedEventAt": "2026-08-05T12:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:39:43.368Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 35,
+        "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_e0a9cb45275b627881e05843",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_70a6ac6932bba86ebef466c9",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-retail-campaign",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:39:43.368Z",
+      "productId": "pr_4356384976de03aec326e575",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata eleaf istick x40 review",
+      "claimedEventAt": "2026-08-18T14:10:48.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.829Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_4b1ecaafe35ec22a95c908b6",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_70c688b024987e3c2e92a8ae",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.829Z",
+      "productId": "pr_eb61a6bc53635fa14eef2fa0",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus g4 mini vs argus g3 mini pod vape review which mini pod system is better",
+      "claimedEventAt": "2026-08-15T08:03:21.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.665Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_e611933bac28bf97445096dc",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_7170332a8f5082695ed3b22d",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.665Z",
+      "productId": "pr_e2166614b0b617a93492aef1",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata sxk mea culpa mtl rta 3",
+      "claimedEventAt": "2026-09-02T13:34:43.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_3e0ce007d9e57e0c3f5b496a",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_71f1a062b4bb554137d49109",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_d48eb13fbd86a49aff4825a6",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata oxva vprime 2 pod kit",
+      "claimedEventAt": "2026-09-03T12:25:23.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_77f5ece8879c644c3be3d6f9",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_734a6bf0c7f43f6a7c03edb6",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_3f7160619f673f4558171420",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "eta precomanda eta precomanda rekavape ghost ring style rta",
+      "claimedEventAt": "2026-09-30T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "NEXT_30_DAYS",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:39:23.727Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
+      },
+      "entityType": "event_claim",
+      "eventType": "PREORDER_OPEN",
+      "evidenceId": "ev_83cbab8313d67d5d0985e9f5",
+      "expectedEndAt": "2026-09-30T00:00:00.000Z",
+      "expectedStartAt": "2026-09-30T00:00:00.000Z",
+      "id": "cl_78159f448530d3c12f4b13e6",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "explicit-vendor-eta",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:39:23.727Z",
+      "productId": "pr_a4caf51e606bd049e55d4185",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "eta precomanda eta precomanda sxk ghost ring style rta",
+      "claimedEventAt": "2026-09-30T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "NEXT_30_DAYS",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:39:23.727Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
+      },
+      "entityType": "event_claim",
+      "eventType": "PREORDER_OPEN",
+      "evidenceId": "ev_942b1e7f8f4d6731a28b9249",
+      "expectedEndAt": "2026-09-30T00:00:00.000Z",
+      "expectedStartAt": "2026-09-30T00:00:00.000Z",
+      "id": "cl_7994f2027e923db8fe8fb85b",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "explicit-vendor-eta",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:39:23.727Z",
+      "productId": "pr_164dd21054620f8241713839",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata rekavape baya rta",
+      "claimedEventAt": "2026-09-02T14:31:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_00b1c69d98d279d9a2a7a0ad",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_7f63475292a01ec5c70de4ab",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_6c9f6a7b86781a136a98e981",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare oxva nexlim 2 mini zero nicotine vape bundle",
+      "claimedEventAt": "2026-08-19T14:25:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_5a6bd7283193984c0f10f8f5",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_80bf51e02a38dfa1c28b9386",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_56a9b5a6d87bc127fed72055",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo drag h40 pro vs drag 6 the ultimate pod mod vs mod comparison - igeekphone.com",
+      "claimedEventAt": "2026-08-16T09:50:17.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.645Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_663b755f1f534255d7ab6a0d",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_810da479389958058689eb0b",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.645Z",
+      "productId": "pr_4a9fcad769e4d6070884f25b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vmate max 2 vs argus z3 which pod system fits your vaping style",
+      "claimedEventAt": "2026-08-25T08:00:13.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.260Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_8c442ddda793c1d067d22c75",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_82a2a8cb0080413d97e0d865",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.260Z",
+      "productId": "pr_265a47f8afc1ef0897598be6",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "eta precomanda eta precomanda rekavape ghost ring style rta",
+      "claimedEventAt": "2026-09-30T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "NEXT_30_DAYS",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:39:23.727Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
+      },
+      "entityType": "event_claim",
+      "eventType": "PREORDER_OPEN",
+      "evidenceId": "ev_4f6878d37f142c94552b7f3f",
+      "expectedEndAt": "2026-09-30T00:00:00.000Z",
+      "expectedStartAt": "2026-09-30T00:00:00.000Z",
+      "id": "cl_83e290039ea881bc48203168",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "explicit-vendor-eta",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:39:23.727Z",
+      "productId": "pr_a4caf51e606bd049e55d4185",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "model existent inaintea ferestrei active listare recenta pentru model existent nu lansare product database release month",
+      "claimedEventAt": "2026-06-01T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 20,
+        "semantic": "UNKNOWN_DATE_SEMANTIC"
+      },
+      "entityType": "event_claim",
+      "eventType": "PRIOR_EXISTENCE",
+      "evidenceId": "ev_36f35c207e1d904b0af60a25",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_858185ffc43880bfad24ec32",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_77cc586d8b5475eafebbf467",
+      "region": "GLOBAL",
+      "relation": "establishes_prior_existence",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "DISCOVERY_ONLY",
+        "KNOWN_BEFORE_WINDOW",
+        "RELISTING"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vinci s vs vinci e80 review which vinci pod vape wins",
+      "claimedEventAt": "2026-08-24T04:56:29.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.383Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_cfd11e5fc37e986c8fca83be",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_89713a98745f2d46b040f9a6",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.383Z",
+      "productId": "pr_2093554dd6a5d48f73d95762",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vmate pro 2 review",
+      "claimedEventAt": "2026-08-08T12:44:27.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.909Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_e8ec8055579ebd1007c336df",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_9505d86d33c10c13da32a1a9",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.909Z",
+      "productId": "pr_39cc06d4c53edaabc28e0df7",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "promovare recenta pentru model existent nu lansare promovare recenta pentru model existent nu lansare coilturd an rta",
+      "claimedEventAt": "2026-08-05T12:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:39:43.368Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 35,
+        "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_3c8ff5d3999b84bc5ccd1de6",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_9680730edc72c8bfb149f425",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-retail-campaign",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:39:43.368Z",
+      "productId": "pr_7ef29b6913627d2f04fdb78f",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch xros 6 vaporesso",
+      "claimedEventAt": "2026-08-07T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.029Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_31e65856290551d52ee1ae61",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_9b15efc72a70ee11afc8c521",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.029Z",
+      "productId": "pr_10959e9b1efa413c81c83f1b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata yftk dvarw fl rta 22mm pc mesh tank 3.5ml",
+      "claimedEventAt": "2026-09-02T16:02:50.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_f0749c56c5b3f5cbe38160ac",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_9ddd65ad9f1d262080d2d81f",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_92e5166a2cc429b281bdd67e",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare sp2s touch vs. oxva nexlim 2 mini a head-to-head pod vape comparison",
+      "claimedEventAt": "2026-08-11T13:54:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.706Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_63962ab29ec0b39b7ad511ef",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_a042d36d37ae0377be861bef",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.706Z",
+      "productId": "pr_56a9b5a6d87bc127fed72055",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 review a lightweight pod that knows what it doesn t need",
+      "claimedEventAt": "2026-08-25T02:28:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.750Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_2f08ed3d0c46b8ab51321d2d",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_a203340bdab3c2f0ad907abc",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.750Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare mq plus sx mini yihi 100w box mod",
+      "claimedEventAt": "2026-08-20T14:52:15.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_18d4c8fac3ddafc5805d67e7",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_a4c82b9c7ead22568288e189",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_9caaa47b6d168cdbd6810889",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 review lightweight pod system - igeekphone.com",
+      "claimedEventAt": "2026-08-25T02:28:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.809Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_ab5f815a2da7d99011e47433",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_a7a6d0e45f731c2342523e0f",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.809Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo drag h40 pro vs drag 6 the ultimate pod mod vs mod comparison",
+      "claimedEventAt": "2026-08-16T09:50:17.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.563Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_57d08706a13d9ce350b4406d",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_ab2ce568c5e7891657102635",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.563Z",
+      "productId": "pr_4a9fcad769e4d6070884f25b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "anunt disponibilitate in pregatire anunt disponibilitate in pregatire xlim 4",
+      "claimedEventAt": "2026-09-03T12:10:49.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "PUBLIC_SIGNAL",
+      "evidenceId": "ev_978cb5112ae1a21ca932460f",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_ab54fbc527ae63ee7a56b55c",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_6e73e1b7ec6450d6f788621a",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata oxva nexlim 2 mini vs nexlim go pod system comparison review - igeekphone.com",
+      "claimedEventAt": "2026-08-24T05:49:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.769Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_cc9b2fb4fada2c37cd144923",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_b04acc5740364720da01f593",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.769Z",
+      "productId": "pr_3521627e2a8c2a7b4eaa86e9",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch luxe xr max 2 vaporesso",
+      "claimedEventAt": "2026-08-09T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.009Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_131c6df3f1a3ace56c3d5079",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_b14f65cd10b4ac6663e59b21",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.009Z",
+      "productId": "pr_e8c8214f3d420ab4b09990db",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare recenta pentru model existent nu lansare elf bar af5000 prefilled pod kit",
+      "claimedEventAt": "2026-08-26T08:40:36.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_264e02e55558d9a94606e05f",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_b2d187795920e01f87ab83a6",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_ab62abca0dff370858537d9d",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE",
+        "RELISTING"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata eleaf iveni pod review",
+      "claimedEventAt": "2026-08-09T12:43:32.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.888Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_0c83f38d7d84bb6fea0e1356",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_b3534cb7373462a0479c07b8",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.888Z",
+      "productId": "pr_c4aa504e4cf536a28cc7277b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare recenta pentru model existent nu lansare reload squonk mod dual 18650",
+      "claimedEventAt": "2026-08-26T11:36:47.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_b581c2e647c1b3cd29e4bda3",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_b384a8f839b68740f176acc4",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_0a883bdc3541b7971acba3b2",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE",
+        "RELISTING"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "model existent inaintea ferestrei active listare recenta pentru model existent nu lansare dated first-look article",
+      "claimedEventAt": "2026-06-25T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 20,
+        "semantic": "UNKNOWN_DATE_SEMANTIC"
+      },
+      "entityType": "event_claim",
+      "eventType": "PRIOR_EXISTENCE",
+      "evidenceId": "ev_a8fa05005d3549b02c48831e",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_b61bf4de6813b80d912ac7d0",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_e8342d8cfaeca1b8db2dda14",
+      "region": "GLOBAL",
+      "relation": "establishes_prior_existence",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "DISCOVERY_ONLY",
+        "KNOWN_BEFORE_WINDOW",
+        "RELISTING"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "anunt disponibilitate in pregatire anunt disponibilitate in pregatire xlim pro 4",
+      "claimedEventAt": "2026-09-03T12:12:22.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "PUBLIC_SIGNAL",
+      "evidenceId": "ev_efd6fcb22f0fbf68e671785c",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_bb8b2299385a1868486e4179",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_46ca4f96f9d0138800d5006c",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo drag h40 pro vs drag 6 the ultimate pod mod vs mod comparison",
+      "claimedEventAt": "2026-08-16T09:50:17.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.563Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_78258e49bd307ba080b95ff4",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_bc2e438d7f2d35b4e513ec38",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.563Z",
+      "productId": "pr_5c4ee4ec180e2402e38d7d82",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata pixo ultra par aspire",
+      "claimedEventAt": "2026-08-10T08:00:04.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:36.083Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_fef9ac3e4fee4f663d6a9128",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_bd5124ea4b4836566b0632f4",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:36.083Z",
+      "productId": "pr_1fcec37f661e5ebeda0cc502",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare dojo blast 7k fresh prefilled pod kit",
+      "claimedEventAt": "2026-09-01T10:54:42.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_85f424cbe5151cf682d9935d",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_c1655d8c12b079b4d24a469d",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_2704955a2630129b4a42defb",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch kit aegis legend 5 z subohm tank 5 geekvape",
+      "claimedEventAt": "2026-08-31T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.924Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_5702d79d63af62065366cfe5",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_c284765483f6f2596d69796b",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.924Z",
+      "productId": "pr_88431cb9d28f50021473c10e",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata sxk unitank v2 rba rta",
+      "claimedEventAt": "2026-09-01T15:02:03.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_683e3482c612601220ef712b",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_c33ee4e555b471d2bbadb162",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_8f9c26c136efeee452c6652b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso prix pod system kit review is the 2600mah battery worth the bulk - igeekphone.com",
+      "claimedEventAt": "2026-08-18T07:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.829Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_603d2da5c6bc0c752e432a16",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_c50c34988d92a8b94a405350",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.829Z",
+      "productId": "pr_714f43255589bdd55e29072f",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare vaporesso xros 6 mini vs xros 5 mini key differences and which pod kit is better - igeekphone.com",
+      "claimedEventAt": "2026-08-24T01:33:54.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.888Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_30f550a6494dd9d4df040c07",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_c66be7e5eb520e77b0f19682",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.888Z",
+      "productId": "pr_0608f5c25e48d60314a2d847",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata geekvape aegis mini 5 kit review compact rugged 100w",
+      "claimedEventAt": "2026-08-13T17:29:17.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.159Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_16c28aae7bb082f2d1575240",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_cce395e69d9e35c98644693f",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.159Z",
+      "productId": "pr_ce7b1e80d96a05106212cff8",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 vs g4 1100mah vs 1650mah 20w vs 35w the ultimate comparison",
+      "claimedEventAt": "2026-08-15T11:27:57.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.627Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_0b48579669a4333acfcb3e3d",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_cdd246ca793b155bfa254889",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.627Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vmate max 2 vs smoant racer flex pod system kit battery or ai chip",
+      "claimedEventAt": "2026-08-19T05:41:10.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.463Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_32c4a72a21428f9acf347ec1",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_ce74a18c84a7dd1ce5aa8a55",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.463Z",
+      "productId": "pr_1119f0bd0d757597a99ab1b9",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare oficiala datata prima listare oficiala datata blaze organic wicking cotton",
+      "claimedEventAt": "2026-08-24T02:55:06.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_0a61c19e587fac7b77abe31f",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_cecd18c4d7da0e527c5cb8c6",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_796f382b2cc01568682ec546",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus g4 review three resistances one pod",
+      "claimedEventAt": "2026-08-13T17:30:38.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.178Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_2afc8d1f5bd7369de864ac28",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_d5c6b8379c1bae7abc92d028",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.178Z",
+      "productId": "pr_4b5d4b0b5d0a02adab578c47",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "promovare recenta pentru model existent nu lansare listare recenta pentru model existent nu lansare mechvape paramour v2 100w vw sbs box mod",
+      "claimedEventAt": "2026-08-05T12:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:39:43.368Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 35,
+        "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_68cf49485859aa3480b663a6",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_d5fbb8a508572534c0bf9c5b",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:39:43.368Z",
+      "productId": "pr_77cc586d8b5475eafebbf467",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE",
+        "RELISTING"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "promovare recenta pentru model existent nu lansare promovare recenta pentru model existent nu lansare sxk prime minister style rdl rta",
+      "claimedEventAt": "2026-08-05T12:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:39:43.368Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 35,
+        "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_2a86196b593d84df20761adf",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_db52fa609daf2fcb78b77ec9",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-retail-campaign",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:39:43.368Z",
+      "productId": "pr_686812c40c0c97f892d6cc25",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare vaporesso xros 6 mini zero nicotine vape bundle",
+      "claimedEventAt": "2026-08-19T12:59:15.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_e89949ae69c281819fcc698f",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_dcceaf9260f87371e7f9219f",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_0608f5c25e48d60314a2d847",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "model existent inaintea ferestrei active listare recenta pentru model existent nu lansare european safety gate notice",
+      "claimedEventAt": "2024-05-22T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 20,
+        "semantic": "UNKNOWN_DATE_SEMANTIC"
+      },
+      "entityType": "event_claim",
+      "eventType": "PRIOR_EXISTENCE",
+      "evidenceId": "ev_94cbf9028aac17953167aa1a",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_ddc7291ad04d502efdbfca73",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_ab62abca0dff370858537d9d",
+      "region": "GLOBAL",
+      "relation": "establishes_prior_existence",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "DISCOVERY_ONLY",
+        "KNOWN_BEFORE_WINDOW",
+        "RELISTING"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch armour ultra vaporesso",
+      "claimedEventAt": "2026-08-10T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.989Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_5e133b3e98932cd3b1b5139c",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_df231e23dcc97a6002de71f3",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.989Z",
+      "productId": "pr_8d310e5452a3b2cbb947eae0",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare vaporesso xros 6 mini review the simplest xros yet",
+      "claimedEventAt": "2026-09-02T19:41:25.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.131Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_913eebe0dc04d4598c591447",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e03bd8f9c791e6b1af52414e",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.131Z",
+      "productId": "pr_0608f5c25e48d60314a2d847",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata an rta par thunder cloud",
+      "claimedEventAt": "2026-08-13T08:10:19.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:36.060Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_33fb0af8da134c0894df16a4",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e1652217a8230d25471cc9e7",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:36.060Z",
+      "productId": "pr_604dd6d4f292bb690b426dff",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare recenta pentru model existent nu lansare mechvape paramour v2 sbs 100w 18650 21700",
+      "claimedEventAt": "2026-08-10T13:14:35.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "RETAIL_PROMOTION",
+      "evidenceId": "ev_98d6d117f8d73ef1a5845c72",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e3eff74988e180e312de5d62",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "RETAIL_PROMOTION",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_77cc586d8b5475eafebbf467",
+      "region": "GLOBAL",
+      "relation": "contextualizes",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "NOT_A_RELEASE",
+        "RELISTING"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare oxva nexlim 2 mini vs nexlim go pod system comparison review - igeekphone.com",
+      "claimedEventAt": "2026-08-24T05:49:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.769Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_5d91945b44963145f1ce2987",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e44c9d22452b40cfeb7e0881",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.769Z",
+      "productId": "pr_56a9b5a6d87bc127fed72055",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso xros 6 mini vs xros 5 mini key differences and which pod kit is better",
+      "claimedEventAt": "2026-08-24T01:33:54.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.788Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_6d5c3f8db301b0d602727c39",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e71cb84ee4b05288158b40bb",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.788Z",
+      "productId": "pr_b17a6f84ea0079d02b923b24",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare voopoo argus g4 mini zero nicotine vape bundle",
+      "claimedEventAt": "2026-08-19T14:24:05.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:37:24.339Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 68,
+        "semantic": "CATALOG_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_421b8bcad0244e184e5075e6",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e72617832b8dcf2f25edfdc6",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:37:24.339Z",
+      "productId": "pr_d0b4a186c5d322288c0ef64c",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso xros 6 vs sp2s uranus quick comparison review",
+      "claimedEventAt": "2026-08-16T09:35:07.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.604Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_6ecdac230374c7bdcd2b6fe4",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e92f13aac758a680e54ae376",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.604Z",
+      "productId": "pr_10959e9b1efa413c81c83f1b",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso xros 6 mini vs xros 5 mini key differences and which pod kit is better - igeekphone.com",
+      "claimedEventAt": "2026-08-24T01:33:54.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.889Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_266cb88ddff13340710e5e98",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_e9caf2f07d08eeb10ac4fe2a",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.889Z",
+      "productId": "pr_b17a6f84ea0079d02b923b24",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare info batch nexlim 2 nexlim 2 mini oxva",
+      "claimedEventAt": "2026-08-31T08:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.961Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_9b052c29cbe0759e524da740",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_ee96996f06303a62b4fa5b02",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.961Z",
+      "productId": "pr_56a9b5a6d87bc127fed72055",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "lansare relatata public lansare relatata public ivg nexio pre-filled pod system launches with 10 000-puff reusable design",
+      "claimedEventAt": "2026-08-19T11:50:23.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.425Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REGIONAL_RELEASE_CLAIM",
+      "evidenceId": "ev_1c3fd1711d98b42a355b091b",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_ef7db284ceedf7baca278405",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "REPORTED_RELEASE",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.425Z",
+      "productId": "pr_5a3cde0a0ea45f60a2b43c34",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo drag h40 pro vs drag 6 the ultimate pod mod vs mod comparison - igeekphone.com",
+      "claimedEventAt": "2026-08-16T09:50:17.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:34.645Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_2e95ca90e859fd5bb6300e4c",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_f1603ea2601a1205816d9602",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:34.645Z",
+      "productId": "pr_5c4ee4ec180e2402e38d7d82",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vinci s vs vinci e80 review which vinci pod vape wins",
+      "claimedEventAt": "2026-08-24T04:56:29.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.383Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_c495d51b4376991e5f11047c",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_f39a950cf9f0b1e31c77986b",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.383Z",
+      "productId": "pr_057cbbfb266b4b457491abab",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare vaporesso xros 6 mini vs xros 5 mini key differences and which pod kit is better",
+      "claimedEventAt": "2026-08-24T01:33:54.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.788Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_8a12e8aec8278a042d811a9f",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_f39c060244967c7bc732db87",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.788Z",
+      "productId": "pr_0608f5c25e48d60314a2d847",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vmate max 2 review battery pods controls and daily use",
+      "claimedEventAt": "2026-08-25T09:08:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.222Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_f4ccf7b8175758e9ad773fe8",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_f56ca92379912f4053d59ace",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.222Z",
+      "productId": "pr_265a47f8afc1ef0897598be6",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata spark 2 par kiwi",
+      "claimedEventAt": "2026-08-07T08:00:04.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:36.104Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_7dcf879f1fde2d18e6869add",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_f5bb8ab538973bb2c69dfad0",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:36.104Z",
+      "productId": "pr_530bd42e7d420e288e09118a",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare oxva nexlim 2 mini vs oxva nexlim go review 2026 pod system showdown",
+      "claimedEventAt": "2026-08-24T05:49:37.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.345Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_7da8611b71a33e667e2a3a72",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_f7bdd6d8e38279a4384cfc8d",
+      "identityConfidence": {
+        "basis": "product-level source URL",
+        "level": "HIGH",
+        "score": 88
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.345Z",
+      "productId": "pr_56a9b5a6d87bc127fed72055",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso luxe x3 review",
+      "claimedEventAt": "2026-08-07T12:02:17.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.929Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_a37e3bf39a8863f299186e28",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_fa5b6c19af7ef808c7ed63a5",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.929Z",
+      "productId": "pr_491e812bffef6f44cf54f169",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata review nexlim 2 oxva",
+      "claimedEventAt": "2026-08-07T14:16:25.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-09-04T07:38:35.112Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-09-04T07:39:56.478Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_0f3f5100d3362e437aaecfed",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_fede76f9075a8a3e85893161",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-09-04T07:38:35.112Z",
+      "productId": "pr_7b153d467d9c1606827f7d65",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    }
+  ],
+  "schemaVersion": "hype-vnext.phase1.v1",
+  "signalWindowActive": 2,
+  "sourceSnapshots": {
+    "data/market-hype-evidence-2026.json": {
+      "sha256": "3662fa96065cf2fb48cf4fef8b745bc8e993f8655aab769d728b7ada6fa260a9"
+    },
+    "data/market-hype-heartbeat-2026.json": {
+      "sha256": "ed42a8f56a18866ad9b4ee8c6f0b16558c9132136577584ce60bfbfd50ad1890"
+    },
+    "data/market-hype-heartbeat-evidence-2026.json": {
+      "sha256": "2b6115800f810488e82fb26c50921f71bdc40db0faf20397276bdc56adf59197"
+    },
+    "data/market-hype-known-history-2026.json": {
+      "sha256": "f7ca724f48cf1879541a213ca86da523dd1b600e88cb8ad7c6deb21afdc8d774"
+    },
+    "data/market-hype-pods-2026.json": {
+      "sha256": "71930f29e5b71f2090a75b1ec22f9849096813ddf7c588259305a73ecbf3ee8b"
+    },
+    "data/market-hype-products-2026.json": {
+      "sha256": "c93f367b41229b4f8720d430a0c00c2d5d71c4de03481eff617a8ef97a305e94"
+    },
+    "data/market-hype-radar-2026.json": {
+      "sha256": "bff71ac540bb65bd49344e53562bd7962d3fb0e946988434eb6bde5345dc7c06"
+    },
+    "data/market-hype-retail-memory-2026.json": {
+      "sha256": "2194aa423dd459776e0d0ff209d91b1593d32cbcb4f5e5ef06314f6881918df9"
+    },
+    "data/market-hype-sources-2026.json": {
+      "sha256": "88607fb6468ff383c4c7e6f0b3ea2aaf9254ca200fcc240c868c640b421c9d06"
+    }
+  }
+}

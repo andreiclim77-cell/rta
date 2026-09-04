@@ -1,9 +1,55 @@
 # HYPE vNext implementation status
 
-**Phase:** 0 - current baseline and regression contract
-**Status:** implemented and self-audited on `codex/hype-vnext-00-baseline`; draft PR #18 awaits approval
-**Date:** 2026-09-01
+**Phase:** 1 - canonical products, immutable evidence and lifecycle claims
+**Status:** implemented and self-audited on `codex/hype-vnext-01-core-schema`; ready for shadow publication
+**Date:** 2026-09-04
 **Rollback point:** `6bf2acc68ec8af7c44db4b5c6e78f0ab771bb1df`
+
+## Phase 1 completed
+
+Phase 1 is additive and deliberately does not switch the public UI or replace
+the production collectors. It converts every controlled current HYPE product
+and source row into versioned canonical entities beside the live system.
+
+Current generated shadow snapshot:
+
+| Entity | Count |
+|---|---:|
+| Canonical products | 74 |
+| RTA products | 16 |
+| Mod products | 16 |
+| Accessory products | 2 |
+| POD products | 40 |
+| Authentic products | 58 |
+| Clone products | 16 |
+| Immutable evidence records | 112 |
+| Lifecycle event claims | 112 |
+
+The event model currently preserves 5 real preorder/ETA claims, 37 first
+retail observations, 11 retail promotions, 5 prior-existence records, 2
+teasers and the remaining public/reviewer claims without silently converting
+them into exact launch dates. A regression test specifically prevents the
+Romanian words `existent` and `datata` from being misread as the token `ETA`.
+
+Implemented:
+
+- deterministic canonical IDs for product, source, scan, evidence, lineage,
+  event claim and projection entities;
+- separate 30-day signal, 30-day release, 180-day forecast and 730-day history
+  clocks;
+- immutable JSON evidence and event stores with collision protection;
+- provisional origin clustering for copied/cross-posted material;
+- explicit authentic/clone and RTA/mod/accessory/POD identities;
+- byte-identical legacy product and POD projections;
+- daily Phase 1 build after final production consolidation at 06:00/06:20;
+- dedicated CI covering schema, fixtures, legacy parity and current public
+  HYPE quality gates.
+
+Phase 1 limitations remain explicit: independent-origin resolution, resolved
+lifecycle events, novelty scoring and completeness-aware source orchestration
+belong to later phases. No public cutover is claimed here.
+
+## Phase 0 baseline retained
 
 ## Scope completed
 
