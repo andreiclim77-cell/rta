@@ -4,8 +4,8 @@
   "scope": "GLOBAL POD SYSTEMS",
   "windowDays": 30,
   "discoveryContextDays": 180,
-  "generatedAt": "2026-08-31T14:36:05.366Z",
-  "snapshotReferenceAt": "2026-08-31T03:00:00.000Z",
+  "generatedAt": "2026-09-04T07:39:56.478Z",
+  "snapshotReferenceAt": "2026-09-04T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest",
   "pendingRefresh": false,
   "truth": {
@@ -55,23 +55,23 @@
     "segmentsConfigured": 4,
     "queriesRun": 227,
     "queriesWorking": 227,
-    "searchDocuments": 1553,
-    "candidateDocuments": 413,
-    "pagesProcessed": 413,
-    "concreteProducts": 28,
+    "searchDocuments": 1464,
+    "candidateDocuments": 398,
+    "pagesProcessed": 398,
+    "concreteProducts": 32,
     "retailProductsObserved": 4,
     "firstRetailEvents": 0,
-    "verifiedSignals": 1,
+    "verifiedSignals": 0,
     "segmentCoverage": {
       "mass-market-open-pod": {
         "label": "Open-pod si pod-mod",
         "makers": 9,
         "queries": 36,
         "queriesWorking": 36,
-        "indexedDocuments": 280,
-        "candidateDocuments": 74,
+        "indexedDocuments": 188,
+        "candidateDocuments": 97,
         "events": 4,
-        "queued": 6,
+        "queued": 10,
         "monitored": 33,
         "signals": 29
       },
@@ -81,10 +81,10 @@
         "queries": 90,
         "queriesWorking": 90,
         "indexedDocuments": 762,
-        "candidateDocuments": 157,
-        "events": 1,
-        "queued": 9,
-        "monitored": 3,
+        "candidateDocuments": 126,
+        "events": 0,
+        "queued": 3,
+        "monitored": 2,
         "signals": 2
       },
       "closed-prefilled-hybrid": {
@@ -92,11 +92,11 @@
         "makers": 20,
         "queries": 74,
         "queriesWorking": 74,
-        "indexedDocuments": 380,
-        "candidateDocuments": 146,
-        "events": 0,
-        "queued": 10,
-        "monitored": 4,
+        "indexedDocuments": 410,
+        "candidateDocuments": 129,
+        "events": 1,
+        "queued": 12,
+        "monitored": 5,
         "signals": 4
       },
       "premium-high-end-aio": {
@@ -104,25 +104,43 @@
         "makers": 7,
         "queries": 27,
         "queriesWorking": 27,
-        "indexedDocuments": 131,
-        "candidateDocuments": 36,
+        "indexedDocuments": 104,
+        "candidateDocuments": 46,
         "events": 0,
-        "queued": 1,
+        "queued": 6,
         "monitored": 0,
         "signals": 0
       }
     },
     "rejections": {
-      "fetchFailed": 59,
+      "fetchFailed": 74,
       "makerMismatch": 0,
-      "notConcretePodProduct": 385,
-      "noDateOrEvent": 27,
-      "sourceNotDecisionEligible": 0,
+      "notConcretePodProduct": 366,
+      "noDateOrEvent": 31,
+      "sourceNotDecisionEligible": 1,
       "outsideWindow": 0,
       "duplicate": 0
     },
-    "candidatesUnderVerification": 26,
+    "candidatesUnderVerification": 32,
     "rejectedSample": [
+      {
+        "brand": "SMOK",
+        "productName": "SMOK - SMOKTech Mods, Pod & Starter Kits",
+        "segment": "mass-market-open-pod",
+        "typology": "open-pod / pod-mod",
+        "reason": "noDateOrEvent",
+        "url": "https://www.elementvape.com/smoktech",
+        "publishedAt": "2026-09-02T17:17:00.000Z"
+      },
+      {
+        "brand": "SMOK",
+        "productName": "SMOK | SMOKTech Pens, Mods, and Pod Systems - VaporFi",
+        "segment": "mass-market-open-pod",
+        "typology": "open-pod / pod-mod",
+        "reason": "noDateOrEvent",
+        "url": "https://www.vaporfi.com/vape-brands/smok/",
+        "publishedAt": "2026-09-01T12:11:00.000Z"
+      },
       {
         "brand": "Vaporesso",
         "productName": "Vaporesso XROS",
@@ -130,7 +148,7 @@
         "typology": "open-pod / pod-mod",
         "reason": "noDateOrEvent",
         "url": "https://www.centralvapors.com/vaporesso/",
-        "publishedAt": "2026-08-31T06:36:00.000Z"
+        "publishedAt": "2026-09-03T06:39:00.000Z"
       },
       {
         "brand": "Voopoo",
@@ -139,97 +157,79 @@
         "typology": "open-pod / pod-mod",
         "reason": "noDateOrEvent",
         "url": "https://www.elementvape.com/voopoo-tech",
-        "publishedAt": "2026-08-30T18:11:00.000Z"
+        "publishedAt": "2026-09-03T18:14:00.000Z"
       },
       {
         "brand": "Uwell",
-        "productName": "Uwell CALIBURN 11W Pod System",
+        "productName": "UWELL - Vape Pod Systems & Disposables",
         "segment": "mass-market-open-pod",
         "typology": "open-pod / pod-mod",
         "reason": "noDateOrEvent",
-        "url": "https://www.elementvape.com/uwell-caliburn",
-        "publishedAt": "2026-08-26T11:14:00.000Z"
+        "url": "https://www.elementvape.com/uwell",
+        "publishedAt": "2026-09-04T02:20:00.000Z"
       },
       {
         "brand": "Uwell",
-        "productName": "Uwell Caliburn Vape Kit - Pod System - myvaporstore.com",
+        "productName": "UWELL | Vape Tanks, Pod Mod Kits & Accessories - VaporFi",
         "segment": "mass-market-open-pod",
         "typology": "open-pod / pod-mod",
         "reason": "noDateOrEvent",
-        "url": "https://www.myvaporstore.com/Uwell-Caliburn-Kit-p/uwc-cal10.htm",
-        "publishedAt": "2026-08-23T01:44:00.000Z"
+        "url": "https://www.vaporfi.com/vape-brands/uwell/",
+        "publishedAt": "2026-09-03T03:26:00.000Z"
       },
       {
         "brand": "Uwell",
-        "productName": "Uwell Caliburn Shop| UWELL",
+        "productName": "UWELL Pre-filled Pod System | KEEP IT REAL",
+        "segment": "mass-market-open-pod",
+        "typology": "open-pod / pod-mod",
+        "reason": "sourceNotDecisionEligible",
+        "url": "https://www.uwellpps.com/",
+        "publishedAt": "2026-09-03T10:43:00.000Z"
+      },
+      {
+        "brand": "OXVA",
+        "productName": "OXVA XLIM Pod System, XSLIM, X SLIM Vape",
         "segment": "mass-market-open-pod",
         "typology": "open-pod / pod-mod",
         "reason": "noDateOrEvent",
-        "url": "https://uwellcaliburn.com/",
-        "publishedAt": "2026-08-30T01:58:00.000Z"
+        "url": "https://www.oxva.com/pages/xlim-new-color",
+        "publishedAt": "2026-09-03T02:57:00.000Z"
       },
       {
-        "brand": "Uwell",
-        "productName": "Uwell Caliburn G4",
+        "brand": "OXVA",
+        "productName": "XLIM PRO 3 丨Pulse System 丨1.05 HD Color Screen 丨 1500mAh Battery 丨3ml Top-fill Pod",
         "segment": "mass-market-open-pod",
         "typology": "open-pod / pod-mod",
         "reason": "noDateOrEvent",
-        "url": "https://www.huffandpuffers.com/products/uwell-caliburn-g4",
-        "publishedAt": "2026-08-29T05:12:00.000Z"
+        "url": "https://www.oxva.com/pages/xlim-pro-3",
+        "publishedAt": "2026-09-02T21:57:00.000Z"
       },
       {
-        "brand": "Eleaf",
-        "productName": "Eleaf - Vape Mod Kits & Pod Systems",
+        "brand": "OXVA",
+        "productName": "OXVA XLIM PRO 3 30W Vape Pod System – 1500mAh, 3ML",
+        "segment": "mass-market-open-pod",
+        "typology": "open-pod / pod-mod",
+        "reason": "noDateOrEvent",
+        "url": "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system",
+        "publishedAt": "2026-09-02T06:40:00.000Z"
+      },
+      {
+        "brand": "Rincoe",
+        "productName": "Rincoe Jellybox Nano Pod System Starter Kit",
         "segment": "mid-tier-regional",
         "typology": "open-pod / pod-mod regional",
         "reason": "noDateOrEvent",
-        "url": "https://www.elementvape.com/eleaf",
-        "publishedAt": "2026-08-30T17:50:00.000Z"
+        "url": "https://www.myvaporstore.com/Rincoe-Jellybox-Nano-Pod-System-Starter-Kit-p/rin-jbn10.htm",
+        "publishedAt": "2026-08-16T01:53:00.000Z"
       },
       {
-        "brand": "Wotofo",
-        "productName": "Wotofo nexPOD, the Pod-Based Disposables!",
+        "brand": "Rincoe",
+        "productName": "Rincoe Jellybox V3 Pod Kit 750mAh - smokstore",
         "segment": "mid-tier-regional",
         "typology": "open-pod / pod-mod regional",
         "reason": "noDateOrEvent",
-        "url": "https://www.wotofo.com/pages/wotofo-nexpod",
-        "publishedAt": "2026-08-29T09:23:00.000Z"
-      },
-      {
-        "brand": "Wotofo",
-        "productName": "Wotofo nexPOD Review: The Best Device with Pre Filled Pods?",
-        "segment": "mid-tier-regional",
-        "typology": "open-pod / pod-mod regional",
-        "reason": "noDateOrEvent",
-        "url": "https://versedvaper.com/wotofo-nexpod-review/",
-        "publishedAt": "2026-08-19T19:57:00.000Z"
-      },
-      {
-        "brand": "Wotofo",
-        "productName": "Wotofo nexPOD",
-        "segment": "mid-tier-regional",
-        "typology": "open-pod / pod-mod regional",
-        "reason": "noDateOrEvent",
-        "url": "https://alternativepods.com/products/wotofo-nexpod",
-        "publishedAt": "2026-08-28T02:21:00.000Z"
-      },
-      {
-        "brand": "Wotofo",
-        "productName": "Wotofo nexPOD Kit Review (2026)",
-        "segment": "mid-tier-regional",
-        "typology": "open-pod / pod-mod regional",
-        "reason": "noDateOrEvent",
-        "url": "https://vapepicks.com/blogs/vape-picks/wotofo-nexpod-vape-reviews",
-        "publishedAt": "2026-08-30T09:29:00.000Z"
-      },
-      {
-        "brand": "Wotofo",
-        "productName": "Review of the Wotofo nexPOD",
-        "segment": "mid-tier-regional",
-        "typology": "open-pod / pod-mod regional",
-        "reason": "noDateOrEvent",
-        "url": "https://www.vapepassion.com/review-wotofo-nexpod-pod-vape/",
-        "publishedAt": "2026-08-21T02:08:00.000Z"
+        "url": "https://www.smokstore.com/rincoe-jellybox-v3-pod-kit-750mah.html",
+        "publishedAt": "2026-08-25T23:18:00.000Z"
       },
       {
         "brand": "UPENDS",
@@ -238,25 +238,16 @@
         "typology": "open-pod / pod-mod regional",
         "reason": "noDateOrEvent",
         "url": "https://www.upends.com/open-pod-system/upox",
-        "publishedAt": "2026-08-30T02:19:00.000Z"
+        "publishedAt": "2026-09-01T03:28:00.000Z"
       },
       {
         "brand": "UPENDS",
-        "productName": "Upends UpOX Pod System Kit 400mAh, Starter Kits - vaporsuper",
+        "productName": "Upends UpOX Pod System Kit 400mAh",
         "segment": "mid-tier-regional",
         "typology": "open-pod / pod-mod regional",
         "reason": "noDateOrEvent",
         "url": "https://www.vaporsuper.com/upends-upox-pod-system-kit-400mah",
         "publishedAt": "2026-08-27T16:06:00.000Z"
-      },
-      {
-        "brand": "IJOY",
-        "productName": "iJoy - Pod Systems & Disposables",
-        "segment": "mid-tier-regional",
-        "typology": "open-pod / pod-mod regional",
-        "reason": "noDateOrEvent",
-        "url": "https://www.elementvape.com/ijoy",
-        "publishedAt": "2026-08-31T10:32:00.000Z"
       },
       {
         "brand": "JUUL Labs",
@@ -265,7 +256,7 @@
         "typology": "closed / pre-filled / hybrid",
         "reason": "noDateOrEvent",
         "url": "https://www.juullabsscience.com/juul2/",
-        "publishedAt": "2026-08-30T13:18:00.000Z"
+        "publishedAt": "2026-09-03T06:25:00.000Z"
       },
       {
         "brand": "JUUL Labs",
@@ -274,7 +265,7 @@
         "typology": "closed / pre-filled / hybrid",
         "reason": "noDateOrEvent",
         "url": "https://pricepointny.com/products/juul2-starter-kit-1-8",
-        "publishedAt": "2026-08-31T04:12:00.000Z"
+        "publishedAt": "2026-09-02T03:20:00.000Z"
       },
       {
         "brand": "JUUL Labs",
@@ -292,16 +283,7 @@
         "typology": "closed / pre-filled / hybrid",
         "reason": "noDateOrEvent",
         "url": "https://www.vapingpost.com/2026/08/31/fda-authorizes-juul2-new-juul-pods-us/",
-        "publishedAt": "2026-08-31T12:34:00.000Z"
-      },
-      {
-        "brand": "IQOS",
-        "productName": "Veeva Systems Inc. (VEEV) Stock Price, News, Quote & History - Yahoo Finance",
-        "segment": "closed-prefilled-hybrid",
-        "typology": "closed / pre-filled / hybrid",
-        "reason": "noDateOrEvent",
-        "url": "https://finance.yahoo.com/quote/VEEV/",
-        "publishedAt": "2026-08-28T19:54:00.000Z"
+        "publishedAt": "2026-09-02T22:40:00.000Z"
       },
       {
         "brand": "IQOS",
@@ -310,34 +292,25 @@
         "typology": "closed / pre-filled / hybrid",
         "reason": "noDateOrEvent",
         "url": "https://www.veev.com/",
-        "publishedAt": "2026-08-31T11:15:00.000Z"
+        "publishedAt": "2026-09-03T17:59:00.000Z"
       },
       {
         "brand": "IQOS",
-        "productName": "Model X Modern Home Floor Plan | Veev, by Lennar",
+        "productName": "Veeva Systems Inc. (VEEV) Stock Price, News, Quote & History - Yahoo Finance",
         "segment": "closed-prefilled-hybrid",
         "typology": "closed / pre-filled / hybrid",
         "reason": "noDateOrEvent",
-        "url": "https://www.veev.com/model-x/",
-        "publishedAt": "2026-08-30T02:12:00.000Z"
+        "url": "https://finance.yahoo.com/quote/VEEV/",
+        "publishedAt": "2021-12-02T15:33:00.000Z"
       },
       {
         "brand": "IQOS",
-        "productName": "Discover the world of VEEV possibilities",
+        "productName": "Veeva Systems Inc. (VEEV)",
         "segment": "closed-prefilled-hybrid",
         "typology": "closed / pre-filled / hybrid",
         "reason": "noDateOrEvent",
-        "url": "https://www.veev-vape.com/hr/en",
-        "publishedAt": "2026-08-31T06:00:00.000Z"
-      },
-      {
-        "brand": "IQOS",
-        "productName": "WELCOME TO VEEV.",
-        "segment": "closed-prefilled-hybrid",
-        "typology": "closed / pre-filled / hybrid",
-        "reason": "noDateOrEvent",
-        "url": "https://www.veev-vape.com/ca/en",
-        "publishedAt": "2026-08-30T11:52:00.000Z"
+        "url": "https://stockanalysis.com/stocks/veev/",
+        "publishedAt": "2026-09-03T16:40:00.000Z"
       },
       {
         "brand": "IQOS",
@@ -346,7 +319,88 @@
         "typology": "closed / pre-filled / hybrid",
         "reason": "noDateOrEvent",
         "url": "https://www.google.com/finance/quote/VEEV:NYSE",
-        "publishedAt": "2026-08-31T09:56:00.000Z"
+        "publishedAt": "2026-09-03T14:39:00.000Z"
+      },
+      {
+        "brand": "IQOS",
+        "productName": "VEEV Stock Quote Price and Forecast | CNN",
+        "segment": "closed-prefilled-hybrid",
+        "typology": "closed / pre-filled / hybrid",
+        "reason": "noDateOrEvent",
+        "url": "https://www.cnn.com/markets/stocks/VEEV",
+        "publishedAt": "2026-04-10T18:51:00.000Z"
+      },
+      {
+        "brand": "IQOS",
+        "productName": "Veeva Systems Inc. (VEEV) Company Profile & Facts - Yahoo Finance",
+        "segment": "closed-prefilled-hybrid",
+        "typology": "closed / pre-filled / hybrid",
+        "reason": "noDateOrEvent",
+        "url": "https://finance.yahoo.com/quote/VEEV/profile/",
+        "publishedAt": "2026-09-01T10:45:00.000Z"
+      },
+      {
+        "brand": "IQOS",
+        "productName": "VEEV - Veeva Systems Inc. veev Summary Stock Price & Overview Follow 50.3K followers",
+        "segment": "closed-prefilled-hybrid",
+        "typology": "closed / pre-filled / hybrid",
+        "reason": "noDateOrEvent",
+        "url": "https://seekingalpha.com/symbol/VEEV",
+        "publishedAt": "2025-06-24T11:13:00.000Z"
+      },
+      {
+        "brand": "SKE",
+        "productName": "SKE Vape Products | Pod Systems, Disposables & E-liquids",
+        "segment": "closed-prefilled-hybrid",
+        "typology": "closed / pre-filled / hybrid",
+        "reason": "noDateOrEvent",
+        "url": "https://www.skevape.com/products/all",
+        "publishedAt": "2026-09-02T15:23:00.000Z"
+      },
+      {
+        "brand": "DotMod",
+        "productName": "dotmod DotPod MAX Complete Kit",
+        "segment": "premium-high-end-aio",
+        "typology": "premium / high-end / AIO",
+        "reason": "noDateOrEvent",
+        "url": "https://www.elementvape.com/dotmod-dotpod-max-complete-kit",
+        "publishedAt": "2026-08-26T09:05:00.000Z"
+      },
+      {
+        "brand": "DotMod",
+        "productName": "dotMod dotPod Max 60W Pod System (Tank & Pod Version)",
+        "segment": "premium-high-end-aio",
+        "typology": "premium / high-end / AIO",
+        "reason": "noDateOrEvent",
+        "url": "https://vapesocietysupplies.com/products/dotpod-max/",
+        "publishedAt": "2026-09-02T10:08:00.000Z"
+      },
+      {
+        "brand": "DotMod",
+        "productName": "dotMod dotPod Pro 35W Pod System",
+        "segment": "premium-high-end-aio",
+        "typology": "premium / high-end / AIO",
+        "reason": "noDateOrEvent",
+        "url": "https://vapordna.com/products/dotmod-dotpod-pro-35w-pod-system",
+        "publishedAt": "2026-09-02T16:35:00.000Z"
+      },
+      {
+        "brand": "DotMod",
+        "productName": "dotMod dotPod Nano Pod System (Discontinued)",
+        "segment": "premium-high-end-aio",
+        "typology": "premium / high-end / AIO",
+        "reason": "noDateOrEvent",
+        "url": "https://vapordna.com/products/dotmod-dotpod-nano-pod-system",
+        "publishedAt": "2026-09-02T07:59:00.000Z"
+      },
+      {
+        "brand": "DotMod",
+        "productName": "Dotmod Dotpod Max - Vaping360",
+        "segment": "premium-high-end-aio",
+        "typology": "premium / high-end / AIO",
+        "reason": "noDateOrEvent",
+        "url": "https://vaping360.com/vape-products/dotmod-dotpod-max/",
+        "publishedAt": "2026-09-04T02:35:00.000Z"
       },
       {
         "brand": "LVE",
@@ -355,51 +409,51 @@
         "typology": "premium / high-end / AIO",
         "reason": "noDateOrEvent",
         "url": "https://lvevapor.com/orion-ii-pro/",
-        "publishedAt": "2026-08-30T03:31:00.000Z"
+        "publishedAt": "2026-09-02T01:40:00.000Z"
       }
     ],
-    "retailObserverCatalogProducts": 45,
-    "retailObserverNewCandidates": 4,
+    "retailObserverCatalogProducts": 47,
+    "retailObserverNewCandidates": 1,
     "retailObserverFirstSaleEvents": 0,
     "directCatalogs": {
       "sourcesConfigured": 49,
-      "sourcesWorking": 49,
-      "sourcesUsingFallback": 4,
-      "productsFetched": 12348,
-      "productsClassified": 2204,
-      "recentEvents": 18,
-      "relistedExcluded": 0,
-      "rtaModAdded": 7,
-      "podsAdded": 11,
+      "sourcesWorking": 47,
+      "sourcesUsingFallback": 3,
+      "productsFetched": 13484,
+      "productsClassified": 2243,
+      "recentEvents": 30,
+      "relistedExcluded": 64,
+      "rtaModAdded": 16,
+      "podsAdded": 14,
       "sourceMix": {
-        "official": 829,
-        "original-retailer": 996,
-        "clone": 367
+        "official": 797,
+        "original-retailer": 1060,
+        "clone": 379
       },
       "adapterMix": {
         "html-listings": 2,
-        "shopify-products-json": 20,
-        "sitemap-jsonld-products": 18,
-        "wordpress-products-json": 9
+        "shopify-products-json": 21,
+        "wordpress-products-json": 8,
+        "sitemap-jsonld-products": 16
       },
       "categoryEvents": {
-        "RTA": 1,
-        "MODURI": 5,
-        "ACCESORII": 1,
-        "POD": 11
+        "RTA": 7,
+        "MODURI": 7,
+        "ACCESORII": 2,
+        "POD": 14
       }
     },
     "datedNews": {
       "newsQueries": 48,
       "newsQueriesWorking": 48,
       "wordpressSources": 23,
-      "wordpressSourcesWorking": 23,
-      "wordpressRequestsWorking": 89,
-      "datedItems": 74,
-      "concreteSignals": 49,
-      "rejected": 12,
+      "wordpressSourcesWorking": 20,
+      "wordpressRequestsWorking": 77,
+      "datedItems": 78,
+      "concreteSignals": 48,
+      "rejected": 18,
       "rtaModAdded": 7,
-      "podsAdded": 37
+      "podsAdded": 36
     },
     "retailCampaigns": {
       "sources": 1,
@@ -414,24 +468,42 @@
       "RTA": 3,
       "MODURI": 3,
       "POD": 0,
-      "rtaModAdded": 6,
+      "rtaModAdded": 5,
       "podsAdded": 0
     },
     "productBackfill": {
-      "candidates": 210,
-      "queries": 420,
-      "queriesWorking": 420,
-      "indexedMatches": 70,
-      "pagesFetched": 65,
-      "pagesMatched": 65,
+      "candidates": 225,
+      "queries": 450,
+      "queriesWorking": 450,
+      "indexedMatches": 83,
+      "pagesFetched": 76,
+      "pagesMatched": 76,
       "datedEvents": 1,
       "groupedEvents": 1,
       "rtaModAdded": 0,
       "podsAdded": 0,
-      "undated": 64
+      "undated": 75
     }
   },
   "verificationQueue": [
+    {
+      "brand": "SMOK",
+      "productName": "SMOK - SMOKTech Mods, Pod & Starter Kits",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "noDateOrEvent",
+      "url": "https://www.elementvape.com/smoktech",
+      "publishedAt": "2026-09-02T17:17:00.000Z"
+    },
+    {
+      "brand": "SMOK",
+      "productName": "SMOK | SMOKTech Pens, Mods, and Pod Systems - VaporFi",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "noDateOrEvent",
+      "url": "https://www.vaporfi.com/vape-brands/smok/",
+      "publishedAt": "2026-09-01T12:11:00.000Z"
+    },
     {
       "brand": "Vaporesso",
       "productName": "Vaporesso XROS",
@@ -439,7 +511,7 @@
       "typology": "open-pod / pod-mod",
       "reason": "noDateOrEvent",
       "url": "https://www.centralvapors.com/vaporesso/",
-      "publishedAt": "2026-08-31T06:36:00.000Z"
+      "publishedAt": "2026-09-03T06:39:00.000Z"
     },
     {
       "brand": "Voopoo",
@@ -448,97 +520,79 @@
       "typology": "open-pod / pod-mod",
       "reason": "noDateOrEvent",
       "url": "https://www.elementvape.com/voopoo-tech",
-      "publishedAt": "2026-08-30T18:11:00.000Z"
+      "publishedAt": "2026-09-03T18:14:00.000Z"
     },
     {
       "brand": "Uwell",
-      "productName": "Uwell CALIBURN 11W Pod System",
+      "productName": "UWELL - Vape Pod Systems & Disposables",
       "segment": "mass-market-open-pod",
       "typology": "open-pod / pod-mod",
       "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/uwell-caliburn",
-      "publishedAt": "2026-08-26T11:14:00.000Z"
+      "url": "https://www.elementvape.com/uwell",
+      "publishedAt": "2026-09-04T02:20:00.000Z"
     },
     {
       "brand": "Uwell",
-      "productName": "Uwell Caliburn Vape Kit - Pod System - myvaporstore.com",
+      "productName": "UWELL | Vape Tanks, Pod Mod Kits & Accessories - VaporFi",
       "segment": "mass-market-open-pod",
       "typology": "open-pod / pod-mod",
       "reason": "noDateOrEvent",
-      "url": "https://www.myvaporstore.com/Uwell-Caliburn-Kit-p/uwc-cal10.htm",
-      "publishedAt": "2026-08-23T01:44:00.000Z"
+      "url": "https://www.vaporfi.com/vape-brands/uwell/",
+      "publishedAt": "2026-09-03T03:26:00.000Z"
     },
     {
       "brand": "Uwell",
-      "productName": "Uwell Caliburn Shop| UWELL",
+      "productName": "UWELL Pre-filled Pod System | KEEP IT REAL",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "sourceNotDecisionEligible",
+      "url": "https://www.uwellpps.com/",
+      "publishedAt": "2026-09-03T10:43:00.000Z"
+    },
+    {
+      "brand": "OXVA",
+      "productName": "OXVA XLIM Pod System, XSLIM, X SLIM Vape",
       "segment": "mass-market-open-pod",
       "typology": "open-pod / pod-mod",
       "reason": "noDateOrEvent",
-      "url": "https://uwellcaliburn.com/",
-      "publishedAt": "2026-08-30T01:58:00.000Z"
+      "url": "https://www.oxva.com/pages/xlim-new-color",
+      "publishedAt": "2026-09-03T02:57:00.000Z"
     },
     {
-      "brand": "Uwell",
-      "productName": "Uwell Caliburn G4",
+      "brand": "OXVA",
+      "productName": "XLIM PRO 3 丨Pulse System 丨1.05 HD Color Screen 丨 1500mAh Battery 丨3ml Top-fill Pod",
       "segment": "mass-market-open-pod",
       "typology": "open-pod / pod-mod",
       "reason": "noDateOrEvent",
-      "url": "https://www.huffandpuffers.com/products/uwell-caliburn-g4",
-      "publishedAt": "2026-08-29T05:12:00.000Z"
+      "url": "https://www.oxva.com/pages/xlim-pro-3",
+      "publishedAt": "2026-09-02T21:57:00.000Z"
     },
     {
-      "brand": "Eleaf",
-      "productName": "Eleaf - Vape Mod Kits & Pod Systems",
+      "brand": "OXVA",
+      "productName": "OXVA XLIM PRO 3 30W Vape Pod System – 1500mAh, 3ML",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "noDateOrEvent",
+      "url": "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system",
+      "publishedAt": "2026-09-02T06:40:00.000Z"
+    },
+    {
+      "brand": "Rincoe",
+      "productName": "Rincoe Jellybox Nano Pod System Starter Kit",
       "segment": "mid-tier-regional",
       "typology": "open-pod / pod-mod regional",
       "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/eleaf",
-      "publishedAt": "2026-08-30T17:50:00.000Z"
+      "url": "https://www.myvaporstore.com/Rincoe-Jellybox-Nano-Pod-System-Starter-Kit-p/rin-jbn10.htm",
+      "publishedAt": "2026-08-16T01:53:00.000Z"
     },
     {
-      "brand": "Wotofo",
-      "productName": "Wotofo nexPOD, the Pod-Based Disposables!",
+      "brand": "Rincoe",
+      "productName": "Rincoe Jellybox V3 Pod Kit 750mAh - smokstore",
       "segment": "mid-tier-regional",
       "typology": "open-pod / pod-mod regional",
       "reason": "noDateOrEvent",
-      "url": "https://www.wotofo.com/pages/wotofo-nexpod",
-      "publishedAt": "2026-08-29T09:23:00.000Z"
-    },
-    {
-      "brand": "Wotofo",
-      "productName": "Wotofo nexPOD Review: The Best Device with Pre Filled Pods?",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://versedvaper.com/wotofo-nexpod-review/",
-      "publishedAt": "2026-08-19T19:57:00.000Z"
-    },
-    {
-      "brand": "Wotofo",
-      "productName": "Wotofo nexPOD",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://alternativepods.com/products/wotofo-nexpod",
-      "publishedAt": "2026-08-28T02:21:00.000Z"
-    },
-    {
-      "brand": "Wotofo",
-      "productName": "Wotofo nexPOD Kit Review (2026)",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://vapepicks.com/blogs/vape-picks/wotofo-nexpod-vape-reviews",
-      "publishedAt": "2026-08-30T09:29:00.000Z"
-    },
-    {
-      "brand": "Wotofo",
-      "productName": "Review of the Wotofo nexPOD",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://www.vapepassion.com/review-wotofo-nexpod-pod-vape/",
-      "publishedAt": "2026-08-21T02:08:00.000Z"
+      "url": "https://www.smokstore.com/rincoe-jellybox-v3-pod-kit-750mah.html",
+      "publishedAt": "2026-08-25T23:18:00.000Z"
     },
     {
       "brand": "UPENDS",
@@ -547,25 +601,7 @@
       "typology": "open-pod / pod-mod regional",
       "reason": "noDateOrEvent",
       "url": "https://www.upends.com/open-pod-system/upox",
-      "publishedAt": "2026-08-30T02:19:00.000Z"
-    },
-    {
-      "brand": "UPENDS",
-      "productName": "Upends UpOX Pod System Kit 400mAh, Starter Kits - vaporsuper",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://www.vaporsuper.com/upends-upox-pod-system-kit-400mah",
-      "publishedAt": "2026-08-27T16:06:00.000Z"
-    },
-    {
-      "brand": "IJOY",
-      "productName": "iJoy - Pod Systems & Disposables",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/ijoy",
-      "publishedAt": "2026-08-31T10:32:00.000Z"
+      "publishedAt": "2026-09-01T03:28:00.000Z"
     },
     {
       "brand": "JUUL Labs",
@@ -574,7 +610,7 @@
       "typology": "closed / pre-filled / hybrid",
       "reason": "noDateOrEvent",
       "url": "https://www.juullabsscience.com/juul2/",
-      "publishedAt": "2026-08-30T13:18:00.000Z"
+      "publishedAt": "2026-09-03T06:25:00.000Z"
     },
     {
       "brand": "JUUL Labs",
@@ -583,7 +619,7 @@
       "typology": "closed / pre-filled / hybrid",
       "reason": "noDateOrEvent",
       "url": "https://pricepointny.com/products/juul2-starter-kit-1-8",
-      "publishedAt": "2026-08-31T04:12:00.000Z"
+      "publishedAt": "2026-09-02T03:20:00.000Z"
     },
     {
       "brand": "JUUL Labs",
@@ -601,16 +637,7 @@
       "typology": "closed / pre-filled / hybrid",
       "reason": "noDateOrEvent",
       "url": "https://www.vapingpost.com/2026/08/31/fda-authorizes-juul2-new-juul-pods-us/",
-      "publishedAt": "2026-08-31T12:34:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "Veeva Systems Inc. (VEEV) Stock Price, News, Quote & History - Yahoo Finance",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://finance.yahoo.com/quote/VEEV/",
-      "publishedAt": "2026-08-28T19:54:00.000Z"
+      "publishedAt": "2026-09-02T22:40:00.000Z"
     },
     {
       "brand": "IQOS",
@@ -619,34 +646,25 @@
       "typology": "closed / pre-filled / hybrid",
       "reason": "noDateOrEvent",
       "url": "https://www.veev.com/",
-      "publishedAt": "2026-08-31T11:15:00.000Z"
+      "publishedAt": "2026-09-03T17:59:00.000Z"
     },
     {
       "brand": "IQOS",
-      "productName": "Model X Modern Home Floor Plan | Veev, by Lennar",
+      "productName": "Veeva Systems Inc. (VEEV) Stock Price, News, Quote & History - Yahoo Finance",
       "segment": "closed-prefilled-hybrid",
       "typology": "closed / pre-filled / hybrid",
       "reason": "noDateOrEvent",
-      "url": "https://www.veev.com/model-x/",
-      "publishedAt": "2026-08-30T02:12:00.000Z"
+      "url": "https://finance.yahoo.com/quote/VEEV/",
+      "publishedAt": "2021-12-02T15:33:00.000Z"
     },
     {
       "brand": "IQOS",
-      "productName": "Discover the world of VEEV possibilities",
+      "productName": "Veeva Systems Inc. (VEEV)",
       "segment": "closed-prefilled-hybrid",
       "typology": "closed / pre-filled / hybrid",
       "reason": "noDateOrEvent",
-      "url": "https://www.veev-vape.com/hr/en",
-      "publishedAt": "2026-08-31T06:00:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "WELCOME TO VEEV.",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://www.veev-vape.com/ca/en",
-      "publishedAt": "2026-08-30T11:52:00.000Z"
+      "url": "https://stockanalysis.com/stocks/veev/",
+      "publishedAt": "2026-09-03T16:40:00.000Z"
     },
     {
       "brand": "IQOS",
@@ -655,7 +673,88 @@
       "typology": "closed / pre-filled / hybrid",
       "reason": "noDateOrEvent",
       "url": "https://www.google.com/finance/quote/VEEV:NYSE",
-      "publishedAt": "2026-08-31T09:56:00.000Z"
+      "publishedAt": "2026-09-03T14:39:00.000Z"
+    },
+    {
+      "brand": "IQOS",
+      "productName": "VEEV Stock Quote Price and Forecast | CNN",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "reason": "noDateOrEvent",
+      "url": "https://www.cnn.com/markets/stocks/VEEV",
+      "publishedAt": "2026-04-10T18:51:00.000Z"
+    },
+    {
+      "brand": "IQOS",
+      "productName": "Veeva Systems Inc. (VEEV) Company Profile & Facts - Yahoo Finance",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "reason": "noDateOrEvent",
+      "url": "https://finance.yahoo.com/quote/VEEV/profile/",
+      "publishedAt": "2026-09-01T10:45:00.000Z"
+    },
+    {
+      "brand": "IQOS",
+      "productName": "VEEV - Veeva Systems Inc. veev Summary Stock Price & Overview Follow 50.3K followers",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "reason": "noDateOrEvent",
+      "url": "https://seekingalpha.com/symbol/VEEV",
+      "publishedAt": "2025-06-24T11:13:00.000Z"
+    },
+    {
+      "brand": "SKE",
+      "productName": "SKE Vape Products | Pod Systems, Disposables & E-liquids",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "reason": "noDateOrEvent",
+      "url": "https://www.skevape.com/products/all",
+      "publishedAt": "2026-09-02T15:23:00.000Z"
+    },
+    {
+      "brand": "DotMod",
+      "productName": "dotmod DotPod MAX Complete Kit",
+      "segment": "premium-high-end-aio",
+      "typology": "premium / high-end / AIO",
+      "reason": "noDateOrEvent",
+      "url": "https://www.elementvape.com/dotmod-dotpod-max-complete-kit",
+      "publishedAt": "2026-08-26T09:05:00.000Z"
+    },
+    {
+      "brand": "DotMod",
+      "productName": "dotMod dotPod Max 60W Pod System (Tank & Pod Version)",
+      "segment": "premium-high-end-aio",
+      "typology": "premium / high-end / AIO",
+      "reason": "noDateOrEvent",
+      "url": "https://vapesocietysupplies.com/products/dotpod-max/",
+      "publishedAt": "2026-09-02T10:08:00.000Z"
+    },
+    {
+      "brand": "DotMod",
+      "productName": "dotMod dotPod Pro 35W Pod System",
+      "segment": "premium-high-end-aio",
+      "typology": "premium / high-end / AIO",
+      "reason": "noDateOrEvent",
+      "url": "https://vapordna.com/products/dotmod-dotpod-pro-35w-pod-system",
+      "publishedAt": "2026-09-02T16:35:00.000Z"
+    },
+    {
+      "brand": "DotMod",
+      "productName": "dotMod dotPod Nano Pod System (Discontinued)",
+      "segment": "premium-high-end-aio",
+      "typology": "premium / high-end / AIO",
+      "reason": "noDateOrEvent",
+      "url": "https://vapordna.com/products/dotmod-dotpod-nano-pod-system",
+      "publishedAt": "2026-09-02T07:59:00.000Z"
+    },
+    {
+      "brand": "DotMod",
+      "productName": "Dotmod Dotpod Max - Vaping360",
+      "segment": "premium-high-end-aio",
+      "typology": "premium / high-end / AIO",
+      "reason": "noDateOrEvent",
+      "url": "https://vaping360.com/vape-products/dotmod-dotpod-max/",
+      "publishedAt": "2026-09-04T02:35:00.000Z"
     },
     {
       "brand": "LVE",
@@ -664,45 +763,222 @@
       "typology": "premium / high-end / AIO",
       "reason": "noDateOrEvent",
       "url": "https://lvevapor.com/orion-ii-pro/",
-      "publishedAt": "2026-08-30T03:31:00.000Z"
+      "publishedAt": "2026-09-02T01:40:00.000Z"
     }
   ],
   "products": [
     {
-      "productName": "New Product Launched: UPOX PRO - UPENDS",
-      "brand": "UPENDS",
+      "productName": "XLIM Pro 4",
+      "brand": "OXVA",
       "category": "POD",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "window": "after",
-      "stage": "RELEASED",
-      "stageLabel": "lansare observata",
-      "eventDate": "2026-08-29T00:33:00.000Z",
-      "dateConfidence": "release-observed",
-      "firstSeenAt": "2026-08-31T14:33:08.953Z",
-      "lastSeenAt": "2026-08-31T14:33:08.953Z",
-      "ageHours": 50.5,
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "before",
+      "stage": "IMMINENT",
+      "stageLabel": "anunt / disponibilitate in pregatire",
+      "signalKind": "dated-pre-market-listing",
+      "confidenceTier": "reported",
+      "eventDate": "2026-09-03T12:12:22.000Z",
+      "stageEvidenceAt": "2026-09-03T12:12:22.000Z",
+      "firstPublicEvidenceAt": "2026-09-03T12:12:22.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 14.8,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
         {
-          "host": "upends.com",
-          "url": "https://www.upends.com/community/news/new-product-launched-upox-pro",
-          "title": "New Product Launched: UPOX PRO - UPENDS",
-          "sourceType": "manufacturer-official",
+          "host": "store.oxva.com",
+          "url": "https://store.oxva.com/products/xlim-pro-4",
+          "title": "XLIM Pro 4",
+          "sourceType": "manufacturer-official-store",
+          "collector": "direct-catalog",
           "decisionEligible": true,
           "discoveryOnly": false,
-          "publishedAt": "2026-08-29T00:33:00.000Z",
-          "eventDate": "2026-08-29T00:33:00.000Z",
-          "dateConfidence": "release-observed",
-          "stage": "lansare observata",
-          "observedAt": "2026-08-31T14:33:08.953Z"
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-09-03T12:12:22.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "anunt / disponibilitate in pregatire",
+          "observedAt": "2026-09-04T07:37:24.339Z",
+          "image": "",
+          "price": 0,
+          "currency": null,
+          "available": false
         }
       ],
-      "id": "9b375be3fb55918af432",
-      "stageEvidenceAt": "2026-08-29T00:33:00.000Z",
+      "id": "afd822f0b2657fd44055"
+    },
+    {
+      "productName": "XLIM 4",
+      "brand": "OXVA",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "before",
+      "stage": "IMMINENT",
+      "stageLabel": "anunt / disponibilitate in pregatire",
+      "signalKind": "dated-pre-market-listing",
       "confidenceTier": "reported",
-      "firstPublicEvidenceAt": "2026-08-29T00:33:00.000Z"
+      "eventDate": "2026-09-03T12:10:49.000Z",
+      "stageEvidenceAt": "2026-09-03T12:10:49.000Z",
+      "firstPublicEvidenceAt": "2026-09-03T12:10:49.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 14.8,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "store.oxva.com",
+          "url": "https://store.oxva.com/products/xlim-4",
+          "title": "XLIM 4",
+          "sourceType": "manufacturer-official-store",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-09-03T12:10:49.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "anunt / disponibilitate in pregatire",
+          "observedAt": "2026-09-04T07:37:24.339Z",
+          "image": "",
+          "price": 0,
+          "currency": null,
+          "available": false
+        }
+      ],
+      "id": "67f8e24965f8e57aa8ff"
+    },
+    {
+      "productName": "2026 NeXLIM Labor Day Bundle",
+      "brand": "OXVA",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_RETAIL",
+      "stageLabel": "prima listare oficiala datata",
+      "signalKind": "dated-retail-listing",
+      "confidenceTier": "reported",
+      "eventDate": "2026-09-01T10:56:53.000Z",
+      "stageEvidenceAt": "2026-09-01T10:56:53.000Z",
+      "firstPublicEvidenceAt": "2026-09-01T10:56:53.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 64.1,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "store.oxva.com",
+          "url": "https://store.oxva.com/products/2026-nexlim-labor-day-bundle",
+          "title": "2026 NeXLIM Labor Day Bundle",
+          "sourceType": "manufacturer-official-store",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-09-01T10:56:53.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare oficiala datata",
+          "observedAt": "2026-09-04T07:37:24.339Z",
+          "image": "https://cdn.shopify.com/s/files/1/0703/9739/5251/files/NEXLIMLABORDAYBUNDLE1000x1000.png?v=1788259652",
+          "price": 57.2,
+          "currency": null,
+          "available": true
+        }
+      ],
+      "id": "6b3489b369c5c865f071"
+    },
+    {
+      "productName": "DOJO Blast 7K Fresh Prefilled Pod Kit",
+      "brand": "Dojo",
+      "category": "POD",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "window": "after",
+      "stage": "FIRST_RETAIL_SIGNAL",
+      "stageLabel": "listare comercială datată, noutate în verificare",
+      "signalKind": "single-retailer-listing",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-09-01T10:54:42.000Z",
+      "stageEvidenceAt": "2026-09-01T10:54:42.000Z",
+      "firstPublicEvidenceAt": "2026-09-01T10:54:42.000Z",
+      "dateConfidence": "catalog-published-at",
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 64.1,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "vapesuperstore.co.uk",
+          "url": "https://vapesuperstore.co.uk/products/dojo-blast-7k-fresh-prefilled-pod-kit",
+          "title": "DOJO Blast 7K Fresh Prefilled Pod Kit",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-09-01T10:54:42.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-09-04T07:37:24.339Z",
+          "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
+          "price": 0,
+          "currency": null,
+          "available": false
+        }
+      ],
+      "id": "03bb92b9d9475de3b39e"
+    },
+    {
+      "productName": "Onéo Pro par Oxva",
+      "brand": "OXVA",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-09-01T08:00:05.000Z",
+      "stageEvidenceAt": "2026-09-01T08:00:05.000Z",
+      "firstPublicEvidenceAt": "2026-09-01T08:00:05.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-09-04T07:38:35.992Z",
+      "lastSeenAt": "2026-09-04T07:38:35.992Z",
+      "ageHours": 67,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "levapelier.com",
+          "url": "https://www.levapelier.com/oneo-pro-par-oxva/",
+          "title": "Onéo Pro par Oxva",
+          "sourceName": "Le Vapelier",
+          "sourceUrl": "https://www.levapelier.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-01T08:00:05.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:35.992Z"
+        }
+      ],
+      "id": "6ded522d869da5953f2e"
     },
     {
       "productName": "Elf Bar AF5000 Prefilled Pod Kit",
@@ -719,9 +995,9 @@
       "stageEvidenceAt": "2026-08-26T08:40:36.000Z",
       "firstPublicEvidenceAt": "2026-08-26T08:40:36.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:33:20.003Z",
-      "ageHours": 114.3,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 210.3,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -738,7 +1014,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/elf_bar_-_af5500_-_blue-razz-lemonade_3.webp?v=1787748011",
           "price": 11.95,
           "currency": null,
@@ -762,6 +1038,47 @@
       "knownBeforeWindowSource": "https://ishmt.gov.al/wp-content/uploads/2024/06/Buletin-23.pdf"
     },
     {
+      "productName": "OXVA ONEO Pro",
+      "brand": "OXVA",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-25T13:00:00.000Z",
+      "stageEvidenceAt": "2026-08-25T13:00:00.000Z",
+      "firstPublicEvidenceAt": "2026-08-25T13:00:00.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-09-04T07:38:34.981Z",
+      "lastSeenAt": "2026-09-04T07:38:34.981Z",
+      "ageHours": 230,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "vapoteurs.net",
+          "url": "https://www.vapoteurs.net/info-batch-oneo-pro-oxva/",
+          "title": "INFO BATCH : ONEO Pro (OXVA)",
+          "sourceName": "Vapoteurs.net",
+          "sourceUrl": "https://vapoteurs.net",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-25T13:00:00.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:34.981Z"
+        }
+      ],
+      "id": "9f8591c656675c29a5a6"
+    },
+    {
       "productName": "OXVA NeXLIM GO",
       "brand": "OXVA",
       "category": "POD",
@@ -776,9 +1093,9 @@
       "stageEvidenceAt": "2026-08-24T05:49:37.000Z",
       "firstPublicEvidenceAt": "2026-08-24T05:49:37.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.836Z",
-      "lastSeenAt": "2026-08-31T14:34:35.342Z",
-      "ageHours": 165.2,
+      "firstSeenAt": "2026-09-04T07:38:34.769Z",
+      "lastSeenAt": "2026-09-04T07:38:35.345Z",
+      "ageHours": 261.2,
       "sourceCount": 2,
       "eligibleSources": 2,
       "sources": [
@@ -797,7 +1114,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.836Z"
+          "observedAt": "2026-09-04T07:38:34.769Z"
         },
         {
           "host": "igeekphone.com",
@@ -814,7 +1131,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.342Z"
+          "observedAt": "2026-09-04T07:38:35.345Z"
         }
       ],
       "id": "493ee902610fc36c68d1"
@@ -834,9 +1151,9 @@
       "stageEvidenceAt": "2026-08-24T04:56:29.000Z",
       "firstPublicEvidenceAt": "2026-08-24T04:56:29.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.390Z",
-      "lastSeenAt": "2026-08-31T14:34:35.390Z",
-      "ageHours": 166.1,
+      "firstSeenAt": "2026-09-04T07:38:35.383Z",
+      "lastSeenAt": "2026-09-04T07:38:35.383Z",
+      "ageHours": 262.1,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -855,7 +1172,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.390Z"
+          "observedAt": "2026-09-04T07:38:35.383Z"
         }
       ],
       "id": "3b773d0b9bce16befe5c"
@@ -875,9 +1192,9 @@
       "stageEvidenceAt": "2026-08-24T04:56:29.000Z",
       "firstPublicEvidenceAt": "2026-08-24T04:56:29.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.390Z",
-      "lastSeenAt": "2026-08-31T14:34:35.390Z",
-      "ageHours": 166.1,
+      "firstSeenAt": "2026-09-04T07:38:35.383Z",
+      "lastSeenAt": "2026-09-04T07:38:35.383Z",
+      "ageHours": 262.1,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -896,7 +1213,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.390Z"
+          "observedAt": "2026-09-04T07:38:35.383Z"
         }
       ],
       "id": "02ac3909ea9d63811dfb"
@@ -916,9 +1233,9 @@
       "stageEvidenceAt": "2026-08-24T02:04:03.000Z",
       "firstPublicEvidenceAt": "2026-08-24T02:04:03.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.414Z",
-      "lastSeenAt": "2026-08-31T14:34:35.414Z",
-      "ageHours": 168.9,
+      "firstSeenAt": "2026-09-04T07:38:35.402Z",
+      "lastSeenAt": "2026-09-04T07:38:35.402Z",
+      "ageHours": 264.9,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -937,10 +1254,68 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.414Z"
+          "observedAt": "2026-09-04T07:38:35.402Z"
         }
       ],
       "id": "8b612b9e14db9aa3674b"
+    },
+    {
+      "productName": "Vaporesso XROS 5 Mini",
+      "brand": "Vaporesso",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-24T01:33:54.000Z",
+      "stageEvidenceAt": "2026-08-24T01:33:54.000Z",
+      "firstPublicEvidenceAt": "2026-08-24T01:33:54.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-09-04T07:38:34.889Z",
+      "lastSeenAt": "2026-09-04T07:38:35.788Z",
+      "ageHours": 265.4,
+      "sourceCount": 2,
+      "eligibleSources": 2,
+      "sources": [
+        {
+          "host": "igeekphone.com",
+          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQaHJrVkRkQnZfX1BjaUtacnduZllmMFlndVR1RGtPZGt6S3p0RVJPaTRpLTNKcTZXT19TV21VRlpXUnBPVkhWUmdqc0s3T3BwaGRPSkdxV2JIT0hWUWFjWk1IS1pHd1BnN2diSUxzaUNVQ0VkNkVGWUx6RkRtcEFvbV84SXlFNGgzOWpsUEFFYW5uc3drelM3Z1FSa0ZuX2gwZFRqNmpYY0ZxZw?oc=5",
+          "title": "Vaporesso XROS 6 Mini vs XROS 5 Mini: Key Differences and Which Pod Kit Is Better? - igeekphone.com",
+          "sourceName": "igeekphone.com",
+          "sourceUrl": "https://www.igeekphone.com",
+          "sourceType": "dated-publication",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-24T01:33:54.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "google-news-rss-pubdate",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:34.889Z"
+        },
+        {
+          "host": "igeekphone.com",
+          "url": "https://www.igeekphone.com/vaporesso-xros-6-mini-vs-xros-5-mini-review-which-compact-pod-system-is-better/",
+          "title": "Vaporesso XROS 6 Mini vs XROS 5 Mini: Key Differences and Which Pod Kit Is Better?",
+          "sourceName": "iGeekPhone",
+          "sourceUrl": "https://www.igeekphone.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-24T01:33:54.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:35.788Z"
+        }
+      ],
+      "id": "540cc26a482f67993657"
     },
     {
       "productName": "OXVA XLIM 3 Ultra",
@@ -957,9 +1332,9 @@
       "stageEvidenceAt": "2026-08-20T13:48:57.000Z",
       "firstPublicEvidenceAt": "2026-08-20T13:48:57.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.967Z",
-      "lastSeenAt": "2026-08-31T14:34:35.967Z",
-      "ageHours": 253.2,
+      "firstSeenAt": "2026-09-04T07:38:35.819Z",
+      "lastSeenAt": "2026-09-04T07:38:35.819Z",
+      "ageHours": 349.2,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -978,7 +1353,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.967Z"
+          "observedAt": "2026-09-04T07:38:35.819Z"
         }
       ],
       "id": "f7df6b8dc9eb6966bb2f"
@@ -998,9 +1373,9 @@
       "stageEvidenceAt": "2026-08-19T14:26:19.000Z",
       "firstPublicEvidenceAt": "2026-08-19T14:26:19.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:33:20.003Z",
-      "ageHours": 276.6,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 372.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1017,7 +1392,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Uwell-Caliburn-G5-Lite-bundle-deal-zero-nicotine-vape_12c32214-2dfe-43d4-af80-f02899e6a34b.webp?v=1787149579",
           "price": 22.99,
           "currency": null,
@@ -1041,9 +1416,9 @@
       "stageEvidenceAt": "2026-08-19T14:25:08.000Z",
       "firstPublicEvidenceAt": "2026-08-19T14:25:08.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:33:20.003Z",
-      "ageHours": 276.6,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 372.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1060,7 +1435,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/OXVA-Xlim-Go-2-bundle-deal-zero-nicotine-vape_9727953c-de82-4681-b7f3-d28f52971006.webp?v=1787149489",
           "price": 19.99,
           "currency": null,
@@ -1084,10 +1459,10 @@
       "stageEvidenceAt": "2026-08-19T14:25:00.000Z",
       "firstPublicEvidenceAt": "2026-08-11T13:54:37.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:34:35.779Z",
-      "ageHours": 276.6,
-      "sourceCount": 4,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:38:35.706Z",
+      "ageHours": 372.6,
+      "sourceCount": 5,
       "eligibleSources": 3,
       "sources": [
         {
@@ -1103,7 +1478,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Oxva-Nexlim-2-Mini-bundle-deal-zero-nicotine-vape_362bafec-6ea6-43c8-b21a-73f8d8fb0c27.webp?v=1787149490",
           "price": 24.99,
           "currency": null,
@@ -1124,7 +1499,24 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.836Z"
+          "observedAt": "2026-09-04T07:38:34.769Z"
+        },
+        {
+          "host": "vapoteurs.net",
+          "url": "https://www.vapoteurs.net/info-batch-nexlim-2-nexlim-2-mini-oxva/",
+          "title": "INFO BATCH : NeXLIM 2 & NeXLIM 2 MINI (OXVA)",
+          "sourceName": "Vapoteurs.net",
+          "sourceUrl": "https://vapoteurs.net",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-31T08:00:00.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:34.961Z"
         },
         {
           "host": "igeekphone.com",
@@ -1141,7 +1533,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.342Z"
+          "observedAt": "2026-09-04T07:38:35.345Z"
         },
         {
           "host": "igeekphone.com",
@@ -1158,7 +1550,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.779Z"
+          "observedAt": "2026-09-04T07:38:35.706Z"
         }
       ],
       "id": "ea8a08716de1151c49ca"
@@ -1178,9 +1570,9 @@
       "stageEvidenceAt": "2026-08-19T14:24:05.000Z",
       "firstPublicEvidenceAt": "2026-08-15T08:03:21.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:34:35.730Z",
-      "ageHours": 276.6,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:38:35.665Z",
+      "ageHours": 372.6,
       "sourceCount": 2,
       "eligibleSources": 2,
       "sources": [
@@ -1197,7 +1589,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Voopoo-argus-g4-Mini-bundle-deal-zero-nicotine-vape_281b99b8-85dc-4674-89a0-09b2824ff2cb.webp?v=1787149436",
           "price": 25.99,
           "currency": null,
@@ -1218,7 +1610,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.730Z"
+          "observedAt": "2026-09-04T07:38:35.665Z"
         }
       ],
       "id": "44efd741915121c5760c"
@@ -1238,11 +1630,11 @@
       "stageEvidenceAt": "2026-08-19T12:59:15.000Z",
       "firstPublicEvidenceAt": "2026-08-07T14:21:08.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:34:36.004Z",
-      "ageHours": 278,
-      "sourceCount": 5,
-      "eligibleSources": 2,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:38:35.850Z",
+      "ageHours": 374,
+      "sourceCount": 7,
+      "eligibleSources": 3,
       "sources": [
         {
           "host": "ecigone.co.uk",
@@ -1257,11 +1649,28 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Vapresso-xros-6-Mini-bundle-deal-zero-nicotine-vape_df71dda8-ffd9-4900-8648-a029ac9ed0cd.webp?v=1787144331",
           "price": 29.99,
           "currency": null,
           "available": true
+        },
+        {
+          "host": "igeekphone.com",
+          "url": "https://news.google.com/rss/articles/CBMiqgFBVV95cUxQaHJrVkRkQnZfX1BjaUtacnduZllmMFlndVR1RGtPZGt6S3p0RVJPaTRpLTNKcTZXT19TV21VRlpXUnBPVkhWUmdqc0s3T3BwaGRPSkdxV2JIT0hWUWFjWk1IS1pHd1BnN2diSUxzaUNVQ0VkNkVGWUx6RkRtcEFvbV84SXlFNGgzOWpsUEFFYW5uc3drelM3Z1FSa0ZuX2gwZFRqNmpYY0ZxZw?oc=5",
+          "title": "Vaporesso XROS 6 Mini vs XROS 5 Mini: Key Differences and Which Pod Kit Is Better? - igeekphone.com",
+          "sourceName": "igeekphone.com",
+          "sourceUrl": "https://www.igeekphone.com",
+          "sourceType": "dated-publication",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-24T01:33:54.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "google-news-rss-pubdate",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:34.888Z"
         },
         {
           "host": "vapoteurs.net",
@@ -1278,7 +1687,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.022Z"
+          "observedAt": "2026-09-04T07:38:35.068Z"
         },
         {
           "host": "vapingpost.com",
@@ -1295,7 +1704,24 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.047Z"
+          "observedAt": "2026-09-04T07:38:35.092Z"
+        },
+        {
+          "host": "blacknote.com",
+          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-mini-pod-kit-review/",
+          "title": "Vaporesso XROS 6 Mini Review: The Simplest XROS Yet",
+          "sourceName": "Black Note",
+          "sourceUrl": "https://www.blacknote.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-02T19:41:25.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:35.131Z"
         },
         {
           "host": "igeekphone.com",
@@ -1312,7 +1738,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.879Z"
+          "observedAt": "2026-09-04T07:38:35.788Z"
         },
         {
           "host": "smoketastic.com",
@@ -1329,10 +1755,51 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.004Z"
+          "observedAt": "2026-09-04T07:38:35.850Z"
         }
       ],
       "id": "ab91d3fb5d1ec9cd7d42"
+    },
+    {
+      "productName": "IVG NEXiO Pre-Filled Pod System",
+      "brand": "IVG",
+      "category": "POD",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "window": "after",
+      "stage": "REPORTED_RELEASE",
+      "stageLabel": "lansare relatata public",
+      "signalKind": "reported-release",
+      "confidenceTier": "reported",
+      "eventDate": "2026-08-19T11:50:23.000Z",
+      "stageEvidenceAt": "2026-08-19T11:50:23.000Z",
+      "firstPublicEvidenceAt": "2026-08-19T11:50:23.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-09-04T07:38:35.425Z",
+      "lastSeenAt": "2026-09-04T07:38:35.425Z",
+      "ageHours": 375.2,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "igeekphone.com",
+          "url": "https://www.igeekphone.com/ivg-nexio-pre-filled-pod-system-launches-with-10000-puff-reusable-design/",
+          "title": "IVG NEXiO Pre-Filled Pod System Launches With 10,000-Puff Reusable Design",
+          "sourceName": "iGeekPhone",
+          "sourceUrl": "https://www.igeekphone.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-19T11:50:23.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "lansare relatata public",
+          "observedAt": "2026-09-04T07:38:35.425Z"
+        }
+      ],
+      "id": "9eb8a79954fb5dceacc9"
     },
     {
       "productName": "SKE Bar 600 Zero Nicotine Prefilled Pod Kit",
@@ -1349,9 +1816,9 @@
       "stageEvidenceAt": "2026-08-19T09:17:29.000Z",
       "firstPublicEvidenceAt": "2026-08-19T09:17:29.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:33:20.003Z",
-      "ageHours": 281.7,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 377.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1368,7 +1835,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/SKE-Bar-600-Zero-Nicotine-Prefilled-Pod-Kit_9f46ceb9-81ef-4a16-a70b-7841ad9a59ca.webp?v=1787128476",
           "price": 3.99,
           "currency": null,
@@ -1392,9 +1859,9 @@
       "stageEvidenceAt": "2026-08-19T05:41:10.000Z",
       "firstPublicEvidenceAt": "2026-08-19T05:41:10.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.490Z",
-      "lastSeenAt": "2026-08-31T14:34:35.490Z",
-      "ageHours": 285.3,
+      "firstSeenAt": "2026-09-04T07:38:35.463Z",
+      "lastSeenAt": "2026-09-04T07:38:35.463Z",
+      "ageHours": 381.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1413,7 +1880,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.490Z"
+          "observedAt": "2026-09-04T07:38:35.463Z"
         }
       ],
       "id": "7ab1cf4034f144c670cf"
@@ -1433,9 +1900,9 @@
       "stageEvidenceAt": "2026-08-19T05:41:10.000Z",
       "firstPublicEvidenceAt": "2026-08-19T05:41:10.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.165Z",
-      "lastSeenAt": "2026-08-31T14:34:35.490Z",
-      "ageHours": 285.3,
+      "firstSeenAt": "2026-09-04T07:38:35.222Z",
+      "lastSeenAt": "2026-09-04T07:38:35.463Z",
+      "ageHours": 381.3,
       "sourceCount": 3,
       "eligibleSources": 1,
       "sources": [
@@ -1454,7 +1921,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.164Z"
+          "observedAt": "2026-09-04T07:38:35.222Z"
         },
         {
           "host": "igeekphone.com",
@@ -1471,7 +1938,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.212Z"
+          "observedAt": "2026-09-04T07:38:35.260Z"
         },
         {
           "host": "igeekphone.com",
@@ -1488,107 +1955,32 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.490Z"
+          "observedAt": "2026-09-04T07:38:35.463Z"
         }
       ],
       "id": "e69f9edd1bf612fb0b86"
     },
     {
-      "productName": "NEXiO Prefilled Pod System",
-      "brand": "IVG",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "REPORTED_RELEASE",
-      "stageLabel": "lansare relatata public",
-      "signalKind": "reported-release",
-      "confidenceTier": "reported",
-      "eventDate": "2026-08-19T02:25:50.000Z",
-      "stageEvidenceAt": "2026-08-19T02:25:50.000Z",
-      "firstPublicEvidenceAt": "2026-08-19T02:25:50.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.628Z",
-      "lastSeenAt": "2026-08-31T14:34:35.442Z",
-      "ageHours": 288.6,
-      "sourceCount": 2,
-      "eligibleSources": 2,
-      "sources": [
-        {
-          "host": "2firsts.com",
-          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxPN0MtRWdyRHhoRTlldGliYU94NDg1eDB3UU1LYmlFX2xnM2xjSERiWERGaHlPbzFSVU1Wd2daNFQ0ai1rLV90YzJNTHFFUWJwdDg2LVI1VHhnNHFmVVQ3d0Y1aU9yUlVPRDF2ZTU5RzNqdVdnTXI5V0pKQjZhWGxpNWVhVHNuZFk2ck1PZVk5OElkZnN1eWpZNWZQbzNjbTRJbXRxNlkzZWY1dnF5dTROOQ?oc=5",
-          "title": "Product | IVG Launches NEXiO Prefilled Pod System, Expanding Beyond Disposable Vapes - 2Firsts",
-          "sourceName": "2Firsts",
-          "sourceUrl": "https://www.2firsts.com",
-          "sourceType": "dated-publication",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-19T02:25:50.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "google-news-rss-pubdate",
-          "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T14:34:34.628Z"
-        },
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/ivg-nexio-pre-filled-pod-system-launches-with-10000-puff-reusable-design/",
-          "title": "IVG NEXiO Pre-Filled Pod System Launches With 10,000-Puff Reusable Design",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-19T11:50:23.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T14:34:35.442Z"
-        }
-      ],
-      "id": "9eb8a79954fb5dceacc9"
-    },
-    {
-      "productName": "Vaporesso PRIX MTL Pod",
+      "productName": "Vaporesso Prix Pod System Kit",
       "brand": "Vaporesso",
       "category": "POD",
       "segment": "mass-market-open-pod",
       "typology": "open-pod / pod-mod",
       "window": "after",
-      "stage": "REPORTED_RELEASE",
+      "stage": "FIRST_PUBLIC",
       "stageLabel": "aparitie publica datata",
-      "signalKind": "reported-release",
-      "confidenceTier": "reported",
-      "eventDate": "2026-08-18T14:05:27.000Z",
-      "stageEvidenceAt": "2026-08-18T14:05:27.000Z",
-      "firstPublicEvidenceAt": "2026-08-18T14:05:27.000Z",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-18T07:00:00.000Z",
+      "stageEvidenceAt": "2026-08-18T07:00:00.000Z",
+      "firstPublicEvidenceAt": "2026-08-18T07:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.685Z",
-      "lastSeenAt": "2026-08-31T14:34:35.514Z",
-      "ageHours": 300.9,
-      "sourceCount": 3,
+      "firstSeenAt": "2026-09-04T07:38:34.829Z",
+      "lastSeenAt": "2026-09-04T07:38:35.494Z",
+      "ageHours": 404,
+      "sourceCount": 2,
       "eligibleSources": 2,
       "sources": [
-        {
-          "host": "2firsts.com",
-          "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxONkkxcnFqUlRicUF3eTdYSUhTZk5NS0RRS2hURk84ZDhjMDJad3ZqeEx5WmZCVkRaY1R4ZzNNUkVka3BQdVhySHhlSk9aUWROQk0ydGFNNmxSVkdmaHkySjZTRmpFMnA3ZWdiWld0d3pBUHVScTFmTERRMVpmeFZKQW1rYnVGUS1keDZHX3hXamxxZkdtYl9HTnNva2tFREJiMTVaT0FmeGplbnFWZ2ZBUDZfcDhBaUs4M3JWRTZfS2RVV2JmbjByLUM5eDR0cFVFWTU3NHJMeXk?oc=5",
-          "title": "Product | VAPORESSO Launches PRIX MTL Pod, With NFC Version Linking Interchangeable Panels to On-Screen Animations - 2Firsts",
-          "sourceName": "2Firsts",
-          "sourceUrl": "https://www.2firsts.com",
-          "sourceType": "dated-publication",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-24T07:56:09.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "google-news-rss-pubdate",
-          "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T14:34:34.685Z"
-        },
         {
           "host": "igeekphone.com",
           "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOVTBqeWFSNzFyVENja1AyWEFqdk5yWTV4MU11WHNNQV9JZ3hHc2ZVRk5lYWhXZmlkbkxtQWJtdkJSTGx4NHNYSjNHNjdlOGlxV3ZQa2NMczlBckVPZ05nRXJqdkIxMU0tUmtBclZiYldvaDQ3RXRaLUh4Uk1uY203ckdqTEVDNWFUcjZlOVpMbk5mM0d3N3J3ZEk2SDFHMnQ2ejgyTTVwZWx2YnJUUTBHYQ?oc=5",
@@ -1600,11 +1992,11 @@
           "decisionEligible": true,
           "discoveryOnly": false,
           "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-18T14:05:27.000Z",
+          "eventDate": "2026-08-18T07:00:00.000Z",
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.887Z"
+          "observedAt": "2026-09-04T07:38:34.829Z"
         },
         {
           "host": "igeekphone.com",
@@ -1621,7 +2013,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.514Z"
+          "observedAt": "2026-09-04T07:38:35.494Z"
         }
       ],
       "id": "9d18180e56115a1ccf90"
@@ -1641,9 +2033,9 @@
       "stageEvidenceAt": "2026-08-17T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-17T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.022Z",
-      "lastSeenAt": "2026-08-31T14:34:35.022Z",
-      "ageHours": 326,
+      "firstSeenAt": "2026-09-04T07:38:35.068Z",
+      "lastSeenAt": "2026-09-04T07:38:35.068Z",
+      "ageHours": 422,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1662,7 +2054,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.022Z"
+          "observedAt": "2026-09-04T07:38:35.068Z"
         }
       ],
       "id": "6f811cf1523e3c3fe8d5"
@@ -1682,9 +2074,9 @@
       "stageEvidenceAt": "2026-08-16T10:36:56.000Z",
       "firstPublicEvidenceAt": "2026-08-16T10:36:56.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.567Z",
-      "lastSeenAt": "2026-08-31T14:34:35.567Z",
-      "ageHours": 352.4,
+      "firstSeenAt": "2026-09-04T07:38:35.536Z",
+      "lastSeenAt": "2026-09-04T07:38:35.536Z",
+      "ageHours": 448.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1703,7 +2095,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.567Z"
+          "observedAt": "2026-09-04T07:38:35.536Z"
         }
       ],
       "id": "2f80942535bb6fe9151b"
@@ -1723,9 +2115,9 @@
       "stageEvidenceAt": "2026-08-15T11:27:57.000Z",
       "firstPublicEvidenceAt": "2026-08-15T11:27:57.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.788Z",
-      "lastSeenAt": "2026-08-31T14:34:35.831Z",
-      "ageHours": 375.5,
+      "firstSeenAt": "2026-09-04T07:38:34.809Z",
+      "lastSeenAt": "2026-09-04T07:38:35.750Z",
+      "ageHours": 471.5,
       "sourceCount": 4,
       "eligibleSources": 2,
       "sources": [
@@ -1744,7 +2136,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.788Z"
+          "observedAt": "2026-09-04T07:38:34.809Z"
         },
         {
           "host": "igeekphone.com",
@@ -1761,7 +2153,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.212Z"
+          "observedAt": "2026-09-04T07:38:35.260Z"
         },
         {
           "host": "igeekphone.com",
@@ -1778,7 +2170,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.682Z"
+          "observedAt": "2026-09-04T07:38:35.627Z"
         },
         {
           "host": "igeekphone.com",
@@ -1795,7 +2187,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.831Z"
+          "observedAt": "2026-09-04T07:38:35.750Z"
         }
       ],
       "id": "9f220d0c58fa1ee30a34"
@@ -1815,9 +2207,9 @@
       "stageEvidenceAt": "2026-08-15T08:03:21.000Z",
       "firstPublicEvidenceAt": "2026-08-15T08:03:21.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.730Z",
-      "lastSeenAt": "2026-08-31T14:34:35.730Z",
-      "ageHours": 378.9,
+      "firstSeenAt": "2026-09-04T07:38:35.666Z",
+      "lastSeenAt": "2026-09-04T07:38:35.666Z",
+      "ageHours": 474.9,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1836,10 +2228,51 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.730Z"
+          "observedAt": "2026-09-04T07:38:35.665Z"
         }
       ],
       "id": "01b50e9669cf3d2e1394"
+    },
+    {
+      "productName": "VOOPOO ARGUS G4",
+      "brand": "Voopoo",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-08-13T17:30:38.000Z",
+      "stageEvidenceAt": "2026-08-13T17:30:38.000Z",
+      "firstPublicEvidenceAt": "2026-08-13T17:30:38.000Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-09-04T07:38:35.178Z",
+      "lastSeenAt": "2026-09-04T07:38:35.178Z",
+      "ageHours": 513.5,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "blacknote.com",
+          "url": "https://www.blacknote.com/blog/voopoo-argus-g4-pod-system-review/",
+          "title": "VOOPOO ARGUS G4 Review: Three Resistances, One Pod",
+          "sourceName": "Black Note",
+          "sourceUrl": "https://www.blacknote.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-13T17:30:38.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:35.178Z"
+        }
+      ],
+      "id": "681f407294ce28257a3b"
     },
     {
       "productName": "Geekvape Sonder Q3 Pod Kit",
@@ -1856,9 +2289,9 @@
       "stageEvidenceAt": "2026-08-13T14:22:05.000Z",
       "firstPublicEvidenceAt": "2026-08-13T14:22:05.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:33:20.003Z",
-      "ageHours": 420.6,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:37:24.339Z",
+      "ageHours": 516.6,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -1875,7 +2308,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/geekvape-sonder-q3-pod-kit-main.jpg?v=1786629641",
           "price": 12.99,
           "currency": null,
@@ -1913,9 +2346,9 @@
       "stageEvidenceAt": "2026-08-11T15:33:28.000Z",
       "firstPublicEvidenceAt": "2026-08-11T15:33:28.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.027Z",
-      "lastSeenAt": "2026-08-31T14:34:36.027Z",
-      "ageHours": 467.4,
+      "firstSeenAt": "2026-09-04T07:38:35.869Z",
+      "lastSeenAt": "2026-09-04T07:38:35.869Z",
+      "ageHours": 563.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1934,7 +2367,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.027Z"
+          "observedAt": "2026-09-04T07:38:35.869Z"
         }
       ],
       "id": "21a7fa6f9c66055ed4ef"
@@ -1954,9 +2387,9 @@
       "stageEvidenceAt": "2026-08-10T08:00:04.000Z",
       "firstPublicEvidenceAt": "2026-08-10T08:00:04.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.309Z",
-      "lastSeenAt": "2026-08-31T14:34:36.309Z",
-      "ageHours": 499,
+      "firstSeenAt": "2026-09-04T07:38:36.083Z",
+      "lastSeenAt": "2026-09-04T07:38:36.083Z",
+      "ageHours": 595,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1975,7 +2408,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.309Z"
+          "observedAt": "2026-09-04T07:38:36.083Z"
         }
       ],
       "id": "d1022c93c369ce39b391"
@@ -1995,9 +2428,9 @@
       "stageEvidenceAt": "2026-08-09T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-09T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.949Z",
-      "lastSeenAt": "2026-08-31T14:34:34.949Z",
-      "ageHours": 518,
+      "firstSeenAt": "2026-09-04T07:38:35.009Z",
+      "lastSeenAt": "2026-09-04T07:38:35.009Z",
+      "ageHours": 614,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2016,7 +2449,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.949Z"
+          "observedAt": "2026-09-04T07:38:35.009Z"
         }
       ],
       "id": "7fe5e0787ded60c35547"
@@ -2036,9 +2469,9 @@
       "stageEvidenceAt": "2026-08-09T12:43:32.000Z",
       "firstPublicEvidenceAt": "2026-08-09T12:43:32.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.050Z",
-      "lastSeenAt": "2026-08-31T14:34:36.050Z",
-      "ageHours": 518.3,
+      "firstSeenAt": "2026-09-04T07:38:35.888Z",
+      "lastSeenAt": "2026-09-04T07:38:35.888Z",
+      "ageHours": 614.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2057,7 +2490,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.050Z"
+          "observedAt": "2026-09-04T07:38:35.888Z"
         }
       ],
       "id": "236a081f702eb72aea89"
@@ -2077,9 +2510,9 @@
       "stageEvidenceAt": "2026-08-08T12:44:27.000Z",
       "firstPublicEvidenceAt": "2026-08-08T12:44:27.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.074Z",
-      "lastSeenAt": "2026-08-31T14:34:36.074Z",
-      "ageHours": 542.3,
+      "firstSeenAt": "2026-09-04T07:38:35.909Z",
+      "lastSeenAt": "2026-09-04T07:38:35.909Z",
+      "ageHours": 638.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2098,13 +2531,13 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.074Z"
+          "observedAt": "2026-09-04T07:38:35.909Z"
         }
       ],
       "id": "5b57d3f7cb52583b8e3b"
     },
     {
-      "productName": "OXVA NeXlim 2",
+      "productName": "OXVA NeXLIM 2",
       "brand": "OXVA",
       "category": "POD",
       "segment": "mass-market-open-pod",
@@ -2118,12 +2551,29 @@
       "stageEvidenceAt": "2026-08-07T14:16:25.000Z",
       "firstPublicEvidenceAt": "2026-08-07T14:16:25.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.073Z",
-      "lastSeenAt": "2026-08-31T14:34:35.073Z",
-      "ageHours": 564.7,
-      "sourceCount": 1,
+      "firstSeenAt": "2026-09-04T07:38:34.961Z",
+      "lastSeenAt": "2026-09-04T07:38:35.112Z",
+      "ageHours": 660.7,
+      "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
+        {
+          "host": "vapoteurs.net",
+          "url": "https://www.vapoteurs.net/info-batch-nexlim-2-nexlim-2-mini-oxva/",
+          "title": "INFO BATCH : NeXLIM 2 & NeXLIM 2 MINI (OXVA)",
+          "sourceName": "Vapoteurs.net",
+          "sourceUrl": "https://vapoteurs.net",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-08-31T08:00:00.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:34.961Z"
+        },
         {
           "host": "vapingpost.com",
           "url": "https://www.vapingpost.com/2026/08/07/review-nexlim-2-oxva/",
@@ -2139,7 +2589,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.073Z"
+          "observedAt": "2026-09-04T07:38:35.112Z"
         }
       ],
       "id": "3669491ec306541d521f"
@@ -2159,12 +2609,29 @@
       "stageEvidenceAt": "2026-08-07T13:00:00.000Z",
       "firstPublicEvidenceAt": "2026-08-07T13:00:00.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.974Z",
-      "lastSeenAt": "2026-08-31T14:34:35.653Z",
-      "ageHours": 566,
-      "sourceCount": 2,
+      "firstSeenAt": "2026-09-04T07:38:34.915Z",
+      "lastSeenAt": "2026-09-04T07:38:35.604Z",
+      "ageHours": 662,
+      "sourceCount": 4,
       "eligibleSources": 1,
       "sources": [
+        {
+          "host": "vapoteurs.net",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-vaporesso/",
+          "title": "INFO BATCH : XROS 6 (Vaporesso)",
+          "sourceName": "Vapoteurs.net",
+          "sourceUrl": "https://vapoteurs.net",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-01T13:00:00.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:34.915Z"
+        },
         {
           "host": "vapoteurs.net",
           "url": "https://www.vapoteurs.net/info-batch-vaporesso-xros-6/",
@@ -2180,7 +2647,24 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.974Z"
+          "observedAt": "2026-09-04T07:38:35.029Z"
+        },
+        {
+          "host": "blacknote.com",
+          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-pod-kit-review/",
+          "title": "Vaporesso XROS 6 Review: Bigger Battery, Same XROS Draw",
+          "sourceName": "Black Note",
+          "sourceUrl": "https://www.blacknote.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-02T19:33:55.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-09-04T07:38:35.150Z"
         },
         {
           "host": "igeekphone.com",
@@ -2197,7 +2681,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.653Z"
+          "observedAt": "2026-09-04T07:38:35.604Z"
         }
       ],
       "id": "e7ea3531f9534241d7e6"
@@ -2217,9 +2701,9 @@
       "stageEvidenceAt": "2026-08-07T12:02:17.000Z",
       "firstPublicEvidenceAt": "2026-08-07T12:02:17.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.099Z",
-      "lastSeenAt": "2026-08-31T14:34:36.099Z",
-      "ageHours": 567,
+      "firstSeenAt": "2026-09-04T07:38:35.929Z",
+      "lastSeenAt": "2026-09-04T07:38:35.929Z",
+      "ageHours": 663,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2238,7 +2722,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.099Z"
+          "observedAt": "2026-09-04T07:38:35.929Z"
         }
       ],
       "id": "71dda3cd9ccec839f36f"
@@ -2258,9 +2742,9 @@
       "stageEvidenceAt": "2026-08-07T08:00:04.000Z",
       "firstPublicEvidenceAt": "2026-08-07T08:00:04.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.334Z",
-      "lastSeenAt": "2026-08-31T14:34:36.334Z",
-      "ageHours": 571,
+      "firstSeenAt": "2026-09-04T07:38:36.104Z",
+      "lastSeenAt": "2026-09-04T07:38:36.104Z",
+      "ageHours": 667,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2279,7 +2763,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.334Z"
+          "observedAt": "2026-09-04T07:38:36.104Z"
         }
       ],
       "id": "1884bb529be345cfcead"
@@ -2299,12 +2783,50 @@
       "stageEvidenceAt": "2026-08-06T20:14:48.000Z",
       "firstPublicEvidenceAt": "2026-08-06T20:14:48.000Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:34:35.294Z",
-      "ageHours": 582.8,
+      "firstSeenAt": "2026-09-04T07:37:24.339Z",
+      "lastSeenAt": "2026-09-04T07:38:34.790Z",
+      "ageHours": 678.8,
       "sourceCount": 5,
-      "eligibleSources": 4,
+      "eligibleSources": 3,
       "sources": [
+        {
+          "host": "store.oxva.com",
+          "url": "https://store.oxva.com/products/vprime-2",
+          "title": "VPRIME 2",
+          "sourceType": "manufacturer-official-store",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-08-20T13:20:42.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "anunt / disponibilitate in pregatire",
+          "observedAt": "2026-09-04T07:37:24.339Z",
+          "image": "https://cdn.shopify.com/s/files/1/0703/9739/5251/files/BlackCarbon.png?v=1787215957",
+          "price": 39.9,
+          "currency": null,
+          "available": false
+        },
+        {
+          "host": "vaping101.co.uk",
+          "url": "https://vaping101.co.uk/products/oxva-vprime-2-pod-kit",
+          "title": "OXVA VPrime 2 Pod Kit",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-09-03T12:25:23.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-09-04T07:37:24.339Z",
+          "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/Mirage-Blue-OXVA-Vprime-2-Pod-Vape-Kit.webp?v=1788437946",
+          "price": 0,
+          "currency": null,
+          "available": false
+        },
         {
           "host": "vapesuperstore.co.uk",
           "url": "https://vapesuperstore.co.uk/products/oxva-vprime-2-pod-kit",
@@ -2318,7 +2840,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 34.95,
           "currency": null,
@@ -2337,7 +2859,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
+          "observedAt": "2026-09-04T07:37:24.339Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/OXVA-VPrime-2-Pod-Vape-Kit.webp?v=1786084418",
           "price": 29.99,
           "currency": null,
@@ -2358,51 +2880,15 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.862Z"
-        },
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/oxva-vprime-2-pod-mod-kit-review-does-the-3400mah-battery-justify-the-hype/",
-          "title": "OXVA Vprime 2 Pod Mod Kit Review: Does the 3400mAh Battery Justify the Hype?",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-24T12:44:01.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.294Z"
-        },
-        {
-          "host": "store.oxva.com",
-          "url": "https://store.oxva.com/products/vprime-2",
-          "title": "VPRIME 2",
-          "sourceType": "manufacturer-official-store",
-          "collector": "direct-catalog",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "catalog-publication-date",
-          "eventDate": "2026-08-20T13:20:42.000Z",
-          "dateConfidence": "catalog-published-at",
-          "dateQuality": "shopify-published-at",
-          "stage": "anunt / disponibilitate in pregatire",
-          "observedAt": "2026-08-31T14:33:20.003Z",
-          "image": "https://cdn.shopify.com/s/files/1/0703/9739/5251/files/BlackCarbon.png?v=1787215957",
-          "price": 39.9,
-          "currency": null,
-          "available": false
+          "observedAt": "2026-09-04T07:38:34.790Z"
         }
       ],
       "id": "da02f960ee55143a8aa7",
       "lifecycleEvidence": [
-        "after",
-        "FIRST_RETAIL",
         "before",
-        "IMMINENT"
+        "IMMINENT",
+        "after",
+        "FIRST_RETAIL"
       ]
     },
     {
@@ -2420,9 +2906,9 @@
       "stageEvidenceAt": "2026-08-05T11:24:38.000Z",
       "firstPublicEvidenceAt": "2026-08-05T11:24:38.000Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.598Z",
-      "lastSeenAt": "2026-08-31T14:34:36.124Z",
-      "ageHours": 615.6,
+      "firstSeenAt": "2026-09-04T07:38:34.645Z",
+      "lastSeenAt": "2026-09-04T07:38:35.950Z",
+      "ageHours": 711.6,
       "sourceCount": 3,
       "eligibleSources": 2,
       "sources": [
@@ -2441,7 +2927,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.598Z"
+          "observedAt": "2026-09-04T07:38:34.645Z"
         },
         {
           "host": "igeekphone.com",
@@ -2458,7 +2944,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.603Z"
+          "observedAt": "2026-09-04T07:38:35.563Z"
         },
         {
           "host": "smoketastic.com",
@@ -2475,376 +2961,22 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.124Z"
+          "observedAt": "2026-09-04T07:38:35.950Z"
         }
       ],
       "id": "1d02ed76d685e2594d59"
-    },
-    {
-      "productName": "VOOPOO ARGUS G4",
-      "brand": "Voopoo",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-04T10:48:44.000Z",
-      "stageEvidenceAt": "2026-08-04T10:48:44.000Z",
-      "firstPublicEvidenceAt": "2026-08-04T10:48:44.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.109Z",
-      "lastSeenAt": "2026-08-31T14:34:36.149Z",
-      "ageHours": 640.2,
-      "sourceCount": 2,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "blacknote.com",
-          "url": "https://www.blacknote.com/blog/voopoo-argus-g4-pod-system-review/",
-          "title": "VOOPOO ARGUS G4 Review: Three Resistances, One Pod",
-          "sourceName": "Black Note",
-          "sourceUrl": "https://www.blacknote.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-13T17:30:38.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.109Z"
-        },
-        {
-          "host": "smoketastic.com",
-          "url": "https://www.smoketastic.com/voopoo-argus-g4-review/",
-          "title": "VOOPOO Argus G4 Review",
-          "sourceName": "Smoketastic",
-          "sourceUrl": "https://smoketastic.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-04T10:48:44.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.149Z"
-        }
-      ],
-      "id": "681f407294ce28257a3b"
-    },
-    {
-      "productName": "Sonder Q3 par Geek Vape",
-      "brand": "Geekvape",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-04T08:03:21.000Z",
-      "stageEvidenceAt": "2026-08-04T08:03:21.000Z",
-      "firstPublicEvidenceAt": "2026-08-04T08:03:21.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.358Z",
-      "lastSeenAt": "2026-08-31T14:34:36.358Z",
-      "ageHours": 642.9,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "levapelier.com",
-          "url": "https://www.levapelier.com/sonder-q3-par-geek-vape/",
-          "title": "Sonder Q3 par Geek Vape",
-          "sourceName": "Le Vapelier",
-          "sourceUrl": "https://www.levapelier.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-04T08:03:21.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.358Z"
-        }
-      ],
-      "id": "0a88d5618eecc5a5f10d"
-    },
-    {
-      "productName": "Al Fakher Hypermax Prime 50K Prefilled Pod Kit",
-      "brand": "Al Fakher",
-      "category": "POD",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "window": "after",
-      "stage": "RETAIL_PROMOTION",
-      "stageLabel": "listare recentă pentru model existent, nu lansare",
-      "signalKind": "recent-listing-known-model",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-03T14:58:57.000Z",
-      "stageEvidenceAt": "2026-08-03T14:58:57.000Z",
-      "firstPublicEvidenceAt": "2026-08-03T14:58:57.000Z",
-      "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-08-31T14:33:20.003Z",
-      "lastSeenAt": "2026-08-31T14:33:20.003Z",
-      "ageHours": 660,
-      "sourceCount": 2,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "vapesuperstore.co.uk",
-          "url": "https://vapesuperstore.co.uk/products/al-fakher-hypermax-prime-50k-prefilled-pod-kit",
-          "title": "Al Fakher Hypermax Prime 50K Prefilled Pod Kit",
-          "sourceType": "retailer-direct",
-          "collector": "direct-catalog",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "catalog-publication-date",
-          "eventDate": "2026-08-03T14:58:57.000Z",
-          "dateConfidence": "catalog-published-at",
-          "dateQuality": "shopify-published-at",
-          "stage": "prima listare comerciala datata",
-          "observedAt": "2026-08-31T14:33:20.003Z",
-          "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/Al_Fakher_Hypermax_Prime_50K_Prefilled_Pod_Kit_Device_01.jpg?v=1787064858",
-          "price": 14.95,
-          "currency": null,
-          "available": true
-        },
-        {
-          "host": "alfakher.fr",
-          "url": "https://alfakher.fr/blog/avis-al-fakher-crown-bar-hypermax-prime-50k/",
-          "title": "Official dated product evaluation",
-          "sourceType": "prior-existence-evidence",
-          "decisionEligible": false,
-          "discoveryOnly": true,
-          "eventDate": "2026-07-16T00:00:00.000Z",
-          "dateConfidence": "prior-public-evidence",
-          "stage": "model existent înaintea ferestrei active",
-          "collector": "known-history"
-        }
-      ],
-      "id": "bd87610fb37b8ae5707b",
-      "knownBeforeWindowAt": "2026-07-16T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://alfakher.fr/blog/avis-al-fakher-crown-bar-hypermax-prime-50k/"
-    },
-    {
-      "productName": "Vaporesso ECO NANO 2",
-      "brand": "Vaporesso",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-03T13:20:55.000Z",
-      "stageEvidenceAt": "2026-08-03T13:20:55.000Z",
-      "firstPublicEvidenceAt": "2026-08-03T13:20:55.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:36.174Z",
-      "lastSeenAt": "2026-08-31T14:34:36.174Z",
-      "ageHours": 661.7,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "smoketastic.com",
-          "url": "https://www.smoketastic.com/vaporesso-eco-nano-2-review/",
-          "title": "Vaporesso ECO NANO 2 Review",
-          "sourceName": "Smoketastic",
-          "sourceUrl": "https://smoketastic.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-03T13:20:55.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.174Z"
-        }
-      ],
-      "id": "5a7a9c5edbd88e36cc75"
-    },
-    {
-      "productName": "Vaporesso XROS Mini Retro",
-      "brand": "Vaporesso",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-03T09:28:18.000Z",
-      "stageEvidenceAt": "2026-08-03T09:28:18.000Z",
-      "firstPublicEvidenceAt": "2026-08-03T09:28:18.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.904Z",
-      "lastSeenAt": "2026-08-31T14:34:35.904Z",
-      "ageHours": 665.5,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/vaporesso-xros-mini-retro-review-a-stylish-compact-pod-vape-with-classic-design-and-reliable-performance/",
-          "title": "Vaporesso XROS Mini Retro Review: A Stylish Compact Pod Vape with Classic Design and Reliable Performance",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-03T09:28:18.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.904Z"
-        }
-      ],
-      "id": "9e4ec2f16659a4b8b151"
-    },
-    {
-      "productName": "OXVA ONEO Pro",
-      "brand": "OXVA",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "REPORTED_RELEASE",
-      "stageLabel": "lansare relatata public",
-      "signalKind": "reported-release",
-      "confidenceTier": "reported",
-      "eventDate": "2026-08-03T08:46:21.000Z",
-      "stageEvidenceAt": "2026-08-03T08:46:21.000Z",
-      "firstPublicEvidenceAt": "2026-08-03T08:46:21.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:34.912Z",
-      "lastSeenAt": "2026-08-31T14:34:35.930Z",
-      "ageHours": 666.2,
-      "sourceCount": 2,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "vapoteurs.net",
-          "url": "https://www.vapoteurs.net/info-batch-oneo-pro-oxva/",
-          "title": "INFO BATCH : ONEO Pro (OXVA)",
-          "sourceName": "Vapoteurs.net",
-          "sourceUrl": "https://vapoteurs.net",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-25T13:00:00.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:34.912Z"
-        },
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/oxva-launches-oneo-pro-in-france-upgrading-its-open-pod-platform-with-enhanced-performance-and-smart-features/",
-          "title": "OXVA Launches ONEO Pro in France, Upgrading Its Open Pod Platform with Enhanced Performance and Smart Features",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-03T08:46:21.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "lansare relatata public",
-          "observedAt": "2026-08-31T14:34:35.930Z"
-        }
-      ],
-      "id": "9f8591c656675c29a5a6"
-    },
-    {
-      "productName": "Vaporesso XROS 5 Mini",
-      "brand": "Vaporesso",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-08-01T12:22:01.000Z",
-      "stageEvidenceAt": "2026-08-01T12:22:01.000Z",
-      "firstPublicEvidenceAt": "2026-08-01T12:22:01.000Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-08-31T14:34:35.879Z",
-      "lastSeenAt": "2026-08-31T14:34:36.199Z",
-      "ageHours": 710.6,
-      "sourceCount": 2,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/vaporesso-xros-6-mini-vs-xros-5-mini-review-which-compact-pod-system-is-better/",
-          "title": "Vaporesso XROS 6 Mini vs XROS 5 Mini: Key Differences and Which Pod Kit Is Better?",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-24T01:33:54.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:35.879Z"
-        },
-        {
-          "host": "smoketastic.com",
-          "url": "https://www.smoketastic.com/vaporesso-xros-5-mini-review/",
-          "title": "Vaporesso XROS 5 Mini Review",
-          "sourceName": "Smoketastic",
-          "sourceUrl": "https://smoketastic.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-08-01T12:22:01.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-08-31T14:34:36.199Z"
-        }
-      ],
-      "id": "540cc26a482f67993657"
     }
   ],
   "summary": {
     "total": 5,
     "allConcrete": 40,
-    "before": 0,
-    "after": 5,
+    "before": 2,
+    "after": 3,
     "explicitDatedAfter": 2,
     "confirmed": 0,
     "reported": 5,
     "publicSignals": 35,
-    "candidatesUnderVerification": 26,
+    "candidatesUnderVerification": 31,
     "categoryEvents": {
       "POD": 5
     }
