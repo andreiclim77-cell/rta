@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 30,
+  "schemaVersion": 31,
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-09-04T13:47:32.948Z",
+  "generatedAt": "2026-09-04T14:17:25.126Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -92,7 +92,11 @@
     "singleRetailerListingNeedsCorroboration": true,
     "confidenceTierNormalizedAtPublish": true,
     "verificationQueueReconciledWithPublishedProducts": true,
-    "finalSegmentAndCategoryCoverageReconciled": true
+    "finalSegmentAndCategoryCoverageReconciled": true,
+    "modelFamilyVariantsGrouped": true,
+    "variantEvidencePreserved": true,
+    "finalPublicProjectionsReconciled": true,
+    "undatedSignalsPreservedInVerificationQueue": true
   },
   "scan": {
     "queries": 90,
@@ -1121,8 +1125,8 @@
     },
     "categoryCoverage": {
       "RTA": {
-        "monitored": 16,
-        "events": 10,
+        "monitored": 14,
+        "events": 8,
         "signals": 6,
         "queued": 0
       },
@@ -1142,7 +1146,7 @@
   },
   "products": [
     {
-      "id": "5795c669c2e2779cc0be",
+      "id": "f67662bde75faccc4bdc",
       "productName": "SXK Ghost Ring Style RTA Rebuildable Tank Atomizer - Silver, 316SS + Glass, 4ml, 22mm Diamter",
       "brand": "SXK",
       "category": "RTA",
@@ -1155,7 +1159,7 @@
       "firstSeenAt": "2026-09-04T13:35:34.153Z",
       "lastSeenAt": "2026-09-04T13:46:57.927Z",
       "ageHours": 621,
-      "sourceCount": 1,
+      "sourceCount": 5,
       "eligibleSources": 1,
       "sources": [
         {
@@ -1172,30 +1176,7 @@
           "stage": "ETA / precomandă",
           "observedAt": "2026-09-04T13:46:57.927Z",
           "catalogEvidence": "product-page"
-        }
-      ],
-      "stageEvidenceAt": "2026-09-30T00:00:00.000Z",
-      "signalKind": "explicit-vendor-eta",
-      "confidenceTier": "reported",
-      "firstPublicEvidenceAt": "2026-09-30T00:00:00.000Z"
-    },
-    {
-      "id": "57f5b2906d8bb60b2e54",
-      "productName": "Ghost Ring Style RTA Rebuildable Tank Atomizer - Silver, SS + Glass, 4ml, 22mm Diamter",
-      "brand": "Ghost",
-      "category": "RTA",
-      "typology": "RDL single",
-      "window": "before",
-      "stage": "IMMINENT",
-      "stageLabel": "ETA / precomandă",
-      "eventDate": "2026-09-30T00:00:00.000Z",
-      "dateConfidence": "explicit-vendor-eta",
-      "firstSeenAt": "2026-09-04T13:35:34.155Z",
-      "lastSeenAt": "2026-09-04T13:46:57.927Z",
-      "ageHours": 621,
-      "sourceCount": 2,
-      "eligibleSources": 1,
-      "sources": [
+        },
         {
           "host": "3fvape.com",
           "url": "https://www.3fvape.com/rta/74546-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-ss-glass-4ml-22mm-diamter.html",
@@ -1225,30 +1206,7 @@
           "stage": "ETA / precomandă",
           "observedAt": "2026-09-04T13:46:57.927Z",
           "catalogEvidence": "catalog-card"
-        }
-      ],
-      "stageEvidenceAt": "2026-09-30T00:00:00.000Z",
-      "signalKind": "explicit-vendor-eta",
-      "confidenceTier": "reported",
-      "firstPublicEvidenceAt": "2026-09-30T00:00:00.000Z"
-    },
-    {
-      "id": "c48fea4b1e0cd09e7ff8",
-      "productName": "RekaVape Ghost Ring Style RTA Rebuildable Tank Atomizer - Silver, 316SS + PCTG, 4ml, 22mm Diamter",
-      "brand": "RekaVape",
-      "category": "RTA",
-      "typology": "RDL single",
-      "window": "before",
-      "stage": "IMMINENT",
-      "stageLabel": "ETA / precomandă",
-      "eventDate": "2026-09-30T00:00:00.000Z",
-      "dateConfidence": "explicit",
-      "firstSeenAt": "2026-09-04T13:35:34.161Z",
-      "lastSeenAt": "2026-09-04T13:43:37.285Z",
-      "ageHours": 621,
-      "sourceCount": 2,
-      "eligibleSources": 0,
-      "sources": [
+        },
         {
           "host": "3fvape.com",
           "url": "https://www.3fvape.com/rta/74530-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pctg-4ml-22mm-diamter.html",
@@ -1275,7 +1233,32 @@
       "stageEvidenceAt": "2026-09-30T00:00:00.000Z",
       "confidenceTier": "reported",
       "signalKind": "explicit-vendor-eta",
-      "firstPublicEvidenceAt": "2026-09-30T00:00:00.000Z"
+      "firstPublicEvidenceAt": "2026-09-30T00:00:00.000Z",
+      "segment": null,
+      "lifecycleEvidence": [
+        "before",
+        "IMMINENT"
+      ],
+      "variants": [
+        {
+          "productName": "SXK Ghost Ring",
+          "brand": "SXK",
+          "url": "https://www.3fvape.com/rta/74547-sxk-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-glass-4ml-22mm-diamter.html"
+        },
+        {
+          "productName": "Ghost Ring",
+          "brand": "Ghost",
+          "url": "https://www.3fvape.com/rta/74546-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-ss-glass-4ml-22mm-diamter.html"
+        },
+        {
+          "productName": "RekaVape Ghost Ring",
+          "brand": "RekaVape",
+          "url": "https://www.3fvape.com/rta/74530-rekavape-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-pctg-4ml-22mm-diamter.html"
+        }
+      ],
+      "variantCount": 3,
+      "familyKey": "RTA|CLONE|ghost ring",
+      "authenticityState": "CLONE"
     },
     {
       "productName": "YFTK Flash e-Vapor V4.5S+ Style RTA",
@@ -1306,11 +1289,21 @@
           "observedAt": "2026-09-04T13:43:37.285Z"
         }
       ],
-      "id": "bfbe64ee676a84784012",
+      "id": "00454d60842f8f03bc1d",
       "stageEvidenceAt": "2026-09-10T00:00:00.000Z",
       "confidenceTier": "public-signal",
       "signalKind": "dated-public-signal",
-      "firstPublicEvidenceAt": "2026-09-10T00:00:00.000Z"
+      "firstPublicEvidenceAt": "2026-09-10T00:00:00.000Z",
+      "familyKey": "RTA|CLONE|flash e vapor v4 5s",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "YFTK Flash e-Vapor V4.5S+",
+          "brand": "YFTK",
+          "url": "https://www.3fvape.com/new-arrivals/44002-yftk-flash-e--v45s-style-rta-rebuildable-tank--atomizer-silver-316-stainless-steel-glass-45ml-23mm-diameter.html"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Rekavape pNeumatyca RTA(大全套）",
@@ -1353,7 +1346,17 @@
           "available": true
         }
       ],
-      "id": "4bed69256e291c8ed253"
+      "id": "e8fcf6c7707c77983d6e",
+      "familyKey": "RTA|CLONE|pneumatyca",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "RekaVape pNeumatyca (大全套）",
+          "brand": "RekaVape",
+          "url": "https://beast-8888.myshopify.com/products/rekavape-pneumatyca-rta%E5%A4%A7%E5%85%A8%E5%A5%97"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "iDot RBA 510 Drip Tip",
@@ -1396,7 +1399,17 @@
           "available": null
         }
       ],
-      "id": "b81d374b9f1c72bed18b"
+      "id": "5dd6103d5abddfc997b3",
+      "familyKey": "ACCESORII|AUTHENTIC|thundercloud|idot 510 drip tip",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "ThunderCloud iDot 510 Drip Tip",
+          "brand": "ThunderCloud",
+          "url": "https://thundercloudofficial.com/product/idot-rba-510-drip-tip/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "YFTK Dvarw FL RTA 22mm PC Mesh Tank 3.5ml 油倉",
@@ -1439,7 +1452,17 @@
           "available": true
         }
       ],
-      "id": "9fdce9b18ac57e4da76b"
+      "id": "c6e0288e43af43075b94",
+      "familyKey": "RTA|CLONE|dvarw fl pc mesh",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "YFTK Dvarw FL PC Mesh 油倉",
+          "brand": "YFTK",
+          "url": "https://beast-8888.myshopify.com/products/yftk-dvarw-fl-rta-22mm-pc-mesh-tank-3-5ml-%E6%B2%B9%E5%80%89"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Rekavape Baya RTA(大全套）",
@@ -1482,7 +1505,17 @@
           "available": true
         }
       ],
-      "id": "93e206fc6fe4bbb85f06"
+      "id": "c7879cda2c65b74cd526",
+      "familyKey": "RTA|CLONE|baya",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "RekaVape Baya (大全套）",
+          "brand": "RekaVape",
+          "url": "https://beast-8888.myshopify.com/products/rekavape-baya-rta%E5%A4%A7%E5%85%A8%E5%A5%97"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "RekaVape BY-KA V9 RTA Kit 22mm, 316SS, 1.2/1.4/1.7mm Air Pins",
@@ -1525,7 +1558,17 @@
           "available": true
         }
       ],
-      "id": "a4ae91341cbfa6a09fee"
+      "id": "5a104ed5154780849c75",
+      "familyKey": "RTA|CLONE|by ka v9 1 2 1 4 air pins",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "RekaVape BY-KA V9 , , 1.2/1.4/ Air Pins",
+          "brand": "RekaVape",
+          "url": "https://beast-8888.myshopify.com/products/rekavape-by-ka-v9-rta-kit-22mm-316ss-1-2-1-4-1-7mm-air-pins"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "SXK Mea Culpa MTL RTA 天井3（大全套）",
@@ -1568,7 +1611,17 @@
           "available": true
         }
       ],
-      "id": "ad9ea7c0364b2cd8f4ec"
+      "id": "5505be8b394f58c1adf9",
+      "familyKey": "RTA|CLONE|mea culpa 3",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "SXK Mea Culpa 天井3（大全套）",
+          "brand": "SXK",
+          "url": "https://beast-8888.myshopify.com/products/sxk-mea-culpa-mtl-rta-%E5%A4%A9%E4%BA%953"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "SXK Unitank V2 RBA套膜 RTA",
@@ -1611,7 +1664,17 @@
           "available": true
         }
       ],
-      "id": "44c94a2d152cc15076a9"
+      "id": "825225ba01eb09383c94",
+      "familyKey": "RTA|CLONE|unitank v2",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "SXK Unitank V2 套膜",
+          "brand": "SXK",
+          "url": "https://beast-8888.myshopify.com/products/sxk-unitank-v2-rba%E5%A5%97%E8%86%9C-rta"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Radiator MTL RTA 散熱器 22mm 4ml",
@@ -1654,7 +1717,17 @@
           "available": true
         }
       ],
-      "id": "6a4f4674324b2a38e9e2"
+      "id": "952b55a9b7d168127c07",
+      "familyKey": "RTA|CLONE|radiator",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "BEAST Radiator 散熱器",
+          "brand": "BEAST",
+          "url": "https://beast-8888.myshopify.com/products/radiator-mtl-rta-%E6%95%A3%E7%86%B1%E5%99%A8-22mm-4ml"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Geekvape Kit Aegis Legend 5 Z Subohm Tank 5",
@@ -1695,10 +1768,20 @@
           "observedAt": "2026-09-04T13:46:07.825Z"
         }
       ],
-      "id": "151744b6747a4b142955"
+      "id": "9e2216b1a377694620fc",
+      "familyKey": "MODURI|AUTHENTIC|geekvape|aegis legend 5 z subohm 5",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Geekvape INFO BATCH : Aegis Legend 5 Z Subohm 5",
+          "brand": "Geekvape",
+          "url": "https://www.vapoteurs.net/info-batch-kit-aegis-legend-5-z-subohm-tank-5-geekvape/"
+        }
+      ],
+      "variantCount": 1
     },
     {
-      "id": "43e0ad6eb30809b7ff63",
+      "id": "1352f0ff202ef5d8d7d7",
       "productName": "SvoeMesto Kayfun Rebuildable Atomisers (RTA)",
       "brand": "SvoëMesto",
       "category": "RTA",
@@ -1729,10 +1812,20 @@
       "stageEvidenceAt": "2026-08-28T23:36:00.000Z",
       "confidenceTier": "public-signal",
       "signalKind": "dated-public-signal",
-      "firstPublicEvidenceAt": "2026-08-28T23:36:00.000Z"
+      "firstPublicEvidenceAt": "2026-08-28T23:36:00.000Z",
+      "familyKey": "RTA|AUTHENTIC|svoemesto|kayfun atomisers",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "SvoëMesto Kayfun Atomisers ( )",
+          "brand": "SvoëMesto",
+          "url": "https://www.cremedevape.com/SvoeMesto"
+        }
+      ],
+      "variantCount": 1
     },
     {
-      "id": "8d1e4e6ba3fee9256e06",
+      "id": "2bda5d8dbb1e8bf80643",
       "productName": "SXK APEX Style Boro Box Mod Black",
       "brand": "SXK",
       "category": "MODURI",
@@ -1763,7 +1856,17 @@
       "stageEvidenceAt": "2026-08-28T08:34:00.000Z",
       "confidenceTier": "public-signal",
       "signalKind": "dated-public-signal",
-      "firstPublicEvidenceAt": "2026-08-28T08:34:00.000Z"
+      "firstPublicEvidenceAt": "2026-08-28T08:34:00.000Z",
+      "familyKey": "MODURI|CLONE|apex boro",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "SXK APEX Boro - 3FVape.com",
+          "brand": "SXK",
+          "url": "https://www.3fvape.com/vv-vw-mod/66917-sxk-apex-style-boro-box-mod-black-vw-560w-1-x-18650-compatible-with-bb-billet-boro-rba-tank.html"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Eleaf iStick XC100 Vape Mod",
@@ -1804,7 +1907,17 @@
           "observedAt": "2026-09-04T13:46:08.985Z"
         }
       ],
-      "id": "d3addce032414d7ec81b"
+      "id": "da7fb44373b1be55f815",
+      "familyKey": "MODURI|AUTHENTIC|eleaf|istick xc100 mod",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Eleaf iStick XC100 Mod Review",
+          "brand": "Eleaf",
+          "url": "https://www.smoketastic.com/eleaf-istick-xc100-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Reload Squonk Mod Dual 18650",
@@ -1859,9 +1972,24 @@
           "collector": "known-history"
         }
       ],
-      "id": "d1d1de4cbaa0993b4d69",
+      "id": "94b7ab4815523dad9275",
       "knownBeforeWindowAt": "2019-01-01T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://www.health.belgium.be/sites/default/files/uploads/fields/fpshealth_theme_file/euceg_be_negativelist_251.pdf"
+      "knownBeforeWindowSource": "https://www.health.belgium.be/sites/default/files/uploads/fields/fpshealth_theme_file/euceg_be_negativelist_251.pdf",
+      "familyKey": "MODURI|AUTHENTIC|reload vapor|reload squonk mod dual 18650",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Reload Vapor Reload",
+          "brand": "Reload Vapor",
+          "url": "https://vaping101.co.uk/products/reload-squonk-mod"
+        },
+        {
+          "productName": "Reload Vapor Regulatory product identifier 04044-19-00005",
+          "brand": "Reload Vapor",
+          "url": "https://www.health.belgium.be/sites/default/files/uploads/fields/fpshealth_theme_file/euceg_be_negativelist_251.pdf"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "Blaze Organic Wicking Cotton",
@@ -1904,7 +2032,17 @@
           "available": true
         }
       ],
-      "id": "ba600c9aa1445d76e3a1"
+      "id": "e92682b5c7b25be0ed92",
+      "familyKey": "ACCESORII|AUTHENTIC|thunderhead creations|blaze organic wicking cotton",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "ThunderHead Creations Blaze Organic Wicking Cotton",
+          "brand": "ThunderHead Creations",
+          "url": "https://thunderheadcreations.com/products/blaze-organic-wicking-cotton"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "004-ZOE SBS BF60",
@@ -1945,7 +2083,17 @@
           "observedAt": "2026-09-04T13:46:09.411Z"
         }
       ],
-      "id": "065312b606a221173190"
+      "id": "6a3ecb572780cc14d565",
+      "familyKey": "MODURI|AUTHENTIC|fakirs mods|004 zoe bf60",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Fakirs Mods 004-ZOE BF60",
+          "brand": "Fakirs Mods",
+          "url": "https://fakirsmods.com/products/mods/004-zoe-sbs-bf60/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "MQ PLUS SX Mini Yihi 100W Box Mod",
@@ -1988,7 +2136,17 @@
           "available": true
         }
       ],
-      "id": "8af874c5644573992df8"
+      "id": "75036f909e1d9c768022",
+      "familyKey": "MODURI|AUTHENTIC|yihi|mq plus sx mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "YiHi MQ PLUS SX Mini",
+          "brand": "YiHi",
+          "url": "https://thevapinggentlemen.club/products/mq-plus-sx-mini-yihi-100w-box-mod-1"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Eleaf iStick X40",
@@ -2029,7 +2187,17 @@
           "observedAt": "2026-09-04T13:46:09.026Z"
         }
       ],
-      "id": "83dec5c9fc43b2abb25b"
+      "id": "ce013bbcd55a8b93cd3a",
+      "familyKey": "MODURI|AUTHENTIC|eleaf|istick x40",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Eleaf iStick X40 Review",
+          "brand": "Eleaf",
+          "url": "https://www.smoketastic.com/eleaf-istick-x40-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Rayden 220 Limited Edition Box Mod by BD Vape",
@@ -2072,7 +2240,17 @@
           "available": null
         }
       ],
-      "id": "80a1593a234601245c8d"
+      "id": "a11b81240958a2d30bd6",
+      "familyKey": "MODURI|AUTHENTIC|bd vape|rayden 220",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "BD Vape Rayden 220",
+          "brand": "BD Vape",
+          "url": "https://thundercloudofficial.com/product/rayden-220-limited-edition-box-mod/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "MechVape x Nitrous Pocket 80W Box Mod",
@@ -2127,9 +2305,24 @@
           "collector": "known-history"
         }
       ],
-      "id": "c4b1deb5a1495d5f8fba",
+      "id": "405fe64b4f93a8425b83",
       "knownBeforeWindowAt": "2026-07-30T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://plaza.rakuten.co.jp/vapeaction/diary/202607300000/"
+      "knownBeforeWindowSource": "https://plaza.rakuten.co.jp/vapeaction/diary/202607300000/",
+      "familyKey": "MODURI|AUTHENTIC|mechvape|nitrous pocket",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "MechVape Nitrous Pocket",
+          "brand": "MechVape",
+          "url": "https://vaping101.co.uk/products/mechvape-x-nitrous-pocket-80w-box-mod"
+        },
+        {
+          "productName": "MechVape Dated product presentation",
+          "brand": "MechVape",
+          "url": "https://plaza.rakuten.co.jp/vapeaction/diary/202607300000/"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "Voopoo DRAG 6",
@@ -2187,7 +2380,22 @@
           "observedAt": "2026-09-04T13:46:08.673Z"
         }
       ],
-      "id": "4bf85a9e4e25d472a04e"
+      "id": "f821a2b8fe011fb002da",
+      "familyKey": "MODURI|AUTHENTIC|voopoo|drag 6",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo DRAG H40 Pro vs DRAG 6: The Ultimate Mod vs Mod Comparison - igeekphone.com",
+          "brand": "Voopoo",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBVT0VFS3kwZU9MZGZIaU4wUXFSNWFEMDI3ODFVeGlGRXM5VXY1NjRKSGdVaGphNEFjQ2RzRXV4ZHZiX25vOVlldlpSbmNEV1dLUkRSU21vTGNBcU5XOFlTMFlsU0x0OG51V2l3VzhnZHBBR1N2SFhnZ3dSNGEwZkE?oc=5"
+        },
+        {
+          "productName": "Voopoo DRAG H40 Pro vs DRAG 6: The Ultimate Mod vs Mod Comparison",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-drag-h40-pro-vs-drag-6-quick-comparison/"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "Geekvape Aegis Mini 5 Kit",
@@ -2228,7 +2436,17 @@
           "observedAt": "2026-09-04T13:46:08.144Z"
         }
       ],
-      "id": "d4ea4bab38bbb3757fc1"
+      "id": "879a2a420643074589ed",
+      "familyKey": "MODURI|AUTHENTIC|geekvape|aegis mini 5",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Geekvape Aegis Mini 5 Review: Compact, Rugged",
+          "brand": "Geekvape",
+          "url": "https://www.blacknote.com/blog/geekvape-aegis-mini-5-kit-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "AN RTA par Thunder Cloud",
@@ -2269,7 +2487,17 @@
           "observedAt": "2026-09-04T13:46:09.342Z"
         }
       ],
-      "id": "e555e5256007c8b0f023"
+      "id": "7611b11db0bac845fa9a",
+      "familyKey": "RTA|AUTHENTIC|thundercloud|an par",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "ThunderCloud AN par",
+          "brand": "ThunderCloud",
+          "url": "https://www.levapelier.com/an-rta-par-thunder-cloud/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Mechvape Paramour V2 SBS 100W 18650/21700",
@@ -2341,9 +2569,24 @@
           "collector": "known-history"
         }
       ],
-      "id": "7362cde6960480b75104",
+      "id": "a2dd06fa6f1781105b33",
       "knownBeforeWindowAt": "2026-06-01T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://vaping360.com/ko/vape-products/mechvape-paramour-v2/"
+      "knownBeforeWindowSource": "https://vaping360.com/ko/vape-products/mechvape-paramour-v2/",
+      "familyKey": "MODURI|AUTHENTIC|mechvape|paramour v2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "MechVape Paramour V2",
+          "brand": "MechVape",
+          "url": "https://vaping101.co.uk/products/mechvape-paramour-v2-sbs-100w-box-mod"
+        },
+        {
+          "productName": "MechVape Product database release month",
+          "brand": "MechVape",
+          "url": "https://vaping360.com/ko/vape-products/mechvape-paramour-v2/"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "Vaporesso Armour Ultra",
@@ -2384,7 +2627,17 @@
           "observedAt": "2026-09-04T13:46:07.913Z"
         }
       ],
-      "id": "e42f2fb7147fe73034fe"
+      "id": "fb7ccd15f3c3f27950cc",
+      "familyKey": "MODURI|AUTHENTIC|vaporesso|armour ultra",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso INFO BATCH : Armour Ultra",
+          "brand": "Vaporesso",
+          "url": "https://www.vapoteurs.net/info-batch-vaporesso-armour-ultra/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "SXmini MQ Plus 100W Box Mod",
@@ -2427,7 +2680,17 @@
           "available": true
         }
       ],
-      "id": "923bcfd0dac1182f4970"
+      "id": "283b18ea7a77b749e782",
+      "familyKey": "MODURI|AUTHENTIC|sx mini|sxmini mq plus",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "SX MINI SXmini MQ Plus",
+          "brand": "SX MINI",
+          "url": "https://www.ecigone.co.uk/products/sxmini-mq-plus-100w-box-mod"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "AMIGO Style Boro Mechanical Mod",
@@ -2468,7 +2731,17 @@
           "observedAt": "2026-09-04T13:47:18.227Z"
         }
       ],
-      "id": "f9283bd172e28b8da567"
+      "id": "283a2b2e8d4e72037553",
+      "familyKey": "MODURI|CLONE|amigo boro mod",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "AMIGO Boro Mod",
+          "brand": "",
+          "url": "https://www.3fvape.com/67297-.html"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "CoilTurd An RTA",
@@ -2509,7 +2782,17 @@
           "observedAt": "2026-09-04T13:47:18.227Z"
         }
       ],
-      "id": "7ad3df9a5b50e516c29f"
+      "id": "7c4f32253599c1066712",
+      "familyKey": "RTA|AUTHENTIC|coilturd|an",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "CoilTurd An",
+          "brand": "CoilTurd",
+          "url": "https://www.3fvape.com/73893-.html"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "SXK Prime Minister Style RDL RTA",
@@ -2550,7 +2833,17 @@
           "observedAt": "2026-09-04T13:47:18.227Z"
         }
       ],
-      "id": "5adcff08a02094f0d715"
+      "id": "0b39438a9e6556b7bffe",
+      "familyKey": "RTA|CLONE|prime minister",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "SXK Prime Minister",
+          "brand": "SXK",
+          "url": "https://www.3fvape.com/74096-.html"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "SXK PRC CUDA Mod",
@@ -2591,7 +2884,17 @@
           "observedAt": "2026-09-04T13:47:18.227Z"
         }
       ],
-      "id": "31bfcfd2d59acf5ff9ff"
+      "id": "e8cd8137773cf2332230",
+      "familyKey": "MODURI|CLONE|prc cuda mod",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "SXK PRC CUDA Mod",
+          "brand": "SXK",
+          "url": "https://www.3fvape.com/74193-.html"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "RekaVape Menelaus Polish Style RTA",
@@ -2632,58 +2935,37 @@
           "observedAt": "2026-09-04T13:47:18.227Z"
         }
       ],
-      "id": "e694e95fe9639ddb14df"
+      "id": "de30db6b698378c5ad13",
+      "familyKey": "RTA|CLONE|menelaus",
+      "authenticityState": "CLONE",
+      "variants": [
+        {
+          "productName": "RekaVape Menelaus",
+          "brand": "RekaVape",
+          "url": "https://www.3fvape.com/74256-.html"
+        }
+      ],
+      "variantCount": 1
     }
   ],
   "summary": {
-    "total": 14,
-    "allConcrete": 34,
-    "before": 3,
+    "total": 12,
+    "allConcrete": 32,
+    "before": 1,
     "after": 11,
     "explicitDatedAfter": 11,
     "confirmed": 3,
-    "reported": 11,
+    "reported": 9,
     "publicSignals": 20,
-    "candidatesUnderVerification": 3,
+    "candidatesUnderVerification": 0,
     "categoryEvents": {
-      "RTA": 10,
+      "RTA": 8,
       "ACCESORII": 2,
       "MODURI": 2
     }
   },
   "discoveryContextDays": 180,
-  "verificationQueue": [
-    {
-      "maker": "VOOPOO",
-      "product": "VOOPOO - Vape Mod Kits & Pod Systems",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.elementvape.com/voopoo-tech",
-      "publishedAt": "2026-09-03T18:14:00.000Z"
-    },
-    {
-      "maker": "Eleaf",
-      "product": "Best Ecig Store, Box Mod Manufacturer",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.eleafworld.com/",
-      "publishedAt": "2026-09-04T01:09:00.000Z"
-    },
-    {
-      "maker": "Eleaf",
-      "product": "Eleaf - Vape Mod Kits & Pod Systems",
-      "category": "MODURI",
-      "typology": "single battery",
-      "reason": "noEventOrDate",
-      "channel": "dated-discovery",
-      "url": "https://www.elementvape.com/eleaf",
-      "publishedAt": "2026-09-03T15:36:00.000Z"
-    }
-  ],
+  "verificationQueue": [],
   "snapshotReferenceAt": "2026-09-04T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
 }

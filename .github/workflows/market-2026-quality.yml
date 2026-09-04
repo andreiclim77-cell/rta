@@ -64,6 +64,9 @@ jobs:
             tools/collect-market-hype-retail-campaigns-2026.js \
             tools/backfill-market-hype-product-evidence-2026.js \
             tools/consolidate-market-hype-2026.js \
+            tools/reconcile-market-hype-public-2026.js \
+            tools/market-hype-verification-identity-2026.js \
+            tools/test-market-hype-public-reconcile-2026.js \
             tools/validate-market-hype-pods-2026.js \
             tools/check-market-data-quality-2026.js \
             tools/probe-market-sales-counters-2026.js \
@@ -131,13 +134,13 @@ jobs:
           if(!salesFlow.includes('workflow_run:')||!salesFlow.includes('Market 2026 Daily Sync')||!salesFlow.includes("cron: '30 4 * * *'")||!salesFlow.includes("cron: '30 5 * * *'"))throw new Error('Analysis chained + 07:30 fallback architecture missing');
           if(!validator.includes('status.date!==today'))throw new Error('Daily freshness validator missing');
           for(const token of ['canonicalize-market-sales-products-2026.js','canonicalize-market-demand-products-2026.js','build-market-product-presence-2026.js','augment-market-management-presence-2026.js','probe-market-sales-counters-2026.js'])if(!salesFlow.includes(token))throw new Error('Sales/management pipeline missing '+token);
-          for(const token of ['collect-market-hype-radar-2026.js','collect-market-hype-deep-2026.js','filter-market-hype-evidence-2026.js','collect-market-hype-wide-2026.js','collect-market-hype-products-2026.js','collect-market-hype-vendor-profiles-v2-2026.js','augment-market-hype-preorder-card-events-2026.js','enforce-market-hype-symmetric-window-2026.js','collect-market-hype-pods-2026.js','observe-market-hype-retail-first-seen-2026.js','collect-market-hype-direct-catalogs-2026.js','collect-market-hype-dated-news-2026.js','collect-market-hype-retail-campaigns-2026.js','backfill-market-hype-product-evidence-2026.js','consolidate-market-hype-2026.js'])if(!hypeFlow.includes(token))throw new Error('Hype daily pipeline missing '+token);
+          for(const token of ['collect-market-hype-radar-2026.js','collect-market-hype-deep-2026.js','filter-market-hype-evidence-2026.js','collect-market-hype-wide-2026.js','collect-market-hype-products-2026.js','collect-market-hype-vendor-profiles-v2-2026.js','augment-market-hype-preorder-card-events-2026.js','enforce-market-hype-symmetric-window-2026.js','collect-market-hype-pods-2026.js','observe-market-hype-retail-first-seen-2026.js','collect-market-hype-direct-catalogs-2026.js','collect-market-hype-dated-news-2026.js','collect-market-hype-retail-campaigns-2026.js','backfill-market-hype-product-evidence-2026.js','consolidate-market-hype-2026.js','reconcile-market-hype-public-2026.js'])if(!hypeFlow.includes(token))throw new Error('Hype daily pipeline missing '+token);
           if(!preorder.includes('preorderCardEtaRecovery:true')||!symmetric.includes('symmetric30DayEventWindow:true')||!symmetric.includes('futureEtaMayExceed30Days:false'))throw new Error('Exact ±30d / preorder recovery Hype contract missing');
-          const essential=['/assets/market-access-policy.js?v=2','/assets/market-loading-guard.js?v=15','/assets/market-ui-recovery.js?v=9','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=11','/assets/market-view-switcher.js?v=8'];
+          const essential=['/assets/market-access-policy.js?v=2','/assets/market-loading-guard.js?v=15','/assets/market-ui-recovery.js?v=9','/assets/market-management-v2.js?v=4','/assets/market-analysis-synthesis.js?v=1','/assets/market-hype-ui.js?v=12','/assets/market-view-switcher.js?v=8'];
           for(const asset of essential)if(!loader.includes(asset)||!sw.includes(asset))throw new Error('Loader/cache mismatch '+asset);
-          if(!sw.includes('/assets/market-source-info.js?v=3')||!sw.includes('/assets/market-hype-ui.css?v=9')||!sw.includes('ghid-rta-static-v41-hype-clear-language'))throw new Error('Final Market/Hype cache manifest mismatch');
+          if(!sw.includes('/assets/market-source-info.js?v=3')||!sw.includes('/assets/market-hype-ui.css?v=10')||!sw.includes('ghid-rta-static-v42-hype-undated-signals'))throw new Error('Final Market/Hype cache manifest mismatch');
           if(!sw.includes('/data/market-hype-products-2026.json')||!sw.includes('/data/market-hype-pods-2026.json'))throw new Error('Concrete Hype data are not network-first');
-          if(!guard.includes("key:'hypeProducts'")||!guard.includes("key:'hypePods'")||!guard.includes('catalog-published-at')||!guard.includes('validAfterProduct')||!recovery.includes('market-hype-ui.js?v=11'))throw new Error('Atomic/recovery Hype contract incomplete');
+          if(!guard.includes("key:'hypeProducts'")||!guard.includes("key:'hypePods'")||!guard.includes('catalog-published-at')||!guard.includes('validAfterProduct')||!recovery.includes('market-hype-ui.js?v=12'))throw new Error('Atomic/recovery Hype contract incomplete');
           if(!analysis.includes('May be?...')||analysis.includes('Ce cumpăr, ce împing la vânzare și unde mă dezvolt'))throw new Error('Analysis heading regression');
           for(const token of ['data-row','Sfat acum','De ce rezultă asta','Ce mă face prudent','Ce schimbă decizia'])if(!analysis.includes(token))throw new Error('Interactive analysis missing '+token);
           for(const token of ['Top România','Rotație','Sinteză','Management','categoryLeaders','validUnit'])if(!synth.includes(token))throw new Error('Management synthesis missing '+token);

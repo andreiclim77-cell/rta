@@ -36,6 +36,9 @@ on:
       - "tools/collect-market-hype-retail-campaigns-2026.js"
       - "tools/backfill-market-hype-product-evidence-2026.js"
       - "tools/consolidate-market-hype-2026.js"
+      - "tools/reconcile-market-hype-public-2026.js"
+      - "tools/market-hype-verification-identity-2026.js"
+      - "tools/test-market-hype-public-reconcile-2026.js"
       - "tools/validate-market-hype-pods-2026.js"
       - "tools/check-market-data-quality-2026.js"
       - "tools/market-product-canonical-2026.js"
@@ -227,6 +230,10 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/consolidate-market-hype-2026.js --write
 
+      - name: Reconcile final public Hype projections and undated signals
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
+        run: node tools/reconcile-market-hype-public-2026.js --write
+
       - name: Build additive HYPE vNext evidence and event claims
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
         run: node tools/hype-vnext/build-phase1.js
@@ -261,6 +268,9 @@ jobs:
           node --check tools/collect-market-hype-retail-campaigns-2026.js
           node --check tools/backfill-market-hype-product-evidence-2026.js
           node --check tools/consolidate-market-hype-2026.js
+          node --check tools/reconcile-market-hype-public-2026.js
+          node --check tools/market-hype-verification-identity-2026.js
+          node --check tools/test-market-hype-public-reconcile-2026.js
           node --check tools/validate-market-hype-pods-2026.js
           node --check tools/check-market-data-quality-2026.js
           node --check tools/market-product-canonical-2026.js
@@ -280,6 +290,8 @@ jobs:
           NODE
           node tools/validate-market-hype-publish-2026.js
           node tools/validate-market-hype-pods-2026.js
+          node tools/reconcile-market-hype-public-2026.js --check
+          node tools/test-market-hype-public-reconcile-2026.js
           node tools/check-market-data-quality-2026.js
           node tools/hype-vnext/run-benchmark.js
           node tools/hype-vnext/build-phase1.js --check

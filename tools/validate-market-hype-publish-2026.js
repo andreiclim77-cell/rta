@@ -3,7 +3,7 @@
 
 const fs=require('fs');
 const {snapshotReferenceMs,windowAgeHours}=require('./hype-window-reference-2026.js');
-const {canonicalizeProduct}=require('./market-product-canonical-2026.js');
+const {canonicalProductFamily}=require('./market-product-canonical-2026.js');
 const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js');
 
 const json=file=>JSON.parse(fs.readFileSync(file,'utf8'));
@@ -23,7 +23,8 @@ need(Number(radar.hypeWindowDays)===30&&Number(radar.lookbackHours)===720,'Globa
 need(Number(products.schemaVersion)>=28&&products.scope==='GLOBAL RTA + clone RTA'&&Number(products.windowDays)===30&&products.pendingRefresh!==true,'Final RTA/MOD Hype snapshot is invalid');
 need(products.snapshotReferenceAt===refIso,`RTA/MOD snapshot reference mismatch: expected ${refIso}`);
 need(products.truth&&products.truth.productLevelOnly===true&&products.truth.newArrivalIsNotRelease===true&&products.truth.relistingIsNotRelease===true,'Product-level/relisting contract is missing');
-need(products.truth.eventDatesSeparatedFromCoverageDates===true&&products.truth.canonicalCrossSourceDeduplication===true&&products.truth.crossWindowLifecycleDeduplication===true&&products.truth.categoryRevalidatedBeforePublish===true&&products.truth.retailPromotionIsNotRelease===true&&products.truth.confidenceTierNormalizedAtPublish===true,'Final Hype arbitration contract is missing');
+need(products.truth.eventDatesSeparatedFromCoverageDates===true&&products.truth.canonicalCrossSourceDeduplication===true&&products.truth.crossWindowLifecycleDeduplication===true&&products.truth.modelFamilyVariantsGrouped===true&&products.truth.variantEvidencePreserved===true&&products.truth.categoryRevalidatedBeforePublish===true&&products.truth.retailPromotionIsNotRelease===true&&products.truth.confidenceTierNormalizedAtPublish===true,'Final Hype arbitration contract is missing');
+need(products.truth.finalPublicProjectionsReconciled===true&&products.truth.undatedSignalsPreservedInVerificationQueue===true,'Final projection/undated-candidate contract is missing');
 need(products.scan&&products.scan.directCatalogs&&products.scan.datedNews&&products.scan.retailCampaigns,'Final multi-source Hype collectors did not run');
 need((products.products||[]).length>0,'Final RTA/MOD Hype product list is empty');
 
@@ -34,8 +35,10 @@ for(const row of products.products||[]){
   need(['confirmed','reported','public-signal'].includes(row.confidenceTier),`Invalid confidence tier: ${row.productName}`);
   need(Array.isArray(row.sources)&&row.sources.length>0,`Sources missing: ${row.productName}`);
   for(const source of row.sources)need(!banned.test(String(source.host||source.url||'')),`Generic false positive leaked: ${source.host||source.url}`);
-  const identity=row.category+'|'+canonicalizeProduct({product:row.productName,brand:row.brand||''}).key;
+  const identity=canonicalProductFamily(row).key;
   need(!identities.has(identity),`Duplicate product lifecycle: ${row.productName}`);identities.add(identity);
+  need(row.familyKey===identity&&['AUTHENTIC','CLONE'].includes(row.authenticityState),`Product family identity missing: ${row.productName}`);
+  need(Array.isArray(row.variants)&&row.variants.length===Number(row.variantCount)&&row.variantCount>0,`Variant evidence missing: ${row.productName}`);
   const event=Date.parse(row.eventDate);need(Number.isFinite(event),`Event date missing: ${row.productName}`);
   if(row.window==='before')need(Math.abs(event-ref)<=windowMs,`Before event outside 30 days: ${row.productName}`);
   else need(event<=ref&&ref-event<=windowMs,`After event outside 30 days: ${row.productName}`);
@@ -44,6 +47,8 @@ for(const row of products.products||[]){
   if(row.window==='after'&&dated(row))need(allowedAfterDates.has(row.dateConfidence),`Invalid dated after-event confidence: ${row.productName}`);
   if(!dated(row))need(row.confidenceTier==='public-signal'||['dated-public-evidence','dated-retail-campaign','signal-publication'].includes(row.dateConfidence),`Unlabelled public signal: ${row.productName}`);
 }
+need(Number(products.summary&&products.summary.candidatesUnderVerification)===(products.verificationQueue||[]).length,'RTA/MOD verification-queue summary is inconsistent');
+for(const candidate of products.verificationQueue||[]){need(candidate.familyKey&&candidate.productName,'RTA/MOD verification candidate identity is incomplete');need(!identities.has(candidate.familyKey),`Published family leaked into verification queue: ${candidate.productName}`)}
 
 const events=(products.products||[]).filter(dated),signals=(products.products||[]).filter(row=>!dated(row));
 need(Number(products.summary.total)===events.length,'RTA/MOD dated-event summary mismatch');

@@ -7,8 +7,8 @@ const BRAND_ALIASES=[
   [/\bsxk\b/i,'SXK'],[/\byftk\b/i,'YFTK'],[/\bul?ton\b/i,'Ulton'],[/\bkindbright\b/i,'Kindbright'],[/\bshenray\b/i,'ShenRay'],[/\breka\s*vape\b|\brekavape\b/i,'RekaVape'],
   [/\bsvoe?mesto\b|\bsvoemesto\b/i,'SvoëMesto'],[/\bvandy\s*vape\b|\bvandyvape\b/i,'Vandy Vape'],[/\bkhw\s*mods?\b/i,'KHW Mods'],[/\bbp\s*mods?\b/i,'BP Mods'],[/\bambition\s*mods?\b/i,'Ambition Mods'],[/\barcana\s*mods?\b/i,'Arcana Mods'],[/\bennequadro(?:\s*mods?)?\b/i,'Ennequadro Mods'],[/\bcentenary\s*mods?\b/i,'Centenary Mods'],[/\bsteam\s*crave\b/i,'Steam Crave'],[/\bthe\s*vaping\s*gentlemen\s*club\b/i,'The Vaping Gentlemen Club'],[/\bla\s*tabaccheria\b/i,'La Tabaccheria'],[/\bwick\s*n\s*vape\b/i,'Wick N Vape'],[/\bgeek\s*vape\b|\bgeekvape\b/i,'Geekvape'],[/\blost\s*vape\b/i,'Lost Vape'],[/\byacht\s*vape\b|\byachtvape\b/i,'Yachtvape'],[/\bvape\s*fly\b|\bvapefly\b/i,'Vapefly'],[/\bfour\s*one\s*five\b|\b415\s*rta\b/i,'Four One Five'],[/\btaifun\b/i,'Taifun'],[/\bauguse\b/i,'Auguse'],[/\baspire\b/i,'Aspire'],[/\bcthulhu\b/i,'Cthulhu'],[/\bhellvape\b/i,'Hellvape'],[/\binnokin\b/i,'Innokin'],[/\bvoopoo\b/i,'Voopoo'],[/\bwotofo\b/i,'Wotofo'],[/\bdicodes\b/i,'Dicodes'],[/\byihi\b/i,'YiHi'],[/\be[h]?pro\b/i,'EHPro']
 ];
-const COLOR_RE=/\b(?:black|matte black|gunmetal|silver|ss|stainless steel|steel|rainbow|purple|blue|red|green|gold|grey|gray|white|brushed|polished|dlc|ice blue|dark blue|carbon black|matte|satin)\b/gi;
-const PRODUCT_DETAIL_SUFFIX_RE=/\s+-\s+(?=(?:black|matte|gunmetal|silver|ss\b|stainless|steel|rainbow|purple|blue|red|green|gold|gr[ae]y|white|brushed|polished|dlc|316(?:l|ss)?\b|304(?:l|ss)?\b|pei\b|pctg\b|ultem\b|glass\b|resin\b|titanium\b))[\s\S]*$/i;
+const COLOR_RE=/\b(?:black|matte black|gunmetal|silver|ss|stainless steel|steel|rainbow|purple|blue|red|green|gold|grey|gray|white|brushed|polish|polished|dlc|ice blue|dark blue|carbon black|matte|satin|316l?|316ss|304l?|304ss|pei|pctg|ultem|glass|resin|titanium)\b/gi;
+const PRODUCT_DETAIL_SUFFIX_RE=/\s+-\s+(?=(?:black|matte|gunmetal|silver|ss\b|stainless|steel|rainbow|purple|blue|red|green|gold|gr[ae]y|white|brushed|polish|polished|dlc|316(?:l|ss)?\b|304(?:l|ss)?\b|pei\b|pctg\b|ultem\b|glass\b|resin\b|titanium\b))[\s\S]*$/i;
 function decode(v){
   return String(v||'')
     .replace(/&#(\d+);/g,(_,n)=>{try{return String.fromCodePoint(Number(n))}catch(e){return' '}})
@@ -24,5 +24,20 @@ function canonicalBrand(input,raw){const explicit=String(input||'').trim(),hay=d
 function stripBrand(text,brand){if(!brand)return text;const bt=norm(brand).split(' ').filter(Boolean),tokens=String(text||'').split(/\s+/);return tokens.filter(tok=>!bt.includes(norm(tok))).join(' ')}
 function cleanModel(raw,brand){let s=decode(raw).replace(/[–—]/g,' - ').replace(PRODUCT_DETAIL_SUFFIX_RE,' ').replace(/\b\d+(?:[.,]\d+)?\s*out of 5\s*\(\d+\)/gi,' ').replace(/\bSKU\s*:\s*[^,;|]+/gi,' ').replace(/\b(?:zero\s+nicotine\s+(?:vape\s+)?bundle|vape\s+bundle|limited\s+edition)\b/gi,' ').replace(/\b(?:atomizor|atomizer|atomiser|clearomizor|clearomizer|rebuildable|tank)\b/gi,' ').replace(/\b(?:RTA|RBA|RDTA|RDA|MTL|RDL|DL)\b/gi,' ').replace(/\b(?:style|clone|authentic|vape|regulated|mechanical|side\s*by\s*side|box\s*mod|sbs\s*mod|squonk\s*mod|pod\s*mod\s*kit|pod\s*system\s*kit|pod\s*system|pod\s*vape\s*kit|pod\s*kit|starter\s*kit|pre[- ]?filled|kit|pod|sbs)\b/gi,' ').replace(/\b\d+(?:[.,]\d+)?\s*(?:ml|mm|w|mah)\b/gi,' ').replace(/\b(?:vw|tc)\b/gi,' ').replace(/\b(?:single|dual)\s+(?:18650|21700)\b/gi,' ').replace(/\b(?:18650|21700)(?:\s*\/\s*(?:18650|21700))?\b/gi,' ').replace(COLOR_RE,' ');s=stripBrand(s,brand);for(const entry of BRAND_ALIASES)s=s.replace(entry[0],' ');s=s.replace(/^\s*(?:x|by)\s+/i,' ').replace(/\s+(?:x|by)\s*$/i,' ');s=s.split(/\s[!|]\s|\s+-\s+(?=(?:poate|unul|una|produs|ideal|sku)\b)/i)[0];s=s.replace(/\bV\s*(\d+)\b/gi,'V$1').replace(/\bV\.\s*(\d+)\b/gi,'V$1').replace(/\s+/g,' ').replace(/^[\s,;:\-]+|[\s,;:\-]+$/g,'').trim();return s}
 function canonicalizeProduct(row){const raw=String(row&&row.product||row&&row.name||'').trim();const brand=canonicalBrand(row&&row.brand,raw);let model=cleanModel(raw,brand);if(!model)model=raw;const key=(norm(brand)?norm(brand)+'|':'')+norm(model);const label=(brand?brand+' ':'')+model;return{key,label:label.replace(/\s+/g,' ').trim(),brand,model,rawProduct:raw}}
+const CLONE_BRANDS=new Set(['sxk','yftk','yfty','ulton','sjmy','kindbright','shenray','coppervape','vazzling','vapeasy','tobeco','wejoytech','jftk','liefeng','rekavape']);
+function productAuthenticity(row){
+  const raw=String(row&&row.product||row&&row.name||row&&row.productName||''),brand=canonicalBrand(row&&row.brand,raw),sources=row&&row.sources||[];
+  if(CLONE_BRANDS.has(norm(brand).replace(/\s+/g,''))||/\b(?:style|styled|clone)\b/i.test(raw)||sources.some(source=>/^clone-|clone/i.test(String(source&&source.sourceType||''))))return'CLONE';
+  return'AUTHENTIC';
+}
+function canonicalProductFamily(row){
+  const raw=String(row&&row.product||row&&row.name||row&&row.productName||''),category=String(row&&row.category||'UNKNOWN'),authenticityState=productAuthenticity(row);
+  const exact=canonicalizeProduct({product:raw,brand:row&&row.brand||''});
+  const unbranded=canonicalizeProduct({product:raw,brand:''});
+  const model=(authenticityState==='CLONE'?unbranded.model:exact.model)||raw;
+  const brand=authenticityState==='CLONE'?'':exact.brand;
+  const key=[category,authenticityState,norm(brand),norm(model)].filter(Boolean).join('|');
+  return{key,category,authenticityState,brand,model,label:[brand,model].filter(Boolean).join(' ').trim()};
+}
 function retailerOperatorMap(reg){const m=new Map();for(const r of reg&&reg.retailers||[])m.set(r.id,r.operatorId||r.id);return m}
-module.exports={norm,decode,canonicalBrand,canonicalizeProduct,retailerOperatorMap};
+module.exports={norm,decode,canonicalBrand,canonicalizeProduct,canonicalProductFamily,productAuthenticity,retailerOperatorMap};
