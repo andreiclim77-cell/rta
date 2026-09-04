@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-09-04T13:43:37.705Z",
+  "generatedAt": "2026-09-04T14:17:25.126Z",
   "lookbackHours": 720,
   "cacheMaxHours": 24,
   "pendingRefresh": false,
@@ -35,7 +35,10 @@
     "releaseObservedTruthful": true,
     "finalCategoryAnchorValidated": true,
     "dailyWindowAnchoredAt0600Bucharest": true,
-    "symmetric30DayEventWindow": true
+    "symmetric30DayEventWindow": true,
+    "finalPublicProjectionsReconciled": true,
+    "modelFamilyVariantsGrouped": true,
+    "undatedSignalsPreservedInVerificationQueue": true
   },
   "sourceStatus": {
     "queriesRun": 194,
@@ -256,129 +259,42 @@
       }
     ],
     "vendorEventsV2": 6,
-    "finalConcreteProducts": 6,
-    "finalBeforeProducts": 6,
-    "finalAfterProducts": 0,
-    "upstreamProductEvents": 5
+    "finalConcreteProducts": 32,
+    "finalBeforeProducts": 4,
+    "finalAfterProducts": 28,
+    "upstreamProductEvents": 5,
+    "finalDatedEvents": 12,
+    "finalPublicSignals": 20,
+    "finalUndatedCandidates": 0
   },
   "categories": {
     "RTA": [
       {
         "kind": "product",
-        "eventId": "27fee9f55002cf51752c",
+        "eventId": "f67662bde75faccc4bdc",
+        "familyKey": "RTA|CLONE|ghost ring",
         "category": "RTA",
         "typology": "RDL single",
-        "mentions30d": 1,
-        "sourceTypeCount": 0,
-        "newestSignalHours": 0,
+        "mentions30d": 5,
+        "sourceTypeCount": 1,
+        "newestSignalHours": 621,
         "maturityStage": "IMMINENT",
         "maturityLabel": "ETA / precomandă",
-        "confidence": 37,
+        "confidence": 86,
         "productDetailAvailable": true,
         "decision": {
           "code": "WATCH",
           "label": "URMĂREȘTE",
-          "reason": "Eveniment datat explicit pe pagina produsului."
-        }
-      },
-      {
-        "kind": "product",
-        "eventId": "651f4ba82bf0a16deb3a",
-        "category": "RTA",
-        "typology": "RDL single",
-        "mentions30d": 2,
-        "sourceTypeCount": 0,
-        "newestSignalHours": 0,
-        "maturityStage": "IMMINENT",
-        "maturityLabel": "ETA / precomandă",
-        "confidence": 44,
-        "productDetailAvailable": true,
-        "decision": {
-          "code": "WATCH",
-          "label": "URMĂREȘTE",
-          "reason": "Eveniment datat explicit pe pagina produsului."
-        }
-      },
-      {
-        "kind": "product",
-        "eventId": "a03d17a96eb746635edf",
-        "category": "RTA",
-        "typology": "RDL single",
-        "mentions30d": 2,
-        "sourceTypeCount": 0,
-        "newestSignalHours": 0,
-        "maturityStage": "IMMINENT",
-        "maturityLabel": "ETA / precomandă",
-        "confidence": 44,
-        "productDetailAvailable": true,
-        "decision": {
-          "code": "WATCH",
-          "label": "URMĂREȘTE",
-          "reason": "Eveniment datat explicit pe pagina produsului."
-        }
-      },
-      {
-        "kind": "product",
-        "eventId": "95296bc0c565530e6e5e",
-        "category": "RTA",
-        "typology": "MTL single",
-        "mentions30d": 1,
-        "sourceTypeCount": 0,
-        "newestSignalHours": 0,
-        "maturityStage": "BATCH",
-        "maturityLabel": "batch viitor",
-        "confidence": 37,
-        "productDetailAvailable": true,
-        "decision": {
-          "code": "WATCH",
-          "label": "URMĂREȘTE",
-          "reason": "Eveniment datat explicit pe pagina produsului."
-        }
-      },
-      {
-        "kind": "product",
-        "eventId": "af25fb652432f87738e1",
-        "category": "RTA",
-        "typology": "RDL single",
-        "mentions30d": 1,
-        "sourceTypeCount": 0,
-        "newestSignalHours": 147.4,
-        "maturityStage": "SIGNAL",
-        "maturityLabel": "teaser",
-        "confidence": 37,
-        "productDetailAvailable": true,
-        "decision": {
-          "code": "WATCH",
-          "label": "URMĂREȘTE",
-          "reason": "Semnal concret, datat, din surse globale relevante."
+          "reason": "Eveniment datat; este necesară încă o confirmare independentă pentru o achiziție serioasă."
         }
       }
     ],
-    "MODURI": [
-      {
-        "kind": "product",
-        "eventId": "9950bda0cda1a01dd8f0",
-        "category": "MODURI",
-        "typology": "single battery",
-        "mentions30d": 1,
-        "sourceTypeCount": 0,
-        "newestSignalHours": 162.43333333333334,
-        "maturityStage": "SIGNAL",
-        "maturityLabel": "teaser",
-        "confidence": 37,
-        "productDetailAvailable": true,
-        "decision": {
-          "code": "WATCH",
-          "label": "URMĂREȘTE",
-          "reason": "Semnal concret, datat, din surse globale relevante."
-        }
-      }
-    ],
+    "MODURI": [],
     "ACCESORII": []
   },
   "summary": {
     "RTA": {
-      "signals": 1,
+      "signals": 5,
       "events": 1,
       "buyHype": 0,
       "buyTrend": 0,
@@ -388,13 +304,13 @@
       "stop": 0
     },
     "MODURI": {
-      "signals": 1,
-      "events": 1,
+      "signals": 0,
+      "events": 0,
       "buyHype": 0,
       "buyTrend": 0,
       "prepareAccessories": 0,
       "prepare": 0,
-      "watch": 1,
+      "watch": 0,
       "stop": 0
     },
     "ACCESORII": {
@@ -501,5 +417,6 @@
   ],
   "hypeWindowDays": 30,
   "snapshotReferenceAt": "2026-09-04T03:00:00.000Z",
-  "dailyWindowTimezone": "Europe/Bucharest"
+  "dailyWindowTimezone": "Europe/Bucharest",
+  "verificationQueue": []
 }

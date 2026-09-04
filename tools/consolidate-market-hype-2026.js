@@ -4,7 +4,7 @@
 const fs=require('fs');
 const crypto=require('crypto');
 const {snapshotReferenceMs}=require('./hype-window-reference-2026.js');
-const {canonicalizeProduct,norm}=require('./market-product-canonical-2026.js');
+const {canonicalizeProduct,canonicalProductFamily,norm}=require('./market-product-canonical-2026.js');
 const {classifyPodProduct}=require('./market-pod-classifier-2026.js');
 const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js');
 
@@ -26,9 +26,16 @@ function ms(value){const parsed=Date.parse(String(value||''));return Number.isFi
 function eventRank(row){if(TIER_RANK[row.confidenceTier])return TIER_RANK[row.confidenceTier];return STRONG_DATES.has(row.dateConfidence)?2:1}
 function isEvent(row){return eventRank(row)>=2}
 function inWindow(row){const value=ms(row.eventDate);if(value==null)return false;if(row.window==='before')return Math.abs(value-REF)<=WINDOW_DAYS*DAY;return row.window==='after'&&value<=REF&&REF-value<=WINDOW_DAYS*DAY}
-function key(row){const canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''});return[String(row.category||''),canonical.key].join('|')}
+function key(row){return canonicalProductFamily(row).key}
 function betterName(a,b,brand){function score(value){const text=String(value||'').trim();let result=text.length;if(!text)result+=1000;if(brand&&!norm(text).includes(norm(brand)))result+=80;if(/\b(?:buy|cheap|sale|deal)\b/i.test(text))result+=50;return result}return score(b)<score(a)?b:a}
 function sourceKey(source){return String(source.url||'')+'|'+String(source.eventDate||'')+'|'+String(source.collector||source.sourceType||'')}
+function variantRecord(row){const canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''});return{productName:canonical.label||row.productName||'',brand:canonical.brand||row.brand||'',url:(row.sources||[]).map(source=>source.url).find(Boolean)||null}}
+function variantsFor(row){
+  if(Array.isArray(row.variants)&&row.variants.length)return row.variants;
+  const sources=(row.sources||[]).filter(source=>source&&source.title).map(function(source){const canonical=canonicalizeProduct({product:source.title,brand:''});return{productName:canonical.label||source.title,brand:canonical.brand||row.brand||'',url:source.url||null}});
+  return sources.length?sources:[variantRecord(row)];
+}
+function mergeVariants(rows){const map=new Map();for(const row of rows){if(!row||!row.productName)continue;const canonical=canonicalizeProduct({product:row.productName,brand:row.brand||''}),k=canonical.key||norm(row.productName);if(!map.has(k))map.set(k,{...row,productName:canonical.label||row.productName,brand:canonical.brand||row.brand||''})}return Array.from(map.values())}
 function earliestIso(values){const parsed=values.map(ms).filter(function(value){return value!=null});return parsed.length?new Date(Math.min(...parsed)).toISOString():null}
 const priorHistory=fs.existsSync(HISTORY_FILE)?read(HISTORY_FILE):{entries:[]};
 const priorByKey=new Map((priorHistory.entries||[]).map(function(entry){return[key(entry),entry]}));
@@ -107,6 +114,9 @@ function mergeRows(current,incoming){
   merged.stageEvidenceAt=dominant.stageEvidenceAt||dominant.eventDate;
   merged.eventDate=dominant.eventDate;
   merged.lifecycleEvidence=unique([current.window,current.stage,incoming.window,incoming.stage]);
+  merged.variants=mergeVariants(variantsFor(current).concat(variantsFor(incoming)));
+  merged.variantCount=merged.variants.length;
+  const family=canonicalProductFamily(merged);merged.familyKey=family.key;merged.authenticityState=family.authenticityState;
   merged.ageHours=Number((Math.abs(REF-ms(merged.eventDate))/36e5).toFixed(1));
   return merged;
 }
@@ -125,9 +135,9 @@ function consolidate(doc,file){
   const isPodFile=/pods/.test(file);
   const grouped=new Map();
   for(const input of doc.products||[]){const row=applyRetailEvidenceGate(applyPriorHistory(normalizeFromEvidence(input)));if(!row||!row.productName||!inWindow(row)||!validTarget(row,isPodFile))continue;const rowKey=key(row),old=grouped.get(rowKey);grouped.set(rowKey,old?mergeRows(old,row):{...row});}
-  const products=Array.from(grouped.entries()).map(function(entry){const row=normalizeConfidenceTier(entry[1]),canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''});row.id=hash(entry[0]);row.brand=canonical.brand||row.brand||'';row.sources=Array.from(new Map((row.sources||[]).map(function(source){return[sourceKey(source),source]})).values());row.sourceCount=row.sources.length;row.eligibleSources=unique(row.sources.filter(function(source){return source.decisionEligible!==false}).map(function(source){return source.sourceType})).length;row.firstPublicEvidenceAt=row.firstPublicEvidenceAt||earliestIso(row.sources.map(function(source){return source.eventDate}))||row.eventDate;row.stageEvidenceAt=row.stageEvidenceAt||row.eventDate;row.ageHours=Number((Math.abs(REF-ms(row.eventDate))/36e5).toFixed(1));return row}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
-  const publishedIdentities=new Set(products.map(function(row){return canonicalizeProduct({product:row.productName||'',brand:row.brand||''}).key})),queueMap=new Map();
-  for(const candidate of Array.isArray(doc.verificationQueue)?doc.verificationQueue:[]){const productName=candidate.productName||candidate.product||'',identity=canonicalizeProduct({product:productName,brand:candidate.brand||''}).key;if(!productName||!identity||publishedIdentities.has(identity)||queueMap.has(identity))continue;queueMap.set(identity,candidate)}
+  const products=Array.from(grouped.entries()).map(function(entry){const row=normalizeConfidenceTier(entry[1]),canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''}),family=canonicalProductFamily(row);row.id=hash(entry[0]);row.brand=canonical.brand||row.brand||'';row.familyKey=family.key;row.authenticityState=family.authenticityState;row.variants=mergeVariants(variantsFor(row));row.variantCount=row.variants.length;row.sources=Array.from(new Map((row.sources||[]).map(function(source){return[sourceKey(source),source]})).values());row.sourceCount=row.sources.length;row.eligibleSources=unique(row.sources.filter(function(source){return source.decisionEligible!==false}).map(function(source){return source.sourceType})).length;row.firstPublicEvidenceAt=row.firstPublicEvidenceAt||earliestIso(row.sources.map(function(source){return source.eventDate}))||row.eventDate;row.stageEvidenceAt=row.stageEvidenceAt||row.eventDate;row.ageHours=Number((Math.abs(REF-ms(row.eventDate))/36e5).toFixed(1));return row}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
+  const publishedIdentities=new Set(products.map(function(row){return canonicalProductFamily(row).key})),queueMap=new Map();
+  for(const candidate of Array.isArray(doc.verificationQueue)?doc.verificationQueue:[]){const productName=candidate.productName||candidate.product||'',identity=canonicalProductFamily({productName,brand:candidate.brand||candidate.maker||'',category:candidate.category||'POD'}).key;if(!productName||!identity||publishedIdentities.has(identity)||queueMap.has(identity))continue;queueMap.set(identity,candidate)}
   const verificationQueue=Array.from(queueMap.values()),events=products.filter(isEvent),signals=products.filter(function(row){return !isEvent(row)}),categories={};for(const row of events)categories[row.category]=(categories[row.category]||0)+1;
   const summary={total:events.length,allConcrete:products.length,before:events.filter(function(row){return row.window==='before'}).length,after:events.filter(function(row){return row.window==='after'}).length,explicitDatedAfter:events.filter(function(row){return row.window==='after'&&STRONG_DATES.has(row.dateConfidence)}).length,confirmed:events.filter(function(row){return row.confidenceTier==='confirmed'}).length,reported:events.filter(function(row){return row.confidenceTier!=='confirmed'}).length,publicSignals:signals.length,candidatesUnderVerification:verificationQueue.length,categoryEvents:categories};
   const scan={...(doc.scan||{})};
@@ -136,7 +146,7 @@ function consolidate(doc,file){
   }else if(!isPodFile){
     scan.categoryCoverage=Object.fromEntries(['RTA','MODURI','ACCESORII'].map(function(category){const categoryProducts=products.filter(function(row){return row.category===category}),categoryEvents=categoryProducts.filter(isEvent);return[category,{monitored:categoryProducts.length,events:categoryEvents.length,signals:categoryProducts.length-categoryEvents.length,queued:verificationQueue.filter(function(item){return item.category===category}).length}]}));
   }
-  return{...doc,schemaVersion:Math.max(30,Number(doc.schemaVersion||0)),generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),pendingRefresh:false,truth:{...(doc.truth||{}),eventDatesSeparatedFromCoverageDates:true,canonicalCrossSourceDeduplication:true,crossWindowLifecycleDeduplication:true,categoryRevalidatedBeforePublish:true,retailPromotionIsNotRelease:true,priorExistenceDemotesRetailRelisting:true,singleRetailerListingNeedsCorroboration:true,confidenceTierNormalizedAtPublish:true,verificationQueueReconciledWithPublishedProducts:true,finalSegmentAndCategoryCoverageReconciled:true},scan,products,verificationQueue,summary};
+  return{...doc,schemaVersion:Math.max(31,Number(doc.schemaVersion||0)),generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),pendingRefresh:false,truth:{...(doc.truth||{}),eventDatesSeparatedFromCoverageDates:true,canonicalCrossSourceDeduplication:true,crossWindowLifecycleDeduplication:true,modelFamilyVariantsGrouped:true,variantEvidencePreserved:true,categoryRevalidatedBeforePublish:true,retailPromotionIsNotRelease:true,priorExistenceDemotesRetailRelisting:true,singleRetailerListingNeedsCorroboration:true,confidenceTierNormalizedAtPublish:true,verificationQueueReconciledWithPublishedProducts:true,finalSegmentAndCategoryCoverageReconciled:true},scan,products,verificationQueue,summary};
 }
 
 for(const file of FILES){const output=consolidate(read(file),file);if(WRITE)save(file,output);console.log(`${file}: ${output.summary.total} dated events, ${output.summary.publicSignals} public signals, ${output.summary.allConcrete} concrete products.`)}

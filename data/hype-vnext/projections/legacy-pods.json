@@ -1,10 +1,10 @@
 {
-  "schemaVersion": 30,
+  "schemaVersion": 31,
   "scopeYear": 2026,
   "scope": "GLOBAL POD SYSTEMS",
   "windowDays": 30,
   "discoveryContextDays": 180,
-  "generatedAt": "2026-09-04T13:47:33.007Z",
+  "generatedAt": "2026-09-04T14:17:25.294Z",
   "snapshotReferenceAt": "2026-09-04T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest",
   "pendingRefresh": false,
@@ -48,7 +48,11 @@
     "singleRetailerListingNeedsCorroboration": true,
     "confidenceTierNormalizedAtPublish": true,
     "verificationQueueReconciledWithPublishedProducts": true,
-    "finalSegmentAndCategoryCoverageReconciled": true
+    "finalSegmentAndCategoryCoverageReconciled": true,
+    "modelFamilyVariantsGrouped": true,
+    "variantEvidencePreserved": true,
+    "finalPublicProjectionsReconciled": true,
+    "undatedSignalsPreservedInVerificationQueue": true
   },
   "scan": {
     "makersConfigured": 60,
@@ -496,292 +500,160 @@
   },
   "verificationQueue": [
     {
-      "brand": "SMOK",
-      "productName": "SMOK - SMOKTech Mods, Pod & Starter Kits",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/smoktech",
-      "publishedAt": "2026-09-02T17:17:00.000Z"
-    },
-    {
-      "brand": "SMOK",
-      "productName": "SMOK | SMOKTech Pens, Mods, and Pod Systems - VaporFi",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.vaporfi.com/vape-brands/smok/",
-      "publishedAt": "2026-09-01T12:11:00.000Z"
+      "brand": "DotMod",
+      "productName": "Dotmod Dotpod Max - Vaping360",
+      "segment": "premium-high-end-aio",
+      "typology": "premium / high-end / AIO",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://vaping360.com/vape-products/dotmod-dotpod-max/",
+      "publishedAt": "2026-09-04T02:35:00.000Z",
+      "familyKey": "POD|AUTHENTIC|dotmod|dotpod max",
+      "firstObservedAt": "2026-08-26T09:05:00.000Z",
+      "lastObservedAt": "2026-09-04T02:35:00.000Z",
+      "sources": [
+        "https://www.elementvape.com/dotmod-dotpod-max-complete-kit",
+        "https://vapesocietysupplies.com/products/dotpod-max/",
+        "https://vaping360.com/vape-products/dotmod-dotpod-max/"
+      ]
     },
     {
       "brand": "Vaporesso",
       "productName": "Vaporesso XROS",
       "segment": "mass-market-open-pod",
       "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
+      "reason": "undatedPublicAnnouncement",
       "url": "https://www.centralvapors.com/vaporesso/",
-      "publishedAt": "2026-09-03T06:39:00.000Z"
-    },
-    {
-      "brand": "Voopoo",
-      "productName": "VOOPOO - Vape Mod Kits & Pod Systems",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/voopoo-tech",
-      "publishedAt": "2026-09-03T18:14:00.000Z"
-    },
-    {
-      "brand": "Uwell",
-      "productName": "UWELL - Vape Pod Systems & Disposables",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/uwell",
-      "publishedAt": "2026-09-04T02:20:00.000Z"
-    },
-    {
-      "brand": "Uwell",
-      "productName": "UWELL | Vape Tanks, Pod Mod Kits & Accessories",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.vaporfi.com/vape-brands/uwell/",
-      "publishedAt": "2026-09-03T03:26:00.000Z"
-    },
-    {
-      "brand": "Uwell",
-      "productName": "UWELL Pre-filled Pod System | KEEP IT REAL",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "sourceNotDecisionEligible",
-      "url": "https://www.uwellpps.com/",
-      "publishedAt": "2026-09-03T10:43:00.000Z"
-    },
-    {
-      "brand": "OXVA",
-      "productName": "OXVA XLIM Pod System, XSLIM, X SLIM Vape",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.oxva.com/pages/xlim-new-color",
-      "publishedAt": "2026-09-03T02:57:00.000Z"
-    },
-    {
-      "brand": "OXVA",
-      "productName": "XLIM PRO 3 丨Pulse System 丨1.05 HD Color Screen 丨 1500mAh Battery 丨3ml Top-fill Pod",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://www.oxva.com/pages/xlim-pro-3",
-      "publishedAt": "2026-09-02T21:57:00.000Z"
-    },
-    {
-      "brand": "OXVA",
-      "productName": "OXVA XLIM PRO 3 30W Vape Pod System – 1500mAh, 3ML",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "noDateOrEvent",
-      "url": "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system",
-      "publishedAt": "2026-09-02T06:40:00.000Z"
-    },
-    {
-      "brand": "Eleaf",
-      "productName": "Eleaf - Vape Mod Kits & Pod Systems",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/eleaf",
-      "publishedAt": "2026-09-03T15:36:00.000Z"
-    },
-    {
-      "brand": "Rincoe",
-      "productName": "Rincoe Jellybox Nano Pod System Starter Kit",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://www.myvaporstore.com/Rincoe-Jellybox-Nano-Pod-System-Starter-Kit-p/rin-jbn10.htm",
-      "publishedAt": "2026-08-16T01:53:00.000Z"
-    },
-    {
-      "brand": "Rincoe",
-      "productName": "Rincoe Jellybox V3 Pod Kit 750mAh - smokstore",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://www.smokstore.com/rincoe-jellybox-v3-pod-kit-750mah.html",
-      "publishedAt": "2026-08-25T23:18:00.000Z"
-    },
-    {
-      "brand": "UPENDS",
-      "productName": "UPOX | OPEN POD SYSTEM",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
-      "reason": "noDateOrEvent",
-      "url": "https://www.upends.com/open-pod-system/upox",
-      "publishedAt": "2026-09-01T03:28:00.000Z"
-    },
-    {
-      "brand": "JUUL Labs",
-      "productName": "Juul Labs’ JUUL2 Platform",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://www.juullabsscience.com/juul2/",
-      "publishedAt": "2026-09-03T06:25:00.000Z"
+      "publishedAt": "2026-09-03T06:39:00.000Z",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros",
+      "firstObservedAt": "2026-09-03T06:39:00.000Z",
+      "lastObservedAt": "2026-09-03T06:39:00.000Z",
+      "sources": [
+        "https://www.centralvapors.com/vaporesso/"
+      ]
     },
     {
       "brand": "JUUL Labs",
       "productName": "JUUL2 Starter Kit | 1.8%",
       "segment": "closed-prefilled-hybrid",
       "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://pricepointny.com/products/juul2-starter-kit-1-8",
-      "publishedAt": "2026-09-02T03:20:00.000Z"
-    },
-    {
-      "brand": "JUUL Labs",
-      "productName": "U.S. Food and Drug Administration Authorizes Juul Labs' Next Generation JUUL2 System",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://www.prnewswire.com/news-releases/us-food-and-drug-administration-authorizes-juul-labs-next-generation-juul2-system-302863088.html",
-      "publishedAt": "2026-08-29T06:59:00.000Z"
-    },
-    {
-      "brand": "JUUL Labs",
-      "productName": "FDA Authorizes Juul2 and Two New Juul Pods in the US",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
+      "reason": "undatedPublicAnnouncement",
       "url": "https://www.vapingpost.com/2026/08/31/fda-authorizes-juul2-new-juul-pods-us/",
-      "publishedAt": "2026-09-02T22:40:00.000Z"
+      "publishedAt": "2026-09-02T22:40:00.000Z",
+      "familyKey": "POD|AUTHENTIC|juul labs|juul2",
+      "firstObservedAt": "2026-09-03T06:25:00.000Z",
+      "lastObservedAt": "2026-09-03T06:25:00.000Z",
+      "sources": [
+        "https://www.juullabsscience.com/juul2/",
+        "https://pricepointny.com/products/juul2-starter-kit-1-8",
+        "https://www.prnewswire.com/news-releases/us-food-and-drug-administration-authorizes-juul-labs-next-generation-juul2-system-302863088.html",
+        "https://www.vapingpost.com/2026/08/31/fda-authorizes-juul2-new-juul-pods-us/"
+      ]
     },
     {
-      "brand": "IQOS",
-      "productName": "Veeva Systems Inc. (VEEV) Stock Price, News, Quote & History - Yahoo Finance",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://finance.yahoo.com/quote/VEEV/",
-      "publishedAt": "2026-09-03T19:54:00.000Z"
+      "brand": "OXVA",
+      "productName": "OXVA XLIM Pod System, XSLIM, X SLIM Vape",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.oxva.com/pages/xlim-new-color",
+      "publishedAt": "2026-09-03T02:57:00.000Z",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim",
+      "firstObservedAt": "2026-09-03T02:57:00.000Z",
+      "lastObservedAt": "2026-09-03T02:57:00.000Z",
+      "sources": [
+        "https://www.oxva.com/pages/xlim-new-color"
+      ]
     },
     {
-      "brand": "IQOS",
-      "productName": "VEEV | Veeva Systems Inc. Cl A Advanced Charts | MarketWatch",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://www.marketwatch.com/investing/Stock/VEEV/charts",
-      "publishedAt": "2026-04-01T15:41:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "Veeva Systems - VEEV - Stock Price Today - Zacks",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://www.zacks.com/stock/quote/VEEV",
-      "publishedAt": "2026-09-04T03:18:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "VEEV Stock Quote Price and Forecast | CNN",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://www.cnn.com/markets/stocks/VEEV",
-      "publishedAt": "2026-04-10T18:51:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "Veeva Systems Inc. (VEEV) Company Profile & Facts - Yahoo Finance",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://finance.yahoo.com/quote/VEEV/profile/",
-      "publishedAt": "2026-09-04T00:19:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "Veeva Systems Inc (VEEV) Stock Price & News - Google Finance",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://www.google.com/finance/quote/VEEV:NYSE",
-      "publishedAt": "2026-09-04T04:22:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "Veeva Systems Inc. (VEEV) Latest Stock News | Seeking Alpha",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://seekingalpha.com/symbol/VEEV/news",
-      "publishedAt": "2026-05-14T20:41:00.000Z"
-    },
-    {
-      "brand": "IQOS",
-      "productName": "VEEV - Veeva Systems Inc. - Seeking Alpha",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "noDateOrEvent",
-      "url": "https://seekingalpha.com/symbol/VEEV",
-      "publishedAt": "2025-06-24T11:13:00.000Z"
-    },
-    {
-      "brand": "DotMod",
-      "productName": "dotmod DotPod MAX Complete Kit",
-      "segment": "premium-high-end-aio",
-      "typology": "premium / high-end / AIO",
-      "reason": "noDateOrEvent",
-      "url": "https://www.elementvape.com/dotmod-dotpod-max-complete-kit",
-      "publishedAt": "2026-08-26T09:05:00.000Z"
-    },
-    {
-      "brand": "DotMod",
-      "productName": "dotMod dotPod Max 60W Pod System (Tank & Pod Version)",
-      "segment": "premium-high-end-aio",
-      "typology": "premium / high-end / AIO",
-      "reason": "noDateOrEvent",
-      "url": "https://vapesocietysupplies.com/products/dotpod-max/",
-      "publishedAt": "2026-09-02T10:08:00.000Z"
+      "brand": "OXVA",
+      "productName": "OXVA XLIM PRO 3 30W Vape Pod System – 1500mAh, 3ML",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system",
+      "publishedAt": "2026-09-02T06:40:00.000Z",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim pro 3",
+      "firstObservedAt": "2026-09-02T21:57:00.000Z",
+      "lastObservedAt": "2026-09-02T21:57:00.000Z",
+      "sources": [
+        "https://www.oxva.com/pages/xlim-pro-3",
+        "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system"
+      ]
     },
     {
       "brand": "DotMod",
       "productName": "dotMod dotPod Pro 35W Pod System",
       "segment": "premium-high-end-aio",
       "typology": "premium / high-end / AIO",
-      "reason": "noDateOrEvent",
+      "reason": "undatedPublicAnnouncement",
       "url": "https://vapordna.com/products/dotmod-dotpod-pro-35w-pod-system",
-      "publishedAt": "2026-09-02T16:35:00.000Z"
-    },
-    {
-      "brand": "DotMod",
-      "productName": "dotMod dotPod Nano Pod System (Discontinued)",
-      "segment": "premium-high-end-aio",
-      "typology": "premium / high-end / AIO",
-      "reason": "noDateOrEvent",
-      "url": "https://vapordna.com/products/dotmod-dotpod-nano-pod-system",
-      "publishedAt": "2026-09-02T07:59:00.000Z"
-    },
-    {
-      "brand": "DotMod",
-      "productName": "Dotmod Dotpod Max - Vaping360",
-      "segment": "premium-high-end-aio",
-      "typology": "premium / high-end / AIO",
-      "reason": "noDateOrEvent",
-      "url": "https://vaping360.com/vape-products/dotmod-dotpod-max/",
-      "publishedAt": "2026-09-04T02:35:00.000Z"
+      "publishedAt": "2026-09-02T16:35:00.000Z",
+      "familyKey": "POD|AUTHENTIC|dotmod|dotpod pro",
+      "firstObservedAt": "2026-09-02T16:35:00.000Z",
+      "lastObservedAt": "2026-09-02T16:35:00.000Z",
+      "sources": [
+        "https://vapordna.com/products/dotmod-dotpod-pro-35w-pod-system"
+      ]
     },
     {
       "brand": "LVE",
       "productName": "ORION II PRO | LVE",
       "segment": "premium-high-end-aio",
       "typology": "premium / high-end / AIO",
-      "reason": "noDateOrEvent",
+      "reason": "undatedPublicAnnouncement",
       "url": "https://lvevapor.com/orion-ii-pro/",
-      "publishedAt": "2026-09-02T01:40:00.000Z"
+      "publishedAt": "2026-09-02T01:40:00.000Z",
+      "familyKey": "POD|AUTHENTIC|lve|orion ii pro",
+      "firstObservedAt": "2026-09-02T01:40:00.000Z",
+      "lastObservedAt": "2026-09-02T01:40:00.000Z",
+      "sources": [
+        "https://lvevapor.com/orion-ii-pro/"
+      ]
+    },
+    {
+      "brand": "UPENDS",
+      "productName": "UPOX | OPEN POD SYSTEM",
+      "segment": "mid-tier-regional",
+      "typology": "open-pod / pod-mod regional",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.upends.com/open-pod-system/upox",
+      "publishedAt": "2026-09-01T03:28:00.000Z",
+      "familyKey": "POD|AUTHENTIC|upends|upox",
+      "firstObservedAt": "2026-09-01T03:28:00.000Z",
+      "lastObservedAt": "2026-09-01T03:28:00.000Z",
+      "sources": [
+        "https://www.upends.com/open-pod-system/upox"
+      ]
+    },
+    {
+      "brand": "Rincoe",
+      "productName": "Rincoe Jellybox V3 Pod Kit 750mAh - smokstore",
+      "segment": "mid-tier-regional",
+      "typology": "open-pod / pod-mod regional",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.smokstore.com/rincoe-jellybox-v3-pod-kit-750mah.html",
+      "publishedAt": "2026-08-25T23:18:00.000Z",
+      "familyKey": "POD|AUTHENTIC|rincoe|jellybox v3 smokstore",
+      "firstObservedAt": "2026-08-25T23:18:00.000Z",
+      "lastObservedAt": "2026-08-25T23:18:00.000Z",
+      "sources": [
+        "https://www.smokstore.com/rincoe-jellybox-v3-pod-kit-750mah.html"
+      ]
+    },
+    {
+      "brand": "Rincoe",
+      "productName": "Rincoe Jellybox Nano Pod System Starter Kit",
+      "segment": "mid-tier-regional",
+      "typology": "open-pod / pod-mod regional",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.myvaporstore.com/Rincoe-Jellybox-Nano-Pod-System-Starter-Kit-p/rin-jbn10.htm",
+      "publishedAt": "2026-08-16T01:53:00.000Z",
+      "familyKey": "POD|AUTHENTIC|rincoe|jellybox nano",
+      "firstObservedAt": "2026-08-16T01:53:00.000Z",
+      "lastObservedAt": "2026-08-16T01:53:00.000Z",
+      "sources": [
+        "https://www.myvaporstore.com/Rincoe-Jellybox-Nano-Pod-System-Starter-Kit-p/rin-jbn10.htm"
+      ]
     }
   ],
   "products": [
@@ -826,7 +698,17 @@
           "available": false
         }
       ],
-      "id": "afd822f0b2657fd44055"
+      "id": "e9bdbca038b3fb8ae313",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim pro 4",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA XLIM Pro 4",
+          "brand": "OXVA",
+          "url": "https://store.oxva.com/products/xlim-pro-4"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "XLIM 4",
@@ -869,7 +751,17 @@
           "available": false
         }
       ],
-      "id": "67f8e24965f8e57aa8ff"
+      "id": "3c8ad73b8219cfbba8c4",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim 4",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA XLIM 4",
+          "brand": "OXVA",
+          "url": "https://store.oxva.com/products/xlim-4"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "2026 NeXLIM Labor Day Bundle",
@@ -912,7 +804,17 @@
           "available": true
         }
       ],
-      "id": "6b3489b369c5c865f071"
+      "id": "58fb0a636bf86add0a15",
+      "familyKey": "POD|AUTHENTIC|oxva|2026 nexlim labor day bundle",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA 2026 NeXLIM Labor Day Bundle",
+          "brand": "OXVA",
+          "url": "https://store.oxva.com/products/2026-nexlim-labor-day-bundle"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "DOJO Blast 7K Fresh Prefilled Pod Kit",
@@ -955,7 +857,17 @@
           "available": false
         }
       ],
-      "id": "03bb92b9d9475de3b39e"
+      "id": "7dd100a73acecc4481bc",
+      "familyKey": "POD|AUTHENTIC|dojo|blast 7k fresh",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Dojo Blast 7K Fresh",
+          "brand": "Dojo",
+          "url": "https://vapesuperstore.co.uk/products/dojo-blast-7k-fresh-prefilled-pod-kit"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Onéo Pro par Oxva",
@@ -996,7 +908,17 @@
           "observedAt": "2026-09-04T13:46:09.252Z"
         }
       ],
-      "id": "6ded522d869da5953f2e"
+      "id": "69930a2acf56a6493cb4",
+      "familyKey": "POD|AUTHENTIC|oxva|oneo pro par",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA Onéo Pro par",
+          "brand": "OXVA",
+          "url": "https://www.levapelier.com/oneo-pro-par-oxva/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Elf Bar AF5000 Prefilled Pod Kit",
@@ -1051,9 +973,24 @@
           "collector": "known-history"
         }
       ],
-      "id": "fde7f60c9aa9cec7d9e6",
+      "id": "b2c706cc49d9ce680630",
       "knownBeforeWindowAt": "2024-05-22T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://ishmt.gov.al/wp-content/uploads/2024/06/Buletin-23.pdf"
+      "knownBeforeWindowSource": "https://ishmt.gov.al/wp-content/uploads/2024/06/Buletin-23.pdf",
+      "familyKey": "POD|AUTHENTIC|elf bar|af5000",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Elf Bar AF5000",
+          "brand": "Elf Bar",
+          "url": "https://vapesuperstore.co.uk/products/elf-bar-af5000-prefilled-pod-kit"
+        },
+        {
+          "productName": "Elf Bar European Safety Gate notice",
+          "brand": "Elf Bar",
+          "url": "https://ishmt.gov.al/wp-content/uploads/2024/06/Buletin-23.pdf"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "OXVA ONEO Pro",
@@ -1094,7 +1031,17 @@
           "observedAt": "2026-09-04T13:46:07.903Z"
         }
       ],
-      "id": "9f8591c656675c29a5a6"
+      "id": "bfd5b71c6376f2d6d0dd",
+      "familyKey": "POD|AUTHENTIC|oxva|oneo pro",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA INFO BATCH : ONEO Pro",
+          "brand": "OXVA",
+          "url": "https://www.vapoteurs.net/info-batch-oneo-pro-oxva/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "OXVA NeXLIM GO",
@@ -1152,7 +1099,22 @@
           "observedAt": "2026-09-04T13:46:08.396Z"
         }
       ],
-      "id": "493ee902610fc36c68d1"
+      "id": "a074f2987a03ebe26632",
+      "familyKey": "POD|AUTHENTIC|oxva|nexlim go",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA NeXLIM 2 Mini vs NeXLIM GO: Comparison Review - igeekphone.com",
+          "brand": "OXVA",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcFkxa1pnX2dNV3k1TS1xS2x0dUh2Z05jV3pNN1cwU1hOTENCdXEwekIxcjdyNThfV0hNV1BuSlJPWGtkbFZKRzI3cjl6cE9VcFhqR0xtajQ4aGp0cjEwZEVQRnAyM2c1d1VSRmozcnplSy1wYlNRSjREZlh0RWhjWTQ2QXdKNF8xZllhMVBPMnFqZEhKVHF3SHlqWUg?oc=5"
+        },
+        {
+          "productName": "OXVA NeXLIM 2 Mini vs NeXLIM GO Review 2026 - Showdown",
+          "brand": "OXVA",
+          "url": "https://www.igeekphone.com/oxva-nexlim-2-mini-vs-oxva-nexlim-go-review-2026-pod-system-showdown/"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "VOOPOO Vinci S",
@@ -1193,7 +1155,17 @@
           "observedAt": "2026-09-04T13:46:08.445Z"
         }
       ],
-      "id": "3b773d0b9bce16befe5c"
+      "id": "080d174f39125d9bba9d",
+      "familyKey": "POD|AUTHENTIC|voopoo|vinci s",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo Vinci S vs Vinci E80 Review: Which Vinci Wins?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-vinci-s-vs-vinci-e80-review-which-vinci-pod-vape-wins/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Voopoo Vinci E80",
@@ -1234,7 +1206,17 @@
           "observedAt": "2026-09-04T13:46:08.445Z"
         }
       ],
-      "id": "02ac3909ea9d63811dfb"
+      "id": "6eb2ef65c5390b9b8258",
+      "familyKey": "POD|AUTHENTIC|voopoo|vinci e80",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo Vinci S vs Vinci E80 Review: Which Vinci Wins?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-vinci-s-vs-vinci-e80-review-which-vinci-pod-vape-wins/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Aspire Pixo Aura 2",
@@ -1275,7 +1257,17 @@
           "observedAt": "2026-09-04T13:46:08.472Z"
         }
       ],
-      "id": "8b612b9e14db9aa3674b"
+      "id": "925c3111bb8d1a52ebb4",
+      "familyKey": "POD|AUTHENTIC|aspire|pixo aura 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Aspire Pixo Aura 2 Review: Compact with Great Flavor & Convenience",
+          "brand": "Aspire",
+          "url": "https://www.igeekphone.com/aspire-pixo-aura-2-review-compact-pod-system-with-great-flavor-convenience/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Vaporesso XROS 5 Mini",
@@ -1316,7 +1308,17 @@
           "observedAt": "2026-09-04T13:46:08.916Z"
         }
       ],
-      "id": "540cc26a482f67993657"
+      "id": "740cc0dfa9303195f92d",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros 5 mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso XROS 6 Mini vs XROS 5 Mini: Key Differences and Which Is Better?",
+          "brand": "Vaporesso",
+          "url": "https://www.igeekphone.com/vaporesso-xros-6-mini-vs-xros-5-mini-review-which-compact-pod-system-is-better/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "OXVA XLIM 3 Ultra",
@@ -1357,7 +1359,17 @@
           "observedAt": "2026-09-04T13:46:09.015Z"
         }
       ],
-      "id": "f7df6b8dc9eb6966bb2f"
+      "id": "60eca8101b4f2d644ff7",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim 3 ultra",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA XLIM 3 Ultra Review",
+          "brand": "OXVA",
+          "url": "https://www.smoketastic.com/oxva-xlim-3-ultra-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Uwell Caliburn G5 Lite Zero Nicotine Vape Bundle",
@@ -1400,7 +1412,17 @@
           "available": true
         }
       ],
-      "id": "bae871d2599ba97a1553"
+      "id": "e604991cd1f87d7e63c8",
+      "familyKey": "POD|AUTHENTIC|uwell|caliburn g5 lite",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Uwell Caliburn G5 Lite",
+          "brand": "Uwell",
+          "url": "https://www.ecigone.co.uk/products/uwell-caliburn-g5-lite-zero-nicotine-vape-bundle"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "OXVA Xlim GO 2 Zero Nicotine Vape Bundle",
@@ -1443,7 +1465,17 @@
           "available": true
         }
       ],
-      "id": "ecacf3ad7e83c9d5b97b"
+      "id": "8c17643def98d863ed4d",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim go 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA Xlim GO 2",
+          "brand": "OXVA",
+          "url": "https://www.ecigone.co.uk/products/oxva-xlim-go-2-zero-nicotine-vape-bundle"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "OXVA NeXlim 2 Mini Zero Nicotine Vape Bundle",
@@ -1554,7 +1586,37 @@
           "observedAt": "2026-09-04T13:46:08.970Z"
         }
       ],
-      "id": "ea8a08716de1151c49ca"
+      "id": "b2c573c4c3601548620d",
+      "familyKey": "POD|AUTHENTIC|oxva|nexlim 2 mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA NeXlim 2 Mini",
+          "brand": "OXVA",
+          "url": "https://www.ecigone.co.uk/products/oxva-nexlim-2-mini-zero-nicotine-vape-bundle"
+        },
+        {
+          "productName": "OXVA NeXLIM 2 Mini vs NeXLIM GO: Comparison Review - igeekphone.com",
+          "brand": "OXVA",
+          "url": "https://news.google.com/rss/articles/CBMinAFBVV95cUxOcFkxa1pnX2dNV3k1TS1xS2x0dUh2Z05jV3pNN1cwU1hOTENCdXEwekIxcjdyNThfV0hNV1BuSlJPWGtkbFZKRzI3cjl6cE9VcFhqR0xtajQ4aGp0cjEwZEVQRnAyM2c1d1VSRmozcnplSy1wYlNRSjREZlh0RWhjWTQ2QXdKNF8xZllhMVBPMnFqZEhKVHF3SHlqWUg?oc=5"
+        },
+        {
+          "productName": "OXVA INFO BATCH : NeXLIM 2 & NeXLIM 2 MINI",
+          "brand": "OXVA",
+          "url": "https://www.vapoteurs.net/info-batch-nexlim-2-nexlim-2-mini-oxva/"
+        },
+        {
+          "productName": "OXVA NeXLIM 2 Mini vs NeXLIM GO Review 2026 - Showdown",
+          "brand": "OXVA",
+          "url": "https://www.igeekphone.com/oxva-nexlim-2-mini-vs-oxva-nexlim-go-review-2026-pod-system-showdown/"
+        },
+        {
+          "productName": "OXVA SP2S Touch vs. NeXLIM 2 Mini: A Head-to-Head Comparison",
+          "brand": "OXVA",
+          "url": "https://www.igeekphone.com/sp2s-touch-vs-oxva-nexlim-2-mini-a-head-to-head-pod-vape-comparison/"
+        }
+      ],
+      "variantCount": 5
     },
     {
       "productName": "VooPoo Argus G4 Mini Zero Nicotine Vape Bundle",
@@ -1614,7 +1676,22 @@
           "observedAt": "2026-09-04T13:46:08.809Z"
         }
       ],
-      "id": "44efd741915121c5760c"
+      "id": "d8a8edbd68e4e6fe70bd",
+      "familyKey": "POD|AUTHENTIC|voopoo|argus g4 mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo Argus G4 Mini",
+          "brand": "Voopoo",
+          "url": "https://www.ecigone.co.uk/products/voopoo-argus-g4-mini-zero-nicotine-vape-bundle"
+        },
+        {
+          "productName": "Voopoo Argus G4 Mini vs Argus G3 Mini Review: Which Mini Is Better?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-argus-g4-mini-vs-argus-g3-mini-pod-vape-review-which-mini-pod-system-is-better/"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "Vaporesso XROS 6 Mini Zero Nicotine Vape Bundle",
@@ -1742,7 +1819,42 @@
           "observedAt": "2026-09-04T13:46:09.053Z"
         }
       ],
-      "id": "ab91d3fb5d1ec9cd7d42"
+      "id": "7fdd83fb5fb29a8194eb",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros 6 mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso XROS 6 Mini",
+          "brand": "Vaporesso",
+          "url": "https://www.ecigone.co.uk/products/vaporesso-xros-6-mini-zero-nicotine-vape-bundle"
+        },
+        {
+          "productName": "Vaporesso INFO BATCH : XROS 6 Mini & VIBE SE 2",
+          "brand": "Vaporesso",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-mini-vibe-se-2-vaporesso/"
+        },
+        {
+          "productName": "Vaporesso Review: Xros 6 Mini",
+          "brand": "Vaporesso",
+          "url": "https://www.vapingpost.com/2026/08/07/review-xros-6-mini-vaporesso/"
+        },
+        {
+          "productName": "Vaporesso XROS 6 Mini Review: The Simplest XROS Yet",
+          "brand": "Vaporesso",
+          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-mini-pod-kit-review/"
+        },
+        {
+          "productName": "Vaporesso XROS 6 Mini vs XROS 5 Mini: Key Differences and Which Is Better?",
+          "brand": "Vaporesso",
+          "url": "https://www.igeekphone.com/vaporesso-xros-6-mini-vs-xros-5-mini-review-which-compact-pod-system-is-better/"
+        },
+        {
+          "productName": "Vaporesso XROS 6 Mini Review",
+          "brand": "Vaporesso",
+          "url": "https://www.smoketastic.com/vaporesso-xros-6-mini-review/"
+        }
+      ],
+      "variantCount": 6
     },
     {
       "productName": "IVG NEXiO Pre-Filled Pod System",
@@ -1783,7 +1895,17 @@
           "observedAt": "2026-09-04T13:46:08.503Z"
         }
       ],
-      "id": "9eb8a79954fb5dceacc9"
+      "id": "4b50cb2ad8a8076bd839",
+      "familyKey": "POD|AUTHENTIC|ivg|nexio",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "IVG NEXiO Launches With 10,000-Puff Reusable Design",
+          "brand": "IVG",
+          "url": "https://www.igeekphone.com/ivg-nexio-pre-filled-pod-system-launches-with-10000-puff-reusable-design/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "SKE Bar 600 Zero Nicotine Prefilled Pod Kit",
@@ -1826,7 +1948,17 @@
           "available": true
         }
       ],
-      "id": "073ca92d0f6e102cc779"
+      "id": "1a9a54f0f5c3561de4d4",
+      "familyKey": "POD|AUTHENTIC|ske|bar 600 zero nicotine",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "SKE Bar 600 Zero Nicotine",
+          "brand": "SKE",
+          "url": "https://www.ecigone.co.uk/products/ske-bar-600-zero-nicotine-prefilled-pod-kit"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Smoant Racer Flex Pod System Kit",
@@ -1867,7 +1999,17 @@
           "observedAt": "2026-09-04T13:46:08.555Z"
         }
       ],
-      "id": "7ab1cf4034f144c670cf"
+      "id": "32e4f4a67ddd0058fcfb",
+      "familyKey": "POD|AUTHENTIC|smoant|racer flex",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo VMATE MAX 2 vs Racer Flex : Battery or AI Chip?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/vmate-max-2-vs-racer-flex-endurance-vs-intelligence/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "VOOPOO VMATE MAX 2",
@@ -1942,7 +2084,27 @@
           "observedAt": "2026-09-04T13:46:08.555Z"
         }
       ],
-      "id": "e69f9edd1bf612fb0b86"
+      "id": "0cf9ca671539fee96d6d",
+      "familyKey": "POD|AUTHENTIC|voopoo|vmate max 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo VMATE MAX 2 Review: Battery, Pods, Controls and Daily Use",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-vmate-max-2-review-battery-pods-controls-and-daily-use/"
+        },
+        {
+          "productName": "Voopoo VMATE MAX 2 vs ARGUS Z3: Which Fits Your Vaping ?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-vmate-max-2-vs-argus-z3-which-pod-system-fits-your-vaping-style/"
+        },
+        {
+          "productName": "Voopoo VMATE MAX 2 vs Racer Flex : Battery or AI Chip?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/vmate-max-2-vs-racer-flex-endurance-vs-intelligence/"
+        }
+      ],
+      "variantCount": 3
     },
     {
       "productName": "Vaporesso PRIX MTL Pod",
@@ -2017,7 +2179,27 @@
           "observedAt": "2026-09-04T13:46:08.580Z"
         }
       ],
-      "id": "9d18180e56115a1ccf90"
+      "id": "3d3969f4a1086bbbcc9a",
+      "familyKey": "POD|AUTHENTIC|vaporesso|prix",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso Product",
+          "brand": "Vaporesso",
+          "url": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxONkkxcnFqUlRicUF3eTdYSUhTZk5NS0RRS2hURk84ZDhjMDJad3ZqeEx5WmZCVkRaY1R4ZzNNUkVka3BQdVhySHhlSk9aUWROQk0ydGFNNmxSVkdmaHkySjZTRmpFMnA3ZWdiWld0d3pBUHVScTFmTERRMVpmeFZKQW1rYnVGUS1keDZHX3hXamxxZkdtYl9HTnNva2tFREJiMTVaT0FmeGplbnFWZ2ZBUDZfcDhBaUs4M3JWRTZfS2RVV2JmbjByLUM5eDR0cFVFWTU3NHJMeXk?oc=5"
+        },
+        {
+          "productName": "Vaporesso Prix Review: Is the Battery Worth the Bulk? - igeekphone.com",
+          "brand": "Vaporesso",
+          "url": "https://news.google.com/rss/articles/CBMisAFBVV95cUxOVTBqeWFSNzFyVENja1AyWEFqdk5yWTV4MU11WHNNQV9JZ3hHc2ZVRk5lYWhXZmlkbkxtQWJtdkJSTGx4NHNYSjNHNjdlOGlxV3ZQa2NMczlBckVPZ05nRXJqdkIxMU0tUmtBclZiYldvaDQ3RXRaLUh4Uk1uY203ckdqTEVDNWFUcjZlOVpMbk5mM0d3N3J3ZEk2SDFHMnQ2ejgyTTVwZWx2YnJUUTBHYQ?oc=5"
+        },
+        {
+          "productName": "Vaporesso Prix Review: Ergonomic Pros and Cons of the Battery",
+          "brand": "Vaporesso",
+          "url": "https://www.igeekphone.com/vaporesso-prix-pod-system-kit-review-ergonomic-pros-and-cons-of-the-2600mah-battery/"
+        }
+      ],
+      "variantCount": 3
     },
     {
       "productName": "Vaporesso VIBE SE 2",
@@ -2058,7 +2240,17 @@
           "observedAt": "2026-09-04T13:46:08.018Z"
         }
       ],
-      "id": "6f811cf1523e3c3fe8d5"
+      "id": "90b6bccfc56eb799e0c0",
+      "familyKey": "POD|AUTHENTIC|vaporesso|vibe se 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso INFO BATCH : XROS 6 Mini & VIBE SE 2",
+          "brand": "Vaporesso",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-mini-vibe-se-2-vaporesso/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "SMOK Sinch Pod System Kit",
@@ -2099,7 +2291,17 @@
           "observedAt": "2026-09-04T13:46:08.636Z"
         }
       ],
-      "id": "2f80942535bb6fe9151b"
+      "id": "7eab3739100988a6f0ba",
+      "familyKey": "POD|AUTHENTIC|smok|sinch",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "SMOK Sinch Review: Compact Power, Smart Features, and Exceptional Flavor",
+          "brand": "SMOK",
+          "url": "https://www.igeekphone.com/smok-sinch-pod-system-kit-review-compact-power-smart-features-and-exceptional-flavor/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "VOOPOO ARGUS Z3",
@@ -2191,7 +2393,32 @@
           "observedAt": "2026-09-04T13:46:08.865Z"
         }
       ],
-      "id": "9f220d0c58fa1ee30a34"
+      "id": "c04a2226306806a0f3d9",
+      "familyKey": "POD|AUTHENTIC|voopoo|argus z3",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo ARGUS Z3 Review: Lightweight - igeekphone.com",
+          "brand": "Voopoo",
+          "url": "https://news.google.com/rss/articles/CBMioAFBVV95cUxOQzdhbGZ3UXBvaVpaN29teHlLQjJqNmFpYkxDem5xQURqMVZlNERXUjAzRlVxcWU5bGdnMlZmRTB1d203ZjVJakRfVC1RcEdoMThOUU1FR1dDSGRRU0Rra3JucFl3NFp3SlZJUjNXbW5FWVZubFdVenNCUm9rWXhpN2EyVC1FNVhPMnc4M1lRU0x6bWUycUtoeHFNSWJFa24w?oc=5"
+        },
+        {
+          "productName": "Voopoo VMATE MAX 2 vs ARGUS Z3: Which Fits Your Vaping ?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-vmate-max-2-vs-argus-z3-which-pod-system-fits-your-vaping-style/"
+        },
+        {
+          "productName": "Voopoo ARGUS Z3 vs G4: vs , vs - The Ultimate Comparison",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-argus-z3-vs-g4-1100mah-vs-1650mah-20w-vs-35w-the-ultimate-comparison/"
+        },
+        {
+          "productName": "Voopoo ARGUS Z3 Review: A Lightweight That Knows What It Doesn’t Need",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-argus-z3-review-a-lightweight-pod-that-knows-what-it-doesnt-need/"
+        }
+      ],
+      "variantCount": 4
     },
     {
       "productName": "Voopoo Argus G3 Mini Pod Vape",
@@ -2232,7 +2459,17 @@
           "observedAt": "2026-09-04T13:46:08.809Z"
         }
       ],
-      "id": "01b50e9669cf3d2e1394"
+      "id": "9b586c5469b9a5ac23ba",
+      "familyKey": "POD|AUTHENTIC|voopoo|argus g3 mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo Argus G4 Mini vs Argus G3 Mini Review: Which Mini Is Better?",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-argus-g4-mini-vs-argus-g3-mini-pod-vape-review-which-mini-pod-system-is-better/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "VOOPOO ARGUS G4",
@@ -2273,7 +2510,17 @@
           "observedAt": "2026-09-04T13:46:08.170Z"
         }
       ],
-      "id": "681f407294ce28257a3b"
+      "id": "ca4d70f76a1d58ccd23f",
+      "familyKey": "POD|AUTHENTIC|voopoo|argus g4",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo ARGUS G4 Review: Three Resistances, One",
+          "brand": "Voopoo",
+          "url": "https://www.blacknote.com/blog/voopoo-argus-g4-pod-system-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Geekvape Sonder Q3 Pod Kit",
@@ -2328,9 +2575,24 @@
           "collector": "known-history"
         }
       ],
-      "id": "7bb8ea65db999a6fb019",
+      "id": "1c6f862a87c8ab9eccc1",
       "knownBeforeWindowAt": "2026-06-25T00:00:00.000Z",
-      "knownBeforeWindowSource": "https://belvaping.com/news/pervy-j-vzglyad/geekvape-sonder-q3-pervyj-vzglyad/"
+      "knownBeforeWindowSource": "https://belvaping.com/news/pervy-j-vzglyad/geekvape-sonder-q3-pervyj-vzglyad/",
+      "familyKey": "POD|AUTHENTIC|geekvape|sonder q3",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Geekvape Sonder Q3",
+          "brand": "Geekvape",
+          "url": "https://ukecigstore.com/products/geekvape-sonder-q3-pod-kit"
+        },
+        {
+          "productName": "Geekvape Dated first-look article",
+          "brand": "Geekvape",
+          "url": "https://belvaping.com/news/pervy-j-vzglyad/geekvape-sonder-q3-pervyj-vzglyad/"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "SMOK TFOS Pod",
@@ -2371,7 +2633,17 @@
           "observedAt": "2026-09-04T13:46:09.079Z"
         }
       ],
-      "id": "21a7fa6f9c66055ed4ef"
+      "id": "1e240aaae741d8d76080",
+      "familyKey": "POD|AUTHENTIC|smok|tfos",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "SMOK TFOS Review",
+          "brand": "SMOK",
+          "url": "https://www.smoketastic.com/smok-tfos-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Pixo Ultra par Aspire",
@@ -2412,7 +2684,17 @@
           "observedAt": "2026-09-04T13:46:09.369Z"
         }
       ],
-      "id": "d1022c93c369ce39b391"
+      "id": "0b7bc24aad4ec83cb510",
+      "familyKey": "POD|AUTHENTIC|aspire|pixo ultra par",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Aspire Pixo Ultra par",
+          "brand": "Aspire",
+          "url": "https://www.levapelier.com/pixo-ultra-par-aspire/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Vaporesso Luxe XR Max 2",
@@ -2453,7 +2735,17 @@
           "observedAt": "2026-09-04T13:46:07.940Z"
         }
       ],
-      "id": "7fe5e0787ded60c35547"
+      "id": "5d7717ec815f91a5d356",
+      "familyKey": "POD|AUTHENTIC|vaporesso|luxe xr max 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso INFO BATCH : Luxe XR Max 2",
+          "brand": "Vaporesso",
+          "url": "https://www.vapoteurs.net/info-batch-vaporesso-luxe-xr-max-2-2/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Eleaf iVeni Pod",
@@ -2494,7 +2786,17 @@
           "observedAt": "2026-09-04T13:46:09.105Z"
         }
       ],
-      "id": "236a081f702eb72aea89"
+      "id": "ee934903bcb85c54728d",
+      "familyKey": "POD|AUTHENTIC|eleaf|iveni",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Eleaf iVeni Review",
+          "brand": "Eleaf",
+          "url": "https://www.smoketastic.com/eleaf-iveni-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "VOOPOO Vmate Pro 2",
@@ -2535,7 +2837,17 @@
           "observedAt": "2026-09-04T13:46:09.135Z"
         }
       ],
-      "id": "5b57d3f7cb52583b8e3b"
+      "id": "e0ff3eedfb3c9815d581",
+      "familyKey": "POD|AUTHENTIC|voopoo|vmate pro 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo Vmate Pro 2 Review",
+          "brand": "Voopoo",
+          "url": "https://www.smoketastic.com/voopoo-vmate-pro-2-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "OXVA NeXLIM 2",
@@ -2593,7 +2905,22 @@
           "observedAt": "2026-09-04T13:46:08.076Z"
         }
       ],
-      "id": "3669491ec306541d521f"
+      "id": "30644b34ed3e8ae517a6",
+      "familyKey": "POD|AUTHENTIC|oxva|nexlim 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA INFO BATCH : NeXLIM 2 & NeXLIM 2 MINI",
+          "brand": "OXVA",
+          "url": "https://www.vapoteurs.net/info-batch-nexlim-2-nexlim-2-mini-oxva/"
+        },
+        {
+          "productName": "OXVA Review: NeXlim 2",
+          "brand": "OXVA",
+          "url": "https://www.vapingpost.com/2026/08/07/review-nexlim-2-oxva/"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "Vaporesso XROS 6",
@@ -2685,7 +3012,27 @@
           "observedAt": "2026-09-04T13:46:08.727Z"
         }
       ],
-      "id": "e7ea3531f9534241d7e6"
+      "id": "d0b329ed7ad30de5ed24",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros 6",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso INFO BATCH : XROS 6",
+          "brand": "Vaporesso",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-vaporesso/"
+        },
+        {
+          "productName": "Vaporesso XROS 6 Review: Bigger Battery, Same XROS Draw",
+          "brand": "Vaporesso",
+          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-pod-kit-review/"
+        },
+        {
+          "productName": "Vaporesso XROS 6 vs SP2S URANUS: Quick Comparison Review",
+          "brand": "Vaporesso",
+          "url": "https://www.igeekphone.com/vaporesso-xros-6-vs-sp2s-uranus-quick-comparison-review/"
+        }
+      ],
+      "variantCount": 3
     },
     {
       "productName": "Vaporesso Luxe X3",
@@ -2726,7 +3073,17 @@
           "observedAt": "2026-09-04T13:46:09.163Z"
         }
       ],
-      "id": "71dda3cd9ccec839f36f"
+      "id": "d84b929ac0d5acb0ae0f",
+      "familyKey": "POD|AUTHENTIC|vaporesso|luxe x3",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso Luxe X3 Review",
+          "brand": "Vaporesso",
+          "url": "https://www.smoketastic.com/vaporesso-luxe-x3-review/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "Spark 2 par Kiwi",
@@ -2767,7 +3124,17 @@
           "observedAt": "2026-09-04T13:46:09.398Z"
         }
       ],
-      "id": "1884bb529be345cfcead"
+      "id": "2e8a149a8fe0859bf35d",
+      "familyKey": "POD|AUTHENTIC|kiwi vapor|spark 2 par",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "KIWI Vapor Spark 2 par",
+          "brand": "KIWI Vapor",
+          "url": "https://www.levapelier.com/spark-2-par-kiwi/"
+        }
+      ],
+      "variantCount": 1
     },
     {
       "productName": "OXVA VPrime 2 Pod Kit",
@@ -2884,13 +3251,28 @@
           "observedAt": "2026-09-04T13:46:07.715Z"
         }
       ],
-      "id": "da02f960ee55143a8aa7",
+      "id": "194bf7e1a28d38a46a0f",
       "lifecycleEvidence": [
         "before",
         "IMMINENT",
         "after",
         "FIRST_RETAIL"
-      ]
+      ],
+      "familyKey": "POD|AUTHENTIC|oxva|vprime 2",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "OXVA VPRIME 2",
+          "brand": "OXVA",
+          "url": "https://store.oxva.com/products/vprime-2"
+        },
+        {
+          "productName": "OXVA Vprime 2 Review: with Output - igeekphone.com",
+          "brand": "OXVA",
+          "url": "https://news.google.com/rss/articles/CBMipAFBVV95cUxNVlhQcU1RVWtnVXhwSGluX3JXaFVhYlFQNVZoc044U0g3STlzRFVFLVdlSVBQTC1aMHM3bExMWm45YkFNRFhDVmxJalU4dC1yNUxHQnA2cmZGNkdRcWVySnA3RFN1SEQ2U0ZOcmRKV3RGNzJwRHVSWW1uMi1mazFLOV9wNHFMSmcyaWJZX3lRV2FzVTJBaWJqX1JrUWVmRXNET1hQag?oc=5"
+        }
+      ],
+      "variantCount": 2
     },
     {
       "productName": "VOOPOO DRAG H40 Pro",
@@ -2965,7 +3347,27 @@
           "observedAt": "2026-09-04T13:46:09.192Z"
         }
       ],
-      "id": "1d02ed76d685e2594d59"
+      "id": "ad6f2c380baeafb74e6a",
+      "familyKey": "POD|AUTHENTIC|voopoo|drag h40 pro",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo DRAG H40 Pro vs DRAG 6: The Ultimate Mod vs Mod Comparison - igeekphone.com",
+          "brand": "Voopoo",
+          "url": "https://news.google.com/rss/articles/CBMif0FVX3lxTFBVT0VFS3kwZU9MZGZIaU4wUXFSNWFEMDI3ODFVeGlGRXM5VXY1NjRKSGdVaGphNEFjQ2RzRXV4ZHZiX25vOVlldlpSbmNEV1dLUkRSU21vTGNBcU5XOFlTMFlsU0x0OG51V2l3VzhnZHBBR1N2SFhnZ3dSNGEwZkE?oc=5"
+        },
+        {
+          "productName": "Voopoo DRAG H40 Pro vs DRAG 6: The Ultimate Mod vs Mod Comparison",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-drag-h40-pro-vs-drag-6-quick-comparison/"
+        },
+        {
+          "productName": "Voopoo Drag H40 Pro Review",
+          "brand": "Voopoo",
+          "url": "https://www.smoketastic.com/voopoo-drag-h40-pro-review/"
+        }
+      ],
+      "variantCount": 3
     }
   ],
   "summary": {
@@ -2977,7 +3379,7 @@
     "confirmed": 0,
     "reported": 6,
     "publicSignals": 34,
-    "candidatesUnderVerification": 32,
+    "candidatesUnderVerification": 10,
     "categoryEvents": {
       "POD": 6
     }
