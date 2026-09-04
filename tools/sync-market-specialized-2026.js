@@ -9,6 +9,7 @@ const MARKET_PATH = path.join(ROOT, 'data', 'market-2026.json');
 const REGISTRY_PATH = path.join(ROOT, 'data', 'market-retailers-2026.json');
 const WRITE = process.argv.includes('--write');
 const CHECK = process.argv.includes('--check');
+const ANALYSIS_START='2026-01-01';
 
 function readJson(file){return JSON.parse(fs.readFileSync(file,'utf8'))}
 function writeJson(file,value){fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n','utf8')}
@@ -100,16 +101,18 @@ async function collect(retailer,type,registry,date){
 }
 
 async function main(){
-  const registry=readJson(REGISTRY_PATH);const market=readJson(MARKET_PATH);const date=today();if(!/^2026-/.test(date)){console.log(`Specialized collector locked to 2026; ${date}.`);return}
+  const registry=readJson(REGISTRY_PATH);const market=readJson(MARKET_PATH);const date=today();if(date<ANALYSIS_START){console.log(`Specialized collector starts at ${ANALYSIS_START}; ${date}.`);return}
   const specialized={vapshop:'opencart',viciishop:'woo',tigaraego:'woo',vapersparadise:'woo',vapetronic:'woo',steamfactory:'woo',ecigvapo:'woo',merlin:'woo'};
   const results=[];
   for(const [id,type] of Object.entries(specialized)){
     const retailer=(registry.retailers||[]).find(r=>r.id===id);if(!retailer)continue;console.log(`Specialized ${type}: ${retailer.name}`);results.push(await collect(retailer,type,registry,date))
   }
-  let observations=(market.observations||[]).filter(r=>/^2026-/.test(String(r.observedAt||'')));
+  let observations=(market.observations||[]).filter(r=>String(r.observedAt||'')>=ANALYSIS_START);
   for(const result of results){if(result.rows.length)observations=observations.filter(r=>r.retailerId!==result.retailerId).concat(result.rows)}
   observations=dedupe(observations).sort((a,b)=>`${a.retailerId}|${a.category}|${a.product}`.localeCompare(`${b.retailerId}|${b.category}|${b.product}`,'ro'));
   market.observations=observations;
+  market.analysisStart=ANALYSIS_START;
+  market.analysisEnd=date;
   market.updatedAt=new Date().toISOString();
   market.specializedCollectorStatus={date,generatedAt:new Date().toISOString(),byRetailer:results.map(r=>({retailerId:r.retailerId,parser:r.parser,pagesFetched:r.pagesFetched,seedsConfigured:r.seedsConfigured,seedsSucceeded:r.seedsSucceeded,seedsFailed:r.seedsFailed,observations:r.rows.length,errors:r.errors,collectionComplete:r.collectionComplete}))};
   if(CHECK){console.log(JSON.stringify(market.specializedCollectorStatus,null,2));return}

@@ -13,12 +13,14 @@ permissions:
 
 concurrency:
   group: smokee-catalog-sync
-  cancel-in-progress: true
+  # The full catalog pass can take more than 12 minutes when npm or YouTube is slow.
+  # Let the running pass finish; the durable publish state already prevents duplicates.
+  cancel-in-progress: false
 
 jobs:
   sync-smokee-catalog:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 35
     steps:
       - name: Confirm Bucharest sync window
         id: sync_window
@@ -50,10 +52,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: npm
 
       - name: Install Facebook image processor
         if: steps.sync_window.outputs.run_sync == 'true'
-        run: npm ci
+        run: npm ci --prefer-offline --no-audit --fund=false
 
       - name: Check Smokee RTA products
         if: steps.sync_window.outputs.run_sync == 'true'

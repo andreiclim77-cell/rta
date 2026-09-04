@@ -5,6 +5,7 @@ const {
   completedOnBothPlatforms,
   displayTitle,
   emptyReelsState,
+  failedReelNeedsRecheck,
   facebookReelStatus,
   finishQueueItemIfComplete,
   markSourceBlocked,
@@ -75,6 +76,8 @@ assert.strictEqual(completedOnBothPlatforms(state, 'page_1'), true, 'Both platfo
 assert.strictEqual(finishQueueItemIfComplete(state, state.queue[0], '2026-08-11T09:05:00Z'), true, 'Complete pair must leave the queue');
 assert.strictEqual(state.queue.length, 0, 'Complete pair must be removed from the queue');
 assert.strictEqual(state.history.length, 1, 'Complete pair must have durable history');
+assert.strictEqual(finishQueueItemIfComplete(state, { sourcePostId: 'page_1', name: 'Primul RTA' }, '2026-08-11T09:06:00Z'), true, 'Receipt reconciliation must be idempotent');
+assert.strictEqual(state.history.length, 1, 'Receipt reconciliation must not duplicate history');
 
 const invalid = normalizeReelsState(emptyReelsState());
 invalid.queue = [
@@ -107,6 +110,21 @@ assert.strictEqual(
   pendingReelIsStale({ startedAt: '2026-08-20T06:00:00Z' }, '2026-08-23T05:59:59Z'),
   false,
   'A Facebook Reel inside the Meta processing window must remain pending'
+);
+assert.strictEqual(
+  failedReelNeedsRecheck({ id: 'video_1', failureReason: 'processing-timeout', failedAt: '2026-08-20T06:00:00Z' }, '2026-08-21T06:00:00Z'),
+  true,
+  'An ambiguous Meta processing timeout must be checked again without re-uploading'
+);
+assert.strictEqual(
+  failedReelNeedsRecheck({ id: 'video_1', failureReason: 'processing-timeout', failedAt: '2026-08-20T06:00:00Z' }, '2026-08-21T05:59:59Z'),
+  false,
+  'A processing timeout must respect the recheck interval'
+);
+assert.strictEqual(
+  failedReelNeedsRecheck({ id: 'video_1', failedAt: '2026-08-20T06:00:00Z' }, '2026-08-22T06:00:00Z'),
+  false,
+  'A terminal Meta failure must stay deduplicated'
 );
 
 console.log('Social Reels publisher checks passed: source-level dedupe, two-platform receipts, retry safety and daily pacing.');

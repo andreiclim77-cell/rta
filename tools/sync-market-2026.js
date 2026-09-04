@@ -11,6 +11,7 @@ const MARKET_PATH = path.join(ROOT, 'data', 'market-2026.json');
 const HISTORY_DIR = path.join(ROOT, 'data', 'market-history-2026');
 const WRITE = process.argv.includes('--write');
 const CHECK = process.argv.includes('--check');
+const ANALYSIS_START = '2026-01-01';
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -540,8 +541,8 @@ async function main() {
   const registry = readJson(REGISTRY_PATH);
   const market = readJson(MARKET_PATH);
   const date = bucharestDate();
-  if (!/^2026-/.test(date)) {
-    console.log(`Market collector is locked to 2026; current Bucharest date is ${date}.`);
+  if (date < ANALYSIS_START) {
+    console.log(`Market collector starts at ${ANALYSIS_START}; current Bucharest date is ${date}.`);
     return;
   }
   if (Number(registry.scopeYear) !== 2026 || Number(market.scopeYear) !== 2026) {
@@ -576,7 +577,7 @@ async function main() {
     observedAt: date,
     source: o.url,
     sourceMode: o.sourceMode
-  })).filter(o => /^2026-/.test(String(o.observedAt || '')))
+  })).filter(o => String(o.observedAt || '') >= ANALYSIS_START)
     .sort((a, b) => `${a.retailerId}|${a.category}|${a.product}`.localeCompare(`${b.retailerId}|${b.category}|${b.product}`, 'ro'));
 
   const snapshots = dedupeCategorySnapshots(results.flatMap(r => r.categorySnapshots || []));
@@ -586,11 +587,16 @@ async function main() {
     retailersWithObservations: new Set(observations.map(o => o.retailerId)).size,
     categories: summaryByCategory(observations)
   };
-  const trendSnapshots = (market.trendSnapshots || []).filter(item => item.date !== date && /^2026-/.test(String(item.date || '')));
+  const trendSnapshots = (market.trendSnapshots || []).filter(item => item.date !== date && String(item.date || '') >= ANALYSIS_START);
   trendSnapshots.push(trend);
   trendSnapshots.sort((a, b) => a.date.localeCompare(b.date));
 
   market.updatedAt = new Date().toISOString();
+  market.analysisStart = ANALYSIS_START;
+  market.analysisEnd = date;
+  market.methodology = market.methodology || {};
+  market.methodology.description = 'Observator de oferta publica din Romania. Masoara produse/SKU-uri listate, preturi, disponibilitate si schimbari observate. Nu echivaleaza stocul, listarea sau popularitatea cumulativa cu vanzari in perioada selectata.';
+  market.methodology.historyPolicy = `Interval solicitat ${ANALYSIS_START} - ultima actualizare. Istoricul comparabil incepe numai la prima captura reala; zilele anterioare nu sunt estimate.`;
   market.retailers = (registry.retailers || []).map(retailer => retailerPublicShape(retailer, results.find(r => r.retailerId === retailer.id)));
   market.observations = observations;
   market.categorySnapshots = snapshots;
@@ -615,6 +621,7 @@ async function main() {
   const history = {
     schemaVersion: 1,
     scopeYear: 2026,
+    analysisStart: ANALYSIS_START,
     date,
     generatedAt: market.collectorStatus.generatedAt,
     observations,

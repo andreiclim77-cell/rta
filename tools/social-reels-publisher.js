@@ -30,6 +30,7 @@ const DEFAULT_MAX_POSTS = 1;
 const FORMAT_VERSION = 'social-reel-vertical-v1';
 const SOURCE_RETRY_MS = 24 * 60 * 60 * 1000;
 const FACEBOOK_PENDING_TIMEOUT_MS = 72 * 60 * 60 * 1000;
+const FACEBOOK_FAILED_RECHECK_MS = 24 * 60 * 60 * 1000;
 const MAX_PREPARE_ATTEMPTS = 12;
 
 const args = process.argv.slice(2);
@@ -535,6 +536,7 @@ function finishQueueItemIfComplete(state, item, timestamp = nowIso()) {
     completedAt: timestamp,
     formatVersion: item.formatVersion
   };
+  state.history = state.history.filter(entry => entry.sourcePostId !== item.sourcePostId);
   state.history.unshift(record);
   state.history = state.history.slice(0, 1000);
   state.updatedAt = timestamp;
@@ -561,6 +563,58 @@ function pendingReelIsStale(pending, now = nowIso()) {
   const checkedAt = Date.parse(String(now || ''));
   return Number.isFinite(startedAt) && Number.isFinite(checkedAt)
     && checkedAt - startedAt >= FACEBOOK_PENDING_TIMEOUT_MS;
+}
+
+function failedReelNeedsRecheck(failed, now = nowIso()) {
+  if (!failed || failed.failureReason !== 'processing-timeout' || !String(failed.id || '').trim()) return false;
+  const lastCheckedAt = Date.parse(String(failed.lastCheckedAt || failed.failedAt || ''));
+  const checkedAt = Date.parse(String(now || ''));
+  return Number.isFinite(lastCheckedAt) && Number.isFinite(checkedAt)
+    && checkedAt - lastCheckedAt >= FACEBOOK_FAILED_RECHECK_MS;
+}
+
+async function reconcileFacebookFailed(state) {
+  const recovered = [];
+  for (const [sourcePostId, failedValue] of Object.entries(state.facebookFailedReels)) {
+    const failed = failedValue && typeof failedValue === 'object' ? failedValue : {};
+    const timestamp = nowIso();
+    if (!failedReelNeedsRecheck(failed, timestamp)) continue;
+    const videoId = String(failed.id || '').trim();
+    try {
+      const video = await graphRequest(videoId, { query: { fields: 'id,status,permalink_url,title,description' } });
+      const status = facebookReelStatus(video);
+      state.facebookFailedReels[sourcePostId] = { ...failed, lastCheckedAt: timestamp, status };
+      state.updatedAt = timestamp;
+      if (!status.ready) {
+        console.log(`Facebook Reel reverificat, inca nepublicat: ${failed.item && failed.item.name || sourcePostId} (${videoId}).`);
+        continue;
+      }
+      state.facebookReels[sourcePostId] = {
+        id: videoId,
+        permalink: String(video.permalink_url || ''),
+        publishedAt: timestamp,
+        verifiedStatus: 'PUBLISHED'
+      };
+      delete state.facebookFailedReels[sourcePostId];
+      const item = failed.item;
+      if (item && !state.instagramReels[sourcePostId] && !state.queue.some(entry => entry.sourcePostId === sourcePostId)) {
+        state.queue.unshift(item);
+      }
+      if (item) finishQueueItemIfComplete(state, item, timestamp);
+      recovered.push(sourcePostId);
+      console.log(`Facebook Reel recuperat fara reincarcare: ${item && item.name || sourcePostId} (${videoId}).`);
+    } catch (error) {
+      state.facebookFailedReels[sourcePostId] = {
+        ...failed,
+        lastCheckedAt: timestamp,
+        recheckError: String(error && error.message || error).slice(0, 500)
+      };
+      state.updatedAt = timestamp;
+      console.warn(`Facebook Reel nu a putut fi reverificat acum: ${sourcePostId}.`);
+    }
+  }
+  writeJsonAtomic(REELS_STATE_PATH, state);
+  return recovered;
 }
 
 async function reconcileFacebookPending(state) {
@@ -627,12 +681,15 @@ async function reconcileFacebookPending(state) {
 }
 
 async function publishPrepared(state) {
-  if (!state.queue.length && !Object.keys(state.facebookPendingReels).length) {
+  const hasRecoverableFailure = Object.values(state.facebookFailedReels)
+    .some(failed => failedReelNeedsRecheck(failed));
+  if (!state.queue.length && !Object.keys(state.facebookPendingReels).length && !hasRecoverableFailure) {
     console.log('Social Reels: coada este goala.');
     return [];
   }
   const { account } = await verifyConnections();
-  const published = await reconcileFacebookPending(state);
+  const published = await reconcileFacebookFailed(state);
+  published.push(...await reconcileFacebookPending(state));
   if (!state.queue.length) return published;
   for (const item of state.queue.slice(0, maxPosts)) {
     await waitForPublicVideo(item.videoUrl);
@@ -788,6 +845,7 @@ module.exports = {
   isSourceMediaUnavailable,
   markSourceBlocked,
   normalizeReelsState,
+  failedReelNeedsRecheck,
   pendingReelItem,
   pendingReelIsStale,
   planReels,

@@ -9,6 +9,7 @@ const MARKET_PATH = path.join(ROOT, 'data', 'market-2026.json');
 const HISTORY_DIR = path.join(ROOT, 'data', 'market-history-2026');
 const WRITE = process.argv.includes('--write');
 const CHECK = process.argv.includes('--check');
+const ANALYSIS_START = '2025-01-01';
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));
@@ -145,7 +146,7 @@ function mergeRows(a, b) {
 function dedupeRows(rows) {
   const map = new Map();
   for (const raw of rows) {
-    if (!raw || !/^2026-/.test(String(raw.observedAt || ''))) continue;
+    if (!raw || String(raw.observedAt || '') < ANALYSIS_START) continue;
     const row = {
       ...raw,
       category: normalizedCategory(raw),
@@ -208,7 +209,7 @@ function refreshTodayTrend(market, observations, date) {
     retailersWithObservations: new Set(observations.map(row => row.retailerId)).size,
     categories: summaryByCategory(observations)
   };
-  const prior = (market.trendSnapshots || []).filter(item => /^2026-/.test(String(item.date || '')) && item.date !== date);
+  const prior = (market.trendSnapshots || []).filter(item => String(item.date || '') >= ANALYSIS_START && item.date !== date);
   prior.push(trend);
   prior.sort((a, b) => String(a.date).localeCompare(String(b.date)));
   market.trendSnapshots = prior;
@@ -218,8 +219,8 @@ function refreshTodayTrend(market, observations, date) {
 function main() {
   const market = readJson(MARKET_PATH);
   const date = bucharestDate();
-  if (Number(market.scopeYear) !== 2026 || !/^2026-/.test(date)) {
-    console.log(`Market normalizer is locked to 2026; current Bucharest date is ${date}.`);
+  if (Number(market.scopeYear) !== 2026 || date < ANALYSIS_START) {
+    console.log(`Market normalizer starts at ${ANALYSIS_START}; current Bucharest date is ${date}.`);
     return;
   }
 
@@ -228,6 +229,8 @@ function main() {
   const trend = refreshTodayTrend(market, observations, date);
   updateStatus(market, observations, date);
   market.observations = observations;
+  market.analysisStart = ANALYSIS_START;
+  market.analysisEnd = date;
   market.updatedAt = new Date().toISOString();
 
   const badBrands = observations.filter(row => /^\[object Object\]$/i.test(String(row.brand || '')));
@@ -262,6 +265,7 @@ function main() {
     const history = {
       schemaVersion: 1,
       scopeYear: 2026,
+      analysisStart: ANALYSIS_START,
       date,
       generatedAt: market.updatedAt,
       observations,
