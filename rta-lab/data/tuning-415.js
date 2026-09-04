@@ -1,6 +1,6 @@
 /* RTA Lab — validări practice + platform DNA, actualizat 04.09.2026.
  * Paradigmă: fără clasament global absolut; pairingul este lichid -> platformă -> sârmă -> geometrie -> watt/TC.
- * Canonical 04.09.2026: varianta K1 29 GA / Ø2,5 / 5 spire spaced a fost eliminată complet.
+ * Canonical 04.09.2026: varianta K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet.
  */
 
 window.RTA_LAB_CONTINUITY = {
@@ -188,7 +188,6 @@ window.RTA_LAB_CONTINUITY = {
     return bonus;
   };
 
-  // Clasamentul static nu influențează pairingul; sortarea este potrivire lichid + obiectiv + ADN platformă.
   atomScore = function(atom, ax, objective, liquid) {
     const average = ax.length
       ? ax.reduce((sum, key) => sum + ((atom.aff && atom.aff[key] != null) ? atom.aff[key] : 3), 0) / ax.length
