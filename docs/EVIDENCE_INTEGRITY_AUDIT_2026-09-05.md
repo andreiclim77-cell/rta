@@ -1,8 +1,9 @@
 # Evidence integrity audit - 2026-09-05
 
-Status: release candidate passes the automated and browser gates. Deployment
-evidence is recorded separately after GitHub Pages publishes the candidate.
-This is not a claim of exact national sales or complete global market coverage.
+Status: deployed and verified on ghid-rta.ro. The final generated-data commit is
+`eb7aee95da835580549df852b570a318f3f3391d`; GitHub Pages deployment run
+`33970358905` completed successfully. This is not a claim of exact national
+sales or complete global market coverage.
 
 ## Reproduce
 
@@ -36,10 +37,11 @@ blocked collection into zero results.
   blocked automated public reads during this run; Cthulhu is explicitly skipped
   after repeated HTTP 521 responses and remains covered by dated-news/search
   layers. Atmizoo returned a usable partial catalog.
-- The direct run fetched 8,838 public catalog records and classified 1,997 as
-  relevant. The published Hype view contains 26 monitored RTA/mod/accessory
-  records and 35 monitored POD records, including 13 and 5 dated events
-  respectively. These counts are evidence-filtered, not claimed as exhaustive.
+- The direct release-candidate run fetched 8,838 public catalog records and
+  classified 1,997 as relevant. The final automated refresh published 25
+  monitored RTA/mod/accessory records and 35 monitored POD records, including
+  12 and 5 dated events respectively. These counts are evidence-filtered, not
+  claimed as exhaustive.
 - The daily workflow retains the 06:00 Europe/Bucharest primary run and 06:20
   recovery run, with validation before publication.
 
@@ -49,9 +51,10 @@ blocked collection into zero results.
 - 16 direct-catalog adapter fixtures passed.
 - 640 Hype benchmark assertions passed across 44 fixtures; 59.1% are
   adversarial cases.
-- Analysis and Hype passed Playwright checks on desktop and mobile. Loading
-  completed, the previous 83% guard was released, controls worked and no
-  horizontal overflow or vertical text was detected.
+- Analysis and Hype passed Playwright checks on desktop and mobile, both locally
+  and against the final public snapshot. Loading completed, the previous 83%
+  guard was released, controls worked and no horizontal overflow or vertical
+  text was detected.
 - Core application regression checks passed.
 
 ## Remaining evidence limits
