@@ -44,6 +44,7 @@ async function inspect(page){
       modeButtons:sections.map(section=>section.querySelectorAll('[data-synth-view]').length),
       oldInventoryText:/Alerta stoc|Sold out|Top produse urmărite|Evoluția produselor|Comparația zilnică/i.test(text),
       clearTruth:/Topuri publice, nu volume de vânzări/.test(text),
+      podBrandText:Array.from(sections[0]?.querySelectorAll('[data-synth-grid="brands"] article')||[]).filter(function(card){return /^POD$/i.test(card.querySelector('h4')?.textContent||'')}).map(function(card){return card.textContent||''}).join(' '),
       technicalClutter:/INTERVAL SOLICITAT|DATE VERIFICABILE DISPONIBILE|Perioada cu dovezi|zile observate|pozițiile publice observate|clasamentele cumulative|snapshot|colectare|Tier A|surse comerciale/i.test(text),
       baseHeroHidden:document.querySelector('#market2026Root>.market-hero')?.classList.contains('market-view-hidden')||getComputedStyle(document.querySelector('#market2026Root>.market-hero')).display==='none',
       docOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
@@ -62,6 +63,7 @@ async function runViewport(browser,viewport){
   if(state.headings.join('|')!=='Vizibilitate în magazine|Idei de cumpărare')throw new Error(`${viewport.width}: public section headings are wrong`);
   if(state.popularityCategories<10||state.ideaCategories<1||state.modeButtons.some(count=>count!==2))throw new Error(`${viewport.width}: brand/product public results are incomplete`);
   if(state.oldInventoryText||state.technicalClutter||!state.clearTruth||!state.baseHeroHidden)throw new Error(`${viewport.width}: Analysis is cluttered or its public meaning is unclear`);
+  if(!/OXVA/i.test(state.podBrandText))throw new Error(`${viewport.width}: evidence-supported OXVA brand is missing from POD visibility (${state.podBrandText})`);
   for(const section of await page.locator('[data-synth-section]').all()){
     await section.locator('[data-synth-view="products"]').click();
     if(await section.locator('[data-synth-grid="products"]').getAttribute('hidden')!==null)throw new Error(`${viewport.width}: product ranking did not open`);
@@ -72,6 +74,10 @@ async function runViewport(browser,viewport){
   const leaked=forbidden.filter(item=>requested.includes(item));
   if(leaked.length)throw new Error(`${viewport.width}: heavy browser data still requested: ${leaked.join(', ')}`);
   if(!requested.includes('/data/market-analysis-public-2026.json'))throw new Error(`${viewport.width}: compact public Analysis was not requested`);
+  await page.locator('[data-primary="sources"]').click();
+  await page.waitForFunction(()=>{const body=document.querySelector('#market2026Body'),chip=body&&body.querySelector('.market-coverage span');return chip&&getComputedStyle(body).display!=='none'&&getComputedStyle(chip).display!=='none'},{timeout:30000});
+  const sourceChip=await page.evaluate(()=>{const chip=document.querySelector('#market2026Body .market-coverage span'),style=getComputedStyle(chip);return{color:style.color,background:style.backgroundColor}});
+  if(sourceChip.color===sourceChip.background||/rgb\(255,\s*255,\s*255\)/.test(sourceChip.background))throw new Error(`${viewport.width}: source-family label has unreadable white-on-white styling`);
   if(errors.length)throw new Error(`${viewport.width}: ${errors.join(' | ')}`);
   await page.screenshot({path:path.join(output,`analysis-${viewport.width}.png`),fullPage:true});
   await page.close();

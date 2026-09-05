@@ -9,6 +9,8 @@ const EXTERNAL='data/market-external-intelligence-2026.json';
 const RETAILERS='data/market-retailers-2026.json';
 const OUT='data/market-analysis-public-2026.json';
 const START='2026-01-01';
+const PUBLIC_BRAND_LIMIT=10;
+const PUBLIC_PRODUCT_LIMIT=10;
 const CATEGORY_ORDER=['POD','RTA','mod','RBA/bridge','RDA/RDTA','componente RTA','accesoriu RTA/mod','sarma','coil prebuilt','bumbac/wick','chipset/board','acumulator','incarcator','unelte build'];
 const CATEGORY_SET=new Set(CATEGORY_ORDER);
 const {canonicalBrand,canonicalizeProduct,retailerOperatorMap}=require('./market-product-canonical-2026.js');
@@ -37,7 +39,7 @@ function firstObservedDate(sales,snapshots){
   return dates[0]||null;
 }
 
-function summarizePanels(panels,labelKey){
+function summarizePanels(panels,labelKey,limit){
   const grouped=new Map();
   for(const row of panels.values()){
     if(!grouped.has(row.category))grouped.set(row.category,new Map());
@@ -55,7 +57,7 @@ function summarizePanels(panels,labelKey){
   }
   return new Map([...grouped.entries()].map(([category,items])=>[category,[...items.values()]
     .sort((a,b)=>b.score-a.score||b.sources.size-a.sources.size||a.bestRank-b.bestRank||a.name.localeCompare(b.name))
-    .slice(0,5)
+    .slice(0,limit)
     .map(item=>({
       name:item.name,
       sourceCount:item.sources.size,
@@ -90,7 +92,7 @@ function observedPopularity(sales,retailers){
       }
     }
   }
-  const products=summarizePanels(productPanels,'productName'),brands=summarizePanels(brandPanels,'brandName');
+  const products=summarizePanels(productPanels,'productName',PUBLIC_PRODUCT_LIMIT),brands=summarizePanels(brandPanels,'brandName',PUBLIC_BRAND_LIMIT);
   return CATEGORY_ORDER.map(category=>({category,brands:brands.get(category)||[],products:products.get(category)||[]}))
     .filter(group=>group.brands.length||group.products.length).sort(categorySort);
 }
@@ -148,7 +150,7 @@ function buyingIdeaBrands(products){
     trackedProducts:item.products.size,
     signalKinds:[...item.signalKinds].sort(),
     interestScore:round(item.scores.sort((a,b)=>b-a).slice(0,3).reduce((sum,value)=>sum+value,0))
-  })).sort((a,b)=>b.interestScore-a.interestScore||b.trackedProducts-a.trackedProducts||a.name.localeCompare(b.name)).slice(0,5);
+  })).sort((a,b)=>b.interestScore-a.interestScore||b.trackedProducts-a.trackedProducts||a.name.localeCompare(b.name)).slice(0,PUBLIC_BRAND_LIMIT);
 }
 
 function buyingIdeas(demand,external){
@@ -182,7 +184,7 @@ function buyingIdeas(demand,external){
     return{
       category,
       brands:buyingIdeaBrands(ordered),
-      products:ordered.slice(0,5).map(item=>({
+      products:ordered.slice(0,PUBLIC_PRODUCT_LIMIT).map(item=>({
         name:item.name,
         brand:item.brand||'',
         metricKind:item.metricKind,

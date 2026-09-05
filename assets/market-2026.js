@@ -90,7 +90,9 @@
       .market-toolbar select{min-width:200px}\
       .market-source-link{font-weight:800;text-decoration:none}\
       .market-coverage{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}\
-      .market-coverage span{padding:4px 7px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);font-size:11px}\
+      #market2026Root .market-coverage span{padding:4px 7px;border-radius:999px;background:#151a1f!important;color:#eef2f4!important;border:1px solid rgba(255,255,255,.16)!important;font-size:11px;text-shadow:none!important}\
+      #market2026Root .market-coverage span.is-covered{background:#10281b!important;color:#a8f4c2!important;border-color:rgba(79,223,134,.42)!important}\
+      #market2026Root .market-coverage span.is-missing{color:#aeb7bf!important}\
       .market-lock-card{max-width:560px;margin:44px auto;padding:26px;border-radius:20px;border:1px solid var(--line);background:var(--panel);text-align:center}\
       .market-lock-card h2{margin:8px 0 10px}\
       .market-lock-card p{color:var(--muted)}\
@@ -280,7 +282,7 @@
   function familyCoverageHtml(){
     var desired=['RTA','sarma','coil prebuilt','bumbac/wick','mod','chipset/board','acumulator','incarcator','unelte build','componente RTA','accesoriu RTA/mod','lichid tutunos/NET/DIY'];
     var cats=new Set(observations().map(function(o){return o.category}));
-    return '<div class="market-coverage">'+desired.map(function(name){return '<span>'+escHtml((cats.has(name)?'✓ ':'○ ')+name)+'</span>'}).join('')+'</div>'
+    return '<div class="market-coverage">'+desired.map(function(name){var covered=cats.has(name);return '<span class="'+(covered?'is-covered':'is-missing')+'">'+escHtml((covered?'✓ ':'○ ')+name)+'</span>'}).join('')+'</div>'
   }
 
   function renderMarketTab(){

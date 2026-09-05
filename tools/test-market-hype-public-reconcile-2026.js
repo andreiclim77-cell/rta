@@ -4,7 +4,7 @@
 const fs=require('fs');
 const {canonicalProductFamily}=require('./market-product-canonical-2026.js');
 const {verificationFamilyKey}=require('./market-hype-verification-identity-2026.js');
-const {dated,reconcileQueue}=require('./reconcile-market-hype-public-2026.js');
+const {dated,productSpecificSource,reconcileQueue}=require('./reconcile-market-hype-public-2026.js');
 
 function need(condition,message){if(!condition)throw new Error(message)}
 function read(file){return fs.readFileSync(file,'utf8')}
@@ -24,15 +24,27 @@ need(verificationFamilyKey({productName:'OXVA XLIM PRO 3 30W Vape Pod System',br
 need(verificationFamilyKey({productName:'dotMod dotPod Pro 35W Pod System',brand:'dotMod',category:'POD'},'POD')!==verificationFamilyKey({productName:'dotMod dotPod Max 60W Pod System',brand:'dotMod',category:'POD'},'POD'),'Distinct POD variants were merged');
 need(dated({confidenceTier:'confirmed'})&&dated({confidenceTier:'reported'}),'Verified event tiers are not recognized');
 need(!dated({confidenceTier:'public-signal',eventDate:'2026-09-01T08:00:00.000Z'}),'A signal publication date was treated as a launch date');
-const undatedQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'Arcana New MTL RTA',brand:'Arcana Mods',category:'RTA',reason:'noEventOrDate',url:'https://example.test/arcana'}]},{verificationQueue:[]},'RTA');
+const undatedQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'Arcana Hawkeye MTL RTA',brand:'Arcana Mods',category:'RTA',reason:'noEventOrDate',url:'https://example.test/products/arcana-hawkeye-mtl-rta'}]},{verificationQueue:[]},'RTA');
 need(undatedQueue.length===1&&undatedQueue[0].reason==='undatedPublicAnnouncement'&&undatedQueue[0].firstObservedAt,'An identifiable product without ETA was discarded');
 need(Date.parse(undatedQueue[0].lastObservedAt)>=Date.parse(undatedQueue[0].firstObservedAt),'Verification observation range is inverted');
+need(productSpecificSource('https://www.hellvape.com/rta/dead-rabbit-4-rta-pro.html',{productName:'Hellvape Dead Rabbit 4 RTA Pro Tank Atomizer',category:'RTA'},'RTA'),'An exact official product URL was rejected');
+need(!productSpecificSource('https://www.centralvapors.com/hellvape/',{productName:'Hellvape Dead Rabbit 4 RTA Pro Tank Atomizer',category:'RTA'},'RTA'),'A generic brand page passed as an exact product URL');
+const hellvapeQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[
+  {productName:'Hellvape Dead Rabbit 4 RTA Pro Tank Atomizer',category:'RTA',url:'https://www.centralvapors.com/hellvape/'},
+  {productName:'Hellvape Dead Rabbit M RTA Atomizer',category:'RTA',url:'https://www.centralvapors.com/hellvape/'},
+  {productName:'Hellvape Dead Rabbit MTL RTA Atomizer',category:'RTA',url:'https://www.centralvapors.com/hellvape/'}
+]},{verificationQueue:[]},'RTA');
+need(hellvapeQueue.length===0,'Old Hellvape products from one generic brand page leaked into the current radar');
+const mixedQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'Hellvape Dead Rabbit 4 RTA Pro Tank Atomizer',category:'RTA',url:'https://www.centralvapors.com/hellvape/',sources:['https://www.centralvapors.com/hellvape/','https://www.hellvape.com/rta/dead-rabbit-4-rta-pro.html']}]},{verificationQueue:[]},'RTA');
+need(mixedQueue.length===1&&mixedQueue[0].url==='https://www.hellvape.com/rta/dead-rabbit-4-rta-pro.html'&&mixedQueue[0].sources.length===1,'Generic URL was not removed when an exact product URL exists');
+const staleQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'Hellvape Dead Rabbit 4 RTA Pro Tank Atomizer',category:'RTA',url:'https://www.hellvape.com/rta/dead-rabbit-4-rta-pro.html',firstObservedAt:'2026-06-01T03:00:00.000Z',lastObservedAt:'2026-09-04T02:00:00.000Z'}]},{verificationQueue:[]},'RTA');
+need(staleQueue.length===0,'An old undated product stayed current only because it was crawled again today');
 const genericQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'Best Ecig Store, Box Mod Manufacturer',brand:'Eleaf',category:'MODURI',reason:'noEventOrDate',url:'https://www.eleafworld.com/'}]},{verificationQueue:[]},'RTA');
 need(genericQueue.length===0,'A generic manufacturer page was treated as a product');
 const aggregateQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'SXK RDA / RTA / RDTA Atomizer, Mod - 3FVape',category:'RTA',reason:'noEventOrDate',url:'https://www.3fvape.com/108-sxk'}]},{verificationQueue:[]},'RTA');
 need(aggregateQueue.length===0,'A generic multi-category collection was treated as a concrete product');
 const discoveryCandidates=[
-  {productName:'Arcana New MTL RTA',brand:'Arcana Mods',category:'RTA',reason:'no-direct-dated-event',url:'https://arcana-mods.com/products/new-mtl-rta',observedAt:'2026-09-04T02:00:00.000Z'},
+  {productName:'Arcana Hawkeye MTL RTA',brand:'Arcana Mods',category:'RTA',reason:'no-direct-dated-event',url:'https://arcana-mods.com/products/arcana-hawkeye-mtl-rta',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'Eleaf iStick XC100 Vape Mod',brand:'Eleaf',category:'MODURI',reason:'no-direct-dated-event',url:'https://www.eleafworld.com/istick-xc100',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'OXVA XLIM PRO 3 30W Vape Pod System',brand:'OXVA',category:'POD',reason:'no-direct-dated-event',url:'https://www.oxva.com/pages/xlim-pro-3',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'2026 NeXLIM Labor Day Bundle',brand:'OXVA',category:'POD',reason:'no-direct-dated-event',url:'https://store.oxva.com/products/2026-nexlim-labor-day-bundle',observedAt:'2026-09-04T02:00:00.000Z'},

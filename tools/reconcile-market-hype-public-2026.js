@@ -40,14 +40,36 @@ function categorySummary(rows){return{signals:rows.reduce((sum,row)=>sum+Number(
 function evidenceEvent(row){return{eventId:row.id,familyKey:row.familyKey||familyKey(row),kind:row.window==='after'?'released':'upcoming',category:row.category,typology:row.typology,productName:row.productName,brand:row.brand||'',authenticityState:row.authenticityState||canonicalProductFamily(row).authenticityState,variantCount:Number(row.variantCount||1),stages:unique([row.stageLabel,row.stage]),sourceTypeCount:eligibleSourceTypes(row).length,sourceHostCount:sourceHosts(row).length,sources:(row.sources||[]).map(source=>({...source}))}}
 function heartbeatRow(row){return{eventId:row.id,familyKey:row.familyKey||familyKey(row),productName:row.productName,brand:row.brand||'',category:row.category,typology:row.typology,maturityStage:row.stage,maturityLabel:row.stageLabel,publishedAt:row.eventDate,eventDate:row.eventDate,firstSeenAt:row.firstSeenAt,ageHours:row.ageHours,sourceCount:row.sourceCount,eligibleSourceCount:row.eligibleSources,discoveryOnly:Number(row.eligibleSources||0)===0,status:Number(row.eligibleSources||0)>=2?'CONFIRMED':Number(row.eligibleSources||0)===1?'EARLY':'DISCOVERY',productDetailAvailable:true,dateConfidence:row.dateConfidence,confidenceTier:row.confidenceTier}}
 function heartbeatEvidenceRows(rows){const output=[];for(const row of rows)for(const source of row.sources||[])output.push({eventId:row.id,familyKey:row.familyKey||familyKey(row),kind:row.window==='after'?'released':'upcoming',category:row.category,typology:row.typology,productName:row.productName,brand:row.brand||'',sourceType:source.sourceType||'',sourceBucket:source.decisionEligible===false?'discovery':'verified',sourceHost:source.host||'',decisionEligible:source.decisionEligible!==false,discoveryOnly:source.decisionEligible===false,url:source.url||'',title:source.title||row.productName,publishedAt:source.publishedAt||null,eventDate:row.eventDate,dateQuality:source.dateConfidence||row.dateConfidence,maturityStage:row.stage,maturityLabel:row.stageLabel,firstSeenAt:row.firstSeenAt,lastSeenAt:row.lastSeenAt});return output}
-const GENERIC_MODEL_TOKENS=new Set(['vape','vaping','mod','mods','kit','kits','pod','pods','system','systems','device','devices','product','products','official','shop','store','collection','collections','range']);
+const GENERIC_MODEL_TOKENS=new Set(['vape','vaping','mod','mods','kit','kits','pod','pods','system','systems','device','devices','product','products','official','shop','store','collection','collections','range','new','series']);
 const FALSE_CANDIDATE=/\b(?:veeva systems|stock price|stock quote|company profile|google finance|yahoo finance|cnn markets?|lennar|follow(?:er|ers)|discontinued|best ecig store|bundle|multipack|multi[ -]?pack|value pack|labor day|black friday|cyber monday|(?:box mod|vape|ecig|e cigarette) manufacturer|vape pod systems?\s*&\s*disposables|vape tanks?,?\s*pod mod kits?\s*&\s*accessories|smoktech mods?,?\s*pod\s*&\s*starter kits?|smoktech pens?,?\s*mods?,?\s*and pod systems?|rebuildables?\s*[-–—:]?\s*rda,?\s*rta|rda,?\s*rta,?\s*(?:and|&)\s*tanks?|keep it real)\b/i;
 const FALSE_SOURCE=/(?:wikipedia\.org|finance\.yahoo|google\.[^/]+\/finance|cnn\.com\/markets|linkedin\.com\/company)/i;
 function concreteCandidate(candidate,defaultCategory){if(candidate&&candidate.named===false)return false;const title=candidate.productName||candidate.product||'',url=candidate.url||'',deviceKinds=new Set(String(title).toLowerCase().match(/\b(?:rda|rta|rdta)\b/g)||[]);if(FALSE_CANDIDATE.test(title)||FALSE_SOURCE.test(url)||deviceKinds.size>=2&&/\b(?:atomizer|atomiser|mod)\b/i.test(title))return false;const identity=canonicalProductFamily({productName:title,brand:candidate.brand||candidate.maker||'',category:candidate.category||defaultCategory}),tokens=String(identity.model||'').toLowerCase().match(/[a-z0-9]+/g)||[];return tokens.some(token=>!GENERIC_MODEL_TOKENS.has(token))}
 function observedRange(old,candidate,fallback){const firstValues=[old&&old.firstObservedAt,candidate.firstObservedAt,candidate.observedAt].filter(value=>Number.isFinite(Date.parse(value))),lastValues=[old&&old.lastObservedAt,candidate.lastObservedAt,candidate.observedAt].filter(value=>Number.isFinite(Date.parse(value))),first=firstValues.length?new Date(Math.min(...firstValues.map(Date.parse))).toISOString():fallback,lastCandidates=lastValues.concat(first).filter(value=>Number.isFinite(Date.parse(value))),last=lastCandidates.length?new Date(Math.max(...lastCandidates.map(Date.parse))).toISOString():first;return{first,last}}
 function queueCategory(candidate,defaultCategory){const category=candidate.category||defaultCategory;if(defaultCategory==='POD')return category==='POD'?'POD':'';return ['RTA','MODURI','ACCESORII'].includes(category)?category:''}
-function sourceUrls(candidate){return unique((candidate.sources||[]).map(source=>typeof source==='string'?source:source&&source.url).concat(candidate.url||[]).filter(url=>/^https?:\/\//i.test(String(url||''))&&!FALSE_SOURCE.test(url)))}
-function recentCandidate(candidate,document){const reference=Date.parse(document.snapshotReferenceAt||document.generatedAt),observed=Date.parse(candidate.lastObservedAt||candidate.observedAt||candidate.firstObservedAt||document.generatedAt);return!Number.isFinite(reference)||!Number.isFinite(observed)||Math.abs(reference-observed)<=31*864e5}
+function urlTokens(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim().split(/\s+/).filter(Boolean)}
+function productSpecificSource(value,candidate,defaultCategory){
+  if(!/^https?:\/\//i.test(String(value||''))||FALSE_SOURCE.test(value))return false;
+  let parsed;try{parsed=new URL(value)}catch(_){return false}
+  const path=decodeURIComponent(parsed.pathname||'/'),normalizedPath=urlTokens(path),tail=normalizedPath[normalizedPath.length-1]||'';
+  if(path==='/'||/^(?:products?|catalog|catalogue|shop|store|collections?|all products?|new arrivals?|rta|rda|rdta|atomizers?|atomisers?|mods?|pods?|pod systems?|accessories|product index)$/.test(normalizedPath.join(' ')))return false;
+  if(/\/(?:collections?|product-category|categories?)\/[^/]+\/?$/i.test(path)||/\/(?:product-index|all-products?|products?)\.(?:html?|php)\/?$/i.test(path)||/(?:^|[-_])series(?:[-_]|\.|$)/i.test(tail))return false;
+  const identity=canonicalProductFamily({productName:candidate.productName||candidate.product||'',brand:candidate.brand||candidate.maker||'',category:candidate.category||defaultCategory});
+  const brandTokens=new Set(urlTokens(identity.brand||candidate.brand||candidate.maker||''));
+  const modelTokens=urlTokens(identity.model).filter(token=>!GENERIC_MODEL_TOKENS.has(token)&&!brandTokens.has(token));
+  const searchable=new Set(urlTokens(path+' '+parsed.searchParams.toString()));
+  const matches=modelTokens.filter(token=>searchable.has(token));
+  const explicitId=['product_id','productid','pid','sku'].some(key=>parsed.searchParams.has(key));
+  if(explicitId)return true;
+  if(!modelTokens.length)return false;
+  return matches.length>=(modelTokens.length===1?1:2);
+}
+function sourceUrls(candidate,defaultCategory){return unique((candidate.sources||[]).map(source=>typeof source==='string'?source:source&&source.url).concat(candidate.url||[]).filter(url=>productSpecificSource(url,candidate,defaultCategory)))}
+function recentCandidate(candidate,document){
+  const reference=Date.parse(document.snapshotReferenceAt||document.generatedAt),sourceDates=(candidate.sources||[]).map(source=>source&&typeof source==='object'&&(source.eventDate||source.publishedAt)).filter(Boolean),evidenceDates=[candidate.eventDate,candidate.publishedAt,candidate.date].concat(sourceDates).map(Date.parse).filter(Number.isFinite);
+  if(Number.isFinite(reference)&&evidenceDates.length)return evidenceDates.some(value=>Math.abs(reference-value)<=31*864e5);
+  const observed=Date.parse(candidate.firstObservedAt||candidate.observedAt||candidate.lastObservedAt||document.generatedAt);
+  return!Number.isFinite(reference)||!Number.isFinite(observed)||Math.abs(reference-observed)<=31*864e5
+}
 function reconcileQueue(document,radar,defaultCategory,extraCandidates=[]){
   const published=new Set((document.products||[]).map(row=>verificationFamilyKey(row,defaultCategory))),map=new Map(),candidates=[];
   candidates.push(...(document.verificationQueue||[]));
@@ -57,10 +79,10 @@ function reconcileQueue(document,radar,defaultCategory,extraCandidates=[]){
     candidates.push(...(document.scan&&document.scan.activeMakerRejectedSample||[]));
   }
   for(const candidate of candidates){
-    const name=candidate&&candidate.productName||candidate&&candidate.product||'',category=queueCategory(candidate||{},defaultCategory),key=name&&category&&verificationFamilyKey({...candidate,category},defaultCategory),urls=sourceUrls(candidate||{});
+    const name=candidate&&candidate.productName||candidate&&candidate.product||'',category=queueCategory(candidate||{},defaultCategory),key=name&&category&&verificationFamilyKey({...candidate,category},defaultCategory),urls=sourceUrls(candidate||{},defaultCategory);
     if(!key||published.has(key)||!category||!urls.length||!recentCandidate(candidate,document)||!concreteCandidate({...candidate,category,url:urls[0]},defaultCategory))continue;
     const old=map.get(key),sources=unique([...(old&&old.sources||[]),...urls]),observed=observedRange(old,candidate,document.generatedAt),display=old&&old.productName&&old.productName.length<=name.length?old.productName:name,pod=category==='POD'&&classifyPodProduct([candidate.brand||candidate.maker||'',name].join(' '));
-    map.set(key,{...(old||{}),...candidate,productName:display,category,segment:candidate.segment||pod&&pod.segment||null,typology:candidate.typology||pod&&pod.typology||null,familyKey:key,signalKind:'undated-identifiable-product',confidenceTier:'watch',reason:['noEventOrDate','noDateOrEvent','no-direct-dated-event'].includes(candidate.reason)?'undatedPublicAnnouncement':candidate.reason||'underVerification',firstObservedAt:observed.first,lastObservedAt:observed.last,sources,url:candidate.url&&!FALSE_SOURCE.test(candidate.url)?candidate.url:old&&old.url||sources[0]||null})
+    map.set(key,{...(old||{}),...candidate,productName:display,category,segment:candidate.segment||pod&&pod.segment||null,typology:candidate.typology||pod&&pod.typology||null,familyKey:key,signalKind:'undated-identifiable-product',confidenceTier:'watch',reason:['noEventOrDate','noDateOrEvent','no-direct-dated-event'].includes(candidate.reason)?'undatedPublicAnnouncement':candidate.reason||'underVerification',firstObservedAt:observed.first,lastObservedAt:observed.last,sources,url:urls.includes(candidate.url)?candidate.url:old&&sources.includes(old.url)?old.url:sources[0]||null,productSpecificSource:true})
   }
   return Array.from(map.values()).sort((a,b)=>String(b.lastObservedAt||'').localeCompare(String(a.lastObservedAt||'')));
 }
@@ -79,11 +101,11 @@ function reconcile(){
   const discoveryCandidates=(discovery.undatedCandidates||[]).map(candidate=>({...candidate,observedAt:candidate.observedAt||discovery.generatedAt||generatedAt}));
   products.verificationQueue=reconcileQueue(products,radar,'RTA',discoveryCandidates);
   products.summary={...(products.summary||{}),candidatesUnderVerification:products.verificationQueue.length};
-  products.truth={...(products.truth||{}),finalPublicProjectionsReconciled:true,undatedSignalsPreservedInVerificationQueue:true};
+  products.truth={...(products.truth||{}),finalPublicProjectionsReconciled:true,undatedSignalsPreservedInVerificationQueue:true,productSpecificCandidateSourcesOnly:true,undatedSignalExpiresFromFirstObservation:true};
   syncQueueCoverage(products,'RTA');
   pods.verificationQueue=reconcileQueue(pods,radar,'POD',discoveryCandidates);
   pods.summary={...(pods.summary||{}),candidatesUnderVerification:pods.verificationQueue.length};
-  pods.truth={...(pods.truth||{}),finalPublicProjectionsReconciled:true,undatedSignalsPreservedInVerificationQueue:true};
+  pods.truth={...(pods.truth||{}),finalPublicProjectionsReconciled:true,undatedSignalsPreservedInVerificationQueue:true,productSpecificCandidateSourcesOnly:true,undatedSignalExpiresFromFirstObservation:true};
   syncQueueCoverage(pods,'POD');
   radar.generatedAt=generatedAt;radar.snapshotReferenceAt=products.snapshotReferenceAt;radar.categories=Object.fromEntries(CATEGORIES.map(category=>[category,beforeDated.filter(row=>row.category===category).map(radarRow)]));radar.summary=Object.fromEntries(CATEGORIES.map(category=>[category,categorySummary(radar.categories[category])]));
   radar.sourceStatus={...(radar.sourceStatus||{}),finalConcreteProducts:rows.length,finalBeforeProducts:before.length,finalAfterProducts:after.length,finalDatedEvents:rows.filter(dated).length,finalPublicSignals:rows.filter(row=>!dated(row)).length,finalUndatedCandidates:products.verificationQueue.length};
@@ -103,8 +125,8 @@ function validate(documents){
   need(eventIds.size===evidenceIds.size&&Array.from(eventIds).every(id=>evidenceIds.has(id)),'Evidence projection is not reconciled with final products');
   const heartbeatIds=new Set((documents.heartbeat.releasedLast30Days||[]).map(row=>row.eventId));
   need(afterIds.size===heartbeatIds.size&&Array.from(afterIds).every(id=>heartbeatIds.has(id)),'Heartbeat is not reconciled with final dated after-market products');
-  const published=new Set(rows.map(row=>verificationFamilyKey(row,'RTA'))),productQueueKeys=new Set();for(const candidate of documents.products.verificationQueue||[]){need(!published.has(candidate.familyKey),'Published family also exists in the verification queue');need(!productQueueKeys.has(candidate.familyKey),'Duplicate family exists in the RTA verification queue');productQueueKeys.add(candidate.familyKey)}
-  const podPublished=new Set((documents.pods.products||[]).map(row=>verificationFamilyKey(row,'POD'))),podQueueKeys=new Set();for(const candidate of documents.pods.verificationQueue||[]){need(!podPublished.has(candidate.familyKey),'Published POD family also exists in the verification queue');need(!podQueueKeys.has(candidate.familyKey),'Duplicate family exists in the POD verification queue');podQueueKeys.add(candidate.familyKey)}
+  const published=new Set(rows.map(row=>verificationFamilyKey(row,'RTA'))),productQueueKeys=new Set();for(const candidate of documents.products.verificationQueue||[]){need(!published.has(candidate.familyKey),'Published family also exists in the verification queue');need(!productQueueKeys.has(candidate.familyKey),'Duplicate family exists in the RTA verification queue');need((candidate.sources||[]).length>0&&(candidate.sources||[]).every(url=>productSpecificSource(url,candidate,'RTA')),'RTA verification candidate has a generic source URL');productQueueKeys.add(candidate.familyKey)}
+  const podPublished=new Set((documents.pods.products||[]).map(row=>verificationFamilyKey(row,'POD'))),podQueueKeys=new Set();for(const candidate of documents.pods.verificationQueue||[]){need(!podPublished.has(candidate.familyKey),'Published POD family also exists in the verification queue');need(!podQueueKeys.has(candidate.familyKey),'Duplicate family exists in the POD verification queue');need((candidate.sources||[]).length>0&&(candidate.sources||[]).every(url=>productSpecificSource(url,candidate,'POD')),'POD verification candidate has a generic source URL');podQueueKeys.add(candidate.familyKey)}
   const categoryQueued=Object.values(documents.products.scan&&documents.products.scan.categoryCoverage||{}).reduce((sum,value)=>sum+Number(value.queued||0),0);
   const segmentQueued=Object.values(documents.pods.scan&&documents.pods.scan.segmentCoverage||{}).reduce((sum,value)=>sum+Number(value.queued||0),0);
   need(categoryQueued===(documents.products.verificationQueue||[]).length,'RTA/MOD queue counters do not match the final queue');
@@ -122,4 +144,4 @@ if(require.main===module){
   }catch(error){console.error(error.stack||error);process.exit(1)}
 }
 
-module.exports={dated,reconcileQueue,reconcile,validate};
+module.exports={dated,productSpecificSource,reconcileQueue,reconcile,validate};

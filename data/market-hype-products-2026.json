@@ -103,7 +103,9 @@
     "verificationQueueReconciledWithPublishedProducts": true,
     "finalSegmentAndCategoryCoverageReconciled": true,
     "finalPublicProjectionsReconciled": true,
-    "undatedSignalsPreservedInVerificationQueue": true
+    "undatedSignalsPreservedInVerificationQueue": true,
+    "productSpecificCandidateSourcesOnly": true,
+    "undatedSignalExpiresFromFirstObservation": true
   },
   "scan": {
     "queries": 90,
@@ -1132,7 +1134,7 @@
         "monitored": 10,
         "events": 8,
         "signals": 2,
-        "queued": 6
+        "queued": 1
       },
       "MODURI": {
         "monitored": 13,
@@ -2625,7 +2627,7 @@
     "confirmed": 3,
     "reported": 9,
     "publicSignals": 13,
-    "candidatesUnderVerification": 6,
+    "candidatesUnderVerification": 1,
     "categoryEvents": {
       "RTA": 8,
       "ACCESORII": 2,
@@ -2634,101 +2636,6 @@
   },
   "discoveryContextDays": 180,
   "verificationQueue": [
-    {
-      "productName": "Hellvape Dead Rabbit 4 RTA Pro Tank Atomizer",
-      "brand": "",
-      "category": "RTA",
-      "url": "https://www.centralvapors.com/hellvape/",
-      "reason": "undatedPublicAnnouncement",
-      "observedAt": "2026-09-05T11:37:06.733Z",
-      "segment": null,
-      "typology": null,
-      "familyKey": "RTA|AUTHENTIC|hellvape|dead rabbit 4 pro",
-      "signalKind": "undated-identifiable-product",
-      "confidenceTier": "watch",
-      "firstObservedAt": "2026-09-05T11:37:06.733Z",
-      "lastObservedAt": "2026-09-05T13:56:46.392Z",
-      "sources": [
-        "https://www.centralvapors.com/hellvape/"
-      ],
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "productName": "Hellvape Dead Rabbit 4 RTA Tank Atomizer",
-      "brand": "",
-      "category": "RTA",
-      "url": "https://www.centralvapors.com/hellvape/",
-      "reason": "undatedPublicAnnouncement",
-      "observedAt": "2026-09-05T11:37:06.733Z",
-      "segment": null,
-      "typology": null,
-      "familyKey": "RTA|AUTHENTIC|hellvape|dead rabbit 4",
-      "signalKind": "undated-identifiable-product",
-      "confidenceTier": "watch",
-      "firstObservedAt": "2026-09-05T11:37:06.733Z",
-      "lastObservedAt": "2026-09-05T13:56:46.392Z",
-      "sources": [
-        "https://www.centralvapors.com/hellvape/"
-      ],
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "productName": "Hellvape Dead Rabbit M RTA Atomizer",
-      "brand": "",
-      "category": "RTA",
-      "url": "https://www.centralvapors.com/hellvape/",
-      "reason": "undatedPublicAnnouncement",
-      "observedAt": "2026-09-05T11:37:06.733Z",
-      "segment": null,
-      "typology": null,
-      "familyKey": "RTA|AUTHENTIC|hellvape|dead rabbit m",
-      "signalKind": "undated-identifiable-product",
-      "confidenceTier": "watch",
-      "firstObservedAt": "2026-09-05T11:37:06.733Z",
-      "lastObservedAt": "2026-09-05T13:56:46.392Z",
-      "sources": [
-        "https://www.centralvapors.com/hellvape/"
-      ],
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "productName": "Hellvape Dead Rabbit MTL RTA Atomizer",
-      "brand": "",
-      "category": "RTA",
-      "url": "https://www.centralvapors.com/hellvape/",
-      "reason": "undatedPublicAnnouncement",
-      "observedAt": "2026-09-05T11:37:06.733Z",
-      "segment": null,
-      "typology": null,
-      "familyKey": "RTA|AUTHENTIC|hellvape|dead rabbit",
-      "signalKind": "undated-identifiable-product",
-      "confidenceTier": "watch",
-      "firstObservedAt": "2026-09-05T11:37:06.733Z",
-      "lastObservedAt": "2026-09-05T13:56:46.392Z",
-      "sources": [
-        "https://www.centralvapors.com/hellvape/"
-      ],
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "productName": "Hellvape Dead Rabbit Solo 2 RTA Tank Atomizer",
-      "brand": "",
-      "category": "RTA",
-      "url": "https://www.centralvapors.com/hellvape/",
-      "reason": "undatedPublicAnnouncement",
-      "observedAt": "2026-09-05T11:37:06.733Z",
-      "segment": null,
-      "typology": null,
-      "familyKey": "RTA|AUTHENTIC|hellvape|dead rabbit solo 2",
-      "signalKind": "undated-identifiable-product",
-      "confidenceTier": "watch",
-      "firstObservedAt": "2026-09-05T11:37:06.733Z",
-      "lastObservedAt": "2026-09-05T13:56:46.392Z",
-      "sources": [
-        "https://www.centralvapors.com/hellvape/"
-      ],
-      "status": "NEEDS_DATE_OR_ETA"
-    },
     {
       "productName": "Picatiny Style MTL RTA Rebuildable Tank Atomizer",
       "brand": "",
@@ -2746,7 +2653,8 @@
       "sources": [
         "https://thevapersboutique.com/product/picatiny-mtl-rta-by-sightpic/?lang=en"
       ],
-      "status": "NEEDS_DATE_OR_ETA"
+      "status": "NEEDS_DATE_OR_ETA",
+      "productSpecificSource": true
     }
   ],
   "snapshotReferenceAt": "2026-09-05T03:00:00.000Z",
