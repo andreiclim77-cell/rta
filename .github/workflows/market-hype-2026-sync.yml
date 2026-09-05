@@ -336,7 +336,26 @@ jobs:
           git commit -m "Refresh verified RTA, mod and POD Hype radar"
           for attempt in 1 2 3 4 5; do
             git fetch origin main
-            git rebase origin/main
+            if ! git rebase origin/main; then
+              conflicts="$(git diff --name-only --diff-filter=U)"
+              if [ -z "$conflicts" ]; then
+                git rebase --abort || true
+                exit 1
+              fi
+              while IFS= read -r path; do
+                case "$path" in
+                  data/market-hype-*.json|data/hype-vnext/*) ;;
+                  *)
+                    echo "Unexpected rebase conflict outside generated Hype data: $path"
+                    git rebase --abort || true
+                    exit 1
+                    ;;
+                esac
+              done <<< "$conflicts"
+              git checkout --theirs -- $conflicts
+              git add $conflicts
+              GIT_EDITOR=true git rebase --continue
+            fi
             if git push origin HEAD:main; then exit 0; fi
             sleep $((attempt*3))
           done
