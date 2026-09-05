@@ -29,7 +29,6 @@ const PUBLIC_DATA_FILES=[
 const INTEGRATION_FILES=[
   'assets/market-analysis-synthesis.js',
   'assets/market-loading-guard.js',
-  'assets/market-access-policy.js',
   'assets/enhancements.js',
   'index.html',
   'en/index.html',

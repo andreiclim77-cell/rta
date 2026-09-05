@@ -14,6 +14,7 @@ const HISTORY_FILE='data/market-hype-known-history-2026.json';
 const REF=snapshotReferenceMs();
 const DAY=86400000;
 const WINDOW_DAYS=30;
+const FORECAST_DAYS=180;
 const TIER_RANK={confirmed:3,reported:2,'public-signal':1};
 const STRONG_DATES=new Set(['explicit','catalog-published-at','official-product-published-at','release-observed','first-retail-observation']);
 const DATE_RANK={explicit:7,'official-product-published-at':6,'catalog-published-at':5,'release-observed':4,'dated-public-evidence':3,'signal-publication':2,'dated-retail-campaign':1,'first-retail-observation':0};
@@ -25,7 +26,10 @@ function unique(values){return Array.from(new Set((values||[]).filter(Boolean)))
 function ms(value){const parsed=Date.parse(String(value||''));return Number.isFinite(parsed)?parsed:null}
 function eventRank(row){if(TIER_RANK[row.confidenceTier])return TIER_RANK[row.confidenceTier];return STRONG_DATES.has(row.dateConfidence)?2:1}
 function isEvent(row){return eventRank(row)>=2}
-function inWindow(row){const value=ms(row.eventDate);if(value==null)return false;if(row.window==='before')return Math.abs(value-REF)<=WINDOW_DAYS*DAY;return row.window==='after'&&value<=REF&&REF-value<=WINDOW_DAYS*DAY}
+function latestObservedAt(row){const values=[row.signalObservedAt,row.firstPublicEvidenceAt,row.firstSeenAt].concat((row.sources||[]).flatMap(function(source){return[source.publishedAt,source.observedAt]})).map(ms).filter(function(value){return value!=null&&value<=REF+DAY});return values.length?Math.max(...values):null}
+function ageHoursFor(row){const value=row.signalWindowOnly===true?latestObservedAt(row):ms(row.eventDate);return value==null?null:Number((Math.abs(REF-value)/36e5).toFixed(1))}
+function activeSignal(row){const observed=latestObservedAt(row);return row.confidenceTier==='public-signal'&&observed!=null&&observed>=REF-WINDOW_DAYS*DAY&&observed<=REF+DAY}
+function inWindow(row){const value=ms(row.eventDate);if(value==null)return false;if(row.window==='before'&&Math.abs(value-REF)<=WINDOW_DAYS*DAY)return true;if(row.window==='after'&&value<=REF&&REF-value<=WINDOW_DAYS*DAY)return true;return row.signalWindowOnly===true&&activeSignal(row)&&row.window==='before'&&value>REF&&value<=REF+FORECAST_DAYS*DAY}
 function key(row){return canonicalProductFamily(row).key}
 function betterName(a,b,brand){function score(value){const text=String(value||'').trim();let result=text.length;if(!text)result+=1000;if(brand&&!norm(text).includes(norm(brand)))result+=80;if(/\b(?:buy|cheap|sale|deal)\b/i.test(text))result+=50;return result}return score(b)<score(a)?b:a}
 function sourceKey(source){return String(source.url||'')+'|'+String(source.eventDate||'')+'|'+String(source.collector||source.sourceType||'')}
@@ -92,6 +96,21 @@ function normalizeConfidenceTier(input){
   return row;
 }
 
+function preserveLongRangeSignal(input){
+  const row={...input},event=ms(row.eventDate),observed=latestObservedAt(row),context=[row.stage,row.stageLabel,row.signalKind].concat((row.sources||[]).map(function(source){return String(source.stage||'')+' '+String(source.title||'')})).join(' ');
+  if(row.window!=='before'||event==null||event<=REF+WINDOW_DAYS*DAY||event>REF+FORECAST_DAYS*DAY||observed==null||observed<REF-WINDOW_DAYS*DAY||!/(?:teaser|prototype|sample|production|preorder|pre-order|pre sale|waitlist|eta|batch|announcement|coming|imminent)/i.test(context))return row;
+  row.confidenceTier='public-signal';
+  row.signalKind='long-range-forecast';
+  row.signalWindowOnly=true;
+  row.forecastEventDate=row.eventDate;
+  row.signalObservedAt=new Date(observed).toISOString();
+  row.stageEvidenceAt=row.signalObservedAt;
+  row.dateConfidence='forecast-eta';
+  row.stageLabel='semnal recent cu ETA viitor, în urmărire';
+  row.ageHours=Number(((REF-observed)/36e5).toFixed(1));
+  return row;
+}
+
 function lifecycleScore(row){
   const event=ms(row.eventDate),future=row.window==='before'&&event!=null&&event>REF;
   const rank=eventRank(row);
@@ -117,7 +136,7 @@ function mergeRows(current,incoming){
   merged.variants=mergeVariants(variantsFor(current).concat(variantsFor(incoming)));
   merged.variantCount=merged.variants.length;
   const family=canonicalProductFamily(merged);merged.familyKey=family.key;merged.authenticityState=family.authenticityState;
-  merged.ageHours=Number((Math.abs(REF-ms(merged.eventDate))/36e5).toFixed(1));
+  merged.ageHours=ageHoursFor(merged);
   return merged;
 }
 
@@ -134,8 +153,8 @@ function validTarget(row,isPodFile){
 function consolidate(doc,file){
   const isPodFile=/pods/.test(file);
   const grouped=new Map();
-  for(const input of doc.products||[]){const row=applyRetailEvidenceGate(applyPriorHistory(normalizeFromEvidence(input)));if(!row||!row.productName||!inWindow(row)||!validTarget(row,isPodFile))continue;const rowKey=key(row),old=grouped.get(rowKey);grouped.set(rowKey,old?mergeRows(old,row):{...row});}
-  const products=Array.from(grouped.entries()).map(function(entry){const row=normalizeConfidenceTier(entry[1]),canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''}),family=canonicalProductFamily(row);row.id=hash(entry[0]);row.brand=canonical.brand||row.brand||'';row.familyKey=family.key;row.authenticityState=family.authenticityState;row.variants=mergeVariants(variantsFor(row));row.variantCount=row.variants.length;row.sources=Array.from(new Map((row.sources||[]).map(function(source){return[sourceKey(source),source]})).values());row.sourceCount=row.sources.length;row.eligibleSources=unique(row.sources.filter(function(source){return source.decisionEligible!==false}).map(function(source){return source.sourceType})).length;row.firstPublicEvidenceAt=row.firstPublicEvidenceAt||earliestIso(row.sources.map(function(source){return source.eventDate}))||row.eventDate;row.stageEvidenceAt=row.stageEvidenceAt||row.eventDate;row.ageHours=Number((Math.abs(REF-ms(row.eventDate))/36e5).toFixed(1));return row}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
+  for(const input of doc.products||[]){const row=preserveLongRangeSignal(applyRetailEvidenceGate(applyPriorHistory(normalizeFromEvidence(input))));if(!row||!row.productName||!inWindow(row)||!validTarget(row,isPodFile))continue;const rowKey=key(row),old=grouped.get(rowKey);grouped.set(rowKey,old?mergeRows(old,row):{...row});}
+  const products=Array.from(grouped.entries()).map(function(entry){const row=normalizeConfidenceTier(entry[1]),canonical=canonicalizeProduct({product:row.productName||'',brand:row.brand||''}),family=canonicalProductFamily(row);row.id=hash(entry[0]);row.brand=canonical.brand||row.brand||'';row.familyKey=family.key;row.authenticityState=family.authenticityState;row.variants=mergeVariants(variantsFor(row));row.variantCount=row.variants.length;row.sources=Array.from(new Map((row.sources||[]).map(function(source){return[sourceKey(source),source]})).values());row.sourceCount=row.sources.length;row.eligibleSources=unique(row.sources.filter(function(source){return source.decisionEligible!==false}).map(function(source){return source.sourceType})).length;row.firstPublicEvidenceAt=row.firstPublicEvidenceAt||earliestIso(row.sources.map(function(source){return source.eventDate}))||row.eventDate;row.stageEvidenceAt=row.stageEvidenceAt||row.eventDate;row.ageHours=ageHoursFor(row);return row}).sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))});
   const publishedIdentities=new Set(products.map(function(row){return canonicalProductFamily(row).key})),queueMap=new Map();
   for(const candidate of Array.isArray(doc.verificationQueue)?doc.verificationQueue:[]){const productName=candidate.productName||candidate.product||'',identity=canonicalProductFamily({productName,brand:candidate.brand||candidate.maker||'',category:candidate.category||'POD'}).key;if(!productName||!identity||publishedIdentities.has(identity)||queueMap.has(identity))continue;queueMap.set(identity,candidate)}
   const verificationQueue=Array.from(queueMap.values()),events=products.filter(isEvent),signals=products.filter(function(row){return !isEvent(row)}),categories={};for(const row of events)categories[row.category]=(categories[row.category]||0)+1;
@@ -146,7 +165,7 @@ function consolidate(doc,file){
   }else if(!isPodFile){
     scan.categoryCoverage=Object.fromEntries(['RTA','MODURI','ACCESORII'].map(function(category){const categoryProducts=products.filter(function(row){return row.category===category}),categoryEvents=categoryProducts.filter(isEvent);return[category,{monitored:categoryProducts.length,events:categoryEvents.length,signals:categoryProducts.length-categoryEvents.length,queued:verificationQueue.filter(function(item){return item.category===category}).length}]}));
   }
-  return{...doc,schemaVersion:Math.max(31,Number(doc.schemaVersion||0)),generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),pendingRefresh:false,truth:{...(doc.truth||{}),eventDatesSeparatedFromCoverageDates:true,canonicalCrossSourceDeduplication:true,crossWindowLifecycleDeduplication:true,modelFamilyVariantsGrouped:true,variantEvidencePreserved:true,categoryRevalidatedBeforePublish:true,retailPromotionIsNotRelease:true,priorExistenceDemotesRetailRelisting:true,singleRetailerListingNeedsCorroboration:true,confidenceTierNormalizedAtPublish:true,verificationQueueReconciledWithPublishedProducts:true,finalSegmentAndCategoryCoverageReconciled:true},scan,products,verificationQueue,summary};
+  return{...doc,schemaVersion:Math.max(32,Number(doc.schemaVersion||0)),generatedAt:new Date().toISOString(),snapshotReferenceAt:new Date(REF).toISOString(),pendingRefresh:false,truth:{...(doc.truth||{}),eventDatesSeparatedFromCoverageDates:true,signalObservationWindowDays:30,signalLookback30dEtaHorizon365d:false,signalLookback30dEtaHorizon180d:true,futureEtaMayExceed30Days:true,forecastHorizonDays:180,longRangeSignalsAreNotLaunches:true,canonicalCrossSourceDeduplication:true,crossWindowLifecycleDeduplication:true,modelFamilyVariantsGrouped:true,variantEvidencePreserved:true,categoryRevalidatedBeforePublish:true,retailPromotionIsNotRelease:true,priorExistenceDemotesRetailRelisting:true,singleRetailerListingNeedsCorroboration:true,confidenceTierNormalizedAtPublish:true,verificationQueueReconciledWithPublishedProducts:true,finalSegmentAndCategoryCoverageReconciled:true},scan,products,verificationQueue,summary};
 }
 
 for(const file of FILES){const output=consolidate(read(file),file);if(WRITE)save(file,output);console.log(`${file}: ${output.summary.total} dated events, ${output.summary.publicSignals} public signals, ${output.summary.allConcrete} concrete products.`)}

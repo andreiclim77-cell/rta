@@ -8,7 +8,7 @@ const {verificationFamilyKey}=require('./market-hype-verification-identity-2026.
 
 const file='data/market-hype-pods-2026.json';
 function need(condition,message){if(!condition)throw new Error(message)}
-const data=JSON.parse(fs.readFileSync(file,'utf8')),reg=registry(),reference=Date.parse(data.snapshotReferenceAt),windowMs=30*24*60*60*1000;
+const data=JSON.parse(fs.readFileSync(file,'utf8')),reg=registry(),reference=Date.parse(data.snapshotReferenceAt),windowMs=30*24*60*60*1000,forecastMs=180*24*60*60*1000;
 need(Number(data.scopeYear)===2026,'POD Hype scope year must be 2026');
 need(data.scope==='GLOBAL POD SYSTEMS','POD Hype scope mismatch');
 need(Number(data.windowDays)===30,'POD Hype window must be 30 days');
@@ -18,13 +18,15 @@ need(data.scan&&Number(data.scan.queriesRun)>0,'POD Hype collector did not run')
 need(data.scan&&data.scan.rejections&&Number.isFinite(Number(data.scan.rejections.notConcretePodProduct)),'POD Hype rejection audit missing');
 need(data.truth&&data.truth.verificationQueueReconciledWithPublishedProducts===true,'POD verification queue was not reconciled after publication');
 need(data.truth.finalPublicProjectionsReconciled===true&&data.truth.undatedSignalsPreservedInVerificationQueue===true,'POD final projection/undated-candidate contract is missing');
+need(data.truth.signalObservationWindowDays===30&&data.truth.forecastHorizonDays===180&&data.truth.longRangeSignalsAreNotLaunches===true,'POD long-range signal contract is missing');
 const keys=new Set();
 for(const product of data.products||[]){
   need(product.category==='POD',`Non-POD category leaked: ${product.productName}`);
   need(classifyPodProduct(product.productName,product.brand),`Unclassified POD product leaked: ${product.productName}`);
   const event=Date.parse(product.eventDate);
   need(Number.isFinite(event),`POD event date missing: ${product.productName}`);
-  if(product.window==='before')need(Math.abs(event-reference)<=windowMs,`POD before event outside 30 days: ${product.productName}`);
+  if(product.window==='before'&&product.signalWindowOnly===true){const observed=Date.parse(product.signalObservedAt);need(product.confidenceTier==='public-signal'&&product.dateConfidence==='forecast-eta',`POD long-range ETA was labelled as a launch: ${product.productName}`);need(Number.isFinite(observed)&&observed>=reference-windowMs&&observed<=reference+864e5,`POD long-range signal observation outside 30 days: ${product.productName}`);need(event>reference+windowMs&&event<=reference+forecastMs,`POD long-range ETA outside 180-day watch horizon: ${product.productName}`)}
+  else if(product.window==='before')need(Math.abs(event-reference)<=windowMs,`POD before event outside 30 days: ${product.productName}`);
   else if(product.window==='after')need(event<=reference&&reference-event<=windowMs,`POD after event outside 30 days: ${product.productName}`);
   else throw new Error(`Invalid POD window: ${product.productName}`);
   const key=canonicalProductFamily(product).key;

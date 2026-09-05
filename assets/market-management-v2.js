@@ -25,16 +25,17 @@ function render(data){
   box.id=ID;
   box.className='mgmt mgmt-public-analysis';
   var updatedAt=data.updatedAt||data.generatedAt;
+  var evidenceStart=data.truth&&data.truth.evidenceFirstObservedAt;
   box.innerHTML='<div class="mgmt-hero">'
     +'<div class="mgmt-kicker">'+esc(t('ROMÂNIA · ACTUALIZAT ZILNIC LA 06:00','ROMANIA · UPDATED DAILY AT 06:00'))+'</div>'
     +'<h2>'+esc(t('Analiza pieței RTA din România','Romanian RTA market analysis'))+'</h2>'
-    +'<p>'+esc(t('Două răspunsuri clare: ce s-a vândut cel mai bine și ce produse atrag cel mai mult interes pentru cumpărare.','Two clear answers: what sold best and which products attract the most buying interest.'))+'</p>'
+    +'<p>'+esc(t('Două răspunsuri fără amestecarea indicatorilor: ce domină topurile comerciale publice și ce atrage interes măsurabil pentru cumpărare. Fiecare este separat pe mărci și produse.','Two answers without mixing indicators: what leads public commercial rankings and what attracts measurable buying interest. Each is split into brands and products.'))+'</p>'
     +'</div>'
     +'<div class="mgmt-evidence-window complete">'
-    +'<div><span>'+esc(t('PERIOADA URMĂRITĂ','TRACKED PERIOD'))+'</span><b>01.01.2026 → '+esc(dateLabel(updatedAt))+'</b></div>'
-    +'<div><span>'+esc(t('ULTIMA ACTUALIZARE','LATEST UPDATE'))+'</span><b>'+esc(dateLabel(updatedAt))+'</b></div>'
+    +'<div><span>'+esc(t('INTERVAL SOLICITAT','REQUESTED PERIOD'))+'</span><b>01.01.2026 → '+esc(dateLabel(updatedAt))+'</b></div>'
+    +'<div><span>'+esc(t('DATE VERIFICABILE DISPONIBILE','VERIFIABLE DATA AVAILABLE'))+'</span><b>'+esc(dateLabel(evidenceStart))+' → '+esc(dateLabel(updatedAt))+'</b></div>'
     +'<strong>'+esc(t('Actualizare automată zilnică la 06:00.','Automatic daily update at 06:00.'))+'</strong>'
-    +'<small>'+esc(t('Ordinea folosește numai topuri publice comparabile de vânzare și popularitate observate în 2026. Disponibilitatea curentă nu schimbă clasamentul.','The order uses only comparable public sales and popularity lists observed in 2026. Current availability does not change the ranking.'))+'</small>'
+    +'<small>'+esc(t('Ordinea folosește numai observații datate. Clasamentele cumulative ale magazinelor nu sunt transformate în vânzări pentru perioada 01.01.2026–prezent, iar disponibilitatea curentă nu schimbă rezultatul.','The order uses dated observations only. Cumulative retailer rankings are never converted into sales for the 1 January 2026–present period, and current availability does not change the result.'))+'</small>'
     +'</div>'
     +'<div id="marketAnalysisSynthesisAnchor"></div>';
   var switcher=el('marketViewSwitcher');

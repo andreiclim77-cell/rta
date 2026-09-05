@@ -1,9 +1,9 @@
 {
-  "schemaVersion": 31,
+  "schemaVersion": 32,
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-09-05T09:47:50.584Z",
+  "generatedAt": "2026-09-05T11:06:41.893Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -45,7 +45,7 @@
     "currentVendorRtaEtaScan": true,
     "etaPastIsNotRelease": true,
     "signalLookback30dEtaHorizon365d": false,
-    "futureEtaMayExceed30Days": false,
+    "futureEtaMayExceed30Days": true,
     "currentVendorProductTitleResolved": true,
     "currentVendorPaginationExpanded": true,
     "currentVendorPaginationProbed": true,
@@ -99,7 +99,11 @@
     "verificationQueueReconciledWithPublishedProducts": true,
     "finalSegmentAndCategoryCoverageReconciled": true,
     "finalPublicProjectionsReconciled": true,
-    "undatedSignalsPreservedInVerificationQueue": true
+    "undatedSignalsPreservedInVerificationQueue": true,
+    "signalObservationWindowDays": 30,
+    "signalLookback30dEtaHorizon180d": true,
+    "forecastHorizonDays": 180,
+    "longRangeSignalsAreNotLaunches": true
   },
   "scan": {
     "queries": 90,
@@ -1128,7 +1132,7 @@
         "monitored": 12,
         "events": 2,
         "signals": 10,
-        "queued": 1
+        "queued": 0
       },
       "ACCESORII": {
         "monitored": 2,
@@ -1149,7 +1153,7 @@
       "stage": "IMMINENT",
       "stageLabel": "ETA / precomandă",
       "eventDate": "2026-09-30T00:00:00.000Z",
-      "dateConfidence": "explicit-vendor-eta",
+      "dateConfidence": "explicit",
       "firstSeenAt": "2026-09-05T09:43:10.393Z",
       "lastSeenAt": "2026-09-05T09:47:21.309Z",
       "ageHours": 597,
@@ -1885,7 +1889,7 @@
       "authenticityState": "AUTHENTIC",
       "variants": [
         {
-          "productName": "Reload Vapor Reload",
+          "productName": "Reload Vapor Reload Vapor Reload Vapor Reload",
           "brand": "Reload Vapor",
           "url": "https://vaping101.co.uk/products/reload-squonk-mod"
         },
@@ -2538,7 +2542,7 @@
     "confirmed": 3,
     "reported": 9,
     "publicSignals": 12,
-    "candidatesUnderVerification": 1,
+    "candidatesUnderVerification": 0,
     "categoryEvents": {
       "RTA": 8,
       "ACCESORII": 2,
@@ -2546,27 +2550,7 @@
     }
   },
   "discoveryContextDays": 180,
-  "verificationQueue": [
-    {
-      "maker": "Hellvape",
-      "product": "HellVape - Hell Vape Rebuildables - RDA, RTA, & Tanks",
-      "category": "RTA",
-      "typology": "RDL single",
-      "reason": "undatedPublicAnnouncement",
-      "channel": "dated-discovery",
-      "url": "https://www.elementvape.com/hellvape",
-      "publishedAt": "2026-09-04T06:09:00.000Z",
-      "observedAt": "2026-09-05T07:14:45.487Z",
-      "productName": "HellVape - Hell Vape Rebuildables - RDA, RTA, & Tanks",
-      "familyKey": "RTA|AUTHENTIC|hellvape|hell rebuildables tanks",
-      "firstObservedAt": "2026-09-05T07:14:45.487Z",
-      "lastObservedAt": "2026-09-05T07:14:45.487Z",
-      "sources": [
-        "https://www.elementvape.com/hellvape"
-      ],
-      "status": "NEEDS_DATE_OR_ETA"
-    }
-  ],
+  "verificationQueue": [],
   "snapshotReferenceAt": "2026-09-05T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
 }

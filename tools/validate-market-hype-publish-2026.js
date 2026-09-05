@@ -13,7 +13,7 @@ const evidence=json('data/market-hype-evidence-2026.json');
 const heartbeat=json('data/market-hype-heartbeat-2026.json');
 const heartbeatEvidence=json('data/market-hype-heartbeat-evidence-2026.json');
 const products=json('data/market-hype-products-2026.json');
-const ref=snapshotReferenceMs(),refIso=new Date(ref).toISOString(),windowMs=30*24*60*60*1000;
+const ref=snapshotReferenceMs(),refIso=new Date(ref).toISOString(),windowMs=30*24*60*60*1000,forecastMs=180*24*60*60*1000;
 const strongDates=new Set(['explicit','catalog-published-at','official-product-published-at','release-observed','first-retail-observation']);
 const allowedAfterDates=new Set([...strongDates,'dated-public-evidence']);
 const banned=/dictionary\.|steampowered\.com|cbsnews\.com|(^|\.)rta\.ae|rtafleet\.com|(^|\.)rta\.com|merriam-webster|riversidetransit|riderta/i;
@@ -24,6 +24,7 @@ need(Number(products.schemaVersion)>=28&&products.scope==='GLOBAL RTA + clone RT
 need(products.snapshotReferenceAt===refIso,`RTA/MOD snapshot reference mismatch: expected ${refIso}`);
 need(products.truth&&products.truth.productLevelOnly===true&&products.truth.newArrivalIsNotRelease===true&&products.truth.relistingIsNotRelease===true,'Product-level/relisting contract is missing');
 need(products.truth.eventDatesSeparatedFromCoverageDates===true&&products.truth.canonicalCrossSourceDeduplication===true&&products.truth.crossWindowLifecycleDeduplication===true&&products.truth.modelFamilyVariantsGrouped===true&&products.truth.variantEvidencePreserved===true&&products.truth.categoryRevalidatedBeforePublish===true&&products.truth.retailPromotionIsNotRelease===true&&products.truth.confidenceTierNormalizedAtPublish===true,'Final Hype arbitration contract is missing');
+need(products.truth.signalObservationWindowDays===30&&products.truth.forecastHorizonDays===180&&products.truth.longRangeSignalsAreNotLaunches===true,'Long-range signal truth contract is missing');
 need(products.truth.finalPublicProjectionsReconciled===true&&products.truth.undatedSignalsPreservedInVerificationQueue===true,'Final projection/undated-candidate contract is missing');
 need(products.scan&&products.scan.directCatalogs&&products.scan.datedNews&&products.scan.retailCampaigns,'Final multi-source Hype collectors did not run');
 need((products.products||[]).length>0,'Final RTA/MOD Hype product list is empty');
@@ -40,7 +41,8 @@ for(const row of products.products||[]){
   need(row.familyKey===identity&&['AUTHENTIC','CLONE'].includes(row.authenticityState),`Product family identity missing: ${row.productName}`);
   need(Array.isArray(row.variants)&&row.variants.length===Number(row.variantCount)&&row.variantCount>0,`Variant evidence missing: ${row.productName}`);
   const event=Date.parse(row.eventDate);need(Number.isFinite(event),`Event date missing: ${row.productName}`);
-  if(row.window==='before')need(Math.abs(event-ref)<=windowMs,`Before event outside 30 days: ${row.productName}`);
+  if(row.window==='before'&&row.signalWindowOnly===true){const observed=Date.parse(row.signalObservedAt);need(!dated(row)&&row.confidenceTier==='public-signal'&&row.dateConfidence==='forecast-eta',`Long-range ETA was labelled as a launch: ${row.productName}`);need(Number.isFinite(observed)&&observed>=ref-windowMs&&observed<=ref+864e5,`Long-range signal observation outside 30 days: ${row.productName}`);need(event>ref+windowMs&&event<=ref+forecastMs,`Long-range ETA outside the 180-day watch horizon: ${row.productName}`)}
+  else if(row.window==='before')need(Math.abs(event-ref)<=windowMs,`Before event outside 30 days: ${row.productName}`);
   else need(event<=ref&&ref-event<=windowMs,`After event outside 30 days: ${row.productName}`);
   if(row.category==='RTA')need(/\bRTA\b|rebuildable\s+(?:tank\s+)?atomiz/i.test(row.productName),`Non-RTA product leaked into RTA: ${row.productName}`);
   if(row.category==='ACCESORII')need(classifyRtaAccessory(row.productName),`Non-RTA accessory leaked into accessories: ${row.productName}`);

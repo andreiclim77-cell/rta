@@ -21,7 +21,7 @@ async function openAnalysis(page){
   if(await accept.isVisible().catch(()=>false))await accept.click();
   await page.waitForFunction(()=>!document.body.classList.contains('app-preparing'),{timeout:30000});
   await page.waitForFunction(()=>document.querySelector('[data-tab="market2026"]')&&Array.isArray(window.MAIN_ROUTES)&&window.MAIN_ROUTES.includes('market2026'),{timeout:30000});
-  await page.evaluate(()=>{sessionStorage.setItem('rtaMarket2026Access','1');if(typeof setRoute==='function')setRoute('market2026');else{location.hash='#market2026';if(typeof applyRoute==='function')applyRoute(false)}});
+  await page.evaluate(()=>{if(typeof setRoute==='function')setRoute('market2026');else{location.hash='#market2026';if(typeof applyRoute==='function')applyRoute(false)}});
   await page.waitForSelector('#market2026.active #market2026Root .market-hero',{timeout:30000});
   await page.waitForFunction(()=>document.querySelector('#market2026Root')?.dataset.marketGuardReady==='1',{timeout:30000});
   await page.locator('[data-primary="analysis"]').click();
@@ -39,12 +39,14 @@ async function inspect(page){
       guardPresent:Boolean(document.querySelector('#marketLoadingGuard')),
       ready:document.querySelector('#market2026Root')?.dataset.marketGuardReady,
       headings:sections.map(section=>section.querySelector('.synth-title span')?.textContent.trim()),
-      salesCategories:sections[0]?.querySelectorAll('.synth-category-grid>article').length||0,
+      popularityCategories:sections[0]?.querySelectorAll('[data-synth-grid="brands"]>article').length||0,
       ideaCategories:sections[1]?.querySelectorAll('.synth-category-grid>article').length||0,
+      modeButtons:sections.map(section=>section.querySelectorAll('[data-synth-view]').length),
       oldInventoryText:/Alerta stoc|Sold out|Top produse urmărite|Evoluția produselor|Comparația zilnică/i.test(text),
       start2026:/01\.01\.2026/.test(text),
       refresh0600:/06:00/.test(text),
-      availabilityExcluded:/Disponibilitatea curentă nu schimbă clasamentul/.test(text),
+      evidenceWindow:/DATE VERIFICABILE DISPONIBILE/.test(text),
+      truthCopy:/nu sunt prezentate drept vânzări realizate după 01\.01\.2026/.test(text),
       docOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
       synthesisOverflow:synthesis?synthesis.scrollWidth-synthesis.clientWidth:999
     };
@@ -58,9 +60,14 @@ async function runViewport(browser,viewport){
   const requested=await openAnalysis(page);
   const state=await inspect(page);
   if(state.ready!=='1'||state.guardPresent)throw new Error(`${viewport.width}: loading guard did not release`);
-  if(state.headings.join('|')!=='Ce s-a vândut cel mai bine|Idei de cumpărare')throw new Error(`${viewport.width}: public section headings are wrong`);
-  if(state.salesCategories<10||state.ideaCategories<1)throw new Error(`${viewport.width}: public category results are incomplete`);
-  if(state.oldInventoryText||!state.start2026||!state.refresh0600||!state.availabilityExcluded)throw new Error(`${viewport.width}: rejected inventory text or required public context is wrong`);
+  if(state.headings.join('|')!=='Ce indică topurile comerciale observate|Ce merită urmărit pentru cumpărare')throw new Error(`${viewport.width}: public section headings are wrong`);
+  if(state.popularityCategories<10||state.ideaCategories<1||state.modeButtons.some(count=>count!==2))throw new Error(`${viewport.width}: brand/product public results are incomplete`);
+  if(state.oldInventoryText||!state.start2026||!state.refresh0600||!state.evidenceWindow||!state.truthCopy)throw new Error(`${viewport.width}: rejected inventory text or required public context is wrong`);
+  for(const section of await page.locator('[data-synth-section]').all()){
+    await section.locator('[data-synth-view="products"]').click();
+    if(await section.locator('[data-synth-grid="products"]').getAttribute('hidden')!==null)throw new Error(`${viewport.width}: product ranking did not open`);
+    await section.locator('[data-synth-view="brands"]').click();
+  }
   if(state.docOverflow>3||state.synthesisOverflow>3)throw new Error(`${viewport.width}: horizontal overflow detected`);
   const forbidden=['/data/market-sales-2026.json','/data/market-management-2026.json','/data/market-demand-intelligence-2026.json','/data/market-external-intelligence-2026.json','/data/market-product-presence-2026.json','/data/market-universe-audit-2026.json'];
   const leaked=forbidden.filter(item=>requested.includes(item));
@@ -77,6 +84,6 @@ async function runViewport(browser,viewport){
   try{
     await runViewport(browser,{width:390,height:844});
     await runViewport(browser,{width:1366,height:900});
-    console.log('Market Analysis visual OK: desktop + mobile; compact snapshot only; guard released; two public sections; no inventory panel or horizontal overflow.');
+    console.log('Market Analysis visual OK: desktop + mobile; direct public access; brand/product switches; evidence window disclosed; no inventory panel or horizontal overflow.');
   }finally{await browser.close()}
 })().catch(error=>{console.error(error.stack||error);process.exit(1)});

@@ -4,6 +4,7 @@
 const fs=require('fs');
 const {canonicalProductFamily}=require('./market-product-canonical-2026.js');
 const {verificationFamilyKey}=require('./market-hype-verification-identity-2026.js');
+const {classifyPodProduct}=require('./market-pod-classifier-2026.js');
 
 const WRITE=process.argv.includes('--write');
 const CHECK=process.argv.includes('--check');
@@ -13,11 +14,13 @@ const FILES={
   radar:'data/market-hype-radar-2026.json',
   evidence:'data/market-hype-evidence-2026.json',
   heartbeat:'data/market-hype-heartbeat-2026.json',
-  heartbeatEvidence:'data/market-hype-heartbeat-evidence-2026.json'
+  heartbeatEvidence:'data/market-hype-heartbeat-evidence-2026.json',
+  discovery:'data/market-hype-discovery-ledger-2026.json'
 };
 const CATEGORIES=['RTA','MODURI','ACCESORII'];
 
 function read(file){return JSON.parse(fs.readFileSync(file,'utf8'))}
+function readOptional(file,fallback){try{return read(file)}catch(_){return fallback}}
 function save(file,value){fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n','utf8')}
 function need(condition,message){if(!condition)throw new Error(message)}
 function unique(values){return Array.from(new Set((values||[]).filter(Boolean)))}
@@ -38,28 +41,50 @@ function evidenceEvent(row){return{eventId:row.id,familyKey:row.familyKey||famil
 function heartbeatRow(row){return{eventId:row.id,familyKey:row.familyKey||familyKey(row),productName:row.productName,brand:row.brand||'',category:row.category,typology:row.typology,maturityStage:row.stage,maturityLabel:row.stageLabel,publishedAt:row.eventDate,eventDate:row.eventDate,firstSeenAt:row.firstSeenAt,ageHours:row.ageHours,sourceCount:row.sourceCount,eligibleSourceCount:row.eligibleSources,discoveryOnly:Number(row.eligibleSources||0)===0,status:Number(row.eligibleSources||0)>=2?'CONFIRMED':Number(row.eligibleSources||0)===1?'EARLY':'DISCOVERY',productDetailAvailable:true,dateConfidence:row.dateConfidence,confidenceTier:row.confidenceTier}}
 function heartbeatEvidenceRows(rows){const output=[];for(const row of rows)for(const source of row.sources||[])output.push({eventId:row.id,familyKey:row.familyKey||familyKey(row),kind:row.window==='after'?'released':'upcoming',category:row.category,typology:row.typology,productName:row.productName,brand:row.brand||'',sourceType:source.sourceType||'',sourceBucket:source.decisionEligible===false?'discovery':'verified',sourceHost:source.host||'',decisionEligible:source.decisionEligible!==false,discoveryOnly:source.decisionEligible===false,url:source.url||'',title:source.title||row.productName,publishedAt:source.publishedAt||null,eventDate:row.eventDate,dateQuality:source.dateConfidence||row.dateConfidence,maturityStage:row.stage,maturityLabel:row.stageLabel,firstSeenAt:row.firstSeenAt,lastSeenAt:row.lastSeenAt});return output}
 const GENERIC_MODEL_TOKENS=new Set(['vape','vaping','mod','mods','kit','kits','pod','pods','system','systems','device','devices','product','products','official','shop','store','collection','collections','range']);
-const FALSE_CANDIDATE=/\b(?:veeva systems|stock price|stock quote|company profile|google finance|yahoo finance|cnn markets?|lennar|follow(?:er|ers)|discontinued|best ecig store|(?:box mod|vape|ecig|e cigarette) manufacturer|vape pod systems?\s*&\s*disposables|vape tanks?,?\s*pod mod kits?\s*&\s*accessories|smoktech mods?,?\s*pod\s*&\s*starter kits?|smoktech pens?,?\s*mods?,?\s*and pod systems?|keep it real)\b/i;
-function concreteCandidate(candidate,defaultCategory){if(candidate&&candidate.named===false)return true;const title=candidate.productName||candidate.product||'',url=candidate.url||'';if(FALSE_CANDIDATE.test(title)||/(?:finance\.yahoo|google\.[^/]+\/finance|cnn\.com\/markets)/i.test(url))return false;const identity=canonicalProductFamily({productName:title,brand:candidate.brand||candidate.maker||'',category:candidate.category||defaultCategory}),tokens=String(identity.model||'').toLowerCase().match(/[a-z0-9]+/g)||[];return tokens.some(token=>!GENERIC_MODEL_TOKENS.has(token))}
+const FALSE_CANDIDATE=/\b(?:veeva systems|stock price|stock quote|company profile|google finance|yahoo finance|cnn markets?|lennar|follow(?:er|ers)|discontinued|best ecig store|(?:box mod|vape|ecig|e cigarette) manufacturer|vape pod systems?\s*&\s*disposables|vape tanks?,?\s*pod mod kits?\s*&\s*accessories|smoktech mods?,?\s*pod\s*&\s*starter kits?|smoktech pens?,?\s*mods?,?\s*and pod systems?|rebuildables?\s*[-–—:]?\s*rda,?\s*rta|rda,?\s*rta,?\s*(?:and|&)\s*tanks?|keep it real)\b/i;
+const FALSE_SOURCE=/(?:wikipedia\.org|finance\.yahoo|google\.[^/]+\/finance|cnn\.com\/markets|linkedin\.com\/company)/i;
+function concreteCandidate(candidate,defaultCategory){if(candidate&&candidate.named===false)return false;const title=candidate.productName||candidate.product||'',url=candidate.url||'';if(FALSE_CANDIDATE.test(title)||FALSE_SOURCE.test(url))return false;const identity=canonicalProductFamily({productName:title,brand:candidate.brand||candidate.maker||'',category:candidate.category||defaultCategory}),tokens=String(identity.model||'').toLowerCase().match(/[a-z0-9]+/g)||[];return tokens.some(token=>!GENERIC_MODEL_TOKENS.has(token))}
 function observedRange(old,candidate,fallback){const firstValues=[old&&old.firstObservedAt,candidate.firstObservedAt,candidate.observedAt].filter(value=>Number.isFinite(Date.parse(value))),lastValues=[old&&old.lastObservedAt,candidate.lastObservedAt,candidate.observedAt].filter(value=>Number.isFinite(Date.parse(value))),first=firstValues.length?new Date(Math.min(...firstValues.map(Date.parse))).toISOString():fallback,lastCandidates=lastValues.concat(first).filter(value=>Number.isFinite(Date.parse(value))),last=lastCandidates.length?new Date(Math.max(...lastCandidates.map(Date.parse))).toISOString():first;return{first,last}}
-function reconcileQueue(document,radar,defaultCategory){
+function queueCategory(candidate,defaultCategory){const category=candidate.category||defaultCategory;if(defaultCategory==='POD')return category==='POD'?'POD':'';return ['RTA','MODURI','ACCESORII'].includes(category)?category:''}
+function sourceUrls(candidate){return unique((candidate.sources||[]).map(source=>typeof source==='string'?source:source&&source.url).concat(candidate.url||[]).filter(url=>/^https?:\/\//i.test(String(url||''))&&!FALSE_SOURCE.test(url)))}
+function recentCandidate(candidate,document){const reference=Date.parse(document.snapshotReferenceAt||document.generatedAt),observed=Date.parse(candidate.lastObservedAt||candidate.observedAt||candidate.firstObservedAt||document.generatedAt);return!Number.isFinite(reference)||!Number.isFinite(observed)||Math.abs(reference-observed)<=31*864e5}
+function reconcileQueue(document,radar,defaultCategory,extraCandidates=[]){
   const published=new Set((document.products||[]).map(row=>verificationFamilyKey(row,defaultCategory))),map=new Map(),candidates=[];
   candidates.push(...(document.verificationQueue||[]));
+  candidates.push(...extraCandidates);
   if(defaultCategory!=='POD'){
     candidates.push(...(radar.verificationQueue||[]));
     candidates.push(...(document.scan&&document.scan.activeMakerRejectedSample||[]));
   }
-  for(const candidate of candidates){const name=candidate&&candidate.productName||candidate&&candidate.product||'',key=name&&verificationFamilyKey(candidate,defaultCategory);if(!key||published.has(key)||!concreteCandidate(candidate,defaultCategory))continue;const old=map.get(key),sources=unique([...(old&&old.sources||[]),...(candidate.sources||[]),candidate.url].filter(Boolean)),observed=observedRange(old,candidate,document.generatedAt),display=old&&old.productName&&old.productName.length<=name.length?old.productName:name;map.set(key,{...(old||{}),...candidate,productName:display,familyKey:key,reason:['noEventOrDate','noDateOrEvent'].includes(candidate.reason)?'undatedPublicAnnouncement':candidate.reason||'underVerification',firstObservedAt:observed.first,lastObservedAt:observed.last,sources,url:candidate.url||old&&old.url||sources[0]||null})}
+  for(const candidate of candidates){
+    const name=candidate&&candidate.productName||candidate&&candidate.product||'',category=queueCategory(candidate||{},defaultCategory),key=name&&category&&verificationFamilyKey({...candidate,category},defaultCategory),urls=sourceUrls(candidate||{});
+    if(!key||published.has(key)||!category||!urls.length||!recentCandidate(candidate,document)||!concreteCandidate({...candidate,category,url:urls[0]},defaultCategory))continue;
+    const old=map.get(key),sources=unique([...(old&&old.sources||[]),...urls]),observed=observedRange(old,candidate,document.generatedAt),display=old&&old.productName&&old.productName.length<=name.length?old.productName:name,pod=category==='POD'&&classifyPodProduct([candidate.brand||candidate.maker||'',name].join(' '));
+    map.set(key,{...(old||{}),...candidate,productName:display,category,segment:candidate.segment||pod&&pod.segment||null,typology:candidate.typology||pod&&pod.typology||null,familyKey:key,signalKind:'undated-identifiable-product',confidenceTier:'watch',reason:['noEventOrDate','noDateOrEvent','no-direct-dated-event'].includes(candidate.reason)?'undatedPublicAnnouncement':candidate.reason||'underVerification',firstObservedAt:observed.first,lastObservedAt:observed.last,sources,url:candidate.url&&!FALSE_SOURCE.test(candidate.url)?candidate.url:old&&old.url||sources[0]||null})
+  }
   return Array.from(map.values()).sort((a,b)=>String(b.lastObservedAt||'').localeCompare(String(a.lastObservedAt||'')));
 }
+function syncQueueCoverage(document,defaultCategory){
+  const scan=document.scan||{},queue=document.verificationQueue||[];
+  if(defaultCategory==='POD'&&scan.segmentCoverage){
+    scan.segmentCoverage=Object.fromEntries(Object.entries(scan.segmentCoverage).map(([segment,value])=>[segment,{...value,queued:queue.filter(candidate=>candidate.segment===segment).length}]));
+  }else if(defaultCategory!=='POD'&&scan.categoryCoverage){
+    scan.categoryCoverage=Object.fromEntries(Object.entries(scan.categoryCoverage).map(([category,value])=>[category,{...value,queued:queue.filter(candidate=>candidate.category===category).length}]));
+  }
+  document.scan=scan;
+}
 function reconcile(){
-  const products=read(FILES.products),pods=read(FILES.pods),radar=read(FILES.radar),evidence=read(FILES.evidence),heartbeat=read(FILES.heartbeat),heartbeatEvidence=read(FILES.heartbeatEvidence);
+  const products=read(FILES.products),pods=read(FILES.pods),radar=read(FILES.radar),evidence=read(FILES.evidence),heartbeat=read(FILES.heartbeat),heartbeatEvidence=read(FILES.heartbeatEvidence),discovery=readOptional(FILES.discovery,{undatedCandidates:[]});
   const generatedAt=products.generatedAt||new Date().toISOString(),rows=products.products||[],before=rows.filter(row=>row.window==='before'),beforeDated=before.filter(dated),after=rows.filter(row=>row.window==='after'),afterDated=after.filter(dated);
-  products.verificationQueue=reconcileQueue(products,radar,'RTA');
+  const discoveryCandidates=(discovery.undatedCandidates||[]).map(candidate=>({...candidate,observedAt:candidate.observedAt||discovery.generatedAt||generatedAt}));
+  products.verificationQueue=reconcileQueue(products,radar,'RTA',discoveryCandidates);
   products.summary={...(products.summary||{}),candidatesUnderVerification:products.verificationQueue.length};
   products.truth={...(products.truth||{}),finalPublicProjectionsReconciled:true,undatedSignalsPreservedInVerificationQueue:true};
-  pods.verificationQueue=reconcileQueue(pods,radar,'POD');
+  syncQueueCoverage(products,'RTA');
+  pods.verificationQueue=reconcileQueue(pods,radar,'POD',discoveryCandidates);
   pods.summary={...(pods.summary||{}),candidatesUnderVerification:pods.verificationQueue.length};
   pods.truth={...(pods.truth||{}),finalPublicProjectionsReconciled:true,undatedSignalsPreservedInVerificationQueue:true};
+  syncQueueCoverage(pods,'POD');
   radar.generatedAt=generatedAt;radar.snapshotReferenceAt=products.snapshotReferenceAt;radar.categories=Object.fromEntries(CATEGORIES.map(category=>[category,beforeDated.filter(row=>row.category===category).map(radarRow)]));radar.summary=Object.fromEntries(CATEGORIES.map(category=>[category,categorySummary(radar.categories[category])]));
   radar.sourceStatus={...(radar.sourceStatus||{}),finalConcreteProducts:rows.length,finalBeforeProducts:before.length,finalAfterProducts:after.length,finalDatedEvents:rows.filter(dated).length,finalPublicSignals:rows.filter(row=>!dated(row)).length,finalUndatedCandidates:products.verificationQueue.length};
   radar.truth={...(radar.truth||{}),finalPublicProjectionsReconciled:true,modelFamilyVariantsGrouped:true,undatedSignalsPreservedInVerificationQueue:true};
@@ -80,6 +105,10 @@ function validate(documents){
   need(afterIds.size===heartbeatIds.size&&Array.from(afterIds).every(id=>heartbeatIds.has(id)),'Heartbeat is not reconciled with final dated after-market products');
   const published=new Set(rows.map(row=>verificationFamilyKey(row,'RTA'))),productQueueKeys=new Set();for(const candidate of documents.products.verificationQueue||[]){need(!published.has(candidate.familyKey),'Published family also exists in the verification queue');need(!productQueueKeys.has(candidate.familyKey),'Duplicate family exists in the RTA verification queue');productQueueKeys.add(candidate.familyKey)}
   const podPublished=new Set((documents.pods.products||[]).map(row=>verificationFamilyKey(row,'POD'))),podQueueKeys=new Set();for(const candidate of documents.pods.verificationQueue||[]){need(!podPublished.has(candidate.familyKey),'Published POD family also exists in the verification queue');need(!podQueueKeys.has(candidate.familyKey),'Duplicate family exists in the POD verification queue');podQueueKeys.add(candidate.familyKey)}
+  const categoryQueued=Object.values(documents.products.scan&&documents.products.scan.categoryCoverage||{}).reduce((sum,value)=>sum+Number(value.queued||0),0);
+  const segmentQueued=Object.values(documents.pods.scan&&documents.pods.scan.segmentCoverage||{}).reduce((sum,value)=>sum+Number(value.queued||0),0);
+  need(categoryQueued===(documents.products.verificationQueue||[]).length,'RTA/MOD queue counters do not match the final queue');
+  need(segmentQueued===(documents.pods.verificationQueue||[]).length,'POD segment queue counters do not match the final queue');
   need(documents.products.truth.finalPublicProjectionsReconciled===true&&documents.radar.truth.finalPublicProjectionsReconciled===true,'Final reconciliation flags are missing');
   return{families:families.length,before:beforeIds.size,afterDated:afterIds.size,undatedCandidates:(documents.products.verificationQueue||[]).length};
 }
@@ -87,7 +116,7 @@ function validate(documents){
 if(require.main===module){
   try{
     const documents=reconcile(),summary=validate(documents);
-    if(WRITE)for(const [key,file] of Object.entries(FILES))save(file,documents[key]);
+    if(WRITE)for(const [key,file] of Object.entries(FILES))if(documents[key])save(file,documents[key]);
     if(CHECK||WRITE)console.log(`Hype public reconciliation PASS: ${summary.families} families; ${summary.before} before; ${summary.afterDated} dated after; ${summary.undatedCandidates} undated candidates.`);
     else console.log(JSON.stringify(summary,null,2));
   }catch(error){console.error(error.stack||error);process.exit(1)}

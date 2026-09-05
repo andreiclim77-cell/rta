@@ -1,22 +1,26 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "scopeYear": 2026,
   "analysisStart": "2026-01-01",
   "updatedAt": "2026-09-05T09:45:24.299Z",
   "refreshTarget": "06:00 Europe/Bucharest",
   "methodology": {
-    "bestSellers": "Aggregated reciprocal-rank evidence from public retailer bestseller and popularity lists available in 2026. It is not exact national unit sales.",
+    "observedPopularity": "Aggregated reciprocal-rank evidence from public retailer bestseller and popularity lists, deduplicated by operator, date, category and canonical product or brand. It is not exact period or national unit sales.",
     "buyingIdeas": "Measured public search, guide or community interest when available; public review-view interest is used as a labelled fallback.",
     "availability": "Current availability, zero-stock labels and stock alerts are excluded from both public sections."
   },
   "truth": {
     "requestedStart": "2026-01-01",
     "evidenceFirstObservedAt": "2026-08-29",
+    "evidenceEndObservedAt": "2026-09-05",
     "exactPeriodUnitsAvailable": false,
     "nationalMarketShareAvailable": false,
     "availabilityExcluded": true,
     "buyingInterestSeparatedFromSales": true,
-    "historicalBackfillInvented": false
+    "historicalBackfillInvented": false,
+    "cumulativeRankingsNeverLabelledAsPeriodSales": true,
+    "brandAndProductRankingsSeparated": true,
+    "operatorDateDeduplication": true
   },
   "coverage": {
     "configuredStores": 22,
@@ -25,654 +29,1404 @@
     "demandProducts": 1208,
     "youtubeModels": 85
   },
-  "bestSellers": [
+  "observedPopularity": [
     {
       "category": "POD",
+      "brands": [
+        {
+          "name": "Vaporesso",
+          "sourceCount": 9,
+          "storefrontCount": 9,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 16.41,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Voopoo",
+          "sourceCount": 7,
+          "storefrontCount": 7,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 13.95,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Geekvape",
+          "sourceCount": 7,
+          "storefrontCount": 7,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 13.65,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Aspire",
+          "sourceCount": 7,
+          "storefrontCount": 7,
+          "bestRank": 3,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 7.97,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Vozol",
+          "sourceCount": 4,
+          "storefrontCount": 4,
+          "bestRank": 1,
+          "observedDays": 4,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 7.69,
+          "evidenceWindow": "mixed-public-ranking"
+        }
+      ],
       "products": [
         {
           "name": "Vaporesso Armour G",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 1,
           "observedDays": 4,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.vapshop.ro/moduri-electronice/vaporesso-armour-g-3000mAh-grey-knight",
-          "signalScore": 8
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "JAC Vapour VIM AIO Slate",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vape.ro/vape-kit-reincarcabil-jac-vapour-vim-aio-box-mod-slate-2600-mah-2ml-tf-tank-mtldtl-rezistenta-1ohm-inclusa-compatibil-nicsalts/535.htm",
-          "signalScore": 5.11
+          "signalScore": 5.11,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Geekvape Sonder Q2",
-          "storeCount": 3,
+          "sourceCount": 3,
+          "storefrontCount": 3,
           "bestRank": 1,
           "observedDays": 4,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.nouatigaraelectronica.ro/",
-          "signalScore": 4.94
+          "signalScore": 4.94,
+          "evidenceWindow": "mixed-public-ranking"
         },
         {
           "name": "Voopoo Argus G3",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 1,
           "observedDays": 4,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.justvape.ro/Kit-Pod-VooPoo-Argus-G3-Justvape-ro",
-          "signalScore": 4.71
+          "signalScore": 4.71,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Vozol Switch Pro 2",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 4,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
-          "signalScore": 4
+          "signalScore": 4,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "RTA",
+      "brands": [
+        {
+          "name": "Hellvape",
+          "sourceCount": 7,
+          "storefrontCount": 7,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 28.09,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Wotofo",
+          "sourceCount": 5,
+          "storefrontCount": 5,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 22.76,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Geekvape",
+          "sourceCount": 2,
+          "storefrontCount": 2,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 12.71,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Ambition Mods",
+          "sourceCount": 4,
+          "storefrontCount": 4,
+          "bestRank": 3,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 9,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Ennequadro Mods",
+          "sourceCount": 2,
+          "storefrontCount": 2,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 8.19,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "Hellvape Dead Rabbit 2",
-          "storeCount": 6,
+          "sourceCount": 6,
+          "storefrontCount": 6,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.justvape.ro/Atomizoare-Justvape-ro/Atomizoare-servisabile-justvape-ro/Atomizor-Hellvape-Dead-Rabbit-MTL-2-RTA-Justvape-ro",
-          "signalScore": 25.83
+          "signalScore": 25.83,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Wotofo Gear V2",
-          "storeCount": 4,
+          "sourceCount": 4,
+          "storefrontCount": 4,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapez.ro/rta-tank/atomizor-wotofo-gear-v2-rta-negru",
-          "signalScore": 21.82
+          "signalScore": 21.82,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Auguse Era V3",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 7,
           "lastSeen": "2026-09-04",
           "productUrl": "https://vaperia.ro/rta/atomizor-era-rta-v3-auguse-5433-4.html",
-          "signalScore": 7
+          "signalScore": 7,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Geekvape Zeus",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 7,
           "lastSeen": "2026-09-04",
           "productUrl": "https://geekvape.ro/index.php?route=product%2Fsearch&search=RTA&orderby=popularity",
-          "signalScore": 7
+          "signalScore": 7,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
-          "name": "SQuape E[c]",
-          "storeCount": 2,
-          "bestRank": 3,
-          "observedDays": 7,
-          "lastSeen": "2026-09-04",
-          "productUrl": "https://tigaraego.com/squape-ec-rta-black/",
-          "signalScore": 6.37
+          "name": "Kuma",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "https://vapepoint.ro/",
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "mod",
+      "brands": [
+        {
+          "name": "Aspire",
+          "sourceCount": 4,
+          "storefrontCount": 4,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 13.02,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Eleaf",
+          "sourceCount": 4,
+          "storefrontCount": 4,
+          "bestRank": 3,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 8.26,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "BP Mods",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Geekvape",
+          "sourceCount": 4,
+          "storefrontCount": 4,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 7.87,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "JAC Vapour",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "BP Mods Warhammer",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://steamfactory.ro/mod-bp-mods-warhammer-18650-orange/",
-          "signalScore": 8
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "SXmini MQ Plus",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapez.ro/mod-yihi-sxmini-mq-plus-silver",
-          "signalScore": 8
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Eleaf iStick Pico Plus",
-          "storeCount": 4,
+          "sourceCount": 4,
+          "storefrontCount": 4,
           "bestRank": 5,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.vapshop.ro/moduri-electronice/eleaf-istick-pico-plus-argintiu",
-          "signalScore": 6.84
+          "signalScore": 6.84,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Aspire Zelos 3",
-          "storeCount": 3,
+          "sourceCount": 3,
+          "storefrontCount": 3,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.nouatigaraelectronica.ro/moduri-electronice/mod-aspire-zelos-3-black-chrome",
-          "signalScore": 6.56
+          "signalScore": 6.56,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "JAC Vapour SERIES-B DNA Edition",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaps.ro/mod-uri/",
-          "signalScore": 6
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "RBA/bridge",
+      "brands": [
+        {
+          "name": "SvoëMesto",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 3,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 4.62,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Taifun",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 6,
+          "observedDays": 5,
+          "lastSeen": "2026-09-04",
+          "productUrl": "",
+          "signalScore": 1.95,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "ThunderCloud",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 4,
+          "observedDays": 2,
+          "lastSeen": "2026-08-30",
+          "productUrl": "",
+          "signalScore": 1,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Ennequadro Mods",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 25,
+          "observedDays": 5,
+          "lastSeen": "2026-09-04",
+          "productUrl": "",
+          "signalScore": 1,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "LVE",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 2,
+          "observedDays": 1,
+          "lastSeen": "2026-08-29",
+          "productUrl": "",
+          "signalScore": 0.71,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "Vision Eternity",
-          "storeCount": 2,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 7,
           "lastSeen": "2026-09-04",
-          "productUrl": "https://tigaraego.com/atomizor-vision-eternity-rba/",
-          "signalScore": 8.81
+          "productUrl": "https://vicii-shop.ro/atomizor-vision-eternity-rba/",
+          "signalScore": 7,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "UD AGT",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 5,
           "lastSeen": "2026-09-04",
           "productUrl": "https://ecig-vapo.com/ud-agt-atomizor-servisabil-titanium-rba-cu-rezervor-din-pyrex/",
-          "signalScore": 5
+          "signalScore": 5,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "SvoëMesto Kayfun BB",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 3,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/baze-rba-rta/kayfun-bb-rba-svoemesto.html",
-          "signalScore": 4.62
+          "signalScore": 4.62,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Orion Six, Alexa",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 6,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/baze-rba-rta/orion-six-rba-alexa-silver.html",
-          "signalScore": 3.27
+          "signalScore": 3.27,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Taifun SmokerStore Gaia + BORO",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 6,
           "observedDays": 5,
           "lastSeen": "2026-09-04",
           "productUrl": "https://www.vapersparadise.ro/shop/smokerstore-taifun-gaia-rba/",
-          "signalScore": 1.95
+          "signalScore": 1.95,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "RDA/RDTA",
+      "brands": [
+        {
+          "name": "Vandy Vape",
+          "sourceCount": 3,
+          "storefrontCount": 3,
+          "bestRank": 1,
+          "observedDays": 1,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 2.35,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Hellvape",
+          "sourceCount": 3,
+          "storefrontCount": 3,
+          "bestRank": 2,
+          "observedDays": 1,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 1.54,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Geekvape",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 1,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 1,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "ThunderCloud",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 10,
+          "observedDays": 1,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 0.32,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "Tobh Atty",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 5,
           "lastSeen": "2026-09-04",
           "productUrl": "https://ecig-vapo.com/tobh-atty-atomizor-rba-rda-28mm/",
-          "signalScore": 3.54
+          "signalScore": 3.54,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Tobh V2 Atty",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 4,
           "observedDays": 5,
           "lastSeen": "2026-09-04",
           "productUrl": "https://ecig-vapo.com/tobh-v2-atty-atomizor-rba-rda-28mm/",
-          "signalScore": 2.5
+          "signalScore": 2.5,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Vandy Vape Lit",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 1,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vape.ro/atomizor-servisabil-vandy-vape-lit-rda-black/413.htm",
-          "signalScore": 2
+          "signalScore": 2,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Vandy Vape Iconic",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 2,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vape.ro/atomizor-servisabil-vandyvape-iconic-rda-gold/317.htm",
-          "signalScore": 1.41
+          "signalScore": 1.41,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Geekvape Baron",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.justvape.ro/Atomizoare-Justvape-ro/Atomizoare-servisabile-justvape-ro/Atomizor-Geekvape-Baron-RDA-Justvape-ro",
-          "signalScore": 1
+          "signalScore": 1,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "componente RTA",
-      "products": [
+      "brands": [
         {
-          "name": "TopFill pentru Dvarw",
-          "storeCount": 2,
+          "name": "Ambition Mods",
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
-          "observedDays": 7,
-          "lastSeen": "2026-09-04",
-          "productUrl": "https://tigaraego.com/topfill-pentru-dvarw-mtl-rta-silver/",
-          "signalScore": 11.04
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
+          "name": "SvoëMesto",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 7.5,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "JAC Vapour",
+          "sourceCount": 2,
+          "storefrontCount": 2,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 6.35,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Aspire",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 2,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 5.66,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
+      "products": [
+        {
           "name": "Ambition Mods Extensie Standard Bi2hop",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/accesorii-60-4/extensie-standard-bi2hop-mtl-rta-ambition-mods-5414-4.html",
-          "signalScore": 8
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "SvoëMesto Chamber SWEET Kayfun BB",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 7,
           "lastSeen": "2026-09-04",
           "productUrl": "https://vaperia.ro/baze-rba-rta/chamber-sweet-kayfun-bb-rba-svoemesto.html",
-          "signalScore": 7
+          "signalScore": 7,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "TopFill pentru Dvarw",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 7,
+          "lastSeen": "2026-09-04",
+          "productUrl": "https://tigaraego.com/topfill-pentru-dvarw-mtl-rta-silver/",
+          "signalScore": 7,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "JAC Vapour VIM",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vape.ro/atomizor-tank-pt-box-mod-ul-aio-vim-2-ml-topfill-rezistenta-tip-capsula-1-ohm-inclusa-compatibil-mtldl-si-sub-ohm/1000.htm",
-          "signalScore": 6.35
+          "signalScore": 6.35,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Ambition Mods Geam Bi2hop",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/accesorii-60-4/geam-ultem-4ml-bi2hop-mtl-rta-ambition-mods.html",
-          "signalScore": 5.66
+          "signalScore": 5.66,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "accesoriu RTA/mod",
+      "brands": [
+        {
+          "name": "Voopoo",
+          "sourceCount": 7,
+          "storefrontCount": 8,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 8.81,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Geekvape",
+          "sourceCount": 9,
+          "storefrontCount": 10,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 6.85,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Vozol",
+          "sourceCount": 5,
+          "storefrontCount": 6,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 5.68,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Vaporesso",
+          "sourceCount": 8,
+          "storefrontCount": 8,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 5.46,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Elf Bar",
+          "sourceCount": 5,
+          "storefrontCount": 5,
+          "bestRank": 2,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 4.8,
+          "evidenceWindow": "mixed-public-ranking"
+        }
+      ],
       "products": [
         {
           "name": "Wrap Acumulator - M7",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/accesorii-vape/wrap-acumulator-18650-m7",
-          "signalScore": 6
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Wrap Acumulator - Poser",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/accesorii-vape/wrap-acumulator-18650-poser",
-          "signalScore": 4.24
+          "signalScore": 4.24,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "LVE Cartuse Orion II Pro - Compatibile cu Orion II Pro",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 5,
           "lastSeen": "2026-09-04",
           "productUrl": "https://www.vapersparadise.ro/shop/cartuse-lve-orion-ii-pro-compatibile-cu-rba-lve-orion-ii-pro/",
-          "signalScore": 4.12
+          "signalScore": 4.12,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Cartus Vuse - Creamy Tobacco 20mg [2 Bucati]",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 4,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://tigaraego.com/cartus-vuse-creamy-tobacco-20mg-2-bucati/",
-          "signalScore": 4
+          "signalScore": 4,
+          "evidenceWindow": "mixed-public-ranking"
         },
         {
           "name": "Wrap Acumulator",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 3,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/accesorii-vape/wrap-acumulator-18650-black-madness",
-          "signalScore": 3.77
+          "signalScore": 3.77,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "sarma",
+      "brands": [
+        {
+          "name": "Geekvape",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 10,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 2.47,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Vandy Vape",
+          "sourceCount": 2,
+          "storefrontCount": 2,
+          "bestRank": 28,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 2.2,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "Vapefly",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 13,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 2.16,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Wotofo",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 8,
+          "observedDays": 5,
+          "lastSeen": "2026-09-04",
+          "productUrl": "",
+          "signalScore": 1.77,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "GV wire roll SS430 24GA",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://geekvape.ro/gv-wire-roll-ss430-24ga?search=wire",
-          "signalScore": 8
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Wire Shots Twisted KA1 28GAx2, UD",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 7,
           "lastSeen": "2026-09-04",
           "productUrl": "https://vaperia.ro/rezistente-d-i-y/wire-shots-twisted-ka1-28gax2-ud.html",
-          "signalScore": 7
+          "signalScore": 7,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Fir Ni80 - Zivipf",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/atomizor-tigara-electronica/consumabile-atomizoare-vapat/fire/fir-ni80-0-40mm-zivipf",
-          "signalScore": 6
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "GV wire roll 28GA",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://geekvape.ro/gv-wire-roll-ss-316l-28ga?search=wire",
-          "signalScore": 5.66
+          "signalScore": 5.66,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Kanthal - 10 metri",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://ecig-vapo.com/kanthal-035-mm-10-metri/",
-          "signalScore": 5.5
+          "signalScore": 5.5,
+          "evidenceWindow": "mixed-public-ranking"
         }
       ]
     },
     {
       "category": "coil prebuilt",
+      "brands": [
+        {
+          "name": "JAC Vapour",
+          "sourceCount": 2,
+          "storefrontCount": 2,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 6.71,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Voopoo",
+          "sourceCount": 6,
+          "storefrontCount": 6,
+          "bestRank": 2,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 6.31,
+          "evidenceWindow": "mixed-public-ranking"
+        },
+        {
+          "name": "CoilTurd",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 5.33,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Hellvape",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 4.12,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Wotofo",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 5,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 3.58,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "JAC Vapour Set 5 Rezistente S-Coil 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vape.ro/set-5-rezistente-atomizor-vape-jac-vapour-s-coil-mtl-10-ohm-bumbac-organic-cutie-5-bucati-tip-capsula/64.htm",
-          "signalScore": 6.71
+          "signalScore": 6.71,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Voopoo Rezistenta PnP",
-          "storeCount": 2,
+          "sourceCount": 2,
+          "storefrontCount": 2,
           "bestRank": 2,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/rezistente-d-i-y/rezistenta-pnp-rba-voopoo.html",
-          "signalScore": 5.79
+          "signalScore": 5.79,
+          "evidenceWindow": "mixed-public-ranking"
         },
         {
           "name": "CoilTurd Rezistenta Clapton 3 Core Ni80 0.35 Ohm 10 buc x",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/rezistenta-clapton-3-core-ni80-0-35-ohm-10-buc-thunder-cloud-x-coilturd/",
-          "signalScore": 5.33
+          "signalScore": 5.33,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Set 48 rezistente kanthal 8 in 1",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.vapshop.ro/bumbac-sarma-kanthal-unelte-tigara-electronica/set-48-rezistente-kanthal-8-in-1",
-          "signalScore": 4.24
+          "signalScore": 4.24,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Hellvape Rezistente Ni80 Fused Clapton Dual Core 1ohm",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/rezistente-d-i-y/rezistente-ni80-mtl-fused-clapton-dual-core-1ohm-hellvape.html",
-          "signalScore": 4.12
+          "signalScore": 4.12,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "bumbac/wick",
+      "brands": [
+        {
+          "name": "Wick N Vape",
+          "sourceCount": 3,
+          "storefrontCount": 3,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 5.23,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Vapefly",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 2,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 3.59,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Steam Crave",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 3,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 3.08,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Wotofo",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 4,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 2.74,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "BP Mods",
+          "sourceCount": 3,
+          "storefrontCount": 3,
+          "bestRank": 1,
+          "observedDays": 6,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 2.5,
+          "evidenceWindow": "mixed-public-ranking"
+        }
+      ],
       "products": [
         {
           "name": "Pachet bumbac HOLY FIBER",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.vapshop.ro/bumbac-sarma-kanthal-unelte-tigara-electronica/pachet-bumbac-holy-fiber",
-          "signalScore": 6
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Bumbac Cloud 9 - Cloud 9",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/atomizor-tigara-electronica/consumabile-atomizoare-vapat/bumbac/bumbac-cloud-9-cloud-9",
-          "signalScore": 4.54
+          "signalScore": 4.54,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Pad Bumbac Muji",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapepoint.ro/produs/bumbac-muji/",
-          "signalScore": 4.24
+          "signalScore": 4.24,
+          "evidenceWindow": "mixed-public-ranking"
         },
         {
           "name": "Vapefly Bumbac Firebolt M",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/atomizor-tigara-electronica/consumabile-atomizoare-vapat/bumbac/bumbac-firebolt-m-vapefly",
-          "signalScore": 3.59
+          "signalScore": 3.59,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Steam Crave Bumbac Mesh Strip Cotton Laces",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 3,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.voore.ro/atomizor-tigara-electronica/consumabile-atomizoare-vapat/bumbac/bumbac-mesh-strip-cotton-laces-steam-crave",
-          "signalScore": 3.08
+          "signalScore": 3.08,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "acumulator",
+      "brands": [
+        {
+          "name": "Lost Mary",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 5,
+          "observedDays": 4,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 1.71,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Vozol",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 6,
+          "observedDays": 4,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 1.57,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Innokin",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 7,
+          "observedDays": 4,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 1.46,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "BD Vape",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 1,
+          "observedDays": 1,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 1,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Aspire",
+          "sourceCount": 2,
+          "storefrontCount": 2,
+          "bestRank": 11,
+          "observedDays": 1,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 0.54,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "Molicel INR-P45B",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 8,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapez.ro/acumulatori-li-ion/acumulator-molicel-inr-21700-p45b-4500mah",
-          "signalScore": 8
+          "signalScore": 8,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Acumulator SONY VTC6",
-          "storeCount": 4,
+          "sourceCount": 4,
+          "storefrontCount": 4,
           "bestRank": 3,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/acumulator-sony-18650-vtc6/",
-          "signalScore": 7.58
+          "signalScore": 7.58,
+          "evidenceWindow": "mixed-public-ranking"
         },
         {
           "name": "Acumulator Samsung 25R INR",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/acumulator-samsung-25r-inr-18650-2500mah/",
-          "signalScore": 6
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Acumulator Sony VTC6A 30A",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.nouatigaraelectronica.ro/baterii-acumulatori/21700-SONY-VTC6A",
-          "signalScore": 5.35
+          "signalScore": 5.35,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Acumulator Trustfire 3.7V Li-ion cu flat top si PCB",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-flat-top-si-pcb/",
-          "signalScore": 5.16
+          "signalScore": 5.16,
+          "evidenceWindow": "mixed-public-ranking"
         }
       ]
     },
     {
       "category": "incarcator",
+      "brands": [
+        {
+          "name": "Innokin",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 11,
+          "observedDays": 8,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 1.38,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "Incarcator XTAR MC2",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 1,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/incarcator-xtar-mc2/",
-          "signalScore": 6
+          "signalScore": 6,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Incarcator E-Cig Power C2 USB-C LED Li-ion",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 2,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/incarcator-e-cig-power-c2-usb-c-led-li-ion/",
-          "signalScore": 4.24
+          "signalScore": 4.24,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Incarcator C1 Plus E-Cig Power",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 3,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/incarcator-c1-plus-e-cig-power/",
-          "signalScore": 3.46
+          "signalScore": 3.46,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Incarcator XTAR MC2 PLUS",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 4,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/incarcator-xtar-mc2-plus/",
-          "signalScore": 3
+          "signalScore": 3,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Incarcator XTAR SC1 LI-ION",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 5,
           "observedDays": 6,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapetronic.ro/produs/incarcator-xtar-sc1-li-ion/",
-          "signalScore": 2.68
+          "signalScore": 2.68,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     },
     {
       "category": "unelte build",
+      "brands": [
+        {
+          "name": "Eleaf",
+          "sourceCount": 1,
+          "storefrontCount": 1,
+          "bestRank": 4,
+          "observedDays": 1,
+          "lastSeen": "2026-09-05",
+          "productUrl": "",
+          "signalScore": 0.5,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        }
+      ],
       "products": [
         {
           "name": "Eleaf Penseta ceramica multifunctionala",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 4,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.vapshop.ro/bumbac-sarma-kanthal-unelte-tigara-electronica/penseta-ceramica-multifunctionala-eleaf",
-          "signalScore": 0.5
+          "signalScore": 0.5,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Penseta multifunctionala ST-15",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 5,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://www.vapshop.ro/bumbac-sarma-kanthal-unelte-tigara-electronica/penseta-multifunctionala-st-15",
-          "signalScore": 0.45
+          "signalScore": 0.45,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Jig Rezistenta",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 100,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vapepoint.ro/produs/jig-rezistenta/",
-          "signalScore": 0.1
+          "signalScore": 0.1,
+          "evidenceWindow": "lifetime-cumulative"
         },
         {
           "name": "Surubelnita 4-1, Fumytech",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 100,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/surubelnita-4-1-fumytech.html",
-          "signalScore": 0.1
+          "signalScore": 0.1,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
           "name": "Cleste D.I.Y Mini",
-          "storeCount": 1,
+          "sourceCount": 1,
+          "storefrontCount": 1,
           "bestRank": 113,
           "observedDays": 1,
           "lastSeen": "2026-09-05",
           "productUrl": "https://vaperia.ro/cleste-d-i-y-mini.html",
-          "signalScore": 0.09
+          "signalScore": 0.09,
+          "evidenceWindow": "retailer-defined-or-unspecified"
         }
       ]
     }
@@ -680,9 +1434,52 @@
   "buyingIdeas": [
     {
       "category": "RTA",
+      "brands": [
+        {
+          "name": "Ambition Mods",
+          "trackedProducts": 5,
+          "signalKinds": [
+            "public-review-views"
+          ],
+          "interestScore": 267.24
+        },
+        {
+          "name": "Four One Five",
+          "trackedProducts": 3,
+          "signalKinds": [
+            "public-review-views"
+          ],
+          "interestScore": 234.86
+        },
+        {
+          "name": "Hellvape",
+          "trackedProducts": 2,
+          "signalKinds": [
+            "public-review-views"
+          ],
+          "interestScore": 190.37
+        },
+        {
+          "name": "Cthulhu",
+          "trackedProducts": 2,
+          "signalKinds": [
+            "public-review-views"
+          ],
+          "interestScore": 185.39
+        },
+        {
+          "name": "BP Mods",
+          "trackedProducts": 2,
+          "signalKinds": [
+            "public-review-views"
+          ],
+          "interestScore": 181.55
+        }
+      ],
       "products": [
         {
           "name": "BKS Blade RTA",
+          "brand": "BKS",
           "metricKind": "public-review-views",
           "metricValue": 4873,
           "reviewCount": 3,
@@ -691,6 +1488,7 @@
         },
         {
           "name": "Asylum RTA V3 YG Creations",
+          "brand": "YG Creations",
           "metricKind": "public-review-views",
           "metricValue": 4975,
           "reviewCount": 2,
@@ -699,6 +1497,7 @@
         },
         {
           "name": "Telli's Mod MooD V2 MTL RTA",
+          "brand": "Telli's Mod",
           "metricKind": "public-review-views",
           "metricValue": 4827,
           "reviewCount": 2,
@@ -707,6 +1506,7 @@
         },
         {
           "name": "Kayfun Mini V3 / KV3 Mini",
+          "brand": "",
           "metricKind": "public-review-views",
           "metricValue": 272955,
           "reviewCount": 4,
@@ -715,6 +1515,7 @@
         },
         {
           "name": "Cthulhu Hastur MTL RTA / Mini",
+          "brand": "Cthulhu",
           "metricKind": "public-review-views",
           "metricValue": 272483,
           "reviewCount": 4,

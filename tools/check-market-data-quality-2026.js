@@ -49,7 +49,7 @@ need(pods.scan&&pods.scan.rejections,'POD Hype rejection audit missing');
 need(Array.isArray(pods.verificationQueue),'POD verification queue missing');
 
 for(const data of [hype,pods]){
-  const reference=Date.parse(data.snapshotReferenceAt),windowMs=30*24*60*60*1000;
+  const reference=Date.parse(data.snapshotReferenceAt),windowMs=30*24*60*60*1000,forecastMs=180*24*60*60*1000;
   need(Number.isFinite(reference),'Hype snapshot reference missing');
   const seen=new Set();
   for(const product of data.products||[]){
@@ -57,13 +57,14 @@ for(const data of [hype,pods]){
     need(product.productName&&Number.isFinite(event),`Invalid published Hype product: ${product.productName||'unnamed'}`);
     need(Array.isArray(product.sources)&&product.sources.length>0,`Hype source missing: ${product.productName}`);
     need(!seen.has(key),`Duplicate Hype event: ${product.productName}`);seen.add(key);
-    if(product.window==='before')need(Math.abs(event-reference)<=windowMs,`Before event outside 30 days: ${product.productName}`);
+    if(product.window==='before'&&product.signalWindowOnly===true){const observed=Date.parse(product.signalObservedAt);need(product.confidenceTier==='public-signal'&&product.dateConfidence==='forecast-eta',`Long-range ETA was labelled as a launch: ${product.productName}`);need(Number.isFinite(observed)&&observed>=reference-windowMs&&observed<=reference+864e5,`Signal observation outside 30 days: ${product.productName}`);need(event>reference+windowMs&&event<=reference+forecastMs,`Forecast ETA outside 180 days: ${product.productName}`)}
+    else if(product.window==='before')need(Math.abs(event-reference)<=windowMs,`Before event outside 30 days: ${product.productName}`);
     else need(event<=reference&&reference-event<=windowMs,`After event outside 30 days: ${product.productName}`);
   }
   const events=(data.products||[]).filter(product=>product.confidenceTier?product.confidenceTier==='confirmed'||product.confidenceTier==='reported':['explicit','catalog-published-at','official-product-published-at','release-observed','first-retail-observation'].includes(product.dateConfidence));
   need(Number(data.summary&&data.summary.total)===events.length,'Dated-event summary does not match published rows');
   need(Number(data.summary&&data.summary.publicSignals)===(data.products||[]).length-events.length,'Public-signal summary does not match published rows');
-  need(data.truth&&data.truth.priorExistenceDemotesRetailRelisting===true&&data.truth.singleRetailerListingNeedsCorroboration===true,'Retail novelty arbitration is missing');
+  need(data.truth&&data.truth.priorExistenceDemotesRetailRelisting===true&&data.truth.singleRetailerListingNeedsCorroboration===true&&data.truth.signalObservationWindowDays===30&&data.truth.forecastHorizonDays===180&&data.truth.longRangeSignalsAreNotLaunches===true,'Retail novelty or signal-window arbitration is missing');
   for(const product of events.filter(function(row){return row.dateConfidence==='catalog-published-at'})){const sources=product.sources||[],official=sources.some(function(source){return/^manufacturer-official/.test(String(source.sourceType||''))}),clone=sources.some(function(source){return source.sourceType==='clone-retailer-direct'}),explicit=sources.some(function(source){return source.decisionEligible!==false&&source.dateConfidence==='dated-public-evidence'&&/\b(?:launch|lansare|released|release|introducing|available now)\b/i.test(String(source.stage||'')+' '+String(source.title||''))}),retailHosts=new Set(sources.filter(function(source){return/retailer-direct/.test(String(source.sourceType||''))&&!/promotion/.test(String(source.sourceType||''))}).map(function(source){return source.host}));need(official||clone||explicit||retailHosts.size>=2,`Single retail page promoted without corroboration: ${product.productName}`)}
 }
 

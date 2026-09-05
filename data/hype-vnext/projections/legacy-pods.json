@@ -1,10 +1,10 @@
 {
-  "schemaVersion": 31,
+  "schemaVersion": 32,
   "scopeYear": 2026,
   "scope": "GLOBAL POD SYSTEMS",
   "windowDays": 30,
   "discoveryContextDays": 180,
-  "generatedAt": "2026-09-05T09:47:50.668Z",
+  "generatedAt": "2026-09-05T11:06:41.974Z",
   "snapshotReferenceAt": "2026-09-05T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest",
   "pendingRefresh": false,
@@ -56,7 +56,13 @@
     "verificationQueueReconciledWithPublishedProducts": true,
     "finalSegmentAndCategoryCoverageReconciled": true,
     "finalPublicProjectionsReconciled": true,
-    "undatedSignalsPreservedInVerificationQueue": true
+    "undatedSignalsPreservedInVerificationQueue": true,
+    "signalObservationWindowDays": 30,
+    "signalLookback30dEtaHorizon365d": false,
+    "signalLookback30dEtaHorizon180d": true,
+    "futureEtaMayExceed30Days": true,
+    "forecastHorizonDays": 180,
+    "longRangeSignalsAreNotLaunches": true
   },
   "scan": {
     "makersConfigured": 60,
@@ -79,7 +85,7 @@
         "indexedDocuments": 262,
         "candidateDocuments": 44,
         "events": 5,
-        "queued": 3,
+        "queued": 7,
         "monitored": 34,
         "signals": 29
       },
@@ -383,6 +389,165 @@
   },
   "verificationQueue": [
     {
+      "brand": "Vaporesso",
+      "productName": "Vaporesso XROS",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.centralvapors.com/vaporesso/",
+      "publishedAt": "2026-09-03T06:39:00.000Z",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros",
+      "firstObservedAt": "2026-09-03T06:39:00.000Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://www.centralvapors.com/vaporesso/"
+      ],
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
+    },
+    {
+      "brand": "JUUL Labs",
+      "productName": "JUUL2 Starter Kit | 1.8%",
+      "segment": "closed-prefilled-hybrid",
+      "typology": "closed / pre-filled / hybrid",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.mycigara.com/blogs/news/introducing-juul-2-pod-kit-reviewed",
+      "publishedAt": "2026-09-02T22:40:00.000Z",
+      "familyKey": "POD|AUTHENTIC|juul labs|juul2",
+      "firstObservedAt": "2026-09-03T06:25:00.000Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://www.juullabsscience.com/juul2/",
+        "https://pricepointny.com/products/juul2-starter-kit-1-8",
+        "https://www.prnewswire.com/news-releases/us-food-and-drug-administration-authorizes-juul-labs-next-generation-juul2-system-302863088.html",
+        "https://www.vapingpost.com/2026/08/31/fda-authorizes-juul2-new-juul-pods-us/",
+        "https://www.mycigara.com/blogs/news/introducing-juul-2-pod-kit-reviewed"
+      ],
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
+    },
+    {
+      "brand": "OXVA",
+      "productName": "OXVA XLIM Pod System, XSLIM, X SLIM Vape",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.oxva.com/pages/products",
+      "publishedAt": "2026-09-03T02:57:00.000Z",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim",
+      "firstObservedAt": "2026-09-03T02:57:00.000Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://www.oxva.com/pages/xlim-new-color",
+        "https://www.oxva.com/pages/products"
+      ],
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
+    },
+    {
+      "brand": "OXVA",
+      "productName": "OXVA XLIM PRO 3 30W Vape Pod System – 1500mAh, 3ML",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "reason": "undatedPublicAnnouncement",
+      "url": "https://www.youtube.com/@oxvaofficial",
+      "publishedAt": "2026-09-02T06:40:00.000Z",
+      "familyKey": "POD|AUTHENTIC|oxva|xlim pro 3",
+      "firstObservedAt": "2026-09-02T21:57:00.000Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://www.oxva.com/pages/xlim-pro-3",
+        "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system",
+        "https://www.youtube.com/@oxvaofficial"
+      ],
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
+    },
+    {
+      "productName": "GeekVape Aegis Hero 5 50W Pod Mod Kit",
+      "brand": "Geekvape",
+      "category": "POD",
+      "url": "https://vapejuicedepot.com/collections/geekvape",
+      "reason": "undatedPublicAnnouncement",
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "familyKey": "POD|AUTHENTIC|geekvape|aegis hero 5",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch",
+      "firstObservedAt": "2026-09-05T09:47:50.476Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://vapejuicedepot.com/collections/geekvape"
+      ]
+    },
+    {
+      "productName": "GeekVape Wenax Q Mini Pod System Kit",
+      "brand": "Geekvape",
+      "category": "POD",
+      "url": "https://vapejuicedepot.com/collections/geekvape",
+      "reason": "undatedPublicAnnouncement",
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "familyKey": "POD|AUTHENTIC|geekvape|wenax",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch",
+      "firstObservedAt": "2026-09-05T09:47:50.476Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://vapejuicedepot.com/collections/geekvape"
+      ]
+    },
+    {
+      "productName": "Vaporesso XROS PRO 2 30W Pod System Kit",
+      "brand": "Vaporesso",
+      "category": "POD",
+      "url": "https://www.centralvapors.com/vaporesso/",
+      "reason": "undatedPublicAnnouncement",
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros pro 2",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch",
+      "firstObservedAt": "2026-09-05T09:47:50.476Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://www.centralvapors.com/vaporesso/"
+      ]
+    },
+    {
+      "productName": "Voopoo DRAG 6",
+      "brand": "Voopoo",
+      "category": "POD",
+      "url": "https://www.elementvape.com/voopoo-tech",
+      "reason": "undatedPublicAnnouncement",
+      "observedAt": "2026-09-05T09:47:50.476Z",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "familyKey": "POD|AUTHENTIC|voopoo|drag 6",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch",
+      "firstObservedAt": "2026-09-05T09:47:50.476Z",
+      "lastObservedAt": "2026-09-05T09:47:50.476Z",
+      "sources": [
+        "https://www.elementvape.com/voopoo-tech"
+      ]
+    },
+    {
       "brand": "DotMod",
       "productName": "Dotmod Dotpod Max - Vaping360",
       "segment": "premium-high-end-aio",
@@ -399,79 +564,10 @@
         "https://vaping360.com/vape-products/dotmod-dotpod-max/"
       ],
       "observedAt": "2026-08-26T09:05:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "brand": "Vaporesso",
-      "productName": "Vaporesso XROS",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "undatedPublicAnnouncement",
-      "url": "https://www.centralvapors.com/vaporesso/",
-      "publishedAt": "2026-09-03T06:39:00.000Z",
-      "familyKey": "POD|AUTHENTIC|vaporesso|xros",
-      "firstObservedAt": "2026-09-03T06:39:00.000Z",
-      "lastObservedAt": "2026-09-03T06:39:00.000Z",
-      "sources": [
-        "https://www.centralvapors.com/vaporesso/"
-      ],
-      "observedAt": "2026-09-03T06:39:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "brand": "JUUL Labs",
-      "productName": "JUUL2 Starter Kit | 1.8%",
-      "segment": "closed-prefilled-hybrid",
-      "typology": "closed / pre-filled / hybrid",
-      "reason": "undatedPublicAnnouncement",
-      "url": "https://www.vapingpost.com/2026/08/31/fda-authorizes-juul2-new-juul-pods-us/",
-      "publishedAt": "2026-09-02T22:40:00.000Z",
-      "familyKey": "POD|AUTHENTIC|juul labs|juul2",
-      "firstObservedAt": "2026-09-03T06:25:00.000Z",
-      "lastObservedAt": "2026-09-03T06:25:00.000Z",
-      "sources": [
-        "https://www.juullabsscience.com/juul2/",
-        "https://pricepointny.com/products/juul2-starter-kit-1-8",
-        "https://www.prnewswire.com/news-releases/us-food-and-drug-administration-authorizes-juul-labs-next-generation-juul2-system-302863088.html",
-        "https://www.vapingpost.com/2026/08/31/fda-authorizes-juul2-new-juul-pods-us/"
-      ],
-      "observedAt": "2026-09-03T06:25:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "brand": "OXVA",
-      "productName": "OXVA XLIM Pod System, XSLIM, X SLIM Vape",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "undatedPublicAnnouncement",
-      "url": "https://www.oxva.com/pages/xlim-new-color",
-      "publishedAt": "2026-09-03T02:57:00.000Z",
-      "familyKey": "POD|AUTHENTIC|oxva|xlim",
-      "firstObservedAt": "2026-09-03T02:57:00.000Z",
-      "lastObservedAt": "2026-09-03T02:57:00.000Z",
-      "sources": [
-        "https://www.oxva.com/pages/xlim-new-color"
-      ],
-      "observedAt": "2026-09-03T02:57:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
-    },
-    {
-      "brand": "OXVA",
-      "productName": "OXVA XLIM PRO 3 30W Vape Pod System – 1500mAh, 3ML",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "reason": "undatedPublicAnnouncement",
-      "url": "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system",
-      "publishedAt": "2026-09-02T06:40:00.000Z",
-      "familyKey": "POD|AUTHENTIC|oxva|xlim pro 3",
-      "firstObservedAt": "2026-09-02T21:57:00.000Z",
-      "lastObservedAt": "2026-09-02T21:57:00.000Z",
-      "sources": [
-        "https://www.oxva.com/pages/xlim-pro-3",
-        "https://giantvapes.com/products/oxva-xlim-pro-3-30w-pod-system"
-      ],
-      "observedAt": "2026-09-02T21:57:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
     },
     {
       "brand": "DotMod",
@@ -488,7 +584,10 @@
         "https://vapordna.com/products/dotmod-dotpod-pro-35w-pod-system"
       ],
       "observedAt": "2026-09-02T16:35:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
     },
     {
       "brand": "LVE",
@@ -505,7 +604,10 @@
         "https://lvevapor.com/orion-ii-pro/"
       ],
       "observedAt": "2026-09-02T01:40:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
     },
     {
       "brand": "UPENDS",
@@ -522,7 +624,10 @@
         "https://www.upends.com/open-pod-system/upox"
       ],
       "observedAt": "2026-09-01T03:28:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
     },
     {
       "brand": "Rincoe",
@@ -539,7 +644,10 @@
         "https://www.smokstore.com/rincoe-jellybox-v3-pod-kit-750mah.html"
       ],
       "observedAt": "2026-08-25T23:18:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
     },
     {
       "brand": "Rincoe",
@@ -556,7 +664,10 @@
         "https://www.myvaporstore.com/Rincoe-Jellybox-Nano-Pod-System-Starter-Kit-p/rin-jbn10.htm"
       ],
       "observedAt": "2026-08-16T01:53:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA"
+      "status": "NEEDS_DATE_OR_ETA",
+      "category": "POD",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch"
     }
   ],
   "products": [
@@ -3313,7 +3424,7 @@
     "confirmed": 0,
     "reported": 6,
     "publicSignals": 35,
-    "candidatesUnderVerification": 10,
+    "candidatesUnderVerification": 14,
     "categoryEvents": {
       "POD": 6
     }

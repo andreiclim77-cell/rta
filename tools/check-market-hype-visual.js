@@ -16,7 +16,8 @@ function expectedSnapshot(file){
   const doc=JSON.parse(fs.readFileSync(path.resolve(file),'utf8'));
   const products=doc.products||[];
   const events=products.filter(row=>row.confidenceTier==='confirmed'||row.confidenceTier==='reported');
-  return{cards:products.length,events:events.length,signals:products.length-events.length};
+  const queue=doc.verificationQueue||[];
+  return{cards:products.length,events:events.length,signals:products.length-events.length,queue:queue.length,signalLayerTotal:products.length-events.length+queue.length,queueHasFalseSource:queue.some(row=>/wikipedia\.org|finance\.yahoo|google\.[^/]+\/finance/i.test(String(row.url||'')+' '+String(row.sources||'')))};
 }
 const expectedRta=expectedSnapshot('data/market-hype-products-2026.json');
 const expectedPod=expectedSnapshot('data/market-hype-pods-2026.json');
@@ -47,7 +48,7 @@ async function openMarket(page,lang){
   if(await accept.isVisible().catch(()=>false))await accept.click();
   await page.waitForFunction(()=>!document.body.classList.contains('app-preparing'),{timeout:30000});
   await page.waitForFunction(()=>document.querySelector('[data-tab="market2026"]')&&Array.isArray(window.MAIN_ROUTES)&&window.MAIN_ROUTES.includes('market2026'),{timeout:30000});
-  await page.evaluate(()=>{sessionStorage.setItem('rtaMarket2026Access','1');if(typeof setRoute==='function')setRoute('market2026');else{location.hash='#market2026';if(typeof applyRoute==='function')applyRoute(false)}});
+  await page.evaluate(()=>{if(typeof setRoute==='function')setRoute('market2026');else{location.hash='#market2026';if(typeof applyRoute==='function')applyRoute(false)}});
   await page.waitForSelector('#market2026.active #market2026Root .market-hero',{timeout:30000});
   await page.waitForFunction(()=>window.__rtaHypeReady===true&&document.querySelector('#marketHypeRadar'),{timeout:30000});
   await page.locator('[data-primary="hype"]').click();
@@ -87,6 +88,9 @@ async function snapshot(page,mode){
       availabilityTotal:Number((root.querySelector('.hype-window.availability .hype-window-count b')?.textContent||'0').replace(/\D/g,'')),
       provenanceTotals:Object.fromEntries(['official','original','clone'].map(kind=>[kind,Number((root.querySelector('.hype-provenance-summary .'+kind+' b')?.textContent||'0').replace(/\D/g,''))])),
       signalTitle:root.querySelector('.hype-window.signals h3')?.textContent.trim(),
+      queueRows:root.querySelectorAll('.hype-review-list>article').length,
+      signalLayerTotal:Number((root.querySelector('[data-hype-layer="signals"]>b')?.textContent||'0').replace(/\D/g,'')),
+      falseQueueSource:/wikipedia\.org|finance\.yahoo|google\.[^/]+\/finance/i.test(root.querySelector('.hype-review-list')?.innerHTML||''),
       docOverflow:document.documentElement.scrollWidth-document.documentElement.clientWidth,
       clipped,
       vertical,
@@ -98,6 +102,7 @@ async function snapshot(page,mode){
 
 function requireState(result,expected){
   if(result.cards!==expected.cards||result.events!==expected.events||result.signals!==expected.signals)throw new Error(`${expected.label}: expected ${expected.cards}/${expected.events}/${expected.signals}, got ${result.cards}/${result.events}/${result.signals}`);
+  if(result.queueRows!==expected.queue||result.signalLayerTotal!==expected.signalLayerTotal||result.falseQueueSource||expected.queueHasFalseSource)throw new Error(`${expected.label}: review queue or signal-layer count is inconsistent`);
   if(result.tabs!==2||result.active!==expected.mode)throw new Error(`${expected.label}: mode switch is incomplete`);
   if(!result.progress||!result.sourceHealth)throw new Error(`${expected.label}: live progress or source coverage is missing`);
   if(result.guideItems!==4||!/URMEAZĂ|COMING/.test(result.guideText)||!/INDICIU|SIGNAL/.test(result.guideText)||!/CATALOG/.test(result.guideText))throw new Error(`${expected.label}: plain-language reading guide is incomplete`);

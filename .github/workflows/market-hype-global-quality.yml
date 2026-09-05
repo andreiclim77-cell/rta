@@ -15,7 +15,6 @@ on:
       - 'assets/market-ui-recovery.js'
       - 'assets/market-view-switcher.js'
       - 'assets/market-source-info.js'
-      - 'assets/market-access-policy.js'
       - 'assets/enhancements.js'
       - 'tools/check-market-report-final.js'
       - '.github/workflows/market-hype-2026-sync.yml'
@@ -36,7 +35,6 @@ on:
       - 'assets/market-ui-recovery.js'
       - 'assets/market-view-switcher.js'
       - 'assets/market-source-info.js'
-      - 'assets/market-access-policy.js'
       - 'assets/enhancements.js'
       - 'tools/check-market-report-final.js'
       - '.github/workflows/market-hype-2026-sync.yml'
@@ -80,7 +78,6 @@ jobs:
           node --check tools/check-market-data-quality-2026.js
           node --check assets/market-hype-ui.js
           node --check assets/market-loading-guard.js
-          node --check assets/market-access-policy.js
           node --check assets/enhancements.js
           node --check tools/check-market-report-final.js
           node --check sw.js
@@ -102,7 +99,6 @@ jobs:
           const merge=read('tools/merge-market-hype-upstream-products-2026.js');
           const ui=read('assets/market-hype-ui.js');
           const guard=read('assets/market-loading-guard.js');
-          const access=read('assets/market-access-policy.js');
           const sw=read('sw.js');
           const need=(ok,msg)=>{if(!ok)throw new Error(msg)};
           need(Number(cfg.lookbackHours)===720&&Number(cfg.hypeWindowDays)===30&&cfg.scope==='GLOBAL RTA + clone RTA','Hype must be GLOBAL / 30 days');
@@ -120,8 +116,7 @@ jobs:
           need(merge.includes('upstreamEvidenceMerged:true')&&merge.includes('release-observed')&&merge.includes('observedReleaseIsNotClaimedAsExactReleaseDate:true'),'Truthful upstream/release-observed merge missing');
           need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel')&&ui.includes('release-observed'),'Expandable observed-release Hype UI missing');
           need(!ui.includes('class="hype-direct"')&&!ui.includes("t('Acum','Now')")&&ui.includes('data-hype-layer="launches"')&&ui.includes('data-hype-layer="signals"')&&ui.includes('data-hype-layer="catalog"'),'Evidence layers or legacy automatic conclusion regression');
-          need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('validAfterProduct')&&guard.includes('catalog-published-at'),'Atomic loader does not validate final RTA/MOD/POD data');
-          need(access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password may be prefilled');
-          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('ghid-rta-static-v46-analysis-buying'),'Product Hype cache/data contract missing');
+          need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('validAfterProduct')&&guard.includes('catalog-published-at')&&guard.includes('signalWindowOnly'),'Atomic loader does not validate final RTA/MOD/POD data');
+          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('/assets/enhancements.js?v=9')&&sw.includes('ghid-rta-static-v48-analysis-hype-signals'),'Product Hype cache/data contract missing');
           console.log('Hype Global gate OK: GLOBAL 30d; RTA/MOD/POD; dated events separated from public signals; anti-relisting memory; 06:00 + 06:20 recovery.');
           NODE

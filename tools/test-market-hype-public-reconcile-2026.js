@@ -29,6 +29,19 @@ need(undatedQueue.length===1&&undatedQueue[0].reason==='undatedPublicAnnouncemen
 need(Date.parse(undatedQueue[0].lastObservedAt)>=Date.parse(undatedQueue[0].firstObservedAt),'Verification observation range is inverted');
 const genericQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'Best Ecig Store, Box Mod Manufacturer',brand:'Eleaf',category:'MODURI',reason:'noEventOrDate',url:'https://www.eleafworld.com/'}]},{verificationQueue:[]},'RTA');
 need(genericQueue.length===0,'A generic manufacturer page was treated as a product');
+const discoveryCandidates=[
+  {productName:'Arcana New MTL RTA',brand:'Arcana Mods',category:'RTA',reason:'no-direct-dated-event',url:'https://arcana-mods.com/products/new-mtl-rta',observedAt:'2026-09-04T02:00:00.000Z'},
+  {productName:'Eleaf iStick XC100 Vape Mod',brand:'Eleaf',category:'MODURI',reason:'no-direct-dated-event',url:'https://www.eleafworld.com/istick-xc100',observedAt:'2026-09-04T02:00:00.000Z'},
+  {productName:'OXVA XLIM PRO 3 30W Vape Pod System',brand:'OXVA',category:'POD',reason:'no-direct-dated-event',url:'https://www.oxva.com/pages/xlim-pro-3',observedAt:'2026-09-04T02:00:00.000Z'},
+  {productName:'Spark 2 par Kiwi',brand:'KIWI Vapor',category:'POD',reason:'no-direct-dated-event',url:'https://en.wikipedia.org/wiki/Apache_Spark',observedAt:'2026-09-04T02:00:00.000Z'},
+  {productName:'Unnamed future RTA',brand:'Example',category:'RTA',named:false,reason:'no-direct-dated-event',url:'https://example.test/unnamed',observedAt:'2026-09-04T02:00:00.000Z'}
+];
+const discoveredRta=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',snapshotReferenceAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[]},{verificationQueue:[]},'RTA',discoveryCandidates);
+need(discoveredRta.length===2&&discoveredRta.some(candidate=>candidate.category==='RTA')&&discoveredRta.some(candidate=>candidate.category==='MODURI'),'Fresh identifiable RTA/MOD discovery candidates were not preserved');
+need(discoveredRta.every(candidate=>candidate.signalKind==='undated-identifiable-product'&&candidate.confidenceTier==='watch'),'Undated discovery candidates were promoted beyond the review queue');
+const discoveredPods=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',snapshotReferenceAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[]},{verificationQueue:[]},'POD',discoveryCandidates);
+need(discoveredPods.length===1&&/XLIM PRO 3/i.test(discoveredPods[0].productName),'Fresh identifiable POD discovery candidate was not preserved');
+need(discoveredPods.every(candidate=>!/(?:Apache Spark|Wikipedia)/i.test(candidate.productName+' '+candidate.url)),'A false Wikipedia product signal entered the POD review queue');
 
 const radar=read('tools/collect-market-hype-radar-2026.js');
 const products=read('tools/collect-market-hype-products-2026.js');
@@ -43,4 +56,4 @@ for(const source of [radar,products,makers,pods])need(source.includes('undatedPu
 need(flow.includes('node tools/reconcile-market-hype-public-2026.js --write'),'Final public reconciliation is absent from the daily workflow');
 need(ui.includes('Semnale fără dată / ETA, în verificare')&&ui.includes('signals.length+(data.verificationQueue||[]).length'),'Undated candidates are not visible or counted in the UI');
 
-console.log('Hype public reconciliation unit gate PASS: clone families grouped; authentic separated; uncapped public discovery; undated candidates retained.');
+console.log('Hype public reconciliation unit gate PASS: clone families grouped; authentic separated; uncapped public discovery; undated candidates retained by category; false sources rejected.');

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 const BRAND_ALIASES=[
-  [/\bcoil\s*turd\b|\bcoilturd\b/i,'CoilTurd'],[/\bthunder\s*cloud\b/i,'ThunderCloud'],[/\bmech\s*vape\b|\bmechvape\b/i,'MechVape'],
+  [/\bcoil\s*turd\b|\bcoilturd\b/i,'CoilTurd'],[/\bthunder\s*cloud\b/i,'ThunderCloud'],[/\bmech\s*vape\b|\bmechvape\b/i,'MechVape'],[/\btelli(?:'s|s)?\s*mods?\b/i,"Telli's Mod"],[/\byg\s*creations?\b/i,'YG Creations'],[/\bbks\b/i,'BKS'],
   [/\bvaporesso\b/i,'Vaporesso'],[/\bvoopoo\b/i,'Voopoo'],[/\boxva\b/i,'OXVA'],[/\buwell\b/i,'Uwell'],[/\bsmok(?:tech)?\b/i,'SMOK'],[/\bfreemax\b/i,'FreeMax'],[/\beleaf\b/i,'Eleaf'],[/\binnokin\b/i,'Innokin'],[/\bsmoant\b/i,'Smoant'],[/\bdot\s*mod\b|\bdotmod\b/i,'DotMod'],[/\bivg\b/i,'IVG'],[/\bnevoks\b/i,'Nevoks'],[/\bsuorin\b/i,'Suorin'],[/\brelx\b/i,'RELX'],[/\belf\s*bar\b/i,'Elf Bar'],[/\blost\s*mary\b/i,'Lost Mary'],[/\bupends\b/i,'UPENDS'],
   [/\bbd\s*vape\b|\bbdvape\b/i,'BD Vape'],[/\breload\s*vapor(?:\s*usa)?\b/i,'Reload Vapor'],[/\brebel\s*vape\b/i,'Rebel Vape'],[/\bqp\s*design\b/i,'QP Design'],[/\bthunder\s*head\s*creations?\b|\bthunderhead\s*creations?\b/i,'ThunderHead Creations'],[/\bsignature\s*(?:tips|mods?)\b/i,'Signature Tips'],[/\bdovpo\b/i,'Dovpo'],[/\bnasty(?:\s*juice)?\b/i,'Nasty Juice'],
   [/\bsxk\b/i,'SXK'],[/\byftk\b/i,'YFTK'],[/\bul?ton\b/i,'Ulton'],[/\bkindbright\b/i,'Kindbright'],[/\bshenray\b/i,'ShenRay'],[/\breka\s*vape\b|\brekavape\b/i,'RekaVape'],

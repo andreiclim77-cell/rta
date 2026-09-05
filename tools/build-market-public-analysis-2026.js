@@ -6,10 +6,12 @@ const WRITE=process.argv.includes('--write');
 const SALES='data/market-sales-2026.json';
 const DEMAND='data/market-demand-intelligence-2026.json';
 const EXTERNAL='data/market-external-intelligence-2026.json';
+const RETAILERS='data/market-retailers-2026.json';
 const OUT='data/market-analysis-public-2026.json';
 const START='2026-01-01';
 const CATEGORY_ORDER=['POD','RTA','mod','RBA/bridge','RDA/RDTA','componente RTA','accesoriu RTA/mod','sarma','coil prebuilt','bumbac/wick','chipset/board','acumulator','incarcator','unelte build'];
 const CATEGORY_SET=new Set(CATEGORY_ORDER);
+const {canonicalBrand,canonicalizeProduct,retailerOperatorMap}=require('./market-product-canonical-2026.js');
 
 function read(file){return JSON.parse(fs.readFileSync(file,'utf8'))}
 function write(file,value){fs.writeFileSync(file,JSON.stringify(value,null,2)+'\n','utf8')}
@@ -23,38 +25,74 @@ function validRank(row){
 }
 function categorySort(a,b){return CATEGORY_ORDER.indexOf(a.category)-CATEGORY_ORDER.indexOf(b.category)}
 
-function bestSellers(sales){
+function rankingSnapshots(sales){
   let snapshots=(sales.rankingHistory||[]).filter(snapshot=>snapshot&&snapshot.date>=START&&Array.isArray(snapshot.rows));
   if(!snapshots.length)snapshots=[{date:String(sales.updatedAt||'').slice(0,10),rows:sales.rankings||[]}];
+  return snapshots.filter(snapshot=>/^\d{4}-\d{2}-\d{2}$/.test(String(snapshot.date||'')));
+}
+
+function firstObservedDate(sales,snapshots){
+  const stated=String(sales.analysisWindow&&sales.analysisWindow.firstObservedAt||'').slice(0,10);
+  const dates=snapshots.map(snapshot=>String(snapshot.date||'')).filter(Boolean).sort();
+  return stated||dates[0]||null;
+}
+
+function summarizePanels(panels,labelKey){
   const grouped=new Map();
-  for(const snapshot of snapshots){
-    for(const row of snapshot.rows||[]){
-      if(!validRank(row))continue;
-      if(!grouped.has(row.category))grouped.set(row.category,new Map());
-      const category=grouped.get(row.category),key=String(row.canonicalProductKey||norm(row.product));
-      if(!key)continue;
-      const item=category.get(key)||{name:row.product,score:0,stores:new Set(),days:new Set(),bestRank:null,lastSeen:'',productUrl:''};
-      item.name=row.product;
-      item.score+=1/Math.sqrt(Number(row.rank));
-      item.stores.add(String(row.retailerId||row.source||'source'));
-      item.days.add(snapshot.date);
-      item.bestRank=item.bestRank==null?Number(row.rank):Math.min(item.bestRank,Number(row.rank));
-      if(snapshot.date>=item.lastSeen){item.lastSeen=snapshot.date;item.productUrl=row.productUrl||row.source||item.productUrl}
-      category.set(key,item);
-    }
+  for(const row of panels.values()){
+    if(!grouped.has(row.category))grouped.set(row.category,new Map());
+    const category=grouped.get(row.category),key=row.entityKey;
+    const item=category.get(key)||{name:row[labelKey],score:0,sources:new Set(),storefronts:new Set(),days:new Set(),bestRank:null,lastSeen:'',productUrl:'',evidenceWindows:new Set()};
+    item.name=row[labelKey];
+    item.score+=1/Math.sqrt(Number(row.rank));
+    item.sources.add(row.operatorId);
+    item.storefronts.add(row.retailerId);
+    item.days.add(row.date);
+    item.bestRank=item.bestRank==null?Number(row.rank):Math.min(item.bestRank,Number(row.rank));
+    item.evidenceWindows.add(String(row.evidenceWindow||'retailer-defined-or-unspecified'));
+    if(row.date>=item.lastSeen){item.lastSeen=row.date;item.productUrl=row.productUrl||item.productUrl}
+    category.set(key,item);
   }
-  return [...grouped.entries()].map(([category,items])=>({
-    category,
-    products:[...items.values()].sort((a,b)=>b.score-a.score||b.stores.size-a.stores.size||a.bestRank-b.bestRank||a.name.localeCompare(b.name)).slice(0,5).map(item=>({
+  return new Map([...grouped.entries()].map(([category,items])=>[category,[...items.values()]
+    .sort((a,b)=>b.score-a.score||b.sources.size-a.sources.size||a.bestRank-b.bestRank||a.name.localeCompare(b.name))
+    .slice(0,5)
+    .map(item=>({
       name:item.name,
-      storeCount:item.stores.size,
+      sourceCount:item.sources.size,
+      storefrontCount:item.storefronts.size,
       bestRank:item.bestRank,
       observedDays:item.days.size,
       lastSeen:item.lastSeen,
-      productUrl:item.productUrl,
-      signalScore:round(item.score)
-    }))
-  })).filter(group=>group.products.length).sort(categorySort);
+      productUrl:labelKey==='productName'?item.productUrl:'',
+      signalScore:round(item.score),
+      evidenceWindow:item.evidenceWindows.size===1?[...item.evidenceWindows][0]:'mixed-public-ranking'
+    }))]));
+}
+
+function observedPopularity(sales,retailers){
+  const snapshots=rankingSnapshots(sales),operatorByRetailer=retailerOperatorMap(retailers),productPanels=new Map(),brandPanels=new Map();
+  for(const snapshot of snapshots){
+    for(const row of snapshot.rows||[]){
+      if(!validRank(row))continue;
+      const product=canonicalizeProduct(row),productKey=String(row.canonicalProductKey||product.key||norm(row.product));
+      const retailerId=String(row.retailerId||row.source||'source'),operatorId=String(operatorByRetailer.get(retailerId)||retailerId);
+      const common={category:row.category,date:snapshot.date,rank:Number(row.rank),retailerId,operatorId,productUrl:row.productUrl||row.source||'',evidenceWindow:row.evidenceWindow||'retailer-defined-or-unspecified'};
+      if(productKey){
+        const panelKey=[snapshot.date,operatorId,row.category,productKey].join('|');
+        const candidate={...common,entityKey:productKey,productName:product.label||row.product};
+        if(!productPanels.has(panelKey)||candidate.rank<productPanels.get(panelKey).rank)productPanels.set(panelKey,candidate);
+      }
+      const brand=canonicalBrand(row.brand,row.product);
+      if(brand){
+        const brandKey=norm(brand),panelKey=[snapshot.date,operatorId,row.category,brandKey].join('|');
+        const candidate={...common,entityKey:brandKey,brandName:brand};
+        if(!brandPanels.has(panelKey)||candidate.rank<brandPanels.get(panelKey).rank)brandPanels.set(panelKey,candidate);
+      }
+    }
+  }
+  const products=summarizePanels(productPanels,'productName'),brands=summarizePanels(brandPanels,'brandName');
+  return CATEGORY_ORDER.map(category=>({category,brands:brands.get(category)||[],products:products.get(category)||[]}))
+    .filter(group=>group.brands.length||group.products.length).sort(categorySort);
 }
 
 function inferCategory(name){
@@ -65,6 +103,7 @@ function inferCategory(name){
   if(/\b(mod|box|dicodes|dani|sbs)\b/.test(value))return'mod';
   return'RTA';
 }
+
 function nearDuplicateIdea(a,b){
   if(!a||!b||a.metricKind!==b.metricKind)return false;
   const compact=value=>norm(value).replace(/\b(?:rta|rda|rdta|rba|mtl|rdl|dl)\b/g,' ').replace(/\s+/g,' ').trim();
@@ -73,8 +112,9 @@ function nearDuplicateIdea(a,b){
   const av=Number(a.metricValue||0),bv=Number(b.metricValue||0),tolerance=Math.max(5,Math.max(av,bv)*0.02);
   return Math.abs(av-bv)<=tolerance;
 }
+
 function addIdea(groups,seen,row){
-  const name=String(row.name||'').trim(),category=CATEGORY_SET.has(row.category)?row.category:inferCategory(name),key=category+'|'+norm(name);
+  const name=String(row.name||'').trim(),category=CATEGORY_SET.has(row.category)?row.category:inferCategory(name),brand=canonicalBrand(row.brand,name),key=category+'|'+norm(name);
   if(!name||!CATEGORY_SET.has(category))return;
   const categoryRows=groups.get(category)||[];
   const duplicate=categoryRows.find(existing=>nearDuplicateIdea(existing,row));
@@ -84,13 +124,33 @@ function addIdea(groups,seen,row){
     duplicate.metricValue=Math.max(Number(duplicate.metricValue||0),Number(row.metricValue||0));
     duplicate.reviewCount=Math.max(Number(duplicate.reviewCount||0),Number(row.reviewCount||0));
     duplicate.recent30dReviews=Math.max(Number(duplicate.recent30dReviews||0),Number(row.recent30dReviews||0));
+    if(!duplicate.brand&&brand)duplicate.brand=brand;
     return;
   }
   if(seen.has(key))return;
   seen.add(key);
   if(!groups.has(category))groups.set(category,categoryRows);
-  categoryRows.push({...row,category});
+  categoryRows.push({...row,category,brand});
 }
+
+function buyingIdeaBrands(products){
+  const grouped=new Map();
+  for(const product of products){
+    if(!product.brand)continue;
+    const key=norm(product.brand),item=grouped.get(key)||{name:product.brand,scores:[],products:new Set(),signalKinds:new Set()};
+    item.scores.push(Number(product.score||0));
+    item.products.add(product.name);
+    item.signalKinds.add(product.metricKind);
+    grouped.set(key,item);
+  }
+  return [...grouped.values()].map(item=>({
+    name:item.name,
+    trackedProducts:item.products.size,
+    signalKinds:[...item.signalKinds].sort(),
+    interestScore:round(item.scores.sort((a,b)=>b-a).slice(0,3).reduce((sum,value)=>sum+value,0))
+  })).sort((a,b)=>b.interestScore-a.interestScore||b.trackedProducts-a.trackedProducts||a.name.localeCompare(b.name)).slice(0,5);
+}
+
 function buyingIdeas(demand,external){
   const groups=new Map(),seen=new Set();
   for(const row of demand.products||[]){
@@ -100,7 +160,7 @@ function buyingIdeas(demand,external){
     let metricKind='community-mentions',metricValue=community;
     if(google>0){metricKind='google-monthly-searches';metricValue=google}
     else if(guide>0){metricKind='guide-searches-30d';metricValue=guide}
-    addIdea(groups,seen,{name:row.name,category:row.category,score,metricKind,metricValue});
+    addIdea(groups,seen,{name:row.name,brand:row.brand,category:row.category,score,metricKind,metricValue});
   }
   const youtube=external&&external.youtubeInterest||{};
   for(const row of youtube.models||[]){
@@ -108,6 +168,7 @@ function buyingIdeas(demand,external){
     if(views<=0||videos<=0)continue;
     addIdea(groups,seen,{
       name:row.name,
+      brand:row.brand,
       category:inferCategory(row.name),
       score:Math.log1p(views)*8+Number(row.recent30dVideos||0)*12+Number(row.recent90dVideos||0)*5,
       metricKind:'public-review-views',
@@ -116,52 +177,61 @@ function buyingIdeas(demand,external){
       recent30dReviews:Number(row.recent30dVideos||0)
     });
   }
-  return [...groups.entries()].map(([category,products])=>({
-    category,
-    products:products.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name)).slice(0,5).map(item=>({
-      name:item.name,
-      metricKind:item.metricKind,
-      metricValue:item.metricValue,
-      reviewCount:item.reviewCount||0,
-      recent30dReviews:item.recent30dReviews||0,
-      interestScore:round(item.score)
-    }))
-  })).filter(group=>group.products.length).sort(categorySort);
+  return [...groups.entries()].map(([category,products])=>{
+    const ordered=products.sort((a,b)=>b.score-a.score||a.name.localeCompare(b.name));
+    return{
+      category,
+      brands:buyingIdeaBrands(ordered),
+      products:ordered.slice(0,5).map(item=>({
+        name:item.name,
+        brand:item.brand||'',
+        metricKind:item.metricKind,
+        metricValue:item.metricValue,
+        reviewCount:item.reviewCount||0,
+        recent30dReviews:item.recent30dReviews||0,
+        interestScore:round(item.score)
+      }))
+    };
+  }).filter(group=>group.products.length).sort(categorySort);
 }
 
 function build(){
-  const sales=read(SALES),demand=read(DEMAND),external=read(EXTERNAL);
-  const sold=bestSellers(sales),ideas=buyingIdeas(demand,external);
-  if(!sold.length)throw new Error('Public Analysis has no category sales leaders');
+  const sales=read(SALES),demand=read(DEMAND),external=read(EXTERNAL),retailers=read(RETAILERS);
+  const snapshots=rankingSnapshots(sales),popularity=observedPopularity(sales,retailers),ideas=buyingIdeas(demand,external),evidenceStart=firstObservedDate(sales,snapshots);
+  if(!popularity.length)throw new Error('Public Analysis has no observed commercial rankings');
   if(!ideas.length)throw new Error('Public Analysis has no measured buying-interest ideas');
   return{
-    schemaVersion:1,
+    schemaVersion:2,
     scopeYear:2026,
     analysisStart:START,
     updatedAt:sales.updatedAt||sales.summary&&sales.summary.generatedAt||new Date().toISOString(),
     refreshTarget:'06:00 Europe/Bucharest',
     methodology:{
-      bestSellers:'Aggregated reciprocal-rank evidence from public retailer bestseller and popularity lists available in 2026. It is not exact national unit sales.',
+      observedPopularity:'Aggregated reciprocal-rank evidence from public retailer bestseller and popularity lists, deduplicated by operator, date, category and canonical product or brand. It is not exact period or national unit sales.',
       buyingIdeas:'Measured public search, guide or community interest when available; public review-view interest is used as a labelled fallback.',
       availability:'Current availability, zero-stock labels and stock alerts are excluded from both public sections.'
     },
     truth:{
       requestedStart:START,
-      evidenceFirstObservedAt:sales.analysisWindow&&sales.analysisWindow.firstObservedAt||null,
+      evidenceFirstObservedAt:evidenceStart,
+      evidenceEndObservedAt:String(sales.updatedAt||'').slice(0,10)||null,
       exactPeriodUnitsAvailable:Boolean(sales.coverage&&sales.coverage.periodUnitSalesAvailable),
       nationalMarketShareAvailable:Boolean(sales.coverage&&sales.coverage.nationalMarketShareAvailable),
       availabilityExcluded:true,
       buyingInterestSeparatedFromSales:true,
-      historicalBackfillInvented:false
+      historicalBackfillInvented:false,
+      cumulativeRankingsNeverLabelledAsPeriodSales:true,
+      brandAndProductRankingsSeparated:true,
+      operatorDateDeduplication:true
     },
     coverage:{
       configuredStores:Number(sales.coverage&&sales.coverage.storefrontsConfigured||0),
       rankingStores:Number(sales.coverage&&sales.coverage.storefrontsWithRetailerSalesRanking||0),
-      snapshots:(sales.rankingHistory||[]).length,
+      snapshots:snapshots.length,
       demandProducts:Number(demand.coverage&&demand.coverage.productsTracked||0),
       youtubeModels:Number(external.coverage&&external.coverage.youtubeTotalModels||0)
     },
-    bestSellers:sold,
+    observedPopularity:popularity,
     buyingIdeas:ideas
   };
 }
@@ -169,7 +239,7 @@ function build(){
 if(require.main===module){
   const output=build();
   if(WRITE)write(OUT,output);
-  console.log(`Public Analysis: ${output.bestSellers.length} sales categories; ${output.buyingIdeas.length} interest categories; ${output.coverage.rankingStores}/${output.coverage.configuredStores} ranking stores.`);
+  console.log(`Public Analysis: ${output.observedPopularity.length} popularity categories; ${output.buyingIdeas.length} interest categories; ${output.coverage.rankingStores}/${output.coverage.configuredStores} ranking stores.`);
 }
 
-module.exports={bestSellers,buyingIdeas,build};
+module.exports={rankingSnapshots,observedPopularity,buyingIdeas,build};
