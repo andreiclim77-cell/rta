@@ -29,6 +29,8 @@ const activeMakers=read('tools/collect-market-hype-active-makers-2026.js');
 const podCollector=read('tools/collect-market-hype-pods-2026.js');
 const cfg=json('data/market-hype-sources-2026.json');
 const vendorCfg=json('data/market-hype-vendor-profiles-2026.json');
+const sales=json('data/market-sales-2026.json');
+const {canonicalizeProduct,isUsableProductTitle}=require('./market-product-canonical-2026.js');
 const hypeFlow=read('.github/workflows/market-hype-2026-sync.yml');
 need(view.includes("setTechnical(root,mode==='sources')"),'Base Market layer is not source-only');
 need(view.includes("BASE='market2026Body'"),'Base Market body is not explicitly controlled');
@@ -55,6 +57,8 @@ need(recovery.includes('market-hype-ui.js?v=12')&&recovery.includes('market-mana
 need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('freshProducts')&&guard.includes('canonicalCrossSourceDeduplication'),'Atomic guard does not validate both Hype catalogs and source arbitration');
 need(access.includes("sessionStorage.removeItem(KEY)")&&access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password must be cleared and anti-autofill on every entry');
 need(Number(cfg.hypeWindowDays)===30&&Number(cfg.lookbackHours)===720&&cfg.scope==='GLOBAL RTA + clone RTA','Hype config is not global 30 days');
+need(!isUsableProductTitle({product:'Pod System (124)'})&&!isUsableProductTitle({product:'- Bumbac (6)'})&&canonicalizeProduct({product:'11% reducere Kit LVE Orion II Pro 50W – Evoluția unui Icon al Vapingului 349,00 lei 309,00 lei'}).label==='LVE Orion II Pro'&&canonicalizeProduct({product:'24% reducere Ambition Mods Revorie MTL RTA – Aromă bună în format 23mm 329,00 lei 249,00 lei'}).label==='Ambition Mods Revorie','Retail archive/promotion title sanitizer regression');
+need(!(sales.rankings||[]).some(row=>!isUsableProductTitle(row)),'Retail archive counters leaked into product rankings');
 need((cfg.cloneMakers||[]).length>=12&&(cfg.forumDomains||[]).length>=14,'Global Hype source coverage too small');
 for(const d of ['2fdeal.com','3fvape.com','shareavape.com','sourcemore.com','e-cigarette-forum.com','ecigssa.co.za','vapoo.de'])need(JSON.stringify(cfg).includes(d),`Global discovery source missing: ${d}`);
 need(Array.isArray(vendorCfg.profiles)&&vendorCfg.profiles.length>=5,'Multi-vendor profile coverage missing');
