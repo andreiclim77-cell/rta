@@ -9,6 +9,10 @@ on:
       - 'tools/market-pod-classifier-2026.js'
       - 'tools/market-product-canonical-2026.js'
       - 'tools/check-market-data-quality-2026.js'
+      - 'tools/audit-evidence-integrity.js'
+      - 'tools/evidence-observation-date.js'
+      - 'tools/test-evidence-integrity.js'
+      - 'tools/test-market-direct-catalogs-2026.js'
       - 'assets/market-hype-*.js'
       - 'assets/market-hype-*.css'
       - 'assets/market-loading-guard.js'
@@ -29,6 +33,10 @@ on:
       - 'tools/market-pod-classifier-2026.js'
       - 'tools/market-product-canonical-2026.js'
       - 'tools/check-market-data-quality-2026.js'
+      - 'tools/audit-evidence-integrity.js'
+      - 'tools/evidence-observation-date.js'
+      - 'tools/test-evidence-integrity.js'
+      - 'tools/test-market-direct-catalogs-2026.js'
       - 'assets/market-hype-*.js'
       - 'assets/market-hype-*.css'
       - 'assets/market-loading-guard.js'
@@ -76,6 +84,10 @@ jobs:
           node --check tools/test-market-hype-public-reconcile-2026.js
           node --check tools/validate-market-hype-pods-2026.js
           node --check tools/check-market-data-quality-2026.js
+          node --check tools/audit-evidence-integrity.js
+          node --check tools/evidence-observation-date.js
+          node --check tools/test-evidence-integrity.js
+          node --check tools/test-market-direct-catalogs-2026.js
           node --check assets/market-hype-ui.js
           node --check assets/market-loading-guard.js
           node --check assets/enhancements.js
@@ -86,6 +98,9 @@ jobs:
           node tools/check-market-report-final.js
           node tools/reconcile-market-hype-public-2026.js --check
           node tools/test-market-hype-public-reconcile-2026.js
+          node tools/test-market-direct-catalogs-2026.js
+          node tools/test-evidence-integrity.js
+          node tools/audit-evidence-integrity.js --scope=hype
           node - <<'NODE'
           const fs=require('fs');
           const read=p=>fs.readFileSync(p,'utf8');
@@ -117,6 +132,6 @@ jobs:
           need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel')&&ui.includes('release-observed'),'Expandable observed-release Hype UI missing');
           need(!ui.includes('class="hype-direct"')&&!ui.includes("t('Acum','Now')")&&ui.includes('data-hype-layer="launches"')&&ui.includes('data-hype-layer="signals"')&&ui.includes('data-hype-layer="catalog"'),'Evidence layers or legacy automatic conclusion regression');
           need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('validAfterProduct')&&guard.includes('catalog-published-at')&&guard.includes('signalWindowOnly'),'Atomic loader does not validate final RTA/MOD/POD data');
-          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('/assets/enhancements.js?v=9')&&sw.includes('ghid-rta-static-v48-analysis-hype-signals'),'Product Hype cache/data contract missing');
+          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('/assets/enhancements.js?v=10')&&sw.includes('ghid-rta-static-v49-evidence-integrity'),'Product Hype cache/data contract missing');
           console.log('Hype Global gate OK: GLOBAL 30d; RTA/MOD/POD; dated events separated from public signals; anti-relisting memory; 06:00 + 06:20 recovery.');
           NODE
