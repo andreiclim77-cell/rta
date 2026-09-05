@@ -2,8 +2,8 @@
 'use strict';
 var attempts={},last={},stopped=false,scanning=false;
 var MODULES=[
- {id:'marketManagementCockpit',src:'/assets/market-management-v2.js?v=5'},
- {id:'marketAnalysisSynthesis',src:'/assets/market-analysis-synthesis.js?v=2'},
+ {id:'marketManagementCockpit',src:'/assets/market-management-v2.js?v=6'},
+ {id:'marketAnalysisSynthesis',src:'/assets/market-analysis-synthesis.js?v=3'},
  {id:'marketHypeRadar',src:'/assets/market-hype-ui.js?v=12'},
  {id:'marketViewSwitcher',src:'/assets/market-view-switcher.js?v=9'}
 ];
