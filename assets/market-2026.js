@@ -127,8 +127,8 @@
     return Array.from(new Uint8Array(hash)).map(function(byte){return byte.toString(16).padStart(2,'0')}).join('')
   }
 
-  function requestAccess(){
-    if(hasAccess())return Promise.resolve(true);
+  function requestAccess(forcePrompt){
+    if(hasAccess()&&!forcePrompt)return Promise.resolve(true);
     var preload=loadData().catch(function(){return null});
     return new Promise(function(resolve){
       var existing=byId('market2026Modal');
@@ -204,7 +204,8 @@
     button.addEventListener('click',function(event){
       event.preventDefault();
       event.stopPropagation();
-      requestAccess().then(function(ok){
+      clearAccess();
+      requestAccess(true).then(function(ok){
         if(!ok)return;
         if(typeof setRoute==='function')setRoute(ROUTE);else location.hash='#'+ROUTE
       })
@@ -222,7 +223,11 @@
       return previousTitle(id,atom)
     };
     var previousEnsure=window.ensureSectionRendered;
-    window.ensureSectionRendered=function(id){if(id===ROUTE){initMarket();return}return previousEnsure(id)}
+    window.ensureSectionRendered=function(id){
+      if(id===ROUTE){initMarket();return}
+      clearAccess();
+      return previousEnsure(id)
+    }
   }
 
   function renderLocked(){
@@ -413,6 +418,7 @@
   }
 
   function boot(){
+    clearAccess();
     injectStyles();
     createSection();
     createNavButton();

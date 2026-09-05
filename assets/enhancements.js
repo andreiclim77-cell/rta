@@ -26,6 +26,6 @@ function waitForMarket(){
   load('/assets/market-view-switcher.js?v=11');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
-function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=9',function(){waitForMarket()})}
+function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=10',function(){waitForMarket()})}
 load('/assets/enhancements-core.js?v=8',function(){loadMarket()});
 })();

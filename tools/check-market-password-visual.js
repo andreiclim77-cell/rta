@@ -41,7 +41,15 @@ if(!password)throw new Error('RTA_MARKET_PASSWORD is required');
     const readyMs=Date.now()-unlockStarted;
     if(await page.locator('#market2026Password').count())throw new Error('Password field remained in the document after unlock');
     if(heroMs>6000)throw new Error(`Market hero took too long after password: ${heroMs}ms`);
-    console.log(`Piața RTA password flow OK: wrong password rejected; hero ${heroMs}ms; full validated view ${readyMs}ms.`);
+    await page.locator('[data-tab="home"]').first().click();
+    await page.waitForSelector('#home.active',{state:'attached',timeout:10000});
+    const reentryStarted=Date.now();
+    await marketButton.click();
+    await modal.waitFor({state:'visible',timeout:2000});
+    const promptMs=Date.now()-reentryStarted;
+    if(promptMs>1000)throw new Error(`Password prompt took too long on re-entry: ${promptMs}ms`);
+    if(await input.inputValue())throw new Error('Password field was not empty on re-entry');
+    console.log(`Piața RTA password flow OK: wrong password rejected; hero ${heroMs}ms; full validated view ${readyMs}ms; re-entry prompt ${promptMs}ms.`);
   }finally{
     await browser.close();
   }
