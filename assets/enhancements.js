@@ -21,7 +21,7 @@ function waitForMarket(){
   style('/assets/market-hype-warnings.css?v=2');
   load('/assets/market-loading-guard.js?v=17');
   load('/assets/market-ui-recovery.js?v=10');
-  load('/assets/market-management-v2.js?v=5',function(){load('/assets/market-analysis-synthesis.js?v=2')});
+  load('/assets/market-management-v2.js?v=6',function(){load('/assets/market-analysis-synthesis.js?v=3')});
   load('/assets/market-hype-ui.js?v=12');
   load('/assets/market-view-switcher.js?v=9');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)

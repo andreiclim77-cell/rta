@@ -1,18 +1,124 @@
 (function(){
 'use strict';
-var S='/data/market-sales-2026.json',M='/data/market-management-2026.json',H='/data/market-hype-radar-2026.json',D='/data/market-demand-intelligence-2026.json',ID='marketAnalysisSynthesis',loading=false;
-function el(i){return document.getElementById(i)}function en(){return window.__rtaLang==='en'}function t(r,e){return en()?e:r}function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}function n(v,d){if(v==null||!Number.isFinite(Number(v)))return'—';return Number(v).toLocaleString(en()?'en-GB':'ro-RO',{maximumFractionDigits:d==null?0:d})}
-function fetchJson(u){return fetch(u+'?synth='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error(u+'-'+r.status);return r.json()})}
-function css(){if(el('marketAnalysisSynthesisCss'))return;var l=document.createElement('link');l.id='marketAnalysisSynthesisCss';l.rel='stylesheet';l.href='/assets/market-analysis-synthesis.css?v=1';document.head.appendChild(l)}
-function catLabel(x){return({'RTA':'RTA','mod':t('Moduri','Mods'),'sarma':t('Sârmă','Wire'),'coil prebuilt':t('Coiluri','Coils'),'bumbac/wick':t('Bumbac','Cotton'),'chipset/board':t('Chipseturi','Chipsets'),'acumulator':t('Acumulatori','Batteries'),'incarcator':t('Încărcătoare','Chargers'),'unelte build':t('Unelte','Tools'),'componente RTA':t('Componente','Components'),'accesoriu RTA/mod':t('Accesorii','Accessories'),'lichid tutunos/NET/DIY':t('Tutun / NET','Tobacco / NET'),'RBA/bridge':'RBA / bridge','RDA/RDTA':'RDA / RDTA'})[x]||x||'—'}
-function validUnit(r){return r&&Number.isFinite(Number(r.unitsSoldDelta))&&Number(r.unitsSoldDelta)>0&&!/(?:\bcomenzi\b|\borders?\b)/i.test(String(r.counterEvidence||''))}
-function categoryLeaders(s){var by={};(s.rankings||[]).forEach(function(r){if(!r.category||!r.product)return;var cat=by[r.category]||(by[r.category]={});var k=String(r.canonicalProductKey||r.product),x=cat[k]||(cat[k]={name:r.product,score:0,stores:{},bestRank:null,units:0});x.score+=1/Math.max(1,Number(r.rank)||999);x.stores[r.retailerId]=1;x.bestRank=x.bestRank==null?Number(r.rank):Math.min(x.bestRank,Number(r.rank))});(s.actualSales||[]).filter(validUnit).forEach(function(r){var cat=by[r.category]||{},k=String(r.canonicalProductKey||r.product),x=cat[k];if(x)x.units+=Number(r.unitsSoldDelta)||0});return Object.keys(by).map(function(cat){var rows=Object.values(by[cat]).sort(function(a,b){return b.score-a.score||Object.keys(b.stores).length-Object.keys(a.stores).length||a.name.localeCompare(b.name)}).slice(0,3);return{category:cat,rows:rows}}).filter(function(x){return x.rows.length}).sort(function(a,b){var order=['RTA','mod','sarma','coil prebuilt','bumbac/wick','chipset/board','acumulator','incarcator','unelte build','componente RTA','accesoriu RTA/mod','lichid tutunos/NET/DIY','RBA/bridge','RDA/RDTA'];return order.indexOf(a.category)-order.indexOf(b.category)})}
-function topRomaniaHtml(s){var cats=categoryLeaders(s),coverage=s.coverage||{},exact=Number(coverage.storefrontsWithActualUnitSales||0),total=Number(coverage.storefrontsConfigured||0);return'<section class="synth-section"><div class="synth-title"><span>'+esc(t('Top semnal public România','Romania public-signal top'))+'</span><p>'+esc(t('Acesta este un clasament al ordonărilor publice de popularitate/bestseller, nu un top de unități vândute. La WooCommerce, popularitatea este cumulativă pe viața produsului, deci un model vechi poate rămâne sus. Magazine cu unități vândute publice: ','This ranks public popularity/bestseller orders, not sold units. WooCommerce popularity is lifetime-cumulative, so an older model can remain near the top. Stores with public sold units: ')+n(exact)+' / '+n(total)+'.')+'</p></div><div class="synth-category-grid">'+cats.map(function(c){return'<article><h4>'+esc(catLabel(c.category))+'</h4>'+c.rows.map(function(r,i){return'<div class="synth-rank"><span>'+(i+1)+'</span><div><b>'+esc(r.name)+'</b><small>'+esc(n(Object.keys(r.stores).length)+' '+t('magazine · cel mai bun loc public #','stores · best public rank #')+n(r.bestRank)+(r.units>0?' · '+n(r.units)+' '+t('unități observate','observed units'):' '))+'</small></div></div>'}).join('')+'</article>'}).join('')+'</div></section>'}
-function rotationRows(s,m){var actual=(s.actualSales||[]).filter(validUnit).sort(function(a,b){return Number(b.unitsSoldDelta)-Number(a.unitsSoldDelta)}).slice(0,8);if(actual.length)return{mode:'actual',rows:actual.map(function(r){return{name:r.product,category:r.category,value:Number(r.unitsSoldDelta),stores:1,why:t('unități vândute observate între două capturi valide','sold units observed between two valid snapshots')}})};var rows=m&&m.periods&&m.periods['30']&&m.periods['30'].product&&m.periods['30'].product.rows||[],moving=rows.filter(function(r){return r.momentumPct!=null}).sort(function(a,b){return Number(b.momentumPct)-Number(a.momentumPct)}).slice(0,8);if(moving.length)return{mode:'momentum',rows:moving.map(function(r){return{name:r.name,category:'',value:Number(r.momentumPct),stores:Number(r.bestsellerStorefronts||r.breadthStores||0),why:t('schimbare în ordonarea publică între '+String(r.baselineDate||'—')+' și '+String(r.lastObservedAt||'—')+'; nu este rotație sau vânzare','change in public ordering between '+String(r.baselineDate||'—')+' and '+String(r.lastObservedAt||'—')+'; not turnover or sales')}})};return{mode:'signal',rows:rows.slice().sort(function(a,b){return Number(b.priorityScore)-Number(a.priorityScore)}).slice(0,8).map(function(r){return{name:r.name,category:'',value:Number(r.priorityScore),stores:Number(r.bestsellerStorefronts||r.breadthStores||0),why:t('scor orientativ al popularității publice; fără istoric suficient și fără unități vândute','directional public-popularity score; insufficient history and no sold units')}})}}
-function rotationHtml(s,m){var x=rotationRows(s,m),intro=x.mode==='actual'?t('Aici folosesc numai creșteri reale ale contoarelor publice de unități vândute.','Only real increases in public sold-unit counters are used here.'):t('Rotația reală nu este disponibilă: ar necesita unități vândute și stoc mediu. Mai jos este doar mișcarea ordonării publice, pe datele efectiv capturate.','Real turnover is unavailable: it requires sold units and average inventory. Below is only movement in public ordering across dates actually captured.');return'<section class="synth-section"><div class="synth-title"><span>'+esc(x.mode==='actual'?t('Unități observate','Observed units'):t('Mișcare observată','Observed movement'))+'</span><p>'+esc(intro)+'</p></div><div class="synth-rotation">'+x.rows.map(function(r,i){var val=x.mode==='actual'?n(r.value)+' '+t('unit.','units'):x.mode==='momentum'?(r.value>0?'+':'')+n(r.value)+'%':n(r.value,0);return'<div><span>'+(i+1)+'</span><div><b>'+esc(r.name)+'</b><small>'+esc(r.why+(r.stores?' · '+n(r.stores)+' '+t('magazine','stores'):''))+'</small></div><strong>'+esc(val)+'</strong></div>'}).join('')+'</div></section>'}
-function hypeCount(h){var all=[].concat(h&&h.categories&&h.categories.RTA||[],h&&h.categories&&h.categories.MODURI||[],h&&h.categories&&h.categories.ACCESORII||[]);return{all:all,buy:all.filter(function(x){return x.decision&&['BUY_HYPE','BUY_TREND'].indexOf(x.decision.code)>=0}).length,warn:all.filter(function(x){return x.decision&&['PREPARE','WATCH','PREPARE_ACCESSORIES'].indexOf(x.decision.code)>=0}).length,stop:all.filter(function(x){return x.decision&&x.decision.code==='STOP_REVIEW'}).length}}
-function synthesisHtml(s,m,h,d){var p=m&&m.periods&&m.periods['30']||{},prod=p.product&&p.product.rows&&p.product.rows[0],brand=p.brand&&p.brand.rows&&p.brand.rows[0],cat=p.category&&p.category.rows&&p.category.rows[0],opp=p.product&&p.product.opportunities&&p.product.opportunities[0],decl=p.product&&p.product.declines&&p.product.declines[0],hc=hypeCount(h),coverage=s.coverage||{},sources=d.sourceStatus||{},advice=[],exact=Number(coverage.storefrontsWithActualUnitSales||0),total=Number(coverage.storefrontsConfigured||0),window=m&&m.analysisWindow||{};if(prod){var code=String(prod.action&&prod.action.code||'DATA_GAP');if(prod.tierA&&prod.periodComplete&&['GROW','CORE'].indexOf(code)>=0)advice.push(t('Semnal confirmat pentru ','Confirmed signal for ')+prod.name+' — '+String(prod.action&&prod.action.label||'').toLowerCase()+'.');else advice.push(t('Urmărește ','Watch ')+prod.name+t(' ca semnal public principal; nu îl transforma în comandă de stoc fără unități vândute și interval complet.',' as the leading public signal; do not turn it into an inventory order without sold units and a complete window.'))}if(opp)advice.push(t('Numai test mic pentru ','Small test only for ')+opp.name+t('; aceasta este o ipoteză, nu o vânzare demonstrată.','; this is a hypothesis, not a demonstrated sale.'));if(decl)advice.push(t('Verifică manual ','Manually verify ')+decl.name+t(' înainte de orice reducere; mișcarea de ranking nu dovedește scăderea vânzărilor.',' before any reduction; rank movement does not prove declining sales.'));if(hc.buy)advice.push(t('Hype are ','Hype has ')+hc.buy+' '+t('semnale pentru teste controlate; noutatea este analizată separat de popularitatea magazinelor.','signals for controlled tests; newness is analysed separately from store popularity.'));else if(hc.warn)advice.push(t('Hype are ','Hype has ')+hc.warn+' '+t('elemente de urmărit, fără ordin automat de cumpărare.','items to monitor, without an automatic buy order.'));else advice.push(t('Hype nu adaugă acum o presiune verificată de cumpărare.','Hype currently adds no verified buying pressure.'));if(exact===0)advice.push(t('Acoperirea unităților vândute este 0 / ','Sold-unit coverage is 0 / ')+n(total)+t('; Analiza este orientativă până apar date Tier A.','; Analysis remains directional until Tier-A data exist.'));else if(exact<total)advice.push(t('Nu folosi procentele drept cotă națională: acoperirea unităților vândute este ','Do not treat percentages as national share: sold-unit coverage is ')+n(exact)+' / '+n(total)+'.');if(window.completeFromRequestedStart!==true)advice.push(t('Intervalul cerut începe la 01.01.2025, dar capturile comparabile existente încep la ','The requested window starts on 01.01.2025, but available comparable snapshots begin on ')+String(window.firstObservedAt||'—')+t('; lipsa nu este completată prin estimare.','; the gap is not estimated.'));var demandOn=Boolean((sources.reddit&&sources.reddit.available)||(sources.facebook&&sources.facebook.available)||(sources.forums&&sources.forums.available)||(sources.googleAds&&sources.googleAds.available));return'<section class="synth-section synth-summary"><div class="synth-title"><span>'+esc(t('Sinteză prudentă','Cautious summary'))+'</span><p>'+esc(t('Combinăm popularitatea publică, mișcarea între capturi, interesul extern și Hype, păstrând separat ce este vânzare, ce este popularitate și ce este doar interes.','Public popularity, movement between snapshots, external interest and Hype are combined while keeping sales, popularity and interest separate.'))+'</p></div><div class="synth-pulse"><div><span>'+esc(t('Produs · semnal','Product · signal'))+'</span><b>'+esc(prod?prod.name:'—')+'</b></div><div><span>'+esc(t('Brand · semnal','Brand · signal'))+'</span><b>'+esc(brand?brand.name:'—')+'</b></div><div><span>'+esc(t('Categorie · semnal','Category · signal'))+'</span><b>'+esc(cat?cat.name:'—')+'</b></div><div><span>Hype</span><b>'+esc(hc.buy?hc.buy+' '+t('teste','tests'):hc.warn?hc.warn+' '+t('de urmărit','to watch'):t('fără presiune','no pressure'))+'</b></div><div><span>'+esc(t('Cerere auxiliară','Auxiliary demand'))+'</span><b>'+esc(demandOn?t('activă','active'):t('limitată','limited'))+'</b></div></div><div class="synth-advice"><h4>'+esc(t('Ce este prudent să faci','Prudent next steps'))+'</h4><ol>'+advice.map(function(x){return'<li>'+esc(x)+'</li>'}).join('')+'</ol></div></section>'}
-function render(s,m,h,d){css();var cockpit=el('marketManagementCockpit');if(!cockpit||el(ID))return;var oldOverview=cockpit.querySelector('.mgmt-overview');if(oldOverview)oldOverview.remove();var oldPlan=cockpit.querySelector('.mgmt-plan');if(oldPlan)oldPlan.remove();var wrap=document.createElement('div');wrap.id=ID;wrap.className='market-analysis-synthesis';wrap.innerHTML=topRomaniaHtml(s)+rotationHtml(s,m)+synthesisHtml(s,m,h,d);var direct=cockpit.querySelector('.mgmt-direct');if(direct&&direct.parentNode)direct.parentNode.insertBefore(wrap,direct.nextSibling);else cockpit.appendChild(wrap);document.dispatchEvent(new CustomEvent('rta:market:synthesis-ready'))}
-function load(){if(loading||el(ID))return;var cockpit=el('marketManagementCockpit');if(!cockpit)return;loading=true;Promise.all([fetchJson(S),fetchJson(M),fetchJson(H),fetchJson(D)]).then(function(x){render(x[0],x[1],x[2],x[3])}).finally(function(){loading=false})}
-function hydrate(){if(!el(ID))load()}function boot(){document.addEventListener('rta:market:analysis-ready',hydrate);document.addEventListener('rta:market:hydrate',hydrate);hydrate();setTimeout(hydrate,450);setTimeout(hydrate,1000)}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+
+var SALES='/data/market-sales-2026.json';
+var MANAGEMENT='/data/market-management-2026.json';
+var ID='marketAnalysisSynthesis';
+var loading=false;
+
+function el(id){return document.getElementById(id)}
+function en(){return window.__rtaLang==='en'}
+function t(ro,english){return en()?english:ro}
+function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(char){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]})}
+function n(value,digits){if(value==null||!Number.isFinite(Number(value)))return'—';return Number(value).toLocaleString(en()?'en-GB':'ro-RO',{maximumFractionDigits:digits==null?0:digits})}
+function fetchJson(url){return fetch(url+'?synth='+Date.now(),{cache:'no-store'}).then(function(response){if(!response.ok)throw new Error(url+'-'+response.status);return response.json()})}
+function css(){if(el('marketAnalysisSynthesisCss'))return;var link=document.createElement('link');link.id='marketAnalysisSynthesisCss';link.rel='stylesheet';link.href='/assets/market-analysis-synthesis.css?v=1';document.head.appendChild(link)}
+
+function categoryLabel(category){
+  return({
+    POD:'POD',
+    RTA:'RTA',
+    mod:t('Moduri','Mods'),
+    'RBA/bridge':'RBA / bridge',
+    'RDA/RDTA':'RDA / RDTA',
+    sarma:t('Sârmă','Wire'),
+    'coil prebuilt':t('Coiluri','Coils'),
+    'bumbac/wick':t('Bumbac','Cotton'),
+    'chipset/board':t('Chipseturi','Chipsets'),
+    acumulator:t('Acumulatori','Batteries'),
+    incarcator:t('Încărcătoare','Chargers'),
+    'unelte build':t('Unelte','Tools'),
+    'componente RTA':t('Componente','Components'),
+    'accesoriu RTA/mod':t('Accesorii','Accessories'),
+    'lichid tutunos/NET/DIY':t('Tutun / NET','Tobacco / NET')
+  })[category]||category||'—'
+}
+
+function categoryLeaders(sales){
+  var grouped={};
+  (sales.rankings||[]).forEach(function(row){
+    if(!row.category||!row.product)return;
+    var category=grouped[row.category]||(grouped[row.category]={});
+    var key=String(row.canonicalProductKey||row.product);
+    var item=category[key]||(category[key]={name:row.product,score:0,stores:{},bestRank:null});
+    item.score+=1/Math.max(1,Number(row.rank)||999);
+    item.stores[row.retailerId]=1;
+    item.bestRank=item.bestRank==null?Number(row.rank):Math.min(item.bestRank,Number(row.rank));
+  });
+  var order=['POD','RTA','mod','RBA/bridge','RDA/RDTA','componente RTA','accesoriu RTA/mod','sarma','coil prebuilt','bumbac/wick','chipset/board','acumulator','incarcator','unelte build','lichid tutunos/NET/DIY'];
+  return Object.keys(grouped).map(function(category){
+    var rows=Object.values(grouped[category]).sort(function(a,b){
+      return b.score-a.score||Object.keys(b.stores).length-Object.keys(a.stores).length||a.name.localeCompare(b.name);
+    }).slice(0,3);
+    return{category:category,rows:rows};
+  }).filter(function(group){return group.rows.length}).sort(function(a,b){
+    var ai=order.indexOf(a.category),bi=order.indexOf(b.category);
+    return(ai<0?999:ai)-(bi<0?999:bi);
+  });
+}
+
+function topProductsHtml(sales){
+  var categories=categoryLeaders(sales);
+  return'<section class="synth-section">'
+    +'<div class="synth-title"><span>'+esc(t('Top produse urmărite','Top tracked products'))+'</span>'
+    +'<p>'+esc(t('Perioada generală: 01.01.2026 → prezent. Ordinea reunește pozițiile produselor în topurile publice ale magazinelor românești. Noutățile sunt prezentate separat în Hype.','Overall period: 01.01.2026 → present. The order combines product positions in public rankings from Romanian stores. New releases are shown separately in Hype.'))+'</p></div>'
+    +'<div class="synth-category-grid">'+categories.map(function(group){
+      return'<article><h4>'+esc(categoryLabel(group.category))+'</h4>'+group.rows.map(function(row,index){
+        return'<div class="synth-rank"><span>'+(index+1)+'</span><div><b>'+esc(row.name)+'</b><small>'
+          +esc(n(Object.keys(row.stores).length)+' '+t('magazine · cea mai bună poziție #','stores · best position #')+n(row.bestRank))
+          +'</small></div></div>';
+      }).join('')+'</article>';
+    }).join('')+'</div></section>';
+}
+
+function movementRows(management){
+  var rows=management&&management.periods&&management.periods['30']&&management.periods['30'].product&&management.periods['30'].product.rows||[];
+  var moving=rows.filter(function(row){return row.momentumPct!=null}).sort(function(a,b){return Number(b.momentumPct)-Number(a.momentumPct)}).slice(0,8);
+  if(moving.length)return{mode:'movement',rows:moving.map(function(row){return{name:row.name,value:Number(row.momentumPct),stores:Number(row.bestsellerStorefronts||row.breadthStores||0),from:row.baselineDate,to:row.lastObservedAt}})};
+  return{mode:'current',rows:rows.slice().sort(function(a,b){return Number(b.priorityScore)-Number(a.priorityScore)}).slice(0,8).map(function(row){return{name:row.name,stores:Number(row.bestsellerStorefronts||row.breadthStores||0)}})};
+}
+
+function movementHtml(management){
+  var movement=movementRows(management);
+  var intro=movement.mode==='movement'
+    ?t('Comparația zilnică arată produsele care au urcat cel mai mult în topurile publice ale magazinelor.','The daily comparison shows products that climbed most in public store rankings.')
+    :t('Aici sunt produsele cu cea mai bună poziție în actualizarea curentă.','These are the products with the strongest position in the current update.');
+  return'<section class="synth-section"><div class="synth-title"><span>'+esc(t('Evoluția produselor','Product movement'))+'</span><p>'+esc(intro)+'</p></div>'
+    +'<div class="synth-rotation">'+movement.rows.map(function(row,index){
+      var description=movement.mode==='movement'
+        ?t('evoluție între ','movement between ')+String(row.from||'—')+t(' și ',' and ')+String(row.to||'—')
+        :t('prezent în topurile publice urmărite','present in the tracked public rankings');
+      var value=movement.mode==='movement'?(row.value>0?'+':'')+n(row.value)+'%':n(row.stores)+' '+t('mag.','stores');
+      return'<div><span>'+(index+1)+'</span><div><b>'+esc(row.name)+'</b><small>'+esc(description+(row.stores?' · '+n(row.stores)+' '+t('magazine','stores'):''))+'</small></div><strong>'+esc(value)+'</strong></div>';
+    }).join('')+'</div></section>';
+}
+
+function render(sales,management){
+  css();
+  var cockpit=el('marketManagementCockpit');
+  if(!cockpit||el(ID))return;
+  var oldOverview=cockpit.querySelector('.mgmt-overview');
+  if(oldOverview)oldOverview.remove();
+  var oldPlan=cockpit.querySelector('.mgmt-plan');
+  if(oldPlan)oldPlan.remove();
+  var wrap=document.createElement('div');
+  wrap.id=ID;
+  wrap.className='market-analysis-synthesis';
+  wrap.innerHTML=topProductsHtml(sales)+movementHtml(management);
+  var direct=cockpit.querySelector('.mgmt-direct');
+  if(direct&&direct.parentNode)direct.parentNode.insertBefore(wrap,direct.nextSibling);
+  else cockpit.appendChild(wrap);
+  document.dispatchEvent(new CustomEvent('rta:market:synthesis-ready'));
+}
+
+function load(){
+  if(loading||el(ID))return;
+  if(!el('marketManagementCockpit'))return;
+  loading=true;
+  Promise.all([fetchJson(SALES),fetchJson(MANAGEMENT)]).then(function(payload){render(payload[0],payload[1])}).finally(function(){loading=false});
+}
+
+function hydrate(){if(!el(ID))load()}
+function boot(){document.addEventListener('rta:market:analysis-ready',hydrate);document.addEventListener('rta:market:hydrate',hydrate);hydrate();setTimeout(hydrate,450);setTimeout(hydrate,1000)}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
