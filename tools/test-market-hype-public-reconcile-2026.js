@@ -29,6 +29,8 @@ need(undatedQueue.length===1&&undatedQueue[0].reason==='undatedPublicAnnouncemen
 need(Date.parse(undatedQueue[0].lastObservedAt)>=Date.parse(undatedQueue[0].firstObservedAt),'Verification observation range is inverted');
 const genericQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'Best Ecig Store, Box Mod Manufacturer',brand:'Eleaf',category:'MODURI',reason:'noEventOrDate',url:'https://www.eleafworld.com/'}]},{verificationQueue:[]},'RTA');
 need(genericQueue.length===0,'A generic manufacturer page was treated as a product');
+const aggregateQueue=reconcileQueue({generatedAt:'2026-09-04T03:00:00.000Z',products:[],verificationQueue:[{productName:'SXK RDA / RTA / RDTA Atomizer, Mod - 3FVape',category:'RTA',reason:'noEventOrDate',url:'https://www.3fvape.com/108-sxk'}]},{verificationQueue:[]},'RTA');
+need(aggregateQueue.length===0,'A generic multi-category collection was treated as a concrete product');
 const discoveryCandidates=[
   {productName:'Arcana New MTL RTA',brand:'Arcana Mods',category:'RTA',reason:'no-direct-dated-event',url:'https://arcana-mods.com/products/new-mtl-rta',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'Eleaf iStick XC100 Vape Mod',brand:'Eleaf',category:'MODURI',reason:'no-direct-dated-event',url:'https://www.eleafworld.com/istick-xc100',observedAt:'2026-09-04T02:00:00.000Z'},
