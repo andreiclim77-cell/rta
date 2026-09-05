@@ -11,30 +11,30 @@ function t(ro,english){return en()?english:ro}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(char){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]})}
 function n(value){if(value==null||!Number.isFinite(Number(value)))return'—';return Number(value).toLocaleString(en()?'en-GB':'ro-RO',{maximumFractionDigits:0})}
 function fetchJson(url){return fetch(url+'?synth='+Date.now(),{cache:'no-store'}).then(function(response){if(!response.ok)throw new Error(url+'-'+response.status);return response.json()})}
-function css(){if(el('marketAnalysisSynthesisCss'))return;var link=document.createElement('link');link.id='marketAnalysisSynthesisCss';link.rel='stylesheet';link.href='/assets/market-analysis-synthesis.css?v=4';document.head.appendChild(link)}
+function css(){if(el('marketAnalysisSynthesisCss'))return;var link=document.createElement('link');link.id='marketAnalysisSynthesisCss';link.rel='stylesheet';link.href='/assets/market-analysis-synthesis.css?v=5';document.head.appendChild(link)}
 
 var CATEGORY_ORDER=['POD','RTA','mod','RBA/bridge','RDA/RDTA','componente RTA','accesoriu RTA/mod','sarma','coil prebuilt','bumbac/wick','chipset/board','acumulator','incarcator','unelte build'];
 function categoryLabel(category){return({POD:'POD',RTA:'RTA',mod:t('Moduri','Mods'),'RBA/bridge':'RBA / bridge','RDA/RDTA':'RDA / RDTA','componente RTA':t('Componente RTA','RTA components'),'accesoriu RTA/mod':t('Accesorii','Accessories'),sarma:t('Sârmă','Wire'),'coil prebuilt':t('Coiluri','Coils'),'bumbac/wick':t('Bumbac','Cotton'),'chipset/board':t('Chipseturi','Chipsets'),acumulator:t('Acumulatori','Batteries'),incarcator:t('Încărcătoare','Chargers'),'unelte build':t('Unelte','Tools')})[category]||category||'—'}
 function categorySort(a,b){var ai=CATEGORY_ORDER.indexOf(a.category),bi=CATEGORY_ORDER.indexOf(b.category);return(ai<0?999:ai)-(bi<0?999:bi)}
 function link(name,url){var label=esc(name);return/^https?:\/\//i.test(String(url||''))?'<a href="'+esc(url)+'" target="_blank" rel="noopener noreferrer">'+label+'</a>':'<b>'+label+'</b>'}
 function signalLabel(kind){
-  if(kind==='google-monthly-searches')return t('căutări Google','Google searches');
+  if(kind==='google-monthly-searches')return t('căutări lunare','monthly searches');
   if(kind==='guide-searches-30d')return t('căutări în ghid','guide searches');
-  if(kind==='community-mentions')return t('mențiuni publice','public mentions');
-  if(kind==='public-review-views')return t('recenzii publice','public reviews');
-  return t('semnale publice','public signals');
+  if(kind==='community-mentions')return t('mențiuni','mentions');
+  if(kind==='public-review-views')return t('recenzii','reviews');
+  return t('interes public','public interest');
 }
 function interestDetail(row,view){
-  if(view==='brands')return n(row.trackedProducts)+' '+t('produse urmărite','tracked products')+' · '+(row.signalKinds||[]).map(signalLabel).join(' · ');
+  if(view==='brands')return n(row.trackedProducts)+' '+t('produse cu interes','products attracting interest');
   var value=n(row.metricValue);
-  if(row.metricKind==='google-monthly-searches')return value+' '+t('căutări Google pe lună','Google searches per month');
-  if(row.metricKind==='guide-searches-30d')return value+' '+t('căutări în ghid în 30 de zile','guide searches in 30 days');
-  if(row.metricKind==='community-mentions')return value+' '+t('mențiuni publice observate','observed public mentions');
-  if(row.metricKind==='public-review-views')return value+' '+t('vizualizări ale recenziilor publice','views of public reviews');
-  return value+' '+t('semnale publice','public signals');
+  if(row.metricKind==='google-monthly-searches')return value+' '+t('căutări lunare','monthly searches');
+  if(row.metricKind==='guide-searches-30d')return value+' '+t('căutări în ghid','guide searches');
+  if(row.metricKind==='community-mentions')return value+' '+t('mențiuni','mentions');
+  if(row.metricKind==='public-review-views')return value+' '+t('vizualizări în recenzii','review views');
+  return value+' '+t('interes public','public interest');
 }
 function popularityDetail(row){
-  return n(row.sourceCount)+' '+t(row.sourceCount===1?'sursă comercială':'surse comerciale',row.sourceCount===1?'commercial source':'commercial sources')+' · '+n(row.observedDays)+' '+t(row.observedDays===1?'zi observată':'zile observate',row.observedDays===1?'observed day':'observed days')+' · '+t('poziție maximă #','best position #')+n(row.bestRank);
+  return n(row.storefrontCount||row.sourceCount)+' '+t((row.storefrontCount||row.sourceCount)===1?'magazin':'magazine',(row.storefrontCount||row.sourceCount)===1?'store':'stores')+' · '+t('cel mai sus pe locul ','highest at no. ')+n(row.bestRank);
 }
 function rankRows(rows,kind,view){return(rows||[]).map(function(row,index){
   var detail=kind==='popularity'?popularityDetail(row):interestDetail(row,view);
@@ -54,19 +54,15 @@ function render(data){
   var wrap=document.createElement('div');
   wrap.id=ID;
   wrap.className='market-analysis-synthesis';
-  var truth=data.truth||{};
-  var interval=truth.evidenceFirstObservedAt&&truth.evidenceEndObservedAt
-    ? truth.evidenceFirstObservedAt+' - '+truth.evidenceEndObservedAt
-    : t('Interval neconfirmat','Unconfirmed interval');
-  wrap.innerHTML='<p class="synth-evidence-period">'+esc(t('Perioada cu dovezi: ','Evidence period: ')+interval)+'. '+esc(t('Perioada solicitată începe la ','Requested period starts on ')+(truth.requestedStart||'2026-01-01'))+'. '+esc(t('Datele lipsă nu reprezintă vânzări zero.','Missing data does not mean zero sales.'))+'</p>'+section(
+  wrap.innerHTML=section(
     'popularity',
-    t('Ce indică topurile comerciale observate','What the observed commercial rankings show'),
-    t('Mărcile și produsele sunt clasate separat după pozițiile publice observate în perioada cu date verificabile. Clasamentele cumulative ale magazinelor nu sunt prezentate drept vânzări realizate după 01.01.2026 și nu reprezintă volume naționale de bucăți.','Brands and products are ranked separately from public positions observed during the verifiable evidence window. Cumulative retailer rankings are not presented as sales made after 1 January 2026 and do not represent national unit volumes.'),
+    t('Vizibilitate în magazine','Store visibility'),
+    t('Topuri publice, nu volume de vânzări.','Public rankings, not sales volumes.'),
     data.observedPopularity,'popularity','synth-sales'
   )+section(
     'ideas',
-    t('Interes public observat','Observed public interest'),
-    t('Mărcile și produsele sunt afișate separat numai când există interes public măsurabil. Fiecare rezultat precizează dacă semnalul provine din căutări, comunități sau vizualizările recenziilor.','Brands and products are shown separately only when measurable public interest exists. Every result states whether its signal comes from searches, communities or review views.'),
+    t('Idei de cumpărare','Buying ideas'),
+    t('Mărci și produse care atrag interes acum.','Brands and products attracting interest now.'),
     data.buyingIdeas,'ideas','synth-ideas'
   );
   var anchor=el('marketAnalysisSynthesisAnchor');

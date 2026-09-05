@@ -57,6 +57,6 @@ need(!radar.includes('return q.slice(0,150)')&&!products.includes('return q.slic
 for(const source of [radar,products,makers,pods])need(source.includes('facebook.com')&&source.includes('instagram.com'),'Public Facebook/Instagram discovery is incomplete');
 for(const source of [radar,products,makers,pods])need(source.includes('undatedPublicAnnouncement'),'Undated identifiable candidates are not preserved consistently');
 need(flow.includes('node tools/reconcile-market-hype-public-2026.js --write'),'Final public reconciliation is absent from the daily workflow');
-need(ui.includes('Semnale fără dată / ETA, în verificare')&&ui.includes('signals.length+(data.verificationQueue||[]).length'),'Undated candidates are not visible or counted in the UI');
+need(ui.includes('Alte produse pe radar')&&ui.includes('signals.length+(data.verificationQueue||[]).length'),'Undated candidates are not visible or counted in the clean UI');
 
 console.log('Hype public reconciliation unit gate PASS: clone families grouped; authentic separated; uncapped public discovery; undated candidates retained by category; false sources rejected.');

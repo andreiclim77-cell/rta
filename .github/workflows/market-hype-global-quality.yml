@@ -129,9 +129,10 @@ jobs:
           need(multi.includes("const VCFG='data/market-hype-vendor-profiles-2026.json'")&&multi.includes('allowPreviewPublicationDate'),'Config-driven vendor/preview discovery missing');
           need(products.includes('BANNED_HOSTS')&&products.includes('steampowered')&&products.includes('dictionary'),'False-positive blacklist missing');
           need(merge.includes('upstreamEvidenceMerged:true')&&merge.includes('release-observed')&&merge.includes('observedReleaseIsNotClaimedAsExactReleaseDate:true'),'Truthful upstream/release-observed merge missing');
-          need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel')&&ui.includes('release-observed'),'Expandable observed-release Hype UI missing');
+          need(ui.includes('hype-category-button')&&ui.includes('hype-product-card')&&ui.includes('productName')&&ui.includes('brandLabel'),'Expandable Hype UI missing');
           need(!ui.includes('class="hype-direct"')&&!ui.includes("t('Acum','Now')")&&ui.includes('data-hype-layer="launches"')&&ui.includes('data-hype-layer="signals"')&&ui.includes('data-hype-layer="catalog"'),'Evidence layers or legacy automatic conclusion regression');
           need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('validAfterProduct')&&guard.includes('catalog-published-at')&&guard.includes('signalWindowOnly'),'Atomic loader does not validate final RTA/MOD/POD data');
-          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('/assets/enhancements.js?v=10')&&sw.includes('ghid-rta-static-v49-evidence-integrity'),'Product Hype cache/data contract missing');
+          need(!ui.includes('Cum a fost verificat')&&!ui.includes('SURSE VERIFICATE LA ULTIMA ACTUALIZARE')&&!ui.includes('module finalizate')&&!ui.includes('memorie anti-relistare')&&ui.includes('Ce urmează și ce e nou'),'Clean Hype copy regression');
+          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('/assets/enhancements.js?v=11')&&sw.includes('ghid-rta-static-v50-clean-market-ui'),'Product Hype cache/data contract missing');
           console.log('Hype Global gate OK: GLOBAL 30d; RTA/MOD/POD; dated events separated from public signals; anti-relisting memory; 06:00 + 06:20 recovery.');
           NODE

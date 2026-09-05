@@ -48,8 +48,8 @@ async function openMarket(page,lang){
   if(await accept.isVisible().catch(()=>false))await accept.click();
   await page.waitForFunction(()=>!document.body.classList.contains('app-preparing'),{timeout:30000});
   await page.waitForFunction(()=>document.querySelector('[data-tab="market2026"]')&&Array.isArray(window.MAIN_ROUTES)&&window.MAIN_ROUTES.includes('market2026'),{timeout:30000});
-  await page.evaluate(()=>{if(typeof setRoute==='function')setRoute('market2026');else{location.hash='#market2026';if(typeof applyRoute==='function')applyRoute(false)}});
-  await page.waitForSelector('#market2026.active #market2026Root .market-hero',{timeout:30000});
+  await page.evaluate(()=>{sessionStorage.setItem('rtaMarket2026Access','1');if(typeof setRoute==='function')setRoute('market2026');else{location.hash='#market2026';if(typeof applyRoute==='function')applyRoute(false)}});
+  await page.waitForSelector('#market2026.active #market2026Root .market-hero',{state:'attached',timeout:30000});
   await page.waitForFunction(()=>window.__rtaHypeReady===true&&document.querySelector('#marketHypeRadar'),{timeout:30000});
   await page.locator('[data-primary="hype"]').click();
   await page.waitForFunction(()=>{const node=document.querySelector('#marketHypeRadar');return node&&getComputedStyle(node).display!=='none'&&!node.classList.contains('market-view-hidden')},{timeout:30000});
@@ -96,6 +96,8 @@ async function snapshot(page,mode){
       vertical,
       lang:document.documentElement.lang||'',
       title:root.querySelector('.hype-master-head h2')?.textContent.trim()
+      ,technicalClutter:/SURSE VERIFICATE|cataloage publice ·|căutări cu dată|Cum a fost verificat|module finalizate|memorie anti-relistare|De ce este aici|Data dovezii|confirmări|Verificate, dar fără lansare datată/i.test(root.textContent||'')
+      ,methodVisible:Boolean(root.querySelector('.hype-method,.hype-reading-guide,.hype-source-health'))
     };
   },mode);
 }
@@ -104,14 +106,14 @@ function requireState(result,expected){
   if(result.cards!==expected.cards||result.events!==expected.events||result.signals!==expected.signals)throw new Error(`${expected.label}: expected ${expected.cards}/${expected.events}/${expected.signals}, got ${result.cards}/${result.events}/${result.signals}`);
   if(result.queueRows!==expected.queue||result.signalLayerTotal!==expected.signalLayerTotal||result.falseQueueSource||expected.queueHasFalseSource)throw new Error(`${expected.label}: review queue or signal-layer count is inconsistent`);
   if(result.tabs!==2||result.active!==expected.mode)throw new Error(`${expected.label}: mode switch is incomplete`);
-  if(!result.progress||!result.sourceHealth)throw new Error(`${expected.label}: live progress or source coverage is missing`);
-  if(result.guideItems!==4||!/URMEAZĂ|COMING/.test(result.guideText)||!/INDICIU|SIGNAL/.test(result.guideText)||!/CATALOG/.test(result.guideText))throw new Error(`${expected.label}: plain-language reading guide is incomplete`);
+  if(!result.progress||result.sourceHealth||result.guideItems!==0||result.methodVisible)throw new Error(`${expected.label}: progress is missing or technical panels remain visible`);
   if(result.layerTabs!==3||result.activeLayer!==expected.layer||result.visiblePanel!==expected.layer)throw new Error(`${expected.label}: evidence layer switch is incomplete`);
   if(result.emptyCategoryAccordions!==0)throw new Error(`${expected.label}: empty zero-count categories still clutter the launch windows`);
   if(result.availabilityRows!==expected.availability.shown||result.availabilityTotal!==expected.availability.total)throw new Error(`${expected.label}: availability expected ${expected.availability.shown}/${expected.availability.total}, got ${result.availabilityRows}/${result.availabilityTotal}`);
   for(const kind of ['official','original','clone'])if(result.provenanceTotals[kind]!==expected.availability.kindTotals[kind])throw new Error(`${expected.label}: ${kind} provenance expected ${expected.availability.kindTotals[kind]}, got ${result.provenanceTotals[kind]}`);
-  if(/Semnale monitorizate|Monitored signals/.test(result.signalTitle||''))throw new Error(`${expected.label}: ambiguous monitored-signal title remains`);
-  if(!/Hype:/.test(result.title||''))throw new Error(`${expected.label}: explicit Hype title is missing`);
+  if(!/Semnale de urmărit|Signals to watch/.test(result.signalTitle||''))throw new Error(`${expected.label}: signal title is unclear`);
+  if(!/Ce urmează și ce e nou|What is coming and what is new/.test(result.title||''))throw new Error(`${expected.label}: clear Hype title is missing`);
+  if(result.technicalClutter)throw new Error(`${expected.label}: technical collection text remains in Hype`);
   if(result.docOverflow>3||result.clipped||result.vertical)throw new Error(`${expected.label}: layout overflow or vertical text detected`);
   if(result.eventNames.some(name=>/Prime Minister|AF5000|Sonder Q3|Paramour V2|Nitrous Pocket|Pinnacle Colossus/i.test(name)))throw new Error(`${expected.label}: known old model leaked into dated events`);
 }

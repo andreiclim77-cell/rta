@@ -2,6 +2,8 @@
   'use strict';
 
   var ROUTE='market2026';
+  var ACCESS_KEY='rtaMarket2026Access';
+  var PASSWORD_SHA256='113180da7cf6dcdea360d1d14de73ebb5c245ae582224c906012b9bf9395e615';
   var marketData=null;
   var activeTab='market';
   var loadingPromise=null;
@@ -110,6 +112,67 @@
     document.head.appendChild(style)
   }
 
+  function hasAccess(){
+    try{return sessionStorage.getItem(ACCESS_KEY)==='1'}catch(e){return false}
+  }
+  function setAccess(){try{sessionStorage.setItem(ACCESS_KEY,'1')}catch(e){}}
+  function clearAccess(){try{sessionStorage.removeItem(ACCESS_KEY)}catch(e){}}
+
+  async function sha256(value){
+    if(!window.crypto||!window.crypto.subtle)throw new Error('crypto-unavailable');
+    var bytes=new TextEncoder().encode(String(value||''));
+    var hash=await window.crypto.subtle.digest('SHA-256',bytes);
+    return Array.from(new Uint8Array(hash)).map(function(byte){return byte.toString(16).padStart(2,'0')}).join('')
+  }
+
+  function requestAccess(){
+    if(hasAccess())return Promise.resolve(true);
+    return new Promise(function(resolve){
+      var existing=byId('market2026Modal');
+      if(existing)existing.remove();
+      var overlay=document.createElement('div');
+      overlay.id='market2026Modal';
+      overlay.className='market-modal';
+      overlay.innerHTML='<form class="market-modal-dialog" autocomplete="off">'+
+        '<div class="market-lock-icon">&#128272;</div>'+
+        '<h2>'+escHtml(word('Acces Piața RTA','RTA Market access'))+'</h2>'+
+        '<p>'+escHtml(word('Introdu parola pentru a deschide Analiza și Hype.','Enter the password to open Analysis and Hype.'))+'</p>'+
+        '<input id="market2026Password" type="password" autocomplete="new-password" aria-label="'+escHtml(word('Parolă','Password'))+'" value="" />'+
+        '<div class="market-error" id="market2026Error"></div>'+
+        '<div class="market-modal-actions"><button type="button" class="mini-link" data-market-cancel>'+escHtml(word('Anulează','Cancel'))+'</button><button type="submit" class="mini-link">'+escHtml(word('Deschide','Open'))+'</button></div>'+
+      '</form>';
+      document.body.appendChild(overlay);
+      var input=byId('market2026Password');
+      var form=overlay.querySelector('form');
+      var done=false;
+      function close(ok){
+        if(done)return;
+        done=true;
+        overlay.remove();
+        resolve(Boolean(ok))
+      }
+      overlay.querySelector('[data-market-cancel]').addEventListener('click',function(){close(false)});
+      overlay.addEventListener('click',function(event){if(event.target===overlay)close(false)});
+      form.addEventListener('submit',async function(event){
+        event.preventDefault();
+        var error=byId('market2026Error');
+        try{
+          var digest=await sha256(input.value);
+          if(digest===PASSWORD_SHA256){
+            setAccess();
+            close(true)
+          }else{
+            error.textContent=word('Parolă incorectă.','Incorrect password.');
+            input.select()
+          }
+        }catch(e){
+          error.textContent=word('Parola nu a putut fi verificată în acest browser.','The password could not be checked in this browser.')
+        }
+      });
+      setTimeout(function(){input.focus()},30)
+    })
+  }
+
   function createSection(){
     if(byId(ROUTE))return;
     var main=document.querySelector('main.wrap')||document.querySelector('main');
@@ -126,7 +189,7 @@
     var nav=document.querySelector('.navlinks');
     if(!nav)return;
     var button=document.createElement('button');
-    button.className='navbtn market-nav';
+    button.className='navbtn market-nav market-lock-nav';
     button.type='button';
     button.dataset.tab=ROUTE;
     button.textContent=word('Piața RTA RO','RTA Market RO');
@@ -134,7 +197,12 @@
     if(anchor)anchor.insertAdjacentElement('beforebegin',button);else nav.appendChild(button);
     button.addEventListener('click',function(event){
       event.preventDefault();
-      if(typeof setRoute==='function')setRoute(ROUTE);else location.hash='#'+ROUTE
+      event.stopPropagation();
+      clearAccess();
+      requestAccess().then(function(ok){
+        if(!ok)return;
+        if(typeof setRoute==='function')setRoute(ROUTE);else location.hash='#'+ROUTE
+      })
     })
   }
 
@@ -150,6 +218,13 @@
     };
     var previousEnsure=window.ensureSectionRendered;
     window.ensureSectionRendered=function(id){if(id===ROUTE){initMarket();return}return previousEnsure(id)}
+  }
+
+  function renderLocked(){
+    var root=byId('market2026Root');
+    if(!root)return;
+    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">&#128274;</div><span class="market-kicker">'+escHtml(word('ACCES PRIVAT','PRIVATE ACCESS'))+'</span><h2>'+escHtml(word('PIAȚA RTA ROMÂNIA','ROMANIA RTA MARKET'))+'</h2><p>'+escHtml(word('Introdu parola pentru a deschide Analiza și Hype.','Enter the password to open Analysis and Hype.'))+'</p><button class="mini-link" type="button" data-market-unlock>'+escHtml(word('Introdu parola','Enter password'))+'</button></div>';
+    root.querySelector('[data-market-unlock]').addEventListener('click',function(){requestAccess().then(function(ok){if(ok)initMarket(true)})})
   }
 
   function loadData(){
@@ -316,16 +391,18 @@
   function renderUnlocked(){
     var root=byId('market2026Root');
     if(!root)return;
-    root.innerHTML=renderHero()+'<div id="market2026Body">'+renderBody()+'</div><div class="market-toolbar"><span class="market-note">'+escHtml(word('Ultima actualizare dataset: ','Dataset last updated: ')+String(marketData.updatedAt||'—'))+'</span></div>';
-    bindUi()
+    root.innerHTML=renderHero()+'<div id="market2026Body">'+renderBody()+'</div><div class="market-toolbar"><button type="button" class="mini-link" data-market-lock>'+escHtml(word('Blochează','Lock'))+'</button></div>';
+    bindUi();
+    root.querySelector('[data-market-lock]').addEventListener('click',function(){clearAccess();renderLocked()})
   }
 
-  function initMarket(){
+  function initMarket(force){
     createSection();
+    if(!hasAccess()&&!force){renderLocked();return}
     var root=byId('market2026Root');
     if(!root)return;
-    root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⌛</div><h2>'+escHtml(word('Se încarcă observațiile zilnice…','Loading daily observations…'))+'</h2></div>';
-    loadData().then(renderUnlocked).catch(function(error){root.innerHTML='<div class="market-lock-card"><div class="market-lock-icon">⚠️</div><h2>'+escHtml(word('Date indisponibile','Data unavailable'))+'</h2><p>'+escHtml(word('Modulul nu a putut încărca datasetul. Reîncearcă după refresh.','The module could not load the dataset. Retry after refresh.'))+'</p><small>'+escHtml(String(error&&error.message||error))+'</small></div>'})
+    root.innerHTML='<div class="market-lock-card"><h2>'+escHtml(word('Se deschide Piața RTA…','Opening RTA Market…'))+'</h2></div>';
+    loadData().then(renderUnlocked).catch(function(error){console.error(error);root.innerHTML='<div class="market-lock-card"><h2>'+escHtml(word('Piața RTA nu este disponibilă momentan','RTA Market is temporarily unavailable'))+'</h2><p>'+escHtml(word('Reîncearcă după reîmprospătarea paginii.','Refresh the page and try again.'))+'</p></div>'})
   }
 
   function boot(){
