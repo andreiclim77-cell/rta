@@ -142,7 +142,7 @@ function mergeRows(current,incoming){
 
 function validTarget(row,isPodFile){
   const name=String(row.productName||''),text=norm(name);
-  if(!name||/\b(?:e liquid|e juice|vape juice|flavou?r|nicotine pouch|shortfill|longfill|cartridge pack|replacement cartridge|empty pod|coil pack|phone|tablet)\b/.test(text))return false;
+  if(!name||/\b(?:e liquid|e juice|vape juice|flavou?r|nicotine pouch|shortfill|longfill|cartridge pack|replacement cartridge|empty pod|coil pack|bundle|multipack|multi pack|value pack|labor day|black friday|cyber monday|phone|tablet)\b/.test(text))return false;
   if(isPodFile)return row.category==='POD'&&Boolean(classifyPodProduct(name,row.brand||''));
   if(row.category==='RTA')return /\brta\b|rebuildable tank (?:atomizer|atomiser)/i.test(name)&&!/\brda\b|\brdta\b/i.test(name);
   if(row.category==='MODURI')return /\b(?:mod|sbs|squonk|bf60|dna\s*\d|yihi|istick|drag\s*6|aegis|armour)\b/i.test(name);

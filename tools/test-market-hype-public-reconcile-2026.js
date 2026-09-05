@@ -33,6 +33,7 @@ const discoveryCandidates=[
   {productName:'Arcana New MTL RTA',brand:'Arcana Mods',category:'RTA',reason:'no-direct-dated-event',url:'https://arcana-mods.com/products/new-mtl-rta',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'Eleaf iStick XC100 Vape Mod',brand:'Eleaf',category:'MODURI',reason:'no-direct-dated-event',url:'https://www.eleafworld.com/istick-xc100',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'OXVA XLIM PRO 3 30W Vape Pod System',brand:'OXVA',category:'POD',reason:'no-direct-dated-event',url:'https://www.oxva.com/pages/xlim-pro-3',observedAt:'2026-09-04T02:00:00.000Z'},
+  {productName:'2026 NeXLIM Labor Day Bundle',brand:'OXVA',category:'POD',reason:'no-direct-dated-event',url:'https://store.oxva.com/products/2026-nexlim-labor-day-bundle',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'Spark 2 par Kiwi',brand:'KIWI Vapor',category:'POD',reason:'no-direct-dated-event',url:'https://en.wikipedia.org/wiki/Apache_Spark',observedAt:'2026-09-04T02:00:00.000Z'},
   {productName:'Unnamed future RTA',brand:'Example',category:'RTA',named:false,reason:'no-direct-dated-event',url:'https://example.test/unnamed',observedAt:'2026-09-04T02:00:00.000Z'}
 ];

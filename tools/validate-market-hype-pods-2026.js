@@ -9,6 +9,7 @@ const {verificationFamilyKey}=require('./market-hype-verification-identity-2026.
 const file='data/market-hype-pods-2026.json';
 function need(condition,message){if(!condition)throw new Error(message)}
 const data=JSON.parse(fs.readFileSync(file,'utf8')),reg=registry(),reference=Date.parse(data.snapshotReferenceAt),windowMs=30*24*60*60*1000,forecastMs=180*24*60*60*1000;
+const PROMOTIONAL_TITLE=/\b(?:bundle|multipack|multi[ -]?pack|value pack|labor day|black friday|cyber monday)\b/i;
 need(Number(data.scopeYear)===2026,'POD Hype scope year must be 2026');
 need(data.scope==='GLOBAL POD SYSTEMS','POD Hype scope mismatch');
 need(Number(data.windowDays)===30,'POD Hype window must be 30 days');
@@ -22,6 +23,7 @@ need(data.truth.signalObservationWindowDays===30&&data.truth.forecastHorizonDays
 const keys=new Set();
 for(const product of data.products||[]){
   need(product.category==='POD',`Non-POD category leaked: ${product.productName}`);
+  need(!PROMOTIONAL_TITLE.test(product.productName),`Promotional bundle leaked as a POD product: ${product.productName}`);
   need(classifyPodProduct(product.productName,product.brand),`Unclassified POD product leaked: ${product.productName}`);
   const event=Date.parse(product.eventDate);
   need(Number.isFinite(event),`POD event date missing: ${product.productName}`);
@@ -37,6 +39,6 @@ const dated=(data.products||[]).filter(product=>product.confidenceTier?product.c
 need(Number(data.summary&&data.summary.total)===dated.length,'POD dated-event summary is inconsistent');
 need(Number(data.summary&&data.summary.publicSignals)===(data.products||[]).length-dated.length,'POD public-signal summary is inconsistent');
 const publishedVerificationKeys=new Set((data.products||[]).map(product=>verificationFamilyKey(product,'POD'))),queueKeys=new Set();
-for(const candidate of data.verificationQueue||[]){const key=verificationFamilyKey(candidate,'POD');need(candidate.familyKey===key&&candidate.productName,'POD verification candidate identity is incomplete');need(!publishedVerificationKeys.has(key),`Published POD event also leaked into verification queue: ${candidate.productName}`);need(!queueKeys.has(key),`Duplicate POD verification candidate: ${candidate.productName}`);queueKeys.add(key)}
+for(const candidate of data.verificationQueue||[]){const key=verificationFamilyKey(candidate,'POD');need(candidate.familyKey===key&&candidate.productName,'POD verification candidate identity is incomplete');need(!PROMOTIONAL_TITLE.test(candidate.productName),`Promotional bundle leaked into the POD verification queue: ${candidate.productName}`);need(!publishedVerificationKeys.has(key),`Published POD event also leaked into verification queue: ${candidate.productName}`);need(!queueKeys.has(key),`Duplicate POD verification candidate: ${candidate.productName}`);queueKeys.add(key)}
 need(Number(data.summary&&data.summary.candidatesUnderVerification)===(data.verificationQueue||[]).length,'POD verification-queue summary is inconsistent');
 console.log(`POD Hype gate OK: ${(reg.makers||[]).length} makers; ${data.scan.candidateDocuments} documents; ${data.scan.concreteProducts} concrete; ${(data.products||[]).length} monitored; ${(data.verificationQueue||[]).length} queued.`);
