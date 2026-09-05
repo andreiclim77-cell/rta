@@ -122,6 +122,6 @@ jobs:
           need(!ui.includes('class="hype-direct"')&&!ui.includes("t('Acum','Now')")&&ui.includes('data-hype-layer="launches"')&&ui.includes('data-hype-layer="signals"')&&ui.includes('data-hype-layer="catalog"'),'Evidence layers or legacy automatic conclusion regression');
           need(guard.includes("key:'hypeProducts'")&&guard.includes("key:'hypePods'")&&guard.includes('validAfterProduct')&&guard.includes('catalog-published-at'),'Atomic loader does not validate final RTA/MOD/POD data');
           need(access.includes("autocomplete','new-password")&&access.includes("input.value=''"),'Password may be prefilled');
-          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('ghid-rta-static-v45-analysis-plain'),'Product Hype cache/data contract missing');
+          need(sw.includes('/data/market-hype-products-2026.json')&&sw.includes('/data/market-hype-pods-2026.json')&&sw.includes('/data/market-hype-direct-catalogs-2026.json')&&sw.includes('ghid-rta-static-v46-analysis-buying'),'Product Hype cache/data contract missing');
           console.log('Hype Global gate OK: GLOBAL 30d; RTA/MOD/POD; dated events separated from public signals; anti-relisting memory; 06:00 + 06:20 recovery.');
           NODE

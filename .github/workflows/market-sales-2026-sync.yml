@@ -17,6 +17,7 @@ on:
       - "tools/collect-discovered-market-sales-2026.js"
       - "tools/probe-market-sales-counters-2026.js"
       - "tools/market-product-canonical-2026.js"
+      - "tools/market-sales-product-classifier-2026.js"
       - "tools/canonicalize-market-sales-products-2026.js"
       - "tools/build-market-product-presence-2026.js"
       - "tools/build-market-sales-summary-2026.js"
@@ -25,6 +26,7 @@ on:
       - "tools/canonicalize-market-demand-products-2026.js"
       - "tools/build-market-management-2026.js"
       - "tools/augment-market-management-presence-2026.js"
+      - "tools/build-market-public-analysis-2026.js"
       - "data/market-sales-sources-2026.json"
       - "data/market-retailers-2026.json"
       - "data/market-universe-discovery-2026.json"
@@ -177,10 +179,15 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: node tools/augment-market-management-presence-2026.js --write
 
+      - name: Build compact public Analysis report
+        if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
+        run: node tools/build-market-public-analysis-2026.js --write
+
       - name: Validate sales, management and daily Analysis freshness
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: |
-          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js; do node --check "$f"; done
+          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/market-sales-product-classifier-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js tools/build-market-public-analysis-2026.js; do node --check "$f"; done
+          node tools/check-market-report-final.js
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
@@ -188,14 +195,16 @@ jobs:
           const q=JSON.parse(fs.readFileSync('data/market-demand-intelligence-2026.json','utf8'));
           const p=JSON.parse(fs.readFileSync('data/market-product-presence-2026.json','utf8'));
           const m=JSON.parse(fs.readFileSync('data/market-management-2026.json','utf8'));
+          const a=JSON.parse(fs.readFileSync('data/market-analysis-public-2026.json','utf8'));
           const r=JSON.parse(fs.readFileSync('data/market-retailers-2026.json','utf8'));
           const base=JSON.parse(fs.readFileSync('data/market-2026.json','utf8'));
           const disc=JSON.parse(fs.readFileSync('data/market-sales-sources-discovered-2026.json','utf8'));
           const localDay=v=>{const x=new Date(v);return Number.isFinite(x.getTime())?new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(x):''};
           const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
-          if([d,disc,e,q,p,m].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must be 2026');
+          if([d,disc,e,q,p,m,a].some(x=>Number(x.scopeYear)!==2026))throw new Error('Market scope must be 2026');
           if(!base.collectorStatus||base.collectorStatus.date!==today)throw new Error('Analysis used stale base Market snapshot');
           if(localDay(m.generatedAt)!==today)throw new Error(`Management Analysis stale: ${m.generatedAt}`);
+          if(localDay(a.updatedAt)!==today)throw new Error(`Public Analysis stale: ${a.updatedAt}`);
           if(!d.summary||localDay(d.summary.generatedAt)!==today)throw new Error(`Sales Analysis stale: ${d.summary&&d.summary.generatedAt}`);
           if(Number(d.coverage.storefrontsConfigured)!==(r.retailers||[]).length)throw new Error('Sales coverage denominator mismatch');
           if(!d.canonicalization||!d.canonicalization.after)throw new Error('Canonical product reconciliation did not run');
@@ -214,6 +223,8 @@ jobs:
             if(!Number.isFinite(Number(row.listedStorefronts))||!Number.isFinite(Number(row.bestsellerStorefronts)))throw new Error(`Listing/bestseller separation missing: ${row.name}`);
           }
           if(!/Retail listing breadth/i.test(String(m.methodology&&m.methodology.listingBreadth||'')))throw new Error('Management listing-breadth truth rule missing');
+          if(!Array.isArray(a.bestSellers)||!a.bestSellers.length||!Array.isArray(a.buyingIdeas)||!a.buyingIdeas.length)throw new Error('Public Analysis sections missing');
+          if(!a.truth||a.truth.requestedStart!=='2026-01-01'||a.truth.availabilityExcluded!==true||a.truth.buyingInterestSeparatedFromSales!==true||a.truth.historicalBackfillInvented!==false)throw new Error('Public Analysis truth contract missing');
           console.log(`Analysis daily gate: ${today}; Tier-A ${m.coverage.tierAStores}/${m.coverage.configuredStores}; Tier-B ${m.coverage.tierBStores}/${m.coverage.configuredStores}; canonical products ${p.summary.canonicalProducts}.`);
           NODE
 
@@ -221,10 +232,10 @@ jobs:
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         shell: bash
         run: |
-          if [ -z "$(git status --porcelain -- data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-product-presence-2026.json data/market-management-2026.json)" ]; then exit 0; fi
+          if [ -z "$(git status --porcelain -- data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-product-presence-2026.json data/market-management-2026.json data/market-analysis-public-2026.json)" ]; then exit 0; fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-product-presence-2026.json data/market-management-2026.json
+          git add data/market-sales-2026.json data/market-sales-sources-discovered-2026.json data/market-external-intelligence-2026.json data/market-demand-intelligence-2026.json data/market-product-presence-2026.json data/market-management-2026.json data/market-analysis-public-2026.json
           git commit -m "Snapshot Romania RTA market intelligence 2026"
           for attempt in 1 2 3 4 5; do
             git fetch origin main
