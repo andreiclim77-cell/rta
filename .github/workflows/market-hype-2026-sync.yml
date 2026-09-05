@@ -212,7 +212,22 @@ jobs:
 
       - name: Collect dated manufacturer, press and product publications
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'
-        run: node tools/collect-market-hype-dated-news-2026.js --write
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            node tools/collect-market-hype-dated-news-2026.js --write
+            if node - <<'NODE'
+          const fs=require('fs');
+          const d=JSON.parse(fs.readFileSync('data/market-hype-dated-news-2026.json','utf8'));
+          const total=Number(d.scan&&d.scan.wordpressSources||0);
+          const working=Number(d.scan&&d.scan.wordpressSourcesWorking||0);
+          if(total>0&&working>=Math.floor(total*.8))process.exit(0);
+          console.error(`Dated WordPress coverage ${working}/${total}; retrying.`);
+          process.exit(1);
+          NODE
+            then break; fi
+            if [ "$attempt" -lt 3 ]; then sleep $((attempt*5)); fi
+          done
 
       - name: Recover explicit future batch and preorder dates
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_hype == 'true'

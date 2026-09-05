@@ -17,6 +17,7 @@ on:
       - "tools/collect-discovered-market-sales-2026.js"
       - "tools/probe-market-sales-counters-2026.js"
       - "tools/market-product-canonical-2026.js"
+      - "tools/market-sales-product-classifier-2026.js"
       - "tools/canonicalize-market-sales-products-2026.js"
       - "tools/build-market-product-presence-2026.js"
       - "tools/build-market-sales-summary-2026.js"
@@ -180,7 +181,8 @@ jobs:
       - name: Validate sales, management and daily Analysis freshness
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'
         run: |
-          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js; do node --check "$f"; done
+          for f in tools/discover-market-sales-sources-2026.js tools/sync-market-sales-2026.js tools/collect-discovered-market-sales-2026.js tools/probe-market-sales-counters-2026.js tools/market-product-canonical-2026.js tools/market-sales-product-classifier-2026.js tools/canonicalize-market-sales-products-2026.js tools/build-market-product-presence-2026.js tools/build-market-sales-summary-2026.js tools/build-market-external-intelligence-2026.js tools/collect-market-demand-intelligence-2026.js tools/canonicalize-market-demand-products-2026.js tools/build-market-management-2026.js tools/augment-market-management-presence-2026.js; do node --check "$f"; done
+          node tools/check-market-report-final.js
           node - <<'NODE'
           const fs=require('fs');
           const d=JSON.parse(fs.readFileSync('data/market-sales-2026.json','utf8'));
