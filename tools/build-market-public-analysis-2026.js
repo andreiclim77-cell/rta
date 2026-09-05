@@ -28,13 +28,13 @@ function categorySort(a,b){return CATEGORY_ORDER.indexOf(a.category)-CATEGORY_OR
 function rankingSnapshots(sales){
   let snapshots=(sales.rankingHistory||[]).filter(snapshot=>snapshot&&snapshot.date>=START&&Array.isArray(snapshot.rows));
   if(!snapshots.length)snapshots=[{date:String(sales.updatedAt||'').slice(0,10),rows:sales.rankings||[]}];
-  return snapshots.filter(snapshot=>/^\d{4}-\d{2}-\d{2}$/.test(String(snapshot.date||'')));
+  const end=String(sales.updatedAt||'').slice(0,10);
+  return snapshots.filter(snapshot=>/^\d{4}-\d{2}-\d{2}$/.test(String(snapshot.date||''))&&snapshot.date>=START&&snapshot.date<=end&&Number.isFinite(Date.parse(snapshot.date))&&new Date(snapshot.date).toISOString().slice(0,10)===snapshot.date);
 }
 
 function firstObservedDate(sales,snapshots){
-  const stated=String(sales.analysisWindow&&sales.analysisWindow.firstObservedAt||'').slice(0,10);
-  const dates=snapshots.map(snapshot=>String(snapshot.date||'')).filter(Boolean).sort();
-  return stated||dates[0]||null;
+  const dates=snapshots.filter(snapshot=>(snapshot.rows||[]).some(validRank)).map(snapshot=>String(snapshot.date||'')).filter(Boolean).sort();
+  return dates[0]||null;
 }
 
 function summarizePanels(panels,labelKey){
@@ -242,4 +242,4 @@ if(require.main===module){
   console.log(`Public Analysis: ${output.observedPopularity.length} popularity categories; ${output.buyingIdeas.length} interest categories; ${output.coverage.rankingStores}/${output.coverage.configuredStores} ranking stores.`);
 }
 
-module.exports={rankingSnapshots,observedPopularity,buyingIdeas,build};
+module.exports={rankingSnapshots,firstObservedDate,observedPopularity,buyingIdeas,build};

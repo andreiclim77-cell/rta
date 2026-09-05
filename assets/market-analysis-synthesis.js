@@ -11,7 +11,7 @@ function t(ro,english){return en()?english:ro}
 function esc(value){return String(value==null?'':value).replace(/[&<>"']/g,function(char){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]})}
 function n(value){if(value==null||!Number.isFinite(Number(value)))return'—';return Number(value).toLocaleString(en()?'en-GB':'ro-RO',{maximumFractionDigits:0})}
 function fetchJson(url){return fetch(url+'?synth='+Date.now(),{cache:'no-store'}).then(function(response){if(!response.ok)throw new Error(url+'-'+response.status);return response.json()})}
-function css(){if(el('marketAnalysisSynthesisCss'))return;var link=document.createElement('link');link.id='marketAnalysisSynthesisCss';link.rel='stylesheet';link.href='/assets/market-analysis-synthesis.css?v=3';document.head.appendChild(link)}
+function css(){if(el('marketAnalysisSynthesisCss'))return;var link=document.createElement('link');link.id='marketAnalysisSynthesisCss';link.rel='stylesheet';link.href='/assets/market-analysis-synthesis.css?v=4';document.head.appendChild(link)}
 
 var CATEGORY_ORDER=['POD','RTA','mod','RBA/bridge','RDA/RDTA','componente RTA','accesoriu RTA/mod','sarma','coil prebuilt','bumbac/wick','chipset/board','acumulator','incarcator','unelte build'];
 function categoryLabel(category){return({POD:'POD',RTA:'RTA',mod:t('Moduri','Mods'),'RBA/bridge':'RBA / bridge','RDA/RDTA':'RDA / RDTA','componente RTA':t('Componente RTA','RTA components'),'accesoriu RTA/mod':t('Accesorii','Accessories'),sarma:t('Sârmă','Wire'),'coil prebuilt':t('Coiluri','Coils'),'bumbac/wick':t('Bumbac','Cotton'),'chipset/board':t('Chipseturi','Chipsets'),acumulator:t('Acumulatori','Batteries'),incarcator:t('Încărcătoare','Chargers'),'unelte build':t('Unelte','Tools')})[category]||category||'—'}
@@ -54,14 +54,18 @@ function render(data){
   var wrap=document.createElement('div');
   wrap.id=ID;
   wrap.className='market-analysis-synthesis';
-  wrap.innerHTML=section(
+  var truth=data.truth||{};
+  var interval=truth.evidenceFirstObservedAt&&truth.evidenceEndObservedAt
+    ? truth.evidenceFirstObservedAt+' - '+truth.evidenceEndObservedAt
+    : t('Interval neconfirmat','Unconfirmed interval');
+  wrap.innerHTML='<p class="synth-evidence-period">'+esc(t('Perioada cu dovezi: ','Evidence period: ')+interval)+'. '+esc(t('Perioada solicitată începe la ','Requested period starts on ')+(truth.requestedStart||'2026-01-01'))+'. '+esc(t('Datele lipsă nu reprezintă vânzări zero.','Missing data does not mean zero sales.'))+'</p>'+section(
     'popularity',
     t('Ce indică topurile comerciale observate','What the observed commercial rankings show'),
     t('Mărcile și produsele sunt clasate separat după pozițiile publice observate în perioada cu date verificabile. Clasamentele cumulative ale magazinelor nu sunt prezentate drept vânzări realizate după 01.01.2026 și nu reprezintă volume naționale de bucăți.','Brands and products are ranked separately from public positions observed during the verifiable evidence window. Cumulative retailer rankings are not presented as sales made after 1 January 2026 and do not represent national unit volumes.'),
     data.observedPopularity,'popularity','synth-sales'
   )+section(
     'ideas',
-    t('Ce merită urmărit pentru cumpărare','What is worth watching for purchase'),
+    t('Interes public observat','Observed public interest'),
     t('Mărcile și produsele sunt afișate separat numai când există interes public măsurabil. Fiecare rezultat precizează dacă semnalul provine din căutări, comunități sau vizualizările recenziilor.','Brands and products are shown separately only when measurable public interest exists. Every result states whether its signal comes from searches, communities or review views.'),
     data.buyingIdeas,'ideas','synth-ideas'
   );

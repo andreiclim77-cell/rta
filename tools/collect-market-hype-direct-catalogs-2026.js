@@ -4,6 +4,8 @@
 const fs=require('fs');
 const crypto=require('crypto');
 const zlib=require('zlib');
+const {execFile}=require('child_process');
+const {promisify}=require('util');
 const {snapshotReferenceMs}=require('./hype-window-reference-2026.js');
 const {classifyPodProduct,decode,norm}=require('./market-pod-classifier-2026.js');
 const {canonicalizeProduct}=require('./market-product-canonical-2026.js');
@@ -11,6 +13,7 @@ const {classifyRtaAccessory}=require('./market-hype-accessory-classifier-2026.js
 
 const WRITE=process.argv.includes('--write');
 const SUMMARY_ONLY=process.argv.includes('--summary-only');
+const SOURCE_FILTER=(process.argv.find(function(arg){return arg.startsWith('--source=')})||'').slice(9);
 const SOURCE_FILE='data/market-hype-sources-2026.json';
 const RTA_FILE='data/market-hype-products-2026.json';
 const POD_FILE='data/market-hype-pods-2026.json';
@@ -19,6 +22,8 @@ const REF=snapshotReferenceMs();
 const DAY=86400000;
 const PUBLIC_DAYS=30;
 const CONTEXT_DAYS=180;
+const USER_AGENT='Mozilla/5.0 (compatible; Ghid-RTA-Direct-Catalog/1.3; +https://ghid-rta.ro/)';
+const execFileAsync=promisify(execFile);
 
 const DEFAULT_SOURCES=[
   {id:'2fdeal-rta-listings',baseUrl:'https://www.2fdeal.com',label:'2FDeal RTA listings',sourceType:'clone-retailer-listing',catalogType:'html-listings',official:false,scopes:['RTA'],pages:Array.from({length:8},function(_,index){return'/c/rta_0376/'+(index+1)+'.html'})},
@@ -36,7 +41,7 @@ const DEFAULT_SOURCES=[
   {id:'uk-ecig-store-direct',baseUrl:'https://ukecigstore.com',label:'UK ECIG STORE catalog',sourceType:'retailer-direct',official:false,scopes:['MODURI','POD']},
   {id:'ecigone-direct',baseUrl:'https://www.ecigone.co.uk',label:'Ecigone catalog',sourceType:'retailer-direct',official:false,scopes:['RTA','MODURI','POD','ACCESORII']},
   {id:'atmizoo-official-catalog',baseUrl:'https://www.atmizoo.com',label:'Atmizoo official catalog',brandHint:'Atmizoo',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','POD','ACCESORII']},
-  {id:'cthulhu-official-catalog',baseUrl:'https://www.cthulhumod.com',label:'Cthulhu Mod official catalog',brandHint:'Cthulhu Mod',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','POD','ACCESORII']},
+  {id:'cthulhu-official-catalog',baseUrl:'https://www.cthulhumod.com',label:'Cthulhu Mod official catalog',brandHint:'Cthulhu Mod',sourceType:'manufacturer-official-catalog',catalogType:'sitemap-jsonld-products',directCatalogEnabled:false,directCatalogReason:'official-site-http-521-use-search-index-and-dated-news',official:true,scopes:['RTA','MODURI','POD','ACCESORII']},
   {id:'fakirs-official-catalog',baseUrl:'https://www.fakirsmods.com',label:'Fakirs Mods official catalog',brandHint:'Fakirs Mods',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','ACCESORII']},
   {id:'centenary-official-catalog',baseUrl:'https://centenarymods.com',label:'Centenary Mods official catalog',brandHint:'Centenary Mods',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','ACCESORII']},
   {id:'gus-official-catalog',baseUrl:'https://www.gus-mod.com',label:'GUS Mods official catalog',brandHint:'GUS Mods',sourceType:'manufacturer-official-catalog',catalogType:'wordpress-products-json',official:true,scopes:['RTA','MODURI','ACCESORII']},
@@ -57,39 +62,70 @@ function productUrl(source,product){return source.baseUrl.replace(/\/$/,'')+'/pr
 async function fetchJson(url,timeout=15000){
   const controller=new AbortController(),timer=setTimeout(function(){controller.abort()},timeout);
   try{
-    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':'Ghid-RTA-Direct-Catalog/1.0 (+https://ghid-rta.ro/)','accept':'application/json,text/plain;q=.8,*/*;q=.5','cache-control':'no-cache'},signal:controller.signal});
+    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':USER_AGENT,'accept':'application/json,text/plain;q=.8,*/*;q=.5','cache-control':'no-cache'},signal:controller.signal});
     const text=await response.text();
     if(!response.ok)throw new Error('HTTP '+response.status);
     const parsed=JSON.parse(text);
     if(!parsed||!Array.isArray(parsed.products))throw new Error('not-shopify-products-json');
     return parsed.products;
+  }catch(primaryError){
+    try{
+      const parsed=JSON.parse(await fetchWithCurl(url,timeout*2,'application/json,text/plain;q=.8,*/*;q=.5'));
+      if(!parsed||!Array.isArray(parsed.products))throw new Error('not-shopify-products-json');
+      return parsed.products;
+    }catch(curlError){throw combinedTransportError(primaryError,curlError)}
   }finally{clearTimeout(timer)}
 }
 
 async function fetchJsonDocument(url,timeout=15000){
   const controller=new AbortController(),timer=setTimeout(function(){controller.abort()},timeout);
   try{
-    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':'Ghid-RTA-Direct-Catalog/1.2 (+https://ghid-rta.ro/)','accept':'application/json,text/plain;q=.8,*/*;q=.5','cache-control':'no-cache'},signal:controller.signal});
+    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':USER_AGENT,'accept':'application/json,text/plain;q=.8,*/*;q=.5','cache-control':'no-cache'},signal:controller.signal});
     const text=await response.text();
     if(!response.ok)throw new Error('HTTP '+response.status);
     return JSON.parse(text);
+  }catch(primaryError){
+    try{return JSON.parse(await fetchWithCurl(url,timeout*2,'application/json,text/plain;q=.8,*/*;q=.5'))}
+    catch(curlError){throw combinedTransportError(primaryError,curlError)}
   }finally{clearTimeout(timer)}
 }
 
 async function fetchText(url,timeout=18000){
   const controller=new AbortController(),timer=setTimeout(function(){controller.abort()},timeout);
   try{
-    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':'Ghid-RTA-Direct-Catalog/1.1 (+https://ghid-rta.ro/)','accept':'text/html,application/xhtml+xml,*/*;q=.6','cache-control':'no-cache'},signal:controller.signal});
+    const response=await fetch(url,{redirect:'follow',headers:{'user-agent':USER_AGENT,'accept':'text/html,application/xhtml+xml,*/*;q=.6','cache-control':'no-cache'},signal:controller.signal});
     const bytes=Buffer.from(await response.arrayBuffer()),gzip=/\.gz(?:\?|$)/i.test(response.url||url)||bytes.length>2&&bytes[0]===0x1f&&bytes[1]===0x8b;
     const text=(gzip?zlib.gunzipSync(bytes):bytes).toString('utf8');
     if(!response.ok)throw new Error('HTTP '+response.status);
     return{url:response.url||url,text};
+  }catch(primaryError){
+    try{return{url,text:await fetchWithCurl(url,timeout*2,'text/html,application/xhtml+xml,*/*;q=.6')}}
+    catch(curlError){throw combinedTransportError(primaryError,curlError)}
   }finally{clearTimeout(timer)}
 }
+
+async function fetchWithCurl(url,timeout,accept){
+  const command=process.platform==='win32'?'curl.exe':'curl',seconds=String(Math.max(5,Math.ceil(timeout/1000)));
+  const result=await execFileAsync(command,['-L','--compressed','-sS','--fail-with-body','--max-time',seconds,'-A',USER_AGENT,'-H','Accept: '+accept,String(url)],{timeout:timeout+5000,maxBuffer:30*1024*1024,windowsHide:true});
+  return String(result.stdout||'');
+}
+
+function combinedTransportError(primary,curl){return new Error('fetch='+String(primary&&primary.message||primary)+'; curl='+String(curl&&curl.message||curl))}
 
 function wait(ms){return new Promise(function(resolve){setTimeout(resolve,ms)})}
 async function fetchTextWithRetry(url,attempts=3){let lastError=null;for(let attempt=1;attempt<=attempts;attempt++){try{return await fetchText(url)}catch(error){lastError=error;if(attempt<attempts)await wait(attempt*700)}}throw lastError||new Error('fetch-failed')}
 async function pool(items,width,worker){let cursor=0;const output=new Array(items.length);async function run(){for(;;){const index=cursor++;if(index>=items.length)return;try{output[index]=await worker(items[index])}catch(error){output[index]={ok:false,error:String(error&&error.message||error)}}}}await Promise.all(Array.from({length:Math.min(width,Math.max(1,items.length))},run));return output}
+async function sourceRun(source,collect=collectSource){try{return{source,products:await collect(source),ok:true,attempts:1,recoveredByRetry:false}}catch(error){return{source,products:[],ok:false,error:String(error&&error.message||error),attempts:1,recoveredByRetry:false}}}
+async function collectSourcesWithRetry(sources,options={}){
+  const collect=options.collect||collectSource,width=Number(options.width||4),retryWidth=Number(options.retryWidth||2),retryDelayMs=options.retryDelayMs==null?1400:Number(options.retryDelayMs);
+  const runs=await pool(sources,width,function(source){return sourceRun(source,collect)}),failed=[];
+  runs.forEach(function(run,index){if(!run.ok)failed.push({source:run.source,index})});
+  if(!failed.length)return{runs,recovered:0};
+  if(retryDelayMs>0)await wait(retryDelayMs);
+  const retries=await pool(failed,retryWidth,async function(entry){const retry=await sourceRun(entry.source,collect);retry.attempts=2;retry.recoveredByRetry=retry.ok;return{index:entry.index,retry}});
+  let recovered=0;for(const row of retries){if(row&&row.retry){if(row.retry.ok)recovered++;runs[row.index]=row.retry}}
+  return{runs,recovered};
+}
 function xmlLocs(value){return Array.from(String(value||'').matchAll(/<loc>\s*([^<]+)\s*<\/loc>/gi),function(match){return decode(match[1])}).filter(Boolean)}
 function safeRegex(value){try{return new RegExp(String(value),'i')}catch(_){return null}}
 function patterns(values){return(values||[]).map(safeRegex).filter(Boolean)}
@@ -112,7 +148,7 @@ async function collectSitemapSource(source){
   const initial=(source.sitemapPaths&&source.sitemapPaths.length?source.sitemapPaths:['/sitemap.xml','/sitemap_index.xml','/wp-sitemap.xml']).map(function(value){return new URL(value,source.baseUrl).toString()}),queue=initial.slice(),seen=new Set(),pageUrls=new Set(),sitemapRuns=[],maxFiles=Number(source.maxSitemapFiles||12);
   while(queue.length&&seen.size<maxFiles){const target=queue.shift();if(seen.has(target))continue;seen.add(target);try{const response=await fetchTextWithRetry(target,2),locs=xmlLocs(response.text),isIndex=/<sitemapindex\b/i.test(response.text)||locs.length&&locs.every(function(url){return /(?:sitemap|\.xml(?:\.gz)?)(?:\?|$)/i.test(url)});sitemapRuns.push({url:target,ok:true,locations:locs.length});if(isIndex){const nested=locs.filter(function(url){return /(?:sitemap|\.xml(?:\.gz)?)(?:\?|$)/i.test(url)}).sort(function(a,b){return Number(/product|shop|pod|rta|mod/i.test(b))-Number(/product|shop|pod|rta|mod/i.test(a))});for(const url of nested)if(!seen.has(url)&&!queue.includes(url))queue.push(url)}else for(const url of locs)pageUrls.add(url)}catch(error){sitemapRuns.push({url:target,ok:false,error:String(error&&error.message||error)})}}
   const candidates=Array.from(pageUrls).filter(function(url){return likelyProductUrl(source,url)}).sort(function(a,b){return productUrlPriority(source,b)-productUrlPriority(source,a)||a.localeCompare(b)}).slice(0,Number(source.maxProductPages||120)),pageRuns=await pool(candidates,Number(source.pageConcurrency||6),async function(url){try{const response=await fetchTextWithRetry(url,2),product=productFromPage(source,response.url,response.text);if(classifyProduct(source,product))return{ok:true,product};const fallback=productFromPage(source,url,'');return classifyProduct(source,fallback)?{ok:true,product:fallback,fallback:true}:{ok:false,error:'not-target-product'}}catch(error){const product=productFromPage(source,url,'');return classifyProduct(source,product)?{ok:true,product,fallback:true}:{ok:false,error:String(error&&error.message||error)}}}),products=pageRuns.filter(function(run){return run&&run.ok&&run.product}).map(function(run){return run.product});
-  if(!products.length)throw new Error('no-target-products-from-sitemap');products.adapterUsed='sitemap-jsonld-products';products.pageStats={sitemapsTried:seen.size,sitemapsWorking:sitemapRuns.filter(function(run){return run.ok}).length,urlsDiscovered:pageUrls.size,productCandidates:candidates.length,productPagesWorking:pageRuns.filter(function(run){return run&&run.ok}).length,failedSitemaps:sitemapRuns.filter(function(run){return!run.ok})};return products;
+  if(!products.length)throw new Error('no-target-products-from-sitemap candidates='+candidates.length+' urls='+pageUrls.size+' sitemaps='+sitemapRuns.filter(function(run){return run.ok}).length+'/'+seen.size);products.adapterUsed='sitemap-jsonld-products';products.pageStats={sitemapsTried:seen.size,sitemapsWorking:sitemapRuns.filter(function(run){return run.ok}).length,urlsDiscovered:pageUrls.size,productCandidates:candidates.length,productPagesWorking:pageRuns.filter(function(run){return run&&run.ok}).length,failedSitemaps:sitemapRuns.filter(function(run){return!run.ok})};return products;
 }
 function htmlListings(source,html,pageUrl){
   const rows=[];
@@ -128,8 +164,29 @@ function htmlListings(source,html,pageUrl){
   return Array.from(new Map(rows.map(function(row){return[row.url,row]})).values());
 }
 
+function navigationProductLinks(source,html,pageUrl){
+  const urls=[];
+  for(const match of String(html||'').matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>/gi)){
+    let url;try{url=new URL(decode(match[1]),pageUrl).toString()}catch(_){continue}
+    if(likelyProductUrl(source,url))urls.push(url);
+  }
+  return Array.from(new Set(urls));
+}
+
+async function collectNavigationSource(source){
+  const pages=Array.isArray(source.pages)&&source.pages.length?source.pages:['/'],links=new Set(),pageRuns=[];
+  for(const page of pages){const target=new URL(page,source.baseUrl).toString();try{const response=await fetchTextWithRetry(target);for(const url of navigationProductLinks(source,response.text,response.url))links.add(url);pageRuns.push({url:target,ok:true})}catch(error){pageRuns.push({url:target,ok:false,error:String(error&&error.message||error)})}}
+  const candidates=Array.from(links).sort(function(a,b){return productUrlPriority(source,b)-productUrlPriority(source,a)||a.localeCompare(b)}).slice(0,Number(source.maxProductPages||120));
+  const productRuns=await pool(candidates,Number(source.pageConcurrency||6),async function(url){try{const response=await fetchTextWithRetry(url,2),product=productFromPage(source,response.url,response.text);return classifyProduct(source,product)?{ok:true,product}:{ok:false,error:'not-target-product'}}catch(error){return{ok:false,error:String(error&&error.message||error)}}});
+  const products=productRuns.filter(function(run){return run&&run.ok}).map(function(run){return run.product});
+  if(!products.length)throw new Error('no-target-products-from-navigation');
+  products.adapterUsed='html-navigation-products';products.pageStats={pages:pages.length,pagesWorking:pageRuns.filter(function(run){return run.ok}).length,urlsDiscovered:links.size,productCandidates:candidates.length,productPagesWorking:products.length,failedPages:pageRuns.filter(function(run){return!run.ok})};
+  return products;
+}
+
 async function collectPrimarySource(source){
   if(source.catalogType==='sitemap-jsonld-products')return collectSitemapSource(source);
+  if(source.catalogType==='html-navigation-products')return collectNavigationSource(source);
   if(source.catalogType==='html-listings'){
     const pages=Array.isArray(source.pages)&&source.pages.length?source.pages:['/'];
     const rows=[],pageRuns=[];
@@ -140,28 +197,30 @@ async function collectPrimarySource(source){
     return rows;
   }
   if(source.catalogType==='wordpress-products-json'){
-    const products=[],endpoint=source.endpoint||'/wp-json/wp/v2/product';
-    for(let page=1;page<=Number(source.maxPages||8);page++){
-      const separator=endpoint.includes('?')?'&':'?',url=source.baseUrl.replace(/\/$/,'')+endpoint+separator+'per_page=100&page='+page+'&_fields=id,date_gmt,modified_gmt,link,slug,title,content';
-      let rows;try{rows=await fetchJsonDocument(url)}catch(error){if(page===1)throw error;break}
+    const products=[],endpoint=source.endpoint||'/wp-json/wp/v2/product',pageRuns=[],pageSize=Math.max(5,Math.min(100,Number(source.wpPageSize||50))),maxPages=Math.max(1,Math.min(30,Number(source.maxPages||12)));
+    for(let page=1;page<=maxPages;page++){
+      const separator=endpoint.includes('?')?'&':'?',url=source.baseUrl.replace(/\/$/,'')+endpoint+separator+'per_page='+pageSize+'&page='+page+'&_fields=id,date_gmt,modified_gmt,link,slug,title,content';
+      let rows;try{rows=await fetchJsonDocument(url);pageRuns.push({page,ok:true,products:Array.isArray(rows)?rows.length:0})}catch(error){pageRuns.push({page,ok:false,error:String(error&&error.message||error)});if(page===1)throw error;break}
       if(!Array.isArray(rows))throw new Error('not-wordpress-products-json');
       for(const row of rows){
         const published=row.date_gmt?row.date_gmt+'Z':null,updated=row.modified_gmt?row.modified_gmt+'Z':published;
         products.push({id:row.id,title:row.title&&row.title.rendered||row.slug||'',handle:row.slug||'',vendor:source.brandHint||source.label,product_type:'',body_html:row.content&&row.content.rendered||'',url:row.link||'',published_at:published,created_at:published,updated_at:updated,variants:[],images:[],__wordpressListing:true});
       }
-      if(rows.length<100)break;
+      if(rows.length<pageSize)break;
     }
     products.adapterUsed='wordpress-products-json';
+    products.pageStats={pagesTried:pageRuns.length,pagesWorking:pageRuns.filter(function(run){return run.ok}).length,productsFetched:products.length,partial:pageRuns.some(function(run){return !run.ok}),failedPages:pageRuns.filter(function(run){return !run.ok})};
     return products;
   }
-  const products=[];
-  for(let page=1;page<=8;page++){
-    const url=source.baseUrl.replace(/\/$/,'')+'/products.json?limit=250&page='+page;
-    const rows=await fetchJson(url);
+  const products=[],pageRuns=[],pageSize=Math.max(20,Math.min(250,Number(source.pageSize||100))),maxPages=Math.max(1,Math.min(20,Number(source.maxCatalogPages||8)));
+  for(let page=1;page<=maxPages;page++){
+    const url=source.baseUrl.replace(/\/$/,'')+'/products.json?limit='+pageSize+'&page='+page;
+    let rows;try{rows=await fetchJson(url);pageRuns.push({page,ok:true,products:rows.length})}catch(error){pageRuns.push({page,ok:false,error:String(error&&error.message||error)});if(products.length)break;throw error}
     products.push(...rows);
-    if(rows.length<250)break;
+    if(rows.length<pageSize)break;
   }
   products.adapterUsed='shopify-products-json';
+  products.pageStats={pagesTried:pageRuns.length,pagesWorking:pageRuns.filter(function(run){return run.ok}).length,productsFetched:products.length,partial:pageRuns.some(function(run){return !run.ok}),failedPages:pageRuns.filter(function(run){return !run.ok})};
   return products;
 }
 
@@ -172,7 +231,7 @@ async function collectSource(source){
     throw new Error('empty-primary-catalog');
   }catch(primaryError){
     if(source.catalogType==='sitemap-jsonld-products'||source.sitemapFallback===false)throw primaryError;
-    const products=await collectSitemapSource(source);
+    let products;try{products=await collectSitemapSource(source)}catch(fallbackError){throw new Error('primary='+String(primaryError&&primaryError.message||primaryError)+'; fallback='+String(fallbackError&&fallbackError.message||fallbackError))}
     products.fallbackUsed=true;
     products.fallbackReason=String(primaryError&&primaryError.message||primaryError);
     return products;
@@ -181,7 +240,7 @@ async function collectSource(source){
 
 function accessoryOnly(value){
   const t=norm(value);
-  return /\b(?:cartridge|cartridges|replacement pod|empty pod|pod pack|coil|coils|coil head|mesh cartridge|tank tube|replacement glass|glass tube|drip tip|mouthpiece|air pin|airflow pin|insert|spare|repair kit|beauty ring|top cap|button set|panel|door|chip|chipset only|battery only|charger|charging cable|usb cable|cotton|wire)\b/.test(t)&&!/\b(?:device|starter kit|pod system|pod kit|box mod|mechanical mod|regulated mod|sbs mod|rta)\b/.test(t);
+  return /\b(?:cartridge|cartridges|replacement pod|empty pod|pod pack|coil|coils|coil head|mesh cartridge|tank tube|replacement glass|glass tube|drip tip|mouthpiece|air pin|airflow pin|insert|spare|repair kit|beauty ring|top cap|button set|panel|front door|back door|door cover|sleeve|tube for .{0,40} mod|chip|chipset only|battery only|charger|charging cable|usb cable|cotton|wire)\b/.test(t)&&!/\b(?:device|starter kit|pod system|pod kit|box mod|mechanical mod|regulated mod|sbs mod|rta)\b/.test(t);
 }
 
 function classifyRta(title){
@@ -192,7 +251,7 @@ function classifyRta(title){
 
 function classifyMod(title){
   const t=norm(title);
-  if(!/\b(?:box mod|mechanical mod|regulated mod|tube mod|sbs mod|squonk mod|side by side|mod device)\b|\bsbs\b/.test(t))return null;
+  if(!/\b(?:box mod|mechanical mod|regulated mod|tube mod|sbs mod|squonk mod|side by side|mod device|mod)\b|\bsbs\b/.test(t))return null;
   if(/replacement|spare|panel|door|button|chip only|chipset only|adapter|accessor/.test(t))return null;
   return{category:'MODURI',typology:/side by side|\bsbs\b/.test(t)?'side by side':/squonk/.test(t)?'squonk':/dual battery|dual 18650|dual 21700|2x18650|2x21700/.test(t)?'dual battery':'single battery',brand:''};
 }
@@ -204,13 +263,13 @@ function classifyProduct(source,product){
   if(accessory&&(source.scopes||[]).includes('ACCESORII'))return accessory;
   if(accessoryOnly(identity))return null;
   if(/\b(?:prefilled pods|pre-filled pods|pod refills?|prefilled pod\s*\+\s*refill)\b/i.test(identity)&&!/\b(?:kit|device|system)\b/i.test(title))return null;
-  const rta=classifyRta(title);
+  const rta=classifyRta([source.defaultProductType||'',title].join(' '));
   if(rta&&(source.scopes||[]).includes('RTA'))return rta;
   const mod=classifyMod(title);
   if(mod&&(source.scopes||[]).includes('MODURI'))return mod;
   if((source.scopes||[]).includes('POD')){
     const pod=classifyPodProduct(identity);
-    if(pod&&pod.confidence!=='generic-pod-device')return pod;
+    if(pod&&(pod.confidence!=='generic-pod-device'||source.defaultProductType==='POD'))return pod;
   }
   return null;
 }
@@ -286,8 +345,10 @@ function finalize(target,stats){
 }
 
 async function main(){
-  const cfg=read(SOURCE_FILE,{}),sources=(cfg.directCatalogSources||DEFAULT_SOURCES).filter(function(source){return source&&source.baseUrl}),old=read(OUT_FILE,{items:[]}),oldMap=new Map((old.items||[]).map(function(item){return[sourceKey(item),item]})),observedAt=new Date().toISOString();
-  const runs=await pool(sources,8,async function(source){try{return{source,products:await collectSource(source),ok:true}}catch(error){return{source,products:[],ok:false,error:String(error&&error.message||error)}}});
+  const cfg=read(SOURCE_FILE,{}),configured=(cfg.directCatalogSources||DEFAULT_SOURCES).filter(function(source){return source&&source.baseUrl}),skippedSources=configured.filter(function(source){return source.directCatalogEnabled===false}).map(function(source){return{id:source.id,label:source.label,reason:source.directCatalogReason||'direct-collection-disabled'}}),sources=configured.filter(function(source){return source.directCatalogEnabled!==false&&(!SOURCE_FILTER||source.id===SOURCE_FILTER)}),old=read(OUT_FILE,{items:[]}),oldMap=new Map((old.items||[]).map(function(item){return[sourceKey(item),item]})),observedAt=new Date().toISOString();
+  if(SOURCE_FILTER&&!sources.length)throw new Error('Unknown or disabled --source='+SOURCE_FILTER);
+  if(SOURCE_FILTER&&WRITE)throw new Error('--source cannot be combined with --write');
+  const collection=await collectSourcesWithRetry(sources),runs=collection.runs;
   const items=[],events=[];let classified=0,relisted=0;
   for(const run of runs){
     for(const product of run.products){
@@ -298,17 +359,29 @@ async function main(){
       items.push(out.item);if(out.event)events.push(out.event);
     }
   }
+  const preserved=preserveFailedSourceData(runs,old,observedAt);items.push(...preserved.items);events.push(...preserved.events);
   const dedupItems=Array.from(new Map(items.map(function(item){return[sourceKey(item),item]})).values()).sort(function(a,b){return String(b.publishedAt).localeCompare(String(a.publishedAt))});
   const groupedEvents=new Map();for(const event of events){const key=canonicalKey(event)+'|'+event.window,old=groupedEvents.get(key);if(!old){groupedEvents.set(key,event);continue}const sourceMap=new Map((old.sources||[]).map(function(source){return[source.url,source]}));for(const source of event.sources||[])sourceMap.set(source.url,source);old.sources=Array.from(sourceMap.values());old.sourceCount=old.sources.length;old.eligibleSources=unique(old.sources.map(function(source){return source.sourceType})).length;if(Date.parse(event.eventDate)<Date.parse(old.eventDate))Object.assign(old,{eventDate:event.eventDate,stage:event.stage,stageLabel:event.stageLabel,dateConfidence:event.dateConfidence})}
   const dedupEvents=Array.from(groupedEvents.values()),rta=read(RTA_FILE,{products:[]}),pods=read(POD_FILE,{products:[]});removeOwnedSignals(rta);removeOwnedSignals(pods);let rtaAdded=0,podsAdded=0;
   for(const event of dedupEvents){if(event.category==='POD'){if(mergeProduct(pods,event))podsAdded++}else if(mergeProduct(rta,event))rtaAdded++}
-  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),sourceMix=dedupItems.reduce(function(acc,item){const kind=/^clone-/.test(String(item.sourceType||''))?'clone':item.official===true||/^manufacturer-official/.test(String(item.sourceType||''))?'official':'original-retailer';acc[kind]=(acc[kind]||0)+1;return acc},{official:0,'original-retailer':0,clone:0}),adapterMix=runs.reduce(function(acc,run){const adapter=run.products.adapterUsed||run.source.catalogType||'shopify-products-json';acc[adapter]=(acc[adapter]||0)+Number(run.ok);return acc},{}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,sourcesUsingFallback:runs.filter(function(run){return run.products.fallbackUsed}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded,sourceMix,adapterMix,categoryEvents:{RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0}};
+  const counts=dedupEvents.reduce(function(acc,event){acc[event.category]=(acc[event.category]||0)+1;return acc},{}),sourceMix=dedupItems.reduce(function(acc,item){const kind=/^clone-/.test(String(item.sourceType||''))?'clone':item.official===true||/^manufacturer-official/.test(String(item.sourceType||''))?'official':'original-retailer';acc[kind]=(acc[kind]||0)+1;return acc},{official:0,'original-retailer':0,clone:0}),adapterMix=runs.reduce(function(acc,run){const adapter=run.products.adapterUsed||run.source.catalogType||'shopify-products-json';acc[adapter]=(acc[adapter]||0)+Number(run.ok);return acc},{}),stats={sourcesConfigured:sources.length,sourcesWorking:runs.filter(function(run){return run.ok}).length,sourcesRecoveredByRetry:collection.recovered,sourcesWithPartialCatalog:runs.filter(function(run){return run.ok&&run.products.pageStats&&run.products.pageStats.partial}).length,sourcesUsingFallback:runs.filter(function(run){return run.products.fallbackUsed}).length,productsFetched:runs.reduce(function(sum,run){return sum+run.products.length},0),productsClassified:classified,preservedItemsFromFailedSources:preserved.items.length,preservedEventsFromFailedSources:preserved.events.length,recentEvents:dedupEvents.length,relistedExcluded:relisted,rtaModAdded:rtaAdded,podsAdded,sourceMix,adapterMix,categoryEvents:{RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0}};
   finalize(rta,stats);finalize(pods,stats);
-  const output={schemaVersion:6,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,sitemapLastmodIsNeverUsedAsLaunchDate:true,jsonLdCatalogCoverageDoesNotCreateLaunchEvents:true,oldRepublishedProductsAreNotRecentEvents:true,availabilityIsSeparateFromReleaseChronology:true,currentAvailabilityIncludesOlderCatalogItems:true,htmlCatalogListingsDoNotClaimStock:true,officialOriginalAndCloneSourcesSeparated:true},scan:stats,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,sourceType:run.source.sourceType||'',official:run.source.official===true,scopes:run.source.scopes||[],catalogType:run.source.catalogType||'shopify-products-json',adapterUsed:run.products.adapterUsed||null,fallbackUsed:run.products.fallbackUsed===true,fallbackReason:run.products.fallbackReason||null,ok:run.ok,products:run.products.length,pages:run.products.pageStats||null,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted,sourceMix,adapterMix},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.slice(0,3000)};
+  const output={schemaVersion:8,generatedAt:observedAt,snapshotReferenceAt:new Date(REF).toISOString(),publicWindowDays:PUBLIC_DAYS,researchContextDays:CONTEXT_DAYS,truth:{directCatalogDatesAreSourceListingEvidence:true,listingDateIsNotClaimedAsGlobalLaunch:true,sitemapLastmodIsNeverUsedAsLaunchDate:true,jsonLdCatalogCoverageDoesNotCreateLaunchEvents:true,oldRepublishedProductsAreNotRecentEvents:true,availabilityIsSeparateFromReleaseChronology:true,currentAvailabilityIncludesOlderCatalogItems:true,htmlCatalogListingsDoNotClaimStock:true,officialOriginalAndCloneSourcesSeparated:true,unavailableDirectSourcesRemainExplicit:true,lastGoodSourceDataPreservedOnFailure:true,transientFailuresRetriedAtReducedConcurrency:true,curlFallbackUsedOnlyForPublicReadEndpoints:true},scan:{...stats,sourcesConfiguredTotal:configured.length,sourcesSkipped:skippedSources.length},skippedSources,sourceRuns:runs.map(function(run){return{id:run.source.id,label:run.source.label,sourceType:run.source.sourceType||'',official:run.source.official===true,scopes:run.source.scopes||[],catalogType:run.source.catalogType||'shopify-products-json',adapterUsed:run.products.adapterUsed||null,fallbackUsed:run.products.fallbackUsed===true,fallbackReason:run.products.fallbackReason||null,ok:run.ok,attempts:run.attempts||1,recoveredByRetry:run.recoveredByRetry===true,products:run.products.length,pages:run.products.pageStats||null,error:run.error||null}}),summary:{events:dedupEvents.length,RTA:counts.RTA||0,MODURI:counts.MODURI||0,ACCESORII:counts.ACCESORII||0,POD:counts.POD||0,monitored:dedupItems.length,relistedExcluded:relisted,sourceMix,adapterMix},events:dedupEvents.sort(function(a,b){return String(b.eventDate).localeCompare(String(a.eventDate))}),items:dedupItems.slice(0,3000)};
   if(WRITE){save(RTA_FILE,rta);save(POD_FILE,pods);save(OUT_FILE,output)}else if(!SUMMARY_ONLY)console.log(JSON.stringify(output,null,2));
   console.log(`Direct catalogs: ${stats.sourcesWorking}/${stats.sourcesConfigured} sources; ${stats.productsFetched} products; ${classified} classified; recent RTA ${counts.RTA||0}; MODURI ${counts.MODURI||0}; ACCESORII ${counts.ACCESORII||0}; POD ${counts.POD||0}; relisted excluded ${relisted}.`);
+  if(SUMMARY_ONLY){const failures=runs.filter(function(run){return!run.ok}).map(function(run){return run.source.id+': '+run.error});if(failures.length)console.log('Direct catalog failures: '+failures.join(' | '))}
 }
 
 function sourceKey(item){return String(item.sourceId||'')+'|'+String(item.productId||item.url||'')}
 
-main().catch(function(error){console.error(error&&error.stack||error);process.exit(1)});
+function sourceHost(value){try{return new URL(value).hostname.replace(/^www\./,'').toLowerCase()}catch(_){return''}}
+function preserveFailedSourceData(runs,old,observedAt){
+  const failedById=new Map(runs.filter(function(run){return !run.ok}).map(function(run){return[run.source.id,run]})),failedByHost=new Map(runs.filter(function(run){return !run.ok}).map(function(run){return[sourceHost(run.source.baseUrl),run]}));
+  const items=(old.items||[]).filter(function(item){return failedById.has(item.sourceId)}).map(function(item){const run=failedById.get(item.sourceId);return{...item,sourceSnapshotStale:true,lastAttemptAt:observedAt,sourceError:run.error}});
+  const events=[];
+  for(const oldEvent of old.events||[]){const sources=(oldEvent.sources||[]).filter(function(source){return failedByHost.has(String(source.host||'').replace(/^www\./,'').toLowerCase())});if(sources.length)events.push({...oldEvent,sources,sourceCount:sources.length,sourceSnapshotStale:true,lastAttemptAt:observedAt})}
+  return{items,events};
+}
+
+if(require.main===module)main().catch(function(error){console.error(error&&error.stack||error);process.exit(1)});
+module.exports={navigationProductLinks,classifyProduct,preserveFailedSourceData,collectSourcesWithRetry};

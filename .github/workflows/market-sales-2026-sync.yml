@@ -27,6 +27,9 @@ on:
       - "tools/build-market-management-2026.js"
       - "tools/augment-market-management-presence-2026.js"
       - "tools/build-market-public-analysis-2026.js"
+      - "tools/test-market-public-analysis-2026.js"
+      - "tools/audit-evidence-integrity.js"
+      - "tools/test-evidence-integrity.js"
       - "data/market-sales-sources-2026.json"
       - "data/market-retailers-2026.json"
       - "data/market-universe-discovery-2026.json"
@@ -184,6 +187,8 @@ jobs:
         run: |
           node tools/build-market-public-analysis-2026.js --write
           node tools/test-market-public-analysis-2026.js
+          node tools/test-evidence-integrity.js
+          node tools/audit-evidence-integrity.js --scope=analysis
 
       - name: Validate sales, management and daily Analysis freshness
         if: steps.gate.outputs.run_sync == 'true' && steps.refresh.outputs.run_analysis == 'true'

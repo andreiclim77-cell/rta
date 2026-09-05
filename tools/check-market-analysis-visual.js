@@ -60,7 +60,7 @@ async function runViewport(browser,viewport){
   const requested=await openAnalysis(page);
   const state=await inspect(page);
   if(state.ready!=='1'||state.guardPresent)throw new Error(`${viewport.width}: loading guard did not release`);
-  if(state.headings.join('|')!=='Ce indică topurile comerciale observate|Ce merită urmărit pentru cumpărare')throw new Error(`${viewport.width}: public section headings are wrong`);
+  if(state.headings.join('|')!=='Ce indică topurile comerciale observate|Interes public observat')throw new Error(`${viewport.width}: public section headings are wrong`);
   if(state.popularityCategories<10||state.ideaCategories<1||state.modeButtons.some(count=>count!==2))throw new Error(`${viewport.width}: brand/product public results are incomplete`);
   if(state.oldInventoryText||!state.start2026||!state.refresh0600||!state.evidenceWindow||!state.truthCopy)throw new Error(`${viewport.width}: rejected inventory text or required public context is wrong`);
   for(const section of await page.locator('[data-synth-section]').all()){

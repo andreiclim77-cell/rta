@@ -83,7 +83,7 @@ function loadCurrentConsolidator(){
   const filename=path.join(ROOT,'tools','consolidate-market-hype-2026.js');
   let source=fs.readFileSync(filename,'utf8').replace(/^#![^\n]*\n/,'');
   source=source.replace('const REF=snapshotReferenceMs();',`const REF=Date.parse('${AS_OF}');`);
-  source=source.replace(/for\(const file of FILES\)\{[\s\S]*$/,"module.exports={inWindow,key,normalizeFromEvidence,applyPriorHistory,applyRetailEvidenceGate,normalizeConfidenceTier,mergeRows,validTarget,eventRank,isEvent,priorByKey,REF};\n");
+  source=source.replace(/if\(require\.main===module\)\{[\s\S]*$/,"module.exports={inWindow,key,normalizeFromEvidence,applyPriorHistory,applyRetailEvidenceGate,normalizeConfidenceTier,mergeRows,validTarget,eventRank,isEvent,priorByKey,REF};\n");
   const module={exports:{}};
   const localRequire=request=>request.startsWith('.')?require(path.resolve(path.dirname(filename),request)):require(request);
   const factory=new Function('require','module','exports','__filename','__dirname',source);

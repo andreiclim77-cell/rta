@@ -10,10 +10,10 @@ var REQUIRED=[
  {key:'heartbeat',url:'/data/market-hype-heartbeat-2026.json',label:'After the first heart-beat',weight:8}
 ];
 var DOM=[
- {id:'marketManagementCockpit',key:'uiAnalysis',label:'Analiza',weight:5,src:'/assets/market-management-v2.js?v=8'},
- {id:'marketAnalysisSynthesis',key:'uiSynthesis',label:'Sinteză',weight:4,src:'/assets/market-analysis-synthesis.js?v=5'},
+ {id:'marketManagementCockpit',key:'uiAnalysis',label:'Analiza',weight:5,src:'/assets/market-management-v2.js?v=9'},
+ {id:'marketAnalysisSynthesis',key:'uiSynthesis',label:'Sinteză',weight:4,src:'/assets/market-analysis-synthesis.js?v=6'},
  {id:'marketHypeRadar',key:'uiHype',label:'Hype',weight:3,src:'/assets/market-hype-ui.js?v=13'},
- {id:'marketViewSwitcher',key:'uiNav',label:'Interfața',weight:2,src:'/assets/market-view-switcher.js?v=9'}
+ {id:'marketViewSwitcher',key:'uiNav',label:'Interfața',weight:2,src:'/assets/market-view-switcher.js?v=10'}
 ];
 var TOTAL=REQUIRED.concat(DOM).reduce(function(s,x){return s+x.weight},0);
 function el(id){return document.getElementById(id)}function en(){return window.__rtaLang==='en'}function t(ro,enText){return en()?enText:ro}

@@ -37,7 +37,7 @@ need(new Set(vPrimeKeys).size===1,`VPrime color/bundle variants are not canonica
 const rayden=canonicalizeProduct({product:'Rayden 220 Limited Edition Box Mod by BD Vape',brand:'BD Vape'});
 need(rayden.brand==='BD Vape'&&rayden.model==='Rayden 220',`Rayden brand/model canonicalization is wrong: ${rayden.label}`);
 
-const sourceConfig=read('data/market-hype-sources-2026.json'),configuredSources=sourceConfig.directCatalogSources||[];
+const sourceConfig=read('data/market-hype-sources-2026.json'),configuredSources=sourceConfig.directCatalogSources||[],enabledSources=configuredSources.filter(function(source){return source.directCatalogEnabled!==false}),disabledSources=configuredSources.filter(function(source){return source.directCatalogEnabled===false});
 need(Number(sourceConfig.schemaVersion)>=8,'Expanded public-source registry schema is missing');
 need(configuredSources.length>=45,`Direct public-source registry is too small: ${configuredSources.length}`);
 need(new Set(configuredSources.map(source=>source.id)).size===configuredSources.length,'Duplicate direct-source ID in registry');
@@ -76,10 +76,13 @@ const history=read('data/market-hype-known-history-2026.json',{entries:[]});
 for(const prior of history.entries||[]){const data=prior.category==='POD'?pods:hype,key=prior.category+'|'+canonicalizeProduct({product:prior.productName,brand:prior.brand||''}).key,row=(data.products||[]).find(function(product){return product.category+'|'+canonicalizeProduct({product:product.productName,brand:product.brand||''}).key===key});if(row&&['catalog-published-at','first-retail-observation'].includes(row.dateConfidence))need(row.confidenceTier==='public-signal'&&row.signalKind==='recent-listing-known-model',`Known model was promoted by a fresh retail page: ${row.productName}`)}
 
 const direct=read('data/market-hype-direct-catalogs-2026.json'),dated=read('data/market-hype-dated-news-2026.json'),campaigns=read('data/market-hype-retail-campaigns-2026.json');
-need(direct.scan&&Number(direct.scan.sourcesConfigured)===configuredSources.length,`Direct catalog scan/config mismatch: ${direct.scan&&direct.scan.sourcesConfigured}/${configuredSources.length}`);
-need(Number(direct.scan.sourcesWorking)>=Math.floor(configuredSources.length*.8),`Direct catalog coverage is incomplete: ${direct.scan.sourcesWorking}/${configuredSources.length}`);
+need(direct.scan&&Number(direct.scan.sourcesConfigured)===enabledSources.length,`Direct catalog scan/config mismatch: ${direct.scan&&direct.scan.sourcesConfigured}/${enabledSources.length}`);
+need(Number(direct.scan.sourcesConfiguredTotal)===configuredSources.length,`Direct catalog total registry mismatch: ${direct.scan&&direct.scan.sourcesConfiguredTotal}/${configuredSources.length}`);
+need(Number(direct.scan.sourcesSkipped)===disabledSources.length,`Direct catalog skipped-source mismatch: ${direct.scan&&direct.scan.sourcesSkipped}/${disabledSources.length}`);
+need(Number(direct.scan.sourcesWorking)>=Math.ceil(enabledSources.length*.9),`Direct catalog coverage is incomplete: ${direct.scan.sourcesWorking}/${enabledSources.length}`);
 need(direct.truth&&direct.truth.sitemapLastmodIsNeverUsedAsLaunchDate===true&&direct.truth.jsonLdCatalogCoverageDoesNotCreateLaunchEvents===true,'Sitemap/JSON-LD launch-date protection is missing');
-need(Array.isArray(direct.sourceRuns)&&direct.sourceRuns.length===configuredSources.length,'Direct adapter telemetry is incomplete');
+need(Array.isArray(direct.sourceRuns)&&direct.sourceRuns.length===enabledSources.length,'Direct adapter telemetry is incomplete');
+need(Array.isArray(direct.skippedSources)&&disabledSources.every(function(source){return direct.skippedSources.some(function(row){return row.id===source.id&&row.reason})}),'Skipped direct-source telemetry is incomplete');
 need(direct.sourceRuns.filter(run=>run.ok).every(run=>run.adapterUsed),'Working direct source is missing adapter telemetry');
 const sitemapIds=new Set(configuredSources.filter(source=>source.catalogType==='sitemap-jsonld-products').map(source=>source.id));
 for(const item of direct.items||[])if(sitemapIds.has(item.sourceId))need(!item.publishedAt,`Sitemap lastmod leaked into publication date: ${item.productName}`);

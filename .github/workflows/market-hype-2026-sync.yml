@@ -48,6 +48,10 @@ on:
       - "tools/finalize-market-hype-category-relevance-2026.js"
       - "tools/merge-market-hype-upstream-products-2026.js"
       - "tools/validate-market-hype-publish-2026.js"
+      - "tools/audit-evidence-integrity.js"
+      - "tools/evidence-observation-date.js"
+      - "tools/test-evidence-integrity.js"
+      - "tools/test-market-direct-catalogs-2026.js"
       - "tools/hype-vnext/**"
       - "docs/HYPE_VNEXT_IMPLEMENTATION_STATUS.md"
       - ".github/workflows/market-hype-vnext-quality.yml"
@@ -295,6 +299,10 @@ jobs:
           node --check tools/finalize-market-hype-category-relevance-2026.js
           node --check tools/merge-market-hype-upstream-products-2026.js
           node --check tools/validate-market-hype-publish-2026.js
+          node --check tools/audit-evidence-integrity.js
+          node --check tools/evidence-observation-date.js
+          node --check tools/test-evidence-integrity.js
+          node --check tools/test-market-direct-catalogs-2026.js
           node - <<'NODE'
           const fs=require('fs');
           const extra=JSON.parse(fs.readFileSync('data/market-hype-active-makers-extra-2026.json','utf8'));
@@ -307,6 +315,9 @@ jobs:
           node tools/validate-market-hype-pods-2026.js
           node tools/reconcile-market-hype-public-2026.js --check
           node tools/test-market-hype-public-reconcile-2026.js
+          node tools/test-market-direct-catalogs-2026.js
+          node tools/test-evidence-integrity.js
+          node tools/audit-evidence-integrity.js --scope=hype
           node tools/check-market-data-quality-2026.js
           node tools/hype-vnext/run-benchmark.js
           node tools/hype-vnext/build-phase1.js --check

@@ -29,7 +29,7 @@ function render(data){
   box.innerHTML='<div class="mgmt-hero">'
     +'<div class="mgmt-kicker">'+esc(t('ROMÂNIA · ACTUALIZAT ZILNIC LA 06:00','ROMANIA · UPDATED DAILY AT 06:00'))+'</div>'
     +'<h2>'+esc(t('Analiza pieței RTA din România','Romanian RTA market analysis'))+'</h2>'
-    +'<p>'+esc(t('Două răspunsuri fără amestecarea indicatorilor: ce domină topurile comerciale publice și ce atrage interes măsurabil pentru cumpărare. Fiecare este separat pe mărci și produse.','Two answers without mixing indicators: what leads public commercial rankings and what attracts measurable buying interest. Each is split into brands and products.'))+'</p>'
+    +'<p>'+esc(t('Două semnale publice, fără amestecarea indicatorilor: pozițiile din topurile comerciale și interesul observat online. Fiecare este separat pe mărci și produse.','Two public signals without mixing indicators: positions in commercial rankings and interest observed online. Each is split into brands and products.'))+'</p>'
     +'</div>'
     +'<div class="mgmt-evidence-window complete">'
     +'<div><span>'+esc(t('INTERVAL SOLICITAT','REQUESTED PERIOD'))+'</span><b>01.01.2026 → '+esc(dateLabel(updatedAt))+'</b></div>'
