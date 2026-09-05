@@ -129,6 +129,7 @@
 
   function requestAccess(){
     if(hasAccess())return Promise.resolve(true);
+    var preload=loadData().catch(function(){return null});
     return new Promise(function(resolve){
       var existing=byId('market2026Modal');
       if(existing)existing.remove();
@@ -158,11 +159,14 @@
       form.addEventListener('submit',async function(event){
         event.preventDefault();
         var error=byId('market2026Error');
+        var submit=form.querySelector('button[type="submit"]');
         try{
           var digest=await sha256(input.value);
           if(digest===PASSWORD_SHA256){
             setAccess();
-            close(true)
+            submit.disabled=true;
+            submit.textContent=word('Se deschide…','Opening…');
+            preload.finally(function(){close(true)})
           }else{
             error.textContent=word('Parolă incorectă.','Incorrect password.');
             input.select()
@@ -200,7 +204,6 @@
     button.addEventListener('click',function(event){
       event.preventDefault();
       event.stopPropagation();
-      clearAccess();
       requestAccess().then(function(ok){
         if(!ok)return;
         if(typeof setRoute==='function')setRoute(ROUTE);else location.hash='#'+ROUTE
@@ -230,12 +233,14 @@
   }
 
   function loadData(){
+    if(marketData)return Promise.resolve(marketData);
     if(loadingPromise)return loadingPromise;
     loadingPromise=fetch('/data/market-2026.json',{cache:'no-store'}).then(function(r){if(!r.ok)throw new Error('market-data');return r.json()}).then(function(value){
       marketData=value;
       if(Number(marketData.scopeYear)!==2026)throw new Error('invalid-market-year');
       marketData.observations=(marketData.observations||[]).filter(function(o){return inAnalysisWindow(o.observedAt)});
       marketData.trendSnapshots=(marketData.trendSnapshots||[]).filter(function(o){return inAnalysisWindow(o.date)});
+      window.__rtaMarketBaseData=marketData;
       return marketData
     }).finally(function(){loadingPromise=null});
     return loadingPromise

@@ -31,13 +31,17 @@ if(!password)throw new Error('RTA_MARKET_PASSWORD is required');
     await modal.locator('button[type="submit"]').click();
     await page.waitForFunction(()=>/incorectă|incorrect/i.test(document.querySelector('#market2026Error')?.textContent||''),{timeout:10000});
     await input.fill(password);
+    const unlockStarted=Date.now();
     await modal.locator('button[type="submit"]').click();
     await modal.waitFor({state:'detached',timeout:10000});
     await page.waitForFunction(()=>sessionStorage.getItem('rtaMarket2026Access')==='1',{timeout:10000});
     await page.waitForSelector('#market2026.active #market2026Root .market-hero',{state:'attached',timeout:30000});
+    const heroMs=Date.now()-unlockStarted;
     await page.waitForFunction(()=>document.querySelector('#market2026Root')?.dataset.marketGuardReady==='1',{timeout:30000});
+    const readyMs=Date.now()-unlockStarted;
     if(await page.locator('#market2026Password').count())throw new Error('Password field remained in the document after unlock');
-    console.log('Piața RTA password flow OK: button prompts; wrong password rejected; supplied password unlocks Analysis and Hype.');
+    if(heroMs>6000)throw new Error(`Market hero took too long after password: ${heroMs}ms`);
+    console.log(`Piața RTA password flow OK: wrong password rejected; hero ${heroMs}ms; full validated view ${readyMs}ms.`);
   }finally{
     await browser.close();
   }
