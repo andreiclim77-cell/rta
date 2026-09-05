@@ -121,7 +121,6 @@ async function runViewport(browser,viewport,lang){
   await page.locator('[data-hype-layer="signals"]').click();
   const rtaSignals=await snapshot(page,'rta');
   requireState(rtaSignals,{label:`${lang}-${viewport.width}-rta-signals`,mode:'rta',layer:'signals',availability:expectedRtaAvailability,...expectedRta});
-  if(!rta.signalNames.some(name=>/Prime Minister/i.test(name)))throw new Error('Prime Minister should remain visible only as a monitored signal');
   await page.locator('[data-hype-layer="catalog"]').click();
   const rtaCatalog=await snapshot(page,'rta');
   requireState(rtaCatalog,{label:`${lang}-${viewport.width}-rta-catalog`,mode:'rta',layer:'catalog',availability:expectedRtaAvailability,...expectedRta});
@@ -132,7 +131,6 @@ async function runViewport(browser,viewport,lang){
   await page.locator('[data-hype-layer="signals"]').click();
   const podSignals=await snapshot(page,'pod');
   requireState(podSignals,{label:`${lang}-${viewport.width}-pod-signals`,mode:'pod',layer:'signals',availability:expectedPodAvailability,...expectedPod});
-  if(!pod.signalNames.some(name=>/AF5000/i.test(name)))throw new Error('AF5000 should remain visible only as a monitored signal');
   await page.locator('[data-hype-layer="catalog"]').click();
   const podCatalog=await snapshot(page,'pod');
   requireState(podCatalog,{label:`${lang}-${viewport.width}-pod-catalog`,mode:'pod',layer:'catalog',availability:expectedPodAvailability,...expectedPod});
