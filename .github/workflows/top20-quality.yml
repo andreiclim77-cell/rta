@@ -1,0 +1,53 @@
+name: Top20 Google Integrity Quality
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ['assets/market-top20*', 'assets/market-view-switcher*', 'tools/top20/**', 'data/google-pod*', 'data/google-pod-evidence/**', 'sw.js', 'top20-configurare.html', '.github/workflows/top20-*.yml']
+  push:
+    branches: ['main', 'fix/top20-**']
+    paths: ['assets/market-top20*', 'assets/market-view-switcher*', 'tools/top20/**', 'data/google-pod*', 'data/google-pod-evidence/**', 'sw.js', 'top20-configurare.html', '.github/workflows/top20-*.yml']
+permissions:
+  contents: read
+concurrency:
+  group: top20-quality-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  integrity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax, regression tests and truthful source status
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p qa-top20
+          node --check assets/market-top20-core.js
+          node --check assets/market-top20-ui.js
+          node --check assets/market-view-switcher.js
+          node --check sw.js
+          node --test tools/top20/core.test.js | tee qa-top20/unit-tests.txt
+          node tools/top20/check-publication.js | tee qa-top20/source-status.json
+          node tools/check-market-report-final.js | tee qa-top20/existing-market-contract.txt
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install browser test dependencies
+        run: |
+          python -m pip install playwright==1.57.0
+          python -m playwright install --with-deps chromium
+      - name: Test phone and desktop interactions in Chromium
+        run: python tools/top20/browser.test.py
+      - name: Upload reproducible QA evidence (fixtures are not Google data)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: top20-integrity-qa
+          path: qa-top20
+          retention-days: 14
+          if-no-files-found: error

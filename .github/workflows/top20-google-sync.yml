@@ -1,0 +1,75 @@
+name: Top20 Google Source Sync
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '20 6 10,15 * *'
+  push:
+    branches: ['main']
+    paths: ['.github/workflows/top20-google-sync.yml']
+permissions:
+  contents: write
+  pages: write
+concurrency:
+  group: top20-google-source
+  cancel-in-progress: false
+jobs:
+  collect:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+      GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+      GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+      GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+      GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+      GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
+      GOOGLE_ADS_USE_APPROVED: ${{ vars.GOOGLE_ADS_USE_APPROVED }}
+      GOOGLE_ADS_API_VERSION: ${{ vars.GOOGLE_ADS_API_VERSION || 'v24' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check source authorization without displaying credentials
+        id: config
+        run: |
+          node - <<'NODE'
+          const fs=require('fs'),c=require('./tools/top20/google-source.js').configuration(process.env);
+          const ready=c.configured&&c.use_approved;
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,'ready='+ready+'\n');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY,ready?'Google source configuration present. Collection still must succeed.\n':'SOURCE NOT CONNECTED / NOT APPROVED. No Google ranking was collected. Missing: '+c.missing.join(', ')+'. Approved use: '+c.use_approved+'\n');
+          NODE
+      - name: Collect authorized historical Google metrics
+        if: steps.config.outputs.ready == 'true'
+        run: |
+          node --test tools/top20/core.test.js
+          node tools/top20/google-source.js --collect --write
+          node tools/top20/check-publication.js
+      - name: Publish validated snapshot without replacing unrelated work
+        if: steps.config.outputs.ready == 'true'
+        id: publish
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/google-pod-top20-2026.json data/google-pod-evidence/
+          if git diff --cached --quiet; then
+            echo 'changed=false' >> "$GITHUB_OUTPUT"
+          else
+            git commit -m 'Update Top20 from authorized Google historical metrics'
+            git pull --rebase origin main
+            node tools/top20/check-publication.js
+            git push origin HEAD:main
+            echo 'changed=true' >> "$GITHUB_OUTPUT"
+          fi
+      - name: Explicitly request Pages build after the Actions-token commit
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds"
+      - name: Report source failure without claiming a new ranking
+        if: failure()
+        run: echo 'Collection or publication failed. Do not claim a new live ranking; inspect failed step. Previously published snapshot is not fabricated or zero-filled.' >> "$GITHUB_STEP_SUMMARY"

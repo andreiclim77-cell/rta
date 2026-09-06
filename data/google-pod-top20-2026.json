@@ -1,39 +1,9 @@
 {
-  "schema_version": 1,
-  "title": "Top 20 pod - Google Romania",
-  "country": "RO",
-  "language": "ro",
-  "status": "awaiting_verified_google_ads_data",
-  "source": {
-    "provider": "Google Ads Keyword Planner",
-    "metric": "Avg. monthly searches",
-    "match_policy": "brand + model, canonicalized and deduplicated",
-    "geography": "Romania",
-    "network": "Google",
-    "notes": "Clasamentul este publicat numai din date Google Ads Keyword Planner exportate sau obtinute prin API si validate. Nu se folosesc valori simulate, rezultate web, pozitii organice sau estimari interne drept volum Google."
-  },
-  "period": {
-    "start": null,
-    "end": null,
-    "label": null
-  },
-  "last_checked": "2026-09-06",
-  "last_updated": null,
-  "rows": [],
-  "validation": {
-    "verified": false,
-    "minimum_rows_for_publication": 20,
-    "deduplicate_variants": true,
-    "require_brand_and_model": true,
-    "require_numeric_monthly_searches": true,
-    "reject_negative_values": true,
-    "reject_unknown_source": true,
-    "ranking_rule": "monthly_searches DESC; canonical brand ASC; canonical model ASC",
-    "publication_rule": "status must equal verified, validation.verified must equal true, and at least 20 valid canonical rows must exist"
-  },
-  "display": {
-    "unavailable_message": "Topul nu este publicat momentan deoarece nu exista inca un set Google Ads Keyword Planner verificat care sa indeplineasca toate regulile de validare.",
-    "metric_label": "Volum lunar estimat Google",
-    "source_label": "Google Ads Keyword Planner"
-  }
+  "schema_version": 2,
+  "status": "source_not_connected",
+  "last_source_attempt": null,
+  "configuration_checked_at": "2026-09-06T13:33:19.000Z",
+  "configuration_result": "required_google_ads_credentials_missing",
+  "catalog_models": 43,
+  "note": "No measured Google source has been imported or collected. No synthetic rows are published."
 }
