@@ -1,0 +1,45 @@
+name: Top20 diagnostics
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/top20-diagnostics.yml'
+permissions:
+  contents: read
+jobs:
+  diagnostics:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Capture source and test diagnostics without changing production
+        run: |
+          mkdir -p /tmp/top20-diagnostics
+          git archive --format=zip HEAD -o /tmp/top20-diagnostics/source.zip
+          node --check assets/market-view-switcher.js > /tmp/top20-diagnostics/syntax.txt 2>&1
+          set +e
+          node tools/check-market-report-final.js > /tmp/top20-diagnostics/report-contract.txt 2>&1
+          code=$?
+          echo "report_contract_exit_code=$code" > /tmp/top20-diagnostics/results.txt
+          echo "Diagnostic capture only; this is not a passing quality gate." >> /tmp/top20-diagnostics/results.txt
+          exit 0
+      - name: Check Google source configuration presence (never secret values)
+        env:
+          ADS_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          ADS_CLIENT: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+          ADS_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          ADS_REFRESH: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+          ADS_CUSTOMER: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+        run: |
+          node -e "const fs=require('fs');const keys=['ADS_TOKEN','ADS_CLIENT','ADS_SECRET','ADS_REFRESH','ADS_CUSTOMER'];fs.writeFileSync('/tmp/top20-diagnostics/source-configuration.json',JSON.stringify({configured:keys.every(k=>Boolean(process.env[k])),missing:keys.filter(k=>!process.env[k]),credentialsExposed:false},null,2))"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: top20-repair-diagnostics
+          path: /tmp/top20-diagnostics
+          retention-days: 7
+          if-no-files-found: error
