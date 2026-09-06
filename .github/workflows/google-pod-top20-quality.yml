@@ -1,0 +1,30 @@
+name: Google Pod Top20 Technical Quality
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/market-view-switcher.js'
+      - 'data/google-pod-top20-2026.json'
+      - 'tools/test-google-pod-top20.js'
+      - '.github/workflows/google-pod-top20-quality.yml'
+  pull_request:
+    paths:
+      - 'assets/market-view-switcher.js'
+      - 'data/google-pod-top20-2026.json'
+      - 'tools/test-google-pod-top20.js'
+      - '.github/workflows/google-pod-top20-quality.yml'
+permissions:
+  contents: read
+jobs:
+  technical-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: node --check assets/market-view-switcher.js
+      - name: Technical validation and synthetic edge cases
+        run: node tools/test-google-pod-top20.js

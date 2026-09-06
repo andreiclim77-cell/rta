@@ -3,20 +3,18 @@
   "title": "Top 20 pod - Google Romania",
   "country": "RO",
   "language": "ro",
-  "status": "awaiting_verified_google_ads_data",
+  "status": "credentials-missing",
   "source": {
     "provider": "Google Ads Keyword Planner",
     "metric": "Avg. monthly searches",
     "match_policy": "brand + model, canonicalized and deduplicated",
     "geography": "Romania",
     "network": "Google",
-    "notes": "Clasamentul este publicat numai din date Google Ads Keyword Planner exportate sau obtinute prin API si validate. Nu se folosesc valori simulate, rezultate web, pozitii organice sau estimari interne drept volum Google."
+    "notes": "Clasamentul este publicat numai din date Google Ads Keyword Planner exportate sau obtinute prin API si validate. Nu se folosesc valori simulate, rezultate web, pozitii organice sau estimari interne drept volum Google.",
+    "evidence_file": null,
+    "evidence_sha256": null
   },
-  "period": {
-    "start": null,
-    "end": null,
-    "label": null
-  },
+  "period": {"start": null, "end": null, "label": null},
   "last_checked": "2026-09-06",
   "last_updated": null,
   "rows": [],
@@ -28,12 +26,23 @@
     "require_numeric_monthly_searches": true,
     "reject_negative_values": true,
     "reject_unknown_source": true,
-    "ranking_rule": "monthly_searches DESC; canonical brand ASC; canonical model ASC",
-    "publication_rule": "status must equal verified, validation.verified must equal true, and at least 20 valid canonical rows must exist"
+    "ranking_rule": "monthly_searches DESC; equal values share rank; normalized brand and model order ties",
+    "publication_rule": "Reviewed source; source file integrity checked; Romania / Google network / 12 complete months; valid dates; no duplicate models or overlapping queries; minimum 20 positive measured models. Technical validation is not authentication by Google.",
+    "require_original_source_evidence": true,
+    "verify_evidence_sha256": true,
+    "missing_values_are_not_zero": true,
+    "duplicate_model_blocks_publication": true
   },
   "display": {
-    "unavailable_message": "Topul nu este publicat momentan deoarece nu exista inca un set Google Ads Keyword Planner verificat care sa indeplineasca toate regulile de validare.",
-    "metric_label": "Volum lunar estimat Google",
+    "unavailable_message": "Conexiunea Google Ads nu este configurată: adaptorul raportează credentials-missing, iar în datele colectate nu există volume Google. Pentru un top real este necesar acces autorizat și eligibil la sursă sau un export original Keyword Planner pentru România. Nu înlocuim volumele lipsă cu topuri editoriale ori cu vânzări.",
+    "metric_label": "Media lunară estimată Google (12 luni)",
     "source_label": "Google Ads Keyword Planner"
+  },
+  "diagnostic": {
+    "verified_from": "deployed data/market-demand-intelligence-2026.json",
+    "upstream_generated_at": "2026-09-06T09:18:06.934Z",
+    "google_status": "credentials-missing",
+    "last_successful_collection": null,
+    "google_rows_available": 0
   }
 }
