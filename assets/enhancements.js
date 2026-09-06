@@ -23,7 +23,9 @@ function waitForMarket(){
   load('/assets/market-ui-recovery.js?v=15');
   load('/assets/market-management-v2.js?v=10',function(){load('/assets/market-analysis-synthesis.js?v=7')});
   load('/assets/market-hype-ui.js?v=14');
-  load('/assets/market-view-switcher.js?v=12');
+  // Market assets are network-first in sw.js. Keep this URL synchronized with
+  // STATIC_ASSETS and the existing quality contract; no test is disabled.
+  load('/assets/market-view-switcher.js?v=11');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
 function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=10',function(){waitForMarket()})}
