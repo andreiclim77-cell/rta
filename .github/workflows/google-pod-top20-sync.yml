@@ -1,0 +1,82 @@
+name: Google Pod Top20 Collection
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '30 8 8 * *'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/market-google-pod-top20-core.js'
+      - 'tools/collect-google-pod-top20.js'
+      - 'tools/test-google-pod-top20-api.js'
+      - '.github/workflows/google-pod-top20-sync.yml'
+  pull_request:
+    paths:
+      - 'assets/market-google-pod-top20-core.js'
+      - 'tools/collect-google-pod-top20.js'
+      - 'tools/test-google-pod-top20-api.js'
+      - '.github/workflows/google-pod-top20-sync.yml'
+permissions:
+  contents: read
+concurrency:
+  group: google-pod-top20-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and deterministic tests (no external credentials)
+        run: |
+          node --check assets/market-google-pod-top20-core.js
+          node --check tools/collect-google-pod-top20.js
+          node tools/test-google-pod-top20-api.js
+          node tools/test-google-pod-top20.js
+          node tools/check-market-report-final.js
+  collect:
+    needs: quality
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Collect authorized Google metrics or report missing configuration
+        id: collect
+        env:
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+          GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+          GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
+          GOOGLE_ADS_API_VERSION: ${{ vars.GOOGLE_ADS_API_VERSION || 'v25' }}
+        run: |
+          node tools/collect-google-pod-top20.js
+          node -e "const d=require('./data/google-pod-top20-2026.json');console.log('publish='+(d.status==='verified'));" >> "$GITHUB_OUTPUT"
+      - name: Publish only real, validated measurements and matching evidence
+        if: steps.collect.outputs.publish == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          node tools/test-google-pod-top20.js
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/google-pod-top20-2026.json data/google-pod-evidence/
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Publish measured Google Pod search volumes and source evidence'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds" --silent
