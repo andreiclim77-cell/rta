@@ -1,0 +1,76 @@
+name: Google Pod Browser and Evidence QA
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, fix/google-pod-top20-proof-20260906]
+    paths:
+      - 'assets/market-view-switcher.*'
+      - 'assets/market-google-pod-top20-*.js'
+      - 'tools/*google-pod-top20*.js'
+      - 'data/google-pod-top20-2026.json'
+      - '.github/workflows/google-pod-top20-browser.yml'
+  pull_request:
+    paths:
+      - 'assets/market-view-switcher.*'
+      - 'assets/market-google-pod-top20-*.js'
+      - 'tools/*google-pod-top20*.js'
+      - '.github/workflows/google-pod-top20-browser.yml'
+permissions:
+  contents: read
+concurrency:
+  group: google-pod-browser-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  browser-and-evidence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Existing regressions and API projection tests
+        run: |
+          node --check assets/market-view-switcher.js
+          node --check assets/market-google-pod-top20-proof.js
+          node tools/test-google-pod-top20.js
+          node tools/test-google-pod-top20-api.js
+          node tools/check-market-report-final.js
+      - name: Install isolated browser test dependencies
+        run: |
+          npm install --no-save --package-lock=false playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Browser tests at desktop and phone widths (synthetic data only)
+        run: node tools/test-google-pod-top20-e2e.js
+      - name: Verify published asset bytes and report real data status
+        if: github.ref == 'refs/heads/main'
+        run: |
+          node - <<'NODE'
+          const fs=require('node:fs'),crypto=require('node:crypto');
+          const hash=x=>crypto.createHash('sha256').update(x).digest('hex');
+          (async()=>{
+            const files=['assets/market-view-switcher.js','assets/market-google-pod-top20-proof.js','assets/market-google-pod-top20-core.js'];
+            const matched=[];
+            for(const file of files){
+              let ok=false;
+              for(let i=0;i<10;i++){
+                try{const r=await fetch('https://ghid-rta.ro/'+file+'?qa='+process.env.GITHUB_SHA,{cache:'no-store',signal:AbortSignal.timeout(10000)});if(r.ok&&hash(Buffer.from(await r.arrayBuffer()))===hash(fs.readFileSync(file))){ok=true;break;}}catch(_){}
+                await new Promise(r=>setTimeout(r,6000));
+              }
+              if(!ok)throw new Error('Public asset does not match tested source: '+file);
+              matched.push(file);
+            }
+            const r=await fetch('https://ghid-rta.ro/data/google-pod-top20-2026.json',{cache:'no-store',signal:AbortSignal.timeout(10000)});
+            if(!r.ok)throw new Error('Public data unavailable: '+r.status);
+            const d=await r.json();
+            const report={tested_at:new Date().toISOString(),commit:process.env.GITHUB_SHA,published_assets:matched,data_status:d.status,public_rows:Array.isArray(d.rows)?d.rows.length:null,notice:'A published interface and successful QA do not constitute a populated Google ranking.'};
+            fs.writeFileSync('test-results/google-pod/publication.json',JSON.stringify(report,null,2));console.log(JSON.stringify(report));
+          })().catch(e=>{console.error(e.message);process.exitCode=1});
+          NODE
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: google-pod-browser-evidence-${{ github.run_id }}
+          path: test-results/google-pod/
+          retention-days: 14
+          if-no-files-found: warn
