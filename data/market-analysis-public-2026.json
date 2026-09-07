@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "scopeYear": 2026,
   "analysisStart": "2026-01-01",
-  "updatedAt": "2026-09-07T09:20:58.645Z",
+  "updatedAt": "2026-09-07T10:06:33.225Z",
   "refreshTarget": "06:00 Europe/Bucharest",
   "methodology": {
     "observedPopularity": "Aggregated reciprocal-rank evidence from public retailer bestseller and popularity lists, deduplicated by operator, date, category and canonical product or brand. It is not exact period or national unit sales.",
@@ -26,7 +26,7 @@
     "configuredStores": 22,
     "rankingStores": 19,
     "snapshots": 10,
-    "demandProducts": 1196,
+    "demandProducts": 1194,
     "youtubeModels": 85
   },
   "observedPopularity": [
@@ -103,11 +103,22 @@
           "name": "OXVA",
           "sourceCount": 2,
           "storefrontCount": 2,
-          "bestRank": 3,
+          "bestRank": 2,
           "observedDays": 8,
           "lastSeen": "2026-09-07",
           "productUrl": "",
-          "signalScore": 5.33,
+          "signalScore": 5.63,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Uwell",
+          "sourceCount": 3,
+          "storefrontCount": 3,
+          "bestRank": 1,
+          "observedDays": 8,
+          "lastSeen": "2026-09-07",
+          "productUrl": "",
+          "signalScore": 4.01,
           "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
@@ -119,17 +130,6 @@
           "lastSeen": "2026-09-07",
           "productUrl": "",
           "signalScore": 3.6,
-          "evidenceWindow": "retailer-defined-or-unspecified"
-        },
-        {
-          "name": "Uwell",
-          "sourceCount": 2,
-          "storefrontCount": 2,
-          "bestRank": 3,
-          "observedDays": 8,
-          "lastSeen": "2026-09-07",
-          "productUrl": "",
-          "signalScore": 3.01,
           "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
@@ -499,17 +499,6 @@
           "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
-          "name": "Eleaf",
-          "sourceCount": 4,
-          "storefrontCount": 4,
-          "bestRank": 3,
-          "observedDays": 10,
-          "lastSeen": "2026-09-07",
-          "productUrl": "",
-          "signalScore": 10.14,
-          "evidenceWindow": "retailer-defined-or-unspecified"
-        },
-        {
           "name": "BP Mods",
           "sourceCount": 1,
           "storefrontCount": 1,
@@ -518,6 +507,17 @@
           "lastSeen": "2026-09-07",
           "productUrl": "",
           "signalScore": 10,
+          "evidenceWindow": "retailer-defined-or-unspecified"
+        },
+        {
+          "name": "Eleaf",
+          "sourceCount": 4,
+          "storefrontCount": 4,
+          "bestRank": 3,
+          "observedDays": 10,
+          "lastSeen": "2026-09-07",
+          "productUrl": "",
+          "signalScore": 9.76,
           "evidenceWindow": "retailer-defined-or-unspecified"
         },
         {
@@ -1227,7 +1227,7 @@
           "observedDays": 10,
           "lastSeen": "2026-09-07",
           "productUrl": "",
-          "signalScore": 13.11,
+          "signalScore": 12.28,
           "evidenceWindow": "mixed-public-ranking"
         },
         {
@@ -2563,30 +2563,6 @@
           "reviewCount": 3,
           "recent30dReviews": 0,
           "interestScore": 95.09
-        }
-      ]
-    },
-    {
-      "category": "mod",
-      "brands": [
-        {
-          "name": "Ambition Mods",
-          "trackedProducts": 1,
-          "signalKinds": [
-            "community-mentions"
-          ],
-          "interestScore": 3.47
-        }
-      ],
-      "products": [
-        {
-          "name": "Ambition Mods Converter",
-          "brand": "Ambition Mods",
-          "metricKind": "community-mentions",
-          "metricValue": 1,
-          "reviewCount": 0,
-          "recent30dReviews": 0,
-          "interestScore": 3.47
         }
       ]
     }

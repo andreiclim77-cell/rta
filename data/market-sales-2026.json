@@ -10,7 +10,7 @@
     "completeFromRequestedStart": false,
     "historicalBackfillInvented": false
   },
-  "updatedAt": "2026-09-07T09:20:58.645Z",
+  "updatedAt": "2026-09-07T10:06:33.225Z",
   "methodology": {
     "actualSalesOnly": true,
     "noStockInference": true,
@@ -138,7 +138,7 @@
       "source": "https://www.vapersparadise.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "rankingCount": 0,
       "actualSalesCount": 0,
-      "error": "HTTP 404",
+      "error": "This operation was aborted",
       "evidenceWindow": "lifetime-cumulative"
     },
     {
@@ -1683,15 +1683,18 @@
       "retailerId": "smokee",
       "category": "accesoriu RTA/mod",
       "product": "OXVA Cartus Xlim Mesh - 0.6 Ohm",
-      "rank": 3,
+      "rank": 89,
       "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-0-6%cf%89/",
-      "evidence": "verified-html-popularity-sort",
+      "evidence": "woocommerce-public-popularity-order",
       "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "OXVA",
       "rawProduct": "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm",
       "canonicalProductKey": "oxva|cartus xlim mesh 0 6 ohm",
-      "brand": "OXVA",
       "rawProducts": [
         "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm"
       ],
@@ -3466,9 +3469,9 @@
       "retailerId": "epotion",
       "category": "coil prebuilt",
       "product": "Innokin Rezistenta Zenith 1.6ohm",
-      "rank": 9,
+      "rank": 11,
       "observedAt": "2026-09-07",
-      "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+      "source": "https://e-potion.ro/atomizoare/?orderby=popularity",
       "productUrl": "https://e-potion.ro/rezistenta-innokin-zenith/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
@@ -8620,128 +8623,19 @@
     },
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "Geekvape Cartus Q Pro, side fill - 0.8 ohm",
+      "category": "POD",
+      "product": "Uwell Caliburn G5",
       "rank": 1,
       "observedAt": "2026-09-07",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-geekvape-q-pro-3ml-side-fill-0-8-ohm/",
+      "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm",
-      "canonicalProductKey": "geekvape|cartus q pro side fill 0 8 ohm",
-      "brand": "Geekvape",
+      "rawProduct": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+      "canonicalProductKey": "uwell|caliburn g5",
+      "brand": "Uwell",
       "rawProducts": [
-        "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "lichid tutunos/NET/DIY",
-      "product": "Longfill Royal Tobacco / - Classic",
-      "rank": 2,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/longfill-royal-tobacco-10ml-60ml-classic-gold/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold",
-      "canonicalProductKey": "longfill royal tobacco classic",
-      "brand": "",
-      "rawProducts": [
-        "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "Cartuș SXmini PX Pro 2 - 0.8 Ohm",
-      "rank": 4,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-sxmini-px-pro-2-0-8-ohm/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm",
-      "canonicalProductKey": "cartus sxmini px pro 2 0 8 ohm",
-      "brand": "",
-      "rawProducts": [
-        "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
-      "rank": 5,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-      "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
-      "brand": "OXVA",
-      "rawProducts": [
-        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "POD",
-      "product": "OXVA Vprime 2",
-      "rank": 6,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-      "canonicalProductKey": "oxva|vprime 2",
-      "brand": "OXVA",
-      "rawProducts": [
-        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Mirage Blue"
-      ],
-      "variantCount": 2
-    },
-    {
-      "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Space",
-      "rank": 7,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-      "canonicalProductKey": "eleaf|istick pico plus space",
-      "brand": "Eleaf",
-      "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Light",
-      "rank": 9,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-light-grey/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey",
-      "canonicalProductKey": "eleaf|istick pico plus light",
-      "brand": "Eleaf",
-      "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey"
+        "Kit Uwell Caliburn G5 &#8211; Mystic Forest"
       ],
       "variantCount": 1
     },
@@ -8749,7 +8643,7 @@
       "retailerId": "smokee",
       "category": "POD",
       "product": "OXVA Oneo Pro",
-      "rank": 10,
+      "rank": 2,
       "observedAt": "2026-09-07",
       "source": "https://smokee.ro/?orderby=popularity",
       "productUrl": "https://smokee.ro/product/kit-oxva-oneo-pro-2100mah-4ml-midnight-black/",
@@ -8760,6 +8654,42 @@
       "brand": "OXVA",
       "rawProducts": [
         "Kit Oxva Oneo Pro 2100mAh 4ml &#8211; Midnight Black"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "accesoriu RTA/mod",
+      "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+      "rank": 3,
+      "observedAt": "2026-09-07",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
+      "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
+      "brand": "OXVA",
+      "rawProducts": [
+        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "accesoriu RTA/mod",
+      "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+      "rank": 4,
+      "observedAt": "2026-09-07",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
+      "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
+      "brand": "OXVA",
+      "rawProducts": [
+        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
       ],
       "variantCount": 1
     },
@@ -15340,6 +15270,24 @@
     },
     {
       "retailerId": "epotion",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Dinner Salts Select Tobacco Creamy 15mg",
+      "rank": 9,
+      "observedAt": "2026-09-07",
+      "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+      "productUrl": "https://e-potion.ro/lichid-dinner-salts-select-tobacco-creamy-15mg-10ml/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Lichid Dinner Salts Select Tobacco Creamy 15mg 10ml",
+      "canonicalProductKey": "lichid dinner salts select tobacco creamy 15mg",
+      "brand": "",
+      "rawProducts": [
+        "Lichid Dinner Salts Select Tobacco Creamy 15mg 10ml"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "epotion",
       "category": "bumbac/wick",
       "product": "Wick N Vape Bumbac Cotton Bacon V2 (10g)",
       "rank": 1,
@@ -19264,7 +19212,7 @@
   ],
   "actualSales": [],
   "summary": {
-    "generatedAt": "2026-09-07T09:21:07.487Z",
+    "generatedAt": "2026-09-07T10:06:45.016Z",
     "observedBestsellerIndex": {
       "method": "reciprocal-rank aggregation of Tier-B public popularity/bestseller lists; WooCommerce popularity is lifetime-cumulative total_sales ordering, not sales in the selected period or unit market share",
       "coveragePct": 86.4,
@@ -19298,7 +19246,7 @@
         {
           "name": "JAC Vapour VIM AIO Slate",
           "value": 1.3333,
-          "sharePct": 0.93
+          "sharePct": 0.94
         },
         {
           "name": "JAC Vapour VIM",
@@ -19376,7 +19324,7 @@
           "sharePct": 0.7
         },
         {
-          "name": "Geekvape Cartus Q Pro, side fill - 0.8 ohm",
+          "name": "Uwell Caliburn G5",
           "value": 1,
           "sharePct": 0.7
         },
@@ -19528,11 +19476,6 @@
           "sharePct": 15.25
         },
         {
-          "name": "Geekvape",
-          "value": 7.8957,
-          "sharePct": 9.7
-        },
-        {
           "name": "Vozol",
           "value": 7.4912,
           "sharePct": 9.2
@@ -19541,6 +19484,11 @@
           "name": "Vaporesso",
           "value": 7.2321,
           "sharePct": 8.88
+        },
+        {
+          "name": "Geekvape",
+          "value": 6.8957,
+          "sharePct": 8.47
         },
         {
           "name": "JAC Vapour",
@@ -19558,19 +19506,24 @@
           "sharePct": 4.33
         },
         {
+          "name": "OXVA",
+          "value": 3.107,
+          "sharePct": 3.81
+        },
+        {
           "name": "Hellvape",
           "value": 2.9179,
           "sharePct": 3.58
         },
         {
-          "name": "OXVA",
-          "value": 2.8125,
-          "sharePct": 3.45
-        },
-        {
           "name": "Wotofo",
           "value": 2.6727,
           "sharePct": 3.28
+        },
+        {
+          "name": "Uwell",
+          "value": 2.587,
+          "sharePct": 3.18
         },
         {
           "name": "Ambition Mods",
@@ -19589,13 +19542,8 @@
         },
         {
           "name": "Innokin",
-          "value": 2.0036,
-          "sharePct": 2.46
-        },
-        {
-          "name": "Eleaf",
-          "value": 1.7253,
-          "sharePct": 2.12
+          "value": 1.9834,
+          "sharePct": 2.44
         },
         {
           "name": "Fumytech",
@@ -19603,9 +19551,9 @@
           "sharePct": 1.96
         },
         {
-          "name": "Uwell",
-          "value": 1.587,
-          "sharePct": 1.95
+          "name": "Eleaf",
+          "value": 1.4713,
+          "sharePct": 1.81
         },
         {
           "name": "Elf Bar",
@@ -19676,63 +19624,63 @@
       "topCategories": [
         {
           "name": "accesoriu RTA/mod",
-          "value": 33.5211,
-          "sharePct": 23.43
+          "value": 32.3324,
+          "sharePct": 22.7
         },
         {
           "name": "coil prebuilt",
-          "value": 20.0009,
-          "sharePct": 13.98
+          "value": 19.9807,
+          "sharePct": 14.03
         },
         {
           "name": "POD",
-          "value": 12.8364,
-          "sharePct": 8.97
+          "value": 14.0697,
+          "sharePct": 9.88
         },
         {
           "name": "acumulator",
           "value": 12.048,
-          "sharePct": 8.42
+          "sharePct": 8.46
         },
         {
           "name": "RTA",
           "value": 11.2151,
-          "sharePct": 7.84
+          "sharePct": 7.87
         },
         {
           "name": "mod",
-          "value": 10.3063,
-          "sharePct": 7.2
+          "value": 10.0523,
+          "sharePct": 7.06
         },
         {
           "name": "lichid tutunos/NET/DIY",
-          "value": 9.0286,
-          "sharePct": 6.31
+          "value": 8.6397,
+          "sharePct": 6.06
         },
         {
           "name": "bumbac/wick",
           "value": 8.6391,
-          "sharePct": 6.04
+          "sharePct": 6.06
         },
         {
           "name": "RDA/RDTA",
           "value": 7.9337,
-          "sharePct": 5.55
+          "sharePct": 5.57
         },
         {
           "name": "sarma",
           "value": 7.1285,
-          "sharePct": 4.98
+          "sharePct": 5
         },
         {
           "name": "componente RTA",
           "value": 4.3776,
-          "sharePct": 3.06
+          "sharePct": 3.07
         },
         {
           "name": "incarcator",
           "value": 3.5232,
-          "sharePct": 2.46
+          "sharePct": 2.47
         },
         {
           "name": "RBA/bridge",
@@ -19742,7 +19690,7 @@
         {
           "name": "unelte build",
           "value": 0.977,
-          "sharePct": 0.68
+          "sharePct": 0.69
         }
       ]
     },
@@ -19841,17 +19789,17 @@
             "sharePct": 1.96
           },
           {
-            "name": "Geekvape Cartus Q Pro, side fill - 0.8 ohm",
+            "name": "Uwell Caliburn G5",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Longfill Royal Tobacco / - Classic",
+            "name": "OXVA Oneo Pro",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Xlim Mesh - 0.6 Ohm",
+            "name": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
             "value": 0,
             "sharePct": 0
           },
@@ -19861,7 +19809,7 @@
             "sharePct": 0
           },
           {
-            "name": "Cartuș SXmini PX Pro 2 - 0.8 Ohm",
+            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
             "value": 0,
             "sharePct": 0
           },
@@ -19871,27 +19819,32 @@
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Voopoo Cartus de rezerva Doric Galaxy - 1.2 Ohm",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Vprime 2",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Eleaf iStick Pico Plus - Space",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "OXVA Cartus Xlim Mesh - 0.8 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus Xlim Mesh - 1.2 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus NeXLIM Unitech 3.0 - 0.6 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus de rezerva Xlim V3 Top Fill 0.8 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus Xlim V3 Top Fill - 1.2 Ohm",
             "value": 0,
             "sharePct": 0
           },
@@ -19954,11 +19907,6 @@
             "name": "Aspire Rezistenta Nautilus 2S Mesh - 0.7ohm",
             "value": 0,
             "sharePct": 0
-          },
-          {
-            "name": "Voopoo Cartus DORIC GO",
-            "value": 0,
-            "sharePct": 0
           }
         ],
         "topBrands": [
@@ -19983,7 +19931,7 @@
             "sharePct": 3.23
           },
           {
-            "name": "Geekvape",
+            "name": "Uwell",
             "value": 0,
             "sharePct": 0
           },
@@ -19994,11 +19942,6 @@
           },
           {
             "name": "Voopoo",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Eleaf",
             "value": 0,
             "sharePct": 0
           },
@@ -20075,11 +20018,6 @@
             "sharePct": 1.96
           },
           {
-            "name": "mod",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "acumulator",
             "value": 0,
             "sharePct": 0
@@ -20121,17 +20059,17 @@
       "viewCount": {
         "topProducts": [
           {
-            "name": "Geekvape Cartus Q Pro, side fill - 0.8 ohm",
+            "name": "Uwell Caliburn G5",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Longfill Royal Tobacco / - Classic",
+            "name": "OXVA Oneo Pro",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Xlim Mesh - 0.6 Ohm",
+            "name": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
             "value": 0,
             "sharePct": 0
           },
@@ -20141,7 +20079,7 @@
             "sharePct": 0
           },
           {
-            "name": "Cartuș SXmini PX Pro 2 - 0.8 Ohm",
+            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
             "value": 0,
             "sharePct": 0
           },
@@ -20151,27 +20089,32 @@
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Voopoo Cartus de rezerva Doric Galaxy - 1.2 Ohm",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Vprime 2",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Eleaf iStick Pico Plus - Space",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "OXVA Cartus Xlim Mesh - 0.8 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus Xlim Mesh - 1.2 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus NeXLIM Unitech 3.0 - 0.6 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus de rezerva Xlim V3 Top Fill 0.8 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus Xlim V3 Top Fill - 1.2 Ohm",
             "value": 0,
             "sharePct": 0
           },
@@ -20314,16 +20257,11 @@
             "name": "Voopoo Cartus DORIC GO",
             "value": 0,
             "sharePct": 0
-          },
-          {
-            "name": "Clearomizor",
-            "value": 0,
-            "sharePct": 0
           }
         ],
         "topBrands": [
           {
-            "name": "Geekvape",
+            "name": "Uwell",
             "value": 0,
             "sharePct": 0
           },
@@ -20334,11 +20272,6 @@
           },
           {
             "name": "Voopoo",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Eleaf",
             "value": 0,
             "sharePct": 0
           },
@@ -20405,22 +20338,12 @@
         ],
         "topCategories": [
           {
-            "name": "accesoriu RTA/mod",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "lichid tutunos/NET/DIY",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "POD",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "mod",
+            "name": "accesoriu RTA/mod",
             "value": 0,
             "sharePct": 0
           },
@@ -20451,6 +20374,11 @@
           },
           {
             "name": "coil prebuilt",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "lichid tutunos/NET/DIY",
             "value": 0,
             "sharePct": 0
           },
@@ -20535,17 +20463,17 @@
             "sharePct": 8.33
           },
           {
-            "name": "Geekvape Cartus Q Pro, side fill - 0.8 ohm",
+            "name": "Uwell Caliburn G5",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Longfill Royal Tobacco / - Classic",
+            "name": "OXVA Oneo Pro",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Xlim Mesh - 0.6 Ohm",
+            "name": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
             "value": 0,
             "sharePct": 0
           },
@@ -20555,7 +20483,7 @@
             "sharePct": 0
           },
           {
-            "name": "Cartuș SXmini PX Pro 2 - 0.8 Ohm",
+            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
             "value": 0,
             "sharePct": 0
           },
@@ -20565,27 +20493,32 @@
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Voopoo Cartus de rezerva Doric Galaxy - 1.2 Ohm",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Vprime 2",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Eleaf iStick Pico Plus - Space",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "OXVA Cartus Xlim Mesh - 0.8 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus Xlim Mesh - 1.2 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus NeXLIM Unitech 3.0 - 0.6 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus de rezerva Xlim V3 Top Fill 0.8 Ohm",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "OXVA Cartus Xlim V3 Top Fill - 1.2 Ohm",
             "value": 0,
             "sharePct": 0
           },
@@ -20668,11 +20601,6 @@
             "name": "Lichid Smokemania Coffee Tobacco",
             "value": 0,
             "sharePct": 0
-          },
-          {
-            "name": "Vaporesso Rezistenta GTX Mesh 0.6ohm",
-            "value": 0,
-            "sharePct": 0
           }
         ],
         "topBrands": [
@@ -20712,17 +20640,12 @@
             "sharePct": 10
           },
           {
-            "name": "Geekvape",
+            "name": "Uwell",
             "value": 0,
             "sharePct": 0
           },
           {
             "name": "OXVA",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Eleaf",
             "value": 0,
             "sharePct": 0
           },
@@ -20789,17 +20712,7 @@
             "sharePct": 8.33
           },
           {
-            "name": "lichid tutunos/NET/DIY",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "POD",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "mod",
             "value": 0,
             "sharePct": 0
           },
@@ -20815,6 +20728,11 @@
           },
           {
             "name": "RDA/RDTA",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "lichid tutunos/NET/DIY",
             "value": 0,
             "sharePct": 0
           },
@@ -20847,26 +20765,6 @@
         "variantCount": 1,
         "previousRank": 101,
         "rankChange": 99
-      },
-      {
-        "retailerId": "smokee",
-        "category": "accesoriu RTA/mod",
-        "product": "OXVA Cartus Xlim Mesh - 0.6 Ohm",
-        "rank": 3,
-        "observedAt": "2026-09-07",
-        "source": "https://smokee.ro/?orderby=popularity",
-        "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-0-6%cf%89/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm",
-        "canonicalProductKey": "oxva|cartus xlim mesh 0 6 ohm",
-        "brand": "OXVA",
-        "rawProducts": [
-          "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm"
-        ],
-        "variantCount": 1,
-        "previousRank": 89,
-        "rankChange": 86
       },
       {
         "retailerId": "vaperia",
@@ -21156,26 +21054,6 @@
         "variantCount": 2,
         "previousRank": 4,
         "rankChange": -3
-      },
-      {
-        "retailerId": "epotion",
-        "category": "coil prebuilt",
-        "product": "Innokin Rezistenta Zenith 1.6ohm",
-        "rank": 9,
-        "observedAt": "2026-09-07",
-        "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
-        "productUrl": "https://e-potion.ro/rezistenta-innokin-zenith/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Rezistenta Innokin Zenith 1.6ohm",
-        "canonicalProductKey": "innokin|rezistenta zenith 1 6ohm",
-        "brand": "Innokin",
-        "rawProducts": [
-          "Rezistenta Innokin Zenith 1.6ohm"
-        ],
-        "variantCount": 1,
-        "previousRank": 11,
-        "rankChange": 2
       },
       {
         "retailerId": "ecigvapo",
@@ -21848,6 +21726,46 @@
         ],
         "variantCount": 1,
         "previousRank": 60,
+        "rankChange": -2
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "coil prebuilt",
+        "product": "Rezistenta P6 0.5ohm, Kamry",
+        "rank": 63,
+        "observedAt": "2026-09-07",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/rezistenta-p6-0-5ohm-kamry.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Rezistenta P6 0.5ohm, Kamry",
+        "canonicalProductKey": "rezistenta p6 0 5ohm kamry",
+        "brand": "",
+        "rawProducts": [
+          "Rezistenta P6 0.5ohm, Kamry"
+        ],
+        "variantCount": 1,
+        "previousRank": 61,
+        "rankChange": -2
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "accesoriu RTA/mod",
+        "product": "OXVA Cartus Xlim V3 Top Fill 1.2ohm",
+        "rank": 64,
+        "observedAt": "2026-09-07",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/cartus-xlim-v3-top-fill-1-2ohm-oxva.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Cartus Xlim V3 Top Fill 1.2ohm, OXVA",
+        "canonicalProductKey": "oxva|cartus xlim v3 top fill 1 2ohm",
+        "brand": "OXVA",
+        "rawProducts": [
+          "Cartus Xlim V3 Top Fill 1.2ohm, OXVA"
+        ],
+        "variantCount": 1,
+        "previousRank": 62,
         "rankChange": -2
       }
     ]
@@ -119063,15 +118981,18 @@
           "retailerId": "smokee",
           "category": "accesoriu RTA/mod",
           "product": "OXVA Cartus Xlim Mesh - 0.6 Ohm",
-          "rank": 3,
+          "rank": 89,
           "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
+          "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-0-6%cf%89/",
-          "evidence": "verified-html-popularity-sort",
+          "evidence": "woocommerce-public-popularity-order",
           "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "OXVA",
           "rawProduct": "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm",
           "canonicalProductKey": "oxva|cartus xlim mesh 0 6 ohm",
-          "brand": "OXVA",
           "rawProducts": [
             "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm"
           ],
@@ -120846,9 +120767,9 @@
           "retailerId": "epotion",
           "category": "coil prebuilt",
           "product": "Innokin Rezistenta Zenith 1.6ohm",
-          "rank": 9,
+          "rank": 11,
           "observedAt": "2026-09-07",
-          "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+          "source": "https://e-potion.ro/atomizoare/?orderby=popularity",
           "productUrl": "https://e-potion.ro/rezistenta-innokin-zenith/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
@@ -126000,128 +125921,19 @@
         },
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Geekvape Cartus Q Pro, side fill - 0.8 ohm",
+          "category": "POD",
+          "product": "Uwell Caliburn G5",
           "rank": 1,
           "observedAt": "2026-09-07",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-geekvape-q-pro-3ml-side-fill-0-8-ohm/",
+          "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm",
-          "canonicalProductKey": "geekvape|cartus q pro side fill 0 8 ohm",
-          "brand": "Geekvape",
+          "rawProduct": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+          "canonicalProductKey": "uwell|caliburn g5",
+          "brand": "Uwell",
           "rawProducts": [
-            "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Longfill Royal Tobacco / - Classic",
-          "rank": 2,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/longfill-royal-tobacco-10ml-60ml-classic-gold/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold",
-          "canonicalProductKey": "longfill royal tobacco classic",
-          "brand": "",
-          "rawProducts": [
-            "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartuș SXmini PX Pro 2 - 0.8 Ohm",
-          "rank": 4,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-sxmini-px-pro-2-0-8-ohm/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm",
-          "canonicalProductKey": "cartus sxmini px pro 2 0 8 ohm",
-          "brand": "",
-          "rawProducts": [
-            "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
-          "rank": 5,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-          "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
-          "brand": "OXVA",
-          "rawProducts": [
-            "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "POD",
-          "product": "OXVA Vprime 2",
-          "rank": 6,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-          "canonicalProductKey": "oxva|vprime 2",
-          "brand": "OXVA",
-          "rawProducts": [
-            "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-            "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Mirage Blue"
-          ],
-          "variantCount": 2
-        },
-        {
-          "retailerId": "smokee",
-          "category": "mod",
-          "product": "Eleaf iStick Pico Plus - Space",
-          "rank": 7,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-          "canonicalProductKey": "eleaf|istick pico plus space",
-          "brand": "Eleaf",
-          "rawProducts": [
-            "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "mod",
-          "product": "Eleaf iStick Pico Plus - Light",
-          "rank": 9,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-light-grey/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey",
-          "canonicalProductKey": "eleaf|istick pico plus light",
-          "brand": "Eleaf",
-          "rawProducts": [
-            "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey"
+            "Kit Uwell Caliburn G5 &#8211; Mystic Forest"
           ],
           "variantCount": 1
         },
@@ -126129,7 +125941,7 @@
           "retailerId": "smokee",
           "category": "POD",
           "product": "OXVA Oneo Pro",
-          "rank": 10,
+          "rank": 2,
           "observedAt": "2026-09-07",
           "source": "https://smokee.ro/?orderby=popularity",
           "productUrl": "https://smokee.ro/product/kit-oxva-oneo-pro-2100mah-4ml-midnight-black/",
@@ -126140,6 +125952,42 @@
           "brand": "OXVA",
           "rawProducts": [
             "Kit Oxva Oneo Pro 2100mAh 4ml &#8211; Midnight Black"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "accesoriu RTA/mod",
+          "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+          "rank": 3,
+          "observedAt": "2026-09-07",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
+          "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
+          "brand": "OXVA",
+          "rawProducts": [
+            "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "accesoriu RTA/mod",
+          "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+          "rank": 4,
+          "observedAt": "2026-09-07",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
+          "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
+          "brand": "OXVA",
+          "rawProducts": [
+            "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
           ],
           "variantCount": 1
         },
@@ -132720,6 +132568,24 @@
         },
         {
           "retailerId": "epotion",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Dinner Salts Select Tobacco Creamy 15mg",
+          "rank": 9,
+          "observedAt": "2026-09-07",
+          "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+          "productUrl": "https://e-potion.ro/lichid-dinner-salts-select-tobacco-creamy-15mg-10ml/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Lichid Dinner Salts Select Tobacco Creamy 15mg 10ml",
+          "canonicalProductKey": "lichid dinner salts select tobacco creamy 15mg",
+          "brand": "",
+          "rawProducts": [
+            "Lichid Dinner Salts Select Tobacco Creamy 15mg 10ml"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "epotion",
           "category": "bumbac/wick",
           "product": "Wick N Vape Bumbac Cotton Bacon V2 (10g)",
           "rank": 1,
@@ -136688,17 +136554,17 @@
   ],
   "discoveredSourceStatus": {
     "date": "2026-09-07",
-    "generatedAt": "2026-09-07T09:18:48.597Z",
+    "generatedAt": "2026-09-07T10:04:17.678Z",
     "verifiedSources": 48,
     "totalCandidates": 100,
-    "rankingsAdded": 795,
+    "rankingsAdded": 790,
     "bySource": [
       {
         "retailerId": "smokee",
         "source": "https://smokee.ro/?orderby=popularity",
         "verified": true,
         "evidenceType": "retailer-popularity-sort",
-        "rankings": 10,
+        "rankings": 4,
         "error": null
       },
       {
@@ -136978,7 +136844,7 @@
         "source": "https://e-potion.ro/atomizoare/?orderby=popularity",
         "verified": true,
         "evidenceType": "retailer-popularity-sort",
-        "rankings": 22,
+        "rankings": 23,
         "error": null
       },
       {
@@ -137091,7 +136957,7 @@
         "verified": false,
         "evidenceType": null,
         "rankings": 0,
-        "error": "verified page yielded zero in-scope products"
+        "error": "This operation was aborted"
       },
       {
         "retailerId": "vapersparadise",
@@ -137099,7 +136965,7 @@
         "verified": false,
         "evidenceType": null,
         "rankings": 0,
-        "error": "verified page yielded zero in-scope products"
+        "error": "This operation was aborted"
       },
       {
         "retailerId": "vapersparadise",
@@ -137107,7 +136973,7 @@
         "verified": false,
         "evidenceType": null,
         "rankings": 0,
-        "error": "verified page yielded zero in-scope products"
+        "error": "This operation was aborted"
       },
       {
         "retailerId": "vapersparadise",
@@ -137115,7 +136981,7 @@
         "verified": false,
         "evidenceType": null,
         "rankings": 0,
-        "error": "verified page yielded zero in-scope products"
+        "error": "HTTP 500"
       },
       {
         "retailerId": "viciishop",
@@ -137498,12 +137364,12 @@
   "demandSignals": [
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "Geekvape Cartus Q Pro, side fill - 0.8 ohm",
+      "category": "POD",
+      "product": "Uwell Caliburn G5",
       "rank": 1,
       "observedAt": "2026-09-07",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-geekvape-q-pro-3ml-side-fill-0-8-ohm/",
+      "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -137515,22 +137381,22 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm",
-      "canonicalProductKey": "geekvape|cartus q pro side fill 0 8 ohm",
-      "brand": "Geekvape",
+      "rawProduct": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+      "canonicalProductKey": "uwell|caliburn g5",
+      "brand": "Uwell",
       "rawProducts": [
-        "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm"
+        "Kit Uwell Caliburn G5 &#8211; Mystic Forest"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
-      "category": "lichid tutunos/NET/DIY",
-      "product": "Longfill Royal Tobacco / - Classic",
+      "category": "POD",
+      "product": "OXVA Oneo Pro",
       "rank": 2,
       "observedAt": "2026-09-07",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/longfill-royal-tobacco-10ml-60ml-classic-gold/",
+      "productUrl": "https://smokee.ro/product/kit-oxva-oneo-pro-2100mah-4ml-midnight-black/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -137542,22 +137408,22 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold",
-      "canonicalProductKey": "longfill royal tobacco classic",
-      "brand": "",
+      "rawProduct": "Kit Oxva Oneo Pro 2100mAh 4ml &#8211; Midnight Black",
+      "canonicalProductKey": "oxva|oneo pro",
+      "brand": "OXVA",
       "rawProducts": [
-        "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold"
+        "Kit Oxva Oneo Pro 2100mAh 4ml &#8211; Midnight Black"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
       "category": "accesoriu RTA/mod",
-      "product": "OXVA Cartus Xlim Mesh - 0.6 Ohm",
+      "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
       "rank": 3,
       "observedAt": "2026-09-07",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-0-6%cf%89/",
+      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -137569,11 +137435,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm",
-      "canonicalProductKey": "oxva|cartus xlim mesh 0 6 ohm",
+      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
+      "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
       "brand": "OXVA",
       "rawProducts": [
-        "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm"
+        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
       ],
       "variantCount": 1
     },
@@ -137610,11 +137476,11 @@
     {
       "retailerId": "smokee",
       "category": "accesoriu RTA/mod",
-      "product": "Cartuș SXmini PX Pro 2 - 0.8 Ohm",
+      "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
       "rank": 4,
       "observedAt": "2026-09-07",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-sxmini-px-pro-2-0-8-ohm/",
+      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -137626,11 +137492,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm",
-      "canonicalProductKey": "cartus sxmini px pro 2 0 8 ohm",
-      "brand": "",
+      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
+      "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
+      "brand": "OXVA",
       "rawProducts": [
-        "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm"
+        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
       ],
       "variantCount": 1
     },
@@ -137667,33 +137533,6 @@
     {
       "retailerId": "smokee",
       "category": "accesoriu RTA/mod",
-      "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
-      "rank": 5,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
-      "evidence": "public-product-demand-signals",
-      "evidenceTier": "C",
-      "reviewCount": 0,
-      "ratingValue": null,
-      "latestReviewDate": null,
-      "viewCount": 0,
-      "wishlistCount": 0,
-      "reviewCountDelta": 0,
-      "viewCountDelta": 0,
-      "wishlistCountDelta": 0,
-      "baseline": true,
-      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-      "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
-      "brand": "OXVA",
-      "rawProducts": [
-        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
       "product": "Voopoo Cartus de rezerva Doric Galaxy - 1.2 Ohm",
       "rank": 6,
       "observedAt": "2026-09-07",
@@ -137723,61 +137562,6 @@
     },
     {
       "retailerId": "smokee",
-      "category": "POD",
-      "product": "OXVA Vprime 2",
-      "rank": 6,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
-      "evidence": "public-product-demand-signals",
-      "evidenceTier": "C",
-      "reviewCount": 0,
-      "ratingValue": null,
-      "latestReviewDate": null,
-      "viewCount": 0,
-      "wishlistCount": 0,
-      "reviewCountDelta": 0,
-      "viewCountDelta": 0,
-      "wishlistCountDelta": 0,
-      "baseline": true,
-      "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-      "canonicalProductKey": "oxva|vprime 2",
-      "brand": "OXVA",
-      "rawProducts": [
-        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Mirage Blue"
-      ],
-      "variantCount": 2
-    },
-    {
-      "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Space",
-      "rank": 7,
-      "observedAt": "2026-09-07",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-      "evidence": "public-product-demand-signals",
-      "evidenceTier": "C",
-      "reviewCount": 0,
-      "ratingValue": null,
-      "latestReviewDate": null,
-      "viewCount": 0,
-      "wishlistCount": 0,
-      "reviewCountDelta": 0,
-      "viewCountDelta": 0,
-      "wishlistCountDelta": 0,
-      "baseline": true,
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-      "canonicalProductKey": "eleaf|istick pico plus space",
-      "brand": "Eleaf",
-      "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
       "category": "accesoriu RTA/mod",
       "product": "OXVA Cartus Xlim Mesh - 0.8 Ohm",
       "rank": 8,
@@ -137794,6 +137578,126 @@
       "canonicalProductKey": "oxva|cartus xlim mesh 0 8 ohm",
       "rawProducts": [
         "Cartus Oxva Xlim SS Mesh &#8211; 0.8 Ohm"
+      ],
+      "variantCount": 1,
+      "reviewCount": 0,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": 0,
+      "wishlistCount": 0,
+      "reviewCountDelta": 0,
+      "viewCountDelta": 0,
+      "wishlistCountDelta": 0,
+      "baseline": true
+    },
+    {
+      "retailerId": "smokee",
+      "category": "accesoriu RTA/mod",
+      "product": "OXVA Cartus Xlim Mesh - 1.2 Ohm",
+      "rank": 9,
+      "observedAt": "2026-09-07",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-1-2-ohm/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "OXVA",
+      "rawProduct": "Cartus Oxva Xlim SS Mesh &#8211; 1.2 Ohm",
+      "canonicalProductKey": "oxva|cartus xlim mesh 1 2 ohm",
+      "rawProducts": [
+        "Cartus Oxva Xlim SS Mesh &#8211; 1.2 Ohm"
+      ],
+      "variantCount": 1,
+      "reviewCount": 0,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": 0,
+      "wishlistCount": 0,
+      "reviewCountDelta": 0,
+      "viewCountDelta": 0,
+      "wishlistCountDelta": 0,
+      "baseline": true
+    },
+    {
+      "retailerId": "smokee",
+      "category": "accesoriu RTA/mod",
+      "product": "OXVA Cartus NeXLIM Unitech 3.0 - 0.6 Ohm",
+      "rank": 12,
+      "observedAt": "2026-09-07",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-nexlim-4-ml-0-6-ohm/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "OXVA",
+      "rawProduct": "Cartus OXVA NeXLIM 4 ml Unitech 3.0 &#8211; 0.6 Ohm",
+      "canonicalProductKey": "oxva|cartus nexlim unitech 3 0 0 6 ohm",
+      "rawProducts": [
+        "Cartus OXVA NeXLIM 4 ml Unitech 3.0 &#8211; 0.6 Ohm"
+      ],
+      "variantCount": 1,
+      "reviewCount": 0,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": 0,
+      "wishlistCount": 0,
+      "reviewCountDelta": 0,
+      "viewCountDelta": 0,
+      "wishlistCountDelta": 0,
+      "baseline": true
+    },
+    {
+      "retailerId": "smokee",
+      "category": "accesoriu RTA/mod",
+      "product": "OXVA Cartus de rezerva Xlim V3 Top Fill 0.8 Ohm",
+      "rank": 13,
+      "observedAt": "2026-09-07",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-v3-top-fill-0-8-ohm/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "OXVA",
+      "rawProduct": "Cartus de rezerva Oxva Xlim V3 Top Fill 0.8 Ohm",
+      "canonicalProductKey": "oxva|cartus de rezerva xlim v3 top fill 0 8 ohm",
+      "rawProducts": [
+        "Cartus de rezerva Oxva Xlim V3 Top Fill 0.8 Ohm"
+      ],
+      "variantCount": 1,
+      "reviewCount": 0,
+      "ratingValue": 5,
+      "latestReviewDate": "2026-05-02",
+      "viewCount": 0,
+      "wishlistCount": 0,
+      "reviewCountDelta": 0,
+      "viewCountDelta": 0,
+      "wishlistCountDelta": 0,
+      "baseline": true
+    },
+    {
+      "retailerId": "smokee",
+      "category": "accesoriu RTA/mod",
+      "product": "OXVA Cartus Xlim V3 Top Fill - 1.2 Ohm",
+      "rank": 14,
+      "observedAt": "2026-09-07",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-v3-top-fill-3ml-1-2-ohm/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "OXVA",
+      "rawProduct": "Cartus Oxva Xlim V3 Top Fill 3ml &#8211; 1.2 Ohm",
+      "canonicalProductKey": "oxva|cartus xlim v3 top fill 1 2 ohm",
+      "rawProducts": [
+        "Cartus Oxva Xlim V3 Top Fill 3ml &#8211; 1.2 Ohm"
       ],
       "variantCount": 1,
       "reviewCount": 0,
@@ -139213,12 +139117,12 @@
       "rows": [
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm",
+          "category": "POD",
+          "product": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
           "rank": 1,
           "observedAt": "2026-09-07",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-geekvape-q-pro-3ml-side-fill-0-8-ohm/",
+          "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -139229,12 +139133,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold",
+          "category": "POD",
+          "product": "Kit Oxva Oneo Pro 2100mAh 4ml &#8211; Midnight Black",
           "rank": 2,
           "observedAt": "2026-09-07",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/longfill-royal-tobacco-10ml-60ml-classic-gold/",
+          "productUrl": "https://smokee.ro/product/kit-oxva-oneo-pro-2100mah-4ml-midnight-black/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -139246,11 +139150,11 @@
         {
           "retailerId": "smokee",
           "category": "accesoriu RTA/mod",
-          "product": "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm",
+          "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
           "rank": 3,
           "observedAt": "2026-09-07",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-0-6%cf%89/",
+          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -139288,11 +139192,11 @@
         {
           "retailerId": "smokee",
           "category": "accesoriu RTA/mod",
-          "product": "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm",
+          "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
           "rank": 4,
           "observedAt": "2026-09-07",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-sxmini-px-pro-2-0-8-ohm/",
+          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -139330,22 +139234,6 @@
         {
           "retailerId": "smokee",
           "category": "accesoriu RTA/mod",
-          "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-          "rank": 5,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
-          "evidence": "public-product-demand-signals",
-          "evidenceTier": "C",
-          "reviewCount": null,
-          "ratingValue": null,
-          "latestReviewDate": null,
-          "viewCount": null,
-          "wishlistCount": 0
-        },
-        {
-          "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
           "product": "Voopoo Cartus de rezerva Doric Galaxy - 1.2 Ohm",
           "rank": 6,
           "observedAt": "2026-09-07",
@@ -139363,38 +139251,6 @@
             "Cartus de rezerva Voopoo Doric Galaxy &#8211; 1.2 Ohm"
           ],
           "variantCount": 1,
-          "reviewCount": null,
-          "ratingValue": null,
-          "latestReviewDate": null,
-          "viewCount": null,
-          "wishlistCount": 0
-        },
-        {
-          "retailerId": "smokee",
-          "category": "POD",
-          "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-          "rank": 6,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
-          "evidence": "public-product-demand-signals",
-          "evidenceTier": "C",
-          "reviewCount": null,
-          "ratingValue": null,
-          "latestReviewDate": null,
-          "viewCount": null,
-          "wishlistCount": 0
-        },
-        {
-          "retailerId": "smokee",
-          "category": "mod",
-          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-          "rank": 7,
-          "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-          "evidence": "public-product-demand-signals",
-          "evidenceTier": "C",
           "reviewCount": null,
           "ratingValue": null,
           "latestReviewDate": null,
@@ -139429,14 +139285,102 @@
         },
         {
           "retailerId": "smokee",
-          "category": "POD",
-          "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Mirage Blue",
-          "rank": 8,
+          "category": "accesoriu RTA/mod",
+          "product": "OXVA Cartus Xlim Mesh - 1.2 Ohm",
+          "rank": 9,
           "observedAt": "2026-09-07",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-mirage-blue/",
+          "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-1-2-ohm/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "OXVA",
+          "rawProduct": "Cartus Oxva Xlim SS Mesh &#8211; 1.2 Ohm",
+          "canonicalProductKey": "oxva|cartus xlim mesh 1 2 ohm",
+          "rawProducts": [
+            "Cartus Oxva Xlim SS Mesh &#8211; 1.2 Ohm"
+          ],
+          "variantCount": 1,
+          "reviewCount": null,
+          "ratingValue": null,
+          "latestReviewDate": null,
+          "viewCount": null,
+          "wishlistCount": 0
+        },
+        {
+          "retailerId": "smokee",
+          "category": "accesoriu RTA/mod",
+          "product": "OXVA Cartus NeXLIM Unitech 3.0 - 0.6 Ohm",
+          "rank": 12,
+          "observedAt": "2026-09-07",
+          "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-nexlim-4-ml-0-6-ohm/",
+          "evidence": "public-product-demand-signals",
+          "evidenceTier": "C",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "OXVA",
+          "rawProduct": "Cartus OXVA NeXLIM 4 ml Unitech 3.0 &#8211; 0.6 Ohm",
+          "canonicalProductKey": "oxva|cartus nexlim unitech 3 0 0 6 ohm",
+          "rawProducts": [
+            "Cartus OXVA NeXLIM 4 ml Unitech 3.0 &#8211; 0.6 Ohm"
+          ],
+          "variantCount": 1,
+          "reviewCount": null,
+          "ratingValue": null,
+          "latestReviewDate": null,
+          "viewCount": null,
+          "wishlistCount": 0
+        },
+        {
+          "retailerId": "smokee",
+          "category": "accesoriu RTA/mod",
+          "product": "OXVA Cartus de rezerva Xlim V3 Top Fill 0.8 Ohm",
+          "rank": 13,
+          "observedAt": "2026-09-07",
+          "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-v3-top-fill-0-8-ohm/",
+          "evidence": "public-product-demand-signals",
+          "evidenceTier": "C",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "OXVA",
+          "rawProduct": "Cartus de rezerva Oxva Xlim V3 Top Fill 0.8 Ohm",
+          "canonicalProductKey": "oxva|cartus de rezerva xlim v3 top fill 0 8 ohm",
+          "rawProducts": [
+            "Cartus de rezerva Oxva Xlim V3 Top Fill 0.8 Ohm"
+          ],
+          "variantCount": 1,
+          "reviewCount": 0,
+          "ratingValue": 5,
+          "latestReviewDate": "2026-05-02",
+          "viewCount": null,
+          "wishlistCount": 0
+        },
+        {
+          "retailerId": "smokee",
+          "category": "accesoriu RTA/mod",
+          "product": "OXVA Cartus Xlim V3 Top Fill - 1.2 Ohm",
+          "rank": 14,
+          "observedAt": "2026-09-07",
+          "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-v3-top-fill-3ml-1-2-ohm/",
+          "evidence": "public-product-demand-signals",
+          "evidenceTier": "C",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "OXVA",
+          "rawProduct": "Cartus Oxva Xlim V3 Top Fill 3ml &#8211; 1.2 Ohm",
+          "canonicalProductKey": "oxva|cartus xlim v3 top fill 1 2 ohm",
+          "rawProducts": [
+            "Cartus Oxva Xlim V3 Top Fill 3ml &#8211; 1.2 Ohm"
+          ],
+          "variantCount": 1,
           "reviewCount": null,
           "ratingValue": null,
           "latestReviewDate": null,
@@ -140470,7 +140414,7 @@
   ],
   "productCounterProbeStatus": {
     "date": "2026-09-07",
-    "generatedAt": "2026-09-07T09:20:58.645Z",
+    "generatedAt": "2026-09-07T10:06:33.225Z",
     "pagesProbed": 218,
     "countersFound": 0,
     "retailersWithCounters": 0,
@@ -140478,8 +140422,8 @@
     "byProduct": [
       {
         "retailerId": "smokee",
-        "product": "Cartus Geekvape Q Pro, 3ml side fill &#8211; 0.8 ohm",
-        "source": "https://smokee.ro/product/cartus-de-rezerva-geekvape-q-pro-3ml-side-fill-0-8-ohm/",
+        "product": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+        "source": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -140487,8 +140431,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Longfill Royal Tobacco 10ml/60ml &#8211; Classic Gold",
-        "source": "https://smokee.ro/product/longfill-royal-tobacco-10ml-60ml-classic-gold/",
+        "product": "Kit Oxva Oneo Pro 2100mAh 4ml &#8211; Midnight Black",
+        "source": "https://smokee.ro/product/kit-oxva-oneo-pro-2100mah-4ml-midnight-black/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -140496,8 +140440,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Cartus Oxva Xlim SS Mesh &#8211; 0.6 Ohm",
-        "source": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-0-6%cf%89/",
+        "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
+        "source": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -140514,8 +140458,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Cartuș SXmini PX Pro 2 &#8211; 0.8 Ohm",
-        "source": "https://smokee.ro/product/cartus-sxmini-px-pro-2-0-8-ohm/",
+        "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
+        "source": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -140532,35 +140476,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-        "source": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
-        "found": false,
-        "value": null,
-        "evidence": null,
-        "error": null
-      },
-      {
-        "retailerId": "smokee",
         "product": "Voopoo Cartus de rezerva Doric Galaxy - 1.2 Ohm",
         "source": "https://smokee.ro/product/cartus-de-rezerva-voopoo-doric-galaxy-1-2/",
-        "found": false,
-        "value": null,
-        "evidence": null,
-        "error": null
-      },
-      {
-        "retailerId": "smokee",
-        "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-        "source": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
-        "found": false,
-        "value": null,
-        "evidence": null,
-        "error": null
-      },
-      {
-        "retailerId": "smokee",
-        "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-        "source": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -140577,8 +140494,35 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Mirage Blue",
-        "source": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-mirage-blue/",
+        "product": "OXVA Cartus Xlim Mesh - 1.2 Ohm",
+        "source": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-ss-mesh-1-2-ohm/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smokee",
+        "product": "OXVA Cartus NeXLIM Unitech 3.0 - 0.6 Ohm",
+        "source": "https://smokee.ro/product/cartus-de-rezerva-oxva-nexlim-4-ml-0-6-ohm/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smokee",
+        "product": "OXVA Cartus de rezerva Xlim V3 Top Fill 0.8 Ohm",
+        "source": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-v3-top-fill-0-8-ohm/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "smokee",
+        "product": "OXVA Cartus Xlim V3 Top Fill - 1.2 Ohm",
+        "source": "https://smokee.ro/product/cartus-de-rezerva-oxva-xlim-v3-top-fill-3ml-1-2-ohm/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -142442,26 +142386,26 @@
   },
   "demandProbeStatus": {
     "date": "2026-09-07",
-    "generatedAt": "2026-09-07T09:20:58.645Z",
+    "generatedAt": "2026-09-07T10:06:33.225Z",
     "signalsFound": 65,
     "retailersWithSignals": 10,
-    "reviewSignals": 17,
+    "reviewSignals": 18,
     "viewSignals": 1,
     "wishlistSignals": 49
   },
   "canonicalization": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-07T09:21:07.182Z",
+    "generatedAt": "2026-09-07T10:06:44.600Z",
     "rule": "Variants, colours, equivalent brand spellings and retailer title noise are consolidated into a canonical product identity before national aggregation. Original titles remain in rawProduct/rawProducts for audit.",
     "before": {
-      "rankings": 1169,
+      "rankings": 1164,
       "actualSales": 0,
       "demandSignals": 65
     },
     "after": {
-      "rankings": 989,
+      "rankings": 986,
       "actualSales": 0,
-      "demandSignals": 61
+      "demandSignals": 62
     }
   }
 }
