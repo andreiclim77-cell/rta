@@ -20,8 +20,13 @@
     return rows;
   }
   function trend(series) { var a=series[10].searches, b=series[11].searches; return a>0 ? Math.round((b-a)/a*1000)/10 : null; }
+  function requiredCount(data) {
+    var n=count(data&&data.required_count);
+    return n===null?20:n;
+  }
   function validate(data, now) {
-    var errors=[], valid=[], seen=new Set(), source=data && data.source || {}, period=data && data.period || {};
+    var errors=[], valid=[], seen=new Set(), source=data && data.source || {}, period=data && data.period || {}, required=requiredCount(data);
+    if(required<1||required>100)errors.push('invalid_required_count');
     var at=now == null ? Date.now() : Number(now), collected=Date.parse(data && data.last_updated), checked=Date.parse(data && data.last_checked);
     var start=monthIndex(period.start), end=monthIndex(period.end), current=monthIndex(new Date(at).toISOString().slice(0,7));
     if (!data || data.schema_version !== 2 || data.status !== 'verified') errors.push('source_not_ready');
@@ -47,8 +52,8 @@
     valid.forEach(function (r,i) { r.rank=i && r.monthly_searches===valid[i-1].monthly_searches ? valid[i-1].rank : i+1; });
     var coverage=data && data.coverage || {}, requested=count(coverage.models_requested);
     if (requested===null || requested<valid.length || coverage.scope!=='tracked_models_only' || coverage.exhaustive!==false) errors.push('missing_universe_disclosure');
-    if (valid.length<20) errors.push('fewer_than_20_measured_models');
-    return {verified:errors.length===0, errors:Array.from(new Set(errors)), rows:errors.length?[]:valid.slice(0,20), validCount:valid.length, source:source, period:period, validation:{verified:errors.length===0}, tiedBeyondCutoff:valid.length>20 ? valid.slice(20).filter(function(r){return r.monthly_searches===valid[19].monthly_searches;}).length : 0};
+    if (valid.length<required) errors.push('fewer_than_required_measured_models');
+    return {verified:errors.length===0, errors:Array.from(new Set(errors)), rows:errors.length?[]:valid.slice(0,required), validCount:valid.length, requiredCount:required, source:source, period:period, validation:{verified:errors.length===0}, tiedBeyondCutoff:valid.length>required ? valid.slice(required).filter(function(r){return r.monthly_searches===valid[required-1].monthly_searches;}).length : 0};
   }
   var MONTHS=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
   function fromGoogle(result) {
@@ -71,6 +76,8 @@
      canonical tracked query so the UI cannot mistake shared Google aliases for
      double counting. */
   function project(models, response, meta) {
+    meta=meta||{};
+    var required=count(meta.required_count);if(required===null)required=20;
     var owners=new Map(), parsed=[], excluded={unmatched:0,ambiguous:0,invalid_metrics:0,overlap:0,period_mismatch:0};
     models.forEach(function(m){ var key=norm(m.query), a=owners.get(key)||[]; a.push(m); owners.set(key,a); });
     (response.results || []).forEach(function(r){
@@ -93,21 +100,10 @@
       var ranked=indexes.map(function(i){var p=parsed[i];return {i:i,p:p,score:norm(p.primary)===canonical?2:1};});
       var maxScore=ranked.reduce(function(m,x){return Math.max(m,x.score);},0);
       var preferred=ranked.filter(function(x){return x.score===maxScore;});
-      if(preferred.length===1){
-        selected.push(preferred[0].p);
-        duplicateGroupsSuppressed+=indexes.length-1;
-        excluded.overlap+=indexes.length-1;
-        return;
-      }
+      if(preferred.length===1){selected.push(preferred[0].p);duplicateGroupsSuppressed+=indexes.length-1;excluded.overlap+=indexes.length-1;return;}
       var signatures=new Set(preferred.map(function(x){return metricSignature(x.p);}));
-      if(signatures.size===1){
-        selected.push(preferred[0].p);
-        duplicateGroupsSuppressed+=indexes.length-1;
-        excluded.overlap+=indexes.length-1;
-        return;
-      }
-      conflictingMetricModels++;
-      excluded.overlap+=indexes.length;
+      if(signatures.size===1){selected.push(preferred[0].p);duplicateGroupsSuppressed+=indexes.length-1;excluded.overlap+=indexes.length-1;return;}
+      conflictingMetricModels++;excluded.overlap+=indexes.length;
     });
     var overlapDiagnostic={metric_groups:parsed.length,unique_metric_models:usedModels.size,single_metric_models:singleMetricModels,duplicate_metric_models:duplicateMetricModels,duplicate_model_groups:duplicateModelGroups,shared_variant_terms:sharedVariantTerms,groups_with_shared_variants:sharedVariantIndexes.size,selected_metric_models:selected.length,duplicate_groups_suppressed:duplicateGroupsSuppressed,conflicting_metric_models:conflictingMetricModels};
     var periods=new Map();
@@ -118,14 +114,14 @@
       if(p.values.series[0].month!==window[0]||p.values.series[11].month!==window[1]){excluded.period_mismatch++;return;}
       rows.push({brand:p.model.brand,model:p.model.model,query:p.model.query,monthly_searches:p.values.volume,monthly_series:p.values.series,trend_pct:trend(p.values.series),keyword_variants:[p.model.query]});
     });
-    var out={schema_version:2,title:'Top 20 pod - Google Romania',country:'RO',status:'verified',last_updated:meta.collected_at,last_checked:meta.collected_at,
+    var out={schema_version:2,title:meta.title||'Google Romania ranking',category:meta.category||null,required_count:required,country:'RO',status:'verified',last_updated:meta.collected_at,last_checked:meta.collected_at,
       source:{provider:'Google Ads Keyword Planner',acquisition:'google_ads_api',geography:'Romania',network:'GOOGLE_SEARCH',geo_target:meta.geo_target,approximate:true,response_sha256:meta.response_sha256},
       period:{start:window[0],end:window[1],label:window[0]&&window[1]?window[0]+' — '+window[1]:null},
       coverage:{scope:'tracked_models_only',exhaustive:false,models_requested:models.length,models_with_valid_series:rows.length,excluded_groups:excluded,overlap_diagnostic:overlapDiagnostic},rows:rows,
-      display:{metric_label:'Medie lunară estimată Google (12 luni)',unavailable_message:'Google nu a furnizat încă minimum 20 de modele cu serii complete, comparabile și fără ambiguități.'},validation:{verified:false}};
+      display:{metric_label:'Medie lunară estimată Google (12 luni)',unavailable_message:'Google nu a furnizat încă minimum '+required+' modele cu serii complete, comparabile și fără ambiguități.'},validation:{verified:false}};
     var check=validate(out,Date.parse(meta.collected_at));out.validation={verified:check.verified,errors:check.errors};
     if(!check.verified){out.status='insufficient_data';out.rows=[];}
     return out;
   }
-  return {norm:norm,count:count,orderedSeries:orderedSeries,trend:trend,validate:validate,project:project};
+  return {norm:norm,count:count,orderedSeries:orderedSeries,trend:trend,requiredCount:requiredCount,validate:validate,project:project};
 });
