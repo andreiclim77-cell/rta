@@ -2,47 +2,3724 @@
   "schema_version": 1,
   "title": "Top 20 pod - Google Romania",
   "country": "RO",
-  "language": "ro",
-  "status": "credentials-missing",
+  "status": "verified",
+  "last_updated": "2026-09-10T19:13:24.614Z",
+  "last_checked": "2026-09-10T19:13:24.614Z",
   "source": {
     "provider": "Google Ads Keyword Planner",
-    "metric": "Avg. monthly searches",
-    "match_policy": "brand + model, canonicalized and deduplicated",
+    "acquisition": "google_ads_api",
     "geography": "Romania",
     "network": "Google",
-    "notes": "Clasamentul este publicat numai din date Google Ads Keyword Planner exportate sau obtinute prin API si validate. Nu se folosesc valori simulate, rezultate web, pozitii organice sau estimari interne drept volum Google.",
-    "evidence_file": null,
-    "evidence_sha256": null
+    "geo_target": "geoTargetConstants/2642",
+    "approximate": true,
+    "response_sha256": "e8a968a1bb40bd7c2f7522112b7274b7ccf397c88e380ed40f01d3c62fb5b6db",
+    "metric": "Avg. monthly searches",
+    "evidence_sha256": "e8a968a1bb40bd7c2f7522112b7274b7ccf397c88e380ed40f01d3c62fb5b6db",
+    "evidence_file": "/data/google-pod-evidence/api-2026-09-10-e8a968a1bb40bd7c.json",
+    "language_filter": "not_set",
+    "include_adult_keywords": true,
+    "api_version": "v25",
+    "collector": "tools/collect-google-pod-top20.js",
+    "run_id": "34519047579"
   },
-  "period": {"start": null, "end": null, "label": null},
-  "last_checked": "2026-09-06",
-  "last_updated": null,
-  "rows": [],
-  "validation": {
-    "verified": false,
-    "minimum_rows_for_publication": 20,
-    "deduplicate_variants": true,
-    "require_brand_and_model": true,
-    "require_numeric_monthly_searches": true,
-    "reject_negative_values": true,
-    "reject_unknown_source": true,
-    "ranking_rule": "monthly_searches DESC; equal values share rank; normalized brand and model order ties",
-    "publication_rule": "Reviewed source; source file integrity checked; Romania / Google network / 12 complete months; valid dates; no duplicate models or overlapping queries; minimum 20 positive measured models. Technical validation is not authentication by Google.",
-    "require_original_source_evidence": true,
-    "verify_evidence_sha256": true,
-    "missing_values_are_not_zero": true,
-    "duplicate_model_blocks_publication": true
+  "period": {
+    "start": "2025-08-01",
+    "end": "2026-07-31",
+    "label": "2025-08-01 — 2026-07-31"
   },
+  "coverage": {
+    "scope": "tracked_models_only",
+    "exhaustive": false,
+    "models_requested": 330,
+    "models_with_valid_series": 60,
+    "excluded_groups": {
+      "unmatched": 0,
+      "ambiguous": 0,
+      "invalid_metrics": 270,
+      "overlap": 0,
+      "period_mismatch": 0
+    },
+    "overlap_diagnostic": {
+      "metric_groups": 60,
+      "unique_metric_models": 60,
+      "single_metric_models": 60,
+      "duplicate_metric_models": 0,
+      "duplicate_model_groups": 0,
+      "shared_variant_terms": 60,
+      "groups_with_shared_variants": 60,
+      "selected_metric_models": 60,
+      "duplicate_groups_suppressed": 0,
+      "conflicting_metric_models": 0
+    }
+  },
+  "rows": [
+    {
+      "brand": "Aspire",
+      "model": "Cyber X",
+      "query": "Aspire Cyber X",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 20
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "aspire cyber x",
+        "Aspire Cyber X"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "Finixx",
+      "query": "Aspire Finixx",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "aspire finixx",
+        "Aspire Finixx"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "Vilter 2",
+      "query": "Aspire Vilter 2",
+      "monthly_searches": 30,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 20
+        },
+        {
+          "month": "2025-09",
+          "searches": 40
+        },
+        {
+          "month": "2025-10",
+          "searches": 20
+        },
+        {
+          "month": "2025-11",
+          "searches": 50
+        },
+        {
+          "month": "2025-12",
+          "searches": 30
+        },
+        {
+          "month": "2026-01",
+          "searches": 30
+        },
+        {
+          "month": "2026-02",
+          "searches": 20
+        },
+        {
+          "month": "2026-03",
+          "searches": 20
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 20
+        },
+        {
+          "month": "2026-06",
+          "searches": 20
+        },
+        {
+          "month": "2026-07",
+          "searches": 30
+        }
+      ],
+      "trend_pct": 50,
+      "keyword_variants": [
+        "aspire vilter 2",
+        "Aspire Vilter 2"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "Vilter Pro",
+      "query": "Aspire Vilter Pro",
+      "monthly_searches": 50,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 50
+        },
+        {
+          "month": "2025-09",
+          "searches": 50
+        },
+        {
+          "month": "2025-10",
+          "searches": 20
+        },
+        {
+          "month": "2025-11",
+          "searches": 50
+        },
+        {
+          "month": "2025-12",
+          "searches": 50
+        },
+        {
+          "month": "2026-01",
+          "searches": 50
+        },
+        {
+          "month": "2026-02",
+          "searches": 50
+        },
+        {
+          "month": "2026-03",
+          "searches": 50
+        },
+        {
+          "month": "2026-04",
+          "searches": 50
+        },
+        {
+          "month": "2026-05",
+          "searches": 50
+        },
+        {
+          "month": "2026-06",
+          "searches": 50
+        },
+        {
+          "month": "2026-07",
+          "searches": 40
+        }
+      ],
+      "trend_pct": -20,
+      "keyword_variants": [
+        "aspire vilter pro",
+        "Aspire Vilter Pro"
+      ]
+    },
+    {
+      "brand": "DotMod",
+      "model": "Dotpod S",
+      "query": "DotMod Dotpod S",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "dotmod dotpod s",
+        "DotMod Dotpod S"
+      ]
+    },
+    {
+      "brand": "FreeMax",
+      "model": "Galex Pro",
+      "query": "FreeMax Galex Pro",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "freemax galex pro",
+        "FreeMax Galex Pro"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Aegis Boost Plus",
+      "query": "Geekvape Aegis Boost Plus",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "geekvape aegis boost plus",
+        "Geekvape Aegis Boost Plus"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Aegis Boost Pro",
+      "query": "Geekvape Aegis Boost Pro",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "geekvape aegis boost pro",
+        "Geekvape Aegis Boost Pro"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "B60 Aegis Boost 2",
+      "query": "Geekvape B60 Aegis Boost 2",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "geekvape b60 aegis boost 2",
+        "Geekvape B60 Aegis Boost 2"
+      ]
+    },
+    {
+      "brand": "Uwell",
+      "model": "Caliburn Tenet Koko",
+      "query": "Uwell Caliburn Tenet Koko",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "uwell caliburn tenet koko",
+        "Uwell Caliburn Tenet Koko"
+      ]
+    },
+    {
+      "brand": "Vaporesso",
+      "model": "GTX Go 40",
+      "query": "Vaporesso GTX Go 40",
+      "monthly_searches": 140,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 170
+        },
+        {
+          "month": "2025-09",
+          "searches": 140
+        },
+        {
+          "month": "2025-10",
+          "searches": 170
+        },
+        {
+          "month": "2025-11",
+          "searches": 210
+        },
+        {
+          "month": "2025-12",
+          "searches": 170
+        },
+        {
+          "month": "2026-01",
+          "searches": 170
+        },
+        {
+          "month": "2026-02",
+          "searches": 140
+        },
+        {
+          "month": "2026-03",
+          "searches": 140
+        },
+        {
+          "month": "2026-04",
+          "searches": 110
+        },
+        {
+          "month": "2026-05",
+          "searches": 90
+        },
+        {
+          "month": "2026-06",
+          "searches": 110
+        },
+        {
+          "month": "2026-07",
+          "searches": 90
+        }
+      ],
+      "trend_pct": -18.2,
+      "keyword_variants": [
+        "vaporesso gtx go 40",
+        "Vaporesso GTX Go 40"
+      ]
+    },
+    {
+      "brand": "Vaporesso",
+      "model": "GTX GO 80",
+      "query": "Vaporesso GTX GO 80",
+      "monthly_searches": 480,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 390
+        },
+        {
+          "month": "2025-09",
+          "searches": 590
+        },
+        {
+          "month": "2025-10",
+          "searches": 590
+        },
+        {
+          "month": "2025-11",
+          "searches": 590
+        },
+        {
+          "month": "2025-12",
+          "searches": 480
+        },
+        {
+          "month": "2026-01",
+          "searches": 590
+        },
+        {
+          "month": "2026-02",
+          "searches": 480
+        },
+        {
+          "month": "2026-03",
+          "searches": 480
+        },
+        {
+          "month": "2026-04",
+          "searches": 390
+        },
+        {
+          "month": "2026-05",
+          "searches": 390
+        },
+        {
+          "month": "2026-06",
+          "searches": 320
+        },
+        {
+          "month": "2026-07",
+          "searches": 260
+        }
+      ],
+      "trend_pct": -18.7,
+      "keyword_variants": [
+        "vaporesso gtx go 80",
+        "Vaporesso GTX GO 80"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Argus G2",
+      "query": "Voopoo Argus G2",
+      "monthly_searches": 50,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 50
+        },
+        {
+          "month": "2025-09",
+          "searches": 50
+        },
+        {
+          "month": "2025-10",
+          "searches": 70
+        },
+        {
+          "month": "2025-11",
+          "searches": 50
+        },
+        {
+          "month": "2025-12",
+          "searches": 30
+        },
+        {
+          "month": "2026-01",
+          "searches": 70
+        },
+        {
+          "month": "2026-02",
+          "searches": 50
+        },
+        {
+          "month": "2026-03",
+          "searches": 40
+        },
+        {
+          "month": "2026-04",
+          "searches": 30
+        },
+        {
+          "month": "2026-05",
+          "searches": 40
+        },
+        {
+          "month": "2026-06",
+          "searches": 40
+        },
+        {
+          "month": "2026-07",
+          "searches": 40
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "voopoo argus g2",
+        "Voopoo Argus G2"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Argus P1",
+      "query": "Voopoo Argus P1",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 30
+        },
+        {
+          "month": "2025-09",
+          "searches": 30
+        },
+        {
+          "month": "2025-10",
+          "searches": 20
+        },
+        {
+          "month": "2025-11",
+          "searches": 20
+        },
+        {
+          "month": "2025-12",
+          "searches": 20
+        },
+        {
+          "month": "2026-01",
+          "searches": 20
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 20
+        },
+        {
+          "month": "2026-06",
+          "searches": 20
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": -50,
+      "keyword_variants": [
+        "voopoo argus p1",
+        "Voopoo Argus P1"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Argus Z",
+      "query": "Voopoo Argus Z",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "voopoo argus z",
+        "Voopoo Argus Z"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Doric 20 Se",
+      "query": "Voopoo Doric 20 Se",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "voopoo doric 20 se",
+        "Voopoo Doric 20 Se"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Drag 6",
+      "query": "Voopoo Drag 6",
+      "monthly_searches": 50,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 30
+        },
+        {
+          "month": "2026-03",
+          "searches": 70
+        },
+        {
+          "month": "2026-04",
+          "searches": 170
+        },
+        {
+          "month": "2026-05",
+          "searches": 140
+        },
+        {
+          "month": "2026-06",
+          "searches": 140
+        },
+        {
+          "month": "2026-07",
+          "searches": 110
+        }
+      ],
+      "trend_pct": -21.4,
+      "keyword_variants": [
+        "voopoo drag 6",
+        "Voopoo Drag 6"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "DRAG X3",
+      "query": "Voopoo DRAG X3",
+      "monthly_searches": 30,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 20
+        },
+        {
+          "month": "2025-11",
+          "searches": 40
+        },
+        {
+          "month": "2025-12",
+          "searches": 50
+        },
+        {
+          "month": "2026-01",
+          "searches": 30
+        },
+        {
+          "month": "2026-02",
+          "searches": 40
+        },
+        {
+          "month": "2026-03",
+          "searches": 40
+        },
+        {
+          "month": "2026-04",
+          "searches": 20
+        },
+        {
+          "month": "2026-05",
+          "searches": 40
+        },
+        {
+          "month": "2026-06",
+          "searches": 20
+        },
+        {
+          "month": "2026-07",
+          "searches": 50
+        }
+      ],
+      "trend_pct": 150,
+      "keyword_variants": [
+        "voopoo drag x3",
+        "Voopoo DRAG X3"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Vinci S",
+      "query": "Voopoo Vinci S",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 20
+        },
+        {
+          "month": "2026-01",
+          "searches": 20
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 40
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 20
+        }
+      ],
+      "trend_pct": 100,
+      "keyword_variants": [
+        "voopoo vinci s",
+        "Voopoo Vinci S"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "Fluffi Mini",
+      "query": "Aspire Fluffi Mini",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "aspire fluffi mini",
+        "Aspire Fluffi Mini"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "Gotek X III",
+      "query": "Aspire Gotek X III",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "aspire gotek x iii",
+        "Aspire Gotek X III"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "Nexi Pro",
+      "query": "Aspire Nexi Pro",
+      "monthly_searches": 90,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 210
+        },
+        {
+          "month": "2025-09",
+          "searches": 90
+        },
+        {
+          "month": "2025-10",
+          "searches": 110
+        },
+        {
+          "month": "2025-11",
+          "searches": 90
+        },
+        {
+          "month": "2025-12",
+          "searches": 90
+        },
+        {
+          "month": "2026-01",
+          "searches": 90
+        },
+        {
+          "month": "2026-02",
+          "searches": 70
+        },
+        {
+          "month": "2026-03",
+          "searches": 70
+        },
+        {
+          "month": "2026-04",
+          "searches": 50
+        },
+        {
+          "month": "2026-05",
+          "searches": 40
+        },
+        {
+          "month": "2026-06",
+          "searches": 30
+        },
+        {
+          "month": "2026-07",
+          "searches": 40
+        }
+      ],
+      "trend_pct": 33.3,
+      "keyword_variants": [
+        "aspire nexi pro",
+        "Aspire Nexi Pro"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "PIXO Aura",
+      "query": "Aspire PIXO Aura",
+      "monthly_searches": 170,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 170
+        },
+        {
+          "month": "2025-09",
+          "searches": 140
+        },
+        {
+          "month": "2025-10",
+          "searches": 140
+        },
+        {
+          "month": "2025-11",
+          "searches": 110
+        },
+        {
+          "month": "2025-12",
+          "searches": 140
+        },
+        {
+          "month": "2026-01",
+          "searches": 170
+        },
+        {
+          "month": "2026-02",
+          "searches": 210
+        },
+        {
+          "month": "2026-03",
+          "searches": 170
+        },
+        {
+          "month": "2026-04",
+          "searches": 170
+        },
+        {
+          "month": "2026-05",
+          "searches": 210
+        },
+        {
+          "month": "2026-06",
+          "searches": 140
+        },
+        {
+          "month": "2026-07",
+          "searches": 210
+        }
+      ],
+      "trend_pct": 50,
+      "keyword_variants": [
+        "aspire pixo aura",
+        "Aspire PIXO Aura"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "TUBINO",
+      "query": "Aspire TUBINO",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 20
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "aspire tubino",
+        "Aspire TUBINO"
+      ]
+    },
+    {
+      "brand": "Aspire",
+      "model": "Vilter Max",
+      "query": "Aspire Vilter Max",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 50
+        },
+        {
+          "month": "2026-01",
+          "searches": 50
+        },
+        {
+          "month": "2026-02",
+          "searches": 20
+        },
+        {
+          "month": "2026-03",
+          "searches": 30
+        },
+        {
+          "month": "2026-04",
+          "searches": 20
+        },
+        {
+          "month": "2026-05",
+          "searches": 30
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "aspire vilter max",
+        "Aspire Vilter Max"
+      ]
+    },
+    {
+      "brand": "DotMod",
+      "model": "Dotpod Max Link",
+      "query": "DotMod Dotpod Max Link",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "dotmod dotpod max link",
+        "DotMod Dotpod Max Link"
+      ]
+    },
+    {
+      "brand": "DotMod",
+      "model": "DotPod Max Lite",
+      "query": "DotMod DotPod Max Lite",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "dotmod dotpod max lite",
+        "DotMod DotPod Max Lite"
+      ]
+    },
+    {
+      "brand": "DotMod",
+      "model": "Dotpod Max V1.5",
+      "query": "DotMod Dotpod Max V1.5",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "dotmod dotpod max v1 5",
+        "DotMod Dotpod Max V1.5"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Aegis Hero Q",
+      "query": "Geekvape Aegis Hero Q",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "geekvape aegis hero q",
+        "Geekvape Aegis Hero Q"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Sonder Q2",
+      "query": "Geekvape Sonder Q2",
+      "monthly_searches": 70,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 70
+        },
+        {
+          "month": "2025-09",
+          "searches": 70
+        },
+        {
+          "month": "2025-10",
+          "searches": 90
+        },
+        {
+          "month": "2025-11",
+          "searches": 110
+        },
+        {
+          "month": "2025-12",
+          "searches": 50
+        },
+        {
+          "month": "2026-01",
+          "searches": 90
+        },
+        {
+          "month": "2026-02",
+          "searches": 70
+        },
+        {
+          "month": "2026-03",
+          "searches": 90
+        },
+        {
+          "month": "2026-04",
+          "searches": 70
+        },
+        {
+          "month": "2026-05",
+          "searches": 40
+        },
+        {
+          "month": "2026-06",
+          "searches": 40
+        },
+        {
+          "month": "2026-07",
+          "searches": 70
+        }
+      ],
+      "trend_pct": 75,
+      "keyword_variants": [
+        "geekvape sonder q2",
+        "Geekvape Sonder Q2"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Sonder Q3",
+      "query": "Geekvape Sonder Q3",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 20
+        }
+      ],
+      "trend_pct": 100,
+      "keyword_variants": [
+        "geekvape sonder q3",
+        "Geekvape Sonder Q3"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Soul 2",
+      "query": "Geekvape Soul 2",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 20
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 20
+        },
+        {
+          "month": "2025-11",
+          "searches": 30
+        },
+        {
+          "month": "2025-12",
+          "searches": 20
+        },
+        {
+          "month": "2026-01",
+          "searches": 30
+        },
+        {
+          "month": "2026-02",
+          "searches": 20
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 20
+        },
+        {
+          "month": "2026-06",
+          "searches": 40
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": -75,
+      "keyword_variants": [
+        "geekvape soul 2",
+        "Geekvape Soul 2"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Wenax M2 Leather Edition",
+      "query": "Geekvape Wenax M2 Leather Edition",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "geekvape wenax m2 leather edition",
+        "Geekvape Wenax M2 Leather Edition"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Wenax Q Ultra",
+      "query": "Geekvape Wenax Q Ultra",
+      "monthly_searches": 30,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 50
+        },
+        {
+          "month": "2025-09",
+          "searches": 40
+        },
+        {
+          "month": "2025-10",
+          "searches": 30
+        },
+        {
+          "month": "2025-11",
+          "searches": 40
+        },
+        {
+          "month": "2025-12",
+          "searches": 20
+        },
+        {
+          "month": "2026-01",
+          "searches": 30
+        },
+        {
+          "month": "2026-02",
+          "searches": 20
+        },
+        {
+          "month": "2026-03",
+          "searches": 20
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 30
+        },
+        {
+          "month": "2026-06",
+          "searches": 20
+        },
+        {
+          "month": "2026-07",
+          "searches": 30
+        }
+      ],
+      "trend_pct": 50,
+      "keyword_variants": [
+        "geekvape wenax q ultra",
+        "Geekvape Wenax Q Ultra"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Wenax Q2",
+      "query": "Geekvape Wenax Q2",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 20
+        },
+        {
+          "month": "2025-09",
+          "searches": 30
+        },
+        {
+          "month": "2025-10",
+          "searches": 20
+        },
+        {
+          "month": "2025-11",
+          "searches": 20
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 20
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 20
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "geekvape wenax q2",
+        "Geekvape Wenax Q2"
+      ]
+    },
+    {
+      "brand": "Geekvape",
+      "model": "Wenax S3 Evo",
+      "query": "Geekvape Wenax S3 Evo",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "geekvape wenax s3 evo",
+        "Geekvape Wenax S3 Evo"
+      ]
+    },
+    {
+      "brand": "KIWI Vapor",
+      "model": "Spark 2",
+      "query": "KIWI Vapor Spark 2",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 20
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "kiwi vapor spark 2",
+        "KIWI Vapor Spark 2"
+      ]
+    },
+    {
+      "brand": "Lost Vape",
+      "model": "Ursa Nano S3",
+      "query": "Lost Vape Ursa Nano S3",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "lost vape ursa nano s3",
+        "Lost Vape Ursa Nano S3"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "NeXLIM 2",
+      "query": "OXVA NeXLIM 2",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 90
+        },
+        {
+          "month": "2026-07",
+          "searches": 170
+        }
+      ],
+      "trend_pct": 88.9,
+      "keyword_variants": [
+        "oxva nexlim 2",
+        "OXVA NeXLIM 2"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Nexlim 2 Mini",
+      "query": "OXVA Nexlim 2 Mini",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 20
+        }
+      ],
+      "trend_pct": 100,
+      "keyword_variants": [
+        "oxva nexlim 2 mini",
+        "OXVA Nexlim 2 Mini"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "NeXLim Go",
+      "query": "OXVA NeXLim Go",
+      "monthly_searches": 70,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 50
+        },
+        {
+          "month": "2025-09",
+          "searches": 90
+        },
+        {
+          "month": "2025-10",
+          "searches": 140
+        },
+        {
+          "month": "2025-11",
+          "searches": 50
+        },
+        {
+          "month": "2025-12",
+          "searches": 90
+        },
+        {
+          "month": "2026-01",
+          "searches": 90
+        },
+        {
+          "month": "2026-02",
+          "searches": 90
+        },
+        {
+          "month": "2026-03",
+          "searches": 50
+        },
+        {
+          "month": "2026-04",
+          "searches": 30
+        },
+        {
+          "month": "2026-05",
+          "searches": 40
+        },
+        {
+          "month": "2026-06",
+          "searches": 50
+        },
+        {
+          "month": "2026-07",
+          "searches": 50
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "oxva nexlim go",
+        "OXVA NeXLim Go"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Slim Stick X",
+      "query": "OXVA Slim Stick X",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 90
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "oxva slim stick x",
+        "OXVA Slim Stick X"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Xlim 3 Ultra - Carbon",
+      "query": "OXVA Xlim 3 Ultra - Carbon",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": -100,
+      "keyword_variants": [
+        "oxva xlim 3 ultra carbon",
+        "OXVA Xlim 3 Ultra - Carbon"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "XLIM Go",
+      "query": "OXVA XLIM Go",
+      "monthly_searches": 70,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 40
+        },
+        {
+          "month": "2025-09",
+          "searches": 70
+        },
+        {
+          "month": "2025-10",
+          "searches": 50
+        },
+        {
+          "month": "2025-11",
+          "searches": 30
+        },
+        {
+          "month": "2025-12",
+          "searches": 30
+        },
+        {
+          "month": "2026-01",
+          "searches": 40
+        },
+        {
+          "month": "2026-02",
+          "searches": 50
+        },
+        {
+          "month": "2026-03",
+          "searches": 40
+        },
+        {
+          "month": "2026-04",
+          "searches": 50
+        },
+        {
+          "month": "2026-05",
+          "searches": 90
+        },
+        {
+          "month": "2026-06",
+          "searches": 110
+        },
+        {
+          "month": "2026-07",
+          "searches": 210
+        }
+      ],
+      "trend_pct": 90.9,
+      "keyword_variants": [
+        "oxva xlim go",
+        "OXVA XLIM Go"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Xlim Go 2",
+      "query": "OXVA Xlim Go 2",
+      "monthly_searches": 50,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 40
+        },
+        {
+          "month": "2025-10",
+          "searches": 90
+        },
+        {
+          "month": "2025-11",
+          "searches": 50
+        },
+        {
+          "month": "2025-12",
+          "searches": 70
+        },
+        {
+          "month": "2026-01",
+          "searches": 90
+        },
+        {
+          "month": "2026-02",
+          "searches": 30
+        },
+        {
+          "month": "2026-03",
+          "searches": 40
+        },
+        {
+          "month": "2026-04",
+          "searches": 70
+        },
+        {
+          "month": "2026-05",
+          "searches": 50
+        },
+        {
+          "month": "2026-06",
+          "searches": 50
+        },
+        {
+          "month": "2026-07",
+          "searches": 30
+        }
+      ],
+      "trend_pct": -40,
+      "keyword_variants": [
+        "oxva xlim go 2",
+        "OXVA Xlim Go 2"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Xlim Go 2, - Light Brown Shadow",
+      "query": "OXVA Xlim Go 2, - Light Brown Shadow",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "oxva xlim go 2 light brown shadow",
+        "OXVA Xlim Go 2, - Light Brown Shadow"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "XLIM Go - Graffiti",
+      "query": "OXVA XLIM Go - Graffiti",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "oxva xlim go graffiti",
+        "OXVA XLIM Go - Graffiti"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Xlim Go Lite",
+      "query": "OXVA Xlim Go Lite",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 70
+        },
+        {
+          "month": "2026-05",
+          "searches": 40
+        },
+        {
+          "month": "2026-06",
+          "searches": 50
+        },
+        {
+          "month": "2026-07",
+          "searches": 30
+        }
+      ],
+      "trend_pct": -40,
+      "keyword_variants": [
+        "oxva xlim go lite",
+        "OXVA Xlim Go Lite"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "XLIM Go - Luxe",
+      "query": "OXVA XLIM Go - Luxe",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 0
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "oxva xlim go luxe",
+        "OXVA XLIM Go - Luxe"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Xlim Pro 2 DNA - Luminous Forged Carbon Fiber",
+      "query": "OXVA Xlim Pro 2 DNA - Luminous Forged Carbon Fiber",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "oxva xlim pro 2 dna luminous forged carbon fiber",
+        "OXVA Xlim Pro 2 DNA - Luminous Forged Carbon Fiber"
+      ]
+    },
+    {
+      "brand": "OXVA",
+      "model": "Xlim Pro 3 - Pro Carbon",
+      "query": "OXVA Xlim Pro 3 - Pro Carbon",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "oxva xlim pro 3 pro carbon",
+        "OXVA Xlim Pro 3 - Pro Carbon"
+      ]
+    },
+    {
+      "brand": "Uwell",
+      "model": "Caliburn G5",
+      "query": "Uwell Caliburn G5",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 10
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 30
+        },
+        {
+          "month": "2026-05",
+          "searches": 70
+        },
+        {
+          "month": "2026-06",
+          "searches": 50
+        },
+        {
+          "month": "2026-07",
+          "searches": 40
+        }
+      ],
+      "trend_pct": -20,
+      "keyword_variants": [
+        "uwell caliburn g5",
+        "Uwell Caliburn G5"
+      ]
+    },
+    {
+      "brand": "Uwell",
+      "model": "Caliburn G5 Koko",
+      "query": "Uwell Caliburn G5 Koko",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 0
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 20
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "uwell caliburn g5 koko",
+        "Uwell Caliburn G5 Koko"
+      ]
+    },
+    {
+      "brand": "Vaporesso",
+      "model": "LUXE XR MAX 2",
+      "query": "Vaporesso LUXE XR MAX 2",
+      "monthly_searches": 110,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 110
+        },
+        {
+          "month": "2025-09",
+          "searches": 70
+        },
+        {
+          "month": "2025-10",
+          "searches": 90
+        },
+        {
+          "month": "2025-11",
+          "searches": 90
+        },
+        {
+          "month": "2025-12",
+          "searches": 70
+        },
+        {
+          "month": "2026-01",
+          "searches": 90
+        },
+        {
+          "month": "2026-02",
+          "searches": 90
+        },
+        {
+          "month": "2026-03",
+          "searches": 140
+        },
+        {
+          "month": "2026-04",
+          "searches": 110
+        },
+        {
+          "month": "2026-05",
+          "searches": 90
+        },
+        {
+          "month": "2026-06",
+          "searches": 140
+        },
+        {
+          "month": "2026-07",
+          "searches": 170
+        }
+      ],
+      "trend_pct": 21.4,
+      "keyword_variants": [
+        "vaporesso luxe xr max 2",
+        "Vaporesso LUXE XR MAX 2"
+      ]
+    },
+    {
+      "brand": "Vaporesso",
+      "model": "XROS 4 Nano Race Track",
+      "query": "Vaporesso XROS 4 Nano Race Track",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 0
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 0
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 0
+        },
+        {
+          "month": "2026-03",
+          "searches": 0
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 0
+        },
+        {
+          "month": "2026-06",
+          "searches": 0
+        },
+        {
+          "month": "2026-07",
+          "searches": 0
+        }
+      ],
+      "trend_pct": null,
+      "keyword_variants": [
+        "vaporesso xros 4 nano race track",
+        "Vaporesso XROS 4 Nano Race Track"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Argus Matrix",
+      "query": "Voopoo Argus Matrix",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 20
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 50
+        },
+        {
+          "month": "2025-11",
+          "searches": 30
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "voopoo argus matrix",
+        "Voopoo Argus Matrix"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "Doric Astra",
+      "query": "Voopoo Doric Astra",
+      "monthly_searches": 10,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 30
+        },
+        {
+          "month": "2025-09",
+          "searches": 10
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 10
+        },
+        {
+          "month": "2025-12",
+          "searches": 10
+        },
+        {
+          "month": "2026-01",
+          "searches": 10
+        },
+        {
+          "month": "2026-02",
+          "searches": 10
+        },
+        {
+          "month": "2026-03",
+          "searches": 10
+        },
+        {
+          "month": "2026-04",
+          "searches": 0
+        },
+        {
+          "month": "2026-05",
+          "searches": 10
+        },
+        {
+          "month": "2026-06",
+          "searches": 10
+        },
+        {
+          "month": "2026-07",
+          "searches": 10
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "voopoo doric astra",
+        "Voopoo Doric Astra"
+      ]
+    },
+    {
+      "brand": "Voopoo",
+      "model": "DRAG S3",
+      "query": "Voopoo DRAG S3",
+      "monthly_searches": 20,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 0
+        },
+        {
+          "month": "2025-09",
+          "searches": 0
+        },
+        {
+          "month": "2025-10",
+          "searches": 10
+        },
+        {
+          "month": "2025-11",
+          "searches": 30
+        },
+        {
+          "month": "2025-12",
+          "searches": 40
+        },
+        {
+          "month": "2026-01",
+          "searches": 30
+        },
+        {
+          "month": "2026-02",
+          "searches": 40
+        },
+        {
+          "month": "2026-03",
+          "searches": 30
+        },
+        {
+          "month": "2026-04",
+          "searches": 10
+        },
+        {
+          "month": "2026-05",
+          "searches": 20
+        },
+        {
+          "month": "2026-06",
+          "searches": 40
+        },
+        {
+          "month": "2026-07",
+          "searches": 30
+        }
+      ],
+      "trend_pct": -25,
+      "keyword_variants": [
+        "voopoo drag s3",
+        "Voopoo DRAG S3"
+      ]
+    },
+    {
+      "brand": "Vozol",
+      "model": "Ace Go",
+      "query": "Vozol Ace Go",
+      "monthly_searches": 320,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 170
+        },
+        {
+          "month": "2025-09",
+          "searches": 260
+        },
+        {
+          "month": "2025-10",
+          "searches": 260
+        },
+        {
+          "month": "2025-11",
+          "searches": 390
+        },
+        {
+          "month": "2025-12",
+          "searches": 320
+        },
+        {
+          "month": "2026-01",
+          "searches": 320
+        },
+        {
+          "month": "2026-02",
+          "searches": 390
+        },
+        {
+          "month": "2026-03",
+          "searches": 390
+        },
+        {
+          "month": "2026-04",
+          "searches": 480
+        },
+        {
+          "month": "2026-05",
+          "searches": 480
+        },
+        {
+          "month": "2026-06",
+          "searches": 390
+        },
+        {
+          "month": "2026-07",
+          "searches": 390
+        }
+      ],
+      "trend_pct": 0,
+      "keyword_variants": [
+        "vozol ace go",
+        "Vozol Ace Go"
+      ]
+    },
+    {
+      "brand": "Vozol",
+      "model": "Switch Pro 2",
+      "query": "Vozol Switch Pro 2",
+      "monthly_searches": 880,
+      "monthly_series": [
+        {
+          "month": "2025-08",
+          "searches": 1300
+        },
+        {
+          "month": "2025-09",
+          "searches": 1300
+        },
+        {
+          "month": "2025-10",
+          "searches": 1000
+        },
+        {
+          "month": "2025-11",
+          "searches": 1000
+        },
+        {
+          "month": "2025-12",
+          "searches": 1000
+        },
+        {
+          "month": "2026-01",
+          "searches": 1000
+        },
+        {
+          "month": "2026-02",
+          "searches": 880
+        },
+        {
+          "month": "2026-03",
+          "searches": 880
+        },
+        {
+          "month": "2026-04",
+          "searches": 720
+        },
+        {
+          "month": "2026-05",
+          "searches": 880
+        },
+        {
+          "month": "2026-06",
+          "searches": 720
+        },
+        {
+          "month": "2026-07",
+          "searches": 590
+        }
+      ],
+      "trend_pct": -18.1,
+      "keyword_variants": [
+        "vozol switch pro 2",
+        "Vozol Switch Pro 2"
+      ]
+    }
+  ],
   "display": {
-    "unavailable_message": "Conexiunea Google Ads nu este configurată: adaptorul raportează credentials-missing, iar în datele colectate nu există volume Google. Pentru un top real este necesar acces autorizat și eligibil la sursă sau un export original Keyword Planner pentru România. Nu înlocuim volumele lipsă cu topuri editoriale ori cu vânzări.",
-    "metric_label": "Media lunară estimată Google (12 luni)",
-    "source_label": "Google Ads Keyword Planner"
+    "metric_label": "Medie lunară estimată Google (12 luni)",
+    "unavailable_message": "Google nu a furnizat încă minimum 20 de modele cu serii complete, comparabile și fără ambiguități."
   },
-  "diagnostic": {
-    "verified_from": "deployed data/market-demand-intelligence-2026.json",
-    "upstream_generated_at": "2026-09-06T09:18:06.934Z",
-    "google_status": "credentials-missing",
-    "last_successful_collection": null,
-    "google_rows_available": 0
+  "validation": {
+    "verified": true,
+    "errors": []
   }
 }
