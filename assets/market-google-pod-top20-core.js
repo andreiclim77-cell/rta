@@ -66,7 +66,10 @@
      groups. A group is mapped only when its returned text/variants identify
      exactly one canonical tracked model. We then select at most ONE metric
      group per model and never sum groups. Exact primary-text matches win. If
-     equally preferred groups conflict on metrics, the entire model is excluded. */
+     equally preferred groups conflict on metrics, the entire model is excluded.
+     Raw close variants remain in source evidence; public rows expose only the
+     canonical tracked query so the UI cannot mistake shared Google aliases for
+     double counting. */
   function project(models, response, meta) {
     var owners=new Map(), parsed=[], excluded={unmatched:0,ambiguous:0,invalid_metrics:0,overlap:0,period_mismatch:0};
     models.forEach(function(m){ var key=norm(m.query), a=owners.get(key)||[]; a.push(m); owners.set(key,a); });
@@ -113,7 +116,7 @@
     var window=chosen?chosen[0].split('/'):[null,null], rows=[];
     selected.forEach(function(p){
       if(p.values.series[0].month!==window[0]||p.values.series[11].month!==window[1]){excluded.period_mismatch++;return;}
-      rows.push({brand:p.model.brand,model:p.model.model,query:p.model.query,monthly_searches:p.values.volume,monthly_series:p.values.series,trend_pct:trend(p.values.series),keyword_variants:p.words});
+      rows.push({brand:p.model.brand,model:p.model.model,query:p.model.query,monthly_searches:p.values.volume,monthly_series:p.values.series,trend_pct:trend(p.values.series),keyword_variants:[p.model.query]});
     });
     var out={schema_version:2,title:'Top 20 pod - Google Romania',country:'RO',status:'verified',last_updated:meta.collected_at,last_checked:meta.collected_at,
       source:{provider:'Google Ads Keyword Planner',acquisition:'google_ads_api',geography:'Romania',network:'GOOGLE_SEARCH',geo_target:meta.geo_target,approximate:true,response_sha256:meta.response_sha256},
