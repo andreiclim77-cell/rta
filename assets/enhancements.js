@@ -29,17 +29,25 @@ function removeMarketLockUi(root){
   if(!root)return;
   root.querySelectorAll('[data-market-lock]').forEach(function(button){button.remove()})
 }
+function ensurePublicFallbackStyle(){
+  var publicStyle=document.getElementById('marketPublicAccessStyle');
+  if(publicStyle)return;
+  publicStyle=document.createElement('style');
+  publicStyle.id='marketPublicAccessStyle';
+  publicStyle.textContent='[data-tab="market2026"].market-lock-nav::after{display:none!important}#market2026Root [data-market-lock]{display:none!important}#market2026Root[data-public-market="1"]:not([data-market-primary-view])>#market2026Body{display:block!important}#market2026Root[data-public-market="1"]:not([data-market-primary-view])>.market-hero>p{display:block!important}#market2026Root[data-public-market="1"]:not([data-market-primary-view])>.market-hero .market-metrics{display:grid!important}#market2026Root[data-public-market="1"]:not([data-market-primary-view])>.market-hero .market-tabs{display:flex!important}';
+  document.head.appendChild(publicStyle)
+}
+function markPublicRoot(){
+  var root=document.getElementById('market2026Root');
+  if(root)root.dataset.publicMarket='1';
+  return root
+}
 function makeMarketPublic(){
   if(!isMainGuide())return;
   window.__rtaMarketPublicAccess=true;
   grantMarketAccess();
-  var publicStyle=document.getElementById('marketPublicAccessStyle');
-  if(!publicStyle){
-    publicStyle=document.createElement('style');
-    publicStyle.id='marketPublicAccessStyle';
-    publicStyle.textContent='[data-tab="market2026"].market-lock-nav::after{display:none!important}#market2026Root [data-market-lock]{display:none!important}';
-    document.head.appendChild(publicStyle)
-  }
+  ensurePublicFallbackStyle();
+  var root=markPublicRoot();
   var button=document.querySelector('[data-tab="market2026"]');
   if(button&&button.dataset.publicAccess!=='1'){
     var publicButton=button.cloneNode(true);
@@ -51,15 +59,15 @@ function makeMarketPublic(){
       grantMarketAccess();
       var modal=document.getElementById('market2026Modal');
       if(modal)modal.remove();
-      if(typeof setRoute==='function')setRoute('market2026');else location.hash='#market2026'
+      if(typeof setRoute==='function')setRoute('market2026');else location.hash='#market2026';
+      setTimeout(function(){markPublicRoot();recoverMarketUi(0)},80)
     });
     button.replaceWith(publicButton)
   }
-  var root=document.getElementById('market2026Root');
   removeMarketLockUi(root);
   if(root&&root.dataset.publicAccessWatch!=='1'&&window.MutationObserver){
     root.dataset.publicAccessWatch='1';
-    new MutationObserver(function(){removeMarketLockUi(root)}).observe(root,{childList:true,subtree:true})
+    new MutationObserver(function(){markPublicRoot();removeMarketLockUi(root)}).observe(root,{childList:true,subtree:true})
   }
   var route=(location.hash||'').replace(/^#/,'');
   if(root&&route==='market2026'&&root.querySelector('[data-market-unlock]')){
@@ -67,11 +75,31 @@ function makeMarketPublic(){
     setTimeout(function(){if(typeof setRoute==='function')setRoute('market2026');else location.hash='#market2026'},0)
   }
 }
+function recoverMarketUi(attempt){
+  if(!isMainGuide())return;
+  var root=markPublicRoot();
+  if(!root||!root.querySelector('.market-hero')){if(attempt<24)setTimeout(function(){recoverMarketUi(attempt+1)},150);return}
+  removeMarketLockUi(root);
+  if(document.getElementById('marketViewSwitcher')){
+    document.dispatchEvent(new CustomEvent('rta:market:hydrate'));
+    return
+  }
+  document.dispatchEvent(new CustomEvent('rta:market:hydrate'));
+  if(attempt===5||attempt===12){
+    var stamp=Date.now();
+    load('/assets/market-management-v2.js?v=10&publicRecovery='+stamp);
+    load('/assets/market-analysis-synthesis.js?v=7&publicRecovery='+stamp);
+    load('/assets/market-hype-ui.js?v=14&publicRecovery='+stamp);
+    load('/assets/market-view-switcher.js?v=11&publicRecovery='+stamp,function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))})
+  }
+  if(attempt<20)setTimeout(function(){recoverMarketUi(attempt+1)},220)
+}
 function waitForMarket(){
   if(marketUiStarted||!isMainGuide())return;
   var root=document.getElementById('market2026Root');
   if(!root||!root.querySelector('.market-hero')){setTimeout(waitForMarket,100);return}
   marketUiStarted=true;
+  markPublicRoot();
   style('/assets/market-management-v4-extra.css?v=1');
   style('/assets/market-analysis-truth.css?v=1');
   style('/assets/market-hype-warnings.css?v=2');
@@ -81,8 +109,8 @@ function waitForMarket(){
   load('/assets/market-hype-ui.js?v=14');
   // Market assets are network-first in sw.js. Keep this URL synchronized with
   // STATIC_ASSETS and the existing quality contract; no test is disabled.
-  load('/assets/market-view-switcher.js?v=11');
-  setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
+  load('/assets/market-view-switcher.js?v=11',function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))});
+  setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'));recoverMarketUi(0)},120)
 }
 function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=10',function(){makeMarketPublic();waitForMarket()})}
 ensureLegalFooter();
