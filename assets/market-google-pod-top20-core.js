@@ -21,7 +21,7 @@
   }
   function trend(series) { var a=series[10].searches, b=series[11].searches; return a>0 ? Math.round((b-a)/a*1000)/10 : null; }
   function validate(data, now) {
-    var errors=[], valid=[], seen=new Set(), variants=new Set(), source=data && data.source || {}, period=data && data.period || {};
+    var errors=[], valid=[], seen=new Set(), source=data && data.source || {}, period=data && data.period || {};
     var at=now == null ? Date.now() : Number(now), collected=Date.parse(data && data.last_updated), checked=Date.parse(data && data.last_checked);
     var start=monthIndex(period.start), end=monthIndex(period.end), current=monthIndex(new Date(at).toISOString().slice(0,7));
     if (!data || data.schema_version !== 2 || data.status !== 'verified') errors.push('source_not_ready');
@@ -38,8 +38,7 @@
       if (seen.has(key)) errors.push('duplicate_model'); seen.add(key);
       if (volume===null || volume<=0 || !series || series[0].month!==period.start || series[11].month!==period.end) { errors.push('invalid_volume_or_series'); return; }
       if (!Array.isArray(r.keyword_variants) || !r.keyword_variants.length || !r.keyword_variants.every(function (x) { return typeof x==='string' && norm(x); })) { errors.push('missing_keyword_evidence'); return; }
-      var local=new Set(r.keyword_variants.map(norm));
-      local.forEach(function (v) { if (variants.has(v)) errors.push('overlapping_keyword_groups'); variants.add(v); });
+      if (typeof r.query!=='string' || !norm(r.query) || !r.keyword_variants.some(function(x){return norm(x)===norm(r.query);})) { errors.push('missing_canonical_query_evidence'); return; }
       var change=trend(series);
       if (r.trend_pct !== change) errors.push('inconsistent_trend');
       valid.push(Object.assign({},r,{monthly_searches:volume,monthly_series:series,trend_pct:change}));
@@ -60,8 +59,14 @@
     }));
     return volume!==null && volume>0 && series ? {volume:volume,series:series} : null;
   }
-  /* Match returned close-variant GROUPS once. Ambiguous cross-model groups are
-     excluded; their entire volume is never allocated to an arbitrary model. */
+  function metricSignature(p) {
+    return String(p.values.volume)+'|'+p.values.series.map(function(x){return x.month+':'+x.searches;}).join(',');
+  }
+  /* Google may return overlapping close-variant labels across distinct metric
+     groups. A group is mapped only when its returned text/variants identify
+     exactly one canonical tracked model. We then select at most ONE metric
+     group per model and never sum groups. Exact primary-text matches win. If
+     equally preferred groups conflict on metrics, the entire model is excluded. */
   function project(models, response, meta) {
     var owners=new Map(), parsed=[], excluded={unmatched:0,ambiguous:0,invalid_metrics:0,overlap:0,period_mismatch:0};
     models.forEach(function(m){ var key=norm(m.query), a=owners.get(key)||[]; a.push(m); owners.set(key,a); });
@@ -71,22 +76,42 @@
       if (!hits.size) {excluded.unmatched++;return;}
       if (hits.size!==1) {excluded.ambiguous++;return;}
       var values=fromGoogle(r); if (!values) {excluded.invalid_metrics++;return;}
-      parsed.push({model:Array.from(hits.values())[0],words:words,values:values});
+      parsed.push({model:Array.from(hits.values())[0],primary:typeof r.text==='string'?r.text:'',words:words,values:values});
     });
     var usedWords=new Map(), usedModels=new Map();
     parsed.forEach(function(p,i){p.words.forEach(function(w){var a=usedWords.get(norm(w))||[];a.push(i);usedWords.set(norm(w),a);});var a=usedModels.get(p.model.id)||[];a.push(i);usedModels.set(p.model.id,a);});
     var duplicateMetricModels=0,duplicateModelGroups=0,singleMetricModels=0,sharedVariantTerms=0,sharedVariantIndexes=new Set();
     usedModels.forEach(function(a){if(a.length>1){duplicateMetricModels++;duplicateModelGroups+=a.length;}else singleMetricModels++;});
     usedWords.forEach(function(a){if(a.length>1){sharedVariantTerms++;a.forEach(function(i){sharedVariantIndexes.add(i);});}});
-    var overlapDiagnostic={metric_groups:parsed.length,unique_metric_models:usedModels.size,single_metric_models:singleMetricModels,duplicate_metric_models:duplicateMetricModels,duplicate_model_groups:duplicateModelGroups,shared_variant_terms:sharedVariantTerms,groups_with_shared_variants:sharedVariantIndexes.size};
-    var bad=new Set();
-    [usedWords,usedModels].forEach(function(map){map.forEach(function(a){if(a.length>1)a.forEach(function(i){bad.add(i);});});});
+    var selected=[],duplicateGroupsSuppressed=0,conflictingMetricModels=0;
+    usedModels.forEach(function(indexes){
+      if(indexes.length===1){selected.push(parsed[indexes[0]]);return;}
+      var canonical=norm(parsed[indexes[0]].model.query);
+      var ranked=indexes.map(function(i){var p=parsed[i];return {i:i,p:p,score:norm(p.primary)===canonical?2:1};});
+      var maxScore=ranked.reduce(function(m,x){return Math.max(m,x.score);},0);
+      var preferred=ranked.filter(function(x){return x.score===maxScore;});
+      if(preferred.length===1){
+        selected.push(preferred[0].p);
+        duplicateGroupsSuppressed+=indexes.length-1;
+        excluded.overlap+=indexes.length-1;
+        return;
+      }
+      var signatures=new Set(preferred.map(function(x){return metricSignature(x.p);}));
+      if(signatures.size===1){
+        selected.push(preferred[0].p);
+        duplicateGroupsSuppressed+=indexes.length-1;
+        excluded.overlap+=indexes.length-1;
+        return;
+      }
+      conflictingMetricModels++;
+      excluded.overlap+=indexes.length;
+    });
+    var overlapDiagnostic={metric_groups:parsed.length,unique_metric_models:usedModels.size,single_metric_models:singleMetricModels,duplicate_metric_models:duplicateMetricModels,duplicate_model_groups:duplicateModelGroups,shared_variant_terms:sharedVariantTerms,groups_with_shared_variants:sharedVariantIndexes.size,selected_metric_models:selected.length,duplicate_groups_suppressed:duplicateGroupsSuppressed,conflicting_metric_models:conflictingMetricModels};
     var periods=new Map();
-    parsed.forEach(function(p,i){if(bad.has(i))return;var k=p.values.series[0].month+'/'+p.values.series[11].month;periods.set(k,(periods.get(k)||0)+1);});
+    selected.forEach(function(p){var k=p.values.series[0].month+'/'+p.values.series[11].month;periods.set(k,(periods.get(k)||0)+1);});
     var chosen=Array.from(periods).sort(function(a,b){return b[1]-a[1]||b[0].localeCompare(a[0]);})[0];
     var window=chosen?chosen[0].split('/'):[null,null], rows=[];
-    parsed.forEach(function(p,i){
-      if(bad.has(i)){excluded.overlap++;return;}
+    selected.forEach(function(p){
       if(p.values.series[0].month!==window[0]||p.values.series[11].month!==window[1]){excluded.period_mismatch++;return;}
       rows.push({brand:p.model.brand,model:p.model.model,query:p.model.query,monthly_searches:p.values.volume,monthly_series:p.values.series,trend_pct:trend(p.values.series),keyword_variants:p.words});
     });
