@@ -1,0 +1,98 @@
+name: Google RTA and Mod Top10 Collection
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '45 8 8 * *'
+  push:
+    branches: [main]
+    paths:
+      - 'assets/market-google-pod-top20-core.js'
+      - 'assets/market-google-pod-top20-proof.js'
+      - 'tools/collect-google-category-top.js'
+      - 'tools/test-google-category-top.js'
+      - '.github/workflows/google-rta-mod-top10-sync.yml'
+permissions:
+  contents: read
+concurrency:
+  group: google-rta-mod-top10-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and deterministic ranking tests
+        run: |
+          node --check assets/market-google-pod-top20-core.js
+          node --check assets/market-google-pod-top20-proof.js
+          node --check tools/collect-google-category-top.js
+          node --check tools/test-google-category-top.js
+          node tools/test-google-pod-top20-api.js
+          node tools/test-google-category-top.js
+  collect:
+    needs: quality
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Collect Google RTA and mod measurements independently
+        env:
+          GOOGLE_ADS_DEVELOPER_TOKEN: ${{ secrets.GOOGLE_ADS_DEVELOPER_TOKEN }}
+          GOOGLE_ADS_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_CUSTOMER_ID }}
+          GOOGLE_ADS_REFRESH_TOKEN: ${{ secrets.GOOGLE_ADS_REFRESH_TOKEN }}
+          GOOGLE_ADS_CLIENT_ID: ${{ secrets.GOOGLE_ADS_CLIENT_ID }}
+          GOOGLE_ADS_CLIENT_SECRET: ${{ secrets.GOOGLE_ADS_CLIENT_SECRET }}
+          GOOGLE_ADS_LOGIN_CUSTOMER_ID: ${{ secrets.GOOGLE_ADS_LOGIN_CUSTOMER_ID }}
+          GOOGLE_ADS_API_VERSION: ${{ vars.GOOGLE_ADS_API_VERSION || 'v25' }}
+        run: |
+          set +e
+          node tools/collect-google-category-top.js --kind=rta
+          rta_rc=$?
+          node tools/collect-google-category-top.js --kind=mod
+          mod_rc=$?
+          set -e
+          echo "collector_exit_codes: rta=$rta_rc mod=$mod_rc"
+          node tools/test-google-category-top.js
+          node - <<'NODE'
+          const fs=require('node:fs');
+          for(const [kind,file] of [['rta','data/google-rta-top10-2026.json'],['mod','data/google-mod-top10-2026.json']]){
+            const d=fs.existsSync(file)?JSON.parse(fs.readFileSync(file,'utf8')):{};
+            console.log(JSON.stringify({kind,status:d.status||'missing',measured:d.coverage&&d.coverage.models_with_valid_series||0,requested:d.coverage&&d.coverage.models_requested||0,required:d.required_count||10}));
+          }
+          NODE
+      - name: Publish only categories with real verified Top 10 data
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          rta_status=$(node -e "const fs=require('fs');try{const d=JSON.parse(fs.readFileSync('data/google-rta-top10-2026.json'));process.stdout.write(d.status||'')}catch(_){process.stdout.write('missing')}")
+          mod_status=$(node -e "const fs=require('fs');try{const d=JSON.parse(fs.readFileSync('data/google-mod-top10-2026.json'));process.stdout.write(d.status||'')}catch(_){process.stdout.write('missing')}")
+          if [ "$rta_status" = "verified" ]; then
+            git add data/google-rta-top10-2026.json data/google-rta-evidence/
+          fi
+          if [ "$mod_status" = "verified" ]; then
+            git add data/google-mod-top10-2026.json data/google-mod-evidence/
+          fi
+          if git diff --cached --quiet; then
+            echo "No new verified RTA/MOD ranking is eligible for publication. POD remains unchanged."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git commit -m 'Publish measured Google RTA and mod Top 10 rankings'
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds" --silent
