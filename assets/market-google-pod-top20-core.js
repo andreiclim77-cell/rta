@@ -75,6 +75,10 @@
     });
     var usedWords=new Map(), usedModels=new Map();
     parsed.forEach(function(p,i){p.words.forEach(function(w){var a=usedWords.get(norm(w))||[];a.push(i);usedWords.set(norm(w),a);});var a=usedModels.get(p.model.id)||[];a.push(i);usedModels.set(p.model.id,a);});
+    var duplicateMetricModels=0,duplicateModelGroups=0,singleMetricModels=0,sharedVariantTerms=0,sharedVariantIndexes=new Set();
+    usedModels.forEach(function(a){if(a.length>1){duplicateMetricModels++;duplicateModelGroups+=a.length;}else singleMetricModels++;});
+    usedWords.forEach(function(a){if(a.length>1){sharedVariantTerms++;a.forEach(function(i){sharedVariantIndexes.add(i);});}});
+    var overlapDiagnostic={metric_groups:parsed.length,unique_metric_models:usedModels.size,single_metric_models:singleMetricModels,duplicate_metric_models:duplicateMetricModels,duplicate_model_groups:duplicateModelGroups,shared_variant_terms:sharedVariantTerms,groups_with_shared_variants:sharedVariantIndexes.size};
     var bad=new Set();
     [usedWords,usedModels].forEach(function(map){map.forEach(function(a){if(a.length>1)a.forEach(function(i){bad.add(i);});});});
     var periods=new Map();
@@ -89,7 +93,7 @@
     var out={schema_version:2,title:'Top 20 pod - Google Romania',country:'RO',status:'verified',last_updated:meta.collected_at,last_checked:meta.collected_at,
       source:{provider:'Google Ads Keyword Planner',acquisition:'google_ads_api',geography:'Romania',network:'GOOGLE_SEARCH',geo_target:meta.geo_target,approximate:true,response_sha256:meta.response_sha256},
       period:{start:window[0],end:window[1],label:window[0]&&window[1]?window[0]+' — '+window[1]:null},
-      coverage:{scope:'tracked_models_only',exhaustive:false,models_requested:models.length,models_with_valid_series:rows.length,excluded_groups:excluded},rows:rows,
+      coverage:{scope:'tracked_models_only',exhaustive:false,models_requested:models.length,models_with_valid_series:rows.length,excluded_groups:excluded,overlap_diagnostic:overlapDiagnostic},rows:rows,
       display:{metric_label:'Medie lunară estimată Google (12 luni)',unavailable_message:'Google nu a furnizat încă minimum 20 de modele cu serii complete, comparabile și fără ambiguități.'},validation:{verified:false}};
     var check=validate(out,Date.parse(meta.collected_at));out.validation={verified:check.verified,errors:check.errors};
     if(!check.verified){out.status='insufficient_data';out.rows=[];}
