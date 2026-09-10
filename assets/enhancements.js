@@ -9,6 +9,19 @@ function load(src,done){
   document.head.appendChild(script)
 }
 function style(src){if(document.querySelector('link[data-rta-style="'+src.replace(/"/g,'\\"')+'"]'))return;var l=document.createElement('link');l.rel='stylesheet';l.href=src;l.dataset.rtaStyle=src;document.head.appendChild(l)}
+function ensureLegalFooter(){
+  if(document.getElementById('rtaLegalFooter'))return;
+  var s=document.createElement('style');
+  s.id='rtaLegalFooterStyle';
+  s.textContent='.rta-legal-footer{margin:28px auto 0;padding:18px 20px 24px;max-width:1180px;border-top:1px solid rgba(127,127,127,.28);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;font:600 13px/1.35 system-ui,-apple-system,Segoe UI,sans-serif}.rta-legal-footer a{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:8px 13px;border:1px solid rgba(127,127,127,.42);border-radius:9px;text-decoration:none;color:inherit;background:rgba(127,127,127,.08)}.rta-legal-footer a:hover,.rta-legal-footer a:focus{border-color:#ef6c20;outline:none}.rta-legal-footer .rta-legal-note{width:100%;text-align:center;opacity:.72;font-weight:500}';
+  document.head.appendChild(s);
+  var footer=document.createElement('footer');
+  footer.id='rtaLegalFooter';
+  footer.className='rta-legal-footer';
+  footer.setAttribute('aria-label','Informatii legale');
+  footer.innerHTML='<a href="/termeni-si-conditii/">Termeni si conditii</a><a href="/politica-confidentialitate/">Politica de confidentialitate</a><span class="rta-legal-note">Ghid RTA MTL - Smokee · Operator: Clim Andrei · Contact: andrei.clim77@gmail.com</span>';
+  document.body.appendChild(footer)
+}
 function stabilizeMarket(){if(document.getElementById('marketBootStabilizer'))return;var s=document.createElement('style');s.id='marketBootStabilizer';s.textContent='#market2026Root:not(.market-load-guard-active):not([data-market-guard-ready="1"]){visibility:hidden;min-height:520px;overflow-anchor:none}';document.head.appendChild(s);setTimeout(function(){var root=document.getElementById('market2026Root'),x=document.getElementById('marketBootStabilizer');if(x&&root&&!root.classList.contains('market-load-guard-active')&&root.dataset.marketGuardReady!=='1')x.remove()},12000)}
 function isMainGuide(){return !/^\/rta-lab(?:\/|$)/i.test(location.pathname)}
 function waitForMarket(){
@@ -29,5 +42,6 @@ function waitForMarket(){
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
 function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=10',function(){waitForMarket()})}
+ensureLegalFooter();
 load('/assets/enhancements-core.js?v=8',function(){loadMarket()});
 })();
