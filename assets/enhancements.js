@@ -24,6 +24,49 @@ function ensureLegalFooter(){
 }
 function stabilizeMarket(){if(document.getElementById('marketBootStabilizer'))return;var s=document.createElement('style');s.id='marketBootStabilizer';s.textContent='#market2026Root:not(.market-load-guard-active):not([data-market-guard-ready="1"]){visibility:hidden;min-height:520px;overflow-anchor:none}';document.head.appendChild(s);setTimeout(function(){var root=document.getElementById('market2026Root'),x=document.getElementById('marketBootStabilizer');if(x&&root&&!root.classList.contains('market-load-guard-active')&&root.dataset.marketGuardReady!=='1')x.remove()},12000)}
 function isMainGuide(){return !/^\/rta-lab(?:\/|$)/i.test(location.pathname)}
+function grantMarketAccess(){try{sessionStorage.setItem('rtaMarket2026Access','1')}catch(e){}}
+function removeMarketLockUi(root){
+  if(!root)return;
+  root.querySelectorAll('[data-market-lock]').forEach(function(button){button.remove()})
+}
+function makeMarketPublic(){
+  if(!isMainGuide())return;
+  window.__rtaMarketPublicAccess=true;
+  grantMarketAccess();
+  var publicStyle=document.getElementById('marketPublicAccessStyle');
+  if(!publicStyle){
+    publicStyle=document.createElement('style');
+    publicStyle.id='marketPublicAccessStyle';
+    publicStyle.textContent='[data-tab="market2026"].market-lock-nav::after{display:none!important}#market2026Root [data-market-lock]{display:none!important}';
+    document.head.appendChild(publicStyle)
+  }
+  var button=document.querySelector('[data-tab="market2026"]');
+  if(button&&button.dataset.publicAccess!=='1'){
+    var publicButton=button.cloneNode(true);
+    publicButton.classList.remove('market-lock-nav');
+    publicButton.dataset.publicAccess='1';
+    publicButton.addEventListener('click',function(event){
+      event.preventDefault();
+      event.stopPropagation();
+      grantMarketAccess();
+      var modal=document.getElementById('market2026Modal');
+      if(modal)modal.remove();
+      if(typeof setRoute==='function')setRoute('market2026');else location.hash='#market2026'
+    });
+    button.replaceWith(publicButton)
+  }
+  var root=document.getElementById('market2026Root');
+  removeMarketLockUi(root);
+  if(root&&root.dataset.publicAccessWatch!=='1'&&window.MutationObserver){
+    root.dataset.publicAccessWatch='1';
+    new MutationObserver(function(){removeMarketLockUi(root)}).observe(root,{childList:true,subtree:true})
+  }
+  var route=(location.hash||'').replace(/^#/,'');
+  if(root&&route==='market2026'&&root.querySelector('[data-market-unlock]')){
+    grantMarketAccess();
+    setTimeout(function(){if(typeof setRoute==='function')setRoute('market2026');else location.hash='#market2026'},0)
+  }
+}
 function waitForMarket(){
   if(marketUiStarted||!isMainGuide())return;
   var root=document.getElementById('market2026Root');
@@ -41,7 +84,7 @@ function waitForMarket(){
   load('/assets/market-view-switcher.js?v=11');
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))},120)
 }
-function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=10',function(){waitForMarket()})}
+function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=10',function(){makeMarketPublic();waitForMarket()})}
 ensureLegalFooter();
 load('/assets/enhancements-core.js?v=8',function(){loadMarket()});
 })();
