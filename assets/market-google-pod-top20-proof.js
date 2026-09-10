@@ -1,6 +1,6 @@
 /* Reconcile public measurements with saved API evidence. A matching hash
    proves file integrity, not Google's authorship. No fabricated fallback. */
-(function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory(require('./market-google-pod-top20-core'));else root.RtaGooglePodProof=factory(root.RtaGooglePodTop20)})(typeof globalThis!=='undefined'?globalThis:this,function(core){
+(function(root,factory){'use strict';if(typeof module==='object'&&module.exports)module.exports=factory(require('./market-google-pod-top20-core'));else{root.RtaGooglePodProof=factory(root.RtaGooglePodTop20);if(typeof document!=='undefined'&&!document.getElementById('marketGoogleExtraTop10Script')){var s=document.createElement('script');s.id='marketGoogleExtraTop10Script';s.async=true;s.src='/assets/market-google-extra-top10.js?v=1';document.head.appendChild(s)}}})(typeof globalThis!=='undefined'?globalThis:this,function(core){
 'use strict';
 function stable(v){if(Array.isArray(v))return'['+v.map(stable).join(',')+']';if(v&&typeof v==='object')return'{'+Object.keys(v).sort().map(function(k){return JSON.stringify(k)+':'+stable(v[k])}).join(',')+'}';return JSON.stringify(v)}
 function rowView(rows){return rows.map(function(r){return{brand:r.brand,model:r.model,query:r.query,monthly_searches:r.monthly_searches,monthly_series:r.monthly_series,trend_pct:r.trend_pct,keyword_variants:r.keyword_variants}}).sort(function(a,b){return(a.brand+'|'+a.model).localeCompare(b.brand+'|'+b.model)})}
