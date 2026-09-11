@@ -10,7 +10,7 @@
     "completeFromRequestedStart": false,
     "historicalBackfillInvented": false
   },
-  "updatedAt": "2026-09-11T07:54:37.647Z",
+  "updatedAt": "2026-09-11T08:58:19.338Z",
   "methodology": {
     "actualSalesOnly": true,
     "noStockInference": true,
@@ -3997,15 +3997,18 @@
       "retailerId": "epotion",
       "category": "coil prebuilt",
       "product": "Aspire Rezistenta Nautilus BVC 0.7ohm",
-      "rank": 9,
+      "rank": 94,
       "observedAt": "2026-09-11",
-      "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+      "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://e-potion.ro/rezistenta-bvc-aspire-nautilus/",
-      "evidence": "verified-html-popularity-sort",
+      "evidence": "woocommerce-public-popularity-order",
       "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "Aspire",
       "rawProduct": "Rezistenta Aspire Nautilus BVC 0.7ohm",
       "canonicalProductKey": "aspire|rezistenta nautilus bvc 0 7ohm",
-      "brand": "Aspire",
       "rawProducts": [
         "Rezistenta Aspire Nautilus BVC 0.7ohm"
       ],
@@ -9630,18 +9633,72 @@
     {
       "retailerId": "smokee",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Longfill Hashtag / - Virginia",
+      "product": "Longfill Drops Tobacco Masters / - Chicago",
       "rank": 1,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/longfill-hashtag-6ml-60ml-virginia/",
+      "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-12ml-120ml-chicago/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Longfill Hashtag 6ml/60ml &#8211; Virginia",
-      "canonicalProductKey": "longfill hashtag virginia",
+      "rawProduct": "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago",
+      "canonicalProductKey": "longfill drops tobacco masters chicago",
       "brand": "",
       "rawProducts": [
-        "Longfill Hashtag 6ml/60ml &#8211; Virginia"
+        "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "accesoriu RTA/mod",
+      "product": "Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina - Strawberry Kiwi",
+      "rank": 2,
+      "observedAt": "2026-09-11",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/tigara-electronica-vaporesso-dojo-blast-2000-go-2000-pufuri-20-mg-nicotina-strawberry-kiwi/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi",
+      "canonicalProductKey": "vaporesso|dojo blast 2000 go 2000 pufuri 20 mg nicotina strawberry kiwi",
+      "brand": "Vaporesso",
+      "rawProducts": [
+        "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "sarma",
+      "product": "Rola Coilology - Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
+      "rank": 3,
+      "observedAt": "2026-09-11",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/rola-coilology-tricore-fused-clapton-wire-3m-ni80-3-28-36-1-73ohm-m/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
+      "canonicalProductKey": "rola coilology tricore fused clapton wire 3m ni80 3 28 36 1 73ohm m",
+      "brand": "Coilology",
+      "rawProducts": [
+        "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "POD",
+      "product": "Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
+      "rank": 4,
+      "observedAt": "2026-09-11",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/kit-tigara-electronica-snowplus-clic-5000-pufuri/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
+      "canonicalProductKey": "snowplus click 5000 pufuri strawberry kiwi 2 nicotina",
+      "brand": "",
+      "rawProducts": [
+        "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina"
       ],
       "variantCount": 1
     },
@@ -9649,163 +9706,53 @@
       "retailerId": "smokee",
       "category": "POD",
       "product": "Geekvape Sonder Q2",
-      "rank": 2,
-      "observedAt": "2026-09-11",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-peach/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach",
-      "canonicalProductKey": "geekvape|sonder q2",
-      "brand": "Geekvape",
-      "rawProducts": [
-        "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "Lost Vape Cartus de Rezerva E Plus Dual Mesh - 0.3 Ohm",
-      "rank": 3,
-      "observedAt": "2026-09-11",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-lost-vape-e-plus-dual-mesh-3ml-0-3-ohm/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm",
-      "canonicalProductKey": "lost vape|cartus de rezerva e plus dual mesh 0 3 ohm",
-      "brand": "Lost Vape",
-      "rawProducts": [
-        "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Space",
-      "rank": 4,
-      "observedAt": "2026-09-11",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-      "canonicalProductKey": "eleaf|istick pico plus space",
-      "brand": "Eleaf",
-      "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Light",
       "rank": 5,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-light-grey/",
+      "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-mint/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey",
-      "canonicalProductKey": "eleaf|istick pico plus light",
-      "brand": "Eleaf",
+      "rawProduct": "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint",
+      "canonicalProductKey": "geekvape|sonder q2",
+      "brand": "Geekvape",
       "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey"
+        "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus",
+      "category": "POD",
+      "product": "OXVA Vprime 2",
       "rank": 6,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+      "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-shard-gold/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
-      "canonicalProductKey": "eleaf|istick pico plus",
-      "brand": "Eleaf",
+      "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold",
+      "canonicalProductKey": "oxva|vprime 2",
+      "brand": "OXVA",
       "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "vaperia",
-      "category": "POD",
-      "product": "Geekvape Wenax M2 Leather Edition",
-      "rank": 1,
-      "observedAt": "2026-09-11",
-      "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/kit-tigara-electronica/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-      "canonicalProductKey": "geekvape|wenax m2 leather edition",
-      "brand": "Geekvape",
-      "rawProducts": [
-        "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-        "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Volcanic Black",
-        "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Wine Red"
-      ],
-      "variantCount": 3
-    },
-    {
-      "retailerId": "vaperia",
-      "category": "mod",
-      "product": "MechVape Paramour V2, - Full",
-      "rank": 2,
-      "observedAt": "2026-09-11",
-      "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
-      "canonicalProductKey": "mechvape|paramour v2 full",
-      "brand": "MechVape",
-      "rawProducts": [
-        "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "vaperia",
-      "category": "accesoriu RTA/mod",
-      "product": "Lost Mary Cartus Pomme Peche Tappo 20mg",
-      "rank": 3,
-      "observedAt": "2026-09-11",
-      "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/consumabile-pod/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
-      "canonicalProductKey": "lost mary|cartus pomme peche tappo 20mg",
-      "brand": "Lost Mary",
-      "rawProducts": [
-        "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary"
+        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "vaperia",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Chemnovatic, Bright Tobacco",
-      "rank": 4,
+      "product": "Aroma BURLEY Twenty One, TNT",
+      "rank": 1,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/lichide-80-4/aroma-chemnovatic-bright-tobacco-10ml.html",
+      "productUrl": "https://vaperia.ro/lichide-80-4/aroma-burley-twenty-one-10ml-tnt-vape.html",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Aroma Chemnovatic, Bright Tobacco 10ml",
-      "canonicalProductKey": "aroma chemnovatic bright tobacco",
+      "rawProduct": "Aroma BURLEY Twenty One 10ml, TNT Vape",
+      "canonicalProductKey": "aroma burley twenty one tnt",
       "brand": "",
       "rawProducts": [
-        "Aroma Chemnovatic, Bright Tobacco 10ml"
+        "Aroma BURLEY Twenty One 10ml, TNT Vape"
       ],
       "variantCount": 1
     },
@@ -9813,7 +9760,7 @@
       "retailerId": "vaperia",
       "category": "accesoriu RTA/mod",
       "product": "Voopoo Cartus Vmate V3 0.7ohm",
-      "rank": 5,
+      "rank": 2,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
       "productUrl": "https://vaperia.ro/consumabile-pod/cartus-vmate-v3-0-7ohm-voopoo.html",
@@ -9829,19 +9776,73 @@
     },
     {
       "retailerId": "vaperia",
+      "category": "POD",
+      "product": "Aspire TUBINO",
+      "rank": 3,
+      "observedAt": "2026-09-11",
+      "source": "https://vaperia.ro/?orderby=popularity",
+      "productUrl": "https://vaperia.ro/kit-tigara-electronica/pod-tubino-1200mah-aspire-black.html",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Pod TUBINO 1200mAh, Aspire - Black",
+      "canonicalProductKey": "aspire|tubino",
+      "brand": "Aspire",
+      "rawProducts": [
+        "Pod TUBINO 1200mAh, Aspire - Black"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma VIRGINIA Twenty One, TNT",
+      "rank": 4,
+      "observedAt": "2026-09-11",
+      "source": "https://vaperia.ro/?orderby=popularity",
+      "productUrl": "https://vaperia.ro/lichide-80-4/aroma-virginia-twenty-one-10ml-tnt-vape.html",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Aroma VIRGINIA Twenty One 10ml, TNT Vape",
+      "canonicalProductKey": "aroma virginia twenty one tnt",
+      "brand": "",
+      "rawProducts": [
+        "Aroma VIRGINIA Twenty One 10ml, TNT Vape"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "vaperia",
       "category": "accesoriu RTA/mod",
-      "product": "Aspire Cartus Tubino 0.8ohm",
+      "product": "Lost Mary Usa Mix Tappo Air, 20mg",
+      "rank": 5,
+      "observedAt": "2026-09-11",
+      "source": "https://vaperia.ro/?orderby=popularity",
+      "productUrl": "https://vaperia.ro/incepator-3-4/kit-usa-mix-tappo-air-lost-mary-20mg.html",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Kit Usa Mix Tappo Air, Lost Mary 20mg",
+      "canonicalProductKey": "lost mary|usa mix tappo air 20mg",
+      "brand": "Lost Mary",
+      "rawProducts": [
+        "Kit Usa Mix Tappo Air, Lost Mary 20mg"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "POD",
+      "product": "Geekvape Mustiuc soft - touch Wenax M1 ( 2buc )",
       "rank": 6,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/branduri-10-4/cartus-tubino-kit-0-8ohm-aspire.html",
+      "productUrl": "https://vaperia.ro/accesorii-56-4/mustiuc-soft-touch-wenax-m1-2buc-geekvape.html",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Cartus Tubino Kit 0.8ohm, Aspire",
-      "canonicalProductKey": "aspire|cartus tubino 0 8ohm",
-      "brand": "Aspire",
+      "rawProduct": "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape",
+      "canonicalProductKey": "geekvape|mustiuc soft touch wenax m1 2buc",
+      "brand": "Geekvape",
       "rawProducts": [
-        "Cartus Tubino Kit 0.8ohm, Aspire"
+        "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape"
       ],
       "variantCount": 1
     },
@@ -9866,19 +9867,37 @@
     },
     {
       "retailerId": "vaperia",
-      "category": "POD",
-      "product": "Voopoo Drag X3 PnP X",
+      "category": "coil prebuilt",
+      "product": "Rezistente Fused NI80 2X30/40 0.85Ω, Crazy Fab Coils",
       "rank": 8,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/kit/kit-drag-x3-pnp-x-voopoo-french-riviera.html",
+      "productUrl": "https://vaperia.ro/atomizoare/rezistente-fused-mtl-ni80-2x30-40-0-85%CF%89-crazy-fab-coils.html",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Kit Drag X3 PnP X , Voopoo - French Riviera",
-      "canonicalProductKey": "voopoo|drag x3 pnp x",
-      "brand": "Voopoo",
+      "rawProduct": "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils",
+      "canonicalProductKey": "rezistente fused ni80 2x30 40 0 85 crazy fab coils",
+      "brand": "",
       "rawProducts": [
-        "Kit Drag X3 PnP X , Voopoo - French Riviera"
+        "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "mod",
+      "product": "MechVape Paramour V2, - Full",
+      "rank": 9,
+      "observedAt": "2026-09-11",
+      "source": "https://vaperia.ro/?orderby=popularity",
+      "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
+      "canonicalProductKey": "mechvape|paramour v2 full",
+      "brand": "MechVape",
+      "rawProducts": [
+        "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver"
       ],
       "variantCount": 1
     },
@@ -9886,7 +9905,7 @@
       "retailerId": "vaperia",
       "category": "mod",
       "product": "Nitrous Pocket Edition, Nitrous X VRK",
-      "rank": 9,
+      "rank": 11,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
       "productUrl": "https://vaperia.ro/nitrous-x-vrk/mod-nitrous-pocket-black-edition-80w-18650-nitrous-x-vrk-black.html",
@@ -9902,37 +9921,19 @@
     },
     {
       "retailerId": "vaperia",
-      "category": "coil prebuilt",
-      "product": "Rezistente Fused NI80 2X30/40 0.85Ω, Crazy Fab Coils",
-      "rank": 9,
-      "observedAt": "2026-09-11",
-      "source": "https://vaperia.ro/rezistente-d-i-y?orderby=popularity",
-      "productUrl": "https://vaperia.ro/rezistente-d-i-y/rezistente-fused-mtl-ni80-2x30-40-0-85%CF%89-crazy-fab-coils.html",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils",
-      "canonicalProductKey": "rezistente fused ni80 2x30 40 0 85 crazy fab coils",
-      "brand": "",
-      "rawProducts": [
-        "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "vaperia",
       "category": "POD",
-      "product": "Geekvape Mustiuc soft - touch Wenax M1 ( 2buc )",
+      "product": "Voopoo Drag X3 PnP X",
       "rank": 12,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/accesorii-56-4/mustiuc-soft-touch-wenax-m1-2buc-geekvape.html",
+      "productUrl": "https://vaperia.ro/kit/kit-drag-x3-pnp-x-voopoo-french-riviera.html",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape",
-      "canonicalProductKey": "geekvape|mustiuc soft touch wenax m1 2buc",
-      "brand": "Geekvape",
+      "rawProduct": "Kit Drag X3 PnP X , Voopoo - French Riviera",
+      "canonicalProductKey": "voopoo|drag x3 pnp x",
+      "brand": "Voopoo",
       "rawProducts": [
-        "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape"
+        "Kit Drag X3 PnP X , Voopoo - French Riviera"
       ],
       "variantCount": 1
     },
@@ -9957,6 +9958,24 @@
     {
       "retailerId": "vaperia",
       "category": "accesoriu RTA/mod",
+      "product": "Lost Mary Cartus Pomme Peche Tappo 20mg",
+      "rank": 14,
+      "observedAt": "2026-09-11",
+      "source": "https://vaperia.ro/?orderby=popularity",
+      "productUrl": "https://vaperia.ro/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
+      "canonicalProductKey": "lost mary|cartus pomme peche tappo 20mg",
+      "brand": "Lost Mary",
+      "rawProducts": [
+        "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "accesoriu RTA/mod",
       "product": "Lost Mary Cartus Cola Tappo 20mg",
       "rank": 15,
       "observedAt": "2026-09-11",
@@ -9969,24 +9988,6 @@
       "brand": "Lost Mary",
       "rawProducts": [
         "Cartus Cola Tappo 20mg 2ml, Lost Mary"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "vaperia",
-      "category": "accesoriu RTA/mod",
-      "product": "Lost Mary Usa Mix Tappo Air, 20mg",
-      "rank": 16,
-      "observedAt": "2026-09-11",
-      "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/kit-usa-mix-tappo-air-lost-mary-20mg.html",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Kit Usa Mix Tappo Air, Lost Mary 20mg",
-      "canonicalProductKey": "lost mary|usa mix tappo air 20mg",
-      "brand": "Lost Mary",
-      "rawProducts": [
-        "Kit Usa Mix Tappo Air, Lost Mary 20mg"
       ],
       "variantCount": 1
     },
@@ -10068,20 +10069,22 @@
     {
       "retailerId": "vaperia",
       "category": "POD",
-      "product": "Aspire TUBINO",
-      "rank": 28,
+      "product": "Geekvape Wenax M2 Leather Edition",
+      "rank": 23,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/pod-tubino-1200mah-aspire-black.html",
+      "productUrl": "https://vaperia.ro/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Pod TUBINO 1200mAh, Aspire - Black",
-      "canonicalProductKey": "aspire|tubino",
-      "brand": "Aspire",
+      "rawProduct": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
+      "canonicalProductKey": "geekvape|wenax m2 leather edition",
+      "brand": "Geekvape",
       "rawProducts": [
-        "Pod TUBINO 1200mAh, Aspire - Black"
+        "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
+        "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Volcanic Black",
+        "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Wine Red"
       ],
-      "variantCount": 1
+      "variantCount": 3
     },
     {
       "retailerId": "vaperia",
@@ -10605,6 +10608,24 @@
       "brand": "La Tabaccheria",
       "rawProducts": [
         "Cartus LION Pod 0.8ohm, La Tabaccheria"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "vaperia",
+      "category": "accesoriu RTA/mod",
+      "product": "Aspire Cartus Tubino 0.8ohm",
+      "rank": 65,
+      "observedAt": "2026-09-11",
+      "source": "https://vaperia.ro/?orderby=popularity",
+      "productUrl": "https://vaperia.ro/cartus-tubino-kit-0-8ohm-aspire.html",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Cartus Tubino Kit 0.8ohm, Aspire",
+      "canonicalProductKey": "aspire|cartus tubino 0 8ohm",
+      "brand": "Aspire",
+      "rawProducts": [
+        "Cartus Tubino Kit 0.8ohm, Aspire"
       ],
       "variantCount": 1
     },
@@ -13886,8 +13907,28 @@
     {
       "retailerId": "vapetronic",
       "category": "mod",
-      "product": "MechVape Nitrous Pocket Peek Edition Nitro Access",
+      "product": "MQ Plus SXmini",
       "rank": 22,
+      "observedAt": "2026-09-11",
+      "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+      "productUrl": "https://vapetronic.ro/produs/mod-mq-plus-sxmini-black/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Mod MQ Plus SXmini Black",
+      "canonicalProductKey": "mq plus sxmini",
+      "brand": "",
+      "rawProducts": [
+        "Mod MQ Plus SXmini Black",
+        "Mod MQ Plus SXmini Silver",
+        "Mod MQ Plus SXmini Gunmetal"
+      ],
+      "variantCount": 3
+    },
+    {
+      "retailerId": "vapetronic",
+      "category": "mod",
+      "product": "MechVape Nitrous Pocket Peek Edition Nitro Access",
+      "rank": 25,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-nitrous-pocket-peek-edition-mechvape-nitro-access/",
@@ -13905,7 +13946,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "MechVape Nitrous Pocket Nitro Access",
-      "rank": 23,
+      "rank": 26,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-nitrous-pocket-mechvape-nitro-access/",
@@ -13923,7 +13964,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Blade DNA 60 Vypers Vapes x Wick’d Graphite",
-      "rank": 25,
+      "rank": 28,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-blade-dna-60-vypers-vapes-x-wickd-graphite-black/",
@@ -13941,7 +13982,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Harrier DNA 60c Early Bird Gun Metal",
-      "rank": 27,
+      "rank": 30,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-harrier-dna-60c-early-bird-gun-metal/",
@@ -13959,7 +14000,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Hammer Of God 200 Vaperz Cloud Classic",
-      "rank": 28,
+      "rank": 31,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-hammer-of-god-200-vaperz-cloud-classic-black/",
@@ -13977,7 +14018,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "LVE Boson Boro DNA80c Vapor",
-      "rank": 29,
+      "rank": 32,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-boson-boro-dna80c-black-lve-vapor/",
@@ -13995,7 +14036,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Geekvape S100 Aegis Solo 2",
-      "rank": 30,
+      "rank": 33,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-s100-aegis-solo-2-geekvape-navy-blue/",
@@ -14013,7 +14054,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "DotMod Dotbox",
-      "rank": 31,
+      "rank": 34,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-dotmod-dotbox-100w-black/",
@@ -14032,7 +14073,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Aspire MIXX, Quick",
-      "rank": 32,
+      "rank": 35,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-quick-silver/",
@@ -14050,7 +14091,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Aspire MIXX, Jet",
-      "rank": 33,
+      "rank": 36,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-jet-black/",
@@ -14068,7 +14109,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Aspire MIXX, Tuxedo",
-      "rank": 34,
+      "rank": 37,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-tuxedo/",
@@ -14086,7 +14127,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Aspire Zelos X",
-      "rank": 35,
+      "rank": 38,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-aspire-zelos-x-full-black/",
@@ -14104,7 +14145,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "MQ Class SXmini",
-      "rank": 36,
+      "rank": 39,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-mq-class-sxmini-black/",
@@ -14124,7 +14165,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Voopoo Musket Poppy",
-      "rank": 40,
+      "rank": 43,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-musket-voopoo-poppy-red/",
@@ -14142,7 +14183,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Ambition Mods Converter",
-      "rank": 41,
+      "rank": 44,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-converter-ambition-mods-ss-black/",
@@ -14160,7 +14201,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Techmod -Kizoku-Gun Metal",
-      "rank": 42,
+      "rank": 45,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-techmod-80w-tc-kizoku-gun-metal/",
@@ -14178,7 +14219,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "BD Vape Rayden 100 V2",
-      "rank": 43,
+      "rank": 46,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-rayden-100-v2-bd-vape-silver/",
@@ -14196,7 +14237,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "DotMod Dotbox Brown",
-      "rank": 44,
+      "rank": 47,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-dotmod-dotbox-100w-brown/",
@@ -14214,7 +14255,7 @@
       "retailerId": "vapetronic",
       "category": "mod",
       "product": "Dovpo Odin V2 Mini Vaperz Cloud x x Vaping Bogan",
-      "rank": 46,
+      "rank": 49,
       "observedAt": "2026-09-11",
       "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/mod-odin-v2-mini-vaperz-cloud-x-dovpo-x-vaping-bogan-matte-black/",
@@ -14225,42 +14266,6 @@
       "brand": "Dovpo",
       "rawProducts": [
         "Mod Odin V2 Mini Vaperz Cloud x Dovpo x Vaping Bogan Matte Black"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "vapetronic",
-      "category": "mod",
-      "product": "Lost Vape Thelema Solo 100 Pro",
-      "rank": 47,
-      "observedAt": "2026-09-11",
-      "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
-      "productUrl": "https://vapetronic.ro/produs/mod-thelema-solo-100-pro-lost-vape-carbon-black/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod Thelema Solo 100 Pro Lost Vape Carbon Black",
-      "canonicalProductKey": "lost vape|thelema solo 100 pro",
-      "brand": "Lost Vape",
-      "rawProducts": [
-        "Mod Thelema Solo 100 Pro Lost Vape Carbon Black"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "vapetronic",
-      "category": "mod",
-      "product": "Lost Vape Thelema Solo Carbon Fiber",
-      "rank": 48,
-      "observedAt": "2026-09-11",
-      "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
-      "productUrl": "https://vapetronic.ro/produs/mod-thelema-solo-lost-vape-black-carbon-fiber/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod Thelema Solo Lost Vape Black Carbon Fiber",
-      "canonicalProductKey": "lost vape|thelema solo carbon fiber",
-      "brand": "Lost Vape",
-      "rawProducts": [
-        "Mod Thelema Solo Lost Vape Black Carbon Fiber"
       ],
       "variantCount": 1
     },
@@ -16347,6 +16352,24 @@
     },
     {
       "retailerId": "epotion",
+      "category": "accesoriu RTA/mod",
+      "product": "Vaporesso Cartus Xros Mesh 0,6Ω Corex 2",
+      "rank": 9,
+      "observedAt": "2026-09-11",
+      "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+      "productUrl": "https://e-potion.ro/cartus-vaporesso-xros-mesh-06%cf%89-2ml-corex-2/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Cartus Vaporesso Xros Mesh 0,6Ω 2ml Corex 2",
+      "canonicalProductKey": "vaporesso|cartus xros mesh 0 6 corex 2",
+      "brand": "Vaporesso",
+      "rawProducts": [
+        "Cartus Vaporesso Xros Mesh 0,6Ω 2ml Corex 2"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "epotion",
       "category": "bumbac/wick",
       "product": "Wick N Vape Bumbac Cotton Bacon Prime",
       "rank": 1,
@@ -17335,15 +17358,15 @@
       "rank": 1,
       "observedAt": "2026-09-11",
       "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
+      "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-blueberry-sour-raspberry",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
+      "rawProduct": "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
       "canonicalProductKey": "vozol|switch pro 2",
       "brand": "Vozol",
       "rawProducts": [
-        "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
         "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
+        "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
         "Kit Vozol Switch Pro 2 - Mr Blue"
       ],
       "variantCount": 3
@@ -17352,7 +17375,7 @@
       "retailerId": "voore",
       "category": "accesoriu RTA/mod",
       "product": "Elf Bar Mate 500 Aurora - Baterie + Cartus RF350",
-      "rank": 4,
+      "rank": 3,
       "observedAt": "2026-09-11",
       "source": "https://www.voore.ro/?orderby=popularity",
       "productUrl": "https://www.voore.ro/kit-elf-bar-mate-500-aurora-blue-cartus-rf350",
@@ -17621,18 +17644,18 @@
     {
       "retailerId": "voore",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Oops! - SE Tobacco",
+      "product": "Aroma Oops! - Coffee Tobacco",
       "rank": 19,
       "observedAt": "2026-09-11",
       "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+      "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Aroma Oops! - SE Tobacco 10ml",
-      "canonicalProductKey": "aroma oops se tobacco",
+      "rawProduct": "Aroma Oops! - Coffee Tobacco 10ml",
+      "canonicalProductKey": "aroma oops coffee tobacco",
       "brand": "",
       "rawProducts": [
-        "Aroma Oops! - SE Tobacco 10ml"
+        "Aroma Oops! - Coffee Tobacco 10ml"
       ],
       "variantCount": 1
     },
@@ -17651,24 +17674,6 @@
       "brand": "",
       "rawProducts": [
         "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "voore",
-      "category": "lichid tutunos/NET/DIY",
-      "product": "Aroma Oops! - Coffee Tobacco",
-      "rank": 21,
-      "observedAt": "2026-09-11",
-      "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Aroma Oops! - Coffee Tobacco 10ml",
-      "canonicalProductKey": "aroma oops coffee tobacco",
-      "brand": "",
-      "rawProducts": [
-        "Aroma Oops! - Coffee Tobacco 10ml"
       ],
       "variantCount": 1
     },
@@ -20325,7 +20330,7 @@
   ],
   "actualSales": [],
   "summary": {
-    "generatedAt": "2026-09-11T07:54:53.510Z",
+    "generatedAt": "2026-09-11T08:58:31.215Z",
     "observedBestsellerIndex": {
       "method": "reciprocal-rank aggregation of Tier-B public popularity/bestseller lists; WooCommerce popularity is lifetime-cumulative total_sales ordering, not sales in the selected period or unit market share",
       "coveragePct": 90.9,
@@ -20352,11 +20357,6 @@
           "sharePct": 1.37
         },
         {
-          "name": "Geekvape Sonder Q2",
-          "value": 1.5145,
-          "sharePct": 1.03
-        },
-        {
           "name": "JAC Vapour Set 5 Rezistente S-Coil 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
           "value": 1.5,
           "sharePct": 1.02
@@ -20365,6 +20365,11 @@
           "name": "JAC Vapour VIM AIO Slate",
           "value": 1.3333,
           "sharePct": 0.91
+        },
+        {
+          "name": "Geekvape Sonder Q2",
+          "value": 1.2145,
+          "sharePct": 0.83
         },
         {
           "name": "JAC Vapour VIM",
@@ -20442,12 +20447,12 @@
           "sharePct": 0.68
         },
         {
-          "name": "Longfill Hashtag / - Virginia",
+          "name": "Longfill Drops Tobacco Masters / - Chicago",
           "value": 1,
           "sharePct": 0.68
         },
         {
-          "name": "Geekvape Wenax M2 Leather Edition",
+          "name": "Aroma BURLEY Twenty One, TNT",
           "value": 1,
           "sharePct": 0.68
         },
@@ -20585,136 +20590,141 @@
       "topBrands": [
         {
           "name": "Aspire",
-          "value": 11.691,
-          "sharePct": 14.31
-        },
-        {
-          "name": "Geekvape",
-          "value": 8.2918,
-          "sharePct": 10.15
+          "value": 11.727,
+          "sharePct": 14.57
         },
         {
           "name": "Vozol",
           "value": 7.807,
-          "sharePct": 9.56
+          "sharePct": 9.7
         },
         {
           "name": "Vaporesso",
-          "value": 7.1193,
-          "sharePct": 8.71
+          "value": 7.7304,
+          "sharePct": 9.61
+        },
+        {
+          "name": "Geekvape",
+          "value": 7.1156,
+          "sharePct": 8.84
         },
         {
           "name": "JAC Vapour",
           "value": 6.3095,
-          "sharePct": 7.72
+          "sharePct": 7.84
         },
         {
           "name": "Voopoo",
-          "value": 4.2713,
-          "sharePct": 5.23
+          "value": 4.5279,
+          "sharePct": 5.63
         },
         {
           "name": "OXVA",
-          "value": 3.6251,
-          "sharePct": 4.44
+          "value": 3.7918,
+          "sharePct": 4.71
         },
         {
           "name": "Vandy Vape",
           "value": 3.5244,
-          "sharePct": 4.31
+          "sharePct": 4.38
         },
         {
           "name": "Hellvape",
           "value": 2.9179,
-          "sharePct": 3.57
+          "sharePct": 3.63
         },
         {
           "name": "Wotofo",
           "value": 2.6727,
-          "sharePct": 3.27
+          "sharePct": 3.32
         },
         {
           "name": "Wick N Vape",
           "value": 2.454,
-          "sharePct": 3
+          "sharePct": 3.05
         },
         {
           "name": "Ambition Mods",
-          "value": 2.4366,
-          "sharePct": 2.98
-        },
-        {
-          "name": "Eleaf",
-          "value": 2.0886,
-          "sharePct": 2.56
+          "value": 2.4349,
+          "sharePct": 3.03
         },
         {
           "name": "BP Mods",
           "value": 2.0856,
-          "sharePct": 2.55
+          "sharePct": 2.59
         },
         {
           "name": "Innokin",
           "value": 1.8363,
-          "sharePct": 2.25
+          "sharePct": 2.28
         },
         {
           "name": "Uwell",
           "value": 1.5757,
-          "sharePct": 1.93
+          "sharePct": 1.96
+        },
+        {
+          "name": "Eleaf",
+          "value": 1.4719,
+          "sharePct": 1.83
         },
         {
           "name": "Elf Bar",
-          "value": 1.3488,
-          "sharePct": 1.65
-        },
-        {
-          "name": "Lost Vape",
-          "value": 1.2506,
-          "sharePct": 1.53
+          "value": 1.4322,
+          "sharePct": 1.78
         },
         {
           "name": "BD Vape",
-          "value": 1.0899,
-          "sharePct": 1.33
+          "value": 1.0884,
+          "sharePct": 1.35
         },
         {
           "name": "Fumytech",
           "value": 1.0313,
-          "sharePct": 1.26
+          "sharePct": 1.28
         },
         {
           "name": "UD",
           "value": 0.9167,
-          "sharePct": 1.12
+          "sharePct": 1.14
+        },
+        {
+          "name": "Lost Vape",
+          "value": 0.8751,
+          "sharePct": 1.09
         },
         {
           "name": "Lost Mary",
-          "value": 0.8525,
-          "sharePct": 1.04
-        },
-        {
-          "name": "MechVape",
-          "value": 0.8087,
-          "sharePct": 0.99
+          "value": 0.7281,
+          "sharePct": 0.9
         },
         {
           "name": "SvoëMesto",
           "value": 0.5833,
-          "sharePct": 0.71
+          "sharePct": 0.72
         },
         {
           "name": "Vapefly",
           "value": 0.5625,
-          "sharePct": 0.69
+          "sharePct": 0.7
         },
         {
           "name": "Ennequadro Mods",
           "value": 0.5,
-          "sharePct": 0.61
+          "sharePct": 0.62
+        },
+        {
+          "name": "MechVape",
+          "value": 0.4094,
+          "sharePct": 0.51
         },
         {
           "name": "Taifun",
+          "value": 0.3333,
+          "sharePct": 0.41
+        },
+        {
+          "name": "Coilology",
           "value": 0.3333,
           "sharePct": 0.41
         },
@@ -20726,34 +20736,34 @@
         {
           "name": "ThunderCloud",
           "value": 0.2548,
-          "sharePct": 0.31
-        },
-        {
-          "name": "CoilTurd",
-          "value": 0.2226,
-          "sharePct": 0.27
+          "sharePct": 0.32
         }
       ],
       "topCategories": [
         {
           "name": "accesoriu RTA/mod",
-          "value": 33.8033,
-          "sharePct": 23.08
+          "value": 34.1887,
+          "sharePct": 23.34
         },
         {
           "name": "coil prebuilt",
-          "value": 18.5567,
-          "sharePct": 12.67
+          "value": 18.4701,
+          "sharePct": 12.61
         },
         {
           "name": "POD",
-          "value": 14.1426,
-          "sharePct": 9.66
+          "value": 13.642,
+          "sharePct": 9.31
         },
         {
           "name": "acumulator",
           "value": 12.098,
           "sharePct": 8.26
+        },
+        {
+          "name": "lichid tutunos/NET/DIY",
+          "value": 11.4543,
+          "sharePct": 7.82
         },
         {
           "name": "RTA",
@@ -20762,13 +20772,8 @@
         },
         {
           "name": "mod",
-          "value": 11.0676,
-          "sharePct": 7.56
-        },
-        {
-          "name": "lichid tutunos/NET/DIY",
-          "value": 10.5019,
-          "sharePct": 7.17
+          "value": 9.9929,
+          "sharePct": 6.82
         },
         {
           "name": "bumbac/wick",
@@ -20777,8 +20782,8 @@
         },
         {
           "name": "sarma",
-          "value": 8.132,
-          "sharePct": 5.55
+          "value": 8.4653,
+          "sharePct": 5.78
         },
         {
           "name": "RDA/RDTA",
@@ -20907,17 +20912,17 @@
             "sharePct": 1.85
           },
           {
-            "name": "Longfill Hashtag / - Virginia",
+            "name": "Longfill Drops Tobacco Masters / - Chicago",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Geekvape Sonder Q2",
+            "name": "Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina - Strawberry Kiwi",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Lost Vape Cartus de Rezerva E Plus Dual Mesh - 0.3 Ohm",
+            "name": "Rola Coilology - Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
             "value": 0,
             "sharePct": 0
           },
@@ -20927,7 +20932,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Space",
+            "name": "Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
             "value": 0,
             "sharePct": 0
           },
@@ -20937,7 +20942,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Light",
+            "name": "Geekvape Sonder Q2",
             "value": 0,
             "sharePct": 0
           },
@@ -20947,7 +20952,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus",
+            "name": "OXVA Vprime 2",
             "value": 0,
             "sharePct": 0
           },
@@ -21044,12 +21049,7 @@
             "sharePct": 6.06
           },
           {
-            "name": "Geekvape",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Lost Vape",
+            "name": "Coilology",
             "value": 0,
             "sharePct": 0
           },
@@ -21059,7 +21059,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf",
+            "name": "Geekvape",
             "value": 0,
             "sharePct": 0
           },
@@ -21089,17 +21089,7 @@
             "sharePct": 0
           },
           {
-            "name": "MechVape",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Ennequadro Mods",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Lost Mary",
             "value": 0,
             "sharePct": 0
           },
@@ -21115,6 +21105,11 @@
           },
           {
             "name": "Vapefly",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Elf Bar",
             "value": 0,
             "sharePct": 0
           }
@@ -21151,7 +21146,7 @@
             "sharePct": 3.7
           },
           {
-            "name": "mod",
+            "name": "sarma",
             "value": 0,
             "sharePct": 0
           },
@@ -21167,11 +21162,6 @@
           },
           {
             "name": "componente RTA",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "sarma",
             "value": 0,
             "sharePct": 0
           },
@@ -21192,17 +21182,17 @@
       "viewCount": {
         "topProducts": [
           {
-            "name": "Longfill Hashtag / - Virginia",
+            "name": "Longfill Drops Tobacco Masters / - Chicago",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Geekvape Sonder Q2",
+            "name": "Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina - Strawberry Kiwi",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Lost Vape Cartus de Rezerva E Plus Dual Mesh - 0.3 Ohm",
+            "name": "Rola Coilology - Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
             "value": 0,
             "sharePct": 0
           },
@@ -21212,7 +21202,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Space",
+            "name": "Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
             "value": 0,
             "sharePct": 0
           },
@@ -21222,7 +21212,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Light",
+            "name": "Geekvape Sonder Q2",
             "value": 0,
             "sharePct": 0
           },
@@ -21232,7 +21222,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus",
+            "name": "OXVA Vprime 2",
             "value": 0,
             "sharePct": 0
           },
@@ -21394,12 +21384,12 @@
         ],
         "topBrands": [
           {
-            "name": "Geekvape",
+            "name": "Vaporesso",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Lost Vape",
+            "name": "Coilology",
             "value": 0,
             "sharePct": 0
           },
@@ -21409,7 +21399,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf",
+            "name": "Geekvape",
             "value": 0,
             "sharePct": 0
           },
@@ -21444,11 +21434,6 @@
             "sharePct": 0
           },
           {
-            "name": "Vaporesso",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Hellvape",
             "value": 0,
             "sharePct": 0
@@ -21459,17 +21444,7 @@
             "sharePct": 0
           },
           {
-            "name": "MechVape",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Ennequadro Mods",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Lost Mary",
             "value": 0,
             "sharePct": 0
           },
@@ -21487,6 +21462,11 @@
             "name": "Vapefly",
             "value": 0,
             "sharePct": 0
+          },
+          {
+            "name": "Elf Bar",
+            "value": 0,
+            "sharePct": 0
           }
         ],
         "topCategories": [
@@ -21496,17 +21476,17 @@
             "sharePct": 0
           },
           {
-            "name": "POD",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "accesoriu RTA/mod",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "mod",
+            "name": "sarma",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "POD",
             "value": 0,
             "sharePct": 0
           },
@@ -21541,11 +21521,6 @@
             "sharePct": 0
           },
           {
-            "name": "sarma",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "RBA/bridge",
             "value": 0,
             "sharePct": 0
@@ -21561,7 +21536,7 @@
             "sharePct": 8.33
           },
           {
-            "name": "Geekvape Wenax M2 Leather Edition",
+            "name": "Aroma BURLEY Twenty One, TNT",
             "value": 980,
             "sharePct": 8.33
           },
@@ -21581,7 +21556,7 @@
             "sharePct": 8.33
           },
           {
-            "name": "MechVape Paramour V2, - Full",
+            "name": "Voopoo Cartus Vmate V3 0.7ohm",
             "value": 980,
             "sharePct": 8.33
           },
@@ -21606,7 +21581,7 @@
             "sharePct": 8.33
           },
           {
-            "name": "Lost Mary Cartus Pomme Peche Tappo 20mg",
+            "name": "Aspire TUBINO",
             "value": 980,
             "sharePct": 8.33
           },
@@ -21621,17 +21596,17 @@
             "sharePct": 0.02
           },
           {
-            "name": "Longfill Hashtag / - Virginia",
+            "name": "Longfill Drops Tobacco Masters / - Chicago",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Geekvape Sonder Q2",
+            "name": "Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina - Strawberry Kiwi",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Lost Vape Cartus de Rezerva E Plus Dual Mesh - 0.3 Ohm",
+            "name": "Rola Coilology - Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
             "value": 0,
             "sharePct": 0
           },
@@ -21641,7 +21616,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Space",
+            "name": "Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
             "value": 0,
             "sharePct": 0
           },
@@ -21651,7 +21626,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Light",
+            "name": "Geekvape Sonder Q2",
             "value": 0,
             "sharePct": 0
           },
@@ -21661,7 +21636,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus",
+            "name": "OXVA Vprime 2",
             "value": 0,
             "sharePct": 0
           },
@@ -21758,49 +21733,34 @@
         ],
         "topBrands": [
           {
-            "name": "Ambition Mods",
-            "value": 1960,
-            "sharePct": 20
-          },
-          {
-            "name": "Geekvape",
-            "value": 980,
-            "sharePct": 10
-          },
-          {
             "name": "Voopoo",
-            "value": 980,
-            "sharePct": 10
+            "value": 1960,
+            "sharePct": 22.22
           },
           {
             "name": "Aspire",
-            "value": 980,
-            "sharePct": 10
+            "value": 1960,
+            "sharePct": 22.22
+          },
+          {
+            "name": "Ambition Mods",
+            "value": 1960,
+            "sharePct": 22.22
           },
           {
             "name": "Hellvape",
             "value": 980,
-            "sharePct": 10
-          },
-          {
-            "name": "MechVape",
-            "value": 980,
-            "sharePct": 10
+            "sharePct": 11.11
           },
           {
             "name": "Ennequadro Mods",
             "value": 980,
-            "sharePct": 10
-          },
-          {
-            "name": "Lost Mary",
-            "value": 980,
-            "sharePct": 10
+            "sharePct": 11.11
           },
           {
             "name": "SvoëMesto",
             "value": 980,
-            "sharePct": 10
+            "sharePct": 11.11
           },
           {
             "name": "Vandy Vape",
@@ -21808,7 +21768,12 @@
             "sharePct": 0.02
           },
           {
-            "name": "Lost Vape",
+            "name": "Vaporesso",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Coilology",
             "value": 0,
             "sharePct": 0
           },
@@ -21818,7 +21783,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf",
+            "name": "Geekvape",
             "value": 0,
             "sharePct": 0
           },
@@ -21838,17 +21803,17 @@
             "sharePct": 0
           },
           {
-            "name": "Vaporesso",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Vozol",
             "value": 0,
             "sharePct": 0
           },
           {
             "name": "Vapefly",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Elf Bar",
             "value": 0,
             "sharePct": 0
           }
@@ -21875,12 +21840,12 @@
             "sharePct": 16.66
           },
           {
-            "name": "POD",
+            "name": "lichid tutunos/NET/DIY",
             "value": 980,
             "sharePct": 8.33
           },
           {
-            "name": "mod",
+            "name": "POD",
             "value": 980,
             "sharePct": 8.33
           },
@@ -21893,11 +21858,6 @@
             "name": "sarma",
             "value": 2,
             "sharePct": 0.02
-          },
-          {
-            "name": "lichid tutunos/NET/DIY",
-            "value": 0,
-            "sharePct": 0
           },
           {
             "name": "acumulator",
@@ -21920,30 +21880,10 @@
     },
     "rankMovers": [
       {
-        "retailerId": "epotion",
-        "category": "coil prebuilt",
-        "product": "Aspire Rezistenta Nautilus BVC 0.7ohm",
-        "rank": 9,
-        "observedAt": "2026-09-11",
-        "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
-        "productUrl": "https://e-potion.ro/rezistenta-bvc-aspire-nautilus/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Rezistenta Aspire Nautilus BVC 0.7ohm",
-        "canonicalProductKey": "aspire|rezistenta nautilus bvc 0 7ohm",
-        "brand": "Aspire",
-        "rawProducts": [
-          "Rezistenta Aspire Nautilus BVC 0.7ohm"
-        ],
-        "variantCount": 1,
-        "previousRank": 94,
-        "rankChange": 85
-      },
-      {
         "retailerId": "vaperia",
         "category": "accesoriu RTA/mod",
         "product": "Voopoo Cartus Vmate V3 0.7ohm",
-        "rank": 5,
+        "rank": 2,
         "observedAt": "2026-09-11",
         "source": "https://vaperia.ro/?orderby=popularity",
         "productUrl": "https://vaperia.ro/consumabile-pod/cartus-vmate-v3-0-7ohm-voopoo.html",
@@ -21957,7 +21897,7 @@
         ],
         "variantCount": 1,
         "previousRank": 76,
-        "rankChange": 71
+        "rankChange": 74
       },
       {
         "retailerId": "vaperia",
@@ -21981,43 +21921,85 @@
       },
       {
         "retailerId": "vaperia",
-        "category": "accesoriu RTA/mod",
-        "product": "Aspire Cartus Tubino 0.8ohm",
-        "rank": 6,
+        "category": "POD",
+        "product": "Aspire TUBINO",
+        "rank": 3,
         "observedAt": "2026-09-11",
         "source": "https://vaperia.ro/?orderby=popularity",
-        "productUrl": "https://vaperia.ro/branduri-10-4/cartus-tubino-kit-0-8ohm-aspire.html",
+        "productUrl": "https://vaperia.ro/kit-tigara-electronica/pod-tubino-1200mah-aspire-black.html",
         "evidence": "verified-html-popularity-sort",
         "evidenceTier": "B",
-        "rawProduct": "Cartus Tubino Kit 0.8ohm, Aspire",
-        "canonicalProductKey": "aspire|cartus tubino 0 8ohm",
+        "rawProduct": "Pod TUBINO 1200mAh, Aspire - Black",
+        "canonicalProductKey": "aspire|tubino",
         "brand": "Aspire",
         "rawProducts": [
-          "Cartus Tubino Kit 0.8ohm, Aspire"
+          "Pod TUBINO 1200mAh, Aspire - Black"
         ],
         "variantCount": 1,
-        "previousRank": 65,
-        "rankChange": 59
+        "previousRank": 28,
+        "rankChange": 25
       },
       {
         "retailerId": "vaperia",
-        "category": "mod",
-        "product": "MechVape Paramour V2, - Full",
-        "rank": 2,
+        "category": "POD",
+        "product": "Geekvape Wenax M2 Leather Edition",
+        "rank": 23,
         "observedAt": "2026-09-11",
         "source": "https://vaperia.ro/?orderby=popularity",
-        "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
+        "productUrl": "https://vaperia.ro/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
         "evidence": "verified-html-popularity-sort",
         "evidenceTier": "B",
-        "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
-        "canonicalProductKey": "mechvape|paramour v2 full",
-        "brand": "MechVape",
+        "rawProduct": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
+        "canonicalProductKey": "geekvape|wenax m2 leather edition",
+        "brand": "Geekvape",
         "rawProducts": [
-          "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver"
+          "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
+          "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Volcanic Black",
+          "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Wine Red"
+        ],
+        "variantCount": 3,
+        "previousRank": 2,
+        "rankChange": -21
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "accesoriu RTA/mod",
+        "product": "Lost Mary Usa Mix Tappo Air, 20mg",
+        "rank": 5,
+        "observedAt": "2026-09-11",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/incepator-3-4/kit-usa-mix-tappo-air-lost-mary-20mg.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Kit Usa Mix Tappo Air, Lost Mary 20mg",
+        "canonicalProductKey": "lost mary|usa mix tappo air 20mg",
+        "brand": "Lost Mary",
+        "rawProducts": [
+          "Kit Usa Mix Tappo Air, Lost Mary 20mg"
         ],
         "variantCount": 1,
-        "previousRank": 11,
-        "rankChange": 9
+        "previousRank": 16,
+        "rankChange": 11
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "accesoriu RTA/mod",
+        "product": "Lost Mary Cartus Pomme Peche Tappo 20mg",
+        "rank": 14,
+        "observedAt": "2026-09-11",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
+        "canonicalProductKey": "lost mary|cartus pomme peche tappo 20mg",
+        "brand": "Lost Mary",
+        "rawProducts": [
+          "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary"
+        ],
+        "variantCount": 1,
+        "previousRank": 5,
+        "rankChange": -9
       },
       {
         "retailerId": "smokee",
@@ -22067,29 +22049,49 @@
       },
       {
         "retailerId": "vaperia",
-        "category": "coil prebuilt",
-        "product": "Rezistente Fused NI80 2X30/40 0.85Ω, Crazy Fab Coils",
-        "rank": 9,
+        "category": "POD",
+        "product": "Voopoo Drag X3 PnP X",
+        "rank": 12,
         "observedAt": "2026-09-11",
-        "source": "https://vaperia.ro/rezistente-d-i-y?orderby=popularity",
-        "productUrl": "https://vaperia.ro/rezistente-d-i-y/rezistente-fused-mtl-ni80-2x30-40-0-85%CF%89-crazy-fab-coils.html",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/kit/kit-drag-x3-pnp-x-voopoo-french-riviera.html",
         "evidence": "verified-html-popularity-sort",
         "evidenceTier": "B",
-        "rawProduct": "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils",
-        "canonicalProductKey": "rezistente fused ni80 2x30 40 0 85 crazy fab coils",
-        "brand": "",
+        "rawProduct": "Kit Drag X3 PnP X , Voopoo - French Riviera",
+        "canonicalProductKey": "voopoo|drag x3 pnp x",
+        "brand": "Voopoo",
         "rawProducts": [
-          "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils"
+          "Kit Drag X3 PnP X , Voopoo - French Riviera"
         ],
         "variantCount": 1,
-        "previousRank": 6,
+        "previousRank": 7,
+        "rankChange": -5
+      },
+      {
+        "retailerId": "smokee",
+        "category": "POD",
+        "product": "OXVA Vprime 2",
+        "rank": 6,
+        "observedAt": "2026-09-11",
+        "source": "https://smokee.ro/?orderby=popularity",
+        "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-shard-gold/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold",
+        "canonicalProductKey": "oxva|vprime 2",
+        "brand": "OXVA",
+        "rawProducts": [
+          "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold"
+        ],
+        "variantCount": 1,
+        "previousRank": 3,
         "rankChange": -3
       },
       {
         "retailerId": "vaperia",
         "category": "POD",
         "product": "Geekvape Mustiuc soft - touch Wenax M1 ( 2buc )",
-        "rank": 12,
+        "rank": 6,
         "observedAt": "2026-09-11",
         "source": "https://vaperia.ro/?orderby=popularity",
         "productUrl": "https://vaperia.ro/accesorii-56-4/mustiuc-soft-touch-wenax-m1-2buc-geekvape.html",
@@ -22103,6 +22105,389 @@
         ],
         "variantCount": 1,
         "previousRank": 9,
+        "rankChange": 3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "MechVape Nitrous Pocket Peek Edition Nitro Access",
+        "rank": 25,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-nitrous-pocket-peek-edition-mechvape-nitro-access/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Nitrous Pocket Peek Edition Mechvape Nitro Access",
+        "canonicalProductKey": "mechvape|nitrous pocket peek edition nitro access",
+        "brand": "MechVape",
+        "rawProducts": [
+          "Mod Nitrous Pocket Peek Edition Mechvape Nitro Access"
+        ],
+        "variantCount": 1,
+        "previousRank": 22,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "MechVape Nitrous Pocket Nitro Access",
+        "rank": 26,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-nitrous-pocket-mechvape-nitro-access/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Nitrous Pocket Mechvape Nitro Access",
+        "canonicalProductKey": "mechvape|nitrous pocket nitro access",
+        "brand": "MechVape",
+        "rawProducts": [
+          "Mod Nitrous Pocket Mechvape Nitro Access"
+        ],
+        "variantCount": 1,
+        "previousRank": 23,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Blade DNA 60 Vypers Vapes x Wick’d Graphite",
+        "rank": 28,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-blade-dna-60-vypers-vapes-x-wickd-graphite-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Blade DNA 60 Vypers Vapes x Wick&#8217;d Graphite Black",
+        "canonicalProductKey": "blade dna 60 vypers vapes x wick d graphite",
+        "brand": "",
+        "rawProducts": [
+          "Mod Blade DNA 60 Vypers Vapes x Wick&#8217;d Graphite Black"
+        ],
+        "variantCount": 1,
+        "previousRank": 25,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Harrier DNA 60c Early Bird Gun Metal",
+        "rank": 30,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-harrier-dna-60c-early-bird-gun-metal/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Harrier DNA 60c Early Bird Gun Metal",
+        "canonicalProductKey": "harrier dna 60c early bird gun metal",
+        "brand": "",
+        "rawProducts": [
+          "Mod Harrier DNA 60c Early Bird Gun Metal"
+        ],
+        "variantCount": 1,
+        "previousRank": 27,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Hammer Of God 200 Vaperz Cloud Classic",
+        "rank": 31,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-hammer-of-god-200-vaperz-cloud-classic-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Hammer Of God 200 Vaperz Cloud Classic Black",
+        "canonicalProductKey": "hammer of god 200 vaperz cloud classic",
+        "brand": "",
+        "rawProducts": [
+          "Mod Hammer Of God 200 Vaperz Cloud Classic Black"
+        ],
+        "variantCount": 1,
+        "previousRank": 28,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "LVE Boson Boro DNA80c Vapor",
+        "rank": 32,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-boson-boro-dna80c-black-lve-vapor/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Boson Boro DNA80c Black LVE Vapor",
+        "canonicalProductKey": "lve|boson boro dna80c vapor",
+        "brand": "LVE",
+        "rawProducts": [
+          "Mod Boson Boro DNA80c Black LVE Vapor"
+        ],
+        "variantCount": 1,
+        "previousRank": 29,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Geekvape S100 Aegis Solo 2",
+        "rank": 33,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-s100-aegis-solo-2-geekvape-navy-blue/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod S100 Aegis Solo 2 Geekvape Navy Blue",
+        "canonicalProductKey": "geekvape|s100 aegis solo 2",
+        "brand": "Geekvape",
+        "rawProducts": [
+          "Mod S100 Aegis Solo 2 Geekvape Navy Blue"
+        ],
+        "variantCount": 1,
+        "previousRank": 30,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "DotMod Dotbox",
+        "rank": 34,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-dotmod-dotbox-100w-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Dotmod Dotbox 100w Black",
+        "canonicalProductKey": "dotmod|dotbox",
+        "brand": "DotMod",
+        "rawProducts": [
+          "Mod Dotmod Dotbox 100w Black",
+          "Mod Dotmod Dotbox 100w Grey"
+        ],
+        "variantCount": 2,
+        "previousRank": 31,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Aspire MIXX, Quick",
+        "rank": 35,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-quick-silver/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Aspire MIXX 60W , Quick Silver",
+        "canonicalProductKey": "aspire|mixx quick",
+        "brand": "Aspire",
+        "rawProducts": [
+          "Mod Aspire MIXX 60W , Quick Silver"
+        ],
+        "variantCount": 1,
+        "previousRank": 32,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Aspire MIXX, Jet",
+        "rank": 36,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-jet-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Aspire MIXX 60W , Jet Black",
+        "canonicalProductKey": "aspire|mixx jet",
+        "brand": "Aspire",
+        "rawProducts": [
+          "Mod Aspire MIXX 60W , Jet Black"
+        ],
+        "variantCount": 1,
+        "previousRank": 33,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Aspire MIXX, Tuxedo",
+        "rank": 37,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-tuxedo/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Aspire MIXX 60W , Tuxedo",
+        "canonicalProductKey": "aspire|mixx tuxedo",
+        "brand": "Aspire",
+        "rawProducts": [
+          "Mod Aspire MIXX 60W , Tuxedo"
+        ],
+        "variantCount": 1,
+        "previousRank": 34,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Aspire Zelos X",
+        "rank": 38,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-aspire-zelos-x-full-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Aspire Zelos X &#8211; Full Black",
+        "canonicalProductKey": "aspire|zelos x",
+        "brand": "Aspire",
+        "rawProducts": [
+          "Mod Aspire Zelos X &#8211; Full Black"
+        ],
+        "variantCount": 1,
+        "previousRank": 35,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "MQ Class SXmini",
+        "rank": 39,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-mq-class-sxmini-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod MQ Class SXmini Black",
+        "canonicalProductKey": "mq class sxmini",
+        "brand": "",
+        "rawProducts": [
+          "Mod MQ Class SXmini Black",
+          "Mod MQ Class SXmini Gunmetal",
+          "Mod MQ Class SXmini Silver"
+        ],
+        "variantCount": 3,
+        "previousRank": 36,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Voopoo Musket Poppy",
+        "rank": 43,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-musket-voopoo-poppy-red/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Musket Voopoo Poppy Red",
+        "canonicalProductKey": "voopoo|musket poppy",
+        "brand": "Voopoo",
+        "rawProducts": [
+          "Mod Musket Voopoo Poppy Red"
+        ],
+        "variantCount": 1,
+        "previousRank": 40,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Ambition Mods Converter",
+        "rank": 44,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-converter-ambition-mods-ss-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Converter Ambition Mods &#8211; SS/Black",
+        "canonicalProductKey": "ambition mods|converter",
+        "brand": "Ambition Mods",
+        "rawProducts": [
+          "Mod Converter Ambition Mods &#8211; SS/Black"
+        ],
+        "variantCount": 1,
+        "previousRank": 41,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Techmod -Kizoku-Gun Metal",
+        "rank": 45,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-techmod-80w-tc-kizoku-gun-metal/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Techmod 80W TC-Kizoku-Gun Metal",
+        "canonicalProductKey": "techmod kizoku gun metal",
+        "brand": "",
+        "rawProducts": [
+          "Mod Techmod 80W TC-Kizoku-Gun Metal"
+        ],
+        "variantCount": 1,
+        "previousRank": 42,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "BD Vape Rayden 100 V2",
+        "rank": 46,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-rayden-100-v2-bd-vape-silver/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Rayden 100 V2 BD Vape Silver",
+        "canonicalProductKey": "bd vape|rayden 100 v2",
+        "brand": "BD Vape",
+        "rawProducts": [
+          "Mod Rayden 100 V2 BD Vape Silver"
+        ],
+        "variantCount": 1,
+        "previousRank": 43,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "DotMod Dotbox Brown",
+        "rank": 47,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-dotmod-dotbox-100w-brown/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Dotmod Dotbox 100w Brown",
+        "canonicalProductKey": "dotmod|dotbox brown",
+        "brand": "DotMod",
+        "rawProducts": [
+          "Mod Dotmod Dotbox 100w Brown"
+        ],
+        "variantCount": 1,
+        "previousRank": 44,
+        "rankChange": -3
+      },
+      {
+        "retailerId": "vapetronic",
+        "category": "mod",
+        "product": "Dovpo Odin V2 Mini Vaperz Cloud x x Vaping Bogan",
+        "rank": 49,
+        "observedAt": "2026-09-11",
+        "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+        "productUrl": "https://vapetronic.ro/produs/mod-odin-v2-mini-vaperz-cloud-x-dovpo-x-vaping-bogan-matte-black/",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Odin V2 Mini Vaperz Cloud x Dovpo x Vaping Bogan Matte Black",
+        "canonicalProductKey": "dovpo|odin v2 mini vaperz cloud x x vaping bogan",
+        "brand": "Dovpo",
+        "rawProducts": [
+          "Mod Odin V2 Mini Vaperz Cloud x Dovpo x Vaping Bogan Matte Black"
+        ],
+        "variantCount": 1,
+        "previousRank": 46,
         "rankChange": -3
       },
       {
@@ -22337,22 +22722,62 @@
       },
       {
         "retailerId": "vaperia",
-        "category": "accesoriu RTA/mod",
-        "product": "Lost Mary Cartus Pomme Peche Tappo 20mg",
-        "rank": 3,
+        "category": "coil prebuilt",
+        "product": "Rezistente Fused NI80 2X30/40 0.85Ω, Crazy Fab Coils",
+        "rank": 8,
         "observedAt": "2026-09-11",
         "source": "https://vaperia.ro/?orderby=popularity",
-        "productUrl": "https://vaperia.ro/consumabile-pod/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
+        "productUrl": "https://vaperia.ro/atomizoare/rezistente-fused-mtl-ni80-2x30-40-0-85%CF%89-crazy-fab-coils.html",
         "evidence": "verified-html-popularity-sort",
         "evidenceTier": "B",
-        "rawProduct": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
-        "canonicalProductKey": "lost mary|cartus pomme peche tappo 20mg",
-        "brand": "Lost Mary",
+        "rawProduct": "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils",
+        "canonicalProductKey": "rezistente fused ni80 2x30 40 0 85 crazy fab coils",
+        "brand": "",
         "rawProducts": [
-          "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary"
+          "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils"
         ],
         "variantCount": 1,
-        "previousRank": 5,
+        "previousRank": 6,
+        "rankChange": -2
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "mod",
+        "product": "MechVape Paramour V2, - Full",
+        "rank": 9,
+        "observedAt": "2026-09-11",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
+        "canonicalProductKey": "mechvape|paramour v2 full",
+        "brand": "MechVape",
+        "rawProducts": [
+          "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver"
+        ],
+        "variantCount": 1,
+        "previousRank": 11,
+        "rankChange": 2
+      },
+      {
+        "retailerId": "voore",
+        "category": "lichid tutunos/NET/DIY",
+        "product": "Aroma Oops! - Coffee Tobacco",
+        "rank": 19,
+        "observedAt": "2026-09-11",
+        "source": "https://www.voore.ro/?orderby=popularity",
+        "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Aroma Oops! - Coffee Tobacco 10ml",
+        "canonicalProductKey": "aroma oops coffee tobacco",
+        "brand": "",
+        "rawProducts": [
+          "Aroma Oops! - Coffee Tobacco 10ml"
+        ],
+        "variantCount": 1,
+        "previousRank": 21,
         "rankChange": 2
       },
       {
@@ -22514,327 +22939,6 @@
         ],
         "variantCount": 1,
         "previousRank": 67,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "smokee",
-        "category": "bumbac/wick",
-        "product": "BP Mods Bumbac Pro",
-        "rank": 69,
-        "observedAt": "2026-09-11",
-        "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-        "productUrl": "https://smokee.ro/product/bumbac-bp-mods-pro-vape-2-5mm/",
-        "evidence": "woocommerce-public-popularity-order",
-        "evidenceTier": "B",
-        "evidenceWindow": "lifetime-cumulative",
-        "popularityBasis": "woocommerce-total_sales",
-        "periodSales": false,
-        "brand": "BP Mods",
-        "rawProduct": "Bumbac BP Mods Pro Vape 2.5mm",
-        "canonicalProductKey": "bp mods|bumbac pro",
-        "rawProducts": [
-          "Bumbac BP Mods Pro Vape 2.5mm"
-        ],
-        "variantCount": 1,
-        "previousRank": 68,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "smokee",
-        "category": "acumulator",
-        "product": "Acumulator X Power 20A",
-        "rank": 78,
-        "observedAt": "2026-09-11",
-        "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-        "productUrl": "https://smokee.ro/product/acumulator-18650-x-power-20a-4000mah/",
-        "evidence": "woocommerce-public-popularity-order",
-        "evidenceTier": "B",
-        "evidenceWindow": "lifetime-cumulative",
-        "popularityBasis": "woocommerce-total_sales",
-        "periodSales": false,
-        "brand": "",
-        "rawProduct": "Acumulator 18650 X Power 20A 4000mAh",
-        "canonicalProductKey": "acumulator x power 20a",
-        "rawProducts": [
-          "Acumulator 18650 X Power 20A 4000mAh"
-        ],
-        "variantCount": 1,
-        "previousRank": 77,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "smokee",
-        "category": "accesoriu RTA/mod",
-        "product": "Voopoo Cartus de rezerva Argus Top Fill, 1.0 ohm - V2",
-        "rank": 80,
-        "observedAt": "2026-09-11",
-        "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-        "productUrl": "https://smokee.ro/product/cartus-de-rezerva-voopoo-argus-top-fill-3ml-1-0-ohm-v/",
-        "evidence": "woocommerce-public-popularity-order",
-        "evidenceTier": "B",
-        "evidenceWindow": "lifetime-cumulative",
-        "popularityBasis": "woocommerce-total_sales",
-        "periodSales": false,
-        "brand": "Voopoo",
-        "rawProduct": "Cartus de rezerva VooPoo Argus Top Fill 3ml, 1.0 ohm &#8211; V2",
-        "canonicalProductKey": "voopoo|cartus de rezerva argus top fill 1 0 ohm v2",
-        "rawProducts": [
-          "Cartus de rezerva VooPoo Argus Top Fill 3ml, 1.0 ohm &#8211; V2"
-        ],
-        "variantCount": 1,
-        "previousRank": 79,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "epotion",
-        "category": "lichid tutunos/NET/DIY",
-        "product": "Aroma Concentrata The Flavor By e-Potion DNH Tobacco",
-        "rank": 30,
-        "observedAt": "2026-09-11",
-        "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-        "productUrl": "https://e-potion.ro/aroma-concentrata-e-potion-dnh-tobacco-10ml/",
-        "evidence": "woocommerce-public-popularity-order",
-        "evidenceTier": "B",
-        "evidenceWindow": "lifetime-cumulative",
-        "popularityBasis": "woocommerce-total_sales",
-        "periodSales": false,
-        "brand": "",
-        "rawProduct": "Aroma Concentrata The Flavor By e-Potion DNH Tobacco 10ml",
-        "canonicalProductKey": "aroma concentrata the flavor by e potion dnh tobacco",
-        "rawProducts": [
-          "Aroma Concentrata The Flavor By e-Potion DNH Tobacco 10ml"
-        ],
-        "variantCount": 1,
-        "previousRank": 31,
-        "rankChange": 1
-      },
-      {
-        "retailerId": "epotion",
-        "category": "accesoriu RTA/mod",
-        "product": "Cartus Vapebar PRO 980 pufuri 20mg - USA MIX",
-        "rank": 80,
-        "observedAt": "2026-09-11",
-        "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-        "productUrl": "https://e-potion.ro/cartus-vapebar-pro-800-pufuri-20mg-usa-mix/",
-        "evidence": "woocommerce-public-popularity-order",
-        "evidenceTier": "B",
-        "evidenceWindow": "lifetime-cumulative",
-        "popularityBasis": "woocommerce-total_sales",
-        "periodSales": false,
-        "brand": "",
-        "rawProduct": "Cartus Vapebar PRO 980 pufuri 20mg &#8211; USA MIX",
-        "canonicalProductKey": "cartus vapebar pro 980 pufuri 20mg usa mix",
-        "rawProducts": [
-          "Cartus Vapebar PRO 980 pufuri 20mg &#8211; USA MIX"
-        ],
-        "variantCount": 1,
-        "previousRank": 81,
-        "rankChange": 1
-      },
-      {
-        "retailerId": "tigaraego",
-        "category": "accesoriu RTA/mod",
-        "product": "Cartus Vuse - Peppermint Ice 20mg [2 Bucati]",
-        "rank": 67,
-        "observedAt": "2026-09-11",
-        "source": "https://tigaraego.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-        "productUrl": "https://tigaraego.com/cartus-vuse-peppermint-ice-20mg-2-bucati/",
-        "evidence": "woocommerce-public-popularity-order",
-        "evidenceTier": "B",
-        "evidenceWindow": "lifetime-cumulative",
-        "popularityBasis": "woocommerce-total_sales",
-        "periodSales": false,
-        "brand": "",
-        "rawProduct": "Cartus Vuse &#8211; Peppermint Ice 20mg [2 Bucati]",
-        "canonicalProductKey": "cartus vuse peppermint ice 20mg 2 bucati",
-        "rawProducts": [
-          "Cartus Vuse &#8211; Peppermint Ice 20mg [2 Bucati]"
-        ],
-        "variantCount": 1,
-        "previousRank": 66,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "vaperia",
-        "category": "POD",
-        "product": "Geekvape Wenax M2 Leather Edition",
-        "rank": 1,
-        "observedAt": "2026-09-11",
-        "source": "https://vaperia.ro/?orderby=popularity",
-        "productUrl": "https://vaperia.ro/kit-tigara-electronica/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-        "canonicalProductKey": "geekvape|wenax m2 leather edition",
-        "brand": "Geekvape",
-        "rawProducts": [
-          "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-          "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Volcanic Black",
-          "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Wine Red"
-        ],
-        "variantCount": 3,
-        "previousRank": 2,
-        "rankChange": 1
-      },
-      {
-        "retailerId": "vaperia",
-        "category": "mod",
-        "product": "MechVape Paramour V2",
-        "rank": 7,
-        "observedAt": "2026-09-11",
-        "source": "https://vaperia.ro/?orderby=popularity",
-        "productUrl": "https://vaperia.ro/mechvape/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-black.html",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Black",
-        "canonicalProductKey": "mechvape|paramour v2",
-        "brand": "MechVape",
-        "rawProducts": [
-          "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Black",
-          "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Silver Black"
-        ],
-        "variantCount": 2,
-        "previousRank": 8,
-        "rankChange": 1
-      },
-      {
-        "retailerId": "vaperia",
-        "category": "POD",
-        "product": "Voopoo Drag X3 PnP X",
-        "rank": 8,
-        "observedAt": "2026-09-11",
-        "source": "https://vaperia.ro/?orderby=popularity",
-        "productUrl": "https://vaperia.ro/kit/kit-drag-x3-pnp-x-voopoo-french-riviera.html",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Kit Drag X3 PnP X , Voopoo - French Riviera",
-        "canonicalProductKey": "voopoo|drag x3 pnp x",
-        "brand": "Voopoo",
-        "rawProducts": [
-          "Kit Drag X3 PnP X , Voopoo - French Riviera"
-        ],
-        "variantCount": 1,
-        "previousRank": 7,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "vaperia",
-        "category": "mod",
-        "product": "Nitrous Pocket Edition, Nitrous X VRK",
-        "rank": 9,
-        "observedAt": "2026-09-11",
-        "source": "https://vaperia.ro/?orderby=popularity",
-        "productUrl": "https://vaperia.ro/nitrous-x-vrk/mod-nitrous-pocket-black-edition-80w-18650-nitrous-x-vrk-black.html",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Mod Nitrous Pocket Black Edition 80W 18650 , Nitrous X VRK - Black",
-        "canonicalProductKey": "nitrous pocket edition nitrous x vrk",
-        "brand": "",
-        "rawProducts": [
-          "Mod Nitrous Pocket Black Edition 80W 18650 , Nitrous X VRK - Black"
-        ],
-        "variantCount": 1,
-        "previousRank": 10,
-        "rankChange": 1
-      },
-      {
-        "retailerId": "vapetronic",
-        "category": "coil prebuilt",
-        "product": "Vaporesso Rezistenta GTX2 Mesh 0.8 Ohm",
-        "rank": 29,
-        "observedAt": "2026-09-11",
-        "source": "https://vapetronic.ro/shop/?orderby=popularity",
-        "productUrl": "https://vapetronic.ro/produs/rezistenta-gtx2-mesh-0-8-ohm-vaporesso/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Rezistenta GTX2 Mesh 0.8 Ohm – Vaporesso",
-        "canonicalProductKey": "vaporesso|rezistenta gtx2 mesh 0 8 ohm",
-        "brand": "Vaporesso",
-        "rawProducts": [
-          "Rezistenta GTX2 Mesh 0.8 Ohm – Vaporesso"
-        ],
-        "variantCount": 1,
-        "previousRank": 30,
-        "rankChange": 1
-      },
-      {
-        "retailerId": "vapetronic",
-        "category": "coil prebuilt",
-        "product": "Aspire Rezistenta BVC 1.6 Ohm",
-        "rank": 30,
-        "observedAt": "2026-09-11",
-        "source": "https://vapetronic.ro/shop/?orderby=popularity",
-        "productUrl": "https://vapetronic.ro/produs/rezistenta-aspire-bvc-1-6-ohm/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Rezistenta Aspire BVC 1.6 Ohm",
-        "canonicalProductKey": "aspire|rezistenta bvc 1 6 ohm",
-        "brand": "Aspire",
-        "rawProducts": [
-          "Rezistenta Aspire BVC 1.6 Ohm"
-        ],
-        "variantCount": 1,
-        "previousRank": 29,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "voore",
-        "category": "accesoriu RTA/mod",
-        "product": "Elf Bar Mate 500 Aurora - Baterie + Cartus RF350",
-        "rank": 4,
-        "observedAt": "2026-09-11",
-        "source": "https://www.voore.ro/?orderby=popularity",
-        "productUrl": "https://www.voore.ro/kit-elf-bar-mate-500-aurora-blue-cartus-rf350",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Kit Elf Bar Mate 500 Aurora Blue - Baterie + Cartus RF350",
-        "canonicalProductKey": "elf bar|mate 500 aurora baterie cartus rf350",
-        "brand": "Elf Bar",
-        "rawProducts": [
-          "Kit Elf Bar Mate 500 Aurora Blue - Baterie + Cartus RF350"
-        ],
-        "variantCount": 1,
-        "previousRank": 3,
-        "rankChange": -1
-      },
-      {
-        "retailerId": "voore",
-        "category": "lichid tutunos/NET/DIY",
-        "product": "Aroma Oops! - SE Tobacco",
-        "rank": 19,
-        "observedAt": "2026-09-11",
-        "source": "https://www.voore.ro/?orderby=popularity",
-        "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Aroma Oops! - SE Tobacco 10ml",
-        "canonicalProductKey": "aroma oops se tobacco",
-        "brand": "",
-        "rawProducts": [
-          "Aroma Oops! - SE Tobacco 10ml"
-        ],
-        "variantCount": 1,
-        "previousRank": 20,
-        "rankChange": 1
-      },
-      {
-        "retailerId": "voore",
-        "category": "lichid tutunos/NET/DIY",
-        "product": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds",
-        "rank": 20,
-        "observedAt": "2026-09-11",
-        "source": "https://www.voore.ro/?orderby=popularity",
-        "productUrl": "https://www.voore.ro/aroma-flavor-madness-tobacco-vanilla-toasted-almonds-9ml",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml",
-        "canonicalProductKey": "aroma flavor madness tobacco vanilla toasted almonds",
-        "brand": "",
-        "rawProducts": [
-          "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml"
-        ],
-        "variantCount": 1,
-        "previousRank": 19,
         "rankChange": -1
       }
     ]
@@ -185395,15 +185499,18 @@
           "retailerId": "epotion",
           "category": "coil prebuilt",
           "product": "Aspire Rezistenta Nautilus BVC 0.7ohm",
-          "rank": 9,
+          "rank": 94,
           "observedAt": "2026-09-11",
-          "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+          "source": "https://e-potion.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://e-potion.ro/rezistenta-bvc-aspire-nautilus/",
-          "evidence": "verified-html-popularity-sort",
+          "evidence": "woocommerce-public-popularity-order",
           "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "Aspire",
           "rawProduct": "Rezistenta Aspire Nautilus BVC 0.7ohm",
           "canonicalProductKey": "aspire|rezistenta nautilus bvc 0 7ohm",
-          "brand": "Aspire",
           "rawProducts": [
             "Rezistenta Aspire Nautilus BVC 0.7ohm"
           ],
@@ -191028,18 +191135,72 @@
         {
           "retailerId": "smokee",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Longfill Hashtag / - Virginia",
+          "product": "Longfill Drops Tobacco Masters / - Chicago",
           "rank": 1,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/longfill-hashtag-6ml-60ml-virginia/",
+          "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-12ml-120ml-chicago/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Longfill Hashtag 6ml/60ml &#8211; Virginia",
-          "canonicalProductKey": "longfill hashtag virginia",
+          "rawProduct": "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago",
+          "canonicalProductKey": "longfill drops tobacco masters chicago",
           "brand": "",
           "rawProducts": [
-            "Longfill Hashtag 6ml/60ml &#8211; Virginia"
+            "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "accesoriu RTA/mod",
+          "product": "Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina - Strawberry Kiwi",
+          "rank": 2,
+          "observedAt": "2026-09-11",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/tigara-electronica-vaporesso-dojo-blast-2000-go-2000-pufuri-20-mg-nicotina-strawberry-kiwi/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi",
+          "canonicalProductKey": "vaporesso|dojo blast 2000 go 2000 pufuri 20 mg nicotina strawberry kiwi",
+          "brand": "Vaporesso",
+          "rawProducts": [
+            "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "sarma",
+          "product": "Rola Coilology - Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
+          "rank": 3,
+          "observedAt": "2026-09-11",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/rola-coilology-tricore-fused-clapton-wire-3m-ni80-3-28-36-1-73ohm-m/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
+          "canonicalProductKey": "rola coilology tricore fused clapton wire 3m ni80 3 28 36 1 73ohm m",
+          "brand": "",
+          "rawProducts": [
+            "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "POD",
+          "product": "Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
+          "rank": 4,
+          "observedAt": "2026-09-11",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/kit-tigara-electronica-snowplus-clic-5000-pufuri/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
+          "canonicalProductKey": "snowplus click 5000 pufuri strawberry kiwi 2 nicotina",
+          "brand": "",
+          "rawProducts": [
+            "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina"
           ],
           "variantCount": 1
         },
@@ -191047,163 +191208,53 @@
           "retailerId": "smokee",
           "category": "POD",
           "product": "Geekvape Sonder Q2",
-          "rank": 2,
-          "observedAt": "2026-09-11",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-peach/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach",
-          "canonicalProductKey": "geekvape|sonder q2",
-          "brand": "Geekvape",
-          "rawProducts": [
-            "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Lost Vape Cartus de Rezerva E Plus Dual Mesh - 0.3 Ohm",
-          "rank": 3,
-          "observedAt": "2026-09-11",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-lost-vape-e-plus-dual-mesh-3ml-0-3-ohm/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm",
-          "canonicalProductKey": "lost vape|cartus de rezerva e plus dual mesh 0 3 ohm",
-          "brand": "Lost Vape",
-          "rawProducts": [
-            "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "mod",
-          "product": "Eleaf iStick Pico Plus - Space",
-          "rank": 4,
-          "observedAt": "2026-09-11",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-          "canonicalProductKey": "eleaf|istick pico plus space",
-          "brand": "Eleaf",
-          "rawProducts": [
-            "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "mod",
-          "product": "Eleaf iStick Pico Plus - Light",
           "rank": 5,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-light-grey/",
+          "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-mint/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey",
-          "canonicalProductKey": "eleaf|istick pico plus light",
-          "brand": "Eleaf",
+          "rawProduct": "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint",
+          "canonicalProductKey": "geekvape|sonder q2",
+          "brand": "Geekvape",
           "rawProducts": [
-            "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey"
+            "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint"
           ],
           "variantCount": 1
         },
         {
           "retailerId": "smokee",
-          "category": "mod",
-          "product": "Eleaf iStick Pico Plus",
+          "category": "POD",
+          "product": "OXVA Vprime 2",
           "rank": 6,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+          "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-shard-gold/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
-          "canonicalProductKey": "eleaf|istick pico plus",
-          "brand": "Eleaf",
+          "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold",
+          "canonicalProductKey": "oxva|vprime 2",
+          "brand": "OXVA",
           "rawProducts": [
-            "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "vaperia",
-          "category": "POD",
-          "product": "Geekvape Wenax M2 Leather Edition",
-          "rank": 1,
-          "observedAt": "2026-09-11",
-          "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/kit-tigara-electronica/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-          "canonicalProductKey": "geekvape|wenax m2 leather edition",
-          "brand": "Geekvape",
-          "rawProducts": [
-            "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-            "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Volcanic Black",
-            "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Wine Red"
-          ],
-          "variantCount": 3
-        },
-        {
-          "retailerId": "vaperia",
-          "category": "mod",
-          "product": "MechVape Paramour V2, - Full",
-          "rank": 2,
-          "observedAt": "2026-09-11",
-          "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
-          "canonicalProductKey": "mechvape|paramour v2 full",
-          "brand": "MechVape",
-          "rawProducts": [
-            "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "vaperia",
-          "category": "accesoriu RTA/mod",
-          "product": "Lost Mary Cartus Pomme Peche Tappo 20mg",
-          "rank": 3,
-          "observedAt": "2026-09-11",
-          "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/consumabile-pod/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
-          "canonicalProductKey": "lost mary|cartus pomme peche tappo 20mg",
-          "brand": "Lost Mary",
-          "rawProducts": [
-            "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary"
+            "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold"
           ],
           "variantCount": 1
         },
         {
           "retailerId": "vaperia",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Chemnovatic, Bright Tobacco",
-          "rank": 4,
+          "product": "Aroma BURLEY Twenty One, TNT",
+          "rank": 1,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/lichide-80-4/aroma-chemnovatic-bright-tobacco-10ml.html",
+          "productUrl": "https://vaperia.ro/lichide-80-4/aroma-burley-twenty-one-10ml-tnt-vape.html",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Aroma Chemnovatic, Bright Tobacco 10ml",
-          "canonicalProductKey": "aroma chemnovatic bright tobacco",
+          "rawProduct": "Aroma BURLEY Twenty One 10ml, TNT Vape",
+          "canonicalProductKey": "aroma burley twenty one tnt",
           "brand": "",
           "rawProducts": [
-            "Aroma Chemnovatic, Bright Tobacco 10ml"
+            "Aroma BURLEY Twenty One 10ml, TNT Vape"
           ],
           "variantCount": 1
         },
@@ -191211,7 +191262,7 @@
           "retailerId": "vaperia",
           "category": "accesoriu RTA/mod",
           "product": "Voopoo Cartus Vmate V3 0.7ohm",
-          "rank": 5,
+          "rank": 2,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
           "productUrl": "https://vaperia.ro/consumabile-pod/cartus-vmate-v3-0-7ohm-voopoo.html",
@@ -191227,19 +191278,73 @@
         },
         {
           "retailerId": "vaperia",
+          "category": "POD",
+          "product": "Aspire TUBINO",
+          "rank": 3,
+          "observedAt": "2026-09-11",
+          "source": "https://vaperia.ro/?orderby=popularity",
+          "productUrl": "https://vaperia.ro/kit-tigara-electronica/pod-tubino-1200mah-aspire-black.html",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Pod TUBINO 1200mAh, Aspire - Black",
+          "canonicalProductKey": "aspire|tubino",
+          "brand": "Aspire",
+          "rawProducts": [
+            "Pod TUBINO 1200mAh, Aspire - Black"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "vaperia",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma VIRGINIA Twenty One, TNT",
+          "rank": 4,
+          "observedAt": "2026-09-11",
+          "source": "https://vaperia.ro/?orderby=popularity",
+          "productUrl": "https://vaperia.ro/lichide-80-4/aroma-virginia-twenty-one-10ml-tnt-vape.html",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Aroma VIRGINIA Twenty One 10ml, TNT Vape",
+          "canonicalProductKey": "aroma virginia twenty one tnt",
+          "brand": "",
+          "rawProducts": [
+            "Aroma VIRGINIA Twenty One 10ml, TNT Vape"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "vaperia",
           "category": "accesoriu RTA/mod",
-          "product": "Aspire Cartus Tubino 0.8ohm",
+          "product": "Lost Mary Usa Mix Tappo Air, 20mg",
+          "rank": 5,
+          "observedAt": "2026-09-11",
+          "source": "https://vaperia.ro/?orderby=popularity",
+          "productUrl": "https://vaperia.ro/incepator-3-4/kit-usa-mix-tappo-air-lost-mary-20mg.html",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Kit Usa Mix Tappo Air, Lost Mary 20mg",
+          "canonicalProductKey": "lost mary|usa mix tappo air 20mg",
+          "brand": "Lost Mary",
+          "rawProducts": [
+            "Kit Usa Mix Tappo Air, Lost Mary 20mg"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "vaperia",
+          "category": "POD",
+          "product": "Geekvape Mustiuc soft - touch Wenax M1 ( 2buc )",
           "rank": 6,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/branduri-10-4/cartus-tubino-kit-0-8ohm-aspire.html",
+          "productUrl": "https://vaperia.ro/accesorii-56-4/mustiuc-soft-touch-wenax-m1-2buc-geekvape.html",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Cartus Tubino Kit 0.8ohm, Aspire",
-          "canonicalProductKey": "aspire|cartus tubino 0 8ohm",
-          "brand": "Aspire",
+          "rawProduct": "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape",
+          "canonicalProductKey": "geekvape|mustiuc soft touch wenax m1 2buc",
+          "brand": "Geekvape",
           "rawProducts": [
-            "Cartus Tubino Kit 0.8ohm, Aspire"
+            "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape"
           ],
           "variantCount": 1
         },
@@ -191264,19 +191369,37 @@
         },
         {
           "retailerId": "vaperia",
-          "category": "POD",
-          "product": "Voopoo Drag X3 PnP X",
+          "category": "coil prebuilt",
+          "product": "Rezistente Fused NI80 2X30/40 0.85Ω, Crazy Fab Coils",
           "rank": 8,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/kit/kit-drag-x3-pnp-x-voopoo-french-riviera.html",
+          "productUrl": "https://vaperia.ro/atomizoare/rezistente-fused-mtl-ni80-2x30-40-0-85%CF%89-crazy-fab-coils.html",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Kit Drag X3 PnP X , Voopoo - French Riviera",
-          "canonicalProductKey": "voopoo|drag x3 pnp x",
-          "brand": "Voopoo",
+          "rawProduct": "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils",
+          "canonicalProductKey": "rezistente fused ni80 2x30 40 0 85 crazy fab coils",
+          "brand": "",
           "rawProducts": [
-            "Kit Drag X3 PnP X , Voopoo - French Riviera"
+            "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "vaperia",
+          "category": "mod",
+          "product": "MechVape Paramour V2, - Full",
+          "rank": 9,
+          "observedAt": "2026-09-11",
+          "source": "https://vaperia.ro/?orderby=popularity",
+          "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
+          "canonicalProductKey": "mechvape|paramour v2 full",
+          "brand": "MechVape",
+          "rawProducts": [
+            "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver"
           ],
           "variantCount": 1
         },
@@ -191284,7 +191407,7 @@
           "retailerId": "vaperia",
           "category": "mod",
           "product": "Nitrous Pocket Edition, Nitrous X VRK",
-          "rank": 9,
+          "rank": 11,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
           "productUrl": "https://vaperia.ro/nitrous-x-vrk/mod-nitrous-pocket-black-edition-80w-18650-nitrous-x-vrk-black.html",
@@ -191300,37 +191423,19 @@
         },
         {
           "retailerId": "vaperia",
-          "category": "coil prebuilt",
-          "product": "Rezistente Fused NI80 2X30/40 0.85Ω, Crazy Fab Coils",
-          "rank": 9,
-          "observedAt": "2026-09-11",
-          "source": "https://vaperia.ro/rezistente-d-i-y?orderby=popularity",
-          "productUrl": "https://vaperia.ro/rezistente-d-i-y/rezistente-fused-mtl-ni80-2x30-40-0-85%CF%89-crazy-fab-coils.html",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils",
-          "canonicalProductKey": "rezistente fused ni80 2x30 40 0 85 crazy fab coils",
-          "brand": "",
-          "rawProducts": [
-            "Rezistente Fused MTL NI80 2X30/40 0.85Ω, Crazy Fab Coils"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "vaperia",
           "category": "POD",
-          "product": "Geekvape Mustiuc soft - touch Wenax M1 ( 2buc )",
+          "product": "Voopoo Drag X3 PnP X",
           "rank": 12,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/accesorii-56-4/mustiuc-soft-touch-wenax-m1-2buc-geekvape.html",
+          "productUrl": "https://vaperia.ro/kit/kit-drag-x3-pnp-x-voopoo-french-riviera.html",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape",
-          "canonicalProductKey": "geekvape|mustiuc soft touch wenax m1 2buc",
-          "brand": "Geekvape",
+          "rawProduct": "Kit Drag X3 PnP X , Voopoo - French Riviera",
+          "canonicalProductKey": "voopoo|drag x3 pnp x",
+          "brand": "Voopoo",
           "rawProducts": [
-            "Mustiuc soft - touch Wenax M1 ( 2buc ), Geekvape"
+            "Kit Drag X3 PnP X , Voopoo - French Riviera"
           ],
           "variantCount": 1
         },
@@ -191355,6 +191460,24 @@
         {
           "retailerId": "vaperia",
           "category": "accesoriu RTA/mod",
+          "product": "Lost Mary Cartus Pomme Peche Tappo 20mg",
+          "rank": 14,
+          "observedAt": "2026-09-11",
+          "source": "https://vaperia.ro/?orderby=popularity",
+          "productUrl": "https://vaperia.ro/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
+          "canonicalProductKey": "lost mary|cartus pomme peche tappo 20mg",
+          "brand": "Lost Mary",
+          "rawProducts": [
+            "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "vaperia",
+          "category": "accesoriu RTA/mod",
           "product": "Lost Mary Cartus Cola Tappo 20mg",
           "rank": 15,
           "observedAt": "2026-09-11",
@@ -191367,24 +191490,6 @@
           "brand": "Lost Mary",
           "rawProducts": [
             "Cartus Cola Tappo 20mg 2ml, Lost Mary"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "vaperia",
-          "category": "accesoriu RTA/mod",
-          "product": "Lost Mary Usa Mix Tappo Air, 20mg",
-          "rank": 16,
-          "observedAt": "2026-09-11",
-          "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/kit-usa-mix-tappo-air-lost-mary-20mg.html",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Kit Usa Mix Tappo Air, Lost Mary 20mg",
-          "canonicalProductKey": "lost mary|usa mix tappo air 20mg",
-          "brand": "Lost Mary",
-          "rawProducts": [
-            "Kit Usa Mix Tappo Air, Lost Mary 20mg"
           ],
           "variantCount": 1
         },
@@ -191466,20 +191571,22 @@
         {
           "retailerId": "vaperia",
           "category": "POD",
-          "product": "Aspire TUBINO",
-          "rank": 28,
+          "product": "Geekvape Wenax M2 Leather Edition",
+          "rank": 23,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/pod-tubino-1200mah-aspire-black.html",
+          "productUrl": "https://vaperia.ro/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Pod TUBINO 1200mAh, Aspire - Black",
-          "canonicalProductKey": "aspire|tubino",
-          "brand": "Aspire",
+          "rawProduct": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
+          "canonicalProductKey": "geekvape|wenax m2 leather edition",
+          "brand": "Geekvape",
           "rawProducts": [
-            "Pod TUBINO 1200mAh, Aspire - Black"
+            "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
+            "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Volcanic Black",
+            "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Wine Red"
           ],
-          "variantCount": 1
+          "variantCount": 3
         },
         {
           "retailerId": "vaperia",
@@ -192003,6 +192110,24 @@
           "brand": "La Tabaccheria",
           "rawProducts": [
             "Cartus LION Pod 0.8ohm, La Tabaccheria"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "vaperia",
+          "category": "accesoriu RTA/mod",
+          "product": "Aspire Cartus Tubino 0.8ohm",
+          "rank": 65,
+          "observedAt": "2026-09-11",
+          "source": "https://vaperia.ro/?orderby=popularity",
+          "productUrl": "https://vaperia.ro/cartus-tubino-kit-0-8ohm-aspire.html",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Cartus Tubino Kit 0.8ohm, Aspire",
+          "canonicalProductKey": "aspire|cartus tubino 0 8ohm",
+          "brand": "Aspire",
+          "rawProducts": [
+            "Cartus Tubino Kit 0.8ohm, Aspire"
           ],
           "variantCount": 1
         },
@@ -195284,8 +195409,28 @@
         {
           "retailerId": "vapetronic",
           "category": "mod",
-          "product": "MechVape Nitrous Pocket Peek Edition Nitro Access",
+          "product": "MQ Plus SXmini",
           "rank": 22,
+          "observedAt": "2026-09-11",
+          "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
+          "productUrl": "https://vapetronic.ro/produs/mod-mq-plus-sxmini-black/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Mod MQ Plus SXmini Black",
+          "canonicalProductKey": "mq plus sxmini",
+          "brand": "",
+          "rawProducts": [
+            "Mod MQ Plus SXmini Black",
+            "Mod MQ Plus SXmini Silver",
+            "Mod MQ Plus SXmini Gunmetal"
+          ],
+          "variantCount": 3
+        },
+        {
+          "retailerId": "vapetronic",
+          "category": "mod",
+          "product": "MechVape Nitrous Pocket Peek Edition Nitro Access",
+          "rank": 25,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-nitrous-pocket-peek-edition-mechvape-nitro-access/",
@@ -195303,7 +195448,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "MechVape Nitrous Pocket Nitro Access",
-          "rank": 23,
+          "rank": 26,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-nitrous-pocket-mechvape-nitro-access/",
@@ -195321,7 +195466,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Blade DNA 60 Vypers Vapes x Wick’d Graphite",
-          "rank": 25,
+          "rank": 28,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-blade-dna-60-vypers-vapes-x-wickd-graphite-black/",
@@ -195339,7 +195484,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Harrier DNA 60c Early Bird Gun Metal",
-          "rank": 27,
+          "rank": 30,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-harrier-dna-60c-early-bird-gun-metal/",
@@ -195357,7 +195502,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Hammer Of God 200 Vaperz Cloud Classic",
-          "rank": 28,
+          "rank": 31,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-hammer-of-god-200-vaperz-cloud-classic-black/",
@@ -195375,7 +195520,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "LVE Boson Boro DNA80c Vapor",
-          "rank": 29,
+          "rank": 32,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-boson-boro-dna80c-black-lve-vapor/",
@@ -195393,7 +195538,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Geekvape S100 Aegis Solo 2",
-          "rank": 30,
+          "rank": 33,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-s100-aegis-solo-2-geekvape-navy-blue/",
@@ -195411,7 +195556,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "DotMod Dotbox",
-          "rank": 31,
+          "rank": 34,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-dotmod-dotbox-100w-black/",
@@ -195430,7 +195575,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Aspire MIXX, Quick",
-          "rank": 32,
+          "rank": 35,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-quick-silver/",
@@ -195448,7 +195593,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Aspire MIXX, Jet",
-          "rank": 33,
+          "rank": 36,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-jet-black/",
@@ -195466,7 +195611,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Aspire MIXX, Tuxedo",
-          "rank": 34,
+          "rank": 37,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-aspire-mixx-60w-tuxedo/",
@@ -195484,7 +195629,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Aspire Zelos X",
-          "rank": 35,
+          "rank": 38,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-aspire-zelos-x-full-black/",
@@ -195502,7 +195647,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "MQ Class SXmini",
-          "rank": 36,
+          "rank": 39,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-mq-class-sxmini-black/",
@@ -195522,7 +195667,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Voopoo Musket Poppy",
-          "rank": 40,
+          "rank": 43,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-musket-voopoo-poppy-red/",
@@ -195540,7 +195685,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Ambition Mods Converter",
-          "rank": 41,
+          "rank": 44,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-converter-ambition-mods-ss-black/",
@@ -195558,7 +195703,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Techmod -Kizoku-Gun Metal",
-          "rank": 42,
+          "rank": 45,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-techmod-80w-tc-kizoku-gun-metal/",
@@ -195576,7 +195721,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "BD Vape Rayden 100 V2",
-          "rank": 43,
+          "rank": 46,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-rayden-100-v2-bd-vape-silver/",
@@ -195594,7 +195739,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "DotMod Dotbox Brown",
-          "rank": 44,
+          "rank": 47,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-dotmod-dotbox-100w-brown/",
@@ -195612,7 +195757,7 @@
           "retailerId": "vapetronic",
           "category": "mod",
           "product": "Dovpo Odin V2 Mini Vaperz Cloud x x Vaping Bogan",
-          "rank": 46,
+          "rank": 49,
           "observedAt": "2026-09-11",
           "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/mod-odin-v2-mini-vaperz-cloud-x-dovpo-x-vaping-bogan-matte-black/",
@@ -195623,42 +195768,6 @@
           "brand": "Dovpo",
           "rawProducts": [
             "Mod Odin V2 Mini Vaperz Cloud x Dovpo x Vaping Bogan Matte Black"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "vapetronic",
-          "category": "mod",
-          "product": "Lost Vape Thelema Solo 100 Pro",
-          "rank": 47,
-          "observedAt": "2026-09-11",
-          "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
-          "productUrl": "https://vapetronic.ro/produs/mod-thelema-solo-100-pro-lost-vape-carbon-black/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod Thelema Solo 100 Pro Lost Vape Carbon Black",
-          "canonicalProductKey": "lost vape|thelema solo 100 pro",
-          "brand": "Lost Vape",
-          "rawProducts": [
-            "Mod Thelema Solo 100 Pro Lost Vape Carbon Black"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "vapetronic",
-          "category": "mod",
-          "product": "Lost Vape Thelema Solo Carbon Fiber",
-          "rank": 48,
-          "observedAt": "2026-09-11",
-          "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
-          "productUrl": "https://vapetronic.ro/produs/mod-thelema-solo-lost-vape-black-carbon-fiber/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod Thelema Solo Lost Vape Black Carbon Fiber",
-          "canonicalProductKey": "lost vape|thelema solo carbon fiber",
-          "brand": "Lost Vape",
-          "rawProducts": [
-            "Mod Thelema Solo Lost Vape Black Carbon Fiber"
           ],
           "variantCount": 1
         },
@@ -197745,6 +197854,24 @@
         },
         {
           "retailerId": "epotion",
+          "category": "accesoriu RTA/mod",
+          "product": "Vaporesso Cartus Xros Mesh 0,6Ω Corex 2",
+          "rank": 9,
+          "observedAt": "2026-09-11",
+          "source": "https://e-potion.ro/lichide/lichid-tigara-electronica-cu-aroma-de-tutun/?orderby=popularity",
+          "productUrl": "https://e-potion.ro/cartus-vaporesso-xros-mesh-06%cf%89-2ml-corex-2/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Cartus Vaporesso Xros Mesh 0,6Ω 2ml Corex 2",
+          "canonicalProductKey": "vaporesso|cartus xros mesh 0 6 corex 2",
+          "brand": "Vaporesso",
+          "rawProducts": [
+            "Cartus Vaporesso Xros Mesh 0,6Ω 2ml Corex 2"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "epotion",
           "category": "bumbac/wick",
           "product": "Wick N Vape Bumbac Cotton Bacon Prime",
           "rank": 1,
@@ -198733,15 +198860,15 @@
           "rank": 1,
           "observedAt": "2026-09-11",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
+          "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-blueberry-sour-raspberry",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
+          "rawProduct": "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
           "canonicalProductKey": "vozol|switch pro 2",
           "brand": "Vozol",
           "rawProducts": [
-            "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
             "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
+            "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
             "Kit Vozol Switch Pro 2 - Mr Blue"
           ],
           "variantCount": 3
@@ -198750,7 +198877,7 @@
           "retailerId": "voore",
           "category": "accesoriu RTA/mod",
           "product": "Elf Bar Mate 500 Aurora - Baterie + Cartus RF350",
-          "rank": 4,
+          "rank": 3,
           "observedAt": "2026-09-11",
           "source": "https://www.voore.ro/?orderby=popularity",
           "productUrl": "https://www.voore.ro/kit-elf-bar-mate-500-aurora-blue-cartus-rf350",
@@ -199019,18 +199146,18 @@
         {
           "retailerId": "voore",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Oops! - SE Tobacco",
+          "product": "Aroma Oops! - Coffee Tobacco",
           "rank": 19,
           "observedAt": "2026-09-11",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/aroma-oops-se-tobacco-10ml",
+          "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Aroma Oops! - SE Tobacco 10ml",
-          "canonicalProductKey": "aroma oops se tobacco",
+          "rawProduct": "Aroma Oops! - Coffee Tobacco 10ml",
+          "canonicalProductKey": "aroma oops coffee tobacco",
           "brand": "",
           "rawProducts": [
-            "Aroma Oops! - SE Tobacco 10ml"
+            "Aroma Oops! - Coffee Tobacco 10ml"
           ],
           "variantCount": 1
         },
@@ -199049,24 +199176,6 @@
           "brand": "",
           "rawProducts": [
             "Aroma Flavor Madness Tobacco Vanilla Toasted Almonds 9ml"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "voore",
-          "category": "lichid tutunos/NET/DIY",
-          "product": "Aroma Oops! - Coffee Tobacco",
-          "rank": 21,
-          "observedAt": "2026-09-11",
-          "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/aroma-oops-coffee-tobacco-10ml",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Aroma Oops! - Coffee Tobacco 10ml",
-          "canonicalProductKey": "aroma oops coffee tobacco",
-          "brand": "",
-          "rawProducts": [
-            "Aroma Oops! - Coffee Tobacco 10ml"
           ],
           "variantCount": 1
         },
@@ -201783,10 +201892,10 @@
   ],
   "discoveredSourceStatus": {
     "date": "2026-09-11",
-    "generatedAt": "2026-09-11T07:50:55.386Z",
+    "generatedAt": "2026-09-11T08:55:01.261Z",
     "verifiedSources": 48,
     "totalCandidates": 102,
-    "rankingsAdded": 793,
+    "rankingsAdded": 794,
     "bySource": [
       {
         "retailerId": "smokee",
@@ -201809,7 +201918,7 @@
         "source": "https://vaperia.ro/?orderby=popularity",
         "verified": true,
         "evidenceType": "retailer-popularity-sort",
-        "rankings": 111,
+        "rankings": 112,
         "error": null
       },
       {
@@ -201921,7 +202030,7 @@
         "source": "https://vapetronic.ro/tip-produs/moduri/?orderby=popularity",
         "verified": true,
         "evidenceType": "retailer-popularity-sort",
-        "rankings": 48,
+        "rankings": 49,
         "error": null
       },
       {
@@ -202145,7 +202254,7 @@
         "source": "https://www.voore.ro/?orderby=popularity",
         "verified": true,
         "evidenceType": "retailer-popularity-sort",
-        "rankings": 21,
+        "rankings": 20,
         "error": null
       },
       {
@@ -202610,11 +202719,11 @@
     {
       "retailerId": "smokee",
       "category": "lichid tutunos/NET/DIY",
-      "product": "Longfill Hashtag / - Virginia",
+      "product": "Longfill Drops Tobacco Masters / - Chicago",
       "rank": 1,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/longfill-hashtag-6ml-60ml-virginia/",
+      "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-12ml-120ml-chicago/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -202626,49 +202735,22 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Longfill Hashtag 6ml/60ml &#8211; Virginia",
-      "canonicalProductKey": "longfill hashtag virginia",
+      "rawProduct": "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago",
+      "canonicalProductKey": "longfill drops tobacco masters chicago",
       "brand": "",
       "rawProducts": [
-        "Longfill Hashtag 6ml/60ml &#8211; Virginia"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "POD",
-      "product": "Geekvape Sonder Q2",
-      "rank": 2,
-      "observedAt": "2026-09-11",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-peach/",
-      "evidence": "public-product-demand-signals",
-      "evidenceTier": "C",
-      "reviewCount": 0,
-      "ratingValue": null,
-      "latestReviewDate": null,
-      "viewCount": 0,
-      "wishlistCount": 0,
-      "reviewCountDelta": 0,
-      "viewCountDelta": 0,
-      "wishlistCountDelta": 0,
-      "baseline": true,
-      "rawProduct": "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach",
-      "canonicalProductKey": "geekvape|sonder q2",
-      "brand": "Geekvape",
-      "rawProducts": [
-        "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach"
+        "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
       "category": "accesoriu RTA/mod",
-      "product": "Lost Vape Cartus de Rezerva E Plus Dual Mesh - 0.3 Ohm",
-      "rank": 3,
+      "product": "Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina - Strawberry Kiwi",
+      "rank": 2,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-de-rezerva-lost-vape-e-plus-dual-mesh-3ml-0-3-ohm/",
+      "productUrl": "https://smokee.ro/product/tigara-electronica-vaporesso-dojo-blast-2000-go-2000-pufuri-20-mg-nicotina-strawberry-kiwi/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -202680,11 +202762,38 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm",
-      "canonicalProductKey": "lost vape|cartus de rezerva e plus dual mesh 0 3 ohm",
-      "brand": "Lost Vape",
+      "rawProduct": "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi",
+      "canonicalProductKey": "vaporesso|dojo blast 2000 go 2000 pufuri 20 mg nicotina strawberry kiwi",
+      "brand": "Vaporesso",
       "rawProducts": [
-        "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm"
+        "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "sarma",
+      "product": "Rola Coilology - Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
+      "rank": 3,
+      "observedAt": "2026-09-11",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/rola-coilology-tricore-fused-clapton-wire-3m-ni80-3-28-36-1-73ohm-m/",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "reviewCount": 0,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": 0,
+      "wishlistCount": 0,
+      "reviewCountDelta": 0,
+      "viewCountDelta": 0,
+      "wishlistCountDelta": 0,
+      "baseline": true,
+      "rawProduct": "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
+      "canonicalProductKey": "rola coilology tricore fused clapton wire 3m ni80 3 28 36 1 73ohm m",
+      "brand": "Coilology",
+      "rawProducts": [
+        "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m"
       ],
       "variantCount": 1
     },
@@ -202720,12 +202829,12 @@
     },
     {
       "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Space",
+      "category": "POD",
+      "product": "Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
       "rank": 4,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
+      "productUrl": "https://smokee.ro/product/kit-tigara-electronica-snowplus-clic-5000-pufuri/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -202737,11 +202846,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-      "canonicalProductKey": "eleaf|istick pico plus space",
-      "brand": "Eleaf",
+      "rawProduct": "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
+      "canonicalProductKey": "snowplus click 5000 pufuri strawberry kiwi 2 nicotina",
+      "brand": "",
       "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
+        "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina"
       ],
       "variantCount": 1
     },
@@ -202777,12 +202886,12 @@
     },
     {
       "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Light",
+      "category": "POD",
+      "product": "Geekvape Sonder Q2",
       "rank": 5,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-light-grey/",
+      "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-mint/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -202794,11 +202903,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey",
-      "canonicalProductKey": "eleaf|istick pico plus light",
-      "brand": "Eleaf",
+      "rawProduct": "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint",
+      "canonicalProductKey": "geekvape|sonder q2",
+      "brand": "Geekvape",
       "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey"
+        "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint"
       ],
       "variantCount": 1
     },
@@ -202834,12 +202943,12 @@
     },
     {
       "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus",
+      "category": "POD",
+      "product": "OXVA Vprime 2",
       "rank": 6,
       "observedAt": "2026-09-11",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+      "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-shard-gold/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -202851,11 +202960,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
-      "canonicalProductKey": "eleaf|istick pico plus",
-      "brand": "Eleaf",
+      "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold",
+      "canonicalProductKey": "oxva|vprime 2",
+      "brand": "OXVA",
       "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal"
+        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold"
       ],
       "variantCount": 1
     },
@@ -203784,12 +203893,12 @@
     },
     {
       "retailerId": "vaperia",
-      "category": "POD",
-      "product": "Geekvape Wenax M2 Leather Edition",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Aroma BURLEY Twenty One, TNT",
       "rank": 1,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/kit-tigara-electronica/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
+      "productUrl": "https://vaperia.ro/lichide-80-4/aroma-burley-twenty-one-10ml-tnt-vape.html",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -203801,11 +203910,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-      "canonicalProductKey": "geekvape|wenax m2 leather edition",
-      "brand": "Geekvape",
+      "rawProduct": "Aroma BURLEY Twenty One 10ml, TNT Vape",
+      "canonicalProductKey": "aroma burley twenty one tnt",
+      "brand": "",
       "rawProducts": [
-        "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown"
+        "Aroma BURLEY Twenty One 10ml, TNT Vape"
       ],
       "variantCount": 1
     },
@@ -203892,12 +204001,12 @@
     },
     {
       "retailerId": "vaperia",
-      "category": "mod",
-      "product": "MechVape Paramour V2, - Full",
+      "category": "accesoriu RTA/mod",
+      "product": "Voopoo Cartus Vmate V3 0.7ohm",
       "rank": 2,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
+      "productUrl": "https://vaperia.ro/consumabile-pod/cartus-vmate-v3-0-7ohm-voopoo.html",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -203909,11 +204018,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
-      "canonicalProductKey": "mechvape|paramour v2 full",
-      "brand": "MechVape",
+      "rawProduct": "Cartus Vmate V3 0.7ohm, Voopoo",
+      "canonicalProductKey": "voopoo|cartus vmate v3 0 7ohm",
+      "brand": "Voopoo",
       "rawProducts": [
-        "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver"
+        "Cartus Vmate V3 0.7ohm, Voopoo"
       ],
       "variantCount": 1
     },
@@ -204027,12 +204136,12 @@
     },
     {
       "retailerId": "vaperia",
-      "category": "accesoriu RTA/mod",
-      "product": "Lost Mary Cartus Pomme Peche Tappo 20mg",
+      "category": "POD",
+      "product": "Aspire TUBINO",
       "rank": 3,
       "observedAt": "2026-09-11",
       "source": "https://vaperia.ro/?orderby=popularity",
-      "productUrl": "https://vaperia.ro/consumabile-pod/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
+      "productUrl": "https://vaperia.ro/kit-tigara-electronica/pod-tubino-1200mah-aspire-black.html",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -204044,11 +204153,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
-      "canonicalProductKey": "lost mary|cartus pomme peche tappo 20mg",
-      "brand": "Lost Mary",
+      "rawProduct": "Pod TUBINO 1200mAh, Aspire - Black",
+      "canonicalProductKey": "aspire|tubino",
+      "brand": "Aspire",
       "rawProducts": [
-        "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary"
+        "Pod TUBINO 1200mAh, Aspire - Black"
       ],
       "variantCount": 1
     },
@@ -204113,7 +204222,7 @@
       "rank": 1,
       "observedAt": "2026-09-11",
       "source": "https://www.voore.ro/?orderby=popularity",
-      "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
+      "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-blueberry-sour-raspberry",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -204125,15 +204234,14 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
+      "rawProduct": "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
       "canonicalProductKey": "vozol|switch pro 2",
       "brand": "Vozol",
       "rawProducts": [
-        "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
         "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
-        "Kit Vozol Switch Pro 2 - Mr Blue"
+        "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava"
       ],
-      "variantCount": 3
+      "variantCount": 2
     },
     {
       "retailerId": "voore",
@@ -204327,6 +204435,33 @@
     },
     {
       "retailerId": "voore",
+      "category": "accesoriu RTA/mod",
+      "product": "Elf Bar Mate 500 Aurora - Baterie + Cartus RF350",
+      "rank": 3,
+      "observedAt": "2026-09-11",
+      "source": "https://www.voore.ro/?orderby=popularity",
+      "productUrl": "https://www.voore.ro/kit-elf-bar-mate-500-aurora-blue-cartus-rf350",
+      "evidence": "public-product-demand-signals",
+      "evidenceTier": "C",
+      "reviewCount": 0,
+      "ratingValue": null,
+      "latestReviewDate": null,
+      "viewCount": 0,
+      "wishlistCount": 0,
+      "reviewCountDelta": 0,
+      "viewCountDelta": 0,
+      "wishlistCountDelta": 0,
+      "baseline": true,
+      "rawProduct": "Kit Elf Bar Mate 500 Aurora Blue - Baterie + Cartus RF350",
+      "canonicalProductKey": "elf bar|mate 500 aurora baterie cartus rf350",
+      "brand": "Elf Bar",
+      "rawProducts": [
+        "Kit Elf Bar Mate 500 Aurora Blue - Baterie + Cartus RF350"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "voore",
       "category": "RDA/RDTA",
       "product": "Goon by 528 Custom Vapes",
       "rank": 3,
@@ -204414,27 +204549,11 @@
         {
           "retailerId": "smokee",
           "category": "lichid tutunos/NET/DIY",
-          "product": "Longfill Hashtag 6ml/60ml &#8211; Virginia",
+          "product": "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago",
           "rank": 1,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/longfill-hashtag-6ml-60ml-virginia/",
-          "evidence": "public-product-demand-signals",
-          "evidenceTier": "C",
-          "reviewCount": null,
-          "ratingValue": null,
-          "latestReviewDate": null,
-          "viewCount": null,
-          "wishlistCount": 0
-        },
-        {
-          "retailerId": "smokee",
-          "category": "POD",
-          "product": "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach",
-          "rank": 2,
-          "observedAt": "2026-09-11",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-peach/",
+          "productUrl": "https://smokee.ro/product/longfill-drops-tobacco-masters-12ml-120ml-chicago/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -204446,11 +204565,27 @@
         {
           "retailerId": "smokee",
           "category": "accesoriu RTA/mod",
-          "product": "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm",
+          "product": "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi",
+          "rank": 2,
+          "observedAt": "2026-09-11",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/tigara-electronica-vaporesso-dojo-blast-2000-go-2000-pufuri-20-mg-nicotina-strawberry-kiwi/",
+          "evidence": "public-product-demand-signals",
+          "evidenceTier": "C",
+          "reviewCount": null,
+          "ratingValue": null,
+          "latestReviewDate": null,
+          "viewCount": null,
+          "wishlistCount": 0
+        },
+        {
+          "retailerId": "smokee",
+          "category": "sarma",
+          "product": "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
           "rank": 3,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-de-rezerva-lost-vape-e-plus-dual-mesh-3ml-0-3-ohm/",
+          "productUrl": "https://smokee.ro/product/rola-coilology-tricore-fused-clapton-wire-3m-ni80-3-28-36-1-73ohm-m/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -204487,12 +204622,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "mod",
-          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
+          "category": "POD",
+          "product": "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
           "rank": 4,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
+          "productUrl": "https://smokee.ro/product/kit-tigara-electronica-snowplus-clic-5000-pufuri/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -204529,12 +204664,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "mod",
-          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey",
+          "category": "POD",
+          "product": "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint",
           "rank": 5,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-light-grey/",
+          "productUrl": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-mint/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -204571,12 +204706,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "mod",
-          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
+          "category": "POD",
+          "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold",
           "rank": 6,
           "observedAt": "2026-09-11",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+          "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-shard-gold/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -205313,12 +205448,12 @@
         },
         {
           "retailerId": "vaperia",
-          "category": "POD",
-          "product": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Aroma BURLEY Twenty One 10ml, TNT Vape",
           "rank": 1,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/kit-tigara-electronica/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
+          "productUrl": "https://vaperia.ro/lichide-80-4/aroma-burley-twenty-one-10ml-tnt-vape.html",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -205377,12 +205512,12 @@
         },
         {
           "retailerId": "vaperia",
-          "category": "mod",
-          "product": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
+          "category": "accesoriu RTA/mod",
+          "product": "Cartus Vmate V3 0.7ohm, Voopoo",
           "rank": 2,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
+          "productUrl": "https://vaperia.ro/consumabile-pod/cartus-vmate-v3-0-7ohm-voopoo.html",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -205457,12 +205592,12 @@
         },
         {
           "retailerId": "vaperia",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
+          "category": "POD",
+          "product": "Pod TUBINO 1200mAh, Aspire - Black",
           "rank": 3,
           "observedAt": "2026-09-11",
           "source": "https://vaperia.ro/?orderby=popularity",
-          "productUrl": "https://vaperia.ro/consumabile-pod/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
+          "productUrl": "https://vaperia.ro/kit-tigara-electronica/pod-tubino-1200mah-aspire-black.html",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -205506,11 +205641,11 @@
         {
           "retailerId": "voore",
           "category": "POD",
-          "product": "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
+          "product": "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
           "rank": 1,
           "observedAt": "2026-09-11",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
+          "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-blueberry-sour-raspberry",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -205586,11 +205721,11 @@
         {
           "retailerId": "voore",
           "category": "POD",
-          "product": "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
+          "product": "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
           "rank": 2,
           "observedAt": "2026-09-11",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-blueberry-sour-raspberry",
+          "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -205665,12 +205800,12 @@
         },
         {
           "retailerId": "voore",
-          "category": "POD",
-          "product": "Kit Vozol Switch Pro 2 - Mr Blue",
+          "category": "accesoriu RTA/mod",
+          "product": "Kit Elf Bar Mate 500 Aurora Blue - Baterie + Cartus RF350",
           "rank": 3,
           "observedAt": "2026-09-11",
           "source": "https://www.voore.ro/?orderby=popularity",
-          "productUrl": "https://www.voore.ro/kit-vozol-switch-pro-2-mr-blue",
+          "productUrl": "https://www.voore.ro/kit-elf-bar-mate-500-aurora-blue-cartus-rf350",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -205732,7 +205867,7 @@
   ],
   "productCounterProbeStatus": {
     "date": "2026-09-11",
-    "generatedAt": "2026-09-11T07:54:37.646Z",
+    "generatedAt": "2026-09-11T08:58:19.338Z",
     "pagesProbed": 230,
     "countersFound": 0,
     "retailersWithCounters": 0,
@@ -205740,8 +205875,8 @@
     "byProduct": [
       {
         "retailerId": "smokee",
-        "product": "Longfill Hashtag 6ml/60ml &#8211; Virginia",
-        "source": "https://smokee.ro/product/longfill-hashtag-6ml-60ml-virginia/",
+        "product": "Longfill Drops Tobacco Masters 12ml/120ml &#8211; Chicago",
+        "source": "https://smokee.ro/product/longfill-drops-tobacco-masters-12ml-120ml-chicago/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -205749,8 +205884,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Kit Geekvape Sonder Q2 &#8211; Fizzy Peach",
-        "source": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-peach/",
+        "product": "Tigara Electronica Vaporesso Dojo Blast 2000 GO 2000 pufuri, 20 mg nicotina &#8211; Strawberry Kiwi",
+        "source": "https://smokee.ro/product/tigara-electronica-vaporesso-dojo-blast-2000-go-2000-pufuri-20-mg-nicotina-strawberry-kiwi/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -205758,8 +205893,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Cartus de Rezerva Lost Vape E Plus Dual Mesh 3ml &#8211; 0.3 Ohm",
-        "source": "https://smokee.ro/product/cartus-de-rezerva-lost-vape-e-plus-dual-mesh-3ml-0-3-ohm/",
+        "product": "Rola Coilology – Tricore Fused Clapton Wire 3m Ni80 3-28/36 1.73ohm/m",
+        "source": "https://smokee.ro/product/rola-coilology-tricore-fused-clapton-wire-3m-ni80-3-28-36-1-73ohm-m/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -205776,8 +205911,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-        "source": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
+        "product": "Kit Tigara Electronica Snowplus Click 5000 pufuri Strawberry Kiwi 2% nicotina",
+        "source": "https://smokee.ro/product/kit-tigara-electronica-snowplus-clic-5000-pufuri/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -205794,8 +205929,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Light Grey",
-        "source": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-light-grey/",
+        "product": "Kit Geekvape Sonder Q2 &#8211; Fizzy Mint",
+        "source": "https://smokee.ro/product/kit-geekvape-sonder-q2-fizzy-mint/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -205812,8 +205947,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
-        "source": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+        "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold",
+        "source": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-shard-gold/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -207144,8 +207279,8 @@
       },
       {
         "retailerId": "vaperia",
-        "product": "Kit Wenax M2 Leather Edition 1200mAh, Geekvape - Terra brown",
-        "source": "https://vaperia.ro/kit-tigara-electronica/kit-wenax-m2-leather-edition-1200mah-geekvape-terra-brown.html",
+        "product": "Aroma BURLEY Twenty One 10ml, TNT Vape",
+        "source": "https://vaperia.ro/lichide-80-4/aroma-burley-twenty-one-10ml-tnt-vape.html",
         "found": false,
         "value": null,
         "evidence": null,
@@ -207180,8 +207315,8 @@
       },
       {
         "retailerId": "vaperia",
-        "product": "Mod Paramour V2 SBS 100W 18650/21700 , Mechvape - Full Silver",
-        "source": "https://vaperia.ro/mod/mod-paramour-v2-sbs-100w-18650-21700-mechvape-full-silver.html",
+        "product": "Cartus Vmate V3 0.7ohm, Voopoo",
+        "source": "https://vaperia.ro/consumabile-pod/cartus-vmate-v3-0-7ohm-voopoo.html",
         "found": false,
         "value": null,
         "evidence": null,
@@ -207225,8 +207360,8 @@
       },
       {
         "retailerId": "vaperia",
-        "product": "Cartus Pomme Peche Tappo 20mg 2ml, Lost Mary",
-        "source": "https://vaperia.ro/consumabile-pod/cartus-pomme-peche-tappo-20mg-2ml-lost-mary.html",
+        "product": "Pod TUBINO 1200mAh, Aspire - Black",
+        "source": "https://vaperia.ro/kit-tigara-electronica/pod-tubino-1200mah-aspire-black.html",
         "found": false,
         "value": null,
         "evidence": null,
@@ -207468,8 +207603,8 @@
       },
       {
         "retailerId": "voore",
-        "product": "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
-        "source": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
+        "product": "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
+        "source": "https://www.voore.ro/kit-vozol-switch-pro-2-blueberry-sour-raspberry",
         "found": false,
         "value": null,
         "evidence": null,
@@ -207513,8 +207648,8 @@
       },
       {
         "retailerId": "voore",
-        "product": "Kit Vozol Switch Pro 2 - Blueberry Sour Raspberry",
-        "source": "https://www.voore.ro/kit-vozol-switch-pro-2-blueberry-sour-raspberry",
+        "product": "Kit Vozol Switch Pro 2 - Kiwi Passion Fruit Guava",
+        "source": "https://www.voore.ro/kit-vozol-switch-pro-2-kiwi-passion-fruit-guava",
         "found": false,
         "value": null,
         "evidence": null,
@@ -207558,8 +207693,8 @@
       },
       {
         "retailerId": "voore",
-        "product": "Kit Vozol Switch Pro 2 - Mr Blue",
-        "source": "https://www.voore.ro/kit-vozol-switch-pro-2-mr-blue",
+        "product": "Kit Elf Bar Mate 500 Aurora Blue - Baterie + Cartus RF350",
+        "source": "https://www.voore.ro/kit-elf-bar-mate-500-aurora-blue-cartus-rf350",
         "found": false,
         "value": null,
         "evidence": null,
@@ -207812,7 +207947,7 @@
   },
   "demandProbeStatus": {
     "date": "2026-09-11",
-    "generatedAt": "2026-09-11T07:54:37.646Z",
+    "generatedAt": "2026-09-11T08:58:19.338Z",
     "signalsFound": 67,
     "retailersWithSignals": 10,
     "reviewSignals": 18,
@@ -207821,17 +207956,17 @@
   },
   "canonicalization": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-11T07:54:53.106Z",
+    "generatedAt": "2026-09-11T08:58:30.834Z",
     "rule": "Variants, colours, equivalent brand spellings and retailer title noise are consolidated into a canonical product identity before national aggregation. Original titles remain in rawProduct/rawProducts for audit.",
     "before": {
-      "rankings": 1215,
+      "rankings": 1216,
       "actualSales": 0,
       "demandSignals": 67
     },
     "after": {
       "rankings": 1040,
       "actualSales": 0,
-      "demandSignals": 64
+      "demandSignals": 65
     }
   }
 }
