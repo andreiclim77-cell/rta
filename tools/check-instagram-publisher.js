@@ -15,6 +15,8 @@ const {
   isGeneratedFacebookReelPost,
   markSourceBlocked,
   manualFacebookRecord,
+  manualFacebookAttachmentQuery,
+  manualFacebookFeedQuery,
   manualContentFingerprint,
   mergeManualFacebookRecords,
   normalizeInstagramState,
@@ -36,6 +38,14 @@ const facebookState = readJson('data/facebook-publish-state.json');
 const photoState = readJson('data/facebook-hourly-photo-state.json');
 const modsFeed = readJson('data/smokee-mods.json');
 const state = normalizeInstagramState(emptyInstagramState());
+
+const feedQuery = manualFacebookFeedQuery('cursor-test');
+assert.strictEqual(feedQuery.limit, '50', 'Manual discovery should page through compact metadata batches');
+assert.strictEqual(feedQuery.after, 'cursor-test', 'Manual discovery must preserve Graph pagination');
+assert(!/attachments/i.test(feedQuery.fields), 'The Page feed request must not expand attachments for every post');
+const attachmentQuery = manualFacebookAttachmentQuery();
+assert(/attachments\.limit\(10\)/.test(attachmentQuery.fields), 'Each new post must load only its bounded attachment set');
+assert(/subattachments\.limit\(10\)/.test(attachmentQuery.fields), 'Facebook carousels must remain bounded to the supported ten photos');
 
 const records = collectFacebookRecords(campaignState, facebookState, photoState);
 assert(records.length > 0, 'Facebook history should expose mirrorable product records');

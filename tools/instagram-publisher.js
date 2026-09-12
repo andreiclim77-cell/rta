@@ -32,8 +32,10 @@ const DEFAULT_DAILY_LIMIT = 4;
 const DEFAULT_MAX_POSTS = 1;
 const MIRROR_FORMAT_VERSION = 'instagram-exact-product-photo-v1';
 const MANUAL_SOURCE = 'facebook-page-api-manual';
-const MANUAL_POSTS_PER_PAGE = 100;
+const MANUAL_POSTS_PER_PAGE = 50;
 const MAX_MANUAL_PAGES = 100;
+const MANUAL_FEED_FIELDS = 'id,message,created_time,is_published,permalink_url,status_type';
+const MANUAL_ATTACHMENT_FIELDS = 'attachments.limit(10){media_type,type,media,target,url,subattachments.limit(10){media_type,type,media,target,url}}';
 const SOURCE_RETRY_MS = 24 * 60 * 60 * 1000;
 const MAX_PREPARE_ATTEMPTS = 12;
 
@@ -683,9 +685,36 @@ async function graphRequest(endpoint, options = {}) {
     const graphError = data.error || {};
     const code = graphError.code ? ` cod ${graphError.code}` : '';
     const subcode = graphError.error_subcode ? `/${graphError.error_subcode}` : '';
-    throw new Error(`Meta Graph API${code}${subcode}: ${graphError.message || `HTTP ${response.status}`}`);
+    const error = new Error(`Meta Graph API${code}${subcode}: ${graphError.message || `HTTP ${response.status}`}`);
+    error.metaCode = Number(graphError.code || 0);
+    error.metaSubcode = Number(graphError.error_subcode || 0);
+    error.httpStatus = response.status;
+    throw error;
   }
   return data;
+}
+
+function manualFacebookFeedQuery(after = '') {
+  const query = {
+    fields: MANUAL_FEED_FIELDS,
+    limit: String(MANUAL_POSTS_PER_PAGE)
+  };
+  if (after) query.after = after;
+  return query;
+}
+
+function manualFacebookAttachmentQuery() {
+  return { fields: MANUAL_ATTACHMENT_FIELDS };
+}
+
+async function hydrateManualFacebookPost(post) {
+  const postId = String(post && post.id || '').trim();
+  if (!postId) return post;
+  const details = await graphRequest(postId, { query: manualFacebookAttachmentQuery() });
+  return {
+    ...post,
+    attachments: details.attachments || { data: [] }
+  };
 }
 
 function attachmentImageUrls(attachment) {
@@ -824,12 +853,7 @@ async function discoverManualFacebookRecords(knownPostIds, generatedIds = new Se
   const excludedPostIds = new Set();
   let after = '';
   for (let page = 0; page < MAX_MANUAL_PAGES; page += 1) {
-    const query = {
-      fields: 'id,message,created_time,is_published,permalink_url,status_type,attachments{media_type,type,media,target,url,subattachments{media_type,type,media,target,url}}',
-      limit: String(MANUAL_POSTS_PER_PAGE)
-    };
-    if (after) query.after = after;
-    const response = await graphRequest(`${pageId}/posts`, { query });
+    const response = await graphRequest(`${pageId}/posts`, { query: manualFacebookFeedQuery(after) });
     const posts = [].concat(response.data || []);
     for (const post of posts) {
       const postId = String(post && post.id || '').trim();
@@ -839,7 +863,21 @@ async function discoverManualFacebookRecords(knownPostIds, generatedIds = new Se
         continue;
       }
       if (knownPostIds.has(postId)) continue;
-      const record = manualFacebookRecord(post, generatedIds);
+      let hydrated;
+      try {
+        hydrated = await hydrateManualFacebookPost(post);
+      } catch (error) {
+        if (error && (error.metaCode === 1 || error.metaCode === 100)) {
+          console.warn(`Instagram mirror: atasamentele postarii ${postId} vor fi reincercate: ${error.message}`);
+          continue;
+        }
+        throw error;
+      }
+      if (postContainsVideo(hydrated)) {
+        excludedPostIds.add(postId);
+        continue;
+      }
+      const record = manualFacebookRecord(hydrated, generatedIds);
       if (record) records.push(record);
     }
     const nextAfter = String(response.paging && response.paging.cursors && response.paging.cursors.after || '');
@@ -1156,6 +1194,8 @@ module.exports = {
   isGeneratedFacebookReelPost,
   manualFacebookRecord,
   manualContentFingerprint,
+  manualFacebookAttachmentQuery,
+  manualFacebookFeedQuery,
   mergeManualFacebookRecords,
   markSourceBlocked,
   normalizeInstagramState,
