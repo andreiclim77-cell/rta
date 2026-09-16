@@ -10,7 +10,7 @@
     "completeFromRequestedStart": false,
     "historicalBackfillInvented": false
   },
-  "updatedAt": "2026-09-16T09:20:58.508Z",
+  "updatedAt": "2026-09-16T09:48:20.991Z",
   "methodology": {
     "actualSalesOnly": true,
     "noStockInference": true,
@@ -27,9 +27,9 @@
   "coverage": {
     "storefrontsConfigured": 22,
     "storefrontsWithActualUnitSales": 0,
-    "storefrontsWithRetailerSalesRanking": 18,
+    "storefrontsWithRetailerSalesRanking": 19,
     "actualUnitSalesCoveragePct": 0,
-    "rankingCoveragePct": 81.8,
+    "rankingCoveragePct": 86.4,
     "periodUnitSalesAvailable": false,
     "nationalUnitsSoldAvailable": false,
     "nationalMarketShareAvailable": false,
@@ -199,9 +199,9 @@
       "retailerId": "ecigvapo",
       "method": "woo-popularity-api",
       "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
-      "rankingCount": 0,
+      "rankingCount": 15,
       "actualSalesCount": 0,
-      "error": "This operation was aborted",
+      "error": null,
       "evidenceWindow": "lifetime-cumulative"
     },
     {
@@ -1389,15 +1389,18 @@
       "retailerId": "smokee",
       "category": "accesoriu RTA/mod",
       "product": "Voopoo Cartus Doric Go - 1.0 Ohm",
-      "rank": 1,
+      "rank": 70,
       "observedAt": "2026-09-16",
-      "source": "https://smokee.ro/?orderby=popularity",
+      "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
       "productUrl": "https://smokee.ro/product/cartus-voopoo-doric-go-5ml-1-0-ohm/",
-      "evidence": "verified-html-popularity-sort",
+      "evidence": "woocommerce-public-popularity-order",
       "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "Voopoo",
       "rawProduct": "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm",
       "canonicalProductKey": "voopoo|cartus doric go 1 0 ohm",
-      "brand": "Voopoo",
       "rawProducts": [
         "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm"
       ],
@@ -5272,6 +5275,321 @@
       "variantCount": 1
     },
     {
+      "retailerId": "ecigvapo",
+      "category": "coil prebuilt",
+      "product": "Rezistenta TOCC pentru clearomizorul T3s sau MT3s",
+      "rank": 1,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/rezistenta-tocc-pentru-clearomizorul-t3s-sau-mt3s/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Rezistenta TOCC pentru clearomizorul T3s sau MT3s",
+      "canonicalProductKey": "rezistenta tocc pentru clearomizorul t3s sau mt3s",
+      "rawProducts": [
+        "Rezistenta TOCC pentru clearomizorul T3s sau MT3s"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "sarma",
+      "product": "Kanthal - 10 metri",
+      "rank": 4,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/kanthal-035-mm-10-metri/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Kanthal 0,35 mm &#8211; 10 metri",
+      "canonicalProductKey": "kanthal 10 metri",
+      "rawProducts": [
+        "Kanthal 0,35 mm &#8211; 10 metri"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "sarma",
+      "product": "Nichelina sarma speciala rezistenta - 10 metri",
+      "rank": 9,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/nichelina-sarma-speciala-rezistenta-035-mm-10-metri/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Nichelina sarma speciala rezistenta 0,35 mm &#8211; 10 metri",
+      "canonicalProductKey": "nichelina sarma speciala rezistenta 10 metri",
+      "rawProducts": [
+        "Nichelina sarma speciala rezistenta 0,35 mm &#8211; 10 metri"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "acumulator",
+      "product": "Baterie Evod Twist cu voltaj variabil",
+      "rank": 10,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/baterie-evod-twist-1100mah-cu-voltaj-variabil/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Baterie Evod Twist 1100mah cu voltaj variabil",
+      "canonicalProductKey": "baterie evod twist cu voltaj variabil",
+      "rawProducts": [
+        "Baterie Evod Twist 1100mah cu voltaj variabil"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "accesoriu RTA/mod",
+      "product": "10 X CE4+ V2",
+      "rank": 13,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/10-x-clearomizer-ce4-v2/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "10 X Clearomizer CE4+ v2",
+      "canonicalProductKey": "10 x ce4 v2",
+      "rawProducts": [
+        "10 X Clearomizer CE4+ v2"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "componente RTA",
+      "product": "Baza eGo-E 2.2-2.6ohmi",
+      "rank": 19,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/baza-atomizor-ego-e-2-2-2-6ohmi/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Baza atomizor eGo-E 2.2-2.6ohmi",
+      "canonicalProductKey": "baza ego e 2 2 2 6ohmi",
+      "rawProducts": [
+        "Baza atomizor eGo-E 2.2-2.6ohmi"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "sarma",
+      "product": "Nickel Coil Ni200 sarma rezistente - 10 metri",
+      "rank": 35,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/nickel-coil-ni200-sarma-rezistente-0-4mm-10-metri/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Nickel Coil Ni200 sarma rezistente 0.4mm &#8211; 10 metri",
+      "canonicalProductKey": "nickel coil ni200 sarma rezistente 10 metri",
+      "rawProducts": [
+        "Nickel Coil Ni200 sarma rezistente 0.4mm &#8211; 10 metri"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "sarma",
+      "product": "Kanthal A1 sârmă rezistențe diametru rolă 9,14m(30fit)",
+      "rank": 36,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/kanthal-a1-sarma-rezistente-diametru-08mm-rola-15m/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Kanthal A1 sârmă rezistențe diametru 0,8mm rolă 9,14m(30fit)",
+      "canonicalProductKey": "kanthal a1 sarma rezistente diametru rola 9 14m 30fit",
+      "rawProducts": [
+        "Kanthal A1 sârmă rezistențe diametru 0,8mm rolă 9,14m(30fit)"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "acumulator",
+      "product": "Acumulator Trustfire 3.7V Li-ion cu flat top si PCB",
+      "rank": 38,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-flat-top-si-pcb/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu flat top si PCB",
+      "canonicalProductKey": "acumulator trustfire 3 7v li ion cu flat top si pcb",
+      "rawProducts": [
+        "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu flat top si PCB"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "acumulator",
+      "product": "Acumulator Trustfire 3.7V Li-ion cu top button si PCB",
+      "rank": 39,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-top-button-si-pcb/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu top button si PCB",
+      "canonicalProductKey": "acumulator trustfire 3 7v li ion cu top button si pcb",
+      "rawProducts": [
+        "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu top button si PCB"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "accesoriu RTA/mod",
+      "product": "eVod BCC ( modelul nou )",
+      "rank": 41,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/clearomizor-evod-bcc-1-6ml-modelul-nou/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Clearomizor eVod BCC 1.6ml ( modelul nou )",
+      "canonicalProductKey": "evod bcc modelul nou",
+      "rawProducts": [
+        "Clearomizor eVod BCC 1.6ml ( modelul nou )"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "accesoriu RTA/mod",
+      "product": "CE5 Sailebao eGo/TGO",
+      "rank": 44,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/clearomizer-ce5-sailebao-ego-tgo/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Clearomizer CE5 Sailebao eGo/TGO",
+      "canonicalProductKey": "ce5 sailebao ego tgo",
+      "rawProducts": [
+        "Clearomizer CE5 Sailebao eGo/TGO"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "sarma",
+      "product": "Kanthal Tip A - 10 metri",
+      "rank": 45,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/kanthal-tip-a-010-mm-10-metri/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Kanthal Tip A 0,10 mm &#8211; 10 metri",
+      "canonicalProductKey": "kanthal tip a 10 metri",
+      "rawProducts": [
+        "Kanthal Tip A 0,10 mm &#8211; 10 metri"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Tutun Simplu e-lichid VG + PG",
+      "rank": 74,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/tutun-simplu-30ml-e-lichid-vg-pg/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Tutun Simplu 30ml e-lichid VG + PG",
+      "canonicalProductKey": "tutun simplu e lichid vg pg",
+      "rawProducts": [
+        "Tutun Simplu 30ml e-lichid VG + PG"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "ecigvapo",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Pipe tobacco Hangsen VG",
+      "rank": 98,
+      "observedAt": "2026-09-16",
+      "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+      "productUrl": "https://ecig-vapo.com/pipe-tobacco-30ml-hangsen-vg/",
+      "evidence": "woocommerce-public-popularity-order",
+      "evidenceTier": "B",
+      "evidenceWindow": "lifetime-cumulative",
+      "popularityBasis": "woocommerce-total_sales",
+      "periodSales": false,
+      "brand": "",
+      "rawProduct": "Pipe tobacco 30ml Hangsen VG",
+      "canonicalProductKey": "pipe tobacco hangsen vg",
+      "rawProducts": [
+        "Pipe tobacco 30ml Hangsen VG"
+      ],
+      "variantCount": 1
+    },
+    {
       "retailerId": "merlin",
       "category": "coil prebuilt",
       "product": "Vaporesso Rezistenta GTX V2",
@@ -8388,73 +8706,145 @@
     },
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "Uwell Cartus Zetta - 0.8 Ohm",
+      "category": "POD",
+      "product": "Vaporesso XROS 4 Nano",
+      "rank": 1,
+      "observedAt": "2026-09-16",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/kit-vaporesso-xros-4-nano-titanium-silver-1350mah-30w-tehnologie-corex-smokee-ro/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver",
+      "canonicalProductKey": "vaporesso|xros 4 nano",
+      "brand": "Vaporesso",
+      "rawProducts": [
+        "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Longfill Yogs Pfeifen X Don Cristo / - Apricot Tobacco",
       "rank": 2,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-uwell-zetta-10-ml-0-8-ohm/",
+      "productUrl": "https://smokee.ro/product/lichid-longfill-yogs-pfeifen-x-don-cristo-10-ml-60-ml-apricot-tobacco/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm",
-      "canonicalProductKey": "uwell|cartus zetta 0 8 ohm",
-      "brand": "Uwell",
+      "rawProduct": "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco",
+      "canonicalProductKey": "lichid longfill yogs pfeifen x don cristo apricot tobacco",
+      "brand": "",
       "rawProducts": [
-        "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm"
+        "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+      "category": "POD",
+      "product": "OXVA NeXLIM 2",
       "rank": 3,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
+      "productUrl": "https://smokee.ro/product/kit-oxva-nexlim-2-black-warrior/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-      "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
+      "rawProduct": "Kit OXVA NeXLIM 2 &#8211; Black Warrior",
+      "canonicalProductKey": "oxva|nexlim 2",
       "brand": "OXVA",
       "rawProducts": [
-        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
+        "Kit OXVA NeXLIM 2 &#8211; Black Warrior"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+      "category": "POD",
+      "product": "Uwell Caliburn G5",
       "rank": 4,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
+      "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
-      "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
-      "brand": "OXVA",
+      "rawProduct": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+      "canonicalProductKey": "uwell|caliburn g5",
+      "brand": "Uwell",
       "rawProducts": [
-        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
+        "Kit Uwell Caliburn G5 &#8211; Mystic Forest"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
       "category": "RTA",
-      "product": "Ennequadro Mods Kuma 1.2",
+      "product": "Arcana Mods Muted +",
       "rank": 5,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/atomizor-ennequadro-mods-kuma-1-2-rta/",
+      "productUrl": "https://smokee.ro/product/atomizor-arcana-mods-muted-rta-2/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Atomizor Ennequadro Mods Kuma 1.2 RTA",
-      "canonicalProductKey": "ennequadro mods|kuma 1 2",
-      "brand": "Ennequadro Mods",
+      "rawProduct": "Atomizor Arcana Mods Muted + RTA",
+      "canonicalProductKey": "arcana mods|muted",
+      "brand": "Arcana Mods",
       "rawProducts": [
-        "Atomizor Ennequadro Mods Kuma 1.2 RTA"
+        "Atomizor Arcana Mods Muted + RTA"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "POD",
+      "product": "Uwell Caliburn G5 Koko",
+      "rank": 6,
+      "observedAt": "2026-09-16",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-koko-1600mah-mocha-silver/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver",
+      "canonicalProductKey": "uwell|caliburn g5 koko",
+      "brand": "Uwell",
+      "rawProducts": [
+        "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "RBA/bridge",
+      "product": "Lost Vape Centaurus Boro",
+      "rank": 7,
+      "observedAt": "2026-09-16",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/lost-vape-centaurus-rba-boro-tank-5ml-gold-brown/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown",
+      "canonicalProductKey": "lost vape|centaurus boro",
+      "brand": "Lost Vape",
+      "rawProducts": [
+        "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "smokee",
+      "category": "RDA/RDTA",
+      "product": "GD Mods Ignis",
+      "rank": 8,
+      "observedAt": "2026-09-16",
+      "source": "https://smokee.ro/?orderby=popularity",
+      "productUrl": "https://smokee.ro/product/gd-mods-ignis-rdta-22mm/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "GD Mods Ignis RDTA 22mm",
+      "canonicalProductKey": "gd mods ignis",
+      "brand": "",
+      "rawProducts": [
+        "GD Mods Ignis RDTA 22mm"
       ],
       "variantCount": 1
     },
@@ -8462,7 +8852,7 @@
       "retailerId": "smokee",
       "category": "mod",
       "product": "Eleaf iStick Pico Plus",
-      "rank": 6,
+      "rank": 9,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
       "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
@@ -8478,56 +8868,19 @@
     },
     {
       "retailerId": "smokee",
-      "category": "POD",
-      "product": "OXVA Vprime 2",
-      "rank": 7,
+      "category": "accesoriu RTA/mod",
+      "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+      "rank": 10,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
+      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
       "evidence": "verified-html-popularity-sort",
       "evidenceTier": "B",
-      "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-      "canonicalProductKey": "oxva|vprime 2",
+      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
+      "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
       "brand": "OXVA",
       "rawProducts": [
-        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold"
-      ],
-      "variantCount": 2
-    },
-    {
-      "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Space",
-      "rank": 8,
-      "observedAt": "2026-09-16",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-      "canonicalProductKey": "eleaf|istick pico plus space",
-      "brand": "Eleaf",
-      "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "smokee",
-      "category": "mod",
-      "product": "BP Mods AMPBB Luxury Edition",
-      "rank": 9,
-      "observedAt": "2026-09-16",
-      "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-bp-mods-ampbb-luxury-edition/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Mod BP Mods AMPBB Luxury Edition",
-      "canonicalProductKey": "bp mods|ampbb luxury edition",
-      "brand": "BP Mods",
-      "rawProducts": [
-        "Mod BP Mods AMPBB Luxury Edition"
+        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
       ],
       "variantCount": 1
     },
@@ -11601,27 +11954,9 @@
     },
     {
       "retailerId": "vapetronic",
-      "category": "accesoriu RTA/mod",
-      "product": "Cartus Icewave E1 Cherry Cola 20mg",
-      "rank": 27,
-      "observedAt": "2026-09-16",
-      "source": "https://vapetronic.ro/shop/?orderby=popularity",
-      "productUrl": "https://vapetronic.ro/produs/cartus-icewave-e1-pod-cherry-cola-2ml-20mg/",
-      "evidence": "verified-html-popularity-sort",
-      "evidenceTier": "B",
-      "rawProduct": "Cartus Icewave E1 Pod Cherry Cola 2ml 20mg",
-      "canonicalProductKey": "cartus icewave e1 cherry cola 20mg",
-      "brand": "",
-      "rawProducts": [
-        "Cartus Icewave E1 Pod Cherry Cola 2ml 20mg"
-      ],
-      "variantCount": 1
-    },
-    {
-      "retailerId": "vapetronic",
       "category": "coil prebuilt",
       "product": "Aspire Rezistenta AVP Pro-1.15 Ohm",
-      "rank": 28,
+      "rank": 27,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/rezistenta-aspire-avp-pro-1-15-ohm/",
@@ -11639,7 +11974,7 @@
       "retailerId": "vapetronic",
       "category": "accesoriu RTA/mod",
       "product": "Cartus Vapebar PRO Capuccino 20mg 980 pufuri",
-      "rank": 29,
+      "rank": 28,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/cartus-vapebar-pro-capuccino-20mg-980-pufuri/",
@@ -11657,7 +11992,7 @@
       "retailerId": "vapetronic",
       "category": "coil prebuilt",
       "product": "Vaporesso Rezistenta GTX2 Mesh 0.8 Ohm",
-      "rank": 30,
+      "rank": 29,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/rezistenta-gtx2-mesh-0-8-ohm-vaporesso/",
@@ -11675,7 +12010,7 @@
       "retailerId": "vapetronic",
       "category": "coil prebuilt",
       "product": "Aspire Rezistenta BVC 1.6 Ohm",
-      "rank": 31,
+      "rank": 30,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/rezistenta-aspire-bvc-1-6-ohm/",
@@ -11693,7 +12028,7 @@
       "retailerId": "vapetronic",
       "category": "accesoriu RTA/mod",
       "product": "Vaporesso Cartus Xros Mesh Corex 3.0 0.6 Ohm",
-      "rank": 32,
+      "rank": 31,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/cartus-xros-mesh-corex-3-0-0-6-ohm-3ml-vaporesso/",
@@ -11711,7 +12046,7 @@
       "retailerId": "vapetronic",
       "category": "accesoriu RTA/mod",
       "product": "Voopoo Cartus Argus Top Fill 0.7 Ohm",
-      "rank": 33,
+      "rank": 32,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/cartus-argus-top-fill-0-7-ohm-voopoo/",
@@ -11729,7 +12064,7 @@
       "retailerId": "vapetronic",
       "category": "accesoriu RTA/mod",
       "product": "Cartus Icewave E1 Latte Coffee 20mg",
-      "rank": 34,
+      "rank": 33,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/cartus-icewave-e1-pod-latte-coffee-2ml-20mg/",
@@ -11747,7 +12082,7 @@
       "retailerId": "vapetronic",
       "category": "coil prebuilt",
       "product": "Innokin Rezistenta Zenith 0.8 Ohm",
-      "rank": 35,
+      "rank": 34,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/rezistenta-zenith-innokin-0-8-ohm/",
@@ -11765,7 +12100,7 @@
       "retailerId": "vapetronic",
       "category": "accesoriu RTA/mod",
       "product": "Cartus Icewave E1 Pineapple Ice 20mg",
-      "rank": 36,
+      "rank": 35,
       "observedAt": "2026-09-16",
       "source": "https://vapetronic.ro/shop/?orderby=popularity",
       "productUrl": "https://vapetronic.ro/produs/cartus-icewave-e1-pod-pineapple-ice-2ml-20mg/",
@@ -11776,6 +12111,24 @@
       "brand": "",
       "rawProducts": [
         "Cartus Icewave E1 Pod Pineapple Ice 2ml 20mg"
+      ],
+      "variantCount": 1
+    },
+    {
+      "retailerId": "vapetronic",
+      "category": "coil prebuilt",
+      "product": "Vaporesso Rezistenta GTX2 Mesh 0.6 Ohm",
+      "rank": 36,
+      "observedAt": "2026-09-16",
+      "source": "https://vapetronic.ro/shop/?orderby=popularity",
+      "productUrl": "https://vapetronic.ro/produs/rezistenta-gtx2-mesh-0-6-ohm-vaporesso/",
+      "evidence": "verified-html-popularity-sort",
+      "evidenceTier": "B",
+      "rawProduct": "Rezistenta GTX2 Mesh 0.6 Ohm &#8211; Vaporesso",
+      "canonicalProductKey": "vaporesso|rezistenta gtx2 mesh 0 6 ohm",
+      "brand": "Vaporesso",
+      "rawProducts": [
+        "Rezistenta GTX2 Mesh 0.6 Ohm &#8211; Vaporesso"
       ],
       "variantCount": 1
     },
@@ -19103,373 +19456,368 @@
   ],
   "actualSales": [],
   "summary": {
-    "generatedAt": "2026-09-16T09:21:20.288Z",
+    "generatedAt": "2026-09-16T09:48:35.084Z",
     "observedBestsellerIndex": {
       "method": "reciprocal-rank aggregation of Tier-B public popularity/bestseller lists; WooCommerce popularity is lifetime-cumulative total_sales ordering, not sales in the selected period or unit market share",
-      "coveragePct": 81.8,
+      "coveragePct": 86.4,
       "evidenceWindow": "current public ordering plus movement between retained daily snapshots only",
       "topProducts": [
         {
           "name": "Wotofo Gear V2",
           "value": 2,
-          "sharePct": 1.4
+          "sharePct": 1.38
         },
         {
           "name": "Vandy Vape Lit",
           "value": 2,
-          "sharePct": 1.4
+          "sharePct": 1.38
         },
         {
           "name": "Vaporesso Armour G",
           "value": 2,
-          "sharePct": 1.4
+          "sharePct": 1.38
         },
         {
           "name": "RTA - Tank",
           "value": 2,
-          "sharePct": 1.4
+          "sharePct": 1.38
         },
         {
           "name": "JAC Vapour Set 5 Rezistente S-Coil 1.0 ohm, Bumbac Organic, Cutie 5 bucati, Tip Capsula",
           "value": 1.5,
-          "sharePct": 1.05
+          "sharePct": 1.04
         },
         {
           "name": "JAC Vapour VIM AIO Slate",
           "value": 1.3333,
-          "sharePct": 0.93
+          "sharePct": 0.92
         },
         {
           "name": "JAC Vapour VIM",
           "value": 1.125,
-          "sharePct": 0.79
+          "sharePct": 0.78
         },
         {
           "name": "Aspire Zelos 3",
           "value": 1.0303,
-          "sharePct": 0.72
+          "sharePct": 0.71
         },
         {
           "name": "Aspire Rezistenta Nautilus 2S Mesh 0.7ohm",
           "value": 1.0122,
-          "sharePct": 0.71
-        },
-        {
-          "name": "Voopoo Cartus Doric Go - 1.0 Ohm",
-          "value": 1,
           "sharePct": 0.7
         },
         {
           "name": "Lichid LIQUA Traditional Tobacco 18mg",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
+        },
+        {
+          "name": "Rezistenta TOCC pentru clearomizorul T3s sau MT3s",
+          "value": 1,
+          "sharePct": 0.69
         },
         {
           "name": "Kuma",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "BD Vape Acumulator Pro XT37",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "OXVA Cartus Nexlim 1.2 Ohm",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Vandy Vape Iconic",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "JAC Vapour SERIES-B DNA Edition",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Aroma Simply Leaf Aged Brazilian Habano, Sticla Longfill Umpluta cu Lichid Concentrat Extras din Tutun Organic",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Geekvape Sonder Q2",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Capsule Myle V4, Set 4 Rezerve Cu Lichid Premium, 240 Inhalari / Capsula",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Vozol Switch Pico 800",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
+        },
+        {
+          "name": "Vaporesso XROS 4 Nano",
+          "value": 1,
+          "sharePct": 0.69
         },
         {
           "name": "Geekvape Wenax M2 Leather Edition",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Clearomizor",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Baze",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Ambition Mods Extensie Standard Bi2hop",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Aspire Rezistenta Nautilus BVC 0.7 Ohm",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Uwell Cartus Caliburn G3 0.4 Ohm",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Acumulator Samsung 25R INR",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Incarcator XTAR MC2",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "SXmini MQ Plus",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Molicel INR-P45B",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Voopoo Argus G3",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Geekvape Baron",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "BP Mods Bumbac Pro Cotton",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Acumulator SAMSUNG 25R",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Vozol Capsula Sleek 1500 pufuri Watermelon Ice 2%",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Wick N Vape Bumbac Cotton Bacon Prime",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Baterie Kanger EVOD USB - inox",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Vozol Switch Pro 2",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Noname Mods Poledance",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Fir Ni80 - Zivipf",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Bumbac Cloud 9 - Cloud 9",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Wrap Acumulator - M7",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Baterii Elfa Pro",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "capac Griffin TAF",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "GV wire roll SS430 24GA",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "rezistenta G series 0.6",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Pachet bumbac HOLY FIBER",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "Vaporesso Cartus Armour G",
           "value": 1,
-          "sharePct": 0.7
+          "sharePct": 0.69
         },
         {
           "name": "BP Mods Warhammer",
           "value": 1,
-          "sharePct": 0.7
-        },
-        {
-          "name": "Acumulator SONY VTC 5A",
-          "value": 0.7,
-          "sharePct": 0.49
+          "sharePct": 0.69
         }
       ],
       "topBrands": [
         {
           "name": "Aspire",
-          "value": 12.0631,
-          "sharePct": 14.6
+          "value": 12.0655,
+          "sharePct": 14.69
+        },
+        {
+          "name": "Vaporesso",
+          "value": 8.0734,
+          "sharePct": 9.83
         },
         {
           "name": "Geekvape",
           "value": 7.785,
-          "sharePct": 9.42
+          "sharePct": 9.48
         },
         {
           "name": "Vozol",
           "value": 7.2119,
-          "sharePct": 8.73
-        },
-        {
-          "name": "Vaporesso",
-          "value": 7.0434,
-          "sharePct": 8.53
+          "sharePct": 8.78
         },
         {
           "name": "JAC Vapour",
           "value": 6.3095,
-          "sharePct": 7.64
+          "sharePct": 7.68
         },
         {
           "name": "Voopoo",
-          "value": 5.6323,
-          "sharePct": 6.82
+          "value": 4.6476,
+          "sharePct": 5.66
         },
         {
           "name": "OXVA",
-          "value": 3.9935,
-          "sharePct": 4.83
+          "value": 3.7007,
+          "sharePct": 4.51
         },
         {
           "name": "Vandy Vape",
           "value": 3.5251,
-          "sharePct": 4.27
+          "sharePct": 4.29
         },
         {
           "name": "Wotofo",
           "value": 2.5838,
-          "sharePct": 3.13
+          "sharePct": 3.15
         },
         {
           "name": "Ambition Mods",
           "value": 2.5129,
-          "sharePct": 3.04
+          "sharePct": 3.06
         },
         {
           "name": "Wick N Vape",
           "value": 2.454,
-          "sharePct": 2.97
+          "sharePct": 2.99
         },
         {
           "name": "Hellvape",
           "value": 2.3936,
-          "sharePct": 2.9
+          "sharePct": 2.91
         },
         {
           "name": "BP Mods",
-          "value": 2.1974,
-          "sharePct": 2.66
+          "value": 2.0862,
+          "sharePct": 2.54
         },
         {
           "name": "Uwell",
-          "value": 2.0777,
-          "sharePct": 2.52
+          "value": 1.9944,
+          "sharePct": 2.43
         },
         {
           "name": "Innokin",
-          "value": 1.8104,
-          "sharePct": 2.19
-        },
-        {
-          "name": "Eleaf",
-          "value": 1.7659,
-          "sharePct": 2.14
+          "value": 1.8112,
+          "sharePct": 2.21
         },
         {
           "name": "Elf Bar",
           "value": 1.5984,
+          "sharePct": 1.95
+        },
+        {
+          "name": "Eleaf",
+          "value": 1.5854,
           "sharePct": 1.93
         },
         {
           "name": "Fumytech",
           "value": 1.3491,
-          "sharePct": 1.63
+          "sharePct": 1.64
         },
         {
           "name": "BD Vape",
           "value": 1.0884,
-          "sharePct": 1.32
+          "sharePct": 1.33
+        },
+        {
+          "name": "Lost Vape",
+          "value": 0.982,
+          "sharePct": 1.2
         },
         {
           "name": "UD",
           "value": 0.9167,
-          "sharePct": 1.11
-        },
-        {
-          "name": "Lost Vape",
-          "value": 0.8391,
-          "sharePct": 1.02
-        },
-        {
-          "name": "Ennequadro Mods",
-          "value": 0.7,
-          "sharePct": 0.85
+          "sharePct": 1.12
         },
         {
           "name": "Lost Mary",
@@ -19492,91 +19840,96 @@
           "sharePct": 0.63
         },
         {
+          "name": "Ennequadro Mods",
+          "value": 0.5,
+          "sharePct": 0.61
+        },
+        {
           "name": "LVE",
           "value": 0.3752,
-          "sharePct": 0.45
+          "sharePct": 0.46
         },
         {
           "name": "Taifun",
           "value": 0.3333,
-          "sharePct": 0.4
+          "sharePct": 0.41
         },
         {
           "name": "Steam Crave",
           "value": 0.3333,
-          "sharePct": 0.4
+          "sharePct": 0.41
         },
         {
           "name": "ThunderCloud",
           "value": 0.3083,
-          "sharePct": 0.37
+          "sharePct": 0.38
         }
       ],
       "topCategories": [
         {
           "name": "accesoriu RTA/mod",
-          "value": 33.5898,
-          "sharePct": 23.54
+          "value": 31.7126,
+          "sharePct": 21.93
         },
         {
           "name": "coil prebuilt",
-          "value": 17.7091,
-          "sharePct": 12.41
+          "value": 18.7413,
+          "sharePct": 12.96
         },
         {
           "name": "POD",
-          "value": 15.395,
-          "sharePct": 10.79
+          "value": 17.0021,
+          "sharePct": 11.76
         },
         {
           "name": "acumulator",
-          "value": 11.8859,
-          "sharePct": 8.33
+          "value": 12.0378,
+          "sharePct": 8.32
         },
         {
           "name": "RTA",
           "value": 11.0081,
-          "sharePct": 7.71
+          "sharePct": 7.61
         },
         {
           "name": "mod",
-          "value": 10.5616,
-          "sharePct": 7.4
+          "value": 10.2699,
+          "sharePct": 7.1
         },
         {
           "name": "lichid tutunos/NET/DIY",
-          "value": 9.0396,
-          "sharePct": 6.33
+          "value": 9.5633,
+          "sharePct": 6.61
         },
         {
           "name": "bumbac/wick",
           "value": 8.9716,
-          "sharePct": 6.29
+          "sharePct": 6.2
         },
         {
           "name": "RDA/RDTA",
-          "value": 7.9547,
-          "sharePct": 5.57
+          "value": 8.0797,
+          "sharePct": 5.59
         },
         {
           "name": "sarma",
-          "value": 6.7158,
-          "sharePct": 4.71
+          "value": 7.1555,
+          "sharePct": 4.95
         },
         {
           "name": "componente RTA",
-          "value": 4.325,
+          "value": 4.3776,
           "sharePct": 3.03
         },
         {
           "name": "incarcator",
           "value": 3.5246,
-          "sharePct": 2.47
+          "sharePct": 2.44
         },
         {
           "name": "RBA/bridge",
-          "value": 1.5455,
-          "sharePct": 1.08
+          "value": 1.6883,
+          "sharePct": 1.17
         },
         {
           "name": "unelte build",
@@ -19680,17 +20033,17 @@
             "sharePct": 1.92
           },
           {
-            "name": "Voopoo Cartus Doric Go - 1.0 Ohm",
+            "name": "Vaporesso XROS 4 Nano",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Uwell Cartus Zetta - 0.8 Ohm",
+            "name": "Lichid Longfill Yogs Pfeifen X Don Cristo / - Apricot Tobacco",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+            "name": "OXVA NeXLIM 2",
             "value": 0,
             "sharePct": 0
           },
@@ -19700,7 +20053,7 @@
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+            "name": "Uwell Caliburn G5",
             "value": 0,
             "sharePct": 0
           },
@@ -19710,7 +20063,7 @@
             "sharePct": 0
           },
           {
-            "name": "Ennequadro Mods Kuma 1.2",
+            "name": "Arcana Mods Muted +",
             "value": 0,
             "sharePct": 0
           },
@@ -19720,12 +20073,12 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus",
+            "name": "Uwell Caliburn G5 Koko",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Vprime 2",
+            "name": "Lost Vape Centaurus Boro",
             "value": 0,
             "sharePct": 0
           },
@@ -19735,7 +20088,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Space",
+            "name": "GD Mods Ignis",
             "value": 0,
             "sharePct": 0
           },
@@ -19817,7 +20170,7 @@
             "sharePct": 6.45
           },
           {
-            "name": "Voopoo",
+            "name": "OXVA",
             "value": 0,
             "sharePct": 0
           },
@@ -19827,17 +20180,17 @@
             "sharePct": 0
           },
           {
-            "name": "OXVA",
+            "name": "Voopoo",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Ennequadro Mods",
+            "name": "Arcana Mods",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Eleaf",
+            "name": "Lost Vape",
             "value": 0,
             "sharePct": 0
           },
@@ -19858,6 +20211,11 @@
           },
           {
             "name": "Ambition Mods",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Ennequadro Mods",
             "value": 0,
             "sharePct": 0
           },
@@ -19924,12 +20282,7 @@
             "sharePct": 0
           },
           {
-            "name": "mod",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "acumulator",
+            "name": "RBA/bridge",
             "value": 0,
             "sharePct": 0
           },
@@ -19939,12 +20292,12 @@
             "sharePct": 0
           },
           {
-            "name": "componente RTA",
+            "name": "acumulator",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "RBA/bridge",
+            "name": "componente RTA",
             "value": 0,
             "sharePct": 0
           },
@@ -19965,17 +20318,17 @@
       "viewCount": {
         "topProducts": [
           {
-            "name": "Voopoo Cartus Doric Go - 1.0 Ohm",
+            "name": "Vaporesso XROS 4 Nano",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Uwell Cartus Zetta - 0.8 Ohm",
+            "name": "Lichid Longfill Yogs Pfeifen X Don Cristo / - Apricot Tobacco",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+            "name": "OXVA NeXLIM 2",
             "value": 0,
             "sharePct": 0
           },
@@ -19985,7 +20338,7 @@
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+            "name": "Uwell Caliburn G5",
             "value": 0,
             "sharePct": 0
           },
@@ -19995,7 +20348,7 @@
             "sharePct": 0
           },
           {
-            "name": "Ennequadro Mods Kuma 1.2",
+            "name": "Arcana Mods Muted +",
             "value": 0,
             "sharePct": 0
           },
@@ -20005,12 +20358,12 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus",
+            "name": "Uwell Caliburn G5 Koko",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Vprime 2",
+            "name": "Lost Vape Centaurus Boro",
             "value": 0,
             "sharePct": 0
           },
@@ -20020,7 +20373,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Space",
+            "name": "GD Mods Ignis",
             "value": 0,
             "sharePct": 0
           },
@@ -20167,12 +20520,7 @@
         ],
         "topBrands": [
           {
-            "name": "Voopoo",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Uwell",
+            "name": "Vaporesso",
             "value": 0,
             "sharePct": 0
           },
@@ -20182,12 +20530,22 @@
             "sharePct": 0
           },
           {
-            "name": "Ennequadro Mods",
+            "name": "Uwell",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Eleaf",
+            "name": "Voopoo",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Arcana Mods",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Lost Vape",
             "value": 0,
             "sharePct": 0
           },
@@ -20212,17 +20570,17 @@
             "sharePct": 0
           },
           {
-            "name": "Vaporesso",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "Geekvape",
             "value": 0,
             "sharePct": 0
           },
           {
             "name": "Ambition Mods",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Ennequadro Mods",
             "value": 0,
             "sharePct": 0
           },
@@ -20259,6 +20617,16 @@
         ],
         "topCategories": [
           {
+            "name": "POD",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "lichid tutunos/NET/DIY",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
             "name": "accesoriu RTA/mod",
             "value": 0,
             "sharePct": 0
@@ -20269,12 +20637,12 @@
             "sharePct": 0
           },
           {
-            "name": "mod",
+            "name": "RBA/bridge",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "POD",
+            "name": "RDA/RDTA",
             "value": 0,
             "sharePct": 0
           },
@@ -20289,27 +20657,12 @@
             "sharePct": 0
           },
           {
-            "name": "RDA/RDTA",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
             "name": "componente RTA",
             "value": 0,
             "sharePct": 0
           },
           {
             "name": "coil prebuilt",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "lichid tutunos/NET/DIY",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "RBA/bridge",
             "value": 0,
             "sharePct": 0
           },
@@ -20384,17 +20737,17 @@
             "sharePct": 8.33
           },
           {
-            "name": "Voopoo Cartus Doric Go - 1.0 Ohm",
+            "name": "Vaporesso XROS 4 Nano",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "Uwell Cartus Zetta - 0.8 Ohm",
+            "name": "Lichid Longfill Yogs Pfeifen X Don Cristo / - Apricot Tobacco",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+            "name": "OXVA NeXLIM 2",
             "value": 0,
             "sharePct": 0
           },
@@ -20404,7 +20757,7 @@
             "sharePct": 0
           },
           {
-            "name": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+            "name": "Uwell Caliburn G5",
             "value": 0,
             "sharePct": 0
           },
@@ -20414,7 +20767,7 @@
             "sharePct": 0
           },
           {
-            "name": "Ennequadro Mods Kuma 1.2",
+            "name": "Arcana Mods Muted +",
             "value": 0,
             "sharePct": 0
           },
@@ -20424,12 +20777,12 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus",
+            "name": "Uwell Caliburn G5 Koko",
             "value": 0,
             "sharePct": 0
           },
           {
-            "name": "OXVA Vprime 2",
+            "name": "Lost Vape Centaurus Boro",
             "value": 0,
             "sharePct": 0
           },
@@ -20439,7 +20792,7 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf iStick Pico Plus - Space",
+            "name": "GD Mods Ignis",
             "value": 0,
             "sharePct": 0
           },
@@ -20536,17 +20889,17 @@
             "sharePct": 20
           },
           {
-            "name": "Ennequadro Mods",
-            "value": 980,
-            "sharePct": 10
-          },
-          {
             "name": "Aspire",
             "value": 980,
             "sharePct": 10
           },
           {
             "name": "Geekvape",
+            "value": 980,
+            "sharePct": 10
+          },
+          {
+            "name": "Ennequadro Mods",
             "value": 980,
             "sharePct": 10
           },
@@ -20566,7 +20919,7 @@
             "sharePct": 10
           },
           {
-            "name": "Uwell",
+            "name": "Vaporesso",
             "value": 0,
             "sharePct": 0
           },
@@ -20576,7 +20929,17 @@
             "sharePct": 0
           },
           {
-            "name": "Eleaf",
+            "name": "Uwell",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Arcana Mods",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "Lost Vape",
             "value": 0,
             "sharePct": 0
           },
@@ -20592,11 +20955,6 @@
           },
           {
             "name": "Wick N Vape",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "Vaporesso",
             "value": 0,
             "sharePct": 0
           },
@@ -20623,17 +20981,17 @@
             "sharePct": 25
           },
           {
+            "name": "POD",
+            "value": 1960,
+            "sharePct": 16.67
+          },
+          {
             "name": "accesoriu RTA/mod",
             "value": 1960,
             "sharePct": 16.67
           },
           {
             "name": "RTA",
-            "value": 1960,
-            "sharePct": 16.67
-          },
-          {
-            "name": "POD",
             "value": 1960,
             "sharePct": 16.67
           },
@@ -20648,7 +21006,12 @@
             "sharePct": 8.33
           },
           {
-            "name": "mod",
+            "name": "lichid tutunos/NET/DIY",
+            "value": 0,
+            "sharePct": 0
+          },
+          {
+            "name": "RDA/RDTA",
             "value": 0,
             "sharePct": 0
           },
@@ -20659,16 +21022,6 @@
           },
           {
             "name": "bumbac/wick",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "RDA/RDTA",
-            "value": 0,
-            "sharePct": 0
-          },
-          {
-            "name": "lichid tutunos/NET/DIY",
             "value": 0,
             "sharePct": 0
           },
@@ -20721,26 +21074,6 @@
         "variantCount": 1,
         "previousRank": 5,
         "rankChange": -72
-      },
-      {
-        "retailerId": "smokee",
-        "category": "accesoriu RTA/mod",
-        "product": "Voopoo Cartus Doric Go - 1.0 Ohm",
-        "rank": 1,
-        "observedAt": "2026-09-16",
-        "source": "https://smokee.ro/?orderby=popularity",
-        "productUrl": "https://smokee.ro/product/cartus-voopoo-doric-go-5ml-1-0-ohm/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm",
-        "canonicalProductKey": "voopoo|cartus doric go 1 0 ohm",
-        "brand": "Voopoo",
-        "rawProducts": [
-          "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm"
-        ],
-        "variantCount": 1,
-        "previousRank": 70,
-        "rankChange": 69
       },
       {
         "retailerId": "vaperia",
@@ -20869,26 +21202,6 @@
         "rankChange": 7
       },
       {
-        "retailerId": "smokee",
-        "category": "accesoriu RTA/mod",
-        "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
-        "rank": 4,
-        "observedAt": "2026-09-16",
-        "source": "https://smokee.ro/?orderby=popularity",
-        "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
-        "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
-        "brand": "OXVA",
-        "rawProducts": [
-          "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
-        ],
-        "variantCount": 1,
-        "previousRank": 10,
-        "rankChange": 6
-      },
-      {
         "retailerId": "vapetronic",
         "category": "RTA",
         "product": "Hellvape Dead Rabbit 4 Pro",
@@ -20928,26 +21241,6 @@
         "variantCount": 1,
         "previousRank": 11,
         "rankChange": 4
-      },
-      {
-        "retailerId": "vapetronic",
-        "category": "accesoriu RTA/mod",
-        "product": "Cartus Icewave E1 Pineapple Ice 20mg",
-        "rank": 36,
-        "observedAt": "2026-09-16",
-        "source": "https://vapetronic.ro/shop/?orderby=popularity",
-        "productUrl": "https://vapetronic.ro/produs/cartus-icewave-e1-pod-pineapple-ice-2ml-20mg/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Cartus Icewave E1 Pod Pineapple Ice 2ml 20mg",
-        "canonicalProductKey": "cartus icewave e1 pineapple ice 20mg",
-        "brand": "",
-        "rawProducts": [
-          "Cartus Icewave E1 Pod Pineapple Ice 2ml 20mg"
-        ],
-        "variantCount": 1,
-        "previousRank": 33,
-        "rankChange": -3
       },
       {
         "retailerId": "smokee",
@@ -21017,27 +21310,6 @@
         "variantCount": 1,
         "previousRank": 88,
         "rankChange": -2
-      },
-      {
-        "retailerId": "smokee",
-        "category": "POD",
-        "product": "OXVA Vprime 2",
-        "rank": 7,
-        "observedAt": "2026-09-16",
-        "source": "https://smokee.ro/?orderby=popularity",
-        "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
-        "evidence": "verified-html-popularity-sort",
-        "evidenceTier": "B",
-        "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-        "canonicalProductKey": "oxva|vprime 2",
-        "brand": "OXVA",
-        "rawProducts": [
-          "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-          "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold"
-        ],
-        "variantCount": 2,
-        "previousRank": 9,
-        "rankChange": 2
       },
       {
         "retailerId": "vaperia",
@@ -21701,6 +21973,86 @@
         ],
         "variantCount": 1,
         "previousRank": 59,
+        "rankChange": 2
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "accesoriu RTA/mod",
+        "product": "OXVA Cartus Xlim V3 Top Fill 0.8ohm",
+        "rank": 58,
+        "observedAt": "2026-09-16",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/cartus-xlim-v3-top-fill-0-8ohm-oxva.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Cartus Xlim V3 Top Fill 0.8ohm, OXVA",
+        "canonicalProductKey": "oxva|cartus xlim v3 top fill 0 8ohm",
+        "brand": "OXVA",
+        "rawProducts": [
+          "Cartus Xlim V3 Top Fill 0.8ohm, OXVA"
+        ],
+        "variantCount": 1,
+        "previousRank": 60,
+        "rankChange": 2
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "accesoriu RTA/mod",
+        "product": "La Tabaccheria Cartus LION 0.8ohm",
+        "rank": 59,
+        "observedAt": "2026-09-16",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/cartus-lion-pod-0-8ohm-la-tabaccheria.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Cartus LION Pod 0.8ohm, La Tabaccheria",
+        "canonicalProductKey": "la tabaccheria|cartus lion 0 8ohm",
+        "brand": "La Tabaccheria",
+        "rawProducts": [
+          "Cartus LION Pod 0.8ohm, La Tabaccheria"
+        ],
+        "variantCount": 1,
+        "previousRank": 61,
+        "rankChange": 2
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "accesoriu RTA/mod",
+        "product": "Aspire Cartus Tubino 0.8ohm",
+        "rank": 60,
+        "observedAt": "2026-09-16",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/cartus-tubino-kit-0-8ohm-aspire.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Cartus Tubino Kit 0.8ohm, Aspire",
+        "canonicalProductKey": "aspire|cartus tubino 0 8ohm",
+        "brand": "Aspire",
+        "rawProducts": [
+          "Cartus Tubino Kit 0.8ohm, Aspire"
+        ],
+        "variantCount": 1,
+        "previousRank": 62,
+        "rankChange": 2
+      },
+      {
+        "retailerId": "vaperia",
+        "category": "accesoriu RTA/mod",
+        "product": "Aspire Cartus Tubino 1.1ohm",
+        "rank": 61,
+        "observedAt": "2026-09-16",
+        "source": "https://vaperia.ro/?orderby=popularity",
+        "productUrl": "https://vaperia.ro/cartus-tubino-kit-1-1ohm-aspire.html",
+        "evidence": "verified-html-popularity-sort",
+        "evidenceTier": "B",
+        "rawProduct": "Cartus Tubino Kit 1.1ohm, Aspire",
+        "canonicalProductKey": "aspire|cartus tubino 1 1ohm",
+        "brand": "Aspire",
+        "rawProducts": [
+          "Cartus Tubino Kit 1.1ohm, Aspire"
+        ],
+        "variantCount": 1,
+        "previousRank": 63,
         "rankChange": 2
       }
     ]
@@ -278746,15 +279098,18 @@
           "retailerId": "smokee",
           "category": "accesoriu RTA/mod",
           "product": "Voopoo Cartus Doric Go - 1.0 Ohm",
-          "rank": 1,
+          "rank": 70,
           "observedAt": "2026-09-16",
-          "source": "https://smokee.ro/?orderby=popularity",
+          "source": "https://smokee.ro/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
           "productUrl": "https://smokee.ro/product/cartus-voopoo-doric-go-5ml-1-0-ohm/",
-          "evidence": "verified-html-popularity-sort",
+          "evidence": "woocommerce-public-popularity-order",
           "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "Voopoo",
           "rawProduct": "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm",
           "canonicalProductKey": "voopoo|cartus doric go 1 0 ohm",
-          "brand": "Voopoo",
           "rawProducts": [
             "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm"
           ],
@@ -282629,6 +282984,321 @@
           "variantCount": 1
         },
         {
+          "retailerId": "ecigvapo",
+          "category": "coil prebuilt",
+          "product": "Rezistenta TOCC pentru clearomizorul T3s sau MT3s",
+          "rank": 1,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/rezistenta-tocc-pentru-clearomizorul-t3s-sau-mt3s/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Rezistenta TOCC pentru clearomizorul T3s sau MT3s",
+          "canonicalProductKey": "rezistenta tocc pentru clearomizorul t3s sau mt3s",
+          "rawProducts": [
+            "Rezistenta TOCC pentru clearomizorul T3s sau MT3s"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "sarma",
+          "product": "Kanthal - 10 metri",
+          "rank": 4,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/kanthal-035-mm-10-metri/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Kanthal 0,35 mm &#8211; 10 metri",
+          "canonicalProductKey": "kanthal 10 metri",
+          "rawProducts": [
+            "Kanthal 0,35 mm &#8211; 10 metri"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "sarma",
+          "product": "Nichelina sarma speciala rezistenta - 10 metri",
+          "rank": 9,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/nichelina-sarma-speciala-rezistenta-035-mm-10-metri/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Nichelina sarma speciala rezistenta 0,35 mm &#8211; 10 metri",
+          "canonicalProductKey": "nichelina sarma speciala rezistenta 10 metri",
+          "rawProducts": [
+            "Nichelina sarma speciala rezistenta 0,35 mm &#8211; 10 metri"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "acumulator",
+          "product": "Baterie Evod Twist cu voltaj variabil",
+          "rank": 10,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/baterie-evod-twist-1100mah-cu-voltaj-variabil/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Baterie Evod Twist 1100mah cu voltaj variabil",
+          "canonicalProductKey": "baterie evod twist cu voltaj variabil",
+          "rawProducts": [
+            "Baterie Evod Twist 1100mah cu voltaj variabil"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "accesoriu RTA/mod",
+          "product": "10 X CE4+ V2",
+          "rank": 13,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/10-x-clearomizer-ce4-v2/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "10 X Clearomizer CE4+ v2",
+          "canonicalProductKey": "10 x ce4 v2",
+          "rawProducts": [
+            "10 X Clearomizer CE4+ v2"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "componente RTA",
+          "product": "Baza eGo-E 2.2-2.6ohmi",
+          "rank": 19,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/baza-atomizor-ego-e-2-2-2-6ohmi/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Baza atomizor eGo-E 2.2-2.6ohmi",
+          "canonicalProductKey": "baza ego e 2 2 2 6ohmi",
+          "rawProducts": [
+            "Baza atomizor eGo-E 2.2-2.6ohmi"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "sarma",
+          "product": "Nickel Coil Ni200 sarma rezistente - 10 metri",
+          "rank": 35,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/nickel-coil-ni200-sarma-rezistente-0-4mm-10-metri/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Nickel Coil Ni200 sarma rezistente 0.4mm &#8211; 10 metri",
+          "canonicalProductKey": "nickel coil ni200 sarma rezistente 10 metri",
+          "rawProducts": [
+            "Nickel Coil Ni200 sarma rezistente 0.4mm &#8211; 10 metri"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "sarma",
+          "product": "Kanthal A1 sârmă rezistențe diametru rolă 9,14m(30fit)",
+          "rank": 36,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/kanthal-a1-sarma-rezistente-diametru-08mm-rola-15m/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Kanthal A1 sârmă rezistențe diametru 0,8mm rolă 9,14m(30fit)",
+          "canonicalProductKey": "kanthal a1 sarma rezistente diametru rola 9 14m 30fit",
+          "rawProducts": [
+            "Kanthal A1 sârmă rezistențe diametru 0,8mm rolă 9,14m(30fit)"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "acumulator",
+          "product": "Acumulator Trustfire 3.7V Li-ion cu flat top si PCB",
+          "rank": 38,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-flat-top-si-pcb/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu flat top si PCB",
+          "canonicalProductKey": "acumulator trustfire 3 7v li ion cu flat top si pcb",
+          "rawProducts": [
+            "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu flat top si PCB"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "acumulator",
+          "product": "Acumulator Trustfire 3.7V Li-ion cu top button si PCB",
+          "rank": 39,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-top-button-si-pcb/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu top button si PCB",
+          "canonicalProductKey": "acumulator trustfire 3 7v li ion cu top button si pcb",
+          "rawProducts": [
+            "Acumulator Trustfire 18650 3000mAh 3.7V Li-ion cu top button si PCB"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "accesoriu RTA/mod",
+          "product": "eVod BCC ( modelul nou )",
+          "rank": 41,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/clearomizor-evod-bcc-1-6ml-modelul-nou/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Clearomizor eVod BCC 1.6ml ( modelul nou )",
+          "canonicalProductKey": "evod bcc modelul nou",
+          "rawProducts": [
+            "Clearomizor eVod BCC 1.6ml ( modelul nou )"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "accesoriu RTA/mod",
+          "product": "CE5 Sailebao eGo/TGO",
+          "rank": 44,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/clearomizer-ce5-sailebao-ego-tgo/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Clearomizer CE5 Sailebao eGo/TGO",
+          "canonicalProductKey": "ce5 sailebao ego tgo",
+          "rawProducts": [
+            "Clearomizer CE5 Sailebao eGo/TGO"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "sarma",
+          "product": "Kanthal Tip A - 10 metri",
+          "rank": 45,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/kanthal-tip-a-010-mm-10-metri/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Kanthal Tip A 0,10 mm &#8211; 10 metri",
+          "canonicalProductKey": "kanthal tip a 10 metri",
+          "rawProducts": [
+            "Kanthal Tip A 0,10 mm &#8211; 10 metri"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Tutun Simplu e-lichid VG + PG",
+          "rank": 74,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/tutun-simplu-30ml-e-lichid-vg-pg/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Tutun Simplu 30ml e-lichid VG + PG",
+          "canonicalProductKey": "tutun simplu e lichid vg pg",
+          "rawProducts": [
+            "Tutun Simplu 30ml e-lichid VG + PG"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "ecigvapo",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Pipe tobacco Hangsen VG",
+          "rank": 98,
+          "observedAt": "2026-09-16",
+          "source": "https://ecig-vapo.com/wp-json/wc/store/v1/products?orderby=popularity&order=desc&per_page=100&page=1",
+          "productUrl": "https://ecig-vapo.com/pipe-tobacco-30ml-hangsen-vg/",
+          "evidence": "woocommerce-public-popularity-order",
+          "evidenceTier": "B",
+          "evidenceWindow": "lifetime-cumulative",
+          "popularityBasis": "woocommerce-total_sales",
+          "periodSales": false,
+          "brand": "",
+          "rawProduct": "Pipe tobacco 30ml Hangsen VG",
+          "canonicalProductKey": "pipe tobacco hangsen vg",
+          "rawProducts": [
+            "Pipe tobacco 30ml Hangsen VG"
+          ],
+          "variantCount": 1
+        },
+        {
           "retailerId": "merlin",
           "category": "coil prebuilt",
           "product": "Vaporesso Rezistenta GTX V2",
@@ -285745,73 +286415,145 @@
         },
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Uwell Cartus Zetta - 0.8 Ohm",
+          "category": "POD",
+          "product": "Vaporesso XROS 4 Nano",
+          "rank": 1,
+          "observedAt": "2026-09-16",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/kit-vaporesso-xros-4-nano-titanium-silver-1350mah-30w-tehnologie-corex-smokee-ro/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver",
+          "canonicalProductKey": "vaporesso|xros 4 nano",
+          "brand": "Vaporesso",
+          "rawProducts": [
+            "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Longfill Yogs Pfeifen X Don Cristo / - Apricot Tobacco",
           "rank": 2,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-uwell-zetta-10-ml-0-8-ohm/",
+          "productUrl": "https://smokee.ro/product/lichid-longfill-yogs-pfeifen-x-don-cristo-10-ml-60-ml-apricot-tobacco/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm",
-          "canonicalProductKey": "uwell|cartus zetta 0 8 ohm",
-          "brand": "Uwell",
+          "rawProduct": "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco",
+          "canonicalProductKey": "lichid longfill yogs pfeifen x don cristo apricot tobacco",
+          "brand": "",
           "rawProducts": [
-            "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm"
+            "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco"
           ],
           "variantCount": 1
         },
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+          "category": "POD",
+          "product": "OXVA NeXLIM 2",
           "rank": 3,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
+          "productUrl": "https://smokee.ro/product/kit-oxva-nexlim-2-black-warrior/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-          "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
+          "rawProduct": "Kit OXVA NeXLIM 2 &#8211; Black Warrior",
+          "canonicalProductKey": "oxva|nexlim 2",
           "brand": "OXVA",
           "rawProducts": [
-            "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
+            "Kit OXVA NeXLIM 2 &#8211; Black Warrior"
           ],
           "variantCount": 1
         },
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+          "category": "POD",
+          "product": "Uwell Caliburn G5",
           "rank": 4,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
+          "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
-          "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
-          "brand": "OXVA",
+          "rawProduct": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+          "canonicalProductKey": "uwell|caliburn g5",
+          "brand": "Uwell",
           "rawProducts": [
-            "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
+            "Kit Uwell Caliburn G5 &#8211; Mystic Forest"
           ],
           "variantCount": 1
         },
         {
           "retailerId": "smokee",
           "category": "RTA",
-          "product": "Ennequadro Mods Kuma 1.2",
+          "product": "Arcana Mods Muted +",
           "rank": 5,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/atomizor-ennequadro-mods-kuma-1-2-rta/",
+          "productUrl": "https://smokee.ro/product/atomizor-arcana-mods-muted-rta-2/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Atomizor Ennequadro Mods Kuma 1.2 RTA",
-          "canonicalProductKey": "ennequadro mods|kuma 1 2",
-          "brand": "Ennequadro Mods",
+          "rawProduct": "Atomizor Arcana Mods Muted + RTA",
+          "canonicalProductKey": "arcana mods|muted",
+          "brand": "Arcana Mods",
           "rawProducts": [
-            "Atomizor Ennequadro Mods Kuma 1.2 RTA"
+            "Atomizor Arcana Mods Muted + RTA"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "POD",
+          "product": "Uwell Caliburn G5 Koko",
+          "rank": 6,
+          "observedAt": "2026-09-16",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-koko-1600mah-mocha-silver/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver",
+          "canonicalProductKey": "uwell|caliburn g5 koko",
+          "brand": "Uwell",
+          "rawProducts": [
+            "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "RBA/bridge",
+          "product": "Lost Vape Centaurus Boro",
+          "rank": 7,
+          "observedAt": "2026-09-16",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/lost-vape-centaurus-rba-boro-tank-5ml-gold-brown/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown",
+          "canonicalProductKey": "lost vape|centaurus boro",
+          "brand": "Lost Vape",
+          "rawProducts": [
+            "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "smokee",
+          "category": "RDA/RDTA",
+          "product": "GD Mods Ignis",
+          "rank": 8,
+          "observedAt": "2026-09-16",
+          "source": "https://smokee.ro/?orderby=popularity",
+          "productUrl": "https://smokee.ro/product/gd-mods-ignis-rdta-22mm/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "GD Mods Ignis RDTA 22mm",
+          "canonicalProductKey": "gd mods ignis",
+          "brand": "",
+          "rawProducts": [
+            "GD Mods Ignis RDTA 22mm"
           ],
           "variantCount": 1
         },
@@ -285819,7 +286561,7 @@
           "retailerId": "smokee",
           "category": "mod",
           "product": "Eleaf iStick Pico Plus",
-          "rank": 6,
+          "rank": 9,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
           "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
@@ -285835,56 +286577,19 @@
         },
         {
           "retailerId": "smokee",
-          "category": "POD",
-          "product": "OXVA Vprime 2",
-          "rank": 7,
+          "category": "accesoriu RTA/mod",
+          "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+          "rank": 10,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
+          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
           "evidence": "verified-html-popularity-sort",
           "evidenceTier": "B",
-          "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-          "canonicalProductKey": "oxva|vprime 2",
+          "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
+          "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
           "brand": "OXVA",
           "rawProducts": [
-            "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-            "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Shard Gold"
-          ],
-          "variantCount": 2
-        },
-        {
-          "retailerId": "smokee",
-          "category": "mod",
-          "product": "Eleaf iStick Pico Plus - Space",
-          "rank": 8,
-          "observedAt": "2026-09-16",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-          "canonicalProductKey": "eleaf|istick pico plus space",
-          "brand": "Eleaf",
-          "rawProducts": [
-            "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "smokee",
-          "category": "mod",
-          "product": "BP Mods AMPBB Luxury Edition",
-          "rank": 9,
-          "observedAt": "2026-09-16",
-          "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-bp-mods-ampbb-luxury-edition/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Mod BP Mods AMPBB Luxury Edition",
-          "canonicalProductKey": "bp mods|ampbb luxury edition",
-          "brand": "BP Mods",
-          "rawProducts": [
-            "Mod BP Mods AMPBB Luxury Edition"
+            "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
           ],
           "variantCount": 1
         },
@@ -288958,27 +289663,9 @@
         },
         {
           "retailerId": "vapetronic",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartus Icewave E1 Cherry Cola 20mg",
-          "rank": 27,
-          "observedAt": "2026-09-16",
-          "source": "https://vapetronic.ro/shop/?orderby=popularity",
-          "productUrl": "https://vapetronic.ro/produs/cartus-icewave-e1-pod-cherry-cola-2ml-20mg/",
-          "evidence": "verified-html-popularity-sort",
-          "evidenceTier": "B",
-          "rawProduct": "Cartus Icewave E1 Pod Cherry Cola 2ml 20mg",
-          "canonicalProductKey": "cartus icewave e1 cherry cola 20mg",
-          "brand": "",
-          "rawProducts": [
-            "Cartus Icewave E1 Pod Cherry Cola 2ml 20mg"
-          ],
-          "variantCount": 1
-        },
-        {
-          "retailerId": "vapetronic",
           "category": "coil prebuilt",
           "product": "Aspire Rezistenta AVP Pro-1.15 Ohm",
-          "rank": 28,
+          "rank": 27,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/rezistenta-aspire-avp-pro-1-15-ohm/",
@@ -288996,7 +289683,7 @@
           "retailerId": "vapetronic",
           "category": "accesoriu RTA/mod",
           "product": "Cartus Vapebar PRO Capuccino 20mg 980 pufuri",
-          "rank": 29,
+          "rank": 28,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/cartus-vapebar-pro-capuccino-20mg-980-pufuri/",
@@ -289014,7 +289701,7 @@
           "retailerId": "vapetronic",
           "category": "coil prebuilt",
           "product": "Vaporesso Rezistenta GTX2 Mesh 0.8 Ohm",
-          "rank": 30,
+          "rank": 29,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/rezistenta-gtx2-mesh-0-8-ohm-vaporesso/",
@@ -289032,7 +289719,7 @@
           "retailerId": "vapetronic",
           "category": "coil prebuilt",
           "product": "Aspire Rezistenta BVC 1.6 Ohm",
-          "rank": 31,
+          "rank": 30,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/rezistenta-aspire-bvc-1-6-ohm/",
@@ -289050,7 +289737,7 @@
           "retailerId": "vapetronic",
           "category": "accesoriu RTA/mod",
           "product": "Vaporesso Cartus Xros Mesh Corex 3.0 0.6 Ohm",
-          "rank": 32,
+          "rank": 31,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/cartus-xros-mesh-corex-3-0-0-6-ohm-3ml-vaporesso/",
@@ -289068,7 +289755,7 @@
           "retailerId": "vapetronic",
           "category": "accesoriu RTA/mod",
           "product": "Voopoo Cartus Argus Top Fill 0.7 Ohm",
-          "rank": 33,
+          "rank": 32,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/cartus-argus-top-fill-0-7-ohm-voopoo/",
@@ -289086,7 +289773,7 @@
           "retailerId": "vapetronic",
           "category": "accesoriu RTA/mod",
           "product": "Cartus Icewave E1 Latte Coffee 20mg",
-          "rank": 34,
+          "rank": 33,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/cartus-icewave-e1-pod-latte-coffee-2ml-20mg/",
@@ -289104,7 +289791,7 @@
           "retailerId": "vapetronic",
           "category": "coil prebuilt",
           "product": "Innokin Rezistenta Zenith 0.8 Ohm",
-          "rank": 35,
+          "rank": 34,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/rezistenta-zenith-innokin-0-8-ohm/",
@@ -289122,7 +289809,7 @@
           "retailerId": "vapetronic",
           "category": "accesoriu RTA/mod",
           "product": "Cartus Icewave E1 Pineapple Ice 20mg",
-          "rank": 36,
+          "rank": 35,
           "observedAt": "2026-09-16",
           "source": "https://vapetronic.ro/shop/?orderby=popularity",
           "productUrl": "https://vapetronic.ro/produs/cartus-icewave-e1-pod-pineapple-ice-2ml-20mg/",
@@ -289133,6 +289820,24 @@
           "brand": "",
           "rawProducts": [
             "Cartus Icewave E1 Pod Pineapple Ice 2ml 20mg"
+          ],
+          "variantCount": 1
+        },
+        {
+          "retailerId": "vapetronic",
+          "category": "coil prebuilt",
+          "product": "Vaporesso Rezistenta GTX2 Mesh 0.6 Ohm",
+          "rank": 36,
+          "observedAt": "2026-09-16",
+          "source": "https://vapetronic.ro/shop/?orderby=popularity",
+          "productUrl": "https://vapetronic.ro/produs/rezistenta-gtx2-mesh-0-6-ohm-vaporesso/",
+          "evidence": "verified-html-popularity-sort",
+          "evidenceTier": "B",
+          "rawProduct": "Rezistenta GTX2 Mesh 0.6 Ohm &#8211; Vaporesso",
+          "canonicalProductKey": "vaporesso|rezistenta gtx2 mesh 0 6 ohm",
+          "brand": "Vaporesso",
+          "rawProducts": [
+            "Rezistenta GTX2 Mesh 0.6 Ohm &#8211; Vaporesso"
           ],
           "variantCount": 1
         },
@@ -296540,7 +297245,7 @@
   ],
   "discoveredSourceStatus": {
     "date": "2026-09-16",
-    "generatedAt": "2026-09-16T09:19:04.546Z",
+    "generatedAt": "2026-09-16T09:46:11.703Z",
     "verifiedSources": 48,
     "totalCandidates": 101,
     "rankingsAdded": 797,
@@ -297199,7 +297904,7 @@
         "verified": false,
         "evidenceType": null,
         "rankings": 0,
-        "error": "verified page yielded zero in-scope products"
+        "error": "HTTP 403"
       },
       {
         "retailerId": "steamfactory",
@@ -297358,12 +298063,12 @@
   "demandSignals": [
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "Voopoo Cartus Doric Go - 1.0 Ohm",
+      "category": "POD",
+      "product": "Vaporesso XROS 4 Nano",
       "rank": 1,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-voopoo-doric-go-5ml-1-0-ohm/",
+      "productUrl": "https://smokee.ro/product/kit-vaporesso-xros-4-nano-titanium-silver-1350mah-30w-tehnologie-corex-smokee-ro/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297375,22 +298080,22 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm",
-      "canonicalProductKey": "voopoo|cartus doric go 1 0 ohm",
-      "brand": "Voopoo",
+      "rawProduct": "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver",
+      "canonicalProductKey": "vaporesso|xros 4 nano",
+      "brand": "Vaporesso",
       "rawProducts": [
-        "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm"
+        "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "Uwell Cartus Zetta - 0.8 Ohm",
+      "category": "lichid tutunos/NET/DIY",
+      "product": "Lichid Longfill Yogs Pfeifen X Don Cristo / - Apricot Tobacco",
       "rank": 2,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-uwell-zetta-10-ml-0-8-ohm/",
+      "productUrl": "https://smokee.ro/product/lichid-longfill-yogs-pfeifen-x-don-cristo-10-ml-60-ml-apricot-tobacco/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297402,22 +298107,22 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm",
-      "canonicalProductKey": "uwell|cartus zetta 0 8 ohm",
-      "brand": "Uwell",
+      "rawProduct": "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco",
+      "canonicalProductKey": "lichid longfill yogs pfeifen x don cristo apricot tobacco",
+      "brand": "",
       "rawProducts": [
-        "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm"
+        "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "OXVA Cartus Vprime 2, - 0.4 Ohm Dual Mesh",
+      "category": "POD",
+      "product": "OXVA NeXLIM 2",
       "rank": 3,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
+      "productUrl": "https://smokee.ro/product/kit-oxva-nexlim-2-black-warrior/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297429,11 +298134,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-      "canonicalProductKey": "oxva|cartus vprime 2 0 4 ohm dual mesh",
+      "rawProduct": "Kit OXVA NeXLIM 2 &#8211; Black Warrior",
+      "canonicalProductKey": "oxva|nexlim 2",
       "brand": "OXVA",
       "rawProducts": [
-        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh"
+        "Kit OXVA NeXLIM 2 &#8211; Black Warrior"
       ],
       "variantCount": 1
     },
@@ -297469,12 +298174,12 @@
     },
     {
       "retailerId": "smokee",
-      "category": "accesoriu RTA/mod",
-      "product": "OXVA Cartus Vprime 2, - 0.6 Ohm Dual Mesh",
+      "category": "POD",
+      "product": "Uwell Caliburn G5",
       "rank": 4,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
+      "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297486,11 +298191,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
-      "canonicalProductKey": "oxva|cartus vprime 2 0 6 ohm dual mesh",
-      "brand": "OXVA",
+      "rawProduct": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+      "canonicalProductKey": "uwell|caliburn g5",
+      "brand": "Uwell",
       "rawProducts": [
-        "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh"
+        "Kit Uwell Caliburn G5 &#8211; Mystic Forest"
       ],
       "variantCount": 1
     },
@@ -297527,11 +298232,11 @@
     {
       "retailerId": "smokee",
       "category": "RTA",
-      "product": "Ennequadro Mods Kuma 1.2",
+      "product": "Arcana Mods Muted +",
       "rank": 5,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/atomizor-ennequadro-mods-kuma-1-2-rta/",
+      "productUrl": "https://smokee.ro/product/atomizor-arcana-mods-muted-rta-2/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297543,11 +298248,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Atomizor Ennequadro Mods Kuma 1.2 RTA",
-      "canonicalProductKey": "ennequadro mods|kuma 1 2",
-      "brand": "Ennequadro Mods",
+      "rawProduct": "Atomizor Arcana Mods Muted + RTA",
+      "canonicalProductKey": "arcana mods|muted",
+      "brand": "Arcana Mods",
       "rawProducts": [
-        "Atomizor Ennequadro Mods Kuma 1.2 RTA"
+        "Atomizor Arcana Mods Muted + RTA"
       ],
       "variantCount": 1
     },
@@ -297583,12 +298288,12 @@
     },
     {
       "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus",
+      "category": "POD",
+      "product": "Uwell Caliburn G5 Koko",
       "rank": 6,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+      "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-koko-1600mah-mocha-silver/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297600,22 +298305,22 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
-      "canonicalProductKey": "eleaf|istick pico plus",
-      "brand": "Eleaf",
+      "rawProduct": "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver",
+      "canonicalProductKey": "uwell|caliburn g5 koko",
+      "brand": "Uwell",
       "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal"
+        "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver"
       ],
       "variantCount": 1
     },
     {
       "retailerId": "smokee",
-      "category": "POD",
-      "product": "OXVA Vprime 2",
+      "category": "RBA/bridge",
+      "product": "Lost Vape Centaurus Boro",
       "rank": 7,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
+      "productUrl": "https://smokee.ro/product/lost-vape-centaurus-rba-boro-tank-5ml-gold-brown/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297627,11 +298332,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-      "canonicalProductKey": "oxva|vprime 2",
-      "brand": "OXVA",
+      "rawProduct": "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown",
+      "canonicalProductKey": "lost vape|centaurus boro",
+      "brand": "Lost Vape",
       "rawProducts": [
-        "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon"
+        "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown"
       ],
       "variantCount": 1
     },
@@ -297667,12 +298372,12 @@
     },
     {
       "retailerId": "smokee",
-      "category": "mod",
-      "product": "Eleaf iStick Pico Plus - Space",
+      "category": "RDA/RDTA",
+      "product": "GD Mods Ignis",
       "rank": 8,
       "observedAt": "2026-09-16",
       "source": "https://smokee.ro/?orderby=popularity",
-      "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
+      "productUrl": "https://smokee.ro/product/gd-mods-ignis-rdta-22mm/",
       "evidence": "public-product-demand-signals",
       "evidenceTier": "C",
       "reviewCount": 0,
@@ -297684,11 +298389,11 @@
       "viewCountDelta": 0,
       "wishlistCountDelta": 0,
       "baseline": true,
-      "rawProduct": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-      "canonicalProductKey": "eleaf|istick pico plus space",
-      "brand": "Eleaf",
+      "rawProduct": "GD Mods Ignis RDTA 22mm",
+      "canonicalProductKey": "gd mods ignis",
+      "brand": "",
       "rawProducts": [
-        "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey"
+        "GD Mods Ignis RDTA 22mm"
       ],
       "variantCount": 1
     },
@@ -299125,12 +299830,12 @@
       "rows": [
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm",
+          "category": "POD",
+          "product": "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver",
           "rank": 1,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-voopoo-doric-go-5ml-1-0-ohm/",
+          "productUrl": "https://smokee.ro/product/kit-vaporesso-xros-4-nano-titanium-silver-1350mah-30w-tehnologie-corex-smokee-ro/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -299141,12 +299846,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm",
+          "category": "lichid tutunos/NET/DIY",
+          "product": "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco",
           "rank": 2,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-uwell-zetta-10-ml-0-8-ohm/",
+          "productUrl": "https://smokee.ro/product/lichid-longfill-yogs-pfeifen-x-don-cristo-10-ml-60-ml-apricot-tobacco/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -299157,12 +299862,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
+          "category": "POD",
+          "product": "Kit OXVA NeXLIM 2 &#8211; Black Warrior",
           "rank": 3,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
+          "productUrl": "https://smokee.ro/product/kit-oxva-nexlim-2-black-warrior/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -299199,12 +299904,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "accesoriu RTA/mod",
-          "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
+          "category": "POD",
+          "product": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
           "rank": 4,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
+          "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -299242,11 +299947,11 @@
         {
           "retailerId": "smokee",
           "category": "RTA",
-          "product": "Atomizor Ennequadro Mods Kuma 1.2 RTA",
+          "product": "Atomizor Arcana Mods Muted + RTA",
           "rank": 5,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/atomizor-ennequadro-mods-kuma-1-2-rta/",
+          "productUrl": "https://smokee.ro/product/atomizor-arcana-mods-muted-rta-2/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -299283,12 +299988,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "mod",
-          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
+          "category": "POD",
+          "product": "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver",
           "rank": 6,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+          "productUrl": "https://smokee.ro/product/kit-uwell-caliburn-g5-koko-1600mah-mocha-silver/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -299299,12 +300004,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "POD",
-          "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
+          "category": "RBA/bridge",
+          "product": "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown",
           "rank": 7,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
+          "productUrl": "https://smokee.ro/product/lost-vape-centaurus-rba-boro-tank-5ml-gold-brown/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -299341,12 +300046,12 @@
         },
         {
           "retailerId": "smokee",
-          "category": "mod",
-          "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
+          "category": "RDA/RDTA",
+          "product": "GD Mods Ignis RDTA 22mm",
           "rank": 8,
           "observedAt": "2026-09-16",
           "source": "https://smokee.ro/?orderby=popularity",
-          "productUrl": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
+          "productUrl": "https://smokee.ro/product/gd-mods-ignis-rdta-22mm/",
           "evidence": "public-product-demand-signals",
           "evidenceTier": "C",
           "reviewCount": null,
@@ -300382,16 +301087,16 @@
   ],
   "productCounterProbeStatus": {
     "date": "2026-09-16",
-    "generatedAt": "2026-09-16T09:20:58.508Z",
-    "pagesProbed": 206,
+    "generatedAt": "2026-09-16T09:48:20.991Z",
+    "pagesProbed": 218,
     "countersFound": 0,
     "retailersWithCounters": 0,
     "rejectedGenericOrderCounters": true,
     "byProduct": [
       {
         "retailerId": "smokee",
-        "product": "Cartus Voopoo Doric Go 5ml &#8211; 1.0 Ohm",
-        "source": "https://smokee.ro/product/cartus-voopoo-doric-go-5ml-1-0-ohm/",
+        "product": "Kit Tigara Electronica Vaporesso XROS 4 Nano Titanium Silver",
+        "source": "https://smokee.ro/product/kit-vaporesso-xros-4-nano-titanium-silver-1350mah-30w-tehnologie-corex-smokee-ro/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300399,8 +301104,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Cartus Uwell Zetta 10 ml &#8211; 0.8 Ohm",
-        "source": "https://smokee.ro/product/cartus-uwell-zetta-10-ml-0-8-ohm/",
+        "product": "Lichid Longfill Yogs Pfeifen X Don Cristo 10 ml / 60 ml &#8211; Apricot Tobacco",
+        "source": "https://smokee.ro/product/lichid-longfill-yogs-pfeifen-x-don-cristo-10-ml-60-ml-apricot-tobacco/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300408,8 +301113,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.4 Ohm Dual Mesh",
-        "source": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-4-ohm-dual-mesh/",
+        "product": "Kit OXVA NeXLIM 2 &#8211; Black Warrior",
+        "source": "https://smokee.ro/product/kit-oxva-nexlim-2-black-warrior/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300426,8 +301131,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Cartus OXVA Vprime 2 ,6ml &#8211; 0.6 Ohm Dual Mesh",
-        "source": "https://smokee.ro/product/cartus-oxva-vprime-2-6ml-0-6-ohm-dual-mesh/",
+        "product": "Kit Uwell Caliburn G5 &#8211; Mystic Forest",
+        "source": "https://smokee.ro/product/kit-uwell-caliburn-g5-mystic-forest/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300444,8 +301149,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Atomizor Ennequadro Mods Kuma 1.2 RTA",
-        "source": "https://smokee.ro/product/atomizor-ennequadro-mods-kuma-1-2-rta/",
+        "product": "Atomizor Arcana Mods Muted + RTA",
+        "source": "https://smokee.ro/product/atomizor-arcana-mods-muted-rta-2/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300462,8 +301167,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Teal",
-        "source": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-teal/",
+        "product": "Kit Uwell Caliburn G5 Koko 1600mAh &#8211; Mocha Silver",
+        "source": "https://smokee.ro/product/kit-uwell-caliburn-g5-koko-1600mah-mocha-silver/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300471,8 +301176,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Kit OXVA Vprime 2 3400mAh 6ml &#8211; Black Carbon",
-        "source": "https://smokee.ro/product/kit-oxva-vprime-2-3400mah-6ml-black-carbon/",
+        "product": "Lost Vape Centaurus RBA Boro Tank 5ml &#8211; Gold Brown",
+        "source": "https://smokee.ro/product/lost-vape-centaurus-rba-boro-tank-5ml-gold-brown/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300489,8 +301194,8 @@
       },
       {
         "retailerId": "smokee",
-        "product": "Mod Eleaf iStick Pico Plus 75W 18650 &#8211; Space Grey",
-        "source": "https://smokee.ro/product/mod-eleaf-istick-pico-plus-75w-18650-space-grey/",
+        "product": "GD Mods Ignis RDTA 22mm",
+        "source": "https://smokee.ro/product/gd-mods-ignis-rdta-22mm/",
         "found": false,
         "value": null,
         "evidence": null,
@@ -300929,6 +301634,114 @@
         "error": null
       },
       {
+        "retailerId": "ecigvapo",
+        "product": "Rezistenta TOCC pentru clearomizorul T3s sau MT3s",
+        "source": "https://ecig-vapo.com/rezistenta-tocc-pentru-clearomizorul-t3s-sau-mt3s/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Kanthal - 10 metri",
+        "source": "https://ecig-vapo.com/kanthal-035-mm-10-metri/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Nichelina sarma speciala rezistenta - 10 metri",
+        "source": "https://ecig-vapo.com/nichelina-sarma-speciala-rezistenta-035-mm-10-metri/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Baterie Evod Twist cu voltaj variabil",
+        "source": "https://ecig-vapo.com/baterie-evod-twist-1100mah-cu-voltaj-variabil/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "10 X CE4+ V2",
+        "source": "https://ecig-vapo.com/10-x-clearomizer-ce4-v2/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Baza eGo-E 2.2-2.6ohmi",
+        "source": "https://ecig-vapo.com/baza-atomizor-ego-e-2-2-2-6ohmi/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Nickel Coil Ni200 sarma rezistente - 10 metri",
+        "source": "https://ecig-vapo.com/nickel-coil-ni200-sarma-rezistente-0-4mm-10-metri/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Kanthal A1 sârmă rezistențe diametru rolă 9,14m(30fit)",
+        "source": "https://ecig-vapo.com/kanthal-a1-sarma-rezistente-diametru-08mm-rola-15m/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Acumulator Trustfire 3.7V Li-ion cu flat top si PCB",
+        "source": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-flat-top-si-pcb/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "Acumulator Trustfire 3.7V Li-ion cu top button si PCB",
+        "source": "https://ecig-vapo.com/acumulator-trustfire-18650-3000mah-3-7v-li-ion-cu-top-button-si-pcb/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "eVod BCC ( modelul nou )",
+        "source": "https://ecig-vapo.com/clearomizor-evod-bcc-1-6ml-modelul-nou/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
+        "retailerId": "ecigvapo",
+        "product": "CE5 Sailebao eGo/TGO",
+        "source": "https://ecig-vapo.com/clearomizer-ce5-sailebao-ego-tgo/",
+        "found": false,
+        "value": null,
+        "evidence": null,
+        "error": null
+      },
+      {
         "retailerId": "merlin",
         "product": "Vaporesso Rezistenta GTX V2",
         "source": "https://merlin.ro/produs/rezistenta-vaporesso-gtx/",
@@ -301232,7 +302045,7 @@
         "found": false,
         "value": null,
         "evidence": null,
-        "error": "This operation was aborted"
+        "error": null
       },
       {
         "retailerId": "vapetronic",
@@ -301241,7 +302054,7 @@
         "found": false,
         "value": null,
         "evidence": null,
-        "error": "HTTP 403"
+        "error": null
       },
       {
         "retailerId": "vapetronic",
@@ -301250,7 +302063,7 @@
         "found": false,
         "value": null,
         "evidence": null,
-        "error": "HTTP 403"
+        "error": null
       },
       {
         "retailerId": "vaps",
@@ -302246,7 +303059,7 @@
   },
   "demandProbeStatus": {
     "date": "2026-09-16",
-    "generatedAt": "2026-09-16T09:20:58.508Z",
+    "generatedAt": "2026-09-16T09:48:20.991Z",
     "signalsFound": 65,
     "retailersWithSignals": 10,
     "reviewSignals": 17,
@@ -302255,15 +303068,15 @@
   },
   "canonicalization": {
     "schemaVersion": 1,
-    "generatedAt": "2026-09-16T09:21:19.848Z",
+    "generatedAt": "2026-09-16T09:48:34.569Z",
     "rule": "Variants, colours, equivalent brand spellings and retailer title noise are consolidated into a canonical product identity before national aggregation. Original titles remain in rawProduct/rawProducts for audit.",
     "before": {
-      "rankings": 1162,
+      "rankings": 1177,
       "actualSales": 0,
       "demandSignals": 65
     },
     "after": {
-      "rankings": 982,
+      "rankings": 999,
       "actualSales": 0,
       "demandSignals": 63
     }
