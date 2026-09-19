@@ -47,8 +47,6 @@ function ensureLegalFooter(){
 }
 function stabilizeMarket(){if(document.getElementById('marketBootStabilizer'))return;var s=document.createElement('style');s.id='marketBootStabilizer';s.textContent='#market2026Root:not(.market-load-guard-active):not([data-market-guard-ready="1"]){visibility:hidden;min-height:520px;overflow-anchor:none}';document.head.appendChild(s);setTimeout(function(){var root=document.getElementById('market2026Root'),x=document.getElementById('marketBootStabilizer');if(x&&root&&!root.classList.contains('market-load-guard-active')&&root.dataset.marketGuardReady!=='1')x.remove()},12000)}
 function isMainGuide(){return !/^\/rta-lab(?:\/|$)/i.test(location.pathname)}
-function grantMarketAccess(){try{sessionStorage.setItem('rtaMarket2026Access','1')}catch(e){}}
-function removeMarketLockUi(root){if(root)root.querySelectorAll('[data-market-lock]').forEach(function(button){button.remove()})}
 function ensurePublicFallbackStyle(){
   var publicStyle=document.getElementById('marketPublicAccessStyle');
   if(publicStyle)return;
@@ -61,28 +59,8 @@ function markPublicRoot(){var root=document.getElementById('market2026Root');if(
 function makeMarketPublic(){
   if(!isMainGuide())return;
   window.__rtaMarketPublicAccess=true;
-  grantMarketAccess();
   ensurePublicFallbackStyle();
-  var root=markPublicRoot();
-  var button=document.querySelector('[data-tab="market2026"]');
-  if(button&&button.dataset.publicAccess!=='1'){
-    var publicButton=button.cloneNode(true);
-    publicButton.classList.remove('market-lock-nav');
-    publicButton.dataset.publicAccess='1';
-    publicButton.addEventListener('click',function(event){
-      event.preventDefault();event.stopPropagation();grantMarketAccess();
-      var modal=document.getElementById('market2026Modal');if(modal)modal.remove();
-      if(typeof setRoute==='function')setRoute('market2026');else location.hash='#market2026';
-      setTimeout(function(){markPublicRoot();recoverMarketUi(0)},80)
-    });
-    button.replaceWith(publicButton)
-  }
-  removeMarketLockUi(root);
-  var route=(location.hash||'').replace(/^#/,'');
-  if(root&&route==='market2026'&&root.querySelector('[data-market-unlock]')){
-    grantMarketAccess();
-    setTimeout(function(){if(typeof setRoute==='function')setRoute('market2026');else location.hash='#market2026'},0)
-  }
+  markPublicRoot()
 }
 function stopMarketRecovery(){if(marketRecoveryTimer){clearTimeout(marketRecoveryTimer);marketRecoveryTimer=0}marketRecoveryRunning=false}
 function recoverMarketUi(attempt){
@@ -96,7 +74,6 @@ function recoverMarketUi(attempt){
     if(attempt>=14){stopMarketRecovery();return}
     marketRecoveryTimer=setTimeout(function(){recoverMarketUi(attempt+1)},180);return
   }
-  removeMarketLockUi(root);
   document.dispatchEvent(new CustomEvent('rta:market:hydrate'));
   if(document.getElementById('marketViewSwitcher')){stopMarketRecovery();return}
   if(attempt===6){
@@ -121,7 +98,7 @@ function waitForMarket(){
   load('/assets/market-view-switcher.js?v=11',function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'))});
   setTimeout(function(){document.dispatchEvent(new CustomEvent('rta:market:hydrate'));recoverMarketUi(0)},120)
 }
-function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=10',function(){makeMarketPublic();waitForMarket()})}
+function loadMarket(){if(!isMainGuide())return;stabilizeMarket();load('/assets/market-2026.js?v=11',function(){makeMarketPublic();waitForMarket()})}
 ensureLegalFooter();
 load('/assets/enhancements-core.js?v=8',function(){loadMarket()});
 })();
