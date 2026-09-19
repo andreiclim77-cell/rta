@@ -1,6 +1,6 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-**Fișier canonic RTA Lab · stare consolidată 04.09.2026.**
+**Fișier canonic RTA Lab · stare consolidată 19.09.2026.**
 
 - Repo: `andreiclim77-cell/rta`
 - Branch: `main`
@@ -17,13 +17,13 @@
 
 ## 0. Frază de pornire pentru reluarea proiectului
 
-> Continuăm proiectul Rta. Pairingul se face prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → număr spire → contact → poziție coil → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 are 620 repere și 5 sloturi active. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 contact** principal, **K1 28 GA / Ø2,5 / 5 contact** secundar. Varianta **K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet din Lab la 04.09.2026**. Pentru TC: **Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Perechi Clapton active: **Chariot→K1 Clapton/5**, **415→K1 Clapton/5**, **Dvarw MTL FL→SS316L Clapton/5**. Asylum V3 nu are o pereche Clapton dedicată/preferată; K1 Clapton/5 rămâne doar opțiune contextuală pentru corp și integrare.
+> Continuăm proiectul Rta. Pairingul se face prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → număr spire → contact → poziție coil → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 are 620 repere și 5 sloturi active. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 contact** principal, **K1 28 GA / Ø2,5 / 5 contact** secundar. Varianta **K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet din Lab la 04.09.2026**. Pentru TC: **Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Perechi Clapton active: **415→K1 Clapton/5**, **Dvarw MTL FL→SS316L Clapton/5**. Asylum V3 nu are o pereche Clapton dedicată/preferată; K1 Clapton/5 rămâne doar opțiune contextuală pentru corp și integrare.
 
 ## 1. Snapshot rapid
 
 1. Paradigmă: fără TOP global în pairing; motorul folosește lichid + obiectiv + ADN platformă + build.
 2. Preferință senzorială: tobacco-first, Tobacco Core Visibility, detaliu, layering, corp/mouthfeel; fără claritate sterilă și fără „tocăniță”.
-3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 17 platforme / 41 atomizoare fizice / 5 sloturi active**.
+3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 16 platforme / 40 atomizoare fizice / 5 sloturi active**.
 4. Catalog: 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex.
 5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar.
 6. K1 29/6 contact rămâne numai când ADN-ul platformei sau A/B-ul îl justifică.
@@ -31,10 +31,10 @@
 8. TC global: **NiFe30/6 + NiFe52/6**, ambele Ø2,5.
 9. Dicodes personal: **RESISTHERM NiFe30, TCR320, 5,5 Ω/m** confirmat direct de pe eticheta rolei.
 10. Harta TC: **GTR/KX → Dicodes NiFe30/6**; **K Prime → Zivipf NiFe52/6**; KLP rămâne exclus din harta NiFe.
-11. Clapton active: **Chariot→K1**, **415→K1**, **Dvarw FL→SS**.
+11. Clapton active: **415→K1**, **Dvarw FL→SS**.
 12. Asylum V3: Flat = claritate/separare; Dome = corp/integrare; **K1 Clapton/5 numai contextual**, fără prior de platformă.
 
-## 2. Inventar activ — 17 platforme / 41 RTA
+## 2. Inventar activ — 16 platforme / 40 RTA
 
 | Platformă | Buc. | ADN / rol curent |
 | --- | ---: | --- |
@@ -52,7 +52,6 @@
 | Prime Minister Freehand | 2 | NET specialist; 28/5 = corp/layering; 29/6 contact = frunză/dry/tobacco-first. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; calibrare separată; 29/5 contact prior personal. |
 | By-Ka V11 | 1 | Echilibru corp–claritate; airflow unic; 29/5 contact prior personal. |
-| Chariot RTA | 1 | Saturație/tobacco complex; **K1 Clapton/5 = pereche dedicată**, validată direct pe Cronos Tab Plus. |
 | Kayfun Mini V3 | 1 | Micro-MTL sec/concentrat; 29/5 contact prior personal. |
 | Minister MTL | 1 | Compact/warm/low-watt; 29/5 contact prior personal. |
 
@@ -133,16 +132,11 @@
 - Explorer direct folosește doar buildurile active ale platformei și nu forțează un Clapton pe locul #1.
 - Triangularea specifică Asylum păstrează numai un bonus mic pentru K1 Clapton când obiectivul/profilul cere body/dark/rich.
 
-### 4.10. Chariot
-
-- K1 Clapton 2×30+38 / Ø2,5 / 5 = pereche dedicată.
-- Validare directă pe Cronos Tab Plus: #1 în watt; K1 28 aproape egal; NiFe foarte complet aromatic, dar TC nu este filosofia naturală preferată a Chariot.
 
 ## 5. Harta Clapton activă — 04.09.2026
 
 | Platformă | Clapton | Tier | Rol |
 | --- | --- | --- | --- |
-| Chariot | K1 Clapton 2×30+38 / 5 | dedicat | corp, densitate, mouthfeel, TH, complex/dark |
 | 415 | K1 Clapton 2×30+38 / 5 | preferat | corp, densitate, integrare; bonus contextual |
 | Dvarw MTL FL | SS316L Clapton 2×30+38 / 5 | dedicat | claritate, top-notes, layering |
 
@@ -157,7 +151,7 @@ Ordinea de decizie rămâne:
 Reguli runtime:
 - 415 + K1 Clapton: bonus de bază + bonus suplimentar pentru complex/dark/rich și body/TH/complete; penalizare moderată pentru tobacco + dry/simple.
 - Asylum + K1 Clapton: bonus contextual mic; crește doar când se caută body/dark/rich.
-- Chariot + K1 și Dvarw FL + SS își păstrează statutul dedicat.
+- Dvarw FL + SS își păstrează statutul dedicat.
 - Pereche preferată nu înseamnă #1 forțat în motorul pe lichid.
 - În **Explorer direct**, doar 415 are Clapton afișat explicit primul.
 
@@ -212,13 +206,13 @@ Reguli runtime:
 
 | Fișier | Rol |
 | --- | --- |
-| `rta-lab/index.html` | UI V10; afișează cele 3 perechi Clapton active și baseline-urile TC. |
-| `rta-lab/engine.js` | Motor de bază: 17 platforme, 5 sloturi, scoring, TOP 3. |
+| `rta-lab/index.html` | UI V10; afișează cele 2 perechi Clapton active și baseline-urile TC. |
+| `rta-lab/engine.js` | Motor de bază: 16 platforme, 5 sloturi, scoring, TOP 3. |
 | `rta-lab/data/tuning-415.js` | Validări 415 + ADN platforme + infrastructura Explorer; 29/5 este doar contact. |
 | `rta-lab/data/personal-5wrap.js` | Prior personal 29/5 contact > 28/5 contact; păstrează excepțiile 29/6. |
 | `rta-lab/data/tc-platform-map.js` | Harta aliaj/platformă TC. |
 | `rta-lab/data/tc-sixwrap-global.js` | Gard global: NiFe = 6 spire. |
-| `rta-lab/data/clapton-platform-map.js` | Autoritatea finală Clapton: 3 perechi active, triangulare contextuală, filtrare per platformă și Explorer final. |
+| `rta-lab/data/clapton-platform-map.js` | Autoritatea finală Clapton: 2 perechi active, triangulare contextuală, filtrare per platformă și Explorer final. |
 | `rta-lab/data/wires.js` | Cele 5 sloturi active + specificații materiale TC. |
 | `rta-lab/sw.js` | PWA/network-first; cache versionat. |
 | `rta-lab/RTA_CONTINUITY_MASTER.md` | Sursa canonică de adevăr. |
@@ -247,14 +241,14 @@ Reguli runtime:
 | Dicodes NiFe30 / 7 spire | DEPĂȘIT | Dicodes NiFe30 / 6 spire |
 | GTR/KX NiFe30/7 | DEPĂȘIT | GTR/KX = NiFe30/6 |
 | 415 K1 Clapton doar compatibil generic | REFINAT | K1 Clapton = pereche preferată de platformă |
-| UI cu 4 perechi Clapton | DEPĂȘIT 04.09.2026 | UI afișează 3 perechi active |
+| UI cu 4 perechi Clapton | DEPĂȘIT 04.09.2026 | UI afișează 2 perechi active |
 | Explorer cu preferință Clapton fixă pe mai multe platforme | REFINAT 04.09.2026 | numai 415 păstrează Clapton explicit primul; restul urmează buildurile active |
 
-## 11. Checkpoint 04.09.2026 — stare Clapton + 29/5 contact-only
+## 11. Checkpoint 19.09.2026 — colecție activă + Clapton + 29/5 contact-only
 
 **SALVAT CANONIC**
 
-1. UI-ul afișează **3 perechi Clapton active**: Chariot+K1, 415+K1, Dvarw FL+SS.
+1. UI-ul afișează **2 perechi Clapton active**: 415+K1 și Dvarw FL+SS.
 2. La selectarea directă a 415 în Explorer, **K1 Clapton este varianta #1 afișată**.
 3. Asylum V3 nu are pereche Clapton dedicată/preferată; K1 Clapton rămâne numai contextual pentru corp/integrare.
 4. Triangularea motorului păstrează 415+K1 ca preferință contextuală și Asylum+K1 doar ca bonus contextual mic.
