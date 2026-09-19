@@ -40,7 +40,6 @@ const BUILD_RULES = {
   "pmfree":   { k128: 5, k129: 6, reason: "Diverterul 32×0,9 mm este foarte lat: 29/6 oferă acoperire, iar 28/5 aduce corp și mouthfeel." },
   "pmstd":    { k128: 5, k129: 6, reason: "Aceeași bază multipunct ca Freehand: 29/6 pentru acoperire, 28/5 pentru alternativa round-wire mai plină." },
   "byka":     { k128: 5, k129: 5, reason: "Air-pipe unic și jet concentrat; 5 spire sunt aproape optim pentru pinurile MTL uzuale." },
-  "chariot":  { k128: 5, k129: 6, reason: "29/6 folosește mai bine zona de airflow, iar 28/5 este alternativa round-wire mai rapidă și mai plină." },
   "kv3":      { k128: 5, k129: 6, reason: "28 GA atinge footprint-ul util cu 5 spire; firul mai subțire de 29 GA cere 6 pentru o lungime axială apropiată." },
   "minister": { k128: 5, k129: 6, reason: "Diverterul lat cere 29/6 pentru acoperire; 28/5 limitează masa în camera mică." }
 };
@@ -66,7 +65,6 @@ const CLAPTON_PLATFORM = {
   "pmfree":   { k1clap: 0.85, ssclap: 0.50 },
   "pmstd":    { k1clap: 0.80, ssclap: 0.40 },
   "byka":     { k1clap: 0.15, ssclap: 0.90 },
-  "chariot":  { k1clap: 1.30, ssclap: -0.40 },
   "kv3":      { k1clap: -0.80, ssclap: -0.65 },
   "minister": { k1clap: 0.35, ssclap: -0.55 }
 };
@@ -127,12 +125,11 @@ function axes(liquid) {
 function atomBonus(atom, ax, objective, liquid) {
   let bonus = 0;
   if ((has(ax, "oriental") || has(ax, "perique")) && ["dvarwfl", "byka"].includes(atom.id)) bonus += 0.8;
-  if (has(ax, "cigar") && has(ax, "alcohol") && ["415", "pmfree", "asylum", "chariot", "muted"].includes(atom.id)) bonus += 0.5;
-  if (has(ax, "sweet") && ["kprime", "415", "chariot", "muted", "asylum", "kx"].includes(atom.id)) bonus += 0.3;
+  if (has(ax, "cigar") && has(ax, "alcohol") && ["415", "pmfree", "asylum", "muted"].includes(atom.id)) bonus += 0.5;
+  if (has(ax, "sweet") && ["kprime", "415", "muted", "asylum", "kx"].includes(atom.id)) bonus += 0.3;
   if (has(ax, "dry") && has(ax, "simple") && ["gtone", "klp", "dvarwcl"].includes(atom.id)) bonus += 0.55;
-  if (has(ax, "citrus") && ["dvarwfl", "asylum", "byka", "gtr", "chariot"].includes(atom.id)) bonus += 0.4;
+  if (has(ax, "citrus") && ["dvarwfl", "asylum", "byka", "gtr"].includes(atom.id)) bonus += 0.4;
   if (liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc") && atom.id === "kprime") bonus += 5;
-  if (norm(liquid.name).includes("tab plus") && atom.id === "chariot") bonus += 1.8;
   if (liquid.class === "NET simplu" && ["gtr", "dvarwfl", "kx", "kprime", "byka"].includes(atom.id)) bonus += 0.25;
   if (liquid.class === "NET complex" && ["dvarwfl", "gtr", "pmfree", "asylum", "415"].includes(atom.id)) bonus += 0.3;
   return bonus;
@@ -239,7 +236,7 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (objective === "body") bonus += 1.3;
     if (objective === "complete") bonus += 0.8;
     if (objective === "tobacco") bonus += 0.35;
-    if (["415", "muted", "gtr", "diplomat", "asylum", "pmfree", "pmstd", "chariot", "minister"].includes(atom.id)) bonus += 0.45;
+    if (["415", "muted", "gtr", "diplomat", "asylum", "pmfree", "pmstd", "minister"].includes(atom.id)) bonus += 0.45;
   }
 
   if (wire.id === "k1clap") {
@@ -254,7 +251,6 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (objective === "layers") bonus += 0.45;
     if (simple && dry && !dark) bonus -= 0.8;
     if (bright && !dark && !rich) bonus -= 0.35;
-    if (atom.id === "chariot" && norm(liquid.name).includes("tab plus")) bonus += 4.5;
   }
 
   if (wire.id === "ssclap") {
@@ -282,7 +278,6 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (objective === "th") bonus -= 0.95;
     if (simple && dry && objective === "tobacco") bonus -= 0.35;
     if (["kprime", "gtr", "kx", "gtone", "kv3"].includes(atom.id)) bonus += 0.75;
-    if (atom.id === "chariot") bonus -= 0.35;
   }
 
   if (atom.id === "klp") {
@@ -294,11 +289,6 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (wire.id === "nife30") bonus += 4;
   }
 
-  if (atom.id === "chariot" && norm(liquid.name).includes("tab plus")) {
-    if (wire.id === "k128") bonus += 2.4;
-    if (wire.id === "nife30") bonus += 1.5;
-    if (wire.id === "k129") bonus += 0.25;
-  }
 
   return bonus;
 }
@@ -360,11 +350,6 @@ function buildOutput(atom, wire, liquid) {
     output.status = "Validat";
     output.noteClass = "valid";
     output.note = "28/5 păstrează hit/TH foarte bun și adaugă mai mult mouthfeel și corp decât 29/5.";
-  }
-  if (atom.id === "chariot" && wire.id === "k1clap" && liquid && norm(liquid.name).includes("tab plus")) {
-    output.status = "Validat practic";
-    output.noteClass = "valid";
-    output.note = "Pe Chariot cu Cronos Tab Plus, K1 Clapton 2×30+38 / 5 spire este reperul principal pentru corp, TH și integrarea profilului.";
   }
   if (wire.id === "nife30") {
     output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
@@ -690,10 +675,6 @@ function renderBuilds() {
 
   if (atom.id === "kprime" && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")) {
     ranking.sort((left, right) => left.wire.id === "nife30" ? -1 : right.wire.id === "nife30" ? 1 : right.score - left.score);
-  }
-  if (atom.id === "chariot" && norm(liquid.name).includes("tab plus")) {
-    const order = { k1clap: 0, k128: 1, nife30: 2, k129: 3, ssclap: 4 };
-    ranking.sort((left, right) => (order[left.wire.id] ?? 99) - (order[right.wire.id] ?? 99));
   }
 
   ranking = ranking.slice(0, 3);
