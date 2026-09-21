@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-09-20T08:09:19.664Z",
+  "generatedAt": "2026-09-21T08:27:35.603Z",
   "lookbackHours": 720,
   "cacheMaxHours": 24,
   "pendingRefresh": false,
@@ -55,8 +55,8 @@
     },
     "redditAuthorized": false,
     "redditMode": "credentials-or-approval-missing",
-    "rawDocuments": 1438,
-    "relevantDocuments": 0,
+    "rawDocuments": 1618,
+    "relevantDocuments": 2,
     "qualifiedPrelaunchSignals": 0,
     "undatedPrelaunchCandidates": 0,
     "verificationQueue": 4,
@@ -71,7 +71,7 @@
       "manufacturer-social-public": {
         "queries": 220,
         "working": 220,
-        "documents": 2148
+        "documents": 2153
       },
       "creator-prelaunch": {
         "queries": 44,
@@ -81,7 +81,7 @@
       "manufacturer-community": {
         "queries": 44,
         "working": 44,
-        "documents": 463
+        "documents": 458
       },
       "vaping-forum-prelaunch": {
         "queries": 51,
@@ -103,22 +103,22 @@
     "indexDateSignals": 0,
     "deepQueriesRun": 115,
     "deepQueriesWorking": 115,
-    "deepCandidateDocuments": 614,
-    "deepWarningsAdded": 1,
+    "deepCandidateDocuments": 656,
+    "deepWarningsAdded": 2,
     "deepScan": true,
     "deepStrictHostValidated": true,
-    "deepWrongHostRejected": 12,
+    "deepWrongHostRejected": 15,
     "wideQueriesRun": 181,
     "wideQueriesWorking": 181,
-    "wideCandidateDocuments": 842,
-    "wideSignalsAccepted": 49,
+    "wideCandidateDocuments": 1407,
+    "wideSignalsAccepted": 100,
     "wideUpcomingSignals": 5,
-    "wideReleasedSignals": 44,
+    "wideReleasedSignals": 95,
     "wideRememberedUpcomingSignals": 5,
-    "wideRememberedReleasedSignals": 46,
-    "wideDiscoveryOnlySignals": 40,
-    "wideDecisionEligibleSignals": 9,
-    "wideCloneSignals": 2,
+    "wideRememberedReleasedSignals": 99,
+    "wideDiscoveryOnlySignals": 89,
+    "wideDecisionEligibleSignals": 11,
+    "wideCloneSignals": 1,
     "wideScan": true,
     "scope": "GLOBAL",
     "finalRelevantProductsBefore": 0,
@@ -126,16 +126,16 @@
     "productQueriesWorking": 231,
     "productCandidates": 0,
     "undatedProductCandidates": 4,
-    "directVendorPages": 35,
-    "directVendorProductLinks": 182,
-    "directVendorProductPagesFetched": 181,
+    "directVendorPages": 34,
+    "directVendorProductLinks": 175,
+    "directVendorProductPagesFetched": 173,
     "directVendorPhraseHits": 169,
     "directVendorEvents": 0,
     "targetedVendorQueries": 90,
     "targetedVendorQueriesWorking": 90,
-    "targetedVendorRawDocs": 680,
-    "targetedVendorPreCandidates": 18,
-    "targetedVendorResolvedPages": 5,
+    "targetedVendorRawDocs": 743,
+    "targetedVendorPreCandidates": 14,
+    "targetedVendorResolvedPages": 2,
     "targetedVendorEvents": 0,
     "explicitVendorDatePass": true,
     "explicitVendorEvents": 0,
@@ -145,9 +145,9 @@
       {
         "id": "3fvape",
         "catalogPages": 44,
-        "catalogFetched": 23,
-        "productLinks": 177,
-        "productPages": 176,
+        "catalogFetched": 24,
+        "productLinks": 174,
+        "productPages": 173,
         "events": 0,
         "samples": []
       },
@@ -188,17 +188,17 @@
         "samples": []
       }
     ],
-    "vendorCatalogPages": 51,
-    "vendorProductLinks": 467,
-    "vendorProductPages": 466,
+    "vendorCatalogPages": 52,
+    "vendorProductLinks": 464,
+    "vendorProductPages": 463,
     "vendorEvents": 0,
     "vendorProfileScanV2": true,
     "vendorProfilesV2": [
       {
         "id": "3fvape",
-        "catalogFetched": 23,
-        "productLinks": 182,
-        "productPages": 181,
+        "catalogFetched": 24,
+        "productLinks": 179,
+        "productPages": 178,
         "events": 3,
         "titleFallbacks": 9,
         "samples": [
@@ -263,9 +263,9 @@
     "finalConcreteProducts": 28,
     "finalBeforeProducts": 2,
     "finalAfterProducts": 26,
-    "upstreamProductEvents": 5,
-    "finalDatedEvents": 14,
-    "finalPublicSignals": 14,
+    "upstreamProductEvents": 11,
+    "finalDatedEvents": 15,
+    "finalPublicSignals": 13,
     "finalUndatedCandidates": 4
   },
   "categories": {
@@ -277,11 +277,30 @@
         "category": "RTA",
         "typology": "RDL single",
         "mentions30d": 2,
-        "sourceTypeCount": 0,
-        "newestSignalHours": 237,
+        "sourceTypeCount": 1,
+        "newestSignalHours": 213,
         "maturityStage": "IMMINENT",
         "maturityLabel": "ETA / precomandă",
-        "confidence": 62,
+        "confidence": 76,
+        "productDetailAvailable": true,
+        "decision": {
+          "code": "WATCH",
+          "label": "URMĂREȘTE",
+          "reason": "Eveniment datat; este necesară încă o confirmare independentă pentru o achiziție serioasă."
+        }
+      },
+      {
+        "kind": "product",
+        "eventId": "00454d60842f8f03bc1d",
+        "familyKey": "RTA|CLONE|flash e vapor v4 5s",
+        "category": "RTA",
+        "typology": "MTL single",
+        "mentions30d": 1,
+        "sourceTypeCount": 1,
+        "newestSignalHours": 267,
+        "maturityStage": "BATCH",
+        "maturityLabel": "batch ETA depășit · verifică disponibilitatea",
+        "confidence": 71,
         "productDetailAvailable": true,
         "decision": {
           "code": "WATCH",
@@ -295,13 +314,13 @@
   },
   "summary": {
     "RTA": {
-      "signals": 2,
-      "events": 1,
+      "signals": 3,
+      "events": 2,
       "buyHype": 0,
       "buyTrend": 0,
       "prepareAccessories": 0,
       "prepare": 0,
-      "watch": 1,
+      "watch": 2,
       "stop": 0
     },
     "MODURI": {
@@ -541,9 +560,13 @@
     {
       "date": "2026-09-20",
       "events": []
+    },
+    {
+      "date": "2026-09-21",
+      "events": []
     }
   ],
   "hypeWindowDays": 30,
-  "snapshotReferenceAt": "2026-09-20T03:00:00.000Z",
+  "snapshotReferenceAt": "2026-09-21T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
 }
