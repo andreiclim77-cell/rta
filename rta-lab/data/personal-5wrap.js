@@ -1,14 +1,14 @@
-/* RTA Lab — preferință personală recurentă, actualizat 04.09.2026.
+/* RTA Lab — preferință personală recurentă, actualizat 21.09.2026.
  * PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS
  * K1 29 GA / Ø2,5 / 5 spire este păstrat numai CONTACT. Varianta de 5 spire distanțată este eliminată.
  */
 (() => {
   window.RTA_LAB_PERSONAL_BUILD_DNA = {
-    date: "2026-09-04",
+    date: "2026-09-21",
     name: "PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS",
     principle: "Pentru utilizator, K1 29 GA / Ø2,5 / 5 contact este priorul personal round-wire principal, urmat de K1 28 GA / Ø2,5 / 5 contact.",
     interpretation: "Preferința sugerează masă termică redusă + footprint compact + ramp-up rapid + vaporizare focalizată. Este interpretare mecanică, nu fapt universal demonstrat.",
-    guardrail: "ADN-ul platformei și validările directe pot depăși priorul personal. 6 spire se păstrează când există câștig practic/geometric real."
+    guardrail: "ADN-ul platformei și validările directe pot depăși priorul personal. KV3 Mini este excepție validată: K1 28 GA / Ø2,5 / 6 și K1 29 GA / Ø2,5 / 6."
   };
 
   if (typeof wireBonus !== "function" || typeof buildOutput !== "function") return;
@@ -32,6 +32,7 @@
     if (!atom || !output) return false;
     if (atom.id === "pmfree" && isNet(liquid)) return true;
     if (atom.id === "415" && Number(output.wraps) === 6) return true;
+    if (atom.id === "kv3") return true;
     return false;
   }
 
@@ -48,6 +49,13 @@
     if (!atom || !wire || !output) return output;
 
     if (wire.id === "k128") {
+      if (atom.id === "kv3") {
+        output.wraps = "6";
+        output.status = "Validat practic · KV3 Mini · 28/6";
+        output.noteClass = "valid";
+        output.note = "Kayfun Mini V3 păstrează K1 28 GA / Ø2,5 / 6 spire ca excepție validată față de priorul personal 28/5: footprint mai lung și utilizare mai completă a airflow-ului.";
+        return output;
+      }
       output.wraps = "5";
       output.note = `${output.note || ""} ${personalFiveWrapNote("k128")}`.trim();
       if (!String(output.status || "").toLowerCase().includes("preferință personală")) {
@@ -94,8 +102,10 @@
       if (wire.id === "k129") {
         if (atom.id === "pmfree" && isNet(liquid)) return base;
         if (atom.id === "415" && Number(buildOutput(atom, wire, liquid).wraps) === 6) return base;
+        if (atom.id === "kv3") return `${base}; pe KV3 Mini 29/6 este excepția activă validată`;
         return `${base}; 29/5 contact are prior personal transversal pentru gustul utilizatorului`;
       }
+      if (wire.id === "k128" && atom.id === "kv3") return `${base}; pe KV3 Mini 28/6 este excepția activă validată`;
       if (wire.id === "k128") return `${base}; 28/5 contact are prior personal secundar pentru corp + compact-coil response`;
       return base;
     };
@@ -108,6 +118,7 @@
       if (wire.id === "k129" && Number(output && output.wraps) === 5) {
         return `${base} · Prior personal: 29/5 contact înainte de 29/6, dacă platforma nu are o excepție validată.`;
       }
+      if (wire.id === "k128" && atom.id === "kv3") return `${base} · Excepție KV3 Mini validată: 28/6 pe Ø2,5.`;
       if (wire.id === "k128") return `${base} · Prior personal secundar: 28/5 contact.`;
       return base;
     };
@@ -125,7 +136,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const guide = document.querySelector(".wire-guide-foot");
     if (guide) {
-      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 contact; K1 29 = <b>5 contact prior personal</b>, 6 contact numai când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes RESISTHERM NiFe30 = <b>6 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. Varianta K1 29/5 distanțată este eliminată din Lab.";
+      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 contact baseline, <b>KV3 Mini = 28/6 pe Ø2,5</b>; K1 29 = <b>5 contact prior personal</b>, cu <b>KV3 Mini = 29/6 pe Ø2,5</b> și alte excepții doar când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes RESISTHERM NiFe30 = <b>6 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. Varianta K1 29/5 distanțată este eliminată din Lab.";
     }
   });
 })();
