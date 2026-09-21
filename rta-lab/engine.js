@@ -20,7 +20,7 @@ const escapeHtml = value => String(value ?? "")
 
 /*
  * Matrice airflow → round-wire, V10.
- * - K1 28 GA rămâne peste tot la 5 spire.
+ * - K1 28 GA folosește 5 spire ca baseline general; KV3 Mini are excepție validată la 6 spire.
  * - K1 29 GA primește 5 spire pe jeturile concentrate și 6 pe geometriile late.
  * - Ambele Claptonuri sunt fixe la 5 spire, Ø2,5 mm.
  * - Familia NiFe TC folosește baseline-ul canonic de 6 spire pe Ø2,5 mm.
@@ -40,12 +40,12 @@ const BUILD_RULES = {
   "pmfree":   { k128: 5, k129: 6, reason: "Diverterul 32×0,9 mm este foarte lat: 29/6 oferă acoperire, iar 28/5 aduce corp și mouthfeel." },
   "pmstd":    { k128: 5, k129: 6, reason: "Aceeași bază multipunct ca Freehand: 29/6 pentru acoperire, 28/5 pentru alternativa round-wire mai plină." },
   "byka":     { k128: 5, k129: 5, reason: "Air-pipe unic și jet concentrat; 5 spire sunt aproape optim pentru pinurile MTL uzuale." },
-  "kv3":      { k128: 5, k129: 6, reason: "28 GA atinge footprint-ul util cu 5 spire; firul mai subțire de 29 GA cere 6 pentru o lungime axială apropiată." },
+  "kv3":      { k128: 6, k129: 6, reason: "Excepție validată practic: pe Kayfun Mini V3, K1 28 GA / Ø2,5 / 6 și K1 29 GA / Ø2,5 / 6 acoperă mai bine zona utilă de airflow decât variantele compacte." },
   "minister": { k128: 5, k129: 6, reason: "Diverterul lat cere 29/6 pentru acoperire; 28/5 limitează masa în camera mică." }
 };
 
 const CONTACT_WIDTH_MM = {
-  k128: { 5: "1,61" },
+  k128: { 5: "1,61", 6: "1,93" },
   k129: { 5: "1,43", 6: "1,72" }
 };
 
@@ -413,6 +413,9 @@ function comparisonText(atom, wire, output) {
   const wraps = Number(output.wraps);
   const atomRule = BUILD_RULES[atom.id] || { k129: 6 };
   if (wire.id === "k128") {
+    if (atom.id === "kv3" && wraps === 6) {
+      return "+ footprint mai lung, vaporizare mai uniformă și corp complet pe Mini V3; − ramp-up ușor mai lent decât 28/5.";
+    }
     if (atomRule.k129 === 6) {
       return "+ corp, densitate, mouthfeel și răspuns prompt; − mai puțină uscăciune, precizie și acoperire axială decât 29/6.";
     }
