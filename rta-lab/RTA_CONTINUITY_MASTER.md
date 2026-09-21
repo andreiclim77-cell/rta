@@ -1,6 +1,6 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-**Fișier canonic RTA Lab · stare consolidată 19.09.2026.**
+**Fișier canonic RTA Lab · stare consolidată 21.09.2026.**
 
 - Repo: `andreiclim77-cell/rta`
 - Branch: `main`
@@ -17,7 +17,7 @@
 
 ## 0. Frază de pornire pentru reluarea proiectului
 
-> Continuăm proiectul Rta. Pairingul se face prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → număr spire → contact → poziție coil → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 are 620 repere și 5 sloturi active. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 contact** principal, **K1 28 GA / Ø2,5 / 5 contact** secundar. Varianta **K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet din Lab la 04.09.2026**. Pentru TC: **Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Perechi Clapton active: **415→K1 Clapton/5**, **Dvarw MTL FL→SS316L Clapton/5**. Asylum V3 nu are o pereche Clapton dedicată/preferată; K1 Clapton/5 rămâne doar opțiune contextuală pentru corp și integrare.
+> Continuăm proiectul Rta. Pairingul se face prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → număr spire → contact → poziție coil → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 are 620 repere și 5 sloturi active. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 contact** principal, **K1 28 GA / Ø2,5 / 5 contact** secundar; **KV3 Mini este excepție validată: K1 28 GA / Ø2,5 / 6 și K1 29 GA / Ø2,5 / 6**. Varianta **K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet din Lab la 04.09.2026**. Pentru TC: **Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Perechi Clapton active: **415→K1 Clapton/5**, **Dvarw MTL FL→SS316L Clapton/5**. Asylum V3 nu are o pereche Clapton dedicată/preferată; K1 Clapton/5 rămâne doar opțiune contextuală pentru corp și integrare.
 
 ## 1. Snapshot rapid
 
@@ -25,7 +25,7 @@
 2. Preferință senzorială: tobacco-first, Tobacco Core Visibility, detaliu, layering, corp/mouthfeel; fără claritate sterilă și fără „tocăniță”.
 3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 16 platforme / 40 atomizoare fizice / 5 sloturi active**.
 4. Catalog: 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex.
-5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar.
+5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar. Excepție validată: **KV3 Mini = 28/6 + 29/6, ambele Ø2,5**.
 6. K1 29/6 contact rămâne numai când ADN-ul platformei sau A/B-ul îl justifică.
 7. Varianta K1 29/5 distanțată este **ȘTEARSĂ / DEPĂȘITĂ** și nu trebuie reintrodusă în UI, motor, Explorer sau arhivă.
 8. TC global: **NiFe30/6 + NiFe52/6**, ambele Ø2,5.
@@ -52,14 +52,14 @@
 | Prime Minister Freehand | 2 | NET specialist; 28/5 = corp/layering; 29/6 contact = frunză/dry/tobacco-first. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; calibrare separată; 29/5 contact prior personal. |
 | By-Ka V11 | 1 | Echilibru corp–claritate; airflow unic; 29/5 contact prior personal. |
-| Kayfun Mini V3 | 1 | Micro-MTL sec/concentrat; 29/5 contact prior personal. |
+| Kayfun Mini V3 | 1 | Micro-MTL sec/concentrat; **validat practic: K1 28 GA / Ø2,5 / 6 și K1 29 GA / Ø2,5 / 6**. |
 | Minister MTL | 1 | Compact/warm/low-watt; 29/5 contact prior personal. |
 
 ## 3. Sârme active și baseline-uri
 
 | Sârmă / familie | Baseline | Rol |
 | --- | --- | --- |
-| K1 28 GA round | Ø2,5 · 5 contact | echilibru, corp curat, mouthfeel, completitudine |
+| K1 28 GA round | Ø2,5 · 5 contact baseline; **KV3 Mini = 6** | echilibru, corp curat, mouthfeel, completitudine |
 | K1 29 GA round | Ø2,5 · 5 contact prior; 6 contact justificat | tobacco-first, TH, dry, precizie, viteză |
 | K1 Clapton 2×30+38 | Ø2,5 · 5 | corp, densitate, mouthfeel, TH, integrare |
 | SS316L Clapton 2×30+38 | Ø2,5 · 5 | claritate, top-notes, layering |
@@ -69,7 +69,7 @@
 ### 3.1. Regula K1 29 actuală
 
 - **29/5 contact** = singura variantă activă de 5 spire.
-- **29/6 contact** = alternativă justificată pe platforme/obiective unde este nevoie de footprint mai lat sau mai mult dry/tobacco-first.
+- **29/6 contact** = alternativă justificată pe platforme/obiective unde este nevoie de footprint mai lat sau mai mult dry/tobacco-first; **pe KV3 Mini este regula activă validată**.
 - Nu mai folosi, recomanda, afișa sau documenta varianta K1 29/5 distanțată.
 
 ## 4. Validări practice cheie
@@ -131,6 +131,12 @@
 - Nu există Clapton dedicat/preferat fixat canonic pe Asylum.
 - Explorer direct folosește doar buildurile active ale platformei și nu forțează un Clapton pe locul #1.
 - Triangularea specifică Asylum păstrează numai un bonus mic pentru K1 Clapton când obiectivul/profilul cere body/dark/rich.
+
+### 4.10. Kayfun Mini V3
+
+- **Validat practic 21.09.2026:** K1 28 GA · Ø2,5 · **6 spire**.
+- **Validat practic 21.09.2026:** K1 29 GA · Ø2,5 · **6 spire**.
+- KV3 Mini este excepție explicită de la priorul personal transversal 28/5 + 29/5; geometria platformei prevalează aici.
 
 
 ## 5. Harta Clapton activă — 04.09.2026
@@ -209,7 +215,7 @@ Reguli runtime:
 | `rta-lab/index.html` | UI V10; afișează cele 2 perechi Clapton active și baseline-urile TC. |
 | `rta-lab/engine.js` | Motor de bază: 16 platforme, 5 sloturi, scoring, TOP 3. |
 | `rta-lab/data/tuning-415.js` | Validări 415 + ADN platforme + infrastructura Explorer; 29/5 este doar contact. |
-| `rta-lab/data/personal-5wrap.js` | Prior personal 29/5 contact > 28/5 contact; păstrează excepțiile 29/6. |
+| `rta-lab/data/personal-5wrap.js` | Prior personal 29/5 contact > 28/5 contact; păstrează excepțiile validate, inclusiv **KV3 Mini 28/6 + 29/6**. |
 | `rta-lab/data/tc-platform-map.js` | Harta aliaj/platformă TC. |
 | `rta-lab/data/tc-sixwrap-global.js` | Gard global: NiFe = 6 spire. |
 | `rta-lab/data/clapton-platform-map.js` | Autoritatea finală Clapton: 2 perechi active, triangulare contextuală, filtrare per platformă și Explorer final. |
