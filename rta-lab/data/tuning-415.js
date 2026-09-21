@@ -1,4 +1,4 @@
-/* RTA Lab — validări practice + platform DNA, actualizat 04.09.2026.
+/* RTA Lab — validări practice + platform DNA, actualizat 21.09.2026.
  * Paradigmă: fără clasament global absolut; pairingul este lichid -> platformă -> sârmă -> geometrie -> watt/TC.
  * Canonical 04.09.2026: varianta K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet.
  */
@@ -15,7 +15,8 @@ window.RTA_LAB_CONTINUITY = {
     "kx": "28/5 = extraordinar; NiFe30 TC = extraordinar; platformă foarte purtabilă.",
     "dvarw": "28/5 = extraordinar în testul curent; observația a fost generică, deci CL și FL rămân distincte până la A/B explicit.",
     "klp": "29 GA este sârma nativă: 29/5 pentru hit/focus, 29/6 pentru varianta mai așezată/completă.",
-    "pmfree": "NET specialist: 28/5 pentru corp/layering, 29/6 pentru frunză/dry/tobacco-first."
+    "pmfree": "NET specialist: 28/5 pentru corp/layering, 29/6 pentru frunză/dry/tobacco-first.",
+    "kv3": "Validat practic: K1 28 GA / Ø2,5 / 6 spire și K1 29 GA / Ø2,5 / 6 spire; excepție explicită de la priorul personal 5-wrap."
   }
 };
 
