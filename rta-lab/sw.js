@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-contact-only-twopairs-16platforms-20260919";
+const CACHE = "rta-lab-v10-five-wire-620-16platforms-kv3-28x6-29x6-20260921";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
