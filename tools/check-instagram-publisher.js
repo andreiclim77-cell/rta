@@ -298,6 +298,12 @@ assert.strictEqual(mediaCanRepresentSource({
   caption: queueItem.caption,
   timestamp: new Date(Date.parse(repeatSourceTime) + 60 * 1000).toISOString()
 }, queueItem), true, 'A contemporary Instagram post may safely recover a publication receipt');
+assert.strictEqual(mediaCanRepresentSource({
+  caption: queueItem.caption,
+  timestamp: new Date(Date.parse(repeatSourceTime) + 60 * 1000).toISOString(),
+  media_type: 'VIDEO',
+  permalink: 'https://www.instagram.com/reel/not-a-photo/'
+}, queueItem), false, 'An Instagram Reel must never satisfy a Facebook photo mirror');
 
 const staleState = normalizeInstagramState({
   ...emptyInstagramState(),

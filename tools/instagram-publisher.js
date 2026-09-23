@@ -103,7 +103,6 @@ function emptyInstagramState() {
 function pruneGeneratedReelEchoes(state) {
   const echoIds = Object.entries(state.mirroredFacebookPosts || {})
     .filter(([, record]) => record
-      && record.productType === 'manual'
       && record.source === 'instagram-existing-media-detected'
       && /instagram\.com\/reel\//i.test(String(record.permalink || '')))
     .map(([sourcePostId]) => sourcePostId);
@@ -126,6 +125,9 @@ function pruneGeneratedReelEchoes(state) {
 
 function mediaCanRepresentSource(media, item, toleranceMs = 15 * 60 * 1000) {
   if (!captionMatchesQueueItem(media && media.caption, item)) return false;
+  const mediaType = String(media && media.media_type || '').toUpperCase();
+  if (mediaType && mediaType !== 'IMAGE' && mediaType !== 'CAROUSEL_ALBUM') return false;
+  if (/instagram\.com\/reel\//i.test(String(media && media.permalink || ''))) return false;
   const sourceTime = Date.parse(item && item.sourcePublishedAt || '');
   const mediaTime = Date.parse(media && media.timestamp || '');
   if (!Number.isFinite(sourceTime) || !Number.isFinite(mediaTime)) return true;
@@ -1030,6 +1032,7 @@ function applyInstagramPublished(state, item, media, account, timestamp = nowIso
     imageUrls: Array.isArray(item.imageUrls) ? item.imageUrls : [item.imageUrl],
     instagramMediaId: String(media.id || ''),
     permalink: String(media.permalink || ''),
+    mediaType: String(media.media_type || ''),
     publishedAt: String(media.timestamp || timestamp),
     source,
     formatVersion: item.formatVersion || MIRROR_FORMAT_VERSION
