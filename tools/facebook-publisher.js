@@ -378,6 +378,32 @@ function postedModFamilyKeys(campaignState, publishState) {
   return keys;
 }
 
+function latestPublishedAtByProduct(campaignState, publishState, productType) {
+  const latest = new Map();
+  const remember = (key, entry) => {
+    const timestamp = String(entry && (entry.publishedAt || entry.originalPublishedAt) || '');
+    if (!key || !timestamp || !entry || !entry.postId) return;
+    if (!latest.has(key) || timestamp > latest.get(key)) latest.set(key, timestamp);
+  };
+  if (productType === 'mod') {
+    Object.entries(campaignState && campaignState.postedMods || {}).forEach(([key, entry]) => {
+      remember(modFamilyKey(entry || { title: key }), entry);
+    });
+  } else {
+    Object.entries(campaignState && campaignState.postedAtomizers || {}).forEach(([key, entry]) => {
+      remember(canonicalAtomizerFamilyKey(entry && entry.name || key) || canonicalAtomizerSlug(entry && entry.name || key), entry);
+    });
+  }
+  [].concat(campaignState && campaignState.history || [], publishState && publishState.history || []).forEach(entry => {
+    if (!entry || eventProductType(entry) !== productType) return;
+    const key = productType === 'mod'
+      ? modFamilyKey({ familyKey: entry.familyKey, title: entry.name })
+      : canonicalAtomizerFamilyKey(entry.name || historyAtomizerSlug(entry)) || historyAtomizerSlug(entry);
+    remember(key, entry);
+  });
+  return latest;
+}
+
 function lastPublishedProductType(campaignState, publishState) {
   const records = [].concat(campaignState && campaignState.history || [], publishState && publishState.history || [])
     .filter(entry => entry && (entry.publishedAt || entry.originalPublishedAt))
@@ -1302,20 +1328,32 @@ function planEditorialPosts(catalog, feed, campaignState, options = {}) {
   const postedAtoms = postedAtomizerSlugs(state, options.publishState || emptyState());
   const postedMods = postedModFamilyKeys(state, options.publishState || emptyState());
 
-  const atomEvents = smokeeAtomizerCandidates(catalog)
-    .filter(atom => {
-      const familyKey = canonicalAtomizerFamilyKey(atom.name) || canonicalAtomizerSlug(atom.name);
-      return !blockedAtomFamilies.has(familyKey) && !postedAtoms.has(familyKey);
-    })
+  const allAtomEvents = smokeeAtomizerCandidates(catalog)
+    .filter(atom => !blockedAtomFamilies.has(canonicalAtomizerFamilyKey(atom.name) || canonicalAtomizerSlug(atom.name)))
     .map(atom => atomizerProductEvent(atom, videosForAtom(videos, slugify(atom.name)), 'editorial'))
-    .filter(Boolean)
-    .sort((a, b) => b.videoCount - a.videoCount || a.name.localeCompare(b.name));
+    .filter(Boolean);
+  const freshAtomEvents = allAtomEvents.filter(event => !postedAtoms.has(event.familyKey));
+  const atomLastPublished = latestPublishedAtByProduct(state, options.publishState || emptyState(), 'atomizer');
+  const atomEvents = (freshAtomEvents.length ? freshAtomEvents : allAtomEvents)
+    .sort((a, b) => {
+      if (freshAtomEvents.length) return b.videoCount - a.videoCount || a.name.localeCompare(b.name);
+      return String(atomLastPublished.get(a.familyKey) || '').localeCompare(String(atomLastPublished.get(b.familyKey) || '')) ||
+        b.videoCount - a.videoCount || a.name.localeCompare(b.name);
+    });
 
-  const modEvents = modCatalogCandidates(modsFeed)
-    .filter(mod => !postedMods.has(modFamilyKey(mod)))
+  const allModEvents = modCatalogCandidates(modsFeed)
     .map(mod => modProductEvent(mod))
-    .filter(Boolean)
-    .sort((a, b) => String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')) || a.name.localeCompare(b.name));
+    .filter(Boolean);
+  const freshModEvents = allModEvents.filter(event => !postedMods.has(event.familyKey));
+  const modLastPublished = latestPublishedAtByProduct(state, options.publishState || emptyState(), 'mod');
+  const modEvents = (freshModEvents.length ? freshModEvents : allModEvents)
+    .sort((a, b) => {
+      if (freshModEvents.length) {
+        return String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')) || a.name.localeCompare(b.name);
+      }
+      return String(modLastPublished.get(a.familyKey) || '').localeCompare(String(modLastPublished.get(b.familyKey) || '')) ||
+        String(b.publishedAt || '').localeCompare(String(a.publishedAt || '')) || a.name.localeCompare(b.name);
+    });
 
   const publishedTypes = facebookProductTypesOnDate(state, options.publishState || emptyState(), targetDate);
   const events = [];
@@ -2247,8 +2285,7 @@ async function main() {
       maxPosts,
       dailyPublished,
       publishState,
-      modsFeed,
-      blockedModelSlugs: Array.from(blockedModelSlugs)
+      modsFeed
     });
 
     if (editorialUnpostedCountOnly) {

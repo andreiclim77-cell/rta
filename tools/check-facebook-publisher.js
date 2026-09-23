@@ -164,6 +164,23 @@ assert(dayTwo.some(event => event.productType === 'mod'));
 dayTwo.forEach(assertSafeSingleProduct);
 assert.strictEqual(campaign.postedMods[dayOneMod.familyKey].messageVersion, 'visible-guide-exact-model-v5');
 
+const dayTwoAtom = dayTwo.find(event => event.productType === 'atomizer');
+const dayTwoMod = dayTwo.find(event => event.productType === 'mod');
+assert.notStrictEqual(dayTwoAtom.familyKey, dayOneAtom.familyKey, 'atomizers must not repeat before the rotation is exhausted');
+assert.notStrictEqual(dayTwoMod.familyKey, dayOneMod.familyKey, 'mods must not repeat before the rotation is exhausted');
+campaign = applyEditorialPublished(campaign, dayTwoAtom, 'page_post_3', '2026-07-14T05:00:00.000Z');
+campaign = applyEditorialPublished(campaign, dayTwoMod, 'page_post_4', '2026-07-14T05:01:00.000Z');
+const dayThree = planEditorialPosts(catalog, feed, campaign, {
+  maxPosts: 2,
+  today: '2026-07-15',
+  modsFeed,
+  publishState: emptyState(),
+  dailyPublished: 0
+});
+assert.strictEqual(dayThree.length, 2, 'the daily pair must continue after both rotations are exhausted');
+assert.strictEqual(dayThree.find(event => event.productType === 'atomizer').familyKey, dayOneAtom.familyKey, 'the oldest atomizer may repeat only after the full rotation');
+assert.strictEqual(dayThree.find(event => event.productType === 'mod').familyKey, dayOneMod.familyKey, 'the oldest mod may repeat only after the full rotation');
+
 const updateState = emptyState();
 updateState.seenAtomizers[dayOneAtom.slug] = { seenAt: '2026-07-13T05:00:00.000Z' };
 updateState.seenMods[dayOneMod.familyKey] = { seenAt: '2026-07-13T05:01:00.000Z' };

@@ -44,7 +44,6 @@ jobs:
         shell: bash
         run: |
           echo "count=$(node tools/facebook-publisher.js --editorial-pending-count --max-posts 2)" >> "$GITHUB_OUTPUT"
-          echo "remaining=$(node tools/facebook-publisher.js --editorial-unposted-count)" >> "$GITHUB_OUTPUT"
 
       - name: Check Meta connection without changing publication state
         if: steps.pending.outputs.count != '0'
@@ -78,12 +77,6 @@ jobs:
           git pull --rebase
           git push
 
-      - name: Stop completed editorial series
-        if: steps.pending.outputs.remaining == '0'
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh api --method PUT "repos/${{ github.repository }}/actions/workflows/facebook-editorial-series.yml/disable"
-
-      - name: Report queued editorial models
-        if: steps.pending.outputs.count == '0' && steps.pending.outputs.remaining != '0'
-        run: echo "${{ steps.pending.outputs.remaining }} RTA product(s) remain queued; the Romanian daily limit may already be complete."
+      - name: Report completed daily pair
+        if: steps.pending.outputs.count == '0'
+        run: echo "The Romanian daily pair is already complete, or no verified product image is currently available."
