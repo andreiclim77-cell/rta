@@ -18,12 +18,14 @@ const {
   manualFacebookAttachmentQuery,
   manualFacebookFeedQuery,
   manualContentFingerprint,
+  mediaCanRepresentSource,
   mergeManualFacebookRecords,
   normalizeInstagramState,
   planInstagramMirrors,
   postContainsVideo,
   purgeGeneratedFacebookReelRecords,
   purgeManualFacebookRecordIds,
+  pruneStaleExistingMediaMatches,
   recordIdentity,
   sourceBlockIsActive,
   syncBackfillSummary,
@@ -226,6 +228,8 @@ assert(caption.includes(first.event.name), 'Instagram caption must identify the 
 assert(caption.includes('18+'), 'Instagram caption must retain the adult technical notice');
 assert(!/pret|preț|stoc|cumpar|cumpăr|comenzi|telefon/i.test(caption), 'Instagram caption must remain educational, not commercial');
 
+const firstSourceTime = Date.parse(first.record.sourcePublishedAt) || Date.parse('2026-08-09T12:00:00.000Z');
+const firstMirrorTime = new Date(firstSourceTime + 5 * 60 * 1000).toISOString();
 state.queue.push({
   sourcePostId: first.record.sourcePostId,
   sourcePublishedAt: first.record.sourcePublishedAt,
@@ -240,12 +244,12 @@ state.queue.push({
 applyInstagramPublished(state, state.queue[0], {
   id: 'ig_media_1',
   permalink: 'https://www.instagram.com/p/test/',
-  timestamp: '2026-08-09T12:05:00.000Z'
+  timestamp: firstMirrorTime
 }, {
   pageId: 'page_1',
   id: 'ig_1',
   username: 'ghid-rta.ro'
-}, '2026-08-09T12:05:00.000Z');
+}, firstMirrorTime);
 assert.strictEqual(state.queue.length, 0, 'Successful Instagram publish must remove the prepared item');
 assert(state.mirroredFacebookPosts[first.record.sourcePostId], 'Successful Instagram publish must record the source Facebook post');
 assert(state.mirroredFamilies[first.identity], 'Successful Instagram publish must record the product family');
@@ -257,6 +261,62 @@ const secondPlan = planInstagramMirrors(campaignState, facebookState, state, cat
   now: '2026-08-10T12:00:00.000Z'
 });
 assert(!secondPlan.candidates.some(candidate => candidate.identity === first.identity), 'A mirrored family must never be planned again');
+
+const repeatSourceTime = new Date(firstSourceTime + 24 * 60 * 60 * 1000).toISOString();
+const repeatedCampaign = {
+  history: [{
+    postId: `${first.record.sourcePostId}_repeat`,
+    publishedAt: repeatSourceTime,
+    productType: first.record.productType,
+    familyKey: first.record.familyKey,
+    slug: first.record.slug,
+    key: first.record.key,
+    name: first.record.name,
+    image: first.record.image
+  }]
+};
+const repeatedPlan = planInstagramMirrors(repeatedCampaign, { history: [] }, state, catalog, modsFeed, {
+  maxPosts: 1,
+  dailyLimit: 500,
+  photoState: { history: [] },
+  now: repeatSourceTime
+});
+assert.strictEqual(repeatedPlan.candidates.length, 1, 'A newer Facebook source may repeat a family after the Facebook rotation advances');
+assert.strictEqual(repeatedPlan.candidates[0].identity, first.identity, 'The repeated Facebook family must retain its canonical identity');
+
+const queueItem = {
+  productType: first.event.productType,
+  name: first.event.name,
+  caption: instagramCaption(first.event),
+  sourcePublishedAt: repeatSourceTime
+};
+assert.strictEqual(mediaCanRepresentSource({
+  caption: queueItem.caption,
+  timestamp: firstMirrorTime
+}, queueItem), false, 'An older Instagram post must not satisfy a newer Facebook source');
+assert.strictEqual(mediaCanRepresentSource({
+  caption: queueItem.caption,
+  timestamp: new Date(Date.parse(repeatSourceTime) + 60 * 1000).toISOString()
+}, queueItem), true, 'A contemporary Instagram post may safely recover a publication receipt');
+
+const staleState = normalizeInstagramState({
+  ...emptyInstagramState(),
+  mirroredFacebookPosts: {
+    stale_source: {
+      sourcePostId: 'stale_source',
+      sourcePublishedAt: repeatSourceTime,
+      publishedAt: firstMirrorTime,
+      identity: first.identity,
+      source: 'instagram-existing-media-detected'
+    }
+  },
+  mirroredFamilies: {
+    [first.identity]: { sourcePostId: 'stale_source', identity: first.identity }
+  },
+  history: [{ sourcePostId: 'stale_source' }]
+});
+assert.strictEqual(pruneStaleExistingMediaMatches(staleState), 0, 'State normalization must already remove stale existing-media matches');
+assert(!staleState.mirroredFacebookPosts.stale_source, 'A stale existing-media match must not block a real Instagram publication');
 
 const invalid = normalizeInstagramState(emptyInstagramState());
 invalid.queue = [

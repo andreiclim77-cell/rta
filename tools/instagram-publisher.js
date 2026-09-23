@@ -124,6 +124,45 @@ function pruneGeneratedReelEchoes(state) {
   return echoIds.length;
 }
 
+function mediaCanRepresentSource(media, item, toleranceMs = 15 * 60 * 1000) {
+  if (!captionMatchesQueueItem(media && media.caption, item)) return false;
+  const sourceTime = Date.parse(item && item.sourcePublishedAt || '');
+  const mediaTime = Date.parse(media && media.timestamp || '');
+  if (!Number.isFinite(sourceTime) || !Number.isFinite(mediaTime)) return true;
+  return mediaTime >= sourceTime - toleranceMs;
+}
+
+function sourceIsNewerThanMirroredFamily(record, mirrored) {
+  if (!mirrored) return true;
+  const sourceTime = Date.parse(record && record.sourcePublishedAt || '');
+  const mirroredSourceTime = Date.parse(mirrored && mirrored.sourcePublishedAt || '');
+  return Number.isFinite(sourceTime) && Number.isFinite(mirroredSourceTime) && sourceTime > mirroredSourceTime;
+}
+
+function pruneStaleExistingMediaMatches(state, toleranceMs = 15 * 60 * 1000) {
+  const staleIds = Object.entries(state.mirroredFacebookPosts || {})
+    .filter(([, record]) => {
+      if (!record || record.source !== 'instagram-existing-media-detected') return false;
+      const sourceTime = Date.parse(record.sourcePublishedAt || '');
+      const mediaTime = Date.parse(record.publishedAt || '');
+      return Number.isFinite(sourceTime) && Number.isFinite(mediaTime) && mediaTime < sourceTime - toleranceMs;
+    })
+    .map(([sourcePostId]) => sourcePostId);
+  for (const sourcePostId of staleIds) {
+    const record = state.mirroredFacebookPosts[sourcePostId];
+    if (record && state.mirroredFamilies[record.identity]
+      && state.mirroredFamilies[record.identity].sourcePostId === sourcePostId) {
+      delete state.mirroredFamilies[record.identity];
+    }
+    delete state.mirroredFacebookPosts[sourcePostId];
+  }
+  if (staleIds.length) {
+    const stale = new Set(staleIds);
+    state.history = state.history.filter(item => !stale.has(item.sourcePostId));
+  }
+  return staleIds.length;
+}
+
 function normalizeInstagramState(value) {
   const state = value && typeof value === 'object' ? value : emptyInstagramState();
   state.schemaVersion = 1;
@@ -150,6 +189,7 @@ function normalizeInstagramState(value) {
     ? state.mirroredFamilies
     : {};
   state.history = Array.isArray(state.history) ? state.history : [];
+  pruneStaleExistingMediaMatches(state);
   pruneGeneratedReelEchoes(state);
   return state;
 }
@@ -157,7 +197,9 @@ function normalizeInstagramState(value) {
 function syncBackfillSummary(state, records, timestamp = nowIso()) {
   const remaining = records.filter(record => {
     const identity = recordIdentity(record);
-    return !state.mirroredFacebookPosts[record.sourcePostId] && !state.mirroredFamilies[identity];
+    const mirroredFamily = state.mirroredFamilies[identity];
+    return !state.mirroredFacebookPosts[record.sourcePostId]
+      && (record.productType === 'manual' || !mirroredFamily || sourceIsNewerThanMirroredFamily(record, mirroredFamily));
   }).length;
   state.backfill = {
     total: records.length,
@@ -480,7 +522,8 @@ function planInstagramMirrors(campaignState, facebookState, instagramState, cata
   for (const record of records) {
     const identity = recordIdentity(record);
     if (instagramState.mirroredFacebookPosts[record.sourcePostId]) continue;
-    if (record.productType !== 'manual' && instagramState.mirroredFamilies[identity]) continue;
+    const mirroredFamily = instagramState.mirroredFamilies[identity];
+    if (record.productType !== 'manual' && mirroredFamily && !sourceIsNewerThanMirroredFamily(record, mirroredFamily)) continue;
     if (queuedFamilies.has(identity)) continue;
     if (sourceBlockIsActive(instagramState, record.sourcePostId, options.now || nowIso())) continue;
     try {
@@ -1017,7 +1060,7 @@ async function publishPrepared(state) {
   for (const item of state.queue.slice(0, Math.min(maxPosts, allowed))) {
     const imageUrls = Array.isArray(item.imageUrls) && item.imageUrls.length ? item.imageUrls : [item.imageUrl];
     for (const imageUrl of imageUrls) await waitForPublicJpeg(imageUrl);
-    const existing = recent.find(media => captionMatchesQueueItem(media.caption, item));
+    const existing = recent.find(media => mediaCanRepresentSource(media, item));
     if (existing) {
       const record = applyInstagramPublished(state, item, existing, account, nowIso(), 'instagram-existing-media-detected');
       published.push(record);
@@ -1197,12 +1240,14 @@ module.exports = {
   manualFacebookAttachmentQuery,
   manualFacebookFeedQuery,
   mergeManualFacebookRecords,
+  mediaCanRepresentSource,
   markSourceBlocked,
   normalizeInstagramState,
   planInstagramMirrors,
   postContainsVideo,
   purgeGeneratedFacebookReelRecords,
   purgeManualFacebookRecordIds,
+  pruneStaleExistingMediaMatches,
   publishedTodayCount,
   recordIdentity,
   recordProductType,
