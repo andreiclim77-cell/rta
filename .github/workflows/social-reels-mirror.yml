@@ -17,8 +17,8 @@ on:
     types:
       - completed
   schedule:
-    # Independent hourly fallback if the Instagram workflow event is delayed or missed.
-    - cron: "42 * * * *"
+    # Independent daytime fallback if the Instagram workflow event is delayed or missed.
+    - cron: "42 4-21 * * *"
 
 permissions:
   contents: write
@@ -63,7 +63,7 @@ jobs:
           node --check tools/meta-token-gate.js
           node tools/check-meta-token-gate.js
           node tools/check-social-reels-publisher.js
-          node tools/social-reels-publisher.js --check --max-posts 1 --daily-limit 4
+          node tools/social-reels-publisher.js --check --max-posts 2 --daily-limit 6
 
       - name: Check Meta connection without changing publication state
         id: meta
@@ -87,14 +87,14 @@ jobs:
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
         run: node tools/social-reels-publisher.js --verify-connection
 
-      - name: Prepare one vertical Reel
+      - name: Prepare up to two vertical Reels
         id: prepare
         if: steps.meta.outputs.ready == 'true' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
-        run: node tools/social-reels-publisher.js --prepare --max-posts 1 --daily-limit 4
+        run: node tools/social-reels-publisher.js --prepare --max-posts 2 --daily-limit 6
 
       - name: Commit prepared public Reel
         if: steps.meta.outputs.ready == 'true' && steps.prepare.outcome == 'success' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')
@@ -117,7 +117,7 @@ jobs:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION || 'v25.0' }}
-        run: node tools/social-reels-publisher.js --publish-prepared --max-posts 1 --daily-limit 4
+        run: node tools/social-reels-publisher.js --publish-prepared --max-posts 2 --daily-limit 6
 
       - name: Commit Reel publication receipts
         if: always() && steps.meta.outputs.ready == 'true' && steps.prepare.outcome == 'success' && (github.event_name != 'workflow_dispatch' || inputs.mode == 'mirror')

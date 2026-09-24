@@ -3,8 +3,9 @@ name: Facebook RTA editorial series
 on:
   workflow_dispatch:
   schedule:
-    # One atomizer and one mod/day. The publisher enforces the Romania daily limit even when GitHub starts late.
-    - cron: "5 7 * * *"
+    # 06:05 in Romania: EEST (UTC+3) and EET (UTC+2). The gate below selects the correct trigger.
+    - cron: "5 3 * * *"
+    - cron: "5 4 * * *"
 
 permissions:
   contents: write
@@ -25,28 +26,48 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Gate scheduled trigger to 06:05 Bucharest
+        id: schedule_gate
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" != "schedule" ]; then
+            echo "run_publish=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          local_hour="$(TZ=Europe/Bucharest date +%H)"
+          if [ "$local_hour" = "06" ]; then
+            echo "run_publish=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "run_publish=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping duplicate seasonal cron at ${local_hour}:00 Europe/Bucharest."
+          fi
+
       - name: Set up Node.js
+        if: steps.schedule_gate.outputs.run_publish == 'true'
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
       - name: Install image processor
+        if: steps.schedule_gate.outputs.run_publish == 'true'
         run: npm ci
 
       - name: Validate editorial publisher
+        if: steps.schedule_gate.outputs.run_publish == 'true'
         run: |
           node --check tools/facebook-publisher.js
           node tools/check-facebook-publisher.js
           node tools/facebook-publisher.js --check-editorial --max-posts 2
 
       - name: Detect remaining editorial posts
+        if: steps.schedule_gate.outputs.run_publish == 'true'
         id: pending
         shell: bash
         run: |
           echo "count=$(node tools/facebook-publisher.js --editorial-pending-count --max-posts 2)" >> "$GITHUB_OUTPUT"
 
       - name: Check Meta connection without changing publication state
-        if: steps.pending.outputs.count != '0'
+        if: steps.schedule_gate.outputs.run_publish == 'true' && steps.pending.outputs.count != '0'
         id: meta
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
@@ -55,7 +76,7 @@ jobs:
         run: node tools/meta-token-gate.js
 
       - name: Publish one verified atomizer and one verified mod
-        if: steps.pending.outputs.count != '0' && steps.meta.outputs.ready == 'true'
+        if: steps.schedule_gate.outputs.run_publish == 'true' && steps.pending.outputs.count != '0' && steps.meta.outputs.ready == 'true'
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -63,7 +84,7 @@ jobs:
         run: node tools/facebook-publisher.js --publish-editorial --max-posts 2
 
       - name: Commit editorial state
-        if: steps.pending.outputs.count != '0' && steps.meta.outputs.ready == 'true'
+        if: steps.schedule_gate.outputs.run_publish == 'true' && steps.pending.outputs.count != '0' && steps.meta.outputs.ready == 'true'
         shell: bash
         run: |
           if git diff --quiet -- data/facebook-campaign-state.json; then
@@ -78,5 +99,5 @@ jobs:
           git push
 
       - name: Report completed daily pair
-        if: steps.pending.outputs.count == '0'
+        if: steps.schedule_gate.outputs.run_publish == 'true' && steps.pending.outputs.count == '0'
         run: echo "The Romanian daily pair is already complete, or no verified product image is currently available."
