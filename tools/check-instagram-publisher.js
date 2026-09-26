@@ -70,6 +70,40 @@ assert(plan.candidates.some(candidate => candidate.event.productType === 'mod'),
 assert(plan.candidates.some(candidate => candidate.event.productType === 'editorial'), 'Instagram plan needs the historical RTA photo series');
 assert(plan.candidates.every(candidate => candidate.event.image || candidate.event.requiresFacebookAttachment), 'Each planned item needs a verified catalog image or its original Facebook attachment');
 
+const priorityTime = '2026-09-26T12:00:00.000Z';
+const priorityState = normalizeInstagramState(emptyInstagramState());
+priorityState.history = Array.from({ length: 4 }, (_, index) => ({
+  productType: 'manual',
+  sourcePublishedAt: '2026-08-01T12:00:00.000Z',
+  publishedAt: priorityTime,
+  sourcePostId: `older-${index}`
+}));
+const oldAtomizer = plan.candidates.find(candidate => candidate.event.productType === 'atomizer'
+  && candidate.record.sourcePublishedAt < '2026-09-26').record;
+const backlogRecord = {
+  ...oldAtomizer,
+  postId: oldAtomizer.sourcePostId,
+  publishedAt: oldAtomizer.sourcePublishedAt
+};
+const priorityRecord = {
+  ...oldAtomizer,
+  postId: 'today-atomizer',
+  publishedAt: priorityTime
+};
+const backlogPlan = planInstagramMirrors({ history: [backlogRecord] }, { history: [] }, priorityState, catalog, modsFeed, {
+  maxPosts: 2,
+  dailyLimit: 6,
+  now: priorityTime
+});
+assert.strictEqual(backlogPlan.candidates.length, 0, 'Backfill must leave two daily slots for the new atomizer and mod');
+const currentPlan = planInstagramMirrors({ history: [priorityRecord, backlogRecord] }, { history: [] }, priorityState, catalog, modsFeed, {
+  maxPosts: 2,
+  dailyLimit: 6,
+  now: priorityTime
+});
+assert.strictEqual(currentPlan.candidates.length, 1, 'A current Facebook atomizer must use a reserved daily slot');
+assert.strictEqual(currentPlan.candidates[0].record.sourcePostId, 'today-atomizer');
+
 const manualOne = manualFacebookRecord({
   id: '1221839447687298_manual_1',
   message: 'Text manual pastrat exact.\nA doua linie.',

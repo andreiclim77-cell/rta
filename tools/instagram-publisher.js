@@ -511,17 +511,32 @@ function publishedTodayCount(state, timestamp = nowIso()) {
   return state.history.filter(entry => dateInRomania(entry.publishedAt) === targetDate).length;
 }
 
+function reservedDailyProductSlots(state, timestamp = nowIso()) {
+  const targetDate = dateInRomania(timestamp);
+  const publishedTypes = new Set(state.history
+    .filter(entry => dateInRomania(entry.sourcePublishedAt) === targetDate)
+    .map(entry => entry.productType)
+    .filter(type => type === 'atomizer' || type === 'mod'));
+  return 2 - publishedTypes.size;
+}
+
 function planInstagramMirrors(campaignState, facebookState, instagramState, catalog, modsFeed, options = {}) {
   const limit = Math.max(0, Number(options.maxPosts || DEFAULT_MAX_POSTS));
+  const timestamp = options.now || nowIso();
   const allowed = Math.max(0, Number(options.dailyLimit || instagramState.dailyLimit || DEFAULT_DAILY_LIMIT)
-    - publishedTodayCount(instagramState, options.now || nowIso()));
+    - publishedTodayCount(instagramState, timestamp));
   if (!limit || !allowed) return { candidates: [], skipped: [] };
 
+  const reserved = reservedDailyProductSlots(instagramState, timestamp);
+  const targetDate = dateInRomania(timestamp);
   const queuedFamilies = new Set(instagramState.queue.map(item => item.identity));
   const records = collectFacebookRecords(campaignState, facebookState, options.photoState, options.manualRecords);
   const candidates = [];
   const skipped = [];
   for (const record of records) {
+    const isTodaysProduct = (record.productType === 'atomizer' || record.productType === 'mod')
+      && dateInRomania(record.sourcePublishedAt) === targetDate;
+    if (!isTodaysProduct && allowed - candidates.length <= reserved) continue;
     const identity = recordIdentity(record);
     if (instagramState.mirroredFacebookPosts[record.sourcePostId]) continue;
     const mirroredFamily = instagramState.mirroredFamilies[identity];
