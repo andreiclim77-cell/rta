@@ -34,12 +34,14 @@ jobs:
             echo "run_publish=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          local_hour="$(TZ=Europe/Bucharest date +%H)"
-          if [ "$local_hour" = "06" ]; then
+          bucharest_offset="$(TZ=Europe/Bucharest date +%z)"
+          scheduled_cron="${{ github.event.schedule }}"
+          if { [ "$bucharest_offset" = "+0300" ] && [ "$scheduled_cron" = "5 3 * * *" ]; } ||
+             { [ "$bucharest_offset" = "+0200" ] && [ "$scheduled_cron" = "5 4 * * *" ]; }; then
             echo "run_publish=true" >> "$GITHUB_OUTPUT"
           else
             echo "run_publish=false" >> "$GITHUB_OUTPUT"
-            echo "Skipping duplicate seasonal cron at ${local_hour}:00 Europe/Bucharest."
+            echo "Skipping seasonal cron $scheduled_cron for Bucharest offset $bucharest_offset."
           fi
 
       - name: Set up Node.js

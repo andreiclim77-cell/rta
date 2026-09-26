@@ -17,8 +17,10 @@ for (const [name, source] of Object.entries({ instagram, reels, editorial, smoke
   assert(source.includes('tools/meta-token-gate.js'), `${name} is missing the shared Meta gate`);
 }
 
-assert(instagram.includes('cron: "17 * * * *"'), 'Instagram manual-post discovery is not scheduled hourly');
-assert(reels.includes('cron: "42 * * * *"'), 'Reels is missing the independent hourly fallback');
+assert(instagram.includes('cron: "17 4-21 * * *"'), 'Instagram manual-post discovery is missing its hourly daytime fallback');
+assert(reels.includes('cron: "42 4-21 * * *"'), 'Reels is missing its independent hourly daytime fallback');
+assert(editorial.includes('scheduled_cron="${{ github.event.schedule }}"'), 'Facebook daily pair must tolerate delayed GitHub schedules');
+assert(editorial.includes('"5 3 * * *"') && editorial.includes('"5 4 * * *"'), 'Facebook daily pair is missing the Bucharest summer/winter schedules');
 assert(reels.includes('Instagram mirror from Facebook'), 'Reels is not chained after the Instagram mirror');
 assert(reels.includes("github.event.workflow_run.event != 'workflow_dispatch'"), 'A manual Instagram verification can still trigger an automatic Reel run');
 assert(reels.includes("if: always() && steps.meta.outputs.ready == 'true'"), 'Reel receipts are not preserved after a terminal platform error');
