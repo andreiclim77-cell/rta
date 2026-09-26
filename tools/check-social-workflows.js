@@ -17,6 +17,10 @@ for (const [name, source] of Object.entries({ instagram, reels, editorial, smoke
   assert(source.includes('tools/meta-token-gate.js'), `${name} is missing the shared Meta gate`);
 }
 
+for (const [name, source] of Object.entries({ instagram, reels, editorial })) {
+  assert(source.includes('git checkout -B main origin/main'), `${name} may publish from a stale workflow checkout`);
+}
+
 assert(instagram.includes('cron: "17 4-21 * * *"'), 'Instagram manual-post discovery is missing its hourly daytime fallback');
 assert(reels.includes('cron: "42 4-21 * * *"'), 'Reels is missing its independent hourly daytime fallback');
 assert(editorial.includes('scheduled_cron="${{ github.event.schedule }}"'), 'Facebook daily pair must tolerate delayed GitHub schedules');
