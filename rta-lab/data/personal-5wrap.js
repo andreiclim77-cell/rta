@@ -8,7 +8,7 @@
     name: "PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS",
     principle: "Pentru utilizator, K1 29 GA / Ø2,5 / 5 contact este priorul personal round-wire principal, urmat de K1 28 GA / Ø2,5 / 5 contact.",
     interpretation: "Preferința sugerează masă termică redusă + footprint compact + ramp-up rapid + vaporizare focalizată. Este interpretare mecanică, nu fapt universal demonstrat.",
-    guardrail: "ADN-ul platformei și validările directe pot depăși priorul personal. KV3 Mini este excepție validată: K1 28 GA / Ø2,5 / 6 și K1 29 GA / Ø2,5 / 6."
+    guardrail: "ADN-ul platformei și validările directe pot depăși priorul personal. Excepții 28/6 validate: KV3 Mini, Dvarw CL cu insert 3×0,6 și Asylum V3 cu clopot Flat. KV3 păstrează și 29/6."
   };
 
   if (typeof wireBonus !== "function" || typeof buildOutput !== "function") return;
@@ -32,7 +32,7 @@
     if (!atom || !output) return false;
     if (atom.id === "pmfree" && isNet(liquid)) return true;
     if (atom.id === "415" && Number(output.wraps) === 6) return true;
-    if (atom.id === "kv3") return true;
+    if (["kv3", "dvarwcl", "asylum"].includes(atom.id) && Number(output.wraps) === 6) return true;
     return false;
   }
 
@@ -54,6 +54,20 @@
         output.status = "Validat practic · KV3 Mini · 28/6";
         output.noteClass = "valid";
         output.note = "Kayfun Mini V3 păstrează K1 28 GA / Ø2,5 / 6 spire ca excepție validată față de priorul personal 28/5: footprint mai lung și utilizare mai completă a airflow-ului.";
+        return output;
+      }
+      if (atom.id === "dvarwcl") {
+        output.wraps = "6";
+        output.status = "Validat practic · Dvarw CL · 3×0,6 · 28/6";
+        output.noteClass = "valid";
+        output.note = "Dvarw MTL CL cu insert 3×0,6 păstrează K1 28 GA / Ø2,5 / 6 spire ca regulă activă validată: airflow multipunct mai lat, layering și dezvoltare aromatică mai completă.";
+        return output;
+      }
+      if (atom.id === "asylum") {
+        output.wraps = "6";
+        output.status = "Validat practic · Asylum V3 Flat · 28/6";
+        output.noteClass = "valid";
+        output.note = "Asylum V3 cu clopot Flat păstrează K1 28 GA / Ø2,5 / 6 spire ca regulă activă validată: claritatea și separarea Flat rămân, cu mai mult corp și completitudine.";
         return output;
       }
       output.wraps = "5";
@@ -106,6 +120,8 @@
         return `${base}; 29/5 contact are prior personal transversal pentru gustul utilizatorului`;
       }
       if (wire.id === "k128" && atom.id === "kv3") return `${base}; pe KV3 Mini 28/6 este excepția activă validată`;
+      if (wire.id === "k128" && atom.id === "dvarwcl") return `${base}; pe Dvarw CL cu 3×0,6, 28/6 este regula activă validată`;
+      if (wire.id === "k128" && atom.id === "asylum") return `${base}; pe Asylum V3 Flat, 28/6 este regula activă validată`;
       if (wire.id === "k128") return `${base}; 28/5 contact are prior personal secundar pentru corp + compact-coil response`;
       return base;
     };
@@ -119,6 +135,8 @@
         return `${base} · Prior personal: 29/5 contact înainte de 29/6, dacă platforma nu are o excepție validată.`;
       }
       if (wire.id === "k128" && atom.id === "kv3") return `${base} · Excepție KV3 Mini validată: 28/6 pe Ø2,5.`;
+      if (wire.id === "k128" && atom.id === "dvarwcl") return `${base} · Dvarw CL 3×0,6 validat: 28/6 pe Ø2,5.`;
+      if (wire.id === "k128" && atom.id === "asylum") return `${base} · Asylum V3 Flat validat: 28/6 pe Ø2,5.`;
       if (wire.id === "k128") return `${base} · Prior personal secundar: 28/5 contact.`;
       return base;
     };
@@ -136,7 +154,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const guide = document.querySelector(".wire-guide-foot");
     if (guide) {
-      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 contact baseline, <b>KV3 Mini = 28/6 pe Ø2,5</b>; K1 29 = <b>5 contact prior personal</b>, cu <b>KV3 Mini = 29/6 pe Ø2,5</b> și alte excepții doar când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes RESISTHERM NiFe30 = <b>6 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. Varianta K1 29/5 distanțată este eliminată din Lab.";
+      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 contact baseline; excepții validate <b>KV3 Mini = 28/6</b>, <b>Dvarw CL 3×0,6 = 28/6</b>, <b>Asylum V3 Flat = 28/6</b>, toate pe Ø2,5. K1 29 = <b>5 contact prior personal</b>, cu <b>KV3 Mini = 29/6 pe Ø2,5</b> și alte excepții doar când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes RESISTHERM NiFe30 = <b>6 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. Varianta K1 29/5 distanțată este eliminată din Lab.";
     }
   });
 })();
