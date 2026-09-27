@@ -1,4 +1,4 @@
-/* RTA Lab — Clapton platform map, actualizat 19.09.2026.
+/* RTA Lab — Clapton platform map, actualizat 27.09.2026.
  * Perechi Clapton active:
  * - 415 -> K1 Clapton 2x30+38 / Ø2,5 / 5 (preferință de platformă)
  * - Dvarw MTL FL -> SS316L Clapton 2x30+38 / Ø2,5 / 5 (dedicată)
@@ -7,7 +7,7 @@
  */
 (() => {
   window.RTA_LAB_CLAPTON_PLATFORM_MAP = {
-    date: "2026-09-19",
+    date: "2026-09-27",
     principle: "Cele două perechi Clapton active influențează triangularea lichid + obiectiv + ADN platformă fără a forța un rezultat incompatibil.",
     activePairs: [
       "415 -> K1 Clapton/5",
@@ -173,7 +173,7 @@
 
       if (atom.id === "asylum") {
         const rule = BUILD_RULES[atom.id] || { k128: 5, k129: 6 };
-        return `<div class="geometry-rule"><h5>Asylum V3 · ADN activ</h5><div class="geometry-grid geometry-grid-five"><span><b>K1 28 GA</b>${rule.k128} spire</span><span><b>K1 29 GA</b>${rule.k129} spire contact</span><span><b>K1 Clapton</b>2×30+38 · 5 spire · contextual</span><span><b>NiFe TC</b>6 spire · contextual</span></div><p>Flat rămâne orientat spre claritate/separare, iar Dome spre corp/integrare. Recomandarea se decide prin lichid + obiectiv + ADN platformă.</p></div>`;
+        return `<div class="geometry-rule"><h5>Asylum V3 · Flat · ADN activ</h5><div class="geometry-grid geometry-grid-five"><span><b>K1 28 GA</b>Ø2,5 · ${rule.k128} spire · VALIDAT</span><span><b>K1 29 GA</b>Ø2,5 · ${rule.k129} spire contact</span><span><b>K1 Clapton</b>2×30+38 · 5 spire · contextual</span><span><b>NiFe TC</b>6 spire · contextual</span></div><p><b>Configurație activă:</b> clopot Flat + K1 28 GA / Ø2,5 / 6 spire. Flat păstrează claritatea/separarea, iar 28/6 adaugă corp și completitudine fără a transforma platforma în Dome-like.</p></div>`;
       }
 
       return baseGeometrySummary(atom);
