@@ -1,10 +1,10 @@
-/* RTA Lab — validări practice + platform DNA, actualizat 21.09.2026.
+/* RTA Lab — validări practice + platform DNA, actualizat 27.09.2026.
  * Paradigmă: fără clasament global absolut; pairingul este lichid -> platformă -> sârmă -> geometrie -> watt/TC.
  * Canonical 04.09.2026: varianta K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet.
  */
 
 window.RTA_LAB_CONTINUITY = {
-  date: "2026-09-04",
+  date: "2026-09-27",
   principle: "Fără clasament global absolut: pairingul se face după ADN lichid -> ADN platformă -> sârmă -> geometrie/contact -> watt/TC.",
   lab: "V10 · 620 repere · 5 sârme active",
   validated: {
@@ -13,10 +13,12 @@ window.RTA_LAB_CONTINUITY = {
     "gtone": "28/5 sau 29/5 contact = foarte bune. Platformă directă, tobacco precision.",
     "gtr": "NiFe30 TC = potrivire naturală/validată, finețe și layering.",
     "kx": "28/5 = extraordinar; NiFe30 TC = extraordinar; platformă foarte purtabilă.",
-    "dvarw": "28/5 = extraordinar în testul curent; observația a fost generică, deci CL și FL rămân distincte până la A/B explicit.",
+    "dvarw": "FL păstrează validarea generică 28/5; CL este acum calibrat separat: insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire.",
     "klp": "29 GA este sârma nativă: 29/5 pentru hit/focus, 29/6 pentru varianta mai așezată/completă.",
     "pmfree": "NET specialist: 28/5 pentru corp/layering, 29/6 pentru frunză/dry/tobacco-first.",
-    "kv3": "Validat practic: K1 28 GA / Ø2,5 / 6 spire și K1 29 GA / Ø2,5 / 6 spire; excepție explicită de la priorul personal 5-wrap."
+    "kv3": "Validat practic: K1 28 GA / Ø2,5 / 6 spire și K1 29 GA / Ø2,5 / 6 spire; excepție explicită de la priorul personal 5-wrap.",
+    "dvarwcl": "Validat practic: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire.",
+    "asylum": "Validat practic: clopot Flat + K1 28 GA / Ø2,5 / 6 spire; K1 Clapton/5 rămâne doar contextual."
   }
 };
 
@@ -243,11 +245,17 @@ window.RTA_LAB_CONTINUITY = {
       }
     }
 
-    if (["dvarwcl", "dvarwfl"].includes(atom.id) && wire.id === "k128") {
+    if (atom.id === "dvarwcl" && wire.id === "k128") {
+      output.wraps = "6";
+      output.status = "Validat practic · Dvarw CL · 3×0,6 · 28/6";
+      output.noteClass = "valid";
+      output.note = "Dvarw MTL CL cu insert 3×0,6 folosește K1 28 GA / Ø2,5 / 6 spire: footprint multipunct mai bine acoperit, layering și dezvoltare aromatică mai completă.";
+    }
+    if (atom.id === "dvarwfl" && wire.id === "k128") {
       output.wraps = "5";
-      output.status = "Confirmare practică · familia Dvarw";
+      output.status = "Confirmare practică · Dvarw FL";
       output.noteClass = "context";
-      output.note = "K1 28 GA / Ø2,5 / 5 spire a fost descris ca extraordinar pe Dvarw. Observația a fost generică, deci CL și FL rămân tratate separat în restul regulilor.";
+      output.note = "K1 28 GA / Ø2,5 / 5 spire rămâne validarea round-wire curentă pe Dvarw FL; CL este calibrat separat pe 3×0,6 cu 28/6.";
     }
 
     if (atom.id === "klp" && wire.id === "k129") {
@@ -286,7 +294,8 @@ window.RTA_LAB_CONTINUITY = {
     if (atom.id === "gtr" && wire.id === "nife30") return "GTR este natural cu NiFe30 TC, unde finețea, layering-ul și stabilitatea termică sunt punctele forte";
     if (atom.id === "kx" && wire.id === "k128") return "KX a validat 28/5 ca build round-wire extraordinar și foarte echilibrat";
     if (atom.id === "kx" && wire.id === "nife30") return "KX a validat NiFe30 TC ca potrivire de top pentru smoothness și consistență";
-    if (["dvarwcl", "dvarwfl"].includes(atom.id) && wire.id === "k128") return "Dvarw a confirmat practic afinitatea foarte mare pentru 28/5; CL și FL rămân însă calibrate separat";
+    if (atom.id === "dvarwcl" && wire.id === "k128") return "Dvarw CL cu insert 3×0,6 este validat cu 28/6 pentru airflow multipunct, layering și completitudine";
+    if (atom.id === "dvarwfl" && wire.id === "k128") return "Dvarw FL păstrează validarea curentă 28/5; CL este calibrat separat";
     if (atom.id === "klp" && wire.id === "k129") return "KLP are o afinitate nativă pentru K1 29 GA; motorul alege 5 sau 6 spire după obiectiv";
     if (atom.id === "pmfree" && liquidIsNet(liquid) && wire.id === "k128") return "PM Freehand este în lumea lui pe NET: 28/5 aduce corp, layering și dezvoltare";
     if (atom.id === "pmfree" && liquidIsNet(liquid) && wire.id === "k129") return "PM Freehand este în lumea lui pe NET: 29/6 împinge frunza, uscăciunea și tobacco-first";
@@ -318,7 +327,8 @@ window.RTA_LAB_CONTINUITY = {
     if (atom.id === "gtone") return base + dnaBox("GT One · straight tobacco precision", ["<b>28/5 contact</b>foarte bun", "<b>29/5 contact</b>foarte bun", "<b>Footprint</b>compact", "<b>Rol</b>direct", "<b>Țintă</b>tobacco-first"]);
     if (atom.id === "gtr") return base + dnaBox("GTR · TC specialist", ["<b>NiFe30</b>potrivire naturală", "<b>TC</b>finețe", "<b>TC</b>layering", "<b>TC</b>smoothness", "<b>Calibrare</b>rece + TCR corect"]);
     if (atom.id === "kx") return base + dnaBox("KX · daily premium", ["<b>28/5</b>extraordinar", "<b>NiFe30 TC</b>extraordinar", "<b>Caracter</b>echilibrat", "<b>TC</b>smooth/constant", "<b>Ergonomie</b>foarte purtabil"]);
-    if (["dvarwcl", "dvarwfl"].includes(atom.id)) return base + dnaBox("Dvarw · confirmare curentă", ["<b>28/5</b>extraordinar", "<b>Model test</b>menționat generic", "<b>CL/FL</b>rămân distincte", "<b>Nu se copiază</b>automat airflow-ul", "<b>Prioritate</b>28/5 în A/B"]);
+    if (atom.id === "dvarwcl") return base + dnaBox("Dvarw CL · 3×0,6 · ADN validat", ["<b>K1 28 GA</b>Ø2,5 · 6 spire", "<b>Insert</b>3×0,6 mm", "<b>Footprint</b>multipunct / mediu-lat", "<b>Rol</b>layering + completitudine", "<b>Status</b>validat practic"]);
+    if (atom.id === "dvarwfl") return base + dnaBox("Dvarw FL · confirmare curentă", ["<b>28/5</b>validat round-wire", "<b>FL/CL</b>calibrate separat", "<b>Nu se copiază</b>automat airflow-ul", "<b>Clapton SS</b>pereche dedicată", "<b>Rol</b>claritate / separare"]);
     if (atom.id === "klp") return base + dnaBox("KLP · K1 29 GA nativ", ["<b>29/5 contact</b>hit / focus", "<b>29/6 contact</b>mai așezat / complet", "<b>Ambele</b>validate ca naturale", "<b>29 GA</b>sârma semnătură", "<b>Geometrie</b>compactă / controlată"]);
     if (atom.id === "pmfree") return base + dnaBox("Prime Minister Freehand · NET specialist", ["<b>28/5</b>corp + layering", "<b>29/6 contact</b>dry + tobacco", "<b>NET</b>zona naturală", "<b>Frunză</b>rămâne centrală", "<b>Clasament global</b>nerelevant"]);
     return base;
@@ -332,6 +342,8 @@ window.RTA_LAB_CONTINUITY = {
     if (atom.id === "gtr" && wire.id === "nife30") return "VALIDAT: NiFe30 TC este ADN-ul de finețe/layering al GTR.";
     if (atom.id === "kx" && wire.id === "k128") return "VALIDAT: 28/5 este extraordinar pe KX.";
     if (atom.id === "kx" && wire.id === "nife30") return "VALIDAT: NiFe30 TC este extraordinar și natural pe KX.";
+    if (atom.id === "dvarwcl" && wire.id === "k128") return "VALIDAT: Dvarw CL + insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire.";
+    if (atom.id === "asylum" && wire.id === "k128") return "VALIDAT: Asylum V3 Flat + K1 28 GA / Ø2,5 / 6 spire.";
     if (atom.id === "klp" && wire.id === "k129") return "VALIDAT: 29/5 contact și 29/6 contact sunt ambele builduri native KLP; 5 = hit/focus, 6 = mai așezat/complet.";
     return baseExplorerVapeText(atom, wire, output);
   };
@@ -363,8 +375,7 @@ window.RTA_LAB_CONTINUITY = {
 
   function explorerWireOrder(atom) {
     const preferred = {
-      "415": ["k1clap", "k128", "k129", "nife30", "ssclap"],
-      asylum: ["ssclap", "k1clap", "k128", "k129", "nife30"]
+      "415": ["k1clap", "k128", "k129", "nife30", "ssclap"]
     };
     const order = preferred[atom && atom.id];
     if (!order) return [...WIRES];
@@ -393,7 +404,7 @@ window.RTA_LAB_CONTINUITY = {
     const orderedWires = explorerWireOrder(atom);
     const cards = orderedWires.map((wire, index) => {
       const output = buildOutput(atom, wire, neutralLiquid);
-      const preferredClass = (atom.id === "415" && wire.id === "k1clap") || (atom.id === "asylum" && wire.id === "ssclap");
+      const preferredClass = atom.id === "415" && wire.id === "k1clap";
       return `<article class="build explorer-build ${preferredClass ? "best" : wire.id === "k128" ? "baseline-build" : ""}">
         <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span>${preferredClass ? '<span class="besttxt">PREFERINȚĂ PLATFORMĂ</span>' : ""}</div>
         <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
@@ -410,12 +421,12 @@ window.RTA_LAB_CONTINUITY = {
       <p class="explorer-air"><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
       ${geometrySummary(atom)}
       <div class="explorer-builds explorer-builds-five">${cards}</div>
-      <div class="explorer-tip"><b>Cum folosești rezultatul:</b> pe 415, K1 Clapton este afișat primul; pe Asylum V3, SS316L Clapton este afișat primul. În motorul pe lichid, ordinea finală rămâne triangulată prin lichid + obiectiv + ADN platformă.</div>`;
+      <div class="explorer-tip"><b>Cum folosești rezultatul:</b> pe 415, K1 Clapton este afișat primul. Dvarw CL 3×0,6 și Asylum V3 Flat păstrează validările 28/6; ordinea finală rămâne triangulată prin lichid + obiectiv + ADN platformă.</div>`;
   };
 
   document.addEventListener("DOMContentLoaded", () => {
     const explorerText = document.querySelector(".explorer-panel .ptitle p");
-    if (explorerText) explorerText.textContent = "Alege platforma și vezi ADN-ul ei. Pe 415 și Asylum, Clapton-ul preferat este afișat primul; motorul pe lichid rămâne contextual.";
+    if (explorerText) explorerText.textContent = "Alege platforma și vezi ADN-ul ei. Pe 415, K1 Clapton este afișat primul; Dvarw CL 3×0,6 și Asylum V3 Flat păstrează validările 28/6.";
     const atomPanelText = document.querySelectorAll(".panel .ptitle p");
     if (atomPanelText[2]) atomPanelText[2].textContent = "Lista se reordonează numai după potrivirea lichid + obiectiv; scorul global al platformei nu intră în calcul.";
     const footer = document.querySelector(".footer");
