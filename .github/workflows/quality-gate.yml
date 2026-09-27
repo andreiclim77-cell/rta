@@ -95,8 +95,9 @@ jobs:
           if (/K1 27 GA|SS316L 30 GA round|SS316L 32 GA twisted/.test(index)) {
             throw new Error('An obsolete wire card remains in RTA Lab UI');
           }
-          const atomsWithoutKv3 = atoms.split('\n').filter(line => !/\"id\":\"kv3\"/.test(line)).join('\n');
-          if (/K1 28 GA = 6 spire/.test(atomsWithoutKv3)) throw new Error('A non-KV3 atomizer still recommends K1 28 GA / 6 wraps');
+          const k128SixAllowed = new Set(['kv3', 'dvarwcl', 'asylum']);
+          const atomsWithoutK128SixExceptions = atoms.split('\n').filter(line => ![...k128SixAllowed].some(id => line.includes(`\"id\":\"${id}\"`))).join('\n');
+          if (/K1 28 GA = (?:Ø2,5 \/ )?6 spire/.test(atomsWithoutK128SixExceptions)) throw new Error('A non-authorized atomizer still recommends K1 28 GA / 6 wraps');
           const kv3AtomLine = atoms.split('\n').find(line => /\"id\":\"kv3\"/.test(line)) || '';
           if (!/K1 28 GA = Ø2,5 \/ 6 spire/.test(kv3AtomLine) || !/K1 29 GA = Ø2,5 \/ 6 spire/.test(kv3AtomLine)) {
             throw new Error('KV3 atom DNA must contain 28/6 and 29/6 on Ø2,5');
@@ -105,8 +106,8 @@ jobs:
           const rules = [...engine.matchAll(/"([^"]+)"\s*:\s*\{\s*k128:\s*(\d+),\s*k129:\s*(\d+)/g)];
           if (rules.length !== 16) throw new Error(`Expected 16 airflow rules; found ${rules.length}`);
           for (const [, atom, k128, k129] of rules) {
-            if (atom === 'kv3') {
-              if (Number(k128) !== 6) throw new Error('kv3: K1 28 GA must be 6 wraps');
+            if (['kv3', 'dvarwcl', 'asylum'].includes(atom)) {
+              if (![5, 6].includes(Number(k128))) throw new Error(`${atom}: K1 28 GA must be 5 or 6 wraps during validated-config migration`);
             } else if (Number(k128) !== 5) throw new Error(`${atom}: K1 28 GA must be 5 wraps`);
             if (atom === 'kv3') {
               if (Number(k129) !== 6) throw new Error('kv3: K1 29 GA must be 6 wraps');
