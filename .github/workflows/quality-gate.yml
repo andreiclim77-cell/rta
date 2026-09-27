@@ -79,6 +79,7 @@ jobs:
           const manifest = JSON.parse(fs.readFileSync('rta-lab/manifest.webmanifest', 'utf8'));
           const bootstrap = fs.readFileSync('rta-lab/bootstrap.js', 'utf8');
           const refresh = fs.readFileSync('rta-lab/refresh.html', 'utf8');
+          const master = fs.readFileSync('rta-lab/RTA_CONTINUITY_MASTER.md', 'utf8');
           const atoms = ['atoms-1.js', 'atoms-2.js', 'atoms-3.js']
             .map(file => fs.readFileSync(`rta-lab/data/${file}`, 'utf8'))
             .join('\n');
