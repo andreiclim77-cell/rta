@@ -20,7 +20,7 @@ const escapeHtml = value => String(value ?? "")
 
 /*
  * Matrice airflow → round-wire, V10.
- * - K1 28 GA folosește 5 spire ca baseline general; KV3 Mini are excepție validată la 6 spire.
+ * - K1 28 GA folosește 5 spire ca baseline general; excepții validate la 6 spire: KV3 Mini, Dvarw CL cu insert 3×0,6 și Asylum V3 cu clopot Flat.
  * - K1 29 GA primește 5 spire pe jeturile concentrate și 6 pe geometriile late.
  * - Ambele Claptonuri sunt fixe la 5 spire, Ø2,5 mm.
  * - Familia NiFe TC folosește baseline-ul canonic de 6 spire pe Ø2,5 mm.
@@ -29,14 +29,14 @@ const BUILD_RULES = {
   "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa round-wire mai plină." },
   "kprime":   { k128: 5, k129: 5, reason: "Bottom-air direct și concentrat; ambele round-wire-uri funcționează optim cu footprint compact." },
   "gtone":    { k128: 5, k129: 5, reason: "Air-pin unic, vertical și foarte apropiat de coil; 5 spire concentrează eficient jetul." },
-  "dvarwcl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock, jetul este compact; 5 spire sunt alegerea optimizată pentru ambele gauge-uri." },
+  "dvarwcl":  { k128: 6, k129: 5, reason: "Configurație activă validată: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire pentru acoperire mai uniformă și layering; 29 GA rămâne contextual după obiectiv." },
   "muted":    { k128: 5, k129: 6, reason: "Triple-air spală o zonă mai lată: 29/6 acoperă jeturile, iar 28/5 oferă round-wire cu mai mult mouthfeel." },
   "gtr":      { k128: 5, k129: 6, reason: "Cele două jeturi oblice cer 29/6 pentru acoperire; 28/5 păstrează un footprint apropiat, cu mai mult corp." },
   "dvarwfl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock 1×1,2 mm, jetul este concentrat; 5 spire sunt aproape optim." },
   "diplomat": { k128: 5, k129: 6, reason: "Diverterul multipunct este lat: 29/6 favorizează acoperirea, iar 28/5 este alternativa round-wire mai densă." },
   "kx":       { k128: 5, k129: 5, reason: "Aerokon restricționează direct sub coil; 5 spire păstrează footprint-ul compact și eficient." },
   "klp":      { k128: 5, k129: 5, reason: "Validat practic: 29/5 maximizează hitul, iar 28/5 păstrează hitul cu mai mult mouthfeel." },
-  "asylum":   { k128: 5, k129: 6, reason: "Geometria dublă/ovală justifică 29/6 pentru acoperire; 28/5 rămâne alternativa round-wire cu corp mai mare." },
+  "asylum":   { k128: 6, k129: 6, reason: "Configurație activă validată: clopot Flat + K1 28 GA / Ø2,5 / 6 spire; footprint-ul mai lung păstrează claritatea Flat și adaugă corp/completitudine. 29/6 rămâne alternativa mai dry/tobacco-first." },
   "pmfree":   { k128: 5, k129: 6, reason: "Diverterul 32×0,9 mm este foarte lat: 29/6 oferă acoperire, iar 28/5 aduce corp și mouthfeel." },
   "pmstd":    { k128: 5, k129: 6, reason: "Aceeași bază multipunct ca Freehand: 29/6 pentru acoperire, 28/5 pentru alternativa round-wire mai plină." },
   "byka":     { k128: 5, k129: 5, reason: "Air-pipe unic și jet concentrat; 5 spire sunt aproape optim pentru pinurile MTL uzuale." },
