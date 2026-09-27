@@ -1,6 +1,6 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-**Fișier canonic RTA Lab · stare consolidată 21.09.2026.**
+**Fișier canonic RTA Lab · stare consolidată 27.09.2026.**
 
 - Repo: `andreiclim77-cell/rta`
 - Branch: `main`
@@ -17,7 +17,7 @@
 
 ## 0. Frază de pornire pentru reluarea proiectului
 
-> Continuăm proiectul Rta. Pairingul se face prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → număr spire → contact → poziție coil → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 are 620 repere și 5 sloturi active. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 contact** principal, **K1 28 GA / Ø2,5 / 5 contact** secundar; **KV3 Mini este excepție validată: K1 28 GA / Ø2,5 / 6 și K1 29 GA / Ø2,5 / 6**. Varianta **K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet din Lab la 04.09.2026**. Pentru TC: **Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Perechi Clapton active: **415→K1 Clapton/5**, **Dvarw MTL FL→SS316L Clapton/5**. Asylum V3 nu are o pereche Clapton dedicată/preferată; K1 Clapton/5 rămâne doar opțiune contextuală pentru corp și integrare.
+> Continuăm proiectul Rta. Pairingul se face prin ADN de platformă, nu prin clasament global absolut: profil lichid → platformă/cameră/airflow → sârmă → Ø coil → număr spire → contact → poziție coil → watt/TC. Testul practic al utilizatorului prevalează asupra extrapolării. RTA Lab V10 are 620 repere și 5 sloturi active. Prior personal round-wire: **K1 29 GA / Ø2,5 / 5 contact** principal, **K1 28 GA / Ø2,5 / 5 contact** secundar; excepții validate 28/6: **KV3 Mini**, **Dvarw MTL CL cu insert 3×0,6** și **Asylum V3 cu clopot Flat**. KV3 Mini păstrează și **K1 29 GA / Ø2,5 / 6**. Varianta **K1 29 GA / Ø2,5 / 5 spire distanțată a fost eliminată complet din Lab la 04.09.2026**. Pentru TC: **Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 spire** și **Zivipf NiFe52 · TCR310 · Ø2,5 · 6 spire**. Perechi Clapton active: **415→K1 Clapton/5**, **Dvarw MTL FL→SS316L Clapton/5**. Asylum V3 nu are o pereche Clapton dedicată/preferată; K1 Clapton/5 rămâne doar opțiune contextuală pentru corp și integrare.
 
 ## 1. Snapshot rapid
 
@@ -25,7 +25,7 @@
 2. Preferință senzorială: tobacco-first, Tobacco Core Visibility, detaliu, layering, corp/mouthfeel; fără claritate sterilă și fără „tocăniță”.
 3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 16 platforme / 40 atomizoare fizice / 5 sloturi active**.
 4. Catalog: 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex.
-5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar. Excepție validată: **KV3 Mini = 28/6 + 29/6, ambele Ø2,5**.
+5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar. Excepții validate: **KV3 Mini = 28/6 + 29/6**, **Dvarw CL 3×0,6 = 28/6**, **Asylum V3 Flat = 28/6**, toate pe Ø2,5.
 6. K1 29/6 contact rămâne numai când ADN-ul platformei sau A/B-ul îl justifică.
 7. Varianta K1 29/5 distanțată este **ȘTEARSĂ / DEPĂȘITĂ** și nu trebuie reintrodusă în UI, motor, Explorer sau arhivă.
 8. TC global: **NiFe30/6 + NiFe52/6**, ambele Ø2,5.
@@ -41,14 +41,14 @@
 | 415 RTA MTL Cool Edition | 1 | High-sensitivity / micro-geometry; 28/5 contact = echilibru/layering; 29/5 contact = concentrat/dulce; 29/6 contact = dry/tobacco; **K1 Clapton/5 = pereche Clapton preferată**. |
 | Kayfun Prime / K Prime | 2 | Echilibru premium; **29/5 contact** = round-wire principal curent; 28/5 = echilibru; TC curent NiFe52/6; NiFe30/6 benchmark istoric 80/20. |
 | Taifun GT One | 4 | Straight tobacco precision; 28/5 contact și 29/5 contact validate. |
-| Dvarw MTL CL 22 | 1 | Tobacco muscular; 28/5 direcție excelentă; separat de FL. |
+| Dvarw MTL CL 22 | 1 | Tobacco muscular; **configurație activă validată: insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire**; separat de FL. |
 | Muted+ | 4 | Corp/mouthfeel + airflow configurabil; prior personal 29/5 contact dacă nu există excepție. |
 | Taifun GTR | 5 | TC specialist; Dicodes RESISTHERM NiFe30 320/6; finețe, layering, smoothness. |
 | Dvarw MTL FL | 2 | Analiză/separare; 28/5 excelent; **SS316L Clapton/5 = pereche dedicată**. |
 | Diplomat v1.5 | 3 | Camerele schimbă specializarea aromatică; calibrare separată; 29/5 contact prior personal. |
 | Kayfun X / KX | 4 | 28/5 extraordinar + Dicodes RESISTHERM NiFe30 320/6 TC; daily premium. |
 | KLP / Kayfun Lite Plus 2021 | 5 | K1 29 GA nativ; 29/5 contact default personal, 29/6 contact alternativă validată; harta NiFe nu modifică KLP. |
-| Asylum V3 SS/DLC | 2 | Flat = claritate/separare; Dome = corp/integrare; **K1 Clapton/5 = opțiune contextuală** pentru corp/densitate/integrare, fără statut dedicat/preferat. |
+| Asylum V3 SS/DLC | 2 | **Flat = configurația activă validată cu K1 28 GA / Ø2,5 / 6 spire** pentru claritate/separare + corp/completitudine; Dome = corp/integrare; K1 Clapton/5 rămâne contextual. |
 | Prime Minister Freehand | 2 | NET specialist; 28/5 = corp/layering; 29/6 contact = frunză/dry/tobacco-first. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; calibrare separată; 29/5 contact prior personal. |
 | By-Ka V11 | 1 | Echilibru corp–claritate; airflow unic; 29/5 contact prior personal. |
@@ -59,7 +59,7 @@
 
 | Sârmă / familie | Baseline | Rol |
 | --- | --- | --- |
-| K1 28 GA round | Ø2,5 · 5 contact baseline; **KV3 Mini = 6** | echilibru, corp curat, mouthfeel, completitudine |
+| K1 28 GA round | Ø2,5 · 5 contact baseline; **28/6 validat pe KV3 Mini, Dvarw CL 3×0,6 și Asylum Flat** | echilibru, corp curat, mouthfeel, completitudine |
 | K1 29 GA round | Ø2,5 · 5 contact prior; 6 contact justificat | tobacco-first, TH, dry, precizie, viteză |
 | K1 Clapton 2×30+38 | Ø2,5 · 5 | corp, densitate, mouthfeel, TH, integrare |
 | SS316L Clapton 2×30+38 | Ø2,5 · 5 | claritate, top-notes, layering |
@@ -110,8 +110,9 @@
 
 ### 4.6. Dvarw
 
-- Observația „Dvarw + 28/5 = extraordinar” a fost generică; CL și FL rămân distincte.
-- Dvarw FL → **SS316L Clapton/5 dedicat** pentru claritate, top-notes și layering.
+- CL și FL rămân calibrate separat.
+- **Dvarw MTL CL + insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire = configurație activă validată 27.09.2026** pentru airflow multipunct, layering și completitudine.
+- Dvarw FL păstrează validarea round-wire 28/5 și → **SS316L Clapton/5 dedicat** pentru claritate, top-notes și layering.
 
 ### 4.7. KLP
 
@@ -126,7 +127,8 @@
 
 ### 4.9. Asylum V3
 
-- Flat = ușor preferat pentru claritate/separare; Dome = corp/integrare.
+- **Flat + K1 28 GA / Ø2,5 / 6 spire = configurație activă validată 27.09.2026**: păstrează claritatea/separarea Flat și adaugă corp/completitudine.
+- Dome = corp/integrare.
 - **K1 Clapton 2×30+38 / Ø2,5 / 5 rămâne doar opțiune contextuală**, când se caută corp, densitate și integrare.
 - Nu există Clapton dedicat/preferat fixat canonic pe Asylum.
 - Explorer direct folosește doar buildurile active ale platformei și nu forțează un Clapton pe locul #1.
@@ -215,7 +217,7 @@ Reguli runtime:
 | `rta-lab/index.html` | UI V10; afișează cele 2 perechi Clapton active și baseline-urile TC. |
 | `rta-lab/engine.js` | Motor de bază: 16 platforme, 5 sloturi, scoring, TOP 3. |
 | `rta-lab/data/tuning-415.js` | Validări 415 + ADN platforme + infrastructura Explorer; 29/5 este doar contact. |
-| `rta-lab/data/personal-5wrap.js` | Prior personal 29/5 contact > 28/5 contact; păstrează excepțiile validate, inclusiv **KV3 Mini 28/6 + 29/6**. |
+| `rta-lab/data/personal-5wrap.js` | Prior personal 29/5 contact > 28/5 contact; păstrează excepțiile validate: **KV3 Mini 28/6 + 29/6**, **Dvarw CL 3×0,6 28/6**, **Asylum Flat 28/6**. |
 | `rta-lab/data/tc-platform-map.js` | Harta aliaj/platformă TC. |
 | `rta-lab/data/tc-sixwrap-global.js` | Gard global: NiFe = 6 spire. |
 | `rta-lab/data/clapton-platform-map.js` | Autoritatea finală Clapton: 2 perechi active, triangulare contextuală, filtrare per platformă și Explorer final. |
@@ -250,7 +252,7 @@ Reguli runtime:
 | UI cu 4 perechi Clapton | DEPĂȘIT 04.09.2026 | UI afișează 2 perechi active |
 | Explorer cu preferință Clapton fixă pe mai multe platforme | REFINAT 04.09.2026 | numai 415 păstrează Clapton explicit primul; restul urmează buildurile active |
 
-## 11. Checkpoint 19.09.2026 — colecție activă + Clapton + 29/5 contact-only
+## 11. Checkpoint 27.09.2026 — colecție activă + validări round-wire + Clapton
 
 **SALVAT CANONIC**
 
