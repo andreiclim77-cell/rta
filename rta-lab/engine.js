@@ -61,7 +61,7 @@ const CLAPTON_PLATFORM = {
   "diplomat": { k1clap: 0.75, ssclap: 0.85 },
   "kx":       { k1clap: -0.20, ssclap: 0.50 },
   "klp":      { k1clap: -0.70, ssclap: -0.55 },
-  "asylum":   { k1clap: 0.90, ssclap: 0.90 },
+  "asylum":   { k1clap: 0.90, ssclap: -100.00 },
   "pmfree":   { k1clap: 0.85, ssclap: 0.50 },
   "pmstd":    { k1clap: 0.80, ssclap: 0.40 },
   "byka":     { k1clap: 0.15, ssclap: 0.90 },
