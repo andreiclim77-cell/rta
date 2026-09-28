@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "scopeYear": 2026,
-  "date": "2026-09-27",
-  "generatedAt": "2026-09-27T08:58:09.329Z",
+  "date": "2026-09-28",
+  "generatedAt": "2026-09-28T09:18:04.239Z",
   "nationalClaim": {
     "label": "ROMANIA 100%",
     "allowed": false,
@@ -13,23 +13,25 @@
   "coverage": {
     "storefrontsConfigured": 22,
     "uniqueOperatorsConfigured": 21,
-    "storefrontsWithObservationsToday": 20,
+    "storefrontsWithObservationsToday": 19,
     "zeroObservationStorefronts": [
       "smokemania",
-      "merlin"
+      "merlin",
+      "vapero"
     ],
     "sourceErrorStorefronts": [
-      "smokee",
       "vapetronic",
       "smokemania",
       "steamfactory",
-      "merlin"
+      "merlin",
+      "vapero"
     ],
     "fallbackStorefronts": [],
     "notAttemptedStorefronts": [
-      "smokemania"
+      "smokemania",
+      "vapero"
     ],
-    "observationsToday": 1760
+    "observationsToday": 2397
   },
   "qualityState": "national-audit-in-progress-with-source-gaps",
   "storefronts": [
@@ -38,14 +40,14 @@
       "name": "Smokee",
       "url": "https://smokee.ro/",
       "operatorKey": "scaby-vape-ro47040419",
-      "observationsToday": 368,
+      "observationsToday": 1029,
       "sourceAttemptedToday": true,
-      "pagesFetched": 51,
-      "errors": 8,
+      "pagesFetched": 64,
+      "errors": 0,
       "fallbackUsed": false,
       "skippedMode": null,
-      "parserComplete": false,
-      "captureState": "captured-with-source-errors",
+      "parserComplete": true,
+      "captureState": "captured",
       "exhaustiveCertified": false
     },
     {
@@ -53,7 +55,7 @@
       "name": "Vaperia",
       "url": "https://vaperia.ro/",
       "operatorKey": "vape-style-ro34435182",
-      "observationsToday": 177,
+      "observationsToday": 171,
       "sourceAttemptedToday": true,
       "pagesFetched": 7,
       "errors": 0,
@@ -293,7 +295,7 @@
       "name": "Ecig Vapo",
       "url": "https://ecig-vapo.com/",
       "operatorKey": "pam-import-export-ro359285",
-      "observationsToday": 41,
+      "observationsToday": 39,
       "sourceAttemptedToday": true,
       "pagesFetched": 9,
       "errors": 0,
@@ -323,14 +325,14 @@
       "name": "Vape.ro",
       "url": "https://vape.ro/",
       "operatorKey": "storefront:vapero",
-      "observationsToday": 16,
-      "sourceAttemptedToday": true,
-      "pagesFetched": 2,
-      "errors": 0,
+      "observationsToday": 0,
+      "sourceAttemptedToday": false,
+      "pagesFetched": 0,
+      "errors": 2,
       "fallbackUsed": false,
       "skippedMode": null,
-      "parserComplete": true,
-      "captureState": "captured",
+      "parserComplete": false,
+      "captureState": "source-error-no-observations",
       "exhaustiveCertified": false
     },
     {
