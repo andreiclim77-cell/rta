@@ -1,7 +1,7 @@
 {
   "schemaVersion": 4,
   "scopeYear": 2026,
-  "generatedAt": "2026-09-29T09:29:21.171Z",
+  "generatedAt": "2026-09-30T09:16:55.477Z",
   "mode": "hype-source-evidence",
   "truth": {
     "retailUsedAsHype": false,
@@ -26,16 +26,16 @@
     "queriesRun": 115,
     "queriesWorking": 115,
     "candidateDocuments": 568,
-    "acceptedUpstreamSignals": 14,
-    "rejectedWrongHostSignals": 18,
-    "acceptedEvidenceEvents": 37,
+    "acceptedUpstreamSignals": 11,
+    "rejectedWrongHostSignals": 11,
+    "acceptedEvidenceEvents": 38,
     "wideQueriesRun": 181,
     "wideQueriesWorking": 181,
-    "wideSignals": 72,
-    "wideEvidenceEvents": 65,
+    "wideSignals": 63,
+    "wideEvidenceEvents": 51,
     "scope": "GLOBAL",
     "directVendorProducts": 0,
-    "undatedCandidates": 4
+    "undatedCandidates": 5
   },
   "events": [
     {
@@ -49,7 +49,7 @@
       "authenticityState": "CLONE",
       "variantCount": 2,
       "stages": [
-        "ETA / precomandă",
+        "ETA depășit · verifică batch-ul/disponibilitatea",
         "IMMINENT"
       ],
       "sourceTypeCount": 1,
@@ -58,18 +58,7 @@
         {
           "host": "3fvape.com",
           "url": "https://www.3fvape.com/rta/74579-yftk-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-ss-glass-4ml-22mm-diamter.html",
-          "title": "YFTK Ghost Ring Style RTA Rebuildable Tank Atomizer - Silver, SS + Glass, 4ml, 22mm Diamter",
-          "sourceType": "clone-original-vendor",
-          "decisionEligible": false,
-          "discoveryOnly": true,
-          "eventDate": "2026-09-30T00:00:00.000Z",
-          "dateConfidence": "explicit",
-          "stage": "ETA / precomandă"
-        },
-        {
-          "host": "3fvape.com",
-          "url": "https://www.3fvape.com/rta/74547-sxk-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-glass-4ml-22mm-diamter.html",
-          "title": "SXK Ghost Ring Style RTA",
+          "title": "YFTK Ghost Ring Style RTA",
           "sourceType": "clone-retailer-direct",
           "collector": "preorder-card",
           "decisionEligible": true,
@@ -77,9 +66,58 @@
           "evidenceScope": "explicit-vendor-eta",
           "eventDate": "2026-09-30T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
-          "stage": "ETA / precomandă",
-          "observedAt": "2026-09-29T09:28:48.100Z",
+          "stage": "ETA depășit · verifică batch-ul/disponibilitatea",
+          "observedAt": "2026-09-30T09:16:16.919Z",
           "catalogEvidence": "product-page"
+        },
+        {
+          "host": "3fvape.com",
+          "url": "https://www.3fvape.com/rta/74547-sxk-ghost-ring-style-rta-rebuildable-tank-atomizer-silver-316ss-glass-4ml-22mm-diamter.html",
+          "title": "SXK Ghost Ring Style RTA Rebuildable Tank Atomizer - Silver, 316SS + Glass, 4ml, 22mm Diamter",
+          "sourceType": "clone-original-vendor",
+          "decisionEligible": false,
+          "discoveryOnly": true,
+          "eventDate": "2026-09-30T00:00:00.000Z",
+          "dateConfidence": "explicit",
+          "stage": "ETA / precomandă"
+        }
+      ]
+    },
+    {
+      "eventId": "234b98139ba033172048",
+      "familyKey": "MODURI|AUTHENTIC|dotmod|dotbox v2 engraved cod",
+      "kind": "released",
+      "category": "MODURI",
+      "typology": "single battery",
+      "productName": "Dotmod dotBox 220W V2 Black Engraved COD Limited Edition Mod",
+      "brand": "DotMod",
+      "authenticityState": "AUTHENTIC",
+      "variantCount": 1,
+      "stages": [
+        "listare comercială datată, noutate în verificare",
+        "FIRST_RETAIL_SIGNAL"
+      ],
+      "sourceTypeCount": 1,
+      "sourceHostCount": 1,
+      "sources": [
+        {
+          "host": "vaping101.co.uk",
+          "url": "https://vaping101.co.uk/products/dotmod-dotbox-220w-v2-black-engraved-cod-limited-edition-mod",
+          "title": "Dotmod dotBox 220W V2 Black Engraved COD Limited Edition Mod",
+          "sourceType": "retailer-direct",
+          "collector": "direct-catalog",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "catalog-publication-date",
+          "eventDate": "2026-09-29T13:47:59.000Z",
+          "dateConfidence": "catalog-published-at",
+          "dateQuality": "shopify-published-at",
+          "stage": "prima listare comerciala datata",
+          "observedAt": "2026-09-30T09:13:01.546Z",
+          "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mod-dotbox-v2-220w-2x18650-black-engraved-cod-dotmod.webp?v=1790677865",
+          "price": 64.99,
+          "currency": null,
+          "available": true
         }
       ]
     },
@@ -115,7 +153,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-09-29T09:29:08.885Z"
+          "observedAt": "2026-09-30T09:16:37.183Z"
         }
       ]
     },
@@ -151,7 +189,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-09-29T09:29:08.885Z"
+          "observedAt": "2026-09-30T09:16:37.183Z"
         }
       ]
     },
@@ -187,7 +225,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-09-29T09:29:08.885Z"
+          "observedAt": "2026-09-30T09:16:37.183Z"
         }
       ]
     },
@@ -223,7 +261,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-09-29T09:29:08.885Z"
+          "observedAt": "2026-09-30T09:16:37.183Z"
         }
       ]
     },
@@ -259,7 +297,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-09-29T09:29:08.885Z"
+          "observedAt": "2026-09-30T09:16:37.183Z"
         }
       ]
     },
@@ -295,7 +333,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-09-29T09:29:08.885Z"
+          "observedAt": "2026-09-30T09:16:37.183Z"
         }
       ]
     },
@@ -331,7 +369,7 @@
           "dateConfidence": "dated-retail-campaign",
           "dateQuality": "utm-campaign-date",
           "stage": "promovare recenta pentru model existent, nu lansare",
-          "observedAt": "2026-09-29T09:29:08.885Z"
+          "observedAt": "2026-09-30T09:16:37.183Z"
         }
       ]
     },
@@ -367,7 +405,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-09-29T09:27:36.904Z"
+          "observedAt": "2026-09-30T09:15:21.426Z"
         }
       ]
     },
@@ -401,7 +439,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0507/3708/6660/files/Black_Geekvape_Aegis_Solo_5_Box_Mod_100W.png?v=1790079295",
           "price": 52.99,
           "currency": null,
@@ -439,7 +477,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "",
           "price": null,
           "currency": null,
@@ -477,7 +515,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "",
           "price": null,
           "currency": null,
@@ -515,7 +553,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "",
           "price": null,
           "currency": null,
@@ -555,7 +593,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:27:37.878Z"
+          "observedAt": "2026-09-30T09:15:22.420Z"
         }
       ]
     },
@@ -591,7 +629,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:27:37.997Z"
+          "observedAt": "2026-09-30T09:15:22.539Z"
         },
         {
           "host": "centenarymods.com",
@@ -608,7 +646,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:27:38.116Z"
+          "observedAt": "2026-09-30T09:15:22.659Z"
         }
       ]
     },
@@ -718,7 +756,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-09-29T09:27:37.043Z"
+          "observedAt": "2026-09-30T09:15:21.566Z"
         }
       ]
     },
@@ -754,7 +792,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-09-29T09:27:36.456Z"
+          "observedAt": "2026-09-30T09:15:20.979Z"
         }
       ]
     },
@@ -788,7 +826,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mod-dotbox-v2-220w-2x18650-red-engraved-deadpool-dotmod.webp?v=1788976426",
           "price": 64.99,
           "currency": null,
@@ -826,7 +864,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mod-dotbox-v2-220w-2x18650-blue-engraved-sonic-dotmod.webp?v=1788976517",
           "price": 64.99,
           "currency": null,
@@ -864,7 +902,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mod-dotbox-v2-220w-2x18650-black-engraved-venom-dotmod.webp?v=1788976571",
           "price": 64.99,
           "currency": null,
@@ -902,7 +940,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mod-dotbox-v2-220w-2x18650-engraved-dracaufeu-dotmod.webp?v=1788976640",
           "price": 64.99,
           "currency": null,
@@ -940,7 +978,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/rock-mods-hammerhand-v3-mech-mod.webp?v=1789022779",
           "price": 299.99,
           "currency": null,
@@ -975,7 +1013,7 @@
           "eventDate": "2026-09-10T00:00:00.000Z",
           "dateConfidence": "explicit-vendor-eta",
           "stage": "batch ETA · confirmă disponibilitatea",
-          "observedAt": "2026-09-29T09:24:59.045Z"
+          "observedAt": "2026-09-30T09:12:21.815Z"
         }
       ]
     },
@@ -1009,7 +1047,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Lost-Vape-Centaurus-M120-S-Mod.webp?v=1788860534",
           "price": 44.99,
           "currency": null,
@@ -1030,7 +1068,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-09-29T09:27:36.222Z"
+          "observedAt": "2026-09-30T09:15:20.743Z"
         },
         {
           "host": "igeekphone.com",
@@ -1047,7 +1085,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-09-29T09:27:37.323Z"
+          "observedAt": "2026-09-30T09:15:21.843Z"
         }
       ]
     },
@@ -1081,7 +1119,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Dead-Rabbit-Mini-RTA.webp?v=1788790132",
           "price": 26.99,
           "currency": null,
@@ -1119,7 +1157,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/vaporesso-armour-octa-aero-white-mod.webp?v=1789047736",
           "price": 39.99,
           "currency": null,
@@ -1138,11 +1176,11 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Vaporesso-Armour-OCTA-Mod.webp?v=1787665884",
           "price": 39.99,
           "currency": null,
-          "available": false
+          "available": true
         }
       ]
     },
@@ -1176,7 +1214,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Reload-Squonk-Mod.webp?v=1788343687",
           "price": 99.99,
           "currency": null,
@@ -1214,7 +1252,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/35A3CA78-01C9-46E9-9AEA-AFB3DE1B5742.jpg?v=1788437498",
           "price": 1880,
           "currency": null,
@@ -1252,7 +1290,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "",
           "price": null,
           "currency": null,
@@ -1290,7 +1328,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/38CD948C-B392-42D7-8823-8DA1262584EF.jpg?v=1788364886",
           "price": 200,
           "currency": null,
@@ -1328,7 +1366,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/8F6C017C-4999-44EE-9253-50F89E4E3E2D.png?v=1788359361",
           "price": 1380,
           "currency": null,
@@ -1366,7 +1404,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/A0CA2F9B-7EA3-4EC8-B826-A2A1BE509EBF.jpg?v=1788356114",
           "price": 780,
           "currency": null,
@@ -1404,7 +1442,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/857376BF-EF4D-48AC-BC6B-38C3A08078E3.jpg?v=1788275132",
           "price": 680,
           "currency": null,
@@ -1442,7 +1480,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-09-29T09:25:41.841Z",
+          "observedAt": "2026-09-30T09:13:01.546Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/32F239D8-813C-44B5-AD3D-0BF2BCE01E28.jpg?v=1788266294",
           "price": 1180,
           "currency": null,
@@ -1482,11 +1520,11 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-09-29T09:27:36.308Z"
+          "observedAt": "2026-09-30T09:15:20.831Z"
         }
       ]
     }
   ],
-  "snapshotReferenceAt": "2026-09-29T03:00:00.000Z",
+  "snapshotReferenceAt": "2026-09-30T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
 }
