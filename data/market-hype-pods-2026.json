@@ -4,8 +4,8 @@
   "scope": "GLOBAL POD SYSTEMS",
   "windowDays": 30,
   "discoveryContextDays": 180,
-  "generatedAt": "2026-10-02T09:16:53.638Z",
-  "snapshotReferenceAt": "2026-10-02T03:00:00.000Z",
+  "generatedAt": "2026-10-03T08:49:14.021Z",
+  "snapshotReferenceAt": "2026-10-03T03:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest",
   "pendingRefresh": false,
   "truth": {
@@ -71,11 +71,11 @@
     "segmentsConfigured": 4,
     "queriesRun": 347,
     "queriesWorking": 347,
-    "searchDocuments": 1871,
-    "candidateDocuments": 202,
-    "pagesProcessed": 202,
-    "concreteProducts": 4,
-    "retailProductsObserved": 2,
+    "searchDocuments": 1786,
+    "candidateDocuments": 239,
+    "pagesProcessed": 239,
+    "concreteProducts": 10,
+    "retailProductsObserved": 1,
     "firstRetailEvents": 0,
     "verifiedSignals": 0,
     "segmentCoverage": {
@@ -84,20 +84,20 @@
         "makers": 9,
         "queries": 54,
         "queriesWorking": 54,
-        "indexedDocuments": 174,
-        "candidateDocuments": 57,
+        "indexedDocuments": 288,
+        "candidateDocuments": 36,
         "events": 4,
         "queued": 1,
-        "monitored": 26,
-        "signals": 22
+        "monitored": 27,
+        "signals": 23
       },
       "mid-tier-regional": {
         "label": "Mid-tier si regional",
         "makers": 24,
         "queries": 138,
         "queriesWorking": 138,
-        "indexedDocuments": 957,
-        "candidateDocuments": 73,
+        "indexedDocuments": 949,
+        "candidateDocuments": 94,
         "events": 1,
         "queued": 1,
         "monitored": 1,
@@ -108,8 +108,8 @@
         "makers": 20,
         "queries": 114,
         "queriesWorking": 114,
-        "indexedDocuments": 516,
-        "candidateDocuments": 58,
+        "indexedDocuments": 408,
+        "candidateDocuments": 86,
         "events": 3,
         "queued": 1,
         "monitored": 14,
@@ -120,10 +120,10 @@
         "makers": 7,
         "queries": 41,
         "queriesWorking": 41,
-        "indexedDocuments": 224,
-        "candidateDocuments": 14,
+        "indexedDocuments": 141,
+        "candidateDocuments": 23,
         "events": 0,
-        "queued": 3,
+        "queued": 2,
         "monitored": 2,
         "signals": 2
       }
@@ -131,14 +131,34 @@
     "rejections": {
       "fetchFailed": 40,
       "makerMismatch": 0,
-      "notConcretePodProduct": 198,
-      "noDateOrEvent": 4,
+      "notConcretePodProduct": 229,
+      "noDateOrEvent": 10,
       "sourceNotDecisionEligible": 0,
       "outsideWindow": 0,
       "duplicate": 0
     },
     "candidatesUnderVerification": 6,
     "rejectedSample": [
+      {
+        "productName": "Hayati Pro Max Plus Prefilled Pod Kit",
+        "brand": "Hayati",
+        "category": "POD",
+        "url": "https://hayativapor.com/pages/hayati%C2%AE-pro-max-plus",
+        "reason": "undatedPublicAnnouncement",
+        "observedAt": "2026-09-20T08:09:19.542Z",
+        "segment": "closed-prefilled-hybrid",
+        "typology": "closed / pre-filled / hybrid",
+        "familyKey": "POD|AUTHENTIC|hayati|pro max plus",
+        "signalKind": "undated-identifiable-product",
+        "confidenceTier": "watch",
+        "firstObservedAt": "2026-09-20T08:09:19.542Z",
+        "lastObservedAt": "2026-10-02T09:16:53.379Z",
+        "sources": [
+          "https://hayativapor.com/pages/hayati%C2%AE-pro-max-plus"
+        ],
+        "productSpecificSource": true,
+        "status": "NEEDS_DATE_OR_ETA"
+      },
       {
         "brand": "UPENDS",
         "productName": "UPOX | OPEN POD SYSTEM",
@@ -162,26 +182,6 @@
         "signalKind": "undated-identifiable-product",
         "confidenceTier": "watch",
         "productSpecificSource": true
-      },
-      {
-        "productName": "Hayati Pro Max Plus Prefilled Pod Kit",
-        "brand": "Hayati",
-        "category": "POD",
-        "url": "https://hayativapor.com/pages/hayati%C2%AE-pro-max-plus",
-        "reason": "undatedPublicAnnouncement",
-        "observedAt": "2026-09-20T08:09:19.542Z",
-        "segment": "closed-prefilled-hybrid",
-        "typology": "closed / pre-filled / hybrid",
-        "familyKey": "POD|AUTHENTIC|hayati|pro max plus",
-        "signalKind": "undated-identifiable-product",
-        "confidenceTier": "watch",
-        "firstObservedAt": "2026-09-20T08:09:19.542Z",
-        "lastObservedAt": "2026-09-20T08:09:19.542Z",
-        "sources": [
-          "https://hayativapor.com/pages/hayati%C2%AE-pro-max-plus"
-        ],
-        "productSpecificSource": true,
-        "status": "NEEDS_DATE_OR_ETA"
       },
       {
         "brand": "OXVA",
@@ -281,16 +281,16 @@
       "sourcesWithPartialCatalog": 1,
       "sourcesUsingFallback": 4,
       "productsFetched": 8745,
-      "productsClassified": 2057,
+      "productsClassified": 2056,
       "preservedItemsFromFailedSources": 45,
       "preservedEventsFromFailedSources": 0,
-      "recentEvents": 42,
+      "recentEvents": 39,
       "relistedExcluded": 73,
-      "rtaModAdded": 20,
+      "rtaModAdded": 17,
       "podsAdded": 22,
       "sourceMix": {
         "official": 984,
-        "original-retailer": 716,
+        "original-retailer": 715,
         "clone": 395
       },
       "adapterMix": {
@@ -301,7 +301,7 @@
         "html-navigation-products": 1
       },
       "categoryEvents": {
-        "RTA": 8,
+        "RTA": 5,
         "MODURI": 10,
         "ACCESORII": 2,
         "POD": 22
@@ -311,13 +311,13 @@
       "newsQueries": 48,
       "newsQueriesWorking": 48,
       "wordpressSources": 23,
-      "wordpressSourcesWorking": 22,
-      "wordpressRequestsWorking": 85,
-      "datedItems": 87,
-      "concreteSignals": 48,
-      "rejected": 15,
+      "wordpressSourcesWorking": 20,
+      "wordpressRequestsWorking": 77,
+      "datedItems": 89,
+      "concreteSignals": 49,
+      "rejected": 19,
       "rtaModAdded": 7,
-      "podsAdded": 36
+      "podsAdded": 37
     },
     "retailCampaigns": {
       "sources": 1,
@@ -336,17 +336,17 @@
       "podsAdded": 0
     },
     "productBackfill": {
-      "candidates": 215,
-      "queries": 430,
-      "queriesWorking": 430,
-      "indexedMatches": 74,
-      "pagesFetched": 57,
-      "pagesMatched": 57,
+      "candidates": 213,
+      "queries": 426,
+      "queriesWorking": 426,
+      "indexedMatches": 49,
+      "pagesFetched": 43,
+      "pagesMatched": 43,
       "datedEvents": 1,
       "groupedEvents": 1,
       "rtaModAdded": 0,
       "podsAdded": 0,
-      "undated": 56
+      "undated": 42
     }
   },
   "verificationQueue": [
@@ -356,14 +356,14 @@
       "category": "POD",
       "url": "https://hayativapor.com/pages/hayati%C2%AE-pro-max-plus",
       "reason": "undatedPublicAnnouncement",
-      "observedAt": "2026-10-02T09:16:53.379Z",
+      "observedAt": "2026-10-03T08:49:13.867Z",
       "segment": "closed-prefilled-hybrid",
       "typology": "closed / pre-filled / hybrid",
       "familyKey": "POD|AUTHENTIC|hayati|pro max plus",
       "signalKind": "undated-identifiable-product",
       "confidenceTier": "watch",
       "firstObservedAt": "2026-09-20T08:09:19.542Z",
-      "lastObservedAt": "2026-10-02T09:16:53.379Z",
+      "lastObservedAt": "2026-10-03T08:49:13.867Z",
       "sources": [
         "https://hayativapor.com/pages/hayati%C2%AE-pro-max-plus"
       ],
@@ -371,27 +371,46 @@
       "status": "NEEDS_DATE_OR_ETA"
     },
     {
-      "brand": "UPENDS",
-      "productName": "UPOX | OPEN POD SYSTEM",
-      "segment": "mid-tier-regional",
-      "typology": "open-pod / pod-mod regional",
+      "brand": "DotMod",
+      "productName": "Dotmod Dotpod Max",
+      "segment": "premium-high-end-aio",
+      "typology": "premium / high-end / AIO",
       "reason": "undatedPublicAnnouncement",
-      "url": "https://www.upends.com/community/news/new-product-launched-upox-pro",
-      "publishedAt": "2026-09-01T03:28:00.000Z",
-      "familyKey": "POD|AUTHENTIC|upends|upox",
-      "firstObservedAt": "2026-09-01T03:28:00.000Z",
-      "lastObservedAt": "2026-09-30T09:16:54.985Z",
+      "url": "https://global.dotmod.com/product/dotpod-max/",
+      "publishedAt": "2026-09-04T02:35:00.000Z",
+      "familyKey": "POD|AUTHENTIC|dotmod|dotpod max",
+      "firstObservedAt": "2026-08-26T09:05:00.000Z",
+      "lastObservedAt": "2026-10-03T08:49:13.867Z",
       "sources": [
-        "https://www.upends.com/open-pod-system/upox",
-        "https://www.vapormo.com/products/upends-upox-pod-system-kit-400mah",
-        "https://www.vaporsuper.com/upends-upox-pod-system-kit-400mah",
-        "https://www.upends.com/community/news/new-product-launched-upox-pro"
+        "https://www.elementvape.com/dotmod-dotpod-max-complete-kit",
+        "https://vapesocietysupplies.com/products/dotpod-max/",
+        "https://vaping360.com/vape-products/dotmod-dotpod-max/",
+        "https://global.dotmod.com/product/dotpod-max/"
       ],
-      "observedAt": "2026-09-01T03:28:00.000Z",
+      "observedAt": "2026-10-03T08:49:13.867Z",
       "status": "NEEDS_DATE_OR_ETA",
       "category": "POD",
       "signalKind": "undated-identifiable-product",
       "confidenceTier": "watch",
+      "productSpecificSource": true
+    },
+    {
+      "productName": "UPOX | OPEN POD SYSTEM",
+      "brand": "UPENDS",
+      "category": "POD",
+      "url": "https://www.upends.com/open-pod-system/upox",
+      "reason": "undatedPublicAnnouncement",
+      "observedAt": "2026-10-03T08:49:13.867Z",
+      "segment": "mid-tier-regional",
+      "typology": "open-pod / pod-mod regional",
+      "familyKey": "POD|AUTHENTIC|upends|upox",
+      "signalKind": "undated-identifiable-product",
+      "confidenceTier": "watch",
+      "firstObservedAt": "2026-10-03T08:49:13.867Z",
+      "lastObservedAt": "2026-10-03T08:49:13.867Z",
+      "sources": [
+        "https://www.upends.com/open-pod-system/upox"
+      ],
       "productSpecificSource": true
     },
     {
@@ -418,29 +437,6 @@
     },
     {
       "brand": "DotMod",
-      "productName": "Dotmod Dotpod Max - Vaping360",
-      "segment": "premium-high-end-aio",
-      "typology": "premium / high-end / AIO",
-      "reason": "undatedPublicAnnouncement",
-      "url": "https://vaping360.com/vape-products/dotmod-dotpod-max/",
-      "publishedAt": "2026-09-04T02:35:00.000Z",
-      "familyKey": "POD|AUTHENTIC|dotmod|dotpod max",
-      "firstObservedAt": "2026-08-26T09:05:00.000Z",
-      "lastObservedAt": "2026-09-04T02:35:00.000Z",
-      "sources": [
-        "https://www.elementvape.com/dotmod-dotpod-max-complete-kit",
-        "https://vapesocietysupplies.com/products/dotpod-max/",
-        "https://vaping360.com/vape-products/dotmod-dotpod-max/"
-      ],
-      "observedAt": "2026-08-26T09:05:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA",
-      "category": "POD",
-      "signalKind": "undated-identifiable-product",
-      "confidenceTier": "watch",
-      "productSpecificSource": true
-    },
-    {
-      "brand": "DotMod",
       "productName": "dotMod dotPod Pro 35W Pod System",
       "segment": "premium-high-end-aio",
       "typology": "premium / high-end / AIO",
@@ -459,30 +455,60 @@
       "signalKind": "undated-identifiable-product",
       "confidenceTier": "watch",
       "productSpecificSource": true
-    },
-    {
-      "brand": "LVE",
-      "productName": "ORION II PRO | LVE",
-      "segment": "premium-high-end-aio",
-      "typology": "premium / high-end / AIO",
-      "reason": "undatedPublicAnnouncement",
-      "url": "https://lvevapor.com/orion-ii-pro/",
-      "publishedAt": "2026-09-02T01:40:00.000Z",
-      "familyKey": "POD|AUTHENTIC|lve|orion ii pro",
-      "firstObservedAt": "2026-09-02T01:40:00.000Z",
-      "lastObservedAt": "2026-09-02T01:40:00.000Z",
-      "sources": [
-        "https://lvevapor.com/orion-ii-pro/"
-      ],
-      "observedAt": "2026-09-02T01:40:00.000Z",
-      "status": "NEEDS_DATE_OR_ETA",
-      "category": "POD",
-      "signalKind": "undated-identifiable-product",
-      "confidenceTier": "watch",
-      "productSpecificSource": true
     }
   ],
   "products": [
+    {
+      "productName": "Argus Z3 par Voopoo",
+      "brand": "Voopoo",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-10-02T08:00:00.000Z",
+      "stageEvidenceAt": "2026-10-02T08:00:00.000Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.622Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-10-03T08:47:51.622Z",
+      "lastSeenAt": "2026-10-03T08:47:51.622Z",
+      "ageHours": 19,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "levapelier.com",
+          "url": "https://www.levapelier.com/argus-z3-par-voopoo/",
+          "title": "Argus Z3 par Voopoo",
+          "sourceName": "Le Vapelier",
+          "sourceUrl": "https://www.levapelier.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-10-02T08:00:00.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-10-03T08:47:51.622Z"
+        }
+      ],
+      "id": "339e826028ca7e3cdc2e",
+      "familyKey": "POD|AUTHENTIC|voopoo|argus z3 par",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo Argus Z3 par",
+          "brand": "Voopoo",
+          "url": "https://www.levapelier.com/argus-z3-par-voopoo/"
+        }
+      ],
+      "variantCount": 1
+    },
     {
       "productName": "JUUL Labs upgraded JUUL2 starter kit for smokers",
       "brand": "JUUL Labs",
@@ -496,11 +522,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-10-01T09:57:04.000Z",
       "stageEvidenceAt": "2026-10-01T09:57:04.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.511Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.598Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.511Z",
-      "lastSeenAt": "2026-10-02T09:15:24.511Z",
-      "ageHours": 17,
+      "firstSeenAt": "2026-10-03T08:47:50.598Z",
+      "lastSeenAt": "2026-10-03T08:47:50.598Z",
+      "ageHours": 41,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -519,7 +545,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "lansare relatata public",
-          "observedAt": "2026-10-02T09:15:24.511Z"
+          "observedAt": "2026-10-03T08:47:50.598Z"
         }
       ],
       "id": "9f9c29783f1c33078138",
@@ -547,11 +573,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-30T10:03:36.000Z",
       "stageEvidenceAt": "2026-09-30T10:03:36.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 40.9,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 64.9,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -568,7 +594,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/smok-novo-axis-ez-pod-kit-main.jpg?v=1790693752",
           "price": 6.99,
           "currency": null,
@@ -600,11 +626,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-30T05:20:18.000Z",
       "stageEvidenceAt": "2026-09-30T05:20:18.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:26.165Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.481Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:26.165Z",
-      "lastSeenAt": "2026-10-02T09:15:26.165Z",
-      "ageHours": 45.7,
+      "firstSeenAt": "2026-10-03T08:47:51.482Z",
+      "lastSeenAt": "2026-10-03T08:47:51.482Z",
+      "ageHours": 69.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -623,7 +649,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.165Z"
+          "observedAt": "2026-10-03T08:47:51.481Z"
         }
       ],
       "id": "10a76bfd295c13f781e6",
@@ -651,11 +677,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-30T03:00:22.000Z",
       "stageEvidenceAt": "2026-09-30T03:00:22.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.240Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.489Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.240Z",
-      "lastSeenAt": "2026-10-02T09:15:25.436Z",
-      "ageHours": 48,
+      "firstSeenAt": "2026-10-03T08:47:50.489Z",
+      "lastSeenAt": "2026-10-03T08:47:51.084Z",
+      "ageHours": 72,
       "sourceCount": 2,
       "eligibleSources": 2,
       "sources": [
@@ -674,7 +700,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.240Z"
+          "observedAt": "2026-10-03T08:47:50.489Z"
         },
         {
           "host": "igeekphone.com",
@@ -691,7 +717,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.436Z"
+          "observedAt": "2026-10-03T08:47:51.084Z"
         }
       ],
       "id": "57d73db84254c24a43b6",
@@ -724,11 +750,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-30T03:00:22.000Z",
       "stageEvidenceAt": "2026-09-30T03:00:22.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.240Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.489Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.240Z",
-      "lastSeenAt": "2026-10-02T09:15:25.436Z",
-      "ageHours": 48,
+      "firstSeenAt": "2026-10-03T08:47:50.489Z",
+      "lastSeenAt": "2026-10-03T08:47:51.084Z",
+      "ageHours": 72,
       "sourceCount": 2,
       "eligibleSources": 2,
       "sources": [
@@ -747,7 +773,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.240Z"
+          "observedAt": "2026-10-03T08:47:50.489Z"
         },
         {
           "host": "igeekphone.com",
@@ -764,7 +790,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.436Z"
+          "observedAt": "2026-10-03T08:47:51.084Z"
         }
       ],
       "id": "aa90fcc82cbd4eb687cc",
@@ -797,11 +823,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-29T13:00:00.000Z",
       "stageEvidenceAt": "2026-09-29T13:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.638Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.687Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.638Z",
-      "lastSeenAt": "2026-10-02T09:15:24.638Z",
-      "ageHours": 62,
+      "firstSeenAt": "2026-10-03T08:47:50.687Z",
+      "lastSeenAt": "2026-10-03T08:47:50.687Z",
+      "ageHours": 86,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -820,7 +846,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.638Z"
+          "observedAt": "2026-10-03T08:47:50.687Z"
         }
       ],
       "id": "b1a6ec2ced6b3a033c88",
@@ -848,11 +874,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-28T21:24:31.000Z",
       "stageEvidenceAt": "2026-09-28T21:24:31.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:23.949Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.304Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:23.949Z",
-      "lastSeenAt": "2026-10-02T09:15:24.278Z",
-      "ageHours": 77.6,
+      "firstSeenAt": "2026-10-03T08:47:50.304Z",
+      "lastSeenAt": "2026-10-03T08:47:50.512Z",
+      "ageHours": 101.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -871,7 +897,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.278Z"
+          "observedAt": "2026-10-03T08:47:50.512Z"
         }
       ],
       "id": "7c72ad16dd65776cbad4",
@@ -899,11 +925,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-28T14:43:47.000Z",
       "stageEvidenceAt": "2026-09-28T14:43:47.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:26.201Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.501Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:26.201Z",
-      "lastSeenAt": "2026-10-02T09:15:26.201Z",
-      "ageHours": 84.3,
+      "firstSeenAt": "2026-10-03T08:47:51.501Z",
+      "lastSeenAt": "2026-10-03T08:47:51.501Z",
+      "ageHours": 108.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -922,7 +948,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.201Z"
+          "observedAt": "2026-10-03T08:47:51.501Z"
         }
       ],
       "id": "59df01c3a909bc1aa1e9",
@@ -950,11 +976,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-28T08:00:00.000Z",
       "stageEvidenceAt": "2026-09-28T08:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:26.459Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.642Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:26.459Z",
-      "lastSeenAt": "2026-10-02T09:15:26.459Z",
-      "ageHours": 91,
+      "firstSeenAt": "2026-10-03T08:47:51.642Z",
+      "lastSeenAt": "2026-10-03T08:47:51.642Z",
+      "ageHours": 115,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -973,7 +999,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.459Z"
+          "observedAt": "2026-10-03T08:47:51.642Z"
         }
       ],
       "id": "23b14f64ae8dabb4f076",
@@ -989,6 +1015,152 @@
       "variantCount": 1
     },
     {
+      "productName": "Vaporesso XROS 6",
+      "brand": "Vaporesso",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-09-27T13:00:00.000Z",
+      "stageEvidenceAt": "2026-09-27T13:00:00.000Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.725Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-10-03T08:47:50.725Z",
+      "lastSeenAt": "2026-10-03T08:47:50.725Z",
+      "ageHours": 134,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "vapoteurs.net",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/",
+          "title": "INFO BATCH : XROS 6 & XROS 6 Mini (Vaporesso)",
+          "sourceName": "Vapoteurs.net",
+          "sourceUrl": "https://vapoteurs.net",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-27T13:00:00.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-10-03T08:47:50.725Z"
+        }
+      ],
+      "id": "d0b329ed7ad30de5ed24",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros 6",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso INFO BATCH : XROS 6 & XROS 6 Mini",
+          "brand": "Vaporesso",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/"
+        }
+      ],
+      "variantCount": 1
+    },
+    {
+      "productName": "Vaporesso XROS 6 Mini",
+      "brand": "Vaporesso",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-09-27T13:00:00.000Z",
+      "stageEvidenceAt": "2026-09-27T13:00:00.000Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.370Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-10-03T08:47:50.370Z",
+      "lastSeenAt": "2026-10-03T08:47:51.701Z",
+      "ageHours": 134,
+      "sourceCount": 3,
+      "eligibleSources": 2,
+      "sources": [
+        {
+          "host": "ecigclick.co.uk",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9kUnNkOHVfQWV0RlhWR0JuTFlVZ09HbjlFODBjZDAzNlRCRFJLd3BFb0Rqb0psRXc3UDdfdVZnUjI5T3lFZmJDOFgtNm4xZ2RVdXlVM0ZFcmZzVC13LV9vLV83TWJfaC0y?oc=5",
+          "title": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power? - Ecigclick",
+          "sourceName": "Ecigclick",
+          "sourceUrl": "https://www.ecigclick.co.uk",
+          "sourceType": "dated-publication",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-29T16:12:59.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "google-news-rss-pubdate",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-10-03T08:47:50.370Z"
+        },
+        {
+          "host": "vapoteurs.net",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/",
+          "title": "INFO BATCH : XROS 6 & XROS 6 Mini (Vaporesso)",
+          "sourceName": "Vapoteurs.net",
+          "sourceUrl": "https://vapoteurs.net",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-27T13:00:00.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-10-03T08:47:50.725Z"
+        },
+        {
+          "host": "ecigclick.co.uk",
+          "url": "https://www.ecigclick.co.uk/vaporesso-xros-6-mini-review/",
+          "title": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power?",
+          "sourceName": "Ecigclick",
+          "sourceUrl": "https://www.ecigclick.co.uk",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-09-29T16:12:59.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-10-03T08:47:51.701Z"
+        }
+      ],
+      "id": "7fdd83fb5fb29a8194eb",
+      "familyKey": "POD|AUTHENTIC|vaporesso|xros 6 mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power? - Ecigclick",
+          "brand": "Vaporesso",
+          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9kUnNkOHVfQWV0RlhWR0JuTFlVZ09HbjlFODBjZDAzNlRCRFJLd3BFb0Rqb0psRXc3UDdfdVZnUjI5T3lFZmJDOFgtNm4xZ2RVdXlVM0ZFcmZzVC13LV9vLV83TWJfaC0y?oc=5"
+        },
+        {
+          "productName": "Vaporesso INFO BATCH : XROS 6 & XROS 6 Mini",
+          "brand": "Vaporesso",
+          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/"
+        },
+        {
+          "productName": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power?",
+          "brand": "Vaporesso",
+          "url": "https://www.ecigclick.co.uk/vaporesso-xros-6-mini-review/"
+        }
+      ],
+      "variantCount": 3
+    },
+    {
       "productName": "Vaporesso XROS 6 & 6 Mini",
       "brand": "Vaporesso",
       "category": "POD",
@@ -1001,11 +1173,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-25T07:36:08.000Z",
       "stageEvidenceAt": "2026-09-25T07:36:08.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:26.274Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.540Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:26.274Z",
-      "lastSeenAt": "2026-10-02T09:15:26.274Z",
-      "ageHours": 163.4,
+      "firstSeenAt": "2026-10-03T08:47:51.540Z",
+      "lastSeenAt": "2026-10-03T08:47:51.540Z",
+      "ageHours": 187.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1024,7 +1196,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.274Z"
+          "observedAt": "2026-10-03T08:47:51.540Z"
         }
       ],
       "id": "54ed57a7cfd5ea8a0c15",
@@ -1052,11 +1224,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-23T14:44:02.000Z",
       "stageEvidenceAt": "2026-09-23T14:44:02.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:25.512Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.127Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:25.512Z",
-      "lastSeenAt": "2026-10-02T09:15:25.512Z",
-      "ageHours": 204.3,
+      "firstSeenAt": "2026-10-03T08:47:51.127Z",
+      "lastSeenAt": "2026-10-03T08:47:51.127Z",
+      "ageHours": 228.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1075,7 +1247,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.512Z"
+          "observedAt": "2026-10-03T08:47:51.127Z"
         }
       ],
       "id": "2b1c8b259c3fa2ef4b08",
@@ -1103,11 +1275,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-23T10:40:22.000Z",
       "stageEvidenceAt": "2026-09-23T10:40:22.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 208.3,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 232.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1124,7 +1296,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 3.95,
           "currency": null,
@@ -1156,11 +1328,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-23T08:00:00.000Z",
       "stageEvidenceAt": "2026-09-23T08:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:26.495Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.662Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:26.495Z",
-      "lastSeenAt": "2026-10-02T09:15:26.495Z",
-      "ageHours": 211,
+      "firstSeenAt": "2026-10-03T08:47:51.662Z",
+      "lastSeenAt": "2026-10-03T08:47:51.662Z",
+      "ageHours": 235,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1179,7 +1351,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.495Z"
+          "observedAt": "2026-10-03T08:47:51.662Z"
         }
       ],
       "id": "31c924f43280aea8eb7a",
@@ -1207,11 +1379,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-22T11:51:56.000Z",
       "stageEvidenceAt": "2026-09-22T11:51:56.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 231.1,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 255.1,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1228,7 +1400,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 9.95,
           "currency": null,
@@ -1260,11 +1432,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-21T08:00:00.000Z",
       "stageEvidenceAt": "2026-09-21T08:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.775Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.763Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.775Z",
-      "lastSeenAt": "2026-10-02T09:15:24.775Z",
-      "ageHours": 259,
+      "firstSeenAt": "2026-10-03T08:47:50.763Z",
+      "lastSeenAt": "2026-10-03T08:47:50.763Z",
+      "ageHours": 283,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1283,7 +1455,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.775Z"
+          "observedAt": "2026-10-03T08:47:50.763Z"
         }
       ],
       "id": "a162312748e00f28101c",
@@ -1311,11 +1483,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-18T10:42:57.000Z",
       "stageEvidenceAt": "2026-09-18T10:42:57.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 328.3,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 352.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1332,7 +1504,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/LVE-Orion-II-Pro-Plus-Pod-Kit.webp?v=1789655412",
           "price": 49.99,
           "currency": null,
@@ -1364,11 +1536,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-18T01:48:55.000Z",
       "stageEvidenceAt": "2026-09-18T01:48:55.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:25.751Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.256Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:25.751Z",
-      "lastSeenAt": "2026-10-02T09:15:25.751Z",
-      "ageHours": 337.2,
+      "firstSeenAt": "2026-10-03T08:47:51.256Z",
+      "lastSeenAt": "2026-10-03T08:47:51.256Z",
+      "ageHours": 361.2,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1387,7 +1559,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.751Z"
+          "observedAt": "2026-10-03T08:47:51.256Z"
         }
       ],
       "id": "521a76119618433e8cdd",
@@ -1415,11 +1587,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-17T08:26:21.000Z",
       "stageEvidenceAt": "2026-09-17T08:26:21.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 354.6,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 378.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1436,7 +1608,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 9.95,
           "currency": null,
@@ -1468,11 +1640,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-17T03:11:58.000Z",
       "stageEvidenceAt": "2026-09-17T03:11:58.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:25.846Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.308Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:25.846Z",
-      "lastSeenAt": "2026-10-02T09:15:25.846Z",
-      "ageHours": 359.8,
+      "firstSeenAt": "2026-10-03T08:47:51.308Z",
+      "lastSeenAt": "2026-10-03T08:47:51.308Z",
+      "ageHours": 383.8,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1491,7 +1663,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.846Z"
+          "observedAt": "2026-10-03T08:47:51.308Z"
         }
       ],
       "id": "bfd5b71c6376f2d6d0dd",
@@ -1519,11 +1691,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-17T02:15:43.000Z",
       "stageEvidenceAt": "2026-09-17T02:15:43.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.597Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.665Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.597Z",
-      "lastSeenAt": "2026-10-02T09:15:25.882Z",
-      "ageHours": 360.7,
+      "firstSeenAt": "2026-10-03T08:47:50.665Z",
+      "lastSeenAt": "2026-10-03T08:47:51.328Z",
+      "ageHours": 384.7,
       "sourceCount": 2,
       "eligibleSources": 2,
       "sources": [
@@ -1542,7 +1714,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.597Z"
+          "observedAt": "2026-10-03T08:47:50.665Z"
         },
         {
           "host": "igeekphone.com",
@@ -1559,7 +1731,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.881Z"
+          "observedAt": "2026-10-03T08:47:51.328Z"
         }
       ],
       "id": "b0b124e0c10d97074ab2",
@@ -1592,11 +1764,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-16T18:19:59.000Z",
       "stageEvidenceAt": "2026-09-16T18:19:59.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 368.7,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 392.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1613,7 +1785,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/SKE-Bar-6K-Pod-Vape-Kit.webp?v=1789370506",
           "price": 7.99,
           "currency": null,
@@ -1645,11 +1817,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-16T14:52:43.000Z",
       "stageEvidenceAt": "2026-09-16T14:52:43.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:25.921Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.349Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:25.921Z",
-      "lastSeenAt": "2026-10-02T09:15:25.921Z",
-      "ageHours": 372.1,
+      "firstSeenAt": "2026-10-03T08:47:51.349Z",
+      "lastSeenAt": "2026-10-03T08:47:51.349Z",
+      "ageHours": 396.1,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1668,7 +1840,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.921Z"
+          "observedAt": "2026-10-03T08:47:51.349Z"
         }
       ],
       "id": "899594fa6a7a8e34d4c7",
@@ -1696,11 +1868,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-16T14:09:18.000Z",
       "stageEvidenceAt": "2026-09-16T14:09:18.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 372.8,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 396.8,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1717,7 +1889,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 9.95,
           "currency": null,
@@ -1749,11 +1921,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-14T07:39:44.000Z",
       "stageEvidenceAt": "2026-09-14T07:39:44.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 427.3,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 451.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1770,7 +1942,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/kit-dotpod-max-v15-5ml-2100mah-batman-engraved-black-dotmod.webp?v=1787662697",
           "price": 39.89,
           "currency": null,
@@ -1802,11 +1974,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-09-12T16:35:30.000Z",
       "stageEvidenceAt": "2026-09-12T16:35:30.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 466.4,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 490.4,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -1823,7 +1995,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/dojo-blast-7k-fresh-kit-main.jpg?v=1790091980",
           "price": 7.49,
           "currency": null,
@@ -1842,7 +2014,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Vaporesso-Dojo-Blast-Fresh-7K-Prefilled-Pod-Kit.webp?v=1788419833",
           "price": 6.99,
           "currency": null,
@@ -1874,11 +2046,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-09-12T16:35:21.000Z",
       "stageEvidenceAt": "2026-09-12T16:35:21.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 466.4,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 490.4,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -1895,7 +2067,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/dojo-blast-10k-fresh-kit-main.jpg?v=1790092440",
           "price": 7.99,
           "currency": null,
@@ -1914,7 +2086,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Vaporesso-Dojo-Blast-Fresh-10K-Prefilled-Pod-Kit.webp?v=1788423118",
           "price": 7.99,
           "currency": null,
@@ -1946,11 +2118,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-11T14:19:38.000Z",
       "stageEvidenceAt": "2026-09-11T14:19:38.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:25.031Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.903Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:25.031Z",
-      "lastSeenAt": "2026-10-02T09:15:25.031Z",
-      "ageHours": 492.7,
+      "firstSeenAt": "2026-10-03T08:47:50.903Z",
+      "lastSeenAt": "2026-10-03T08:47:50.903Z",
+      "ageHours": 516.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1969,7 +2141,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.031Z"
+          "observedAt": "2026-10-03T08:47:50.903Z"
         }
       ],
       "id": "925c3111bb8d1a52ebb4",
@@ -1997,11 +2169,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-11T08:00:00.000Z",
       "stageEvidenceAt": "2026-09-11T08:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.827Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.792Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.827Z",
-      "lastSeenAt": "2026-10-02T09:15:24.827Z",
-      "ageHours": 499,
+      "firstSeenAt": "2026-10-03T08:47:50.792Z",
+      "lastSeenAt": "2026-10-03T08:47:50.792Z",
+      "ageHours": 523,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2020,7 +2192,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.827Z"
+          "observedAt": "2026-10-03T08:47:50.792Z"
         }
       ],
       "id": "8672ece4f4428d29fb2a",
@@ -2048,11 +2220,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-10T08:00:00.000Z",
       "stageEvidenceAt": "2026-09-10T08:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:26.530Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.681Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:26.530Z",
-      "lastSeenAt": "2026-10-02T09:15:26.530Z",
-      "ageHours": 523,
+      "firstSeenAt": "2026-10-03T08:47:51.681Z",
+      "lastSeenAt": "2026-10-03T08:47:51.681Z",
+      "ageHours": 547,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2071,7 +2243,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.530Z"
+          "observedAt": "2026-10-03T08:47:51.681Z"
         }
       ],
       "id": "3b816f2c35f4384017b5",
@@ -2099,11 +2271,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-09T13:00:00.000Z",
       "stageEvidenceAt": "2026-09-09T13:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.861Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.810Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.861Z",
-      "lastSeenAt": "2026-10-02T09:15:24.861Z",
-      "ageHours": 542,
+      "firstSeenAt": "2026-10-03T08:47:50.810Z",
+      "lastSeenAt": "2026-10-03T08:47:50.810Z",
+      "ageHours": 566,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2122,7 +2294,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.861Z"
+          "observedAt": "2026-10-03T08:47:50.810Z"
         }
       ],
       "id": "3d3969f4a1086bbbcc9a",
@@ -2150,11 +2322,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-09T12:28:40.000Z",
       "stageEvidenceAt": "2026-09-09T12:28:40.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:26.049Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:51.418Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:26.049Z",
-      "lastSeenAt": "2026-10-02T09:15:26.049Z",
-      "ageHours": 542.5,
+      "firstSeenAt": "2026-10-03T08:47:51.418Z",
+      "lastSeenAt": "2026-10-03T08:47:51.418Z",
+      "ageHours": 566.5,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2173,7 +2345,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.049Z"
+          "observedAt": "2026-10-03T08:47:51.418Z"
         }
       ],
       "id": "2ab8a156c26b7c4f5a3a",
@@ -2201,11 +2373,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-09-09T09:42:09.000Z",
       "stageEvidenceAt": "2026-09-09T09:42:09.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 545.3,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 569.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2222,7 +2394,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0038/8032/1113/files/forest_berries_nexpod_15k_pro_kit.jpg?v=1788945300",
           "price": 22.99,
           "currency": null,
@@ -2254,11 +2426,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-09-09T09:02:28.000Z",
       "stageEvidenceAt": "2026-09-09T09:02:28.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 546,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 570,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -2275,7 +2447,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/smok-novo-axis-pod-kit-main.jpg?v=1790694560",
           "price": 19.99,
           "currency": null,
@@ -2294,7 +2466,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Smok-Novo-Axis-Pod-Vape-Kit.webp?v=1788788502",
           "price": 18.99,
           "currency": null,
@@ -2326,11 +2498,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-09-08T14:30:38.000Z",
       "stageEvidenceAt": "2026-09-08T14:30:38.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:15:26.423Z",
-      "ageHours": 564.5,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:47:51.579Z",
+      "ageHours": 588.5,
       "sourceCount": 8,
       "eligibleSources": 3,
       "sources": [
@@ -2347,7 +2519,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 7.95,
           "currency": null,
@@ -2366,7 +2538,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Voopoo-Argus-Z3-Pod-Kit.webp?v=1788875203",
           "price": 7.99,
           "currency": null,
@@ -2387,7 +2559,24 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.428Z"
+          "observedAt": "2026-10-03T08:47:50.646Z"
+        },
+        {
+          "host": "igeekphone.com",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPdThqUmZyQzJuREV5cGExU2dOLTdVSU42TkVELWhTSmJWRlZ2bTBlZVNYeWFxTV9CcWZEN2hIVE8yN2RXZHR6M3dFY1ZzWGcwNTBSSlIyem1SN2NubEFFX3RCak50Z0NOc2xwcnNEYWhyZXZZQ0djNXdHTEJDMlVjTEQ1RGpmaGNGZEg4cFlLaERVQ3VXSWtLLTdB?oc=5",
+          "title": "VOOPOO ARGUS Z3 Review – Flip the Pod, Change the Vape! Keep It Simple! - igeekphone.com",
+          "sourceName": "igeekphone.com",
+          "sourceUrl": "https://www.igeekphone.com",
+          "sourceType": "dated-publication",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-10-01T16:57:16.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "google-news-rss-pubdate",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-10-03T08:47:50.416Z"
         },
         {
           "host": "igeekphone.com",
@@ -2404,7 +2593,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "lansare relatata public",
-          "observedAt": "2026-10-02T09:15:24.392Z"
+          "observedAt": "2026-10-03T08:47:50.451Z"
         },
         {
           "host": "igeekphone.com",
@@ -2421,7 +2610,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.216Z"
+          "observedAt": "2026-10-03T08:47:50.966Z"
         },
         {
           "host": "vapingvibe.com",
@@ -2438,7 +2627,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.237Z"
+          "observedAt": "2026-10-03T08:47:51.520Z"
         },
         {
           "host": "myvapereview.com",
@@ -2455,24 +2644,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.346Z"
-        },
-        {
-          "host": "vapinghardware.com",
-          "url": "https://vapinghardware.com/voopoo-argus-z3-pod-kit-review/",
-          "title": "Voopoo Argus Z3 Pod Kit Review / Simplistic But Very Effective",
-          "sourceName": "Vaping Hardware",
-          "sourceUrl": "https://www.vapinghardware.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-09-22T18:24:22.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.423Z"
+          "observedAt": "2026-10-03T08:47:51.579Z"
         }
       ],
       "id": "c04a2226306806a0f3d9",
@@ -2490,14 +2662,14 @@
           "url": "https://news.google.com/rss/articles/CBMiY0FVX3lxTE9nRkJIT0wybDlQYlZlQzJIbWZZa2d3bE1DZFRXRjJJM09mQ3BGNjd6ZnFRb2JoczZQd2VqSVd5MGhTdEFydmRITkNLbFEyWW1QODN3TExrNkZhaFFXNHlLQmVOTQ?oc=5"
         },
         {
+          "productName": "Voopoo ARGUS Z3 Review - Flip the, Change the",
+          "brand": "Voopoo",
+          "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPdThqUmZyQzJuREV5cGExU2dOLTdVSU42TkVELWhTSmJWRlZ2bTBlZVNYeWFxTV9CcWZEN2hIVE8yN2RXZHR6M3dFY1ZzWGcwNTBSSlIyem1SN2NubEFFX3RCak50Z0NOc2xwcnNEYWhyZXZZQ0djNXdHTEJDMlVjTEQ1RGpmaGNGZEg4cFlLaERVQ3VXSWtLLTdB?oc=5"
+        },
+        {
           "productName": "Voopoo ARGUS Z3 Launches With Multi-Ohm MAGIC - igeekphone.com",
           "brand": "Voopoo",
           "url": "https://news.google.com/rss/articles/CBMimgFBVV95cUxPV2xTZFMyTVk2LU43dDgwcGJGbWtWMmhvSDl0S0taOGQ5M2pvc3hic0RtU09sVklIRzZfUkdUUF9fM0cwUHNCX0prZUhyZHBaYUVZS0Nza1VyNUNjS0wxUEY2aHgtSkZUUjZfb3NqR1JPX3NiTUYzTlRQZURTM1hIS0ZDR2xnWGttbHZXdFpnVkp5WmhsZF9uYUdn?oc=5"
-        },
-        {
-          "productName": "Voopoo ARGUS Z3 Review - Flip the, Change the",
-          "brand": "Voopoo",
-          "url": "https://www.igeekphone.com/voopoo-argus-z3-review-flip-the-pod-change-the-vape-keep-it-simple/"
         },
         {
           "productName": "Voopoo Argus Z3 Review: Big Flavor, Tiny Price",
@@ -2508,14 +2680,9 @@
           "productName": "Voopoo ARGUS Z3 Review: MAGIC, Battery and Beginner Setup Tested",
           "brand": "Voopoo",
           "url": "https://myvapereview.com/editors-reviews/voopoo-argus-z3-review/"
-        },
-        {
-          "productName": "Voopoo Argus Z3 Review / Simplistic But Very Effective",
-          "brand": "Voopoo",
-          "url": "https://vapinghardware.com/voopoo-argus-z3-pod-kit-review/"
         }
       ],
-      "variantCount": 7
+      "variantCount": 6
     },
     {
       "productName": "OXVA Xlim 4 Pod Kit",
@@ -2530,11 +2697,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-09-08T10:45:22.000Z",
       "stageEvidenceAt": "2026-09-08T10:45:22.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:15:25.369Z",
-      "ageHours": 568.2,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:47:51.049Z",
+      "ageHours": 592.2,
       "sourceCount": 5,
       "eligibleSources": 2,
       "sources": [
@@ -2551,7 +2718,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/oxva-xlim-4-aurora-petal-pink-pod-kit.webp?v=1788952995",
           "price": 0,
           "currency": null,
@@ -2570,7 +2737,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/AwaitingImagePod-Kit2025_f6bd8518-4d29-4fa1-924a-fb6d04f3d095.jpg?v=1773740191",
           "price": 16.95,
           "currency": null,
@@ -2589,7 +2756,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/oxva-xlim-4-pod-kit-main.jpg?v=1790258246",
           "price": 19.99,
           "currency": null,
@@ -2608,7 +2775,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/OXVA-Xlim-4-Pod-Kit.webp?v=1788853090",
           "price": 15.99,
           "currency": null,
@@ -2629,7 +2796,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.369Z"
+          "observedAt": "2026-10-03T08:47:51.049Z"
         }
       ],
       "id": "3c8ad73b8219cfbba8c4",
@@ -2662,11 +2829,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-07T17:35:54.000Z",
       "stageEvidenceAt": "2026-09-07T17:35:54.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 585.4,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 609.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2683,7 +2850,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Aspire-Gotek-Pro-2-Pod-Vape-Kit.webp?v=1787750786",
           "price": 19.99,
           "currency": null,
@@ -2715,11 +2882,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-07T15:49:36.000Z",
       "stageEvidenceAt": "2026-09-07T15:49:36.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 587.2,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 611.2,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2736,7 +2903,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Voopoo-VMATE-2-Pod-Vape-Kit.webp?v=1787664649",
           "price": 24.99,
           "currency": null,
@@ -2768,11 +2935,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-07T14:38:59.000Z",
       "stageEvidenceAt": "2026-09-07T14:38:59.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:25.072Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.926Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:25.072Z",
-      "lastSeenAt": "2026-10-02T09:15:25.072Z",
-      "ageHours": 588.4,
+      "firstSeenAt": "2026-10-03T08:47:50.926Z",
+      "lastSeenAt": "2026-10-03T08:47:50.926Z",
+      "ageHours": 612.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2791,7 +2958,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.072Z"
+          "observedAt": "2026-10-03T08:47:50.926Z"
         }
       ],
       "id": "2ef3cb817df8885b1a75",
@@ -2819,11 +2986,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-05T08:00:00.000Z",
       "stageEvidenceAt": "2026-09-05T08:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.898Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:47:50.830Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.898Z",
-      "lastSeenAt": "2026-10-02T09:15:24.898Z",
-      "ageHours": 643,
+      "firstSeenAt": "2026-10-03T08:47:50.830Z",
+      "lastSeenAt": "2026-10-03T08:47:50.830Z",
+      "ageHours": 667,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2842,7 +3009,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.898Z"
+          "observedAt": "2026-10-03T08:47:50.830Z"
         }
       ],
       "id": "5d7717ec815f91a5d356",
@@ -2870,11 +3037,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-09-04T07:46:12.000Z",
       "stageEvidenceAt": "2026-09-04T07:46:12.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:13:34.466Z",
-      "ageHours": 667.2,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:46:04.755Z",
+      "ageHours": 691.2,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2891,7 +3058,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/VPRIME-dual-mesh-pod-0.4.webp?v=1788507466",
           "price": 6.29,
           "currency": null,
@@ -2923,11 +3090,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-09-03T12:25:23.000Z",
       "stageEvidenceAt": "2026-09-03T12:25:23.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:13:34.466Z",
+      "firstPublicEvidenceAt": "2026-10-03T08:46:04.755Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-10-02T09:13:34.466Z",
-      "lastSeenAt": "2026-10-02T09:15:26.603Z",
-      "ageHours": 686.6,
+      "firstSeenAt": "2026-10-03T08:46:04.755Z",
+      "lastSeenAt": "2026-10-03T08:47:51.721Z",
+      "ageHours": 710.6,
       "sourceCount": 9,
       "eligibleSources": 3,
       "sources": [
@@ -2944,7 +3111,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/Mirage-Blue-OXVA-Vprime-2-Pod-Vape-Kit.webp?v=1788437946",
           "price": 29.79,
           "currency": null,
@@ -2963,7 +3130,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-10-02T09:13:34.466Z",
+          "observedAt": "2026-10-03T08:46:04.755Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/oxva-vprime-2-pod-kit-black-carbon.jpg?v=1789031756",
           "price": 34.99,
           "currency": null,
@@ -2984,7 +3151,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.465Z"
+          "observedAt": "2026-10-03T08:47:50.575Z"
         },
         {
           "host": "vapoteurs.net",
@@ -3001,7 +3168,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.741Z"
+          "observedAt": "2026-10-03T08:47:50.744Z"
         },
         {
           "host": "vapingpost.com",
@@ -3018,7 +3185,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.950Z"
+          "observedAt": "2026-10-03T08:47:50.859Z"
         },
         {
           "host": "igeekphone.com",
@@ -3035,7 +3202,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.751Z"
+          "observedAt": "2026-10-03T08:47:51.256Z"
         },
         {
           "host": "igeekphone.com",
@@ -3052,7 +3219,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.007Z"
+          "observedAt": "2026-10-03T08:47:51.396Z"
         },
         {
           "host": "vapingvibe.com",
@@ -3069,7 +3236,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.311Z"
+          "observedAt": "2026-10-03T08:47:51.560Z"
         },
         {
           "host": "ecigclick.co.uk",
@@ -3086,7 +3253,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.603Z"
+          "observedAt": "2026-10-03T08:47:51.721Z"
         }
       ],
       "id": "194bf7e1a28d38a46a0f",
@@ -3135,208 +3302,18 @@
         }
       ],
       "variantCount": 8
-    },
-    {
-      "productName": "Vaporesso XROS 6 Mini",
-      "brand": "Vaporesso",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-09-02T19:41:25.000Z",
-      "stageEvidenceAt": "2026-09-02T19:41:25.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.061Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.061Z",
-      "lastSeenAt": "2026-10-02T09:15:26.567Z",
-      "ageHours": 703.3,
-      "sourceCount": 4,
-      "eligibleSources": 2,
-      "sources": [
-        {
-          "host": "ecigclick.co.uk",
-          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9kUnNkOHVfQWV0RlhWR0JuTFlVZ09HbjlFODBjZDAzNlRCRFJLd3BFb0Rqb0psRXc3UDdfdVZnUjI5T3lFZmJDOFgtNm4xZ2RVdXlVM0ZFcmZzVC13LV9vLV83TWJfaC0y?oc=5",
-          "title": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power? - Ecigclick",
-          "sourceName": "Ecigclick",
-          "sourceUrl": "https://www.ecigclick.co.uk",
-          "sourceType": "dated-publication",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-09-29T16:12:59.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "google-news-rss-pubdate",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.061Z"
-        },
-        {
-          "host": "vapoteurs.net",
-          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/",
-          "title": "INFO BATCH : XROS 6 & XROS 6 Mini (Vaporesso)",
-          "sourceName": "Vapoteurs.net",
-          "sourceUrl": "https://vapoteurs.net",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-09-27T13:00:00.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.707Z"
-        },
-        {
-          "host": "blacknote.com",
-          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-mini-pod-kit-review/",
-          "title": "Vaporesso XROS 6 Mini Review: The Simplest XROS Yet",
-          "sourceName": "Black Note",
-          "sourceUrl": "https://www.blacknote.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-09-02T19:41:25.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.106Z"
-        },
-        {
-          "host": "ecigclick.co.uk",
-          "url": "https://www.ecigclick.co.uk/vaporesso-xros-6-mini-review/",
-          "title": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power?",
-          "sourceName": "Ecigclick",
-          "sourceUrl": "https://www.ecigclick.co.uk",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-09-29T16:12:59.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:26.567Z"
-        }
-      ],
-      "id": "7fdd83fb5fb29a8194eb",
-      "familyKey": "POD|AUTHENTIC|vaporesso|xros 6 mini",
-      "authenticityState": "AUTHENTIC",
-      "variants": [
-        {
-          "productName": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power? - Ecigclick",
-          "brand": "Vaporesso",
-          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE9kUnNkOHVfQWV0RlhWR0JuTFlVZ09HbjlFODBjZDAzNlRCRFJLd3BFb0Rqb0psRXc3UDdfdVZnUjI5T3lFZmJDOFgtNm4xZ2RVdXlVM0ZFcmZzVC13LV9vLV83TWJfaC0y?oc=5"
-        },
-        {
-          "productName": "Vaporesso INFO BATCH : XROS 6 & XROS 6 Mini",
-          "brand": "Vaporesso",
-          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/"
-        },
-        {
-          "productName": "Vaporesso XROS 6 Mini Review: The Simplest XROS Yet",
-          "brand": "Vaporesso",
-          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-mini-pod-kit-review/"
-        },
-        {
-          "productName": "Vaporesso XROS 6 Mini Review- Mini Size, Max Power?",
-          "brand": "Vaporesso",
-          "url": "https://www.ecigclick.co.uk/vaporesso-xros-6-mini-review/"
-        }
-      ],
-      "variantCount": 4
-    },
-    {
-      "productName": "Vaporesso XROS 6",
-      "brand": "Vaporesso",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-09-02T19:33:55.000Z",
-      "stageEvidenceAt": "2026-09-02T19:33:55.000Z",
-      "firstPublicEvidenceAt": "2026-10-02T09:15:24.707Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-10-02T09:15:24.707Z",
-      "lastSeenAt": "2026-10-02T09:15:25.141Z",
-      "ageHours": 703.4,
-      "sourceCount": 2,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "vapoteurs.net",
-          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/",
-          "title": "INFO BATCH : XROS 6 & XROS 6 Mini (Vaporesso)",
-          "sourceName": "Vapoteurs.net",
-          "sourceUrl": "https://vapoteurs.net",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-09-27T13:00:00.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:24.707Z"
-        },
-        {
-          "host": "blacknote.com",
-          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-pod-kit-review/",
-          "title": "Vaporesso XROS 6 Review: Bigger Battery, Same XROS Draw",
-          "sourceName": "Black Note",
-          "sourceUrl": "https://www.blacknote.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-09-02T19:33:55.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-10-02T09:15:25.141Z"
-        }
-      ],
-      "id": "d0b329ed7ad30de5ed24",
-      "familyKey": "POD|AUTHENTIC|vaporesso|xros 6",
-      "authenticityState": "AUTHENTIC",
-      "variants": [
-        {
-          "productName": "Vaporesso INFO BATCH : XROS 6 & XROS 6 Mini",
-          "brand": "Vaporesso",
-          "url": "https://www.vapoteurs.net/info-batch-xros-6-xros-6-mini-vaporesso-2/"
-        },
-        {
-          "productName": "Vaporesso XROS 6 Review: Bigger Battery, Same XROS Draw",
-          "brand": "Vaporesso",
-          "url": "https://www.blacknote.com/blog/vaporesso-xros-6-pod-kit-review/"
-        }
-      ],
-      "variantCount": 2
     }
   ],
   "summary": {
     "total": 8,
-    "allConcrete": 43,
+    "allConcrete": 44,
     "before": 0,
     "after": 8,
     "explicitDatedAfter": 7,
     "confirmed": 0,
     "reported": 8,
-    "publicSignals": 35,
-    "candidatesUnderVerification": 6,
+    "publicSignals": 36,
+    "candidatesUnderVerification": 5,
     "categoryEvents": {
       "POD": 8
     }
