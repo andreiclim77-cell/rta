@@ -1,12 +1,12 @@
 {
   "schemaVersion": 3,
   "scopeYear": 2026,
-  "generatedAt": "2026-10-09T08:58:35.279Z",
+  "generatedAt": "2026-10-10T08:27:15.444Z",
   "registryStorefronts": 22,
   "searchEnginesConfigured": 2,
   "searchEnginesWorking": 2,
   "queriesRun": 51,
-  "domainsDiscovered": 89,
+  "domainsDiscovered": 99,
   "validatedNewRetailers": [],
   "unresolvedCandidates": [],
   "allCandidates": [
@@ -28,25 +28,8 @@
         "\"Asylum V3\" RTA Romania vape",
         "\"Minister MTL RTA\" Romania vape",
         "\"Diplomat MTL RTA\" Romania vape",
+        "\"MD-01 RTA\" Romania vape",
         "\"BY-KA V11\" Romania vape"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
-      "host": "thefreedictionary.com",
-      "url": "https://www.thefreedictionary.com/arcana",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Arcana Mods\" Romania vape",
-        "\"High End\" RTA Romania vape",
-        "\"Minister MTL RTA\" Romania vape"
       ],
       "fetchError": "HTTP 403"
     },
@@ -75,14 +58,15 @@
       ],
       "queries": [
         "\"High End\" RTA Romania vape",
+        "\"Mood V2\" RTA Romania vape",
         "\"Minister MTL RTA\" Romania vape",
         "\"BY-KA V11\" Romania vape"
       ],
       "fetchError": null
     },
     {
-      "host": "rta.qld.gov.au",
-      "url": "https://www.rta.qld.gov.au/",
+      "host": "dictionary.com",
+      "url": "https://www.dictionary.com/browse/high",
       "known": false,
       "validated": false,
       "score": 25,
@@ -94,6 +78,93 @@
         "romania": false,
         "vape": false,
         "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"High End\" RTA Romania vape",
+        "\"Mood V2\" RTA Romania vape",
+        "\"Minister MTL RTA\" Romania vape",
+        "\"BY-KA V11\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "rta.com",
+      "url": "https://rta.com/",
+      "known": false,
+      "validated": false,
+      "score": 65,
+      "reasons": [
+        "Romania/commercial identity",
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": true,
+        "vape": false,
+        "rta": true,
+        "commerce": true,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"RTA\" vape Romania magazin",
+        "\"RTA tank\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "riderta.com",
+      "url": "https://www.riderta.com/",
+      "known": false,
+      "validated": false,
+      "score": -10,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "editorial-only cue"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": true,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"RTA\" vape Romania magazin",
+        "\"RTA tank\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "app.rtafleet.com",
+      "url": "https://app.rtafleet.com/",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": false,
         "commerce": false,
         "b2bOnly": false,
         "editorial": false,
@@ -135,22 +206,13 @@
       "fetchError": null
     },
     {
-      "host": "riversidetransit.com",
-      "url": "https://www.riversidetransit.com/index.php/maps-schedules",
+      "host": "fares.nita.illinois.gov",
+      "url": "https://fares.nita.illinois.gov/",
       "known": false,
       "validated": false,
       "score": 0,
       "reasons": [],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": false,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
+      "signals": null,
       "engines": [
         "bing-rss"
       ],
@@ -158,27 +220,26 @@
         "\"RTA\" vape Romania magazin",
         "\"RTA tank\" Romania vape"
       ],
-      "fetchError": null
+      "fetchError": "HTTP 403"
     },
     {
-      "host": "rta.com",
-      "url": "https://rta.com/",
+      "host": "rtafleet.com",
+      "url": "https://rtafleet.com/",
       "known": false,
       "validated": false,
-      "score": 65,
+      "score": -10,
       "reasons": [
-        "Romania/commercial identity",
         "RTA/rebuildable evidence",
-        "consumer commerce cues"
+        "editorial-only cue"
       ],
       "signals": {
         "roDomain": false,
-        "romania": true,
+        "romania": false,
         "vape": false,
         "rta": true,
-        "commerce": true,
+        "commerce": false,
         "b2bOnly": false,
-        "editorial": false,
+        "editorial": true,
         "marketplace": false
       },
       "engines": [
@@ -191,13 +252,31 @@
       "fetchError": null
     },
     {
-      "host": "wojhati.rta.ae",
-      "url": "https://wojhati.rta.ae/dub/XSLT_TRIP_REQUEST2?language=en",
+      "host": "thertastore.com",
+      "url": "https://www.thertastore.com/",
       "known": false,
       "validated": false,
-      "score": 25,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"RTA\" vape Romania magazin",
+        "\"RTA tank\" Romania vape"
+      ],
+      "fetchError": "HTTP 403"
+    },
+    {
+      "host": "nita.illinois.gov",
+      "url": "https://nita.illinois.gov/index",
+      "known": false,
+      "validated": false,
+      "score": -10,
       "reasons": [
-        "RTA/rebuildable evidence"
+        "RTA/rebuildable evidence",
+        "editorial-only cue"
       ],
       "signals": {
         "roDomain": false,
@@ -206,7 +285,7 @@
         "rta": true,
         "commerce": false,
         "b2bOnly": false,
-        "editorial": false,
+        "editorial": true,
         "marketplace": false
       },
       "engines": [
@@ -245,6 +324,52 @@
       "queries": [
         "\"Kanthal\" bumbac vape Romania magazin",
         "\"Prime Minister RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "thefreedictionary.com",
+      "url": "https://www.thefreedictionary.com/high",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"High End\" RTA Romania vape",
+        "\"Minister MTL RTA\" Romania vape"
+      ],
+      "fetchError": "HTTP 403"
+    },
+    {
+      "host": "en.m.wiktionary.org",
+      "url": "https://en.wiktionary.org/wiki/high",
+      "known": false,
+      "validated": false,
+      "score": 45,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": true,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"High End\" RTA Romania vape",
+        "\"BY-KA V11\" Romania vape"
       ],
       "fetchError": null
     },
@@ -292,62 +417,6 @@
         "commerce": false,
         "b2bOnly": false,
         "editorial": true,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Minister MTL RTA\" Romania vape",
-        "\"BY-KA V11\" Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "dictionary.com",
-      "url": "https://www.dictionary.com/browse/minister",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Minister MTL RTA\" Romania vape",
-        "\"BY-KA V11\" Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "en.wiktionary.org",
-      "url": "https://en.wiktionary.org/wiki/minister",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
         "marketplace": false
       },
       "engines": [
@@ -433,24 +502,8 @@
       "fetchError": null
     },
     {
-      "host": "baike.baidu.com",
-      "url": "https://baike.baidu.com/item/%E8%B4%A3%E4%BB%BB%E5%95%86%E4%B8%9A%E8%81%94%E7%9B%9F/67371190",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"RBA\" \"RTA\" vape Romania"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
-      "host": "news.qq.com",
-      "url": "https://news.qq.com/rain/a/20260815A0CHYG00",
+      "host": "abc.net.au",
+      "url": "https://www.abc.net.au/news/2026-09-29/rba-lifts-rates-highest-level-in-15-years-september-2026/107206640",
       "known": false,
       "validated": false,
       "score": 25,
@@ -476,8 +529,8 @@
       "fetchError": null
     },
     {
-      "host": "asiapacific.tw",
-      "url": "https://asiapacific.tw/rba/",
+      "host": "rba.co.rw",
+      "url": "https://www.rba.co.rw/",
       "known": false,
       "validated": false,
       "score": 25,
@@ -503,73 +556,14 @@
       "fetchError": null
     },
     {
-      "host": "flyroyalbrunei.com",
-      "url": "https://www.flyroyalbrunei.com/brunei/en/",
+      "host": "finance.yahoo.com",
+      "url": "https://finance.yahoo.com/quote/RBA/",
       "known": false,
       "validated": false,
-      "score": 45,
+      "score": -75,
       "reasons": [
-        "Romania/commercial identity",
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": true,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"RBA\" \"RTA\" vape Romania"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "zhuanlan.zhihu.com",
-      "url": "https://zhuanlan.zhihu.com/p/645868745",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"RBA\" \"RTA\" vape Romania"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
-      "host": "jsconsulting.com.tw",
-      "url": "https://www.jsconsulting.com.tw/rba-news01/",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"RBA\" \"RTA\" vape Romania"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
-      "host": "kanthal.com",
-      "url": "https://www.kanthal.com/en/",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
+        "RTA/rebuildable evidence",
+        "marketplace-only cue"
       ],
       "signals": {
         "roDomain": false,
@@ -579,19 +573,19 @@
         "commerce": false,
         "b2bOnly": false,
         "editorial": false,
-        "marketplace": false
+        "marketplace": true
       },
       "engines": [
         "bing-rss"
       ],
       "queries": [
-        "\"Kanthal\" bumbac vape Romania magazin"
+        "\"RBA\" \"RTA\" vape Romania"
       ],
       "fetchError": null
     },
     {
-      "host": "alleima.com",
-      "url": "https://www.alleima.com/en/about-us/strategy-and-operations/divisions/kanthal/",
+      "host": "sbs.com.au",
+      "url": "https://www.sbs.com.au/news/live-blog/rba-september-2026-interest-rates-decision-live/k8b1jlim2",
       "known": false,
       "validated": false,
       "score": -10,
@@ -613,13 +607,166 @@
         "bing-rss"
       ],
       "queries": [
+        "\"RBA\" \"RTA\" vape Romania"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "theguardian.com",
+      "url": "https://www.theguardian.com/business/2026/sep/29/rba-interest-rate-announcement-decision-cash-rate",
+      "known": false,
+      "validated": false,
+      "score": 45,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": true,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"RBA\" \"RTA\" vape Romania"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "prodshop.kanthal.com",
+      "url": "https://prodshop.kanthal.com/",
+      "known": false,
+      "validated": false,
+      "score": 25,
+      "reasons": [
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
         "\"Kanthal\" bumbac vape Romania magazin"
       ],
       "fetchError": null
     },
     {
-      "host": "linkedin.com",
-      "url": "https://www.linkedin.com/company/kanthal",
+      "host": "kanthal.com",
+      "url": "https://www.kanthal.com/en/about-us/",
+      "known": false,
+      "validated": false,
+      "score": 25,
+      "reasons": [
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Kanthal\" bumbac vape Romania magazin"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "hi-tempproducts.com",
+      "url": "https://hi-tempproducts.com/products/raw-materials/",
+      "known": false,
+      "validated": false,
+      "score": 25,
+      "reasons": [
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Kanthal\" bumbac vape Romania magazin"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "aliexpress.com",
+      "url": "https://www.aliexpress.com/s/wiki-ssr/article/what-is-kanthal",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Kanthal\" bumbac vape Romania magazin"
+      ],
+      "fetchError": "HTTP 410"
+    },
+    {
+      "host": "kanthal.de",
+      "url": "https://www.kanthal.de/globalassets/kanthal-global/downloads/resistance-heating-alloys-for-electric-appliances-handbook_b_eng_lr.pdf",
+      "known": false,
+      "validated": false,
+      "score": 45,
+      "reasons": [
+        "Romania/commercial identity",
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": true,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Kanthal\" bumbac vape Romania magazin"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "nationalelement.com",
+      "url": "https://www.nationalelement.com/resistance-alloys/",
       "known": false,
       "validated": false,
       "score": 25,
@@ -673,33 +820,6 @@
       "fetchError": null
     },
     {
-      "host": "arcana.io",
-      "url": "https://www.arcana.io/",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Arcana Mods\" Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
       "host": "arcanacalculator.net",
       "url": "https://arcanacalculator.net/",
       "known": false,
@@ -727,21 +847,20 @@
       "fetchError": null
     },
     {
-      "host": "arcanaempothecary.com",
-      "url": "https://www.arcanaempothecary.com/",
+      "host": "arcana.io",
+      "url": "https://www.arcana.io/",
       "known": false,
       "validated": false,
-      "score": 45,
+      "score": 25,
       "reasons": [
-        "RTA/rebuildable evidence",
-        "consumer commerce cues"
+        "RTA/rebuildable evidence"
       ],
       "signals": {
         "roDomain": false,
         "romania": false,
         "vape": false,
         "rta": true,
-        "commerce": true,
+        "commerce": false,
         "b2bOnly": false,
         "editorial": false,
         "marketplace": false
@@ -771,6 +890,62 @@
       "fetchError": "HTTP 403"
     },
     {
+      "host": "destinymatrics.com",
+      "url": "https://destinymatrics.com/arcana-calculator/",
+      "known": false,
+      "validated": false,
+      "score": -10,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "editorial-only cue"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": true,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Arcana Mods\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "dailytarotdraw.com",
+      "url": "https://www.dailytarotdraw.com/numerology",
+      "known": false,
+      "validated": false,
+      "score": 45,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": true,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Arcana Mods\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
       "host": "tarot.com",
       "url": "https://www.tarot.com/tarot/cards/major-arcana",
       "known": false,
@@ -787,20 +962,21 @@
       "fetchError": "HTTP 403"
     },
     {
-      "host": "mytrilogylife.com",
-      "url": "https://www.mytrilogylife.com/",
+      "host": "mtl.org",
+      "url": "https://www.mtl.org/en",
       "known": false,
       "validated": false,
-      "score": 25,
+      "score": 45,
       "reasons": [
-        "RTA/rebuildable evidence"
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
       ],
       "signals": {
         "roDomain": false,
         "romania": false,
         "vape": false,
         "rta": true,
-        "commerce": false,
+        "commerce": true,
         "b2bOnly": false,
         "editorial": false,
         "marketplace": false
@@ -814,19 +990,17 @@
       "fetchError": null
     },
     {
-      "host": "modernterminals.com",
-      "url": "https://www.modernterminals.com/",
+      "host": "nhl.com",
+      "url": "https://www.nhl.com/canadiens/",
       "known": false,
       "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
+      "score": 0,
+      "reasons": [],
       "signals": {
         "roDomain": false,
         "romania": false,
         "vape": false,
-        "rta": true,
+        "rta": false,
         "commerce": false,
         "b2bOnly": false,
         "editorial": false,
@@ -868,8 +1042,8 @@
       "fetchError": null
     },
     {
-      "host": "mtl.co.jp",
-      "url": "https://mtl.co.jp/english/",
+      "host": "mytrilogylife.com",
+      "url": "https://www.mytrilogylife.com/",
       "known": false,
       "validated": false,
       "score": 25,
@@ -895,67 +1069,14 @@
       "fetchError": null
     },
     {
-      "host": "mtl.org",
-      "url": "https://www.mtl.org/en",
+      "host": "stlviewer.net",
+      "url": "https://stlviewer.net/mtl-viewer",
       "known": false,
       "validated": false,
-      "score": 45,
+      "score": -35,
       "reasons": [
-        "RTA/rebuildable evidence",
-        "consumer commerce cues"
+        "editorial-only cue"
       ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": true,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"MTL RTA\" Romania magazin"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "moleculartestinglabs.com",
-      "url": "https://moleculartestinglabs.com/",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"MTL RTA\" Romania magazin"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "presentation.mtl-inst.com",
-      "url": "https://presentation.mtl-inst.com/mtl/eaton-mtl-products.html",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
       "signals": {
         "roDomain": false,
         "romania": false,
@@ -963,7 +1084,7 @@
         "rta": false,
         "commerce": false,
         "b2bOnly": false,
-        "editorial": false,
+        "editorial": true,
         "marketplace": false
       },
       "engines": [
@@ -971,6 +1092,76 @@
       ],
       "queries": [
         "\"MTL RTA\" Romania magazin"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "acronymfinder.com",
+      "url": "https://www.acronymfinder.com/MTL.html",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"MTL RTA\" Romania magazin"
+      ],
+      "fetchError": "HTTP 403"
+    },
+    {
+      "host": "dictionary.net",
+      "url": "https://www.dictionary.net/dictionary/high",
+      "known": false,
+      "validated": false,
+      "score": -35,
+      "reasons": [
+        "editorial-only cue"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": false,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": true,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"High End\" RTA Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "khs.kingstoncityschools.org",
+      "url": "https://khs.kingstoncityschools.org/",
+      "known": false,
+      "validated": false,
+      "score": 25,
+      "reasons": [
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"High End\" RTA Romania vape"
       ],
       "fetchError": null
     },
@@ -1003,20 +1194,19 @@
       "fetchError": null
     },
     {
-      "host": "en.m.wiktionary.org",
-      "url": "https://en.wiktionary.org/wiki/high",
+      "host": "mood.com",
+      "url": "https://mood.com/",
       "known": false,
       "validated": false,
-      "score": 45,
+      "score": 20,
       "reasons": [
-        "RTA/rebuildable evidence",
         "consumer commerce cues"
       ],
       "signals": {
         "roDomain": false,
         "romania": false,
         "vape": false,
-        "rta": true,
+        "rta": false,
         "commerce": true,
         "b2bOnly": false,
         "editorial": false,
@@ -1026,50 +1216,7 @@
         "bing-rss"
       ],
       "queries": [
-        "\"High End\" RTA Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "collinsdictionary.com",
-      "url": "https://www.collinsdictionary.com/dictionary/english/high",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"High End\" RTA Romania vape"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
-      "host": "lahigh.org",
-      "url": "https://www.lahigh.org/",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"High End\" RTA Romania vape"
+        "\"Mood V2\" RTA Romania vape"
       ],
       "fetchError": null
     },
@@ -1088,33 +1235,6 @@
         "romania": false,
         "vape": false,
         "rta": true,
-        "commerce": true,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Mood V2\" RTA Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "mood.com",
-      "url": "https://mood.com/",
-      "known": false,
-      "validated": false,
-      "score": 20,
-      "reasons": [
-        "consumer commerce cues"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": false,
         "commerce": true,
         "b2bOnly": false,
         "editorial": false,
@@ -1157,78 +1277,8 @@
       "fetchError": null
     },
     {
-      "host": "dana.org",
-      "url": "https://dana.org/resources/understanding-mood/",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Mood V2\" RTA Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "neurolaunch.com",
-      "url": "https://neurolaunch.com/what-are-moods/",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Mood V2\" RTA Romania vape"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
       "host": "uscis.gov",
       "url": "https://www.uscis.gov/humanitarian/refugees-and-asylum/asylum",
-      "known": false,
-      "validated": false,
-      "score": 25,
-      "reasons": [
-        "RTA/rebuildable evidence"
-      ],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": true,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Asylum V3\" RTA Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "americanimmigrationcouncil.org",
-      "url": "https://www.americanimmigrationcouncil.org/fact-sheet/asylum-united-states/",
       "known": false,
       "validated": false,
       "score": 25,
@@ -1281,6 +1331,38 @@
       "fetchError": null
     },
     {
+      "host": "georgiaasylum.org",
+      "url": "https://georgiaasylum.org/",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Asylum V3\" RTA Romania vape"
+      ],
+      "fetchError": "HTTP 403"
+    },
+    {
+      "host": "britannica.com",
+      "url": "https://www.britannica.com/topic/asylum",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Asylum V3\" RTA Romania vape"
+      ],
+      "fetchError": "HTTP 403"
+    },
+    {
       "host": "boundless.com",
       "url": "https://www.boundless.com/immigration-resources/asylum-explained",
       "known": false,
@@ -1309,30 +1391,13 @@
       "fetchError": null
     },
     {
-      "host": "britannica.com",
-      "url": "https://www.britannica.com/topic/asylum",
+      "host": "humanrights.emory.edu",
+      "url": "https://humanrights.emory.edu/atlantaAsylumNetwork/asylumSeekers.htm",
       "known": false,
       "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Asylum V3\" RTA Romania vape"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
-      "host": "citizenpath.com",
-      "url": "https://citizenpath.com/asylum-process-how-it-works/",
-      "known": false,
-      "validated": false,
-      "score": -10,
+      "score": 25,
       "reasons": [
-        "RTA/rebuildable evidence",
-        "editorial-only cue"
+        "RTA/rebuildable evidence"
       ],
       "signals": {
         "roDomain": false,
@@ -1341,7 +1406,7 @@
         "rta": true,
         "commerce": false,
         "b2bOnly": false,
-        "editorial": true,
+        "editorial": false,
         "marketplace": false
       },
       "engines": [
@@ -1378,22 +1443,6 @@
       "fetchError": null
     },
     {
-      "host": "blade.com",
-      "url": "https://www.blade.com/",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"Blade RTA\" BKS Romania vape"
-      ],
-      "fetchError": "HTTP 403"
-    },
-    {
       "host": "justwatch.com",
       "url": "https://www.justwatch.com/us/movie/blade-1998",
       "known": false,
@@ -1421,8 +1470,8 @@
       "fetchError": null
     },
     {
-      "host": "bladehq.com",
-      "url": "https://www.bladehq.com/",
+      "host": "marvel.fandom.com",
+      "url": "https://marvel.fandom.com/wiki/Eric_Brooks_(Earth-616)",
       "known": false,
       "validated": false,
       "score": 0,
@@ -1464,6 +1513,49 @@
       "fetchError": null
     },
     {
+      "host": "bladehq.com",
+      "url": "https://www.bladehq.com/",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Blade RTA\" BKS Romania vape"
+      ],
+      "fetchError": "HTTP 403"
+    },
+    {
+      "host": "en.wiktionary.org",
+      "url": "https://en.wiktionary.org/wiki/minister",
+      "known": false,
+      "validated": false,
+      "score": 25,
+      "reasons": [
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Minister MTL RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
       "host": "oed.com",
       "url": "https://www.oed.com/?tl=true",
       "known": false,
@@ -1490,20 +1582,17 @@
     },
     {
       "host": "primevideo.com",
-      "url": "https://www.primevideo.com/storefront/home/home",
+      "url": "https://www.primevideo.com/offers/nonprimehomepage?ref_=dv_web_force_root",
       "known": false,
       "validated": false,
-      "score": 45,
-      "reasons": [
-        "RTA/rebuildable evidence",
-        "consumer commerce cues"
-      ],
+      "score": 0,
+      "reasons": [],
       "signals": {
         "roDomain": false,
         "romania": false,
         "vape": false,
-        "rta": true,
-        "commerce": true,
+        "rta": false,
+        "commerce": false,
         "b2bOnly": false,
         "editorial": false,
         "marketplace": false
@@ -1532,6 +1621,35 @@
         "b2bOnly": false,
         "editorial": false,
         "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Prime Minister RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "amzn.com",
+      "url": "https://www.amzn.com/",
+      "known": false,
+      "validated": false,
+      "score": -55,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "consumer commerce cues",
+        "marketplace-only cue"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": true,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": true
       },
       "engines": [
         "bing-rss"
@@ -1622,20 +1740,21 @@
       "fetchError": null
     },
     {
-      "host": "diplomacy.state.gov",
-      "url": "https://diplomacy.state.gov/how-do-you-become-a-diplomat/",
+      "host": "thediplomat.com",
+      "url": "https://thediplomat.com/",
       "known": false,
       "validated": false,
-      "score": 25,
+      "score": 45,
       "reasons": [
-        "RTA/rebuildable evidence"
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
       ],
       "signals": {
         "roDomain": false,
         "romania": false,
         "vape": false,
         "rta": true,
-        "commerce": false,
+        "commerce": true,
         "b2bOnly": false,
         "editorial": false,
         "marketplace": false
@@ -1649,49 +1768,8 @@
       "fetchError": null
     },
     {
-      "host": "blog.csdn.net",
-      "url": "https://blog.csdn.net/HouHouEr/article/details/119818080",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": null,
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"MD-01 RTA\" Romania vape"
-      ],
-      "fetchError": "HTTP 521"
-    },
-    {
-      "host": "runoob.com",
-      "url": "https://www.runoob.com/markdown/md-tutorial.html",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": false,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"MD-01 RTA\" Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "markdownviewer.org",
-      "url": "https://markdownviewer.org/",
+      "host": "webmd.com",
+      "url": "https://www.webmd.com/",
       "known": false,
       "validated": false,
       "score": -10,
@@ -1718,58 +1796,8 @@
       "fetchError": null
     },
     {
-      "host": "mdview.cn",
-      "url": "https://www.mdview.cn/",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": false,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"MD-01 RTA\" Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "pandao.github.io",
-      "url": "https://pandao.github.io/editor.md/",
-      "known": false,
-      "validated": false,
-      "score": 0,
-      "reasons": [],
-      "signals": {
-        "roDomain": false,
-        "romania": false,
-        "vape": false,
-        "rta": false,
-        "commerce": false,
-        "b2bOnly": false,
-        "editorial": false,
-        "marketplace": false
-      },
-      "engines": [
-        "bing-rss"
-      ],
-      "queries": [
-        "\"MD-01 RTA\" Romania vape"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "dealmoon.com",
-      "url": "https://www.dealmoon.com/guide/965020",
+      "host": "maryland.gov",
+      "url": "https://www.maryland.gov/",
       "known": false,
       "validated": false,
       "score": 25,
@@ -1795,8 +1823,88 @@
       "fetchError": null
     },
     {
-      "host": "zhihu.com",
-      "url": "https://www.zhihu.com/question/509709392",
+      "host": "mdcalc.com",
+      "url": "https://www.mdcalc.com/",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": false,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"MD-01 RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "providers.geisinger.org",
+      "url": "https://providers.geisinger.org/provider/erin-connolly/2613525",
+      "known": false,
+      "validated": false,
+      "score": 25,
+      "reasons": [
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"MD-01 RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "symptoms.webmd.com",
+      "url": "https://symptoms.webmd.com/",
+      "known": false,
+      "validated": false,
+      "score": -10,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "editorial-only cue"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": true,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"MD-01 RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "bannerhealth.com",
+      "url": "https://www.bannerhealth.com/healthcareblog/teach-me/md-do-pa-np-ma-and-more-what-these-letters-mean",
       "known": false,
       "validated": false,
       "score": 0,
@@ -1863,6 +1971,187 @@
       "fetchError": null
     },
     {
+      "host": "support.microsoft.com",
+      "url": "https://support.microsoft.com/ro-ro/windows/modifica%C8%9Bi-modul-de-alimentare-pentru-pc-ul-windows-c2aff038-22c9-f46d-5ca0-78696fdf2de8",
+      "known": false,
+      "validated": false,
+      "score": 45,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": true,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Chephren RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "ro.geeksbrains.com",
+      "url": "https://ro.geeksbrains.com/cum-sa-schimbati-setarile-de-alimentare-windows-10-3-metode",
+      "known": false,
+      "validated": false,
+      "score": 45,
+      "reasons": [
+        "RTA/rebuildable evidence",
+        "consumer commerce cues"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": true,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Chephren RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "ro.101-help.com",
+      "url": "https://ro.101-help.com/cum-se-schimba-planul-de-alimentare-pe-windows-10-39940838e9/",
+      "known": false,
+      "validated": false,
+      "score": 25,
+      "reasons": [
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Chephren RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "asus.com",
+      "url": "https://www.asus.com/ro/support/faq/1044699/",
+      "known": false,
+      "validated": false,
+      "score": 45,
+      "reasons": [
+        "Romania/commercial identity",
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": true,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Chephren RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "digitalcitizen.ro",
+      "url": "https://www.digitalcitizen.ro/comutatorul-alimentare-windows-10-autonomie-performanta/",
+      "known": false,
+      "validated": false,
+      "score": 50,
+      "reasons": [
+        "domain .ro",
+        "RTA/rebuildable evidence"
+      ],
+      "signals": {
+        "roDomain": true,
+        "romania": false,
+        "vape": false,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Chephren RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "mundowin.com",
+      "url": "https://mundowin.com/ro/cum-se-configureaz%C4%83-planul-de-alimentare-%C3%AEn-Windows-10/",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": false,
+        "rta": false,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": false,
+        "marketplace": false
+      },
+      "engines": [
+        "bing-rss"
+      ],
+      "queries": [
+        "\"Chephren RTA\" Romania vape"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "vapersparadise.ro",
+      "url": "https://www.vapersparadise.ro/shop/dead-rabbit-mtl-rta-2-its-a-hell-of-a-vape/",
+      "known": true,
+      "validated": true,
+      "score": 100,
+      "reasons": [
+        "already in national registry"
+      ],
+      "engines": [
+        "duckduckgo-html"
+      ],
+      "queries": [
+        "\"RTA\" vape Romania magazin"
+      ],
+      "fetchError": null
+    },
+    {
       "host": "vaperomania.ro",
       "url": "https://vaperomania.ro/tank-rta-rda-rdta-ce-inseamna-ce-trebuie-sa-folosesti/",
       "known": false,
@@ -1879,42 +2168,53 @@
       "fetchError": "HTTP 403"
     },
     {
+      "host": "vape.com",
+      "url": "https://vape.com/collections/rta",
+      "known": false,
+      "validated": false,
+      "score": 10,
+      "reasons": [
+        "vape evidence",
+        "RTA/rebuildable evidence",
+        "editorial-only cue"
+      ],
+      "signals": {
+        "roDomain": false,
+        "romania": false,
+        "vape": true,
+        "rta": true,
+        "commerce": false,
+        "b2bOnly": false,
+        "editorial": true,
+        "marketplace": false
+      },
+      "engines": [
+        "duckduckgo-html"
+      ],
+      "queries": [
+        "\"RTA\" vape Romania magazin"
+      ],
+      "fetchError": null
+    },
+    {
+      "host": "elementvape.com",
+      "url": "https://www.elementvape.com/rta-rebuildable-tank-atomizers",
+      "known": false,
+      "validated": false,
+      "score": 0,
+      "reasons": [],
+      "signals": null,
+      "engines": [
+        "duckduckgo-html"
+      ],
+      "queries": [
+        "\"RTA\" vape Romania magazin"
+      ],
+      "fetchError": "HTTP 403"
+    },
+    {
       "host": "voore.ro",
       "url": "https://www.voore.ro/tigari-electronice/kit-vape-pro",
-      "known": true,
-      "validated": true,
-      "score": 100,
-      "reasons": [
-        "already in national registry"
-      ],
-      "engines": [
-        "duckduckgo-html"
-      ],
-      "queries": [
-        "\"RTA\" vape Romania magazin"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "vapersparadise.ro",
-      "url": "https://www.vapersparadise.ro/shop/pure-leaf-rta-edition-lichid-pro-vape-30-ml-dublu-concentrat-nebunie-curata/",
-      "known": true,
-      "validated": true,
-      "score": 100,
-      "reasons": [
-        "already in national registry"
-      ],
-      "engines": [
-        "duckduckgo-html"
-      ],
-      "queries": [
-        "\"RTA\" vape Romania magazin"
-      ],
-      "fetchError": null
-    },
-    {
-      "host": "smokee.ro",
-      "url": "https://smokee.ro/product/atomizor-by-ka-v-11-rta-23mm-by-vape-systems-standard-set/",
       "known": true,
       "validated": true,
       "score": 100,
@@ -1998,8 +2298,8 @@
       "fetchError": null
     },
     {
-      "host": "e-potion.ro",
-      "url": "https://e-potion.ro/atomizoare/servisabile/",
+      "host": "ecig-vapo.com",
+      "url": "https://ecig-vapo.com/atomizoare-servisabile/",
       "known": true,
       "validated": true,
       "score": 100,
@@ -2032,8 +2332,8 @@
       "fetchError": null
     },
     {
-      "host": "ecig-vapo.com",
-      "url": "https://ecig-vapo.com/atomizoare-servisabile/",
+      "host": "e-potion.ro",
+      "url": "https://e-potion.ro/atomizoare/servisabile/",
       "known": true,
       "validated": true,
       "score": 100,
@@ -2289,7 +2589,7 @@
       "engine": "bing-rss",
       "query": "\"Chephren RTA\" Romania vape",
       "ok": true,
-      "urls": 0,
+      "urls": 10,
       "error": null
     },
     {
@@ -2303,7 +2603,7 @@
       "engine": "duckduckgo-html",
       "query": "\"RTA\" vape Romania magazin",
       "ok": true,
-      "urls": 8,
+      "urls": 10,
       "error": null
     },
     {
@@ -2483,16 +2783,8 @@
     }
   ],
   "currentAuditClean": true,
-  "consecutiveCleanAudits": 1,
+  "consecutiveCleanAudits": 2,
   "auditHistory": [
-    {
-      "at": "2026-09-26T07:37:22.633Z",
-      "clean": true,
-      "newRetailers": 0,
-      "unresolved": 0,
-      "domains": 90,
-      "enginesWorking": 2
-    },
     {
       "at": "2026-09-27T08:05:15.856Z",
       "clean": true,
@@ -2596,6 +2888,14 @@
       "unresolved": 0,
       "domains": 89,
       "enginesWorking": 2
+    },
+    {
+      "at": "2026-10-10T08:27:15.444Z",
+      "clean": true,
+      "newRetailers": 0,
+      "unresolved": 0,
+      "domains": 99,
+      "enginesWorking": 2
     }
   ],
   "scopePolicy": {
@@ -2605,7 +2905,7 @@
     "unit": "consumer retailer storefront"
   },
   "nationalUniverseGate": {
-    "pass": false,
-    "reason": "clean audit 1/2; one more independent clean pass required"
+    "pass": true,
+    "reason": "two consecutive clean universe audits with no uncovered retailer"
   }
 }
