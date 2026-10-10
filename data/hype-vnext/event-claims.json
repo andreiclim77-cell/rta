@@ -1,18 +1,18 @@
 {
-  "count": 116,
+  "count": 110,
   "entitySchemaVersion": 1,
   "entityType": "event_claim",
   "eventTypes": {
     "BATCH": 1,
-    "FIRST_RETAIL_OBSERVATION": 67,
+    "FIRST_RETAIL_OBSERVATION": 53,
     "OFFICIAL_RELEASE": 1,
     "PREORDER_OPEN": 1,
     "PUBLIC_SIGNAL": 2,
     "REGIONAL_RELEASE_CLAIM": 1,
     "RETAIL_PROMOTION": 7,
-    "REVIEWER_FIRST_LOOK": 36
+    "REVIEWER_FIRST_LOOK": 44
   },
-  "generatedAt": "2026-10-09T09:54:08.457Z",
+  "generatedAt": "2026-10-10T09:20:46.079Z",
   "recentReleaseWindowActive": 1,
   "rows": [
     {
@@ -23,11 +23,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.623Z",
+        "materialObservedAt": "2026-10-10T09:19:23.217Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -48,7 +48,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.623Z",
+      "observedAt": "2026-10-10T09:19:23.217Z",
       "productId": "pr_39149174f83a3ff596b366d6",
       "region": "GLOBAL",
       "relation": "supports",
@@ -65,11 +65,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 85,
         "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
@@ -90,7 +90,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_aef82d8702aa037e6ecad0bf",
       "region": "GLOBAL",
       "relation": "supports",
@@ -104,45 +104,43 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare voopoo argus z3 review big flavor tiny price",
-      "claimedEventAt": "2026-09-26T10:01:59.000Z",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata review argus z3 voopoo",
+      "claimedEventAt": "2026-10-09T14:18:12.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.883Z",
+        "materialObservedAt": "2026-10-10T09:19:22.466Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
       },
       "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_c9c5968f34c7b9c94cda97e0",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_66754c0563c11d254d4d870a",
       "expectedEndAt": null,
       "expectedStartAt": null,
-      "id": "cl_0319d6a3aa73391acd53ae34",
+      "id": "cl_0358f84c2f66bc01dcd0722d",
       "identityConfidence": {
         "basis": "current canonical product association",
         "level": "MEDIUM",
         "score": 72
       },
       "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.883Z",
+      "observedAt": "2026-10-10T09:19:22.466Z",
       "productId": "pr_462f995862179b4df2a04842",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
       "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
+      "warnings": [],
       "weightRole": "LIFECYCLE_ELIGIBLE"
     },
     {
@@ -153,11 +151,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.783Z",
+        "materialObservedAt": "2026-10-10T09:19:23.305Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -178,7 +176,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.783Z",
+      "observedAt": "2026-10-10T09:19:23.305Z",
       "productId": "pr_6e73e1b7ec6450d6f788621a",
       "region": "GLOBAL",
       "relation": "supports",
@@ -192,16 +190,58 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 review magic pod 1100mah battery and beginner setup tested",
+      "claimedEventAt": "2026-09-29T10:24:43.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:23.486Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_c50f37f6e2129c3e8d2fcd5c",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_099b03da258d65d013041dca",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:23.486Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
       "claimTextNormalized": "aparitie publica datata aparitie publica datata vaporesso xros 6 mini review- mini size max power - ecigclick",
       "claimedEventAt": "2026-09-29T16:12:59.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.079Z",
+        "materialObservedAt": "2026-10-10T09:19:21.669Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -222,7 +262,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.079Z",
+      "observedAt": "2026-10-10T09:19:21.669Z",
       "productId": "pr_0608f5c25e48d60314a2d847",
       "region": "GLOBAL",
       "relation": "supports",
@@ -239,11 +279,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.832Z",
+        "materialObservedAt": "2026-10-10T09:19:22.425Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -264,7 +304,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.832Z",
+      "observedAt": "2026-10-10T09:19:22.425Z",
       "productId": "pr_3c980156d83315d8a49af328",
       "region": "GLOBAL",
       "relation": "supports",
@@ -276,60 +316,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare voopoo argus z3 pod kit review simplistic but very effective",
-      "claimedEventAt": "2026-09-22T18:24:22.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.993Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_729bab13f51616bf8b32b35e",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_0b8f6a33828e6e5a690bdd41",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:48.993Z",
-      "productId": "pr_462f995862179b4df2a04842",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare oxva vprime 2 review- battery beast",
       "claimedEventAt": "2026-09-13T21:05:50.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.231Z",
+        "materialObservedAt": "2026-10-10T09:19:23.781Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -350,7 +346,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.231Z",
+      "observedAt": "2026-10-10T09:19:23.781Z",
       "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
@@ -369,11 +365,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:53:59.073Z",
+        "materialObservedAt": "2026-10-10T09:20:38.772Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 35,
         "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
@@ -394,7 +390,7 @@
         "legacyStage": "RETAIL_PROMOTION",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:53:59.073Z",
+      "observedAt": "2026-10-10T09:20:38.772Z",
       "productId": "pr_77cc586d8b5475eafebbf467",
       "region": "GLOBAL",
       "relation": "contextualizes",
@@ -413,11 +409,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.689Z",
+        "materialObservedAt": "2026-10-10T09:19:22.284Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -438,7 +434,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.689Z",
+      "observedAt": "2026-10-10T09:19:22.284Z",
       "productId": "pr_d97e4a7f85e65b5feb6f386f",
       "region": "GLOBAL",
       "relation": "supports",
@@ -455,11 +451,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.551Z",
+        "materialObservedAt": "2026-10-10T09:19:22.145Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -480,7 +476,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.551Z",
+      "observedAt": "2026-10-10T09:19:22.145Z",
       "productId": "pr_c0873ea76bf8ff2e7a6b96b5",
       "region": "GLOBAL",
       "relation": "supports",
@@ -499,11 +495,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -524,7 +520,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_1cff5676988c9cb32709a11f",
       "region": "GLOBAL",
       "relation": "supports",
@@ -538,60 +534,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare info batch centaurus m120 s lost vape",
-      "claimedEventAt": "2026-09-11T13:00:00.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.806Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_cca8ea298bcefda77628dbb2",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_17add8f5fc5e2115658a6e7c",
-      "identityConfidence": {
-        "basis": "current canonical product association",
-        "level": "MEDIUM",
-        "score": 72
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:47.806Z",
-      "productId": "pr_65c072a5e1d71cdb36dabe0e",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata smok novo axis pod kit",
+      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare smok novo axis pod kit",
       "claimedEventAt": "2026-09-30T10:06:38.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -609,10 +561,10 @@
       },
       "migration": {
         "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_fdc8fb320d32f934d54e1a54",
       "region": "GLOBAL",
       "relation": "supports",
@@ -631,11 +583,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.792Z",
+        "materialObservedAt": "2026-10-10T09:19:22.385Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -656,7 +608,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.792Z",
+      "observedAt": "2026-10-10T09:19:22.385Z",
       "productId": "pr_158088ab59e28e591e7742eb",
       "region": "GLOBAL",
       "relation": "supports",
@@ -668,60 +620,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare lost vape centaurus m120 s box mod",
-      "claimedEventAt": "2026-09-09T10:45:30.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 68,
-        "semantic": "CATALOG_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_1eabbb7d701ca6958f7cf833",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_1ee007198da608faa08540d8",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:50:59.107Z",
-      "productId": "pr_65c072a5e1d71cdb36dabe0e",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "prima listare oficiala datata prima listare oficiala datata prime minister rdl rta standard",
       "claimedEventAt": "2026-09-21T12:21:09.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.353Z",
+        "materialObservedAt": "2026-10-10T09:19:23.890Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 85,
         "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
@@ -742,7 +650,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.353Z",
+      "observedAt": "2026-10-10T09:19:23.890Z",
       "productId": "pr_668dc43be3702e0784b93e0e",
       "region": "GLOBAL",
       "relation": "supports",
@@ -761,11 +669,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.209Z",
+        "materialObservedAt": "2026-10-10T09:19:22.804Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -786,7 +694,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.209Z",
+      "observedAt": "2026-10-10T09:19:22.804Z",
       "productId": "pr_6e73e1b7ec6450d6f788621a",
       "region": "GLOBAL",
       "relation": "supports",
@@ -805,11 +713,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -830,52 +738,8 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_8b1c5681d074f94ad1a1eb5d",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare voopoo argus z3 review flip the pod change the vape keep it simple - igeekphone.com",
-      "claimedEventAt": "2026-10-01T16:57:16.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.224Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_77e64670180dc4cdd37bc239",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_288abb42fcb8512081f31d36",
-      "identityConfidence": {
-        "basis": "current canonical product association",
-        "level": "MEDIUM",
-        "score": 72
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:47.224Z",
-      "productId": "pr_462f995862179b4df2a04842",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
@@ -893,11 +757,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:53:59.073Z",
+        "materialObservedAt": "2026-10-10T09:20:38.772Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 35,
         "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
@@ -918,7 +782,7 @@
         "legacyStage": "RETAIL_PROMOTION",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:53:59.073Z",
+      "observedAt": "2026-10-10T09:20:38.772Z",
       "productId": "pr_ad8a7cc34dd35c2eb3454b5c",
       "region": "GLOBAL",
       "relation": "contextualizes",
@@ -937,11 +801,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.898Z",
+        "materialObservedAt": "2026-10-10T09:19:22.492Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -962,93 +826,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.898Z",
-      "productId": "pr_3f7160619f673f4558171420",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata aparitie publica datata bat expands vuse pro in the u.s. with app-based age verification and four flavored pods",
-      "claimedEventAt": "2026-09-09T12:28:40.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.718Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "REVIEWER_FIRST_LOOK",
-      "evidenceId": "ev_08294665614149a3b8df2b66",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_2b3c3ceb47d8e7e1579a263d",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "dated-public-evidence",
-        "legacyStage": "FIRST_PUBLIC",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:48.718Z",
-      "productId": "pr_ccd9963f18dec6112d950cbb",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare review vprime 2 oxva - vaping post",
-      "claimedEventAt": "2026-09-18T10:30:52.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.418Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_14fd1dde38e628bf17edf0e7",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_2d9d9c33c416f67a853f2b51",
-      "identityConfidence": {
-        "basis": "current canonical product association",
-        "level": "MEDIUM",
-        "score": 72
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:47.418Z",
+      "observedAt": "2026-10-10T09:19:22.492Z",
       "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1067,11 +845,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.767Z",
+        "materialObservedAt": "2026-10-10T09:19:22.360Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -1092,7 +870,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.767Z",
+      "observedAt": "2026-10-10T09:19:22.360Z",
       "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1111,11 +889,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1136,7 +914,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_c0873ea76bf8ff2e7a6b96b5",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1155,11 +933,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.259Z",
+        "materialObservedAt": "2026-10-10T09:19:22.854Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -1180,7 +958,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.259Z",
+      "observedAt": "2026-10-10T09:19:22.854Z",
       "productId": "pr_b283877e79be876cfcb6cfe8",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1192,60 +970,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare info batch argus z3 voopoo",
-      "claimedEventAt": "2026-10-03T13:00:00.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.659Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_61c29b40487667bae7b5134b",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_3b98271a6b3d95f2535b8cd4",
-      "identityConfidence": {
-        "basis": "current canonical product association",
-        "level": "MEDIUM",
-        "score": 72
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:47.659Z",
-      "productId": "pr_462f995862179b4df2a04842",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata oxva xlim 4 pod kit",
       "claimedEventAt": "2026-09-10T08:40:09.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1266,7 +1000,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6e73e1b7ec6450d6f788621a",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1285,11 +1019,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.911Z",
+        "materialObservedAt": "2026-10-10T09:19:23.433Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -1310,7 +1044,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.911Z",
+      "observedAt": "2026-10-10T09:19:23.433Z",
       "productId": "pr_d25df825827d5ddcccef4b7f",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1327,11 +1061,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.857Z",
+        "materialObservedAt": "2026-10-10T09:19:23.379Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -1352,7 +1086,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.857Z",
+      "observedAt": "2026-10-10T09:19:23.379Z",
       "productId": "pr_c0b17236f771aba1932ee4f0",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1369,11 +1103,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1394,7 +1128,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1408,58 +1142,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch prix mtl pod vaporesso",
-      "claimedEventAt": "2026-09-09T13:00:00.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.857Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "REVIEWER_FIRST_LOOK",
-      "evidenceId": "ev_3499ae818b74ef5c0721375c",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_4480d6f5592aa9581a8fa347",
-      "identityConfidence": {
-        "basis": "product-level source URL",
-        "level": "HIGH",
-        "score": 88
-      },
-      "migration": {
-        "legacyDateConfidence": "dated-public-evidence",
-        "legacyStage": "FIRST_PUBLIC",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:47.857Z",
-      "productId": "pr_714f43255589bdd55e29072f",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata oxva xlim 4 pod kit",
       "claimedEventAt": "2026-09-10T11:28:17.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1480,7 +1172,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6e73e1b7ec6450d6f788621a",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1499,11 +1191,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1524,7 +1216,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_435cd4b5d259c3ba13923fb2",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1543,11 +1235,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.449Z",
+        "materialObservedAt": "2026-10-10T09:19:23.985Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 85,
         "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
@@ -1568,7 +1260,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.449Z",
+      "observedAt": "2026-10-10T09:19:23.985Z",
       "productId": "pr_668dc43be3702e0784b93e0e",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1587,11 +1279,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1612,7 +1304,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_c43c059198d7a6b31a91ebbb",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1631,11 +1323,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1656,52 +1348,8 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_e9f51dda1add7fcc9707b1df",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare hellvape dead rabbit mini rta",
-      "claimedEventAt": "2026-09-09T10:02:16.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 68,
-        "semantic": "CATALOG_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_0115123f2be0874490b8d235",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_51d07882e9e288a477d849e8",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:50:59.107Z",
-      "productId": "pr_be608af7a66756a267565e6e",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
@@ -1719,11 +1367,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -1744,7 +1392,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6dfacce07cb837db30a15f72",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1763,11 +1411,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.390Z",
+        "materialObservedAt": "2026-10-10T09:19:21.950Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -1788,52 +1436,8 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.390Z",
+      "observedAt": "2026-10-10T09:19:21.950Z",
       "productId": "pr_6e73e1b7ec6450d6f788621a",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare voopoo argus z3 review flip the pod change the vape keep it simple",
-      "claimedEventAt": "2026-10-01T16:57:16.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.096Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_fd230af726d496c70f89e7b8",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_56360c3baf675599e9e752da",
-      "identityConfidence": {
-        "basis": "product-level source URL",
-        "level": "HIGH",
-        "score": 88
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:48.096Z",
-      "productId": "pr_462f995862179b4df2a04842",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
@@ -1851,11 +1455,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:53:59.073Z",
+        "materialObservedAt": "2026-10-10T09:20:38.772Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 35,
         "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
@@ -1876,7 +1480,7 @@
         "legacyStage": "RETAIL_PROMOTION",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:53:59.073Z",
+      "observedAt": "2026-10-10T09:20:38.772Z",
       "productId": "pr_8bc98b24165f4d1f4ba68ff9",
       "region": "GLOBAL",
       "relation": "contextualizes",
@@ -1895,11 +1499,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.567Z",
+        "materialObservedAt": "2026-10-10T09:19:23.161Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -1920,7 +1524,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.567Z",
+      "observedAt": "2026-10-10T09:19:23.161Z",
       "productId": "pr_e0dd3d75d0462985f92e2a58",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1937,11 +1541,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.277Z",
+        "materialObservedAt": "2026-10-10T09:19:21.841Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -1962,7 +1566,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.277Z",
+      "observedAt": "2026-10-10T09:19:21.841Z",
       "productId": "pr_1336b4b0eb4ae538a6f43a13",
       "region": "GLOBAL",
       "relation": "supports",
@@ -1979,11 +1583,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2004,7 +1608,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_8b1c5681d074f94ad1a1eb5d",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2023,11 +1627,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.098Z",
+        "materialObservedAt": "2026-10-10T09:19:23.648Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2048,7 +1652,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.098Z",
+      "observedAt": "2026-10-10T09:19:23.648Z",
       "productId": "pr_6c162de7a26f76733e921968",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2065,11 +1669,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2090,7 +1694,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6e73e1b7ec6450d6f788621a",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2104,58 +1708,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "batch viitor batch viitor yftk flash e-vapor v4.5s+ style rta",
-      "claimedEventAt": "2026-10-10T00:00:00.000Z",
-      "clocks": {
-        "forecastBand": "NEXT_30_DAYS",
-        "historyMemoryActive": false,
-        "materialObservedAt": "2026-10-09T09:53:39.118Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 78,
-        "semantic": "CLAIMED_OR_EXPECTED_DATE"
-      },
-      "entityType": "event_claim",
-      "eventType": "BATCH",
-      "evidenceId": "ev_33a6ef31d5a13c5d8ce3f656",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_67d9910fb545a933da1856a8",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "explicit-vendor-eta",
-        "legacyStage": "BATCH",
-        "legacyWindow": "before"
-      },
-      "observedAt": "2026-10-09T09:53:39.118Z",
-      "productId": "pr_9213c33222528f7249d9cb2f",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare dotmod dotbox 220w v2 red engraved deadpool limited edition mod",
       "claimedEventAt": "2026-09-10T11:28:09.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2176,8 +1738,94 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_f79c92a30557c6763811ba91",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+      ],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 review flip the pod change the vape keep it simple - igeekphone.com",
+      "claimedEventAt": "2026-10-01T16:57:16.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:21.787Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_77e64670180dc4cdd37bc239",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_6a1299cee1f1c13a0059f381",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:21.787Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare review vprime 2 oxva - vaping post",
+      "claimedEventAt": "2026-09-18T07:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:22.006Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "FIRST_RETAIL_OBSERVATION",
+      "evidenceId": "ev_2ba4053f96799872c2a7e2d9",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_6c6c142dcc73bd348b8c9f7e",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "catalog-published-at",
+        "legacyStage": "FIRST_RETAIL_SIGNAL",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:22.006Z",
+      "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
@@ -2195,11 +1843,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2220,7 +1868,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_d62dc076abde9ecfeeeaa031",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2239,11 +1887,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2264,7 +1912,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6312e4a134d58c569d2955c7",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2283,11 +1931,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.604Z",
+        "materialObservedAt": "2026-10-10T09:19:22.198Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2308,7 +1956,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.604Z",
+      "observedAt": "2026-10-10T09:19:22.198Z",
       "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2322,58 +1970,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "eta precomanda eta precomanda sxk ghost ring style rta",
-      "claimedEventAt": "2026-10-15T00:00:00.000Z",
-      "clocks": {
-        "forecastBand": "NEXT_30_DAYS",
-        "historyMemoryActive": false,
-        "materialObservedAt": "2026-10-09T09:53:39.118Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 78,
-        "semantic": "CLAIMED_OR_EXPECTED_DATE"
-      },
-      "entityType": "event_claim",
-      "eventType": "PREORDER_OPEN",
-      "evidenceId": "ev_d9ccb42f4862441b543fa78f",
-      "expectedEndAt": "2026-10-15T00:00:00.000Z",
-      "expectedStartAt": "2026-10-15T00:00:00.000Z",
-      "id": "cl_723a95b3c603b1f7c9c59bca",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "explicit-vendor-eta",
-        "legacyStage": "IMMINENT",
-        "legacyWindow": "before"
-      },
-      "observedAt": "2026-10-09T09:53:39.118Z",
-      "productId": "pr_164dd21054620f8241713839",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "aparitie publica datata aparitie publica datata dojo blast 10k review- powered by vaporesso - ecigclick",
       "claimedEventAt": "2026-10-07T11:51:15.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.632Z",
+        "materialObservedAt": "2026-10-10T09:19:22.227Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2394,7 +2000,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.632Z",
+      "observedAt": "2026-10-10T09:19:22.227Z",
       "productId": "pr_595f60f19a642e8c725365c7",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2411,11 +2017,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.019Z",
+        "materialObservedAt": "2026-10-10T09:19:23.570Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2436,7 +2042,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.019Z",
+      "observedAt": "2026-10-10T09:19:23.570Z",
       "productId": "pr_fe247ee8dca0e464aa37bdd6",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2453,11 +2059,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.783Z",
+        "materialObservedAt": "2026-10-10T09:19:23.305Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2478,7 +2084,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.783Z",
+      "observedAt": "2026-10-10T09:19:23.305Z",
       "productId": "pr_ac392811cd6319d961f5f7e9",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2495,11 +2101,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2520,7 +2126,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_d62dc076abde9ecfeeeaa031",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2539,11 +2145,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.259Z",
+        "materialObservedAt": "2026-10-10T09:19:22.854Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2564,7 +2170,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.259Z",
+      "observedAt": "2026-10-10T09:19:22.854Z",
       "productId": "pr_1336b4b0eb4ae538a6f43a13",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2581,11 +2187,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.204Z",
+        "materialObservedAt": "2026-10-10T09:19:23.754Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2606,7 +2212,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.204Z",
+      "observedAt": "2026-10-10T09:19:23.754Z",
       "productId": "pr_0608f5c25e48d60314a2d847",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2618,60 +2224,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare voopoo argus z3 review magic pod 1100mah battery and beginner setup tested",
-      "claimedEventAt": "2026-09-29T10:24:43.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.963Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_c50f37f6e2129c3e8d2fcd5c",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_822f5fc10dbdc6fd5fbf30e4",
-      "identityConfidence": {
-        "basis": "current canonical product association",
-        "level": "MEDIUM",
-        "score": 72
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:48.963Z",
-      "productId": "pr_462f995862179b4df2a04842",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare vaporesso armour gs2 pod mod kit",
       "claimedEventAt": "2026-10-04T13:19:44.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2692,7 +2254,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_1d6e1ca771adbdc24f330dbb",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2711,11 +2273,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2736,7 +2298,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6d391974e3c00c0e2aa54e27",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2755,11 +2317,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.959Z",
+        "materialObservedAt": "2026-10-10T09:19:22.552Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2780,7 +2342,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.959Z",
+      "observedAt": "2026-10-10T09:19:22.552Z",
       "productId": "pr_dc1531ab0f3e405a221cb391",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2797,11 +2359,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2822,7 +2384,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_0a3718fb278b5c9229017f21",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2841,11 +2403,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 85,
         "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
@@ -2866,7 +2428,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_26ab5b1b73582f3c58a1319a",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2885,11 +2447,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -2910,7 +2472,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_56c4116062504e2cdc7455b5",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2929,11 +2491,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 85,
         "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
@@ -2954,7 +2516,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_57450c03006a59435f69beac",
       "region": "GLOBAL",
       "relation": "supports",
@@ -2968,16 +2530,58 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata info batch argus z3 voopoo",
+      "claimedEventAt": "2026-10-03T13:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:22.253Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_61c29b40487667bae7b5134b",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_8f998e822f553ec91b451682",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:22.253Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
       "claimTextNormalized": "aparitie publica datata aparitie publica datata oxva xlim 4 pods 0.4 vs 0.6 vs 0.8 vs 1.2 explained",
       "claimedEventAt": "2026-09-30T05:20:18.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.812Z",
+        "materialObservedAt": "2026-10-10T09:19:23.333Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -2998,7 +2602,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.812Z",
+      "observedAt": "2026-10-10T09:19:23.333Z",
       "productId": "pr_fab3e5073172039be1f895f8",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3015,11 +2619,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:53:59.073Z",
+        "materialObservedAt": "2026-10-10T09:20:38.772Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 35,
         "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
@@ -3040,7 +2644,7 @@
         "legacyStage": "RETAIL_PROMOTION",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:53:59.073Z",
+      "observedAt": "2026-10-10T09:20:38.772Z",
       "productId": "pr_686812c40c0c97f892d6cc25",
       "region": "GLOBAL",
       "relation": "contextualizes",
@@ -3059,11 +2663,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.740Z",
+        "materialObservedAt": "2026-10-10T09:19:22.334Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3084,7 +2688,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.740Z",
+      "observedAt": "2026-10-10T09:19:22.334Z",
       "productId": "pr_0608f5c25e48d60314a2d847",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3096,16 +2700,60 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
+      "claimTextNormalized": "batch nou batch nou yftk flash e-vapor v4.5s+ style rta rebuildable tank atomizer - silver 316 stainless steel + glass 4.5ml 23mm diameter",
+      "claimedEventAt": "2026-10-10T00:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:14:57.797Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
+      },
+      "entityType": "event_claim",
+      "eventType": "BATCH",
+      "evidenceId": "ev_e647d7c11d74d5590095eb23",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_921d3940c815366bcc2465bf",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "explicit",
+        "legacyStage": "BATCH",
+        "legacyWindow": "before"
+      },
+      "observedAt": "2026-10-10T09:14:57.797Z",
+      "productId": "pr_9213c33222528f7249d9cb2f",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [
+        "DISCOVERY_ONLY"
+      ],
+      "weightRole": "DISCOVERY_ONLY"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
       "claimTextNormalized": "aparitie publica datata aparitie publica datata oxva vprime 2 vs vprime what s new in the latest version",
       "claimedEventAt": "2026-09-18T01:48:55.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.496Z",
+        "materialObservedAt": "2026-10-10T09:19:23.090Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3126,7 +2774,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.496Z",
+      "observedAt": "2026-10-10T09:19:23.090Z",
       "productId": "pr_fe115e2c6c4519488543b80c",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3143,11 +2791,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -3168,7 +2816,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_cddb4f5024097891455f58dd",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3182,16 +2830,58 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata review argus z3 voopoo - vaping post",
+      "claimedEventAt": "2026-10-09T14:18:12.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:21.979Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_4169104a728aabf54c066d01",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_968a72a3d58d43ca97a36f82",
+      "identityConfidence": {
+        "basis": "current canonical product association",
+        "level": "MEDIUM",
+        "score": 72
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:21.979Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
       "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo vmate max2 vs vmate i3 review key differences - igeekphone.com",
       "claimedEventAt": "2026-09-30T03:00:22.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.277Z",
+        "materialObservedAt": "2026-10-10T09:19:21.841Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3212,7 +2902,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.277Z",
+      "observedAt": "2026-10-10T09:19:21.841Z",
       "productId": "pr_b283877e79be876cfcb6cfe8",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3229,11 +2919,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.015Z",
+        "materialObservedAt": "2026-10-10T09:19:22.608Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3254,7 +2944,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.015Z",
+      "observedAt": "2026-10-10T09:19:22.608Z",
       "productId": "pr_c0873ea76bf8ff2e7a6b96b5",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3273,11 +2963,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -3298,7 +2988,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6be4336605f2e48875acb143",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3317,11 +3007,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.308Z",
+        "materialObservedAt": "2026-10-10T09:19:21.872Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3342,7 +3032,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.308Z",
+      "observedAt": "2026-10-10T09:19:21.872Z",
       "productId": "pr_e9aa2269a258b17ea4327ec6",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3359,11 +3049,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:53:59.073Z",
+        "materialObservedAt": "2026-10-10T09:20:38.772Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 35,
         "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
@@ -3384,7 +3074,7 @@
         "legacyStage": "RETAIL_PROMOTION",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:53:59.073Z",
+      "observedAt": "2026-10-10T09:20:38.772Z",
       "productId": "pr_d57aa4fbf4f2eb4122a155e5",
       "region": "GLOBAL",
       "relation": "contextualizes",
@@ -3398,16 +3088,58 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 pod kit review simplistic but very effective",
+      "claimedEventAt": "2026-09-22T18:24:22.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:23.516Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_729bab13f51616bf8b32b35e",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_a18bbc180882f6572cf806f7",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:23.516Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata vaporesso dojo blast 10k fresh prefilled pod kit",
       "claimedEventAt": "2026-09-12T16:35:21.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -3428,7 +3160,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_cddb4f5024097891455f58dd",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3447,11 +3179,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.740Z",
+        "materialObservedAt": "2026-10-10T09:19:22.334Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3472,7 +3204,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.740Z",
+      "observedAt": "2026-10-10T09:19:22.334Z",
       "productId": "pr_10959e9b1efa413c81c83f1b",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3484,60 +3216,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare lost vape centaurus m120 s kit review 5500mah battery 120w power and a more practical design",
-      "claimedEventAt": "2026-09-09T12:19:29.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.733Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_226661c4cb39a13f0ce8a9f0",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_a8142646efd78f9552bd56ef",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:48.733Z",
-      "productId": "pr_65c072a5e1d71cdb36dabe0e",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "aparitie publica datata aparitie publica datata nexlim 2 mini par oxva",
       "claimedEventAt": "2026-09-28T08:00:00.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.072Z",
+        "materialObservedAt": "2026-10-10T09:19:23.622Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3558,7 +3246,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.072Z",
+      "observedAt": "2026-10-10T09:19:23.622Z",
       "productId": "pr_b3cac3f29ed3bd4662da0c5b",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3575,11 +3263,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.407Z",
+        "materialObservedAt": "2026-10-10T09:19:23.002Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3600,7 +3288,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.407Z",
+      "observedAt": "2026-10-10T09:19:23.002Z",
       "productId": "pr_39740086c3488f3b3772ad21",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3617,11 +3305,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -3642,52 +3330,8 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_de8f9915cbbe1bf545cbc1e8",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare voopoo argus z3 review budget-friendly flavor - vaping360",
-      "claimedEventAt": "2026-09-30T13:58:56.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.507Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_e36a6999feb7d14406cf0498",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_b3ba2ec46abec50e8bb2f214",
-      "identityConfidence": {
-        "basis": "current canonical product association",
-        "level": "MEDIUM",
-        "score": 72
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:47.507Z",
-      "productId": "pr_462f995862179b4df2a04842",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
@@ -3705,11 +3349,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -3730,7 +3374,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_7eb35b095098c973a262c60e",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3749,11 +3393,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.045Z",
+        "materialObservedAt": "2026-10-10T09:19:23.596Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3774,7 +3418,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.045Z",
+      "observedAt": "2026-10-10T09:19:23.596Z",
       "productId": "pr_2c13bbac35400a095c3f7388",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3791,11 +3435,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.390Z",
+        "materialObservedAt": "2026-10-10T09:19:21.950Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3816,7 +3460,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.390Z",
+      "observedAt": "2026-10-10T09:19:21.950Z",
       "productId": "pr_ac392811cd6319d961f5f7e9",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3828,60 +3472,16 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare voopoo argus z3 pod vape kit",
-      "claimedEventAt": "2026-09-09T11:19:17.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 68,
-        "semantic": "CATALOG_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_e8e37fd93526b77a6611cf5b",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_c125b4efc34374485d267063",
-      "identityConfidence": {
-        "basis": "direct product title match",
-        "level": "HIGH",
-        "score": 96
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:50:59.107Z",
-      "productId": "pr_462f995862179b4df2a04842",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare lve orion ii pro plus pod vape kit",
       "claimedEventAt": "2026-09-18T10:42:57.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -3902,7 +3502,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_397b5a79936f2c7b269c25c9",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3921,11 +3521,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -3946,7 +3546,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_40ab04dd47283bebfb1749bd",
       "region": "GLOBAL",
       "relation": "supports",
@@ -3965,11 +3565,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.577Z",
+        "materialObservedAt": "2026-10-10T09:19:22.171Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -3990,7 +3590,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.577Z",
+      "observedAt": "2026-10-10T09:19:22.171Z",
       "productId": "pr_135172abc641371ecc222c22",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4011,7 +3611,7 @@
         "recentReleaseWindowActive": true,
         "signalWindowActive": true
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 72,
         "semantic": "OBSERVED_RELEASE_CLAIM"
@@ -4049,11 +3649,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.496Z",
+        "materialObservedAt": "2026-10-10T09:19:23.090Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4074,7 +3674,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.496Z",
+      "observedAt": "2026-10-10T09:19:23.090Z",
       "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4088,16 +3688,58 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata vprime 2 par oxva",
+      "claimedEventAt": "2026-10-09T08:00:00.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:23.543Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_9bcf6f3261682b907a03c1db",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_cfb2c70db01c529d9508a676",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:23.543Z",
+      "productId": "pr_ec9a03158fe70c2563d6fca3",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata listare comerciala datata noutate in verificare vaporesso armour g2 pod mod kit",
       "claimedEventAt": "2026-10-04T13:19:43.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -4118,7 +3760,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_c3c0ebc86a20603d4a4e440f",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4137,11 +3779,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.258Z",
+        "materialObservedAt": "2026-10-10T09:19:23.794Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 85,
         "semantic": "OFFICIAL_PRODUCT_PUBLICATION"
@@ -4162,7 +3804,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.258Z",
+      "observedAt": "2026-10-10T09:19:23.794Z",
       "productId": "pr_6fcfc79b9ea895d0dc7ec556",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4181,11 +3823,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.937Z",
+        "materialObservedAt": "2026-10-10T09:19:23.460Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4206,7 +3848,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.937Z",
+      "observedAt": "2026-10-10T09:19:23.460Z",
       "productId": "pr_3f7160619f673f4558171420",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4225,11 +3867,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -4250,7 +3892,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_6312e4a134d58c569d2955c7",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4269,11 +3911,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.446Z",
+        "materialObservedAt": "2026-10-10T09:19:22.035Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4294,7 +3936,7 @@
         "legacyStage": "REPORTED_RELEASE",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.446Z",
+      "observedAt": "2026-10-10T09:19:22.035Z",
       "productId": "pr_76789d4038b6ba4b9fbf60c9",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4311,11 +3953,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.515Z",
+        "materialObservedAt": "2026-10-10T09:19:23.109Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4336,7 +3978,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.515Z",
+      "observedAt": "2026-10-10T09:19:23.109Z",
       "productId": "pr_f22cf0dac572ef5ef2ffdab1",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4353,11 +3995,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.151Z",
+        "materialObservedAt": "2026-10-10T09:19:23.701Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4378,7 +4020,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.151Z",
+      "observedAt": "2026-10-10T09:19:23.701Z",
       "productId": "pr_6e73e1b7ec6450d6f788621a",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4397,11 +4039,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.177Z",
+        "materialObservedAt": "2026-10-10T09:19:23.728Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4422,7 +4064,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.177Z",
+      "observedAt": "2026-10-10T09:19:23.728Z",
       "productId": "pr_595f60f19a642e8c725365c7",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4439,11 +4081,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.594Z",
+        "materialObservedAt": "2026-10-10T09:19:23.187Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4464,8 +4106,92 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.594Z",
+      "observedAt": "2026-10-10T09:19:23.187Z",
       "productId": "pr_135172abc641371ecc222c22",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 review budget-friendly flavor - vaping360",
+      "claimedEventAt": "2026-09-30T13:58:56.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:22.099Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_e36a6999feb7d14406cf0498",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_dd3ef61d65267d287ccf6f1e",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:22.099Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 review big flavor tiny price",
+      "claimedEventAt": "2026-09-26T10:01:59.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:23.405Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_c9c5968f34c7b9c94cda97e0",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_dd83a4950b99752e31c9d69b",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:23.405Z",
+      "productId": "pr_462f995862179b4df2a04842",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
@@ -4481,11 +4207,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.315Z",
+        "materialObservedAt": "2026-10-10T09:19:22.911Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4506,7 +4232,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:48.315Z",
+      "observedAt": "2026-10-10T09:19:22.911Z",
       "productId": "pr_992532bbd7c7882defb6ac51",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4527,7 +4253,7 @@
         "recentReleaseWindowActive": false,
         "signalWindowActive": true
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 72,
         "semantic": "OBSERVED_RELEASE_CLAIM"
@@ -4565,11 +4291,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -4590,7 +4316,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_1799f465fd7df133fa1b5334",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4609,11 +4335,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -4634,7 +4360,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_58cf9cd65ec44b1210a126b8",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4653,11 +4379,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:47.870Z",
+        "materialObservedAt": "2026-10-10T09:19:22.439Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4678,7 +4404,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:47.870Z",
+      "observedAt": "2026-10-10T09:19:22.439Z",
       "productId": "pr_5c4ee4ec180e2402e38d7d82",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4695,11 +4421,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:53:59.073Z",
+        "materialObservedAt": "2026-10-10T09:20:38.772Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 35,
         "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
@@ -4720,7 +4446,7 @@
         "legacyStage": "RETAIL_PROMOTION",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:53:59.073Z",
+      "observedAt": "2026-10-10T09:20:38.772Z",
       "productId": "pr_d1e61b3df1f2dfd547f6e1a4",
       "region": "GLOBAL",
       "relation": "contextualizes",
@@ -4739,11 +4465,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -4764,7 +4490,7 @@
         "legacyStage": "FIRST_RETAIL_SIGNAL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_9c3bc4d551b602f0430c94bb",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4778,16 +4504,58 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
+      "claimTextNormalized": "aparitie publica datata aparitie publica datata voopoo argus z3 review flip the pod change the vape keep it simple",
+      "claimedEventAt": "2026-10-01T16:57:16.000Z",
+      "clocks": {
+        "forecastBand": "PAST",
+        "historyMemoryActive": true,
+        "materialObservedAt": "2026-10-10T09:19:22.690Z",
+        "recentReleaseWindowActive": false,
+        "signalWindowActive": false
+      },
+      "createdAt": "2026-10-10T09:20:46.079Z",
+      "dateConfidence": {
+        "score": 45,
+        "semantic": "SOURCE_PUBLICATION"
+      },
+      "entityType": "event_claim",
+      "eventType": "REVIEWER_FIRST_LOOK",
+      "evidenceId": "ev_fd230af726d496c70f89e7b8",
+      "expectedEndAt": null,
+      "expectedStartAt": null,
+      "id": "cl_f12adb1e7b25c1f289ce5f31",
+      "identityConfidence": {
+        "basis": "direct product title match",
+        "level": "HIGH",
+        "score": 96
+      },
+      "migration": {
+        "legacyDateConfidence": "dated-public-evidence",
+        "legacyStage": "FIRST_PUBLIC",
+        "legacyWindow": "after"
+      },
+      "observedAt": "2026-10-10T09:19:22.690Z",
+      "productId": "pr_462f995862179b4df2a04842",
+      "region": "GLOBAL",
+      "relation": "supports",
+      "schemaVersion": 1,
+      "sourcePublishedAt": null,
+      "warnings": [],
+      "weightRole": "LIFECYCLE_ELIGIBLE"
+    },
+    {
+      "candidateEntityId": null,
+      "claimState": "active",
       "claimTextNormalized": "prima listare comerciala datata prima listare oficiala datata geekvape aegis solo 5 box mod",
       "claimedEventAt": "2026-10-04T12:05:47.000Z",
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "materialObservedAt": "2026-10-10T09:17:32.059Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 68,
         "semantic": "CATALOG_PUBLICATION"
@@ -4808,7 +4576,7 @@
         "legacyStage": "FIRST_RETAIL",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
+      "observedAt": "2026-10-10T09:17:32.059Z",
       "productId": "pr_435cd4b5d259c3ba13923fb2",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4827,11 +4595,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:49.124Z",
+        "materialObservedAt": "2026-10-10T09:19:23.674Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 45,
         "semantic": "SOURCE_PUBLICATION"
@@ -4852,7 +4620,7 @@
         "legacyStage": "FIRST_PUBLIC",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:52:49.124Z",
+      "observedAt": "2026-10-10T09:19:23.674Z",
       "productId": "pr_a9e5585e061c395fc2ca95c6",
       "region": "GLOBAL",
       "relation": "supports",
@@ -4864,90 +4632,46 @@
     {
       "candidateEntityId": null,
       "claimState": "active",
-      "claimTextNormalized": "prima listare comerciala datata prima listare comerciala datata smok novo axis pod vape kit",
-      "claimedEventAt": "2026-09-09T09:02:28.000Z",
+      "claimTextNormalized": "eta precomanda eta precomanda sxk ghost ring style rta rebuildable tank atomizer - silver 316ss + glass 4ml 22mm diamter",
+      "claimedEventAt": "2026-10-15T00:00:00.000Z",
       "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:50:59.107Z",
+        "forecastBand": "NEXT_30_DAYS",
+        "historyMemoryActive": false,
+        "materialObservedAt": "2026-10-10T09:14:57.484Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
-        "score": 68,
-        "semantic": "CATALOG_PUBLICATION"
+        "score": 78,
+        "semantic": "CLAIMED_OR_EXPECTED_DATE"
       },
       "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_857acfaa4b438b4650689a37",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_f5c07944965ba92a69458d52",
+      "eventType": "PREORDER_OPEN",
+      "evidenceId": "ev_b24205cf193df8f2d0272586",
+      "expectedEndAt": "2026-10-15T00:00:00.000Z",
+      "expectedStartAt": "2026-10-15T00:00:00.000Z",
+      "id": "cl_fb0047bf33188a9ba152f122",
       "identityConfidence": {
-        "basis": "product-level source URL",
+        "basis": "direct product title match",
         "level": "HIGH",
-        "score": 88
+        "score": 96
       },
       "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL",
-        "legacyWindow": "after"
+        "legacyDateConfidence": "explicit",
+        "legacyStage": "IMMINENT",
+        "legacyWindow": "before"
       },
-      "observedAt": "2026-10-09T09:50:59.107Z",
-      "productId": "pr_fdc8fb320d32f934d54e1a54",
+      "observedAt": "2026-10-10T09:14:57.484Z",
+      "productId": "pr_164dd21054620f8241713839",
       "region": "GLOBAL",
       "relation": "supports",
       "schemaVersion": 1,
       "sourcePublishedAt": null,
       "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
+        "DISCOVERY_ONLY"
       ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
-    },
-    {
-      "candidateEntityId": null,
-      "claimState": "active",
-      "claimTextNormalized": "aparitie publica datata listare comerciala datata noutate in verificare oxva vprime 2 pod mod kit review does the 3400mah battery justify the hype",
-      "claimedEventAt": "2026-09-10T00:44:01.000Z",
-      "clocks": {
-        "forecastBand": "PAST",
-        "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:52:48.687Z",
-        "recentReleaseWindowActive": false,
-        "signalWindowActive": false
-      },
-      "createdAt": "2026-10-09T09:54:08.457Z",
-      "dateConfidence": {
-        "score": 45,
-        "semantic": "SOURCE_PUBLICATION"
-      },
-      "entityType": "event_claim",
-      "eventType": "FIRST_RETAIL_OBSERVATION",
-      "evidenceId": "ev_fc5f36274001336d69653792",
-      "expectedEndAt": null,
-      "expectedStartAt": null,
-      "id": "cl_fb32b33591ead61f7e4b53b7",
-      "identityConfidence": {
-        "basis": "product-level source URL",
-        "level": "HIGH",
-        "score": 88
-      },
-      "migration": {
-        "legacyDateConfidence": "catalog-published-at",
-        "legacyStage": "FIRST_RETAIL_SIGNAL",
-        "legacyWindow": "after"
-      },
-      "observedAt": "2026-10-09T09:52:48.687Z",
-      "productId": "pr_3f7160619f673f4558171420",
-      "region": "GLOBAL",
-      "relation": "supports",
-      "schemaVersion": 1,
-      "sourcePublishedAt": null,
-      "warnings": [
-        "FIRST_OBSERVED_RETAIL_IS_NOT_EXACT_RELEASE"
-      ],
-      "weightRole": "LIFECYCLE_ELIGIBLE"
+      "weightRole": "DISCOVERY_ONLY"
     },
     {
       "candidateEntityId": null,
@@ -4961,7 +4685,7 @@
         "recentReleaseWindowActive": false,
         "signalWindowActive": true
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 72,
         "semantic": "OBSERVED_RELEASE_CLAIM"
@@ -4999,11 +4723,11 @@
       "clocks": {
         "forecastBand": "PAST",
         "historyMemoryActive": true,
-        "materialObservedAt": "2026-10-09T09:53:59.073Z",
+        "materialObservedAt": "2026-10-10T09:20:38.772Z",
         "recentReleaseWindowActive": false,
         "signalWindowActive": false
       },
-      "createdAt": "2026-10-09T09:54:08.457Z",
+      "createdAt": "2026-10-10T09:20:46.079Z",
       "dateConfidence": {
         "score": 35,
         "semantic": "RETAIL_CAMPAIGN_PUBLICATION"
@@ -5024,7 +4748,7 @@
         "legacyStage": "RETAIL_PROMOTION",
         "legacyWindow": "after"
       },
-      "observedAt": "2026-10-09T09:53:59.073Z",
+      "observedAt": "2026-10-10T09:20:38.772Z",
       "productId": "pr_c89afb16d04eb88c62dc52e4",
       "region": "GLOBAL",
       "relation": "contextualizes",
@@ -5040,28 +4764,28 @@
   "signalWindowActive": 3,
   "sourceSnapshots": {
     "data/market-hype-evidence-2026.json": {
-      "sha256": "b7aba1876dc3653fba454fe620a44c0c9fdcfa10ef858243819dba9b31f0d7a7"
+      "sha256": "1c1b409cd27d95740042ead1dde552ca898f1d216e072bfdba66536baecea7b1"
     },
     "data/market-hype-heartbeat-2026.json": {
-      "sha256": "a8954584551ad069619c7d0a9f6c96df82ce104cf824040ccf8cb9b89c4beab2"
+      "sha256": "e94aead3fee0a865b0242f71f1f9b358038d9d374a116e0537aa3bef605f0e60"
     },
     "data/market-hype-heartbeat-evidence-2026.json": {
-      "sha256": "5308a8ff24194e44e6308c31750e304df7cfeb4d33164abd8efa4094bb705a45"
+      "sha256": "7aaa2d9ef585e5c43cf76882cac868b087a70d363ca1794896ac3e0c57585ee1"
     },
     "data/market-hype-known-history-2026.json": {
       "sha256": "f7ca724f48cf1879541a213ca86da523dd1b600e88cb8ad7c6deb21afdc8d774"
     },
     "data/market-hype-pods-2026.json": {
-      "sha256": "7f0d0e80f5a0f977aa3e9bbb052fb9f692d19e55b2d31904f44ccb3f0e63b8ac"
+      "sha256": "06798f4a85fbc1d419e96f3f2919597be08a2898940ecb5b8217ff1c65e26b8c"
     },
     "data/market-hype-products-2026.json": {
-      "sha256": "c7a2688b554414d49671566e514daac43da454608bdce12cf49ea1ad30b18d65"
+      "sha256": "f359bf1acad89e32e04a4064f38f36af2487b6b2a77c6d48dc25c51826b4110a"
     },
     "data/market-hype-radar-2026.json": {
-      "sha256": "ca8d492989407ad31fa26f52ed59548d195ed4c5c49bb4b646552317148de079"
+      "sha256": "757289fbb51a331bc975419bbe68cfd1e922f288f3803410b2554c1313da10a6"
     },
     "data/market-hype-retail-memory-2026.json": {
-      "sha256": "f86eb5ff39a3d36cb1364c4256d9b78b6aad9d7a368f947e5be5529ae7ec0058"
+      "sha256": "36a2aeefb02c6699817f7f1a0fd3b15b74afe18e433693c4e048c5308ce01b23"
     },
     "data/market-hype-sources-2026.json": {
       "sha256": "ef86e1721b8af67c8b8b19f2e0da45af6813cfe8181d43769e2a55d315be251f"
