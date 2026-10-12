@@ -1,6 +1,6 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-**Fișier canonic RTA Lab · stare consolidată 27.09.2026.**
+**Fișier canonic RTA Lab · stare consolidată 12.10.2026.**
 
 - Repo: `andreiclim77-cell/rta`
 - Branch: `main`
@@ -26,7 +26,7 @@
 3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 16 platforme / 40 atomizoare fizice / 5 sloturi active**.
 4. Catalog: 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex.
 5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar. Excepții validate: **KV3 Mini = 28/6 + 29/6**, **Dvarw CL 3×0,6 = 28/6**, **Asylum V3 Flat = 28/6**, toate pe Ø2,5.
-6. K1 29/6 contact rămâne numai când ADN-ul platformei sau A/B-ul îl justifică.
+6. K1 29/6 contact rămâne numai când ADN-ul platformei sau A/B-ul îl justifică; **GT One = 29/6 validat practic și preferat față de 28/5 în A/B direct**.
 7. Varianta K1 29/5 distanțată este **ȘTEARSĂ / DEPĂȘITĂ** și nu trebuie reintrodusă în UI, motor, Explorer sau arhivă.
 8. TC global: **NiFe30/6 + NiFe52/6**, ambele Ø2,5.
 9. Dicodes personal: **RESISTHERM NiFe30, TCR320, 5,5 Ω/m** confirmat direct de pe eticheta rolei.
@@ -40,14 +40,14 @@
 | --- | ---: | --- |
 | 415 RTA MTL Cool Edition | 1 | High-sensitivity / micro-geometry; 28/5 contact = echilibru/layering; 29/5 contact = concentrat/dulce; 29/6 contact = dry/tobacco; **K1 Clapton/5 = pereche Clapton preferată**. |
 | Kayfun Prime / K Prime | 2 | Echilibru premium; **29/5 contact** = round-wire principal curent; 28/5 = echilibru; TC curent NiFe52/6; NiFe30/6 benchmark istoric 80/20. |
-| Taifun GT One | 4 | Straight tobacco precision; 28/5 contact și 29/5 contact validate. |
+| Taifun GT One | 4 | Straight tobacco precision; **A/B direct 12.10.2026: K1 29 GA / Ø2,5 / 6 contact > K1 28 GA / Ø2,5 / 5**. 29/6 devine buildul round-wire preferat curent al platformei. |
 | Dvarw MTL CL 22 | 1 | Tobacco muscular; **configurație activă validată: insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire**; separat de FL. |
 | Muted+ | 4 | Corp/mouthfeel + airflow configurabil; prior personal 29/5 contact dacă nu există excepție. |
 | Taifun GTR | 5 | TC specialist; Dicodes RESISTHERM NiFe30 320/6; finețe, layering, smoothness. |
 | Dvarw MTL FL | 2 | Analiză/separare; 28/5 excelent; **SS316L Clapton/5 = pereche dedicată**. |
 | Diplomat v1.5 | 3 | Camerele schimbă specializarea aromatică; calibrare separată; 29/5 contact prior personal. |
 | Kayfun X / KX | 4 | 28/5 extraordinar + Dicodes RESISTHERM NiFe30 320/6 TC; daily premium. |
-| KLP / Kayfun Lite Plus 2021 | 5 | K1 29 GA nativ; 29/5 contact default personal, 29/6 contact alternativă validată; harta NiFe nu modifică KLP. |
+| KLP / Kayfun Lite Plus 2021 | 5 | **A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6 contact** pentru redarea generală/completă. 29/5 contact rămâne specialistul de hit/TH/focus; harta NiFe nu modifică KLP. |
 | Asylum V3 SS/DLC | 2 | **Flat = configurația activă validată cu K1 28 GA / Ø2,5 / 6 spire** pentru claritate/separare + corp/completitudine; Dome = corp/integrare; K1 Clapton/5 rămâne contextual. |
 | Prime Minister Freehand | 2 | NET specialist; 28/5 = corp/layering; 29/6 contact = frunză/dry/tobacco-first. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; calibrare separată; 29/5 contact prior personal. |
@@ -69,7 +69,7 @@
 ### 3.1. Regula K1 29 actuală
 
 - **29/5 contact** = singura variantă activă de 5 spire.
-- **29/6 contact** = alternativă justificată pe platforme/obiective unde este nevoie de footprint mai lat sau mai mult dry/tobacco-first; **pe KV3 Mini este regula activă validată**.
+- **29/6 contact** = alternativă justificată pe platforme/obiective unde este nevoie de footprint mai lat sau mai mult dry/tobacco-first; **pe KV3 Mini și GT One este regulă activă validată**. Pe KLP, A/B-ul direct 12.10.2026 favorizează 28/5 față de 29/6.
 - Nu mai folosi, recomanda, afișa sau documenta varianta K1 29/5 distanțată.
 
 ## 4. Validări practice cheie
@@ -94,9 +94,9 @@
 
 ### 4.3. GT One
 
-- 28/5 contact = foarte bun, echilibru/corp.
-- 29/5 contact = foarte bun, direct, incisiv, tobacco-first.
-- Coil compact/contact rămâne filozofia de lucru.
+- **A/B direct 12.10.2026: K1 29 GA / Ø2,5 / 6 contact este preferat față de K1 28 GA / Ø2,5 / 5**.
+- 29/6 = mai fin, mai separat și mai potrivit ADN-ului actual al GT One; devine buildul round-wire preferat curent.
+- 28/5 rămâne alternativa mai plină/corpolentă.
 
 ### 4.4. GTR
 
@@ -116,9 +116,9 @@
 
 ### 4.7. KLP
 
-- 29/5 contact = hit/TH, focus, viteză, tobacco-first; default personal.
-- 29/6 contact = mai așezat/complet; alternativă validată.
-- 28/5 = mai mult corp/mouthfeel.
+- **A/B direct 12.10.2026: 28/5 contact este preferat față de 29/6 contact** pentru redare generală/completă.
+- 29/5 contact rămâne specialistul de hit/TH, focus, viteză și tobacco-first.
+- 29/6 rămâne contextual, dar nu mai este varianta preferată de completitudine față de 28/5.
 
 ### 4.8. Prime Minister Freehand
 
@@ -252,7 +252,7 @@ Reguli runtime:
 | UI cu 4 perechi Clapton | DEPĂȘIT 04.09.2026 | UI afișează 2 perechi active |
 | Explorer cu preferință Clapton fixă pe mai multe platforme | REFINAT 04.09.2026 | numai 415 păstrează Clapton explicit primul; restul urmează buildurile active |
 
-## 11. Checkpoint 27.09.2026 — colecție activă + validări round-wire + Clapton
+## 11. Checkpoint 12.10.2026 — colecție activă + validări round-wire + Clapton
 
 **SALVAT CANONIC**
 
@@ -263,6 +263,8 @@ Reguli runtime:
 5. K1 29 GA / 5 spire există numai **contact**; varianta distanțată este eliminată din regulile active.
 6. 415: 29/5 contact = concentrat/dulce; 29/6 contact = dry/tobacco; K1 Clapton/5 = preferință Clapton.
 7. K Prime: 29/5 contact = round-wire principal curent.
+8. **GT One: A/B direct → K1 29 GA / Ø2,5 / 6 contact > K1 28 GA / Ø2,5 / 5; 29/6 devine preferința round-wire curentă.**
+9. **KLP: A/B direct → K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6 pentru redare generală/completă; 29/5 rămâne specialist hit/TH/focus.**
 
 ## 12. Protocol de update / QA
 
