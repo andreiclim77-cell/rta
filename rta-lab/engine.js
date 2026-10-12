@@ -349,7 +349,7 @@ function buildOutput(atom, wire, liquid) {
   if (atom.id === "klp" && wire.id === "k128") {
     output.status = "Validat";
     output.noteClass = "valid";
-    output.note = "28/5 este preferat practic față de 29/6 pentru redare generală/completă și păstrează hit/TH foarte bun, cu mai mult mouthfeel și corp.";"
+    output.note = "28/5 este preferat practic față de 29/6 pentru redare generală/completă și păstrează hit/TH foarte bun, cu mai mult mouthfeel și corp.";
   }
   if (wire.id === "nife30") {
     output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
