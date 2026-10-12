@@ -28,14 +28,14 @@ const escapeHtml = value => String(value ?? "")
 const BUILD_RULES = {
   "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa round-wire mai plină." },
   "kprime":   { k128: 5, k129: 5, reason: "Bottom-air direct și concentrat; ambele round-wire-uri funcționează optim cu footprint compact." },
-  "gtone":    { k128: 5, k129: 5, reason: "Air-pin unic, vertical și foarte apropiat de coil; 5 spire concentrează eficient jetul." },
+  "gtone":    { k128: 5, k129: 6, reason: "Validat practic 12.10.2026: K1 29 GA / Ø2,5 / 6 contact este preferat față de K1 28 GA / Ø2,5 / 5; 28/5 rămâne alternativa mai plină." },
   "dvarwcl":  { k128: 6, k129: 5, reason: "Configurație activă validată: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire pentru acoperire mai uniformă și layering; 29 GA rămâne contextual după obiectiv." },
   "muted":    { k128: 5, k129: 6, reason: "Triple-air spală o zonă mai lată: 29/6 acoperă jeturile, iar 28/5 oferă round-wire cu mai mult mouthfeel." },
   "gtr":      { k128: 5, k129: 6, reason: "Cele două jeturi oblice cer 29/6 pentru acoperire; 28/5 păstrează un footprint apropiat, cu mai mult corp." },
   "dvarwfl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock 1×1,2 mm, jetul este concentrat; 5 spire sunt aproape optim." },
   "diplomat": { k128: 5, k129: 6, reason: "Diverterul multipunct este lat: 29/6 favorizează acoperirea, iar 28/5 este alternativa round-wire mai densă." },
   "kx":       { k128: 5, k129: 5, reason: "Aerokon restricționează direct sub coil; 5 spire păstrează footprint-ul compact și eficient." },
-  "klp":      { k128: 5, k129: 5, reason: "Validat practic: 29/5 maximizează hitul, iar 28/5 păstrează hitul cu mai mult mouthfeel." },
+  "klp":      { k128: 5, k129: 5, reason: "Validat practic 12.10.2026: 28/5 este preferat față de 29/6 pentru redare generală/completă; 29/5 rămâne specialistul de hit/TH/focus." },
   "asylum":   { k128: 6, k129: 6, reason: "Configurație activă validată: clopot Flat + K1 28 GA / Ø2,5 / 6 spire; footprint-ul mai lung păstrează claritatea Flat și adaugă corp/completitudine. 29/6 rămâne alternativa mai dry/tobacco-first." },
   "pmfree":   { k128: 5, k129: 6, reason: "Diverterul 32×0,9 mm este foarte lat: 29/6 oferă acoperire, iar 28/5 aduce corp și mouthfeel." },
   "pmstd":    { k128: 5, k129: 6, reason: "Aceeași bază multipunct ca Freehand: 29/6 pentru acoperire, 28/5 pentru alternativa round-wire mai plină." },
@@ -349,7 +349,7 @@ function buildOutput(atom, wire, liquid) {
   if (atom.id === "klp" && wire.id === "k128") {
     output.status = "Validat";
     output.noteClass = "valid";
-    output.note = "28/5 păstrează hit/TH foarte bun și adaugă mai mult mouthfeel și corp decât 29/5.";
+    output.note = "28/5 este preferat practic față de 29/6 pentru redare generală/completă și păstrează hit/TH foarte bun, cu mai mult mouthfeel și corp.";"
   }
   if (wire.id === "nife30") {
     output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
