@@ -104,6 +104,14 @@ jobs:
           if (!/K1 28 GA = Ø2,5 \/ 6 spire/.test(kv3AtomLine) || !/K1 29 GA = Ø2,5 \/ 6 spire/.test(kv3AtomLine)) {
             throw new Error('KV3 atom DNA must contain 28/6 and 29/6 on Ø2,5');
           }
+          const gtOneAtomLine = atomLine('gtone');
+          if (!gtOneAtomLine.includes('K1 29 GA = Ø2,5 / 6 spire contact > K1 28 GA = Ø2,5 / 5 spire')) {
+            throw new Error('GT One atom DNA must contain validated 29/6 > 28/5 comparison');
+          }
+          const klpAtomLine = atomLine('klp');
+          if (!klpAtomLine.includes('K1 28 GA / Ø2,5 / 5 spire este preferat față de K1 29 GA / Ø2,5 / 6')) {
+            throw new Error('KLP atom DNA must contain validated 28/5 > 29/6 comparison');
+          }
           const dvarwClAtomLine = atomLine('dvarwcl');
           if (!/insert 3×0,6 mm/.test(dvarwClAtomLine) || !/K1 28 GA = Ø2,5 \/ 6 spire/.test(dvarwClAtomLine)) {
             throw new Error('Dvarw CL atom DNA must contain insert 3×0,6 + K1 28/6 on Ø2,5');
@@ -121,6 +129,8 @@ jobs:
             } else if (Number(k128) !== 5) throw new Error(`${atom}: K1 28 GA must be 5 wraps`);
             if (atom === 'kv3') {
               if (Number(k129) !== 6) throw new Error('kv3: K1 29 GA must be 6 wraps');
+            } else if (atom === 'gtone') {
+              if (Number(k129) !== 6) throw new Error('gtone: K1 29 GA must be 6 wraps after direct A/B');
             } else if (![5, 6].includes(Number(k129))) throw new Error(`${atom}: K1 29 GA must be 5 or 6 wraps`);
           }
           const claptonRules = [...engine.matchAll(/"([^"]+)"\s*:\s*\{\s*k1clap:\s*(-?\d+(?:\.\d+)?),\s*ssclap:\s*(-?\d+(?:\.\d+)?)/g)];
@@ -130,6 +140,8 @@ jobs:
           if (!/\"asylum\"\s*:\s*\{\s*k1clap:\s*0\.90,\s*ssclap:\s*-100\.00\s*\}/.test(engine)) throw new Error('Asylum base SS Clapton score must stay excluded');
           if (!master.includes('Dvarw MTL CL + insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire')) throw new Error('MASTER is missing Dvarw CL 3×0,6 28/6 validation');
           if (!master.includes('Flat + K1 28 GA / Ø2,5 / 6 spire')) throw new Error('MASTER is missing Asylum Flat 28/6 validation');
+          if (!master.includes('K1 29 GA / Ø2,5 / 6 contact > K1 28 GA / Ø2,5 / 5')) throw new Error('MASTER is missing GT One 29/6 > 28/5 validation');
+          if (!master.includes('K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6')) throw new Error('MASTER is missing KLP 28/5 > 29/6 validation');
 
           sandbox.window.RTA_LIQUIDS = [];
           const liquidFiles = fs.readdirSync('rta-lab/data')
