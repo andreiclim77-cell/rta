@@ -1,14 +1,14 @@
-/* RTA Lab — preferință personală recurentă, actualizat 21.09.2026.
+/* RTA Lab — preferință personală recurentă, actualizat 12.10.2026.
  * PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS
  * K1 29 GA / Ø2,5 / 5 spire este păstrat numai CONTACT. Varianta de 5 spire distanțată este eliminată.
  */
 (() => {
   window.RTA_LAB_PERSONAL_BUILD_DNA = {
-    date: "2026-09-21",
+    date: "2026-10-12",
     name: "PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS",
     principle: "Pentru utilizator, K1 29 GA / Ø2,5 / 5 contact este priorul personal round-wire principal, urmat de K1 28 GA / Ø2,5 / 5 contact.",
     interpretation: "Preferința sugerează masă termică redusă + footprint compact + ramp-up rapid + vaporizare focalizată. Este interpretare mecanică, nu fapt universal demonstrat.",
-    guardrail: "ADN-ul platformei și validările directe pot depăși priorul personal. Excepții 28/6 validate: KV3 Mini, Dvarw CL cu insert 3×0,6 și Asylum V3 cu clopot Flat. KV3 păstrează și 29/6."
+    guardrail: "ADN-ul platformei și validările directe pot depăși priorul personal. Excepții 28/6 validate: KV3 Mini, Dvarw CL cu insert 3×0,6 și Asylum V3 cu clopot Flat. KV3 păstrează 29/6; GT One validează 29/6 ca preferință A/B. Pe KLP, 28/5 este preferat față de 29/6 pentru redare generală."
   };
 
   if (typeof wireBonus !== "function" || typeof buildOutput !== "function") return;
@@ -33,6 +33,7 @@
     if (atom.id === "pmfree" && isNet(liquid)) return true;
     if (atom.id === "415" && Number(output.wraps) === 6) return true;
     if (["kv3", "dvarwcl", "asylum"].includes(atom.id) && Number(output.wraps) === 6) return true;
+    if (atom.id === "gtone" && Number(output.wraps) === 6) return true;
     return false;
   }
 
@@ -41,6 +42,8 @@
     if (!wire) return bonus;
     if (wire.id === "k129") bonus += 0.55;
     if (wire.id === "k128") bonus += 0.30;
+    if (atom && atom.id === "gtone" && wire.id === "k129") bonus += 0.35;
+    if (atom && atom.id === "klp" && wire.id === "k128") bonus += 0.45;
     return bonus;
   };
 
@@ -71,6 +74,12 @@
         return output;
       }
       output.wraps = "5";
+      if (atom.id === "klp") {
+        output.status = "Validat practic · KLP · 28/5 preferat vs 29/6";
+        output.noteClass = "valid";
+        output.note = "A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact redă mai bine decât K1 29 GA / Ø2,5 / 6 pentru utilizator; păstrează corpul și volumul fără să piardă precizia Aerokon.";
+        return output;
+      }
       output.note = `${output.note || ""} ${personalFiveWrapNote("k128")}`.trim();
       if (!String(output.status || "").toLowerCase().includes("preferință personală")) {
         output.status = `${output.status || "Context"} · preferință personală 28/5`;
@@ -95,9 +104,9 @@
     }
 
     if (atom.id === "klp") {
-      output.status = "Validat practic · KLP · prior personal 29/5 contact";
+      output.status = "Validat practic · KLP · 29/5 specialist";
       output.noteClass = "valid";
-      output.note = "KLP păstrează ambele builduri native, dar pentru utilizator 29/5 contact este defaultul personal: hit, focus, răspuns rapid și gust direct. 29/6 contact rămâne alternativa mai așezată/completă.";
+      output.note = "K1 29 GA / Ø2,5 / 5 contact rămâne specialistul pentru hit/TH/focus. Pentru redare generală/completă, A/B-ul direct 12.10.2026 a pus K1 28/5 înaintea K1 29/6.";
       return output;
     }
 
@@ -117,11 +126,13 @@
         if (atom.id === "pmfree" && isNet(liquid)) return base;
         if (atom.id === "415" && Number(buildOutput(atom, wire, liquid).wraps) === 6) return base;
         if (atom.id === "kv3") return `${base}; pe KV3 Mini 29/6 este excepția activă validată`;
+        if (atom.id === "gtone") return `${base}; pe GT One 29/6 este preferința round-wire validată direct față de 28/5`;
         return `${base}; 29/5 contact are prior personal transversal pentru gustul utilizatorului`;
       }
       if (wire.id === "k128" && atom.id === "kv3") return `${base}; pe KV3 Mini 28/6 este excepția activă validată`;
       if (wire.id === "k128" && atom.id === "dvarwcl") return `${base}; pe Dvarw CL cu 3×0,6, 28/6 este regula activă validată`;
       if (wire.id === "k128" && atom.id === "asylum") return `${base}; pe Asylum V3 Flat, 28/6 este regula activă validată`;
+      if (wire.id === "k128" && atom.id === "klp") return `${base}; pe KLP, A/B-ul direct 12.10.2026 preferă 28/5 față de 29/6 pentru redare generală`;
       if (wire.id === "k128") return `${base}; 28/5 contact are prior personal secundar pentru corp + compact-coil response`;
       return base;
     };
@@ -137,6 +148,8 @@
       if (wire.id === "k128" && atom.id === "kv3") return `${base} · Excepție KV3 Mini validată: 28/6 pe Ø2,5.`;
       if (wire.id === "k128" && atom.id === "dvarwcl") return `${base} · Dvarw CL 3×0,6 validat: 28/6 pe Ø2,5.`;
       if (wire.id === "k128" && atom.id === "asylum") return `${base} · Asylum V3 Flat validat: 28/6 pe Ø2,5.`;
+      if (wire.id === "k128" && atom.id === "klp") return `${base} · KLP A/B direct: 28/5 > 29/6 pentru redare generală/completă.`;
+      if (wire.id === "k129" && atom.id === "gtone" && Number(output && output.wraps) === 6) return `${base} · GT One A/B direct: 29/6 > 28/5.`;
       if (wire.id === "k128") return `${base} · Prior personal secundar: 28/5 contact.`;
       return base;
     };
@@ -154,7 +167,7 @@
   document.addEventListener("DOMContentLoaded", () => {
     const guide = document.querySelector(".wire-guide-foot");
     if (guide) {
-      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 contact baseline; excepții validate <b>KV3 Mini = 28/6</b>, <b>Dvarw CL 3×0,6 = 28/6</b>, <b>Asylum V3 Flat = 28/6</b>, toate pe Ø2,5. K1 29 = <b>5 contact prior personal</b>, cu <b>KV3 Mini = 29/6 pe Ø2,5</b> și alte excepții doar când ADN-ul platformei / A-B-ul direct justifică; K1 Clapton = 5; SS Clapton = 5; Dicodes RESISTHERM NiFe30 = <b>6 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. Varianta K1 29/5 distanțată este eliminată din Lab.";
+      guide.innerHTML = "<b>Regulă activă:</b> K1 28 = 5 contact baseline; excepții validate <b>KV3 Mini = 28/6</b>, <b>Dvarw CL 3×0,6 = 28/6</b>, <b>Asylum V3 Flat = 28/6</b>, toate pe Ø2,5. K1 29 = <b>5 contact prior personal</b>, cu <b>KV3 Mini = 29/6</b> și <b>GT One = 29/6 preferat A/B</b> pe Ø2,5; pe <b>KLP, 28/5 este preferat față de 29/6</b> pentru redare generală; K1 Clapton = 5; SS Clapton = 5; Dicodes RESISTHERM NiFe30 = <b>6 spire</b>; Zivipf NiFe52 = <b>6 spire</b>. Varianta K1 29/5 distanțată este eliminată din Lab.";
     }
   });
 })();
