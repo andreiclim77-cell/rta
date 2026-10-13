@@ -120,13 +120,32 @@ find("atomExplorer").value="gtr";
 doc.events.DOMContentLoaded();
 assert.ok(find("sensoryExplorer").innerHTML.includes("GTR"));
 assert.ok(find("sensoryExplorer").innerHTML.includes("magie pe palat"));
+// Three-zone navigation and landmarks must be present in both paths.
+function checkThreeZones(view){
+ const html=find("sensory"+(view==="explorer"?"Explorer":"Main")).innerHTML;
+ const order=["config","dna","recommendations"].map(name=>html.indexOf('id="sd-'+view+'-'+name+'"'));
+ assert.ok(order.every(index=>index>=0),"Missing stage landmark in "+view);
+ assert.ok(order[0]<order[1]&&order[1]<order[2],"Wrong stage order in "+view);
+ for(const name of ["config","dna","recommendations"]){
+  assert.ok(html.includes('href="#sd-'+view+'-'+name+'"'),"Missing navigation link "+view+"/"+name);
+  assert.ok(html.includes('aria-labelledby="sd-'+view+'-'+name+'-title"'),"Missing accessible heading "+view+"/"+name);
+ }
+ assert.ok(html.includes("Ce câștigi")&&html.includes("Ce sacrifici"),"Missing sensory trade-offs");
+ assert.ok(html.includes("TOP 3 configurații pentru obiectiv"),"Missing alternative builds");
+ assert.ok(html.includes("Lichide din catalog potrivite"),"Missing liquid recommendations");
+}
+checkThreeZones("explorer");
 assert.equal(find("labLiquidView").hidden,true);
 find("mode-main").trigger("click");
+find("atom").value="gtr";
+sandbox.window.RTA_SENSORY_UI.render("main");
+checkThreeZones("main");
 assert.equal(find("labExplorerView").hidden,true);
 assert.equal(find("labLiquidView").hidden,false);
 find("mode-explorer").trigger("click");
 find("sensoryExplorer").trigger("change",{target:{dataset:{sdField:"wire"},value:"k128"}});
 assert.equal(sandbox.window.RTA_SENSORY_UI.configFor("gtr","explorer").wire,"k128");
+checkThreeZones("explorer");
 assert.ok(find("sensoryExplorer").innerHTML.includes("Kanthal A1 28 GA"));
 find("sensoryExplorer").trigger("change",{target:{dataset:{sdProfile:"explorer"},value:"Tutun complex"}});
 assert.equal(sandbox.window.RTA_SENSORY_UI.states.explorer.category,"Tutun complex");
