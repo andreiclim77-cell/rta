@@ -50,7 +50,7 @@
       location.reload();
     });
 
-    const registration = await navigator.serviceWorker.register(`./sw.js?v=${VERSION}`, {
+    const registration = await navigator.serviceWorker.register(`./sw.js?v=${VERSION}-responsive-v2-20261013`, {
       scope: "./",
       updateViaCache: "none"
     });
