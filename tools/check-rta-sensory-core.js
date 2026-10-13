@@ -172,6 +172,17 @@ assert.equal(sandbox.window.RTA_SENSORY_UI.configFor("gtr","explorer").wire,"nif
 find("sensoryExplorer").trigger("change",{target:{dataset:{sdProfile:"explorer"},value:"Tutun complex"}});
 assert.equal(sandbox.window.RTA_SENSORY_UI.states.explorer.category,"Tutun complex");
 assert.ok(find("sensoryExplorer").innerHTML.includes("Tutun complex"));
+// Change wire in the actual UI: never inherit Kanthal wattage for KLP TC.
+find("atomExplorer").value="klp";
+sandbox.window.RTA_SENSORY_UI.render("explorer");
+find("sensoryExplorer").trigger("change",{target:{dataset:{sdField:"wire"},value:"nife30"}});
+const uiKlp=sandbox.window.RTA_SENSORY_UI.configFor("klp","explorer");
+assert.equal(uiKlp.wire,"nife30");
+assert.equal(uiKlp.wraps,6);
+assert.equal(uiKlp.temp,220);
+assert.equal(uiKlp.power,16);
+assert.ok(find("sensoryExplorer").innerHTML.includes("OBSERVAȚIE PARȚIALĂ"));
+assert.ok(find("sensoryExplorer").innerHTML.includes("Kayfun Prime")||find("sensoryExplorer").innerHTML.includes("K Prime"));
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 const sw=fs.readFileSync(path.join(root,"sw.js"),"utf8");
 for(const token of ["sensoryExplorer","sensoryMain","mode-main","mode-explorer","data/sensory-core.js","sensory-ui.js","sensory-ui.css"])assert.ok(html.includes(token),token+" missing in HTML");
