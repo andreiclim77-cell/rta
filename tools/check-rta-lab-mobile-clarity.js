@@ -10,8 +10,8 @@ const engine=read("rta-lab/engine.js");
 const sensory=read("rta-lab/sensory-ui.js");
 const css=read("rta-lab/sensory-ui.css");
 const sw=read("rta-lab/sw.js");
-for(const f of ["engine.js","sensory-ui.js","sensory-ui.css"]){
- const asset="./"+f+"?v=10-mobile-20261013";
+for(const [f,version] of [["engine.js","10-mobile-20261013"],["sensory-ui.js","10-three-zone-20261013"],["sensory-ui.css","10-three-zone-20261013"]]){
+ const asset="./"+f+"?v="+version;
  assert.ok(html.includes(asset),"HTML must load updated "+f);
  assert.ok(sw.includes(asset),"service worker must precache updated "+f);
 }
@@ -29,5 +29,6 @@ assert.ok(css.includes(".sd-controls{grid-template-columns:minmax(0,1fr)}"));
 assert.ok(css.includes(".sd-metrics{grid-template-columns:minmax(0,1fr)}"));
 assert.ok(css.includes(".row2{grid-template-columns:minmax(0,1fr) auto}"));
 assert.ok(css.includes("overflow-wrap:anywhere"));
+for(const marker of [".sd-journey", ".sd-stage", ".sd-stage-head", "@media(max-width:690px)"])assert.ok(css.includes(marker),"Three-zone responsive style missing: "+marker);
 assert.ok(css.includes(".sd-liquid small{display:block;-webkit-line-clamp:unset;overflow:visible}"));
 console.log("RTA MOBILE CLARITY PASS: ranking semantics, independent TOP3 explanation, narrow layout guards, cache refresh");
