@@ -188,8 +188,9 @@ function content(view){
   (analysis.anchors.length?'<div class="sd-evidence"><b>Observații folosite în calibrare</b>'+
    analysis.anchors.map(o=>'<p><strong>'+esc(o.title)+'</strong> — '+esc(o.text)+
    ' <em>('+esc(o.evidence)+')</em></p>').join("")+'</div>':'')+
-  '<div class="sd-section-title"><h4>Alternative pentru obiectivul ales</h4>'+
-  '<small>compară configurații, nu numai sârme</small></div>'+
+  '<div class="sd-section-title"><h4>TOP 3 configurații pentru obiectiv</h4>'+
+  '<small>toate buildurile compatibile</small></div>'+
+  '<p class="sd-ranking-note">Acest TOP 3 compară toate buildurile compatibile pentru atomizor, cameră, airflow, lichid și obiectiv. Alegerea sârmei de mai sus schimbă semnătura configurației active, nu automat clasamentul alternativelor.</p>'+
   '<div class="sd-builds">'+altWires+'</div>'+
   '<div class="sd-section-title"><h4>Lichide din catalog potrivite acestui setup</h4>'+
   '<small>calculate din toate cele 620</small></div>'+
