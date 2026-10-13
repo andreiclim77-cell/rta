@@ -50,6 +50,8 @@ jobs:
           node --check rta-lab/bootstrap.js
           node --check rta-lab/sw.js
           for file in rta-lab/data/*.js; do node --check "$file"; done
+          node --check rta-lab/bell-liquid-ui.js
+          node tools/check-rta-bell-fit.js
           test ! -e rta-lab/app.js
           test ! -e rta-lab/lab-update.js
           node - <<'NODE'

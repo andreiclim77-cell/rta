@@ -1,15 +1,18 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-gtone-29x6-klp-28x5-ab-20261012";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-bell-liquid-fit-20261013";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
   "./styles.css?v=10",
   "./lab-update.css?v=10",
+  "./bell-liquid.css?v=10",
   "./engine.js?v=10",
   "./data/tuning-415.js?v=10",
   "./data/personal-5wrap.js?v=10",
   "./data/tc-platform-map.js?v=10",
   "./data/tc-sixwrap-global.js?v=10",
   "./data/clapton-platform-map.js?v=10",
+  "./data/bell-liquid-fit.js?v=10",
+  "./bell-liquid-ui.js?v=10",
   "./RTA_CONTINUITY_MASTER.md?v=10",
   "./bootstrap.js?v=10",
   "./manifest.webmanifest?v=10",
