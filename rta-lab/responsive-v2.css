@@ -1,0 +1,224 @@
+/* RTA Lab: responsive layout v2 · 13 Oct 2026
+   Scoped presentation-only overrides. No changes to matching or sensory scoring.
+   Previous overly permissive "anywhere" wrapping created one-letter-wide columns. */
+:root { --rta-space: clamp(12px, 2vw, 22px); }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { line-height: 1.5; }
+.wrap { width: 100%; max-width: 1200px; padding: 15px clamp(10px, 2.5vw, 28px) 64px; }
+.topin { width: 100%; max-width: 1144px; }
+.hero, .panel, .sensory-panel, .wire-card, .bl-liquid, .bl-category,
+.sd-build, .sd-liquid, .sd-metric, .geometry-rule, .lab-secondary,
+.wire-guide { min-width: 0; box-sizing: border-box; overflow-wrap: break-word; word-break: normal; hyphens: auto; }
+:where(.hero, .panel, .sensory-panel, .wire-card, .bl-liquid, .bl-category,
+.sd-build, .sd-liquid, .sd-metric, .geometry-rule, .lab-secondary,
+.wire-guide) :where(h2,h3,h4,h5,p,span,strong,small,b,li,summary,button) {
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.panel { padding: clamp(15px, 2vw, 25px); }
+.ptitle { display: grid; grid-template-columns: 40px minmax(0, 1fr); align-items: start; gap: 12px; }
+.ptitle .num { width: 40px; height: 40px; flex: none; }
+.ptitle > div:last-child { min-width: 0; }
+.ptitle h3 { line-height: 1.24; }
+.ptitle p { line-height: 1.55; }
+.hero p { font-size: 13px; line-height: 1.65; }
+.hero .badge { font-size: 11px; line-height: 1.3; }
+label, .sd-field span { letter-spacing: normal; }
+button, input, select { font-family: inherit; }
+button { touch-action: manipulation; }
+.categories { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.categories .cat { min-width: 0; padding: 11px 12px; font-size: 13px; line-height: 1.35; }
+.categories .cat small { font-size: 11px; line-height: 1.35; }
+.row2 { grid-template-columns: minmax(0, 1fr) auto; }
+.row2 > input { min-width: 0; }
+.objective { gap: 8px; overflow-x: auto; scrollbar-width: thin; scroll-snap-type: x proximity; padding: 2px 0 10px; }
+.objective button { min-height: 44px; padding: 10px 13px; font-size: 12px; scroll-snap-align: start; }
+.freehint, .legend, .footer { font-size: 11px; line-height: 1.6; }
+.pill { font-size: 11px; line-height: 1.45; }
+.pills { gap: 7px; }
+.info p, .ameta p { font-size: 12px; line-height: 1.6; }
+
+/* Grids follow available card width rather than only viewport width. */
+.wire-grid-five, .explorer-builds-five {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 285px), 1fr));
+  gap: 12px;
+}
+.wire-grid-five .wire-card.tc { grid-column: auto; }
+.geometry-grid, .geometry-grid-five {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 188px), 1fr));
+  gap: 7px;
+}
+.geometry-grid span {
+  display: flex; align-items: flex-start; flex-wrap: wrap;
+  justify-content: space-between; gap: 6px 12px;
+  min-width: 0; padding: 9px 10px;
+  font-size: 12px; line-height: 1.45; text-align: left;
+}
+.geometry-grid span b { display: inline; margin: 0; min-width: 0; }
+.geometry-rule h5 { font-size: 13px; }
+.geometry-rule p { font-size: 11px !important; line-height: 1.6 !important; }
+.wire-guide>summary span { font-size: 13px; line-height: 1.4; }
+.wire-guide>summary small { font-size: 11px; line-height: 1.45; }
+.wire-card { padding: 14px; }
+.wire-head { gap: 9px; }
+.wire-head strong { font-size: 14px; line-height: 1.45; }
+.wire-tag { max-width: 100%; font-size: 10px; line-height: 1.3; letter-spacing: .1px; }
+.wire-specs { font-size: 12px; line-height: 1.6; }
+.wire-card p, .wire-delta span { font-size: 12px; line-height: 1.6; }
+.wire-guide-intro, .wire-guide-foot { font-size: 12px; line-height: 1.6; }
+.explorer-air, .explorer-tip { font-size: 12px; line-height: 1.6; }
+
+/* Sensory cockpit: use real-width cards and readable density. */
+.sensory-panel { padding: clamp(14px, 2.1vw, 24px); }
+.sd-heading > div:first-child { flex: 1 1 230px; min-width: 0; }
+.sd-confidence { flex: 0 1 148px; max-width: 148px; }
+.sd-context { align-items: stretch; gap: 8px; }
+.sd-context span { max-width: 100%; flex: 0 1 auto; font-size: 12px; line-height: 1.45; }
+.sd-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 13px; }
+.sd-field { min-width: 0; }
+.sd-field span { font-size: 12px; line-height: 1.4; }
+.sd-field select, .sd-field input { font-size: 15px; min-width: 0; }
+.sd-metrics { grid-template-columns: repeat(auto-fit, minmax(min(100%, 225px), 1fr)); gap: 10px; }
+.sd-metric { min-width: 0; min-height: 100px; padding: 13px 14px; }
+.sd-metric span { font-size: 12px; }
+.sd-metric strong { font-size: 14px; line-height: 1.45; }
+.sd-meter { width: 100%; max-width: none; }
+.sd-meter i { height: 7px; }
+.sd-personal { grid-column: 1 / -1; }
+.sd-trade { grid-template-columns: repeat(2, minmax(0,1fr)); }
+.sd-trade li { font-size: 12px; line-height: 1.55; }
+.sd-evidence p, .sd-method p { font-size: 12px; line-height: 1.6; }
+.sd-builds { grid-template-columns: minmax(0, 1fr); }
+.sd-build { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 10px; align-items: center; min-height: 66px; }
+.sd-build-rank { width: 30px; height: 30px; }
+.sd-build-title { flex: none; min-width: 0; }
+.sd-build-title strong { font-size: 13px; }
+.sd-build-title small { font-size: 11px; }
+.sd-build-indicator { margin: 0; white-space: normal; font-size: 10px; text-align: right; }
+.sd-liquids { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 9px; }
+.sd-liquid { display: grid; grid-template-columns: 21px minmax(0, 1fr); gap: 8px 10px; align-items: start; padding: 13px; }
+.sd-liquid > div { min-width: 0; }
+.sd-liquid b { font-size: 13px; line-height: 1.5; }
+.sd-liquid small { font-size: 11px; line-height: 1.5; }
+.sd-liquid button { grid-column: 2; justify-self: start; min-height: 44px; font-size: 12px; }
+.sd-section-title small { line-height: 1.5; }
+.sd-ranking-note, .lab-rank-note { max-width: 100%; }
+
+/* The bell catalogue is nested inside other cards: avoid forced 2-column text. */
+.bl-categories { grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 9px; }
+.bl-results { grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 9px; }
+.bl-category {
+  display: grid; grid-template-columns: 22px minmax(0,1fr);
+  align-items: start; gap: 5px 10px; padding: 12px;
+}
+.bl-position { min-width: 0; }
+.bl-class-text { display: flex; flex-direction: column; min-width: 0; }
+.bl-class-text strong { font-size: 13px; line-height: 1.4; }
+.bl-class-text span { font-size: 11px; line-height: 1.5; }
+.bl-fit-level {
+  grid-column: 2; justify-self: start; max-width: none;
+  font-size: 11px; line-height: 1.5; text-align: left;
+  color: #bde6d8; white-space: normal;
+}
+.bl-liquid { min-width: 0; padding: 13px; }
+.bl-liquid-top { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 7px 9px; }
+.bl-liquid-name { min-width: 0; }
+.bl-liquid-name strong { font-size: 13px; line-height: 1.5; }
+.bl-liquid-name span { font-size: 11px; line-height: 1.5; }
+.bl-liquid-grade { grid-column: 2; justify-self: start; margin: 0; white-space: normal; font-size: 11px; }
+.bl-liquid p { font-size: 12px; line-height: 1.55; }
+.bl-try, .bl-actions button, .bl-filters button { font-size: 12px; min-height: 44px; }
+.bl-heading p, .bl-bell-note, .bl-warning, .bl-method { font-size: 12px; line-height: 1.6; }
+.bl-summary { font-size: 11px; }
+
+/* Mobile: full-width reading flow, no tiny multi-column panels. */
+@media (max-width: 699px) {
+  .wrap { padding: 10px 10px 60px; }
+  .top { padding: 10px 12px; margin: 0 0 12px; }
+  .topin { gap: 9px; }
+  .topin .logo { width: 43px; height: 43px; border-radius: 13px; }
+  .topin .brand { min-width: 0; }
+  .brand h1 { font-size: 16px; }
+  .brand div { font-size: 10px; line-height: 1.3; }
+  .hero, .panel { border-radius: 18px; }
+  .hero { padding: 17px 15px; margin-bottom: 12px; }
+  .hero h2 { font-size: clamp(22px, 6vw, 29px); line-height: 1.18; }
+  .hero p { font-size: 12px; line-height: 1.6; }
+  .panel { padding: 14px; margin-bottom: 12px; }
+  .ptitle { grid-template-columns: 35px minmax(0,1fr); gap: 10px; }
+  .ptitle .num { width: 35px; height: 35px; font-size: 14px; }
+  .ptitle h3 { font-size: 17px; }
+  .ptitle p { font-size: 12px; }
+  .lab-flow-switch { grid-template-columns: minmax(0,1fr); gap: 5px; padding: 5px; margin-bottom: 12px; }
+  .lab-flow-switch button { width: 100%; min-height: 58px; padding: 10px 12px; }
+  .lab-flow-switch button strong { font-size: 14px; }
+  .lab-flow-switch button small { font-size: 11px; }
+  .categories { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .categories .cat.all { grid-column: 1/-1; }
+  .categories .cat { min-height: 60px; font-size: 12px; padding: 10px; }
+  .categories .cat small { font-size: 10px; }
+  .sensory-panel { margin: 11px 0 2px; padding: 13px; border-radius: 16px; }
+  .sd-heading { display: flex; flex-direction: column; gap: 4px; }
+  .sd-heading h3 { font-size: 21px; }
+  .sd-confidence { flex: none; align-self: flex-start; max-width: 100%; text-align: left; }
+  .sd-context span { font-size: 11px; }
+  .sd-controls { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .sd-field select, .sd-field input { min-height: 46px; font-size: 16px; }
+  .sd-metrics { grid-template-columns: minmax(0, 1fr); }
+  .sd-metric {
+    display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+    gap: 6px 11px; align-items: center; min-height: 74px; padding: 11px 12px;
+  }
+  .sd-metric span { grid-column: 1; font-size: 12px; }
+  .sd-metric strong { grid-column: 2; font-size: 13px; }
+  .sd-metric .sd-meter { grid-column: 1/-1; margin-top: 2px; }
+  .sd-personal small { grid-column: 1/-1; }
+  .sd-trade { grid-template-columns: minmax(0, 1fr); gap: 9px; }
+  .sd-trade > div { padding: 13px; }
+  .sd-build { grid-template-columns: 28px minmax(0, 1fr); gap: 4px 10px; min-height: 72px; padding: 12px; }
+  .sd-build-rank { width: 28px; height: 28px; grid-row: 1 / 3; }
+  .sd-build-title { grid-column: 2; }
+  .sd-build-indicator { grid-column: 2; text-align: left; font-size: 10px; }
+  .sd-liquid button { width: auto; }
+  .wire-grid-five, .explorer-builds-five, .bl-results, .bl-categories { grid-template-columns: minmax(0,1fr); }
+  .wire-grid { padding: 9px; }
+  .wire-card { padding: 12px; }
+  .wire-guide > summary { display: block; }
+  .wire-guide > summary small { display: block; text-align: left; margin-top: 4px; }
+  .air { grid-template-columns: minmax(0,1fr); }
+  .airvis { max-width: 220px; }
+  .lab-secondary { margin-top: 12px; }
+  .lab-secondary > summary { font-size: 12px; line-height: 1.5; }
+  .lab-secondary .bell-liquid-panel { margin: 8px; padding: 11px; }
+  .sd-section-title h4 { font-size: 15px; }
+  .sd-section-title small { font-size: 11px; }
+}
+@media (min-width: 420px) and (max-width: 699px) {
+  .sd-metrics { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .sd-metric { display: flex; flex-direction: column; align-items: stretch; min-height: 116px; }
+  .sd-metric strong, .sd-metric span { font-size: 12px; }
+  .sd-metric .sd-meter { margin-top: auto; }
+  .sd-personal { grid-column: 1/-1; min-height: 85px; }
+}
+@media (min-width: 480px) and (max-width: 699px) {
+  .air { grid-template-columns: 124px minmax(0,1fr); }
+  .airvis { max-width: none; width: 100%; }
+}
+@media (min-width: 700px) and (max-width: 999px) {
+  .wrap { max-width: 960px; }
+  .sd-controls { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .sd-trade { grid-template-columns: repeat(2,minmax(0,1fr)); }
+}
+@media (min-width: 1000px) {
+  #labLiquidView { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 15px; align-items: start; }
+  #labLiquidView > .steps, #labLiquidView > .panel:last-child { grid-column: 1/-1; }
+  #labLiquidView > .panel { margin: 0; }
+  .sd-controls { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .sd-metrics { grid-template-columns: repeat(4,minmax(0,1fr)); }
+  .sd-personal { grid-column: 1/-1; }
+  .lab-flow-switch { max-width: 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
