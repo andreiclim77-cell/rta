@@ -297,5 +297,5 @@ Reguli runtime:
 ### Integrare și QA
 - rta-lab/index.html încarcă funcția după clapton-platform-map.js și afișează fișele în ambele fluxuri.
 - rta-lab/sw.js precache pentru toate resursele noi, cache separat 20261013; rămâne V10 cu 5 sârme.
-- .github/workflows/quality-gate.yml execută și tests/check-rta-bell-fit (fișier efectiv tools/check-rta-bell-fit.js).
+- .github/workflows/quality-gate.yml execută și tools/check-rta-bell-fit.js.
 - Quality Gate și deploy trebuie confirmate efectiv SUCCESS pe commitul publicat, nu doar sintaxa locală.

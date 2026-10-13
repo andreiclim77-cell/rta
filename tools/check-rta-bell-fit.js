@@ -85,9 +85,12 @@ const store={
  getItem:()=>{throw new Error("private browsing blocked storage");},
  setItem:()=>{throw new Error("private browsing blocked storage");}
 };
+const handoff={};
 const sandbox={
  window:{RTA_CORE:{atoms:atoms},RTA_LIQUIDS:catalog,RTA_BELL_LIQUID_FIT:api,localStorage:store},
- document:document,setCategory:()=>{},activateLiquid:()=>{},chooseAtom:()=>{}
+ document:document,
+ setCategory:c=>{handoff.category=c;},activateLiquid:l=>{handoff.liquid=l;},
+ chooseAtom:()=>{handoff.chooseAtom=(handoff.chooseAtom||0)+1;}
 };
 vm.createContext(sandbox);
 vm.runInContext(fs.readFileSync(path.join(root,"bell-liquid-ui.js"),"utf8"),sandbox);
@@ -120,4 +123,20 @@ assert.ok(panel.innerHTML.includes("calibrate pe clopotul Flat") ||
 explorer.value="gtr";explorer.trigger("change");
 assert.equal(ui.views.explorer.analysis.total,620);
 assert.ok(panel.innerHTML.includes("disabled"));
+assert.ok(ui.views.explorer.analysis.total===620);
+const first=ui.views.explorer.analysis.matches[0];
+panel.trigger("click",{target:{closest:()=>({dataset:{blPick:String(first.index),blView:"explorer"}})}});
+assert.equal(handoff.category,"ALL");
+assert.equal(handoff.liquid,catalog[first.index]);
+assert.equal(element("atom").value,"gtr");
+assert.equal(handoff.chooseAtom,1);
+explorer.value="diplomat";explorer.trigger("change");
+assert.equal(ui.views.explorer.analysis.bell.id,"freehand","Selection must persist without localStorage.");
+panel.trigger("input",{dataset:{blSearch:"explorer"},value:""});
+ui.filter("explorer","NET complex");
+assert.ok(panel.querySelector('[data-bl-summary="explorer"]').textContent.includes("din 170"));
+panel.trigger("click",{target:{closest:()=>({dataset:{blMore:"explorer"}})}});
+assert.ok(panel.querySelector('[data-bl-summary="explorer"]').textContent.includes("36 din 170"));
+element("atom").value="diplomat";element("atom").trigger("change");
+assert.equal(ui.views.main.analysis.bell.id,"freehand","Both views must use the same physical bell choice.");
 console.log("RTA bell fit PASS: "+profiles+" atomizer/chamber configurations, 620 liquids each; UI select/search/filter/blocked-storage tests.");

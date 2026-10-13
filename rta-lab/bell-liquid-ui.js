@@ -150,6 +150,8 @@ function pick(view,index) {
     typeof chooseAtom!=="function")return;
  setCategory("ALL");
  activateLiquid(catalog[index]);
+ var mainLiquid=byId("liq");
+ if(mainLiquid)mainLiquid.value=String(index);
  var atomSelect=byId("atom");
  if(atomSelect){atomSelect.value=report.atomId;chooseAtom();render("main");}
  var step=byId("step3");
