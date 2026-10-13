@@ -5,7 +5,7 @@
  */
 (function () {
 "use strict";
-const V="2026-10-13";
+const V="2026-10-13-nife30-klp";
 const AXIOMS=[
  "Configurația completă este unitatea de evaluare.",
  "Spectrul aromatic nu este același lucru cu intensitatea.",
@@ -98,6 +98,16 @@ const PLATFORMS={
  AIR("d12","Diverter 12×1 + pin 1,2 mm","diverter",[1.2],1.6)],
  traits:{spectrum:4.2,simultaneity:3.9,focus:4.2,palate:4.5,offense:4.2,th:4.3,harmony:4.0},note:"Diverterul este distribuit, dar camera este compactă."}
 };
+/* NiFe30 + high-end MTL family affinity: reported for KLP, K Prime,
+   KX and GTR; Kayfun Mini V3 remains an extrapolation. Not manufacturer intent. */
+const NIFE30_FAMILY=Object.freeze({
+ label:"SvoëMesto + Taifun GTR",
+ candidates:["klp","kprime","kx","kv3","gtr"],
+ reported:["klp","kprime","kx","gtr"],
+ untested:["kv3"],
+ status:"afinitate personală preliminară; nu proiectare dedicată dovedită",
+ explanation:"NiFe30 TC poate aduce finețe și prezență pe palat pe mai multe platforme, dar geometria fiecăreia decide caracterul. Nu atribui automat avantaje tuturor lichidelor sau buildurilor."
+});
 const WIRES={
  k128:{name:"Kanthal A1 28 GA",type:"round",diameter:.321,mode:"WATT",power:12.5},
  k129:{name:"Kanthal A1 29 GA",type:"round",diameter:.286,mode:"WATT",power:12.3},
@@ -124,10 +134,21 @@ const DEFAULTS={
  kv3:{wire:"k128",wraps:6,air:"screw_mid"},
  minister:{wire:"k129",wraps:5,air:"d20"}
 };
+function wireSetup(atom,wire){
+ const w=WIRES[wire];if(!w)return null;
+ // KLP DNA personal test: 220°C / 16 W. Other devices retain their own presets.
+ if(atom==="klp"&&wire==="nife30")return {power:16,temp:220};
+ return {power:w.power,temp:w.temp||230};
+}
 const OBS=[
  {atom:"klp",wire:"k128",wraps:5,title:"KLP 28/5: bogăție + ofensivă",
   text:"Palat îmbrățișat de un spectru simultan, TH și ofensivă; preferat personal față de 28/6 și 29/6.",
   patch:{simultaneity:4.92,palate:4.9,offense:4.67,th:4.7,harmony:4.8},affinity:"configurație preferată",evidence:"A/B personal 13.10.2026"},
+ {atom:"klp",wire:"nife30",wraps:6,coilMm:2.5,power:16,temp:220,partial:true,
+  title:"KLP + Dicodes NiFe30 TC · DNA 220°C / 16 W",
+  text:"Față de KLP cu K1 28/5: palat mai bogat, spectru mai bun, TH și ofensivă ușor crescute; apare magia, cu o apropiere senzorială de K Prime cu aceeași sârmă. Nu devine GTR și nu își pierde identitatea.",
+  affinity:"magie senzorială · apropiere de K Prime",
+  evidence:"observație personală 13.10.2026 · airflow, lichid și puterea comparatorului neprecizate"},
  {atom:"klp",wire:"k128",wraps:6,title:"KLP 28/6: mai analitic, mai blând",
   text:"Scade ofensiva și TH; profil mai moale și analitic, considerat inferior lui 28/5.",
   patch:{separation:4.72,offense:3.35,th:3.55,palate:4.2},affinity:"mai puțin preferat",evidence:"A/B personal 13.10.2026"},
@@ -184,7 +205,6 @@ function bellFor(id,bellId){
 function permitted(id,wire,wraps){
  if(!PLATFORMS[id]||!WIRES[wire])return false;
  if(wire==="ssclap"&&id==="asylum")return false;
- if((wire==="nife30"||wire==="nife52")&&id==="klp")return false;
  if(wire==="k128"&&id==="415"&&wraps===6)return false; // deprecated per MASTER
  if(wire==="k128"||wire==="k129")return wraps===5||wraps===6;
  return wraps===(WIRES[wire].type==="tc"?6:5);
@@ -205,7 +225,7 @@ function defaults(id) {
  const bellCfg=window.RTA_BELL_LIQUID_FIT&&window.RTA_BELL_LIQUID_FIT.config(id);
  return {atom:id,bell:bellCfg?bellCfg.defaultId:"standard",air:def.air,wire:def.wire,
   wraps:def.wraps,coilMm:2.5,position:"standard",
-  power:WIRES[def.wire].power,temp:WIRES[def.wire].temp||230};
+  power:wireSetup(id,def.wire).power,temp:wireSetup(id,def.wire).temp};
 }
 function configuration(id,changes={}) {
  const base=defaults(id);
@@ -255,12 +275,19 @@ function anchorsFor(config) {
  // Changing the air, bell, coil diameter, height or power turns the result into an extrapolation.
  const defaults=DEFAULTS[config.atom];
  const expectedBell=bellFor(config.atom,defaults&&defaults.bell).id;
+ const preset=wireSetup(config.atom,config.wire);
  if(!defaults || config.air!==defaults.air || config.position!=="standard" ||
-    config.coilMm!==2.5 || Math.abs(config.power-WIRES[config.wire].power)>1.25 ||
+    config.coilMm!==2.5 || Math.abs(config.power-preset.power)>1.25 ||
     config.bell!==expectedBell)return [];
- return OBS.filter(o=>o.atom===config.atom&&o.wire===config.wire &&
+ return OBS.filter(o=>!o.partial&&o.atom===config.atom&&o.wire===config.wire &&
    (o.wraps==null||o.wraps===config.wraps) &&
    (!o.bell||o.bell===config.bell));
+}
+function partialReportsFor(config){
+ // Do not transfer this report to untested TC settings; airflow/liquid were not recorded.
+ return OBS.filter(o=>o.partial && o.atom===config.atom && o.wire===config.wire &&
+   o.wraps===config.wraps && o.coilMm===config.coilMm &&
+   Math.abs(o.power-config.power)<0.1 && Math.abs(o.temp-config.temp)<1);
 }
 function technicalBaseline(config,liquid) {
  const tech=PLATFORMS[config.atom], phys=physical(config), bell=bellFor(config.atom,config.bell);
@@ -291,6 +318,13 @@ function technicalBaseline(config,liquid) {
  if(config.wire==="ssclap"){result.separation+=.16;result.offense-=.08;}
  if(config.wire==="k1clap"){result.palate+=.12;result.harmony+=.10;result.separation-=.12;}
  if(config.wire==="nife30"&&config.atom==="gtr"){result.palate+=.2;result.harmony+=.1;}
+ // KLP-specific hypothesis calibrated directionally from the reported 220°C/16 W
+ // comparison. This is NOT a measured effect or universal benefit of NiFe30.
+ if(config.atom==="klp"&&config.wire==="nife30"&&config.wraps===6 &&
+    Math.abs(config.power-16)<=.5 && Math.abs(config.temp-220)<=5){
+   result.spectrum+=.20;result.simultaneity+=.10;result.palate+=.20;
+   result.offense+=.50;result.th+=.45;result.harmony+=.10;
+ }
  if(config.atom==="dvarwcl"){
   if(config.air==="single12"){result.offense+=.26;result.focus+=.25;result.simultaneity-=.12;}
   if(config.air==="triple06"){result.offense+=.08;result.simultaneity+=.1;result.focus-=.08;}
@@ -316,7 +350,7 @@ function analyze(input,liquid={},objective="complete"){
  const config=configuration(typeof input==="string"?input:input.atom,typeof input==="string"?{}:input);
  if(!config)return null;
  const res=technicalBaseline(config,liquid);
- const signal={...res.signal},anchors=anchorsFor(config);
+ const signal={...res.signal},anchors=anchorsFor(config),partialReports=partialReportsFor(config);
  for(const obs of anchors)Object.assign(signal,obs.patch);
  Object.keys(signal).forEach(k=>signal[k]=round(clamp(signal[k])));
  const dimensions={
@@ -327,7 +361,8 @@ function analyze(input,liquid={},objective="complete"){
   pleasure:null
  };
  // Personal pleasure is qualitative and only surfaced for explicit user observations.
- const personal=anchors.length?anchors.map(o=>o.affinity).join(" / "):null;
+ const personal=anchors.length?anchors.map(o=>o.affinity).join(" / "):
+   partialReports.length?partialReports.map(o=>o.affinity).join(" / "):null;
  const w=res.physical.wire,air=res.physical.air;
  const advantages=[],tradeoffs=[];
  if(signal.simultaneity>=4.6)advantages.push("nuanțe percepute simultan");
@@ -342,7 +377,8 @@ function analyze(input,liquid={},objective="complete"){
  if(signal.separation<4.0)tradeoffs.push("separare mai puțin analitică");
  if(!advantages.length)advantages.push("profil aromatic echilibrat");
  if(!tradeoffs.length)tradeoffs.push("depinde mult de lichid și reglaj");
- const status=anchors.length?"observație personală + extrapolare la lichid":"predicție tehnică orientativă";
+ const status=anchors.length?"observație personală + extrapolare la lichid":
+  partialReports.length?"observație personală parțială + extrapolare tehnică":"predicție tehnică orientativă";
  const notes=[
   "Airflow: "+air.label+(res.physical.areaMm2!=null?", arie nominală "+res.physical.areaMm2+" mm²":"")+
    "; aria geometrică nu prezice singură debitul.",
@@ -354,13 +390,18 @@ function analyze(input,liquid={},objective="complete"){
  if(config.wire==="nife52")notes.push("NiFe52 rămâne fără verdict universal cross-alloy față de Dicodes NiFe30.");
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
+ if(config.atom==="klp"&&config.wire==="nife30")notes.push(
+   "KLP NiFe30: 220°C / 16 W sunt setările raportate pe DNA, nu recomandări universale. Airflow-ul, lichidul și reglajele comparatorului nu au fost încă documentate.");
+ if(NIFE30_FAMILY.candidates.includes(config.atom)&&config.wire==="nife30")notes.push(NIFE30_FAMILY.explanation);
  if(config.atom==="asylum"&&config.bell==="dome")
    notes.push("Asylum Dome nu preia automat validarea Flat/28/6.");
  const ext=anchors.map(o=>({title:o.title,text:o.text,evidence:o.evidence}));
  const modelWarning="Indicatorii interni sunt estimări, nu măsurători ale aromei sau garanții.";
  return {config,objective,signals:signal,dimensions,physical:res.physical,
   labels:Object.fromEntries(Object.entries(dimensions).filter(([k,v])=>v!=null).map(([k,v])=>[k,label(v)])),
-  pleasure:personal,anchors:ext,certainty:status,advantages,tradeoffs,notes,modelWarning};
+  pleasure:personal,anchors:ext,
+  partialEvidence:partialReports.map(o=>({title:o.title,text:o.text,evidence:o.evidence})),
+  certainty:status,advantages,tradeoffs,notes,modelWarning};
 }
 const GOALS={
  complete:{architecture:.30,palate:.27,harmony:.26,energy:.17},
@@ -387,7 +428,7 @@ function priority(result,objective="complete"){
 function rankBuilds(atomId,liquid={},objective="complete",context={}){
  const base=configuration(atomId,context);if(!base)return [];
  return variants(atomId).map(v=>{
-  const c=configuration(atomId,{...base,...v,power:WIRES[v.wire].power,temp:WIRES[v.wire].temp||base.temp});
+  const c=configuration(atomId,{...base,...v,...wireSetup(atomId,v.wire)});
   const result=analyze(c,liquid,objective);
   return {...result,rankScore:priority(result,objective)};
  }).sort((a,b)=>b.rankScore-a.rankScore);
@@ -414,6 +455,6 @@ function bestForLiquid(liquid,objective="complete",top=16){
  }).sort((a,b)=>b.score-a.score).slice(0,top);
 }
 window.RTA_SENSORY_CORE={version:V,axioms:AXIOMS,dimensions:DIMENSIONS,platforms:PLATFORMS,
- wires:WIRES,observations:OBS,defaultConfig:defaults,config:configuration,variants,
+ wires:WIRES,observations:OBS,nife30Family:NIFE30_FAMILY,wireSetup,defaultConfig:defaults,config:configuration,variants,
  physical,analyze,priority,rankBuilds,matchLiquids,bestForLiquid,liquidTags,permitted};
 })();
