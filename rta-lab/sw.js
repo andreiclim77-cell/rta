@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
@@ -7,6 +7,7 @@ const ASSETS = [
   "./bell-liquid.css?v=10",
   "./sensory-ui.css?v=10-three-zone-20261013",
   "./mood-match.css?v=11-mood-20261013",
+  "./home-ui.css?v=10-home-20261013",
   "./engine.js?v=10-mobile-20261013",
   "./data/tuning-415.js?v=10",
   "./data/personal-5wrap.js?v=10",
@@ -20,6 +21,7 @@ const ASSETS = [
   "./mood-match.js?v=11-mood-20261013",
   "./RTA_CONTINUITY_MASTER.md?v=10",
   "./bootstrap.js?v=10",
+  "./home-ui.js?v=10-home-20261013",
   "./manifest.webmanifest?v=10",
   "./icon-192.png?v=10",
   "./data/core.js?v=10",
