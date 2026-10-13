@@ -30,7 +30,7 @@
 7. Varianta K1 29/5 distanțată este **ȘTEARSĂ / DEPĂȘITĂ** și nu trebuie reintrodusă în UI, motor, Explorer sau arhivă.
 8. TC global: **NiFe30/6 + NiFe52/6**, ambele Ø2,5.
 9. Dicodes personal: **RESISTHERM NiFe30, TCR320, 5,5 Ω/m** confirmat direct de pe eticheta rolei.
-10. Harta TC: **GTR/KX → Dicodes NiFe30/6**; **K Prime → Zivipf NiFe52/6**; KLP rămâne exclus din harta NiFe.
+10. Harta TC: **GTR/KX → Dicodes NiFe30/6**, **K Prime → Zivipf NiFe52/6** (și benchmark Dicodes NiFe30); **KLP → Dicodes NiFe30/6 DNA 220°C / plafon 16 W, test personal 13.10.2026**; NiFe52 KLP încă netestat.
 11. Clapton active: **415→K1**, **Dvarw FL→SS**.
 12. Asylum V3: Flat = claritate/separare; Dome = corp/integrare; **K1 Clapton/5 numai contextual**, fără prior de platformă.
 13. **Mood Match (aprobat 13.10.2026):** 7 stări × 5 momente × lichid automat/manual; toate cele 16 platforme rămân accesibile; trei interpretări, niciun câștigător universal.
@@ -48,7 +48,7 @@
 | Dvarw MTL FL | 2 | Analiză/separare; 28/5 excelent; **SS316L Clapton/5 = pereche dedicată**. |
 | Diplomat v1.5 | 3 | Camerele schimbă specializarea aromatică; calibrare separată; 29/5 contact prior personal. |
 | Kayfun X / KX | 4 | 28/5 extraordinar + Dicodes RESISTHERM NiFe30 320/6 TC; daily premium. |
-| KLP / Kayfun Lite Plus 2021 | 5 | **A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6 contact** pentru redarea generală/completă. 29/5 contact rămâne specialistul de hit/TH/focus; harta NiFe nu modifică KLP. |
+| KLP / Kayfun Lite Plus 2021 | 5 | **A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6 contact** pentru redarea generală/completă. 29/5 contact rămâne specialistul de hit/TH/focus; **KLP NiFe30/6 TC DNA 220°C / plafon 16 W este testat personal** (vezi §18). |
 | Asylum V3 SS/DLC | 2 | **Flat = configurația activă validată cu K1 28 GA / Ø2,5 / 6 spire** pentru claritate/separare + corp/completitudine; Dome = corp/integrare; K1 Clapton/5 rămâne contextual. |
 | Prime Minister Freehand | 2 | NET specialist; 28/5 = corp/layering; 29/6 contact = frunză/dry/tobacco-first. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; calibrare separată; 29/5 contact prior personal. |
@@ -117,9 +117,10 @@
 
 ### 4.7. KLP
 
-- **A/B direct 12.10.2026: 28/5 contact este preferat față de 29/6 contact** pentru redare generală/completă.
-- 29/5 contact rămâne specialistul de hit/TH, focus, viteză și tobacco-first.
-- 29/6 rămâne contextual, dar nu mai este varianta preferată de completitudine față de 28/5.
+- **A/B direct 12.10.2026: 28/5 contact este preferat față de 29/6 contact** pentru redare generală/completă; 28/6 a fost mai blând/analitic față de 28/5.
+- 29/5 contact rămâne specialistul de hit/TH, focus, viteză și tobacco-first; 29/6 rămâne contextual.
+- **Nou 13.10.2026:** KLP + Dicodes NiFe30 TCR320 / Ø2,5 / 6 spire / DNA TC **220°C, plafon 16 W** a fost raportat cu spectru și palat îmbunătățite față de KLP Kanthal K1, TH și ofensivă ușor mai puternice și o magie senzorială, apropiindu-se de K Prime cu aceeași sârmă.
+- **Incertitudine:** lichidul, airflow-ul și condițiile exacte ale comparatorului rămân neprecizate; nu declara A/B complet controlat sau avantaj universal. KLP K1 28/5 rămâne referință round-wire; NiFe52 pe KLP rămâne nevalidat.
 
 ### 4.8. Prime Minister Freehand
 
@@ -183,7 +184,7 @@ Reguli runtime:
 | GTR | Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 |
 | KX | Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 |
 | K Prime | Zivipf NiFe52 · TCR310 · Ø2,5 · 6 |
-| KLP | neschimbat / exclus din harta NiFe |
+| KLP | Dicodes NiFe30 / 6 spire / Ø2,5 / DNA 220°C / plafon 16 W — observație personală, airflow/lichid încă neprecizate; NiFe52 doar ipoteză |
 
 `tc-sixwrap-global.js` este gardul runtime care menține familia NiFe la 6 spire.
 
@@ -339,7 +340,7 @@ Reguli runtime:
 - Nu șterge motorul legacy, care rămâne reper de control.
 - Aria nominală a orificiilor NU implică debit real; lungimea/masa termică sunt proximități geometrice, nu măsurători ale temperaturii.
 - Diametrele necunoscute sunt marcate orientativ/neconfirmat. Nu pretindem clopote sau inserturi deținute dacă avem doar compatibilitatea.
-- Implicit Ø2,5, contact pentru K1 29/5; varianta 29/5 distanțată rămâne ștearsă. NiFe30 și NiFe52 folosesc 6 spire; KLP exclus din harta NiFe, Asylum SS Clapton exclus, 415 K1 28/6 depășit.
+- Implicit Ø2,5, contact pentru K1 29/5; varianta 29/5 distanțată rămâne ștearsă. NiFe30 și NiFe52 folosesc 6 spire; KLP NiFe30 TC acceptat și testat personal cu detalii parțiale, NiFe52 KLP permis ca variantă exploratorie, Asylum SS Clapton exclus, 415 K1 28/6 depășit.
 - Plăcerea personală nu primește niciodată scor calculat. Configurațiile nevalidate sunt marcate extrapolate; observațiile personale sunt condiționate de setup.
 - Ierarhia din profilul senzorial este estimare, nu măsurătoare, probabilitate sau sondaj.
 
@@ -431,3 +432,21 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 - `node tools/check-rta-home-ui.js` validează ordinea ecranului, accesul la instrumente, schimbarea modului, deschiderea referințelor, linkurile MASTER, scenariul reduce-motion și precache.
 - Păstrează validările anterioare Sensory DNA, Mood Match, Bell Fit, mobil și RTA Guide Quality Gate.
 - Confirmă separat rezultatul CI, integrarea în `main`, publicarea GitHub Pages și aspectul pe telefon real. Nu confunda codul salvat într-o ramură cu versiunea publicată.
+
+## 18. KLP NiFe30 TC și afinitatea de familie SvoëMesto–GTR — 13.10.2026
+
+**Dovadă nouă raportată:** KLP + Dicodes RESISTHERM NiFe30, 6 spire Ø2,5 mm, TCR 320 (rola 5,5 Ω/m); pe mod DNA în TC la **220°C**, plafon **16 W**. Comparativ cu KLP Kanthal K1 28/5, utilizatorul raportează **spectru aromatic, prezență pe palat și feeling/magie mai bune; TH și ofensivă ușor crescute**. KLP rămâne distinct de GTR, dar se apropie mult senzorial de **K Prime cu aceeași sârmă Dicodes NiFe30**, nu de K Prime NiFe52.
+
+**Date încă necunoscute:** lichidul, deschiderea AEROKON/airflow, contact/distanțat, poziție, rezistența rece, reglajele comparabile în K1. Nu declara automat A/B controlat pe parametri inexistenți, nici că limita de 16 W se furnizează permanent.
+
+**Concluzie de familie:** NiFe30 TC pare deosebit de potrivit pentru SvoëMesto și Taifun GTR, *fără să uniformizeze personalitatea camerelor*. Observații personale/benchmarkuri pentru KLP, K Prime, KX și GTR. Kayfun Mini V3 + NiFe30 rămâne **extrapolare nevalidată**, nu test efectuat.
+
+**Intenția producătorilor:** Nu s-a găsit dovadă că atomizoarele au fost concepute pentru NiFe30 în mod specific. SvoëMesto explică reducerea punctelor calde prin distribuția aerului pe lungimea coilului la Prime și saturarea/optimizarea MTL prin AEROKON la KLP. Dicodes precizează că RESISTHERM a fost special conceput pentru TC. Aceste proiectări sunt *complementare*, fără a demonstra o intenție comună sau cauzalitate exclusivă.
+- SvoëMesto Kayfun Prime: https://www.svoemesto.de/en/kayfun-prime
+- SvoëMesto Kayfun Lite plus: https://b2b.svoemesto.de/all-products/atomizers/
+- Manual Dicodes RESISTHERM: https://www.manualslib.com/manual/2531221/Dicodes-Dani-Box-Micro.html?page=9
+- Manual Taifun GTR: https://www.manualslib.com/manual/1617945/Taifun-Gtr.html
+
+**Regulă de cod:** vechea excludere KLP din familia NiFe TC este **DEPĂȘITĂ**, înlocuită de permisul NiFe30/6. Motorul oferă KLP NiFe30 preset 220°C/16 W; alte platforme păstrează preseturile lor. Observația KLP cu airflow/lichid necunoscute se afișează ca **dovadă parțială**, nu ca ancoră exactă pentru orice insert/clopot. KLP K1 28/5 rămâne reper round-wire; NiFe52 pe KLP și NiFe30 pe Mini V3 sunt experimentale, nu validate personal. Niciun scor numeric al plăcerii nu este fabricat.
+
+**Fișiere afectate:** data/sensory-core.js, data/tc-platform-map.js, sensory-ui.js, engine.js, index.html, sw.js și teste QA. Se verifică CI/deploy înainte de a confirma versiunea publică.

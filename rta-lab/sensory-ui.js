@@ -61,8 +61,9 @@ function setConfig(atomId,changes,view){
  const next=core.config(atomId,{...before,...changes});
  if(changes.wire && next.wire!==before.wire){
   // Never carry an unrelated fixed wattage into another wire.
-  next.power=core.wires[next.wire].power;
-  next.temp=core.wires[next.wire].temp||230;
+  const preset=core.wireSetup(atomId,next.wire);
+  next.power=preset.power;
+  next.temp=preset.temp;
  }
  configs[atomId]=next;remember();
  return next;
@@ -95,7 +96,7 @@ function narrative(result){
   if(d.id==="pleasure"){
    return '<div class="sd-metric sd-personal"><span>'+esc(d.title)+'</span>'+
     '<strong>'+esc(result.pleasure||"În așteptarea unui A/B")+'</strong>'+
-    '<small>'+(result.pleasure?"observație personală, fără extrapolare universală":"nu simulăm numeric plăcerea")+'</small></div>';
+    '<small>'+(result.pleasure?(result.partialEvidence&&result.partialEvidence.length?"observație parțială · airflow/lichid neprecizate":"observație personală, fără extrapolare universală"):"nu simulăm numeric plăcerea")+'</small></div>';
   }
   const n=Math.max(1,Math.min(5,result.dimensions[d.id]));
   const sticks=[1,2,3,4,5].map(i=>'<i'+(n>=i-.3?' class="on"':'')+'></i>').join("");
@@ -182,8 +183,9 @@ function content(view){
  const opts=objectives.map(o=>({value:o.id,label:o.text,selected:objective}));
  const altWires=sameBuildRows;
  let experimental="";
- if(!analysis.anchors.length)experimental='<span class="sd-confidence">EXTRAPOLAT TEHNIC</span>';
- else experimental='<span class="sd-confidence sd-confirmed">OBSERVAȚIE PERSONALĂ</span>';
+ if(analysis.anchors.length)experimental='<span class="sd-confidence sd-confirmed">OBSERVAȚIE PERSONALĂ</span>';
+ else if(analysis.partialEvidence&&analysis.partialEvidence.length)experimental='<span class="sd-confidence">OBSERVAȚIE PARȚIALĂ + MODEL</span>';
+ else experimental='<span class="sd-confidence">EXTRAPOLAT TEHNIC</span>';
  return '<div class="sd-heading"><div><span class="sd-eyebrow">RTA SENSORY DNA · CONFIGURATOR</span>'+
   '<h3>'+esc(atom.short)+'</h3><p>Predicție după geometrie, cameră, aer și build; calibrată cu A/B personale.</p></div>'+
   experimental+'</div>'+
@@ -217,6 +219,10 @@ function content(view){
   (analysis.anchors.length?'<div class="sd-evidence"><b>Observații folosite în calibrare</b>'+
    analysis.anchors.map(o=>'<p><strong>'+esc(o.title)+'</strong> — '+esc(o.text)+
    ' <em>('+esc(o.evidence)+')</em></p>').join("")+'</div>':'')+
+  (analysis.partialEvidence&&analysis.partialEvidence.length?'<div class="sd-evidence"><b>Test personal raportat · parametri parțiali</b>'+
+   analysis.partialEvidence.map(o=>'<p><strong>'+esc(o.title)+'</strong> — '+esc(o.text)+
+   ' <em>('+esc(o.evidence)+')</em></p>').join("")+
+   '<p><em>Nu este o validare complet controlată a lichidului sau airflow-ului; comparația nu se transferă automat.</em></p></div>':'')+
   '</section>'+
   '<section class="sd-stage sd-stage--recommendations" id="'+stage.recommendations+'" aria-labelledby="'+stage.recommendations+'-title">'+
   stageHeading(view,"recommendations","03","Recomandări","Alternative calculate contextual, nu un clasament universal.")+
