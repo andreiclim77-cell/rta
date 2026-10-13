@@ -617,7 +617,7 @@ function fillAtoms() {
   state.atomRanking.forEach((item, index) => {
     const option = document.createElement("option");
     option.value = item.atom.id;
-    option.textContent = `#${index + 1} · ${item.atom.short} · ${state.match[item.atom.id]}% fit · ${item.atom.score.toFixed(1)}/10`;
+    option.textContent = `#${index + 1} · ${item.atom.short} · platformă ${item.atom.score.toFixed(1)}/10`;
     select.appendChild(option);
   });
 }
@@ -638,8 +638,10 @@ function chooseAtom() {
   $("airvis").innerHTML = '<div class="coil"></div>'
     + (flags.bottom ? '<div class="jetB"></div>' : '')
     + (flags.side ? '<div class="jetL"></div><div class="jetR"></div>' : '');
-  $("ameta").innerHTML = `<h4>${escapeHtml(atom.short)} · ${atom.score.toFixed(1)}/10</h4>
-    <div class="pills"><span class="pill cyan">${escapeHtml(atom.airflow.system)}</span><span class="pill gold">${state.match[atom.id]}% fit</span></div>
+  const rankPosition = state.atomRanking.findIndex(item => item.atom.id === atom.id) + 1;
+  $("ameta").innerHTML = `<h4>${escapeHtml(atom.short)}</h4>
+    <div class="pills"><span class="pill cyan">${escapeHtml(atom.airflow.system)}</span><span class="pill gold">Locul ${rankPosition} din ${state.atomRanking.length}</span><span class="pill">Scor platformă ${atom.score.toFixed(1)}/10</span></div>
+    <p class="lab-score-note">Locul este relativ la lichidul și obiectivul ales; nota /10 descrie platforma în general. Niciuna nu este probabilitate sau potrivire 100%.</p>
     <p><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
     ${geometrySummary(atom)}`;
   renderBuilds();
