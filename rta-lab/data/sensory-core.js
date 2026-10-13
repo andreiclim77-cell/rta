@@ -18,6 +18,7 @@ const AXIOMS=[
  "A/B personal prevalează local asupra extrapolării, fără transfer automat.",
  "Orice recomandare explică avantajul, compromisul și certitudinea."
 ];
+const previousBellFitAnalyze=window.RTA_BELL_LIQUID_FIT&&window.RTA_BELL_LIQUID_FIT.analyze;
 const DIMENSIONS=[
  {id:"architecture",title:"Arhitectură aromatică",description:"Spectru, separare, simultaneitate și tobacco core."},
  {id:"palate",title:"Prezență pe palat",description:"Bogăție, acoperire, corp și textură."},
@@ -250,6 +251,13 @@ function physical(config) {
   coverageMatch:round(coverageMatch),air:a,wire:w};
 }
 function anchorsFor(config) {
+ // User A/B evidence applies only near the actual canonical setup.
+ // Changing the air, bell, coil diameter, height or power turns the result into an extrapolation.
+ const defaults=DEFAULTS[config.atom];
+ const expectedBell=bellFor(config.atom,defaults&&defaults.bell).id;
+ if(!defaults || config.air!==defaults.air || config.position!=="standard" ||
+    config.coilMm!==2.5 || Math.abs(config.power-WIRES[config.wire].power)>1.25 ||
+    config.bell!==expectedBell)return [];
  return OBS.filter(o=>o.atom===config.atom&&o.wire===config.wire &&
    (o.wraps==null||o.wraps===config.wraps) &&
    (!o.bell||o.bell===config.bell));
@@ -388,7 +396,7 @@ function matchLiquids(config,catalog,objective="complete",limit=0){
  const input=configuration(config.atom,config);if(!input||!Array.isArray(catalog))return [];
  const fit=window.RTA_BELL_LIQUID_FIT;
  const atom=getAtoms().find(a=>a.id===input.atom);
- const prior=fit&&atom?fit.analyze(atom,input.bell,catalog):null;
+ const prior=previousBellFitAnalyze&&atom?previousBellFitAnalyze(atom,input.bell,catalog):null;
  const priorById=new Map((prior?prior.matches:[]).map(m=>[m.index,m.score]));
  const rows=catalog.map((liquid,index)=>{
   const result=analyze(input,liquid,objective);
