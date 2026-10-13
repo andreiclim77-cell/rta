@@ -277,7 +277,7 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (objective === "complete") bonus += 1.0;
     if (objective === "th") bonus -= 0.95;
     if (simple && dry && objective === "tobacco") bonus -= 0.35;
-    if (["kprime", "gtr", "kx", "gtone", "kv3"].includes(atom.id)) bonus += 0.75;
+    if (["klp", "kprime", "gtr", "kx", "gtone", "kv3"].includes(atom.id)) bonus += 0.75;
   }
 
   if (atom.id === "klp") {
