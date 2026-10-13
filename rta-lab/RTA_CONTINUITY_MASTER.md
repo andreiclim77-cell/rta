@@ -274,3 +274,28 @@ Reguli runtime:
 4. La „salvează”, sincronizează MASTER + date + logică + UI + PWA.
 5. Verifică să nu rămână reguli active contradictorii.
 6. După fiecare update verifică **Quality Gate efectiv** și nu declara success înainte de `conclusion: success`.
+
+
+## 13. Checkpoint 13.10.2026 — compatibilitate lichide după clopot (V10 extins)
+
+**Implementare nouă:** la selectarea oricărui atomizor din Explorer sau din fluxul Lichid → Atomizor apare o fișă pentru clopotul folosit.
+
+- Mai întâi cele patru clase în ordinea potrivirii: Tutun simplu / Tutun complex / NET simplu / NET complex.
+- Apoi clasament nominal calculat din toate cele 620 repere existente (inclusiv 120 Hall of Fame), fără a crea lichide fictive sau a altera catalogul.
+- Căutare în toate cele 620; filtre pe cele patru clase; afișare progresivă; buton pe fiecare lichid pentru transfer în motorul TOP 3 existent.
+- Clopote selectabile: Diplomat v1.5 = Duke, Freehand, Rhodesian; Asylum V3 = Flat, Dome; Prime Minister (ambele intrări Freehand/Rhodesian) = Freehand, Rhodesian, cu baza hardware standardizată pentru același clopot. Restul platformelor au cameră originală documentată; nu se inventează variante. Clopotul ales este păstrat local dacă stocarea este disponibilă.
+- Recunoașterea clopotelor se bazează pe informații de producător/distribuitori verificate la 13.10.2026. Potrivirea lichidelor este un model determinist CALITATIV extrapolat din ADN-ul platformei, rolul clopotului și profilele/catalogul propriu, nu un sondaj, certificat universal, nici A/B individual pentru toate combinațiile. Nu afișa procente de certitudine nejustificate.
+- Nu modifică geometria validată a buildurilor existente; în special **GT One K1 29/6 > 28/5**, **KLP K1 28/5 > 29/6** și **Asylum Flat K1 28/6**. Pe Asylum Dome avertizează că buildul validat este numai Flat.
+- Noua funcție este disponibilă atât în Explorer, cât și la selectarea atomizorului din motor. La click pe lichidul din listă se deschide același lichid în motor cu atomizorul ales, pentru TOP 3.
+
+### Fișiere noi
+- rta-lab/data/bell-liquid-fit.js — profilurile celor 16 platforme, 4 clase, clopote și scorul calitativ aplicat fiecărui lichid.
+- rta-lab/bell-liquid-ui.js — selectare clopot, liste, filtre, căutare, paginare, preferință locală, trimitere către motor.
+- rta-lab/bell-liquid.css — interfață responsivă.
+- tools/check-rta-bell-fit.js — teste exhaustive pe 620 de lichide pentru fiecare clopot și smoke tests de interacțiune.
+
+### Integrare și QA
+- rta-lab/index.html încarcă funcția după clapton-platform-map.js și afișează fișele în ambele fluxuri.
+- rta-lab/sw.js precache pentru toate resursele noi, cache separat 20261013; rămâne V10 cu 5 sârme.
+- .github/workflows/quality-gate.yml execută și tests/check-rta-bell-fit (fișier efectiv tools/check-rta-bell-fit.js).
+- Quality Gate și deploy trebuie confirmate efectiv SUCCESS pe commitul publicat, nu doar sintaxa locală.
