@@ -1,0 +1,163 @@
+/* RTA Mood Match · focused, accessible mobile-first visual language · 2026-10-13 */
+.mood-match{
+  width:100%;
+  min-width:0;
+  margin:0 0 19px;
+  padding:clamp(17px,3.5vw,30px);
+  overflow:hidden;
+  border-color:rgba(160,214,201,.33);
+  background:
+    radial-gradient(720px 270px at 92% -35%,rgba(143,217,198,.15),transparent 68%),
+    radial-gradient(480px 200px at 5% 0,rgba(223,182,114,.10),transparent 65%),
+    linear-gradient(140deg,#122129,#0c171e 70%);
+}
+.mood-match,.mood-match *{box-sizing:border-box;word-break:normal;overflow-wrap:break-word}
+.mood-match [hidden]{display:none!important}
+.mm-eyebrow{display:inline-flex;color:#e8c991;letter-spacing:1.7px;font-size:10px;font-weight:800}
+.mm-head h3{margin:10px 0 8px;line-height:1.17;letter-spacing:-.5px;font-weight:770;font-size:clamp(23px,3.1vw,35px);color:#faf6ed}
+.mm-head p{font-size:13px;line-height:1.7;max-width:760px;color:#bbcbcd;margin:0}
+.mm-progress{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0 7px}
+.mm-progress span{font-size:10px;color:#a2c8bf;background:rgba(119,195,178,.085);padding:7px 10px;border:1px solid rgba(135,212,195,.18);border-radius:999px;letter-spacing:.8px;font-weight:720}
+.mm-stage{margin:20px 0 0}
+.mm-stage h4,.mm-result-heading h4{font-size:clamp(17px,1.7vw,20px);line-height:1.4;color:#f7f0e7;margin:0 0 12px}
+.mm-moods,.mm-moments{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+.mm-mood,.mm-moment,.mm-source button{
+  min-width:0;width:100%;text-align:left;min-height:74px;display:flex;align-items:center;gap:13px;
+  padding:13px 14px;border-radius:15px;border:1px solid rgba(166,191,193,.18);
+  color:#e4edeb;background:linear-gradient(135deg,rgba(249,255,255,.045),rgba(247,255,255,.015));
+  cursor:pointer;transition:background .15s,border-color .15s,transform .15s
+}
+.mm-mood:hover,.mm-moment:hover,.mm-source button:hover{border-color:rgba(154,219,207,.52);background:rgba(95,150,145,.11)}
+.mm-mood.selected,.mm-moment.selected,.mm-source button.selected{
+  border-color:#a8ddca;background:linear-gradient(125deg,rgba(135,206,179,.19),rgba(89,151,145,.10));
+  box-shadow:inset 0 0 0 1px rgba(159,226,195,.10)
+}
+.mm-mood:focus-visible,.mm-moment:focus-visible,.mm-source button:focus-visible,.mood-match button:focus-visible,.mood-match input:focus-visible{
+  outline:2px solid #f3d39c;outline-offset:3px
+}
+.mm-icon{flex:0 0 47px;width:47px;height:47px;display:grid;place-items:center;font-size:23px;border-radius:13px;
+  border:1px solid rgba(212,218,194,.15);background:rgba(219,228,207,.06)}
+.mm-mood-text,.mm-moment>span:last-child{display:block;flex:1 1 auto;min-width:0}
+.mm-mood strong,.mm-moment strong{font-size:14px;letter-spacing:.1px;line-height:1.38;display:block;color:#f2f6f4}
+.mm-mood small,.mm-moment small{font-size:11px;line-height:1.55;display:block;color:#a9bbbf;margin-top:3px}
+.mm-moment{min-height:63px}
+.mm-moment>span:first-child{flex:0 0 30px;font-size:22px;text-align:center}
+.mm-source{display:grid;grid-template-columns:minmax(0,1fr);gap:9px}
+.mm-source button{justify-content:center;text-align:center;min-height:51px;font-size:13px;font-weight:700;padding:12px}
+.mm-manual{min-width:0;margin:14px 0 0}
+.mm-manual label{display:block;font-size:12px;color:#cbd8d8;margin:0 0 8px}
+.mm-manual input{width:100%;max-width:100%;min-width:0;min-height:49px;border-radius:12px;background:#0c161c;border:1px solid rgba(150,197,194,.32);color:#f6f8f6;font-size:16px;padding:12px}
+.mm-suggestions{max-height:230px;overflow-y:auto;display:grid;gap:5px;margin-top:8px}
+.mm-suggestions button{display:flex;align-items:flex-start;flex-direction:column;gap:4px;text-align:left;min-height:45px;
+  padding:10px 13px;border-radius:9px;background:rgba(105,155,156,.09);color:#f1f3ed;
+  border:1px solid rgba(137,194,189,.12);cursor:pointer}
+.mm-suggestions button:hover,.mm-suggestions button:focus-visible{border-color:#a8ddca}
+.mm-suggestions button strong{font-size:12px}
+.mm-suggestions button small{color:#afc4c1;font-size:10px}
+.mm-method,.mm-hint{font-size:12px;line-height:1.6;color:#a8bdc0}
+.mm-method{margin:16px 0 0}
+.mm-method b{color:#e6d29f}
+.mm-await{border:1px dashed rgba(142,196,193,.27);border-radius:12px;padding:15px;margin-top:15px}
+.mm-results{min-width:0}
+.mm-result-heading{margin:25px 0 12px}
+.mm-result-heading h4{margin-bottom:3px}
+.mm-result-heading p{color:#a9c0c3;font-size:12px;margin:0}
+.mm-result-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:13px}
+.mm-result{
+  min-width:0;display:flex;flex-direction:column;border:1px solid rgba(165,199,195,.20);border-radius:16px;
+  padding:16px;background:linear-gradient(160deg,rgba(24,43,48,.94),rgba(12,25,32,.93))
+}
+.mm-result:first-child{border-color:rgba(231,192,133,.42);background:radial-gradient(300px 110px at 10% 0,rgba(215,178,114,.12),transparent 72%),linear-gradient(160deg,#1b3035,#102026)}
+.mm-card-top{display:flex;gap:10px;align-items:center;margin-bottom:8px;min-width:0}
+.mm-num{display:grid;place-items:center;border-radius:9px;background:#a9daca;color:#143238;width:32px;height:32px;flex:0 0 32px;font-size:14px;font-weight:800}
+.mm-result:first-child .mm-num{background:#edcf92;color:#29200e}
+.mm-role{color:#b9cfd1;font-size:11px;letter-spacing:.35px;font-weight:750;min-width:0}
+.mm-result h5{font-size:clamp(17px,2vw,20px);color:#f7f1e8;line-height:1.4;margin:3px 0 5px}
+.mm-liquid-name{font-size:13px;color:#e8d3ab;line-height:1.5;font-weight:660}
+.mm-class{display:inline-block;margin:8px 0 12px;padding:4px 8px;color:#b2e2d4;font-size:10px;border-radius:20px;border:1px solid rgba(141,203,186,.3);align-self:flex-start}
+.mm-specs{display:grid;gap:8px;margin:0 0 10px;border-radius:12px;background:rgba(4,11,15,.35);padding:12px}
+.mm-specs span{font-size:11px;color:#d7e4e1;line-height:1.55}
+.mm-specs span b{color:#91cbbc;margin-right:4px}
+.mm-reason,.mm-compromise{color:#bacacd;font-size:11px;line-height:1.55;margin:5px 0}
+.mm-reason b,.mm-compromise b{color:#f0d4a1}
+.mm-certainty{color:#9db7bb;font-size:10px;margin:10px 0 14px;line-height:1.5}
+.mm-use{margin-top:auto;min-height:44px;width:100%;font-size:12px;font-weight:750;cursor:pointer;
+  background:rgba(133,203,186,.16);color:#baf1de;border:1px solid rgba(139,211,193,.44);
+  border-radius:11px;padding:11px}
+.mm-use:hover{background:rgba(133,203,186,.24)}
+.mm-collection{margin-top:15px;border-radius:13px;border:1px solid rgba(153,192,189,.2);padding:0 13px;background:rgba(10,18,24,.35)}
+.mm-collection summary{cursor:pointer;padding:16px 4px;font-size:12px;font-weight:700;color:#bad7d1;line-height:1.5}
+.mm-collection-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;padding:0 0 13px}
+.mm-collection-grid button{min-width:0;text-align:left;cursor:pointer;padding:10px 12px;
+ border-radius:9px;border:1px solid rgba(153,204,191,.18);background:rgba(88,147,140,.07);color:#e3eeee}
+.mm-collection-grid button strong,.mm-collection-grid button small{display:block;line-height:1.4}
+.mm-collection-grid button strong{font-size:12px}
+.mm-collection-grid button small{font-size:10px;color:#a8c6c2;margin-top:3px}
+@media (min-width:600px) {
+ .mm-moods{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mm-moments{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mm-source{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mm-result-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mm-collection-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (min-width:980px) {
+ .mm-moods{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .mm-result-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (max-width:599px) {
+ .mood-match{border-radius:19px;padding:17px 14px;margin-bottom:13px}
+ .mm-head h3{font-size:24px}
+ .mm-progress span{font-size:9px;letter-spacing:.4px}
+ .mm-mood{min-height:64px;padding:9px 11px;gap:11px}
+ .mm-icon{width:42px;height:42px;flex-basis:42px;font-size:20px}
+ .mm-result{padding:14px}
+}
+
+/* Mobile polish across all preexisting Lab sections:
+ * Never split normal Romanian words into one-character vertical columns.
+ * Containers shrink; their actual children reflow at explicit breakpoints. */
+.wrap :is(.hero,.panel,.ptitle,.wire-card,.wire-guide,.geometry-rule,
+  .bell-liquid-panel,.bl-liquid,.sd-metric,.sd-build,.sd-liquid,.ameta,
+  .sensory-panel,.explorer-head,.explorer-build,.lab-flow-switch) {
+  min-width:0;overflow-wrap:break-word;word-break:normal;hyphens:none
+}
+.wrap :is(.ptitle>div,.wire-head,.wire-specs,.wire-delta,
+  .sd-controls,.sd-build-title,.sd-metric>span,.sd-metric>strong,
+  .sd-liquid>div,.geometry-grid span,.bl-liquid-name) {
+  min-width:0;word-break:normal;overflow-wrap:break-word;hyphens:none
+}
+@media (max-width:599px) {
+ .wrap{width:100%;max-width:100%;padding:11px 12px 65px}
+ .wrap .panel{padding:16px 14px}
+ .wrap .mood-match{padding:17px 14px}
+ .hero p{font-size:12px;line-height:1.7}
+ .ptitle{display:flex;min-width:0;align-items:flex-start;gap:10px}
+ .ptitle .num{flex:0 0 35px;width:35px;height:35px}
+ .ptitle>div:last-child{flex:1 1 auto;min-width:0}
+ .ptitle h3{font-size:17px;line-height:1.3}
+ .lab-flow-switch{grid-template-columns:minmax(0,1fr);gap:7px}
+ .lab-flow-switch button{min-height:53px}
+ .lab-flow-switch button strong{font-size:13px}
+ .lab-flow-switch button small{font-size:11px}
+ .wire-grid-five,.explorer-builds-five,.geometry-grid-five,.bl-results,
+ .builds,.sd-controls,.sd-metrics{grid-template-columns:minmax(0,1fr)}
+ .sd-build,.sd-liquid,.wire-card,.geometry-grid span{width:100%;max-width:100%}
+ .sd-build-title{flex:1 1 auto}
+ .sd-build-indicator{flex:0 0 auto;margin-left:0;white-space:normal;text-align:right}
+ .sd-trade{grid-template-columns:minmax(0,1fr)}
+ .geometry-grid span{display:flex;flex-wrap:wrap;align-items:flex-start}
+ .geometry-grid span b{display:inline}
+ .sd-liquid{grid-template-columns:20px minmax(0,1fr);gap:8px}
+ .sd-liquid button{grid-column:2;justify-self:start;white-space:normal}
+ .steps .step{font-size:10px;line-height:1.3;min-width:0}
+ .categories{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .row2{grid-template-columns:minmax(0,1fr)}
+ .row2 #count{justify-self:start}
+ .topin .brand{flex:1 1 auto;min-width:0}
+}
+@media (max-width:350px) {
+ .categories{grid-template-columns:minmax(0,1fr)}
+ .mm-head h3{font-size:21px}
+ .mm-progress{gap:5px}
+ .mm-progress span{padding:6px 7px}
+}
