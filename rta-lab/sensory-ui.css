@@ -195,3 +195,63 @@ input,select{font-size:14px;min-height:47px;border-color:rgba(171,201,205,.21)}
  .lab-flow-switch button small{line-height:1.35}
  .sd-liquid small{overflow-wrap:anywhere}
 }
+
+
+/* RTA Lab three-zone cockpit — a shared responsive hierarchy, 13 October 2026 */
+.sd-journey{
+ display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;
+ margin:16px 0 14px;
+}
+.sd-journey a{
+ display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;align-items:center;
+ padding:12px 13px;min-height:68px;box-sizing:border-box;min-width:0;
+ border:1px solid rgba(153,196,197,.25);border-radius:14px;
+ color:#ecf2ee;background:linear-gradient(140deg,rgba(35,62,66,.7),rgba(15,26,34,.92));
+ text-decoration:none;transition:border-color .2s,background .2s,transform .2s;
+}
+.sd-journey a span{
+ grid-row:1/3;display:grid;place-items:center;align-self:center;
+ width:31px;height:31px;border-radius:9px;background:rgba(145,209,201,.14);
+ color:#a8dfd3;font-weight:800;font-size:12px;letter-spacing:.2px;
+}
+.sd-journey a strong{font-size:13px;font-weight:780;line-height:1.3}
+.sd-journey a small{font-size:10px;color:#a6bdc1;line-height:1.4}
+.sd-journey a:hover{border-color:#9bd4ca;background:rgba(52,100,100,.22)}
+.sd-journey a:focus-visible{outline:3px solid #e5c38f;outline-offset:3px}
+.sd-stage{
+ min-width:0;scroll-margin-top:15px;margin-top:15px;padding:clamp(13px,2.1vw,21px);
+ border:1px solid rgba(147,189,190,.19);border-radius:17px;
+ background:rgba(4,13,19,.35);
+}
+.sd-stage--config{border-color:rgba(130,205,191,.28)}
+.sd-stage--dna{border-color:rgba(146,190,202,.24)}
+.sd-stage--recommendations{border-color:rgba(213,189,145,.25)}
+.sd-stage-head{
+ display:flex;align-items:flex-start;gap:12px;margin-bottom:15px;
+ padding-bottom:12px;border-bottom:1px solid rgba(163,193,198,.15);
+}
+.sd-stage-step{
+ flex:none;display:grid;place-items:center;width:43px;height:34px;
+ border:1px solid rgba(136,198,186,.23);border-radius:10px;
+ background:rgba(116,186,173,.11);color:#a2dbcd;
+ font-size:11px;letter-spacing:.6px;font-weight:800;
+}
+.sd-stage-head>div{min-width:0;flex:1}
+.sd-stage-head h4{margin:0;color:#f3f4f0;font-size:17px;line-height:1.2;letter-spacing:-.25px}
+.sd-stage-head p{margin:5px 0 0;color:#aec2c6;font-size:11px;line-height:1.5}
+.sd-stage .sd-section-title{margin-top:16px}
+.sd-stage--recommendations .sd-section-title:first-of-type{margin-top:0}
+@media(max-width:690px){
+ .sd-journey{grid-template-columns:minmax(0,1fr);gap:7px}
+ .sd-journey a{min-height:56px;padding:9px 11px;grid-template-columns:31px minmax(0,1fr)}
+ .sd-journey a span{grid-row:1/3}
+ .sd-journey a strong{font-size:13px}
+ .sd-journey a small{font-size:10px}
+ .sd-stage{padding:12px;margin-top:11px}
+ .sd-stage-head{gap:9px}
+ .sd-stage-head h4{font-size:16px}
+}
+@media(prefers-reduced-motion:reduce){
+ .sd-journey a{transition:none}
+ html{scroll-behavior:auto}
+}

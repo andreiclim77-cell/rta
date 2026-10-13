@@ -129,6 +129,29 @@ function recommendationRows(config,objective){
   esc(x.liquid.class)+' · '+esc(x.liquid.profile||"")+'</small></div>'+
   '<button type="button" title="Folosește lichidul în motor" data-sd-liquid="'+x.index+'">În motor ↗</button></div>').join("");
 }
+
+function stageIds(view){
+ return {config:"sd-"+view+"-config",dna:"sd-"+view+"-dna",
+  recommendations:"sd-"+view+"-recommendations"};
+}
+function stageHeading(view,key,number,title,description){
+ const id=stageIds(view)[key];
+ return '<div class="sd-stage-head"><span class="sd-stage-step">'+number+
+  ' / 03</span><div><h4 id="'+id+'-title">'+esc(title)+'</h4><p>'+
+  esc(description)+'</p></div></div>';
+}
+function stageNav(view){
+ const ids=stageIds(view);
+ const steps=[
+  {key:"config",number:"01",title:"Configurator",hint:"Cameră · airflow · build"},
+  {key:"dna",number:"02",title:"Sensory DNA",hint:"Profil · dovezi · compromisuri"},
+  {key:"recommendations",number:"03",title:"Recomandări",hint:"Builduri · lichide"}
+ ];
+ return '<nav class="sd-journey" aria-label="Navigare în cele trei zone ale evaluării">'+
+  steps.map(s=>'<a href="#'+ids[s.key]+'" data-sd-stage="'+s.key+'"><span>'+
+   s.number+'</span><strong>'+esc(s.title)+'</strong><small>'+esc(s.hint)+
+   '</small></a>').join("")+'</nav>';
+}
 function content(view){
  const atom=currentAtom(view);
  if(!atom)return "";
@@ -145,6 +168,7 @@ function content(view){
   analysis.physical.areaMm2==null?"Arie nedefinită":"Arie nominală "+analysis.physical.areaMm2+" mm²"
  ];
  const isTC=wire.type==="tc";
+ const stage=stageIds(view);
  let profileControls=view==="explorer"?
   '<label class="sd-field sd-profile-field"><span>Profil de lichid pentru evaluare</span><select data-sd-profile="explorer">'+
   classes.map(t=>'<option value="'+esc(t)+'"'+(states.explorer.category===t?' selected':'')+'>'+esc(t)+'</option>').join("")+
@@ -164,6 +188,9 @@ function content(view){
   '<h3>'+esc(atom.short)+'</h3><p>Predicție după geometrie, cameră, aer și build; calibrată cu A/B personale.</p></div>'+
   experimental+'</div>'+
   '<div class="sd-context">'+technical.map(x=>'<span>'+esc(x)+'</span>').join("")+'</div>'+
+  stageNav(view)+
+  '<section class="sd-stage sd-stage--config" id="'+stage.config+'" aria-labelledby="'+stage.config+'-title">'+
+  stageHeading(view,"config","01","Configurator","Alege configurația fizică; orice modificare recalculează întregul profil.")+
   '<div class="sd-controls">'+profileControls+
    choice("Obiectiv senzorial","goal",opts)+
    choice("Clopot / cameră","bell",bellOptions,view,bellOptions.length===1)+
@@ -180,7 +207,9 @@ function content(view){
    '<label class="sd-field"><span>Putere / limită TC (W)</span><input type="number" min="7" max="20" step="0.5" data-sd-field="power" value="'+config.power+'"></label>'+
    (isTC?'<label class="sd-field"><span>Temperatură TC (°C)</span>'+
     '<input type="number" min="180" max="270" step="5" data-sd-field="temp" value="'+config.temp+'"></label>':'')+
-  '</div><p class="sd-fine-note">Modelul folosește indicatori termici relativi, nu calculează temperatura efectivă a spirelor. Montajul și alimentarea rămân de verificat practic.</p></details>'+
+  '</div><p class="sd-fine-note">Modelul folosește indicatori termici relativi, nu calculează temperatura efectivă a spirelor. Montajul și alimentarea rămân de verificat practic.</p></details></section>'+ 
+  '<section class="sd-stage sd-stage--dna" id="'+stage.dna+'" aria-labelledby="'+stage.dna+'-title">'+
+  stageHeading(view,"dna","02","Sensory DNA","Cele cinci dimensiuni senzoriale, avantajele, compromisurile și dovezile folosite.")+
   '<div class="sd-section-title"><h4>Semnătura senzorială</h4><small>'+esc(analysis.certainty)+'</small></div>'+
   narrative(analysis)+
   '<div class="sd-trade"><div><h5>Ce câștigi</h5>'+listSummary(analysis.advantages)+'</div>'+
@@ -188,6 +217,9 @@ function content(view){
   (analysis.anchors.length?'<div class="sd-evidence"><b>Observații folosite în calibrare</b>'+
    analysis.anchors.map(o=>'<p><strong>'+esc(o.title)+'</strong> — '+esc(o.text)+
    ' <em>('+esc(o.evidence)+')</em></p>').join("")+'</div>':'')+
+  '</section>'+
+  '<section class="sd-stage sd-stage--recommendations" id="'+stage.recommendations+'" aria-labelledby="'+stage.recommendations+'-title">'+
+  stageHeading(view,"recommendations","03","Recomandări","Alternative calculate contextual, nu un clasament universal.")+
   '<div class="sd-section-title"><h4>TOP 3 configurații pentru obiectiv</h4>'+
   '<small>toate buildurile compatibile</small></div>'+
   '<p class="sd-ranking-note">Acest TOP 3 compară toate buildurile compatibile pentru atomizor, cameră, airflow, lichid și obiectiv. Alegerea sârmei de mai sus schimbă semnătura configurației active, nu automat clasamentul alternativelor.</p>'+
@@ -198,7 +230,7 @@ function content(view){
   '<details class="sd-method"><summary>De ce recomandă Lab această configurație?</summary>'+
    '<p>'+esc(tech.note)+'</p>'+analysis.notes.map(x=>'<p>'+esc(x)+'</p>').join("")+
    '<p>'+esc(analysis.modelWarning)+'</p>'+
-   '<p>Plăcerea nu are scor predictiv. Observațiile personale sunt legate de configurația testată, nu de toate lichidele sau wattajele posibile.</p></details>';
+   '<p>Plăcerea nu are scor predictiv. Observațiile personale sunt legate de configurația testată, nu de toate lichidele sau wattajele posibile.</p></details></section>';
 }
 function render(view){
  const v=el("sensory"+(view==="main"?"Main":"Explorer"));

@@ -389,3 +389,24 @@ Reguli runtime:
 - Fișiere: `rta-lab/mood-match.js`, `rta-lab/mood-match.css`; integrare: `rta-lab/index.html`, `rta-lab/sensory-ui.js`, `rta-lab/bootstrap.js`, `rta-lab/sw.js`.
 - Test obligatoriu înainte de publicare: `node tools/check-rta-mood-match.js` plus testele RTA existente în **RTA Guide Quality Gate**; verifică 7×5 contexte, 16 platforme, 620 lichide, cache și handoff complet.
 - După merge, confirmă separat versiunea publică și aspectul pe telefon real; trecerea testelor de cod nu echivalează automat cu un test vizual/deployment.
+
+## 16. COCKPIT UNITAR ÎN TREI ZONE — aprobat 13.10.2026
+
+**Decizie:** păstrăm Constituția RTA (10 axiome), modelul cu 5 dimensiuni, catalogul complet, Mood Match, A/B și modul dual atomizor/lichid. Nu recreăm motorul; îi facem rezultatele mai coerente și lizibile vizual.
+
+### 16.1 Arhitectura interfeței
+Pentru ambele intrări („Pornește de la atomizor” și „Pornește de la lichid”), după selectarea atomizorului cockpitul este împărțit în trei zone consecutive, cu navigare prin ancore accesibile:
+1. **Configurator (01):** profil lichid sau lichid selectat, obiectiv, cameră/clopot, airflow, material, spire, diametru, poziție, putere și TC.
+2. **Sensory DNA (02):** cele cinci dimensiuni, nivelul dovezilor, câștiguri, compromisuri, ancore A/B personale și explicații.
+3. **Recomandări (03):** TOP 3 builduri compatibile și sugestii de lichide din tot catalogul; metoda și incertitudinea sunt vizibile.
+
+Interfața păstrează selecțiile persistente deja existente; modificarea buildului trebuie să refacă analiza și recomandările, nu doar etichetele. Mood Match poate deschide configurația completă, fără recalcul arbitrar al configurației preluate.
+
+### 16.2 Reguli UI/UX și PWA
+- Stiluri responsive în `sensory-ui.css`: navigare în 3 coloane pe desktop, listă verticală pe mobil; zone în carduri, contrast, ordine vizuală, focus vizibil, suport pentru preferința de mișcare redusă.
+- Zone distincte în DOM pentru fiecare mod: `sd-explorer-config/dna/recommendations`, respectiv `sd-main-config/dna/recommendations`. Titlurile au asociere `aria-labelledby`.
+- Activele UI `sensory-ui.js` și `sensory-ui.css` au versiunea `10-three-zone-20261013` în HTML și service worker. Se schimbă cheia cache la publicare; restul motorului nu se rescrie.
+- Păstrăm accesibile modulele istorice extensibile și continuitatea MASTER.
+
+### 16.3 Teste obligatorii înainte de integrarea în main
+`node tools/check-rta-sensory-core.js`, `node tools/check-rta-lab-mobile-clarity.js`, `node tools/check-rta-mood-match.js`, `node tools/check-rta-bell-fit.js`, plus workflow-ul integral `RTA Guide Quality Gate`. Verificarea CI nu înlocuiește testul vizual pe telefon real și confirmarea separată a versiunii publice.
