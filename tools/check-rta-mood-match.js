@@ -76,6 +76,20 @@ for(const mood of moodIds)for(const moment of momentIds){
   }
 }
 assert.equal(encountered.size,16,"Discovery must rotate through all 16 platforms across 35 contexts");
+// Regression: different desired experiences must not all show the same generic winner.
+const coffeeLeaders=moodIds.filter(m=>m!=="surprise").map(m=>api.recommend(m,"coffee").picks[0].id);
+assert.ok(new Set(coffeeLeaders).size>=3,
+  "Mood-aware scoring regressed to a single generic first-choice platform");
+const powerCoffee=api.recommend("power","coffee").picks[0].id;
+const magicCoffee=api.recommend("magic","coffee").picks[0].id;
+assert.notEqual(powerCoffee,magicCoffee,
+  "Forță la cafea și complexitate la cafea nu trebuie reduse la același scoring generic");
+for(const mood of moodIds)for(const moment of momentIds){
+  const rows=api.recommend(mood,moment).ranked;
+  assert.ok(rows.every(row=>Number.isFinite(row.score)),mood+"/"+moment+" invalid sensory score");
+  assert.ok(rows.every((row,i)=>i===0||rows[i-1].score>=row.score),
+    mood+"/"+moment+" contextual ordering invalid");
+}
 
 ui.ready();
 assert.ok(ui.get("moodMatch").innerHTML.includes("mmMoods"),"Mood Match UI mounted");
