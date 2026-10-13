@@ -55,18 +55,35 @@
     return group[(moodIndex(mood)*19 + momentIndex(moment)*37) % group.length];
   }
 
-  function momentAdjustment(result, momentId) {
-    const d = result.dimensions;
-    // Small transparent contextual biases, never claimed to be objective measurements.
-    const momentWeights = {
-      coffee:{energy:.08,architecture:.04},
-      day:{harmony:.11},
-      juice:{architecture:.10,palate:.03},
-      evening:{palate:.10,architecture:.05},
-      relax:{harmony:.13,energy:-.03}
-    }[momentId] || {};
-    return Object.entries(momentWeights).reduce((sum,entry) =>
-      sum + ((d[entry[0]] || 3.5) - 3.5) * entry[1], 0);
+  // Unlike a generic total score, these profiles make the chosen experience matter.
+  // All weights are transparent heuristics on Sensory DNA signals (not measured pleasure).
+  const moodSignals = {
+    power:{offense:.50,th:.40,focus:.10},
+    pleasure:{palate:.48,texture:.28,simultaneity:.24},
+    magic:{spectrum:.32,separation:.29,simultaneity:.20,harmony:.19},
+    oldschool:{focus:.49,th:.19,tobaccoCore:.21,offense:.11},
+    chill:{harmony:.55,simultaneity:.15,softness:.30},
+    allday:{focus:.64,harmony:.10,tobaccoCore:.14,spectrum:.12},
+    surprise:{harmony:.25,spectrum:.25,separation:.25,focus:.25}
+  };
+  const momentSignals = {
+    coffee:{focus:.60,offense:.40},
+    day:{harmony:.65,focus:.35},
+    juice:{spectrum:.55,focus:.45},
+    evening:{palate:.55,simultaneity:.45},
+    relax:{harmony:.70,softness:.30}
+  };
+  function signalFit(signals,weights) {
+    return Object.entries(weights).reduce((sum,[key,weight]) =>
+      sum+(key==="softness" ? 5.5-signals.offense : signals[key])*weight,0);
+  }
+  function contextScore(result,moodId,momentId) {
+    // 24% build/goal compatibility + 63% mood + 13% the selected moment.
+    // 'Softness' is simply an inverse-offense proxy, never a measured comfort rating.
+    const score=.24*result.rankScore+
+      .63*signalFit(result.signals,moodSignals[moodId])+
+      .13*signalFit(result.signals,momentSignals[momentId]);
+    return Math.round(score*10000)/10000;
   }
 
   function recommend(moodId, momentId, selectedIndex = -1) {
@@ -76,7 +93,7 @@
     const ranked = atoms.map(atom => {
       const best = core.rankBuilds(atom.id, liquid, mood.goal)[0];
       return best ? {id:atom.id, atom, best,
-        score:best.rankScore + momentAdjustment(best,momentId)} : null;
+        score:contextScore(best,moodId,momentId)} : null;
     }).filter(Boolean).sort((a,b) => b.score - a.score || a.id.localeCompare(b.id));
     if (ranked.length < 3) return {mood, moment, liquid, ranked, picks:[]};
     const primary = moodId === "surprise"
