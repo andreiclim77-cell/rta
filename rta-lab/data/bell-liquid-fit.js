@@ -22,8 +22,8 @@ var PLATFORMS={
  kx:{fit:[4.48,4.72,4.48,4.48],chamber:"Cameră originală KX",character:"Redare naturală, echilibru și corp cu Aerokon."},
  klp:{fit:[4.95,3.95,4.65,3.95],chamber:"Cameră originală KLP",character:"Tutun sec și concentrat, hit și precizie."},
  asylum:{fit:[4.05,4.58,4.56,4.74],chamber:"Flat",character:"Flat favorizează separarea; Dome favorizează corpul."},
- pmfree:{fit:[4.15,4.22,4.55,4.73],chamber:"Freehand",character:"Mixturi NET seci, frunză și layering."},
- pmstd:{fit:[4.35,4.58,4.65,4.42],chamber:"Rhodesian",character:"Tutun mai saturat, rotund, cu saturație crescută."},
+ pmfree:{fit:[4.25,4.35,4.56,4.64],chamber:"Freehand",character:"Mixturi NET seci, frunză și layering."},
+ pmstd:{fit:[4.25,4.35,4.56,4.64],chamber:"Rhodesian",character:"Tutun mai saturat, rotund, cu saturație crescută."},
  byka:{fit:[4.40,4.40,4.66,4.72],chamber:"Cameră originală V11",character:"Echilibru între claritate, corp și structură de frunză."},
  kv3:{fit:[4.75,4.20,4.55,3.90],chamber:"Cameră originală Mini V3",character:"MTL compact, uscat și concentrat."},
  minister:{fit:[4.32,4.65,4.45,4.35],chamber:"Cameră originală Minister",character:"Cameră compactă și caldă, corp și tutunuri mai bogate."}
@@ -33,6 +33,7 @@ function bell(id,name,bonus,tones,character,status,source,note) {
   status:status,source:source||"",note:note||""};
 }
 /* Source-grounded existence of interchangeable bells; individual liquid rankings remain estimations. */
+var PM_SHARED_AFFINITY={simple:3.9,dry:4.8,bright:4.2,dark:4.8,burley:4.7,kentucky:4.8,latakia:5,oriental:5,perique:4.6,cigar:5,pipe:4.3,citrus:4.6,alcohol:4.9,nuts:4.4,coffeeCocoa:4.5,sweet:3.7,layers:5};
 var MULTI={
  diplomat:{defaultId:"duke",bells:[
   bell("duke","Duke",[.06,.19,.10,.13],{layers:.10,bright:.06},
@@ -111,8 +112,9 @@ function analyze(atom,id,catalog) {
   var i=CLASSES.indexOf(liquid&&liquid.class);
   if(i<0)return null;
   var tags=tagsFor(liquid);
-  var aff=Object.keys(atom.aff||{}).filter(function(k){return tags.has(k);});
-  var avg=aff.length?aff.reduce(function(sum,k){return sum+Number(atom.aff[k]);},0)/aff.length:4;
+  var effectiveAff=(atom.id==="pmfree"||atom.id==="pmstd")?PM_SHARED_AFFINITY:(atom.aff||{});
+  var aff=Object.keys(effectiveAff).filter(function(k){return tags.has(k);});
+  var avg=aff.length?aff.reduce(function(sum,k){return sum+Number(effectiveAff[k]);},0)/aff.length:4;
   var bellDelta=Object.keys(b.tones).reduce(function(sum,k){return sum+(tags.has(k)?b.tones[k]:0);},0);
   return {liquid:liquid,index:index,category:liquid.class,
     score:(setup.platform.fit[i]+b.bonus[i])*20+(avg-4)*6+bellDelta*8};
