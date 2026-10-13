@@ -274,7 +274,7 @@ function technicalBaseline(config,liquid) {
  const flowShift=(phys.areaMm2==null?0:clamp(1-phys.areaMm2,-.6,.6));
  let result={
   spectrum:tech.traits.spectrum+(tags.complex?.14:0)+(multi?.12:0)+(isTC?.15:0),
-  separation:tech.traits.spectrum+(multi?.22:0)+(isTC?.18:0)+(config.wire==="ssclap"?.22:0),
+  separation:tech.traits.spectrum-.35+(multi?.22:0)+(isTC?.18:0)+(config.wire==="ssclap"?.22:0),
   simultaneity:tech.traits.simultaneity+(isTC?.16:0)+(multi?.13:0)-(config.wire==="k129"?.10:0),
   focus:tech.traits.focus+(focus?.16:0)+(config.wire==="k129"?.16:0)-(multi?.13:0),
   palate:tech.traits.palate+(isClap?.20:0)+(isTC?.15:0)+(config.wire==="k128"?.11:0)+powerShift*.35,
