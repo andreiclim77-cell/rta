@@ -1,0 +1,49 @@
+/* Bell + liquid explorer · RTA Lab V10 */
+.bell-liquid-panel{margin-top:14px;padding:15px;border:1px solid rgba(112,201,213,.25);border-radius:18px;background:radial-gradient(420px 160px at 100% 0,rgba(78,167,173,.11),transparent 80%),linear-gradient(155deg,#111d26,#0b131a)}
+.bl-kicker{font-size:10px;letter-spacing:1px;font-weight:850;color:#a3d9df}
+.bl-heading h4{font-size:17px;margin:5px 0 7px;line-height:1.35;color:#f5f6f5}
+.bl-heading p,.bl-bell-note,.bl-provenance,.bl-method,.bl-warning{font-size:11px;line-height:1.55;color:#c1cbd2;margin:6px 0}
+.bl-controls{margin-top:10px}
+.bl-controls label,.bell-liquid-panel label{font-size:11px;font-weight:780;color:#d9e1e5;margin:9px 2px 6px}
+.bell-liquid-panel select,.bell-liquid-panel input{min-height:44px;font-size:13px;border-radius:11px;width:100%}
+.bell-liquid-panel select:disabled{opacity:.8;color:#e4edf1}
+.bl-bell-note{margin-top:11px;padding:9px 11px;background:rgba(65,169,179,.085);border-radius:10px;color:#d3e7e9}
+.bl-provenance{font-size:10px;color:#92a9b3}.bl-source,.bl-source:visited{color:#9bd5df;text-decoration:underline;text-underline-offset:2px}
+.bl-warning{border:1px solid rgba(223,168,85,.23);border-radius:10px;background:rgba(223,168,85,.085);padding:9px;color:#f3d8ab}
+.bl-subtitle{font-size:13px;color:#f4e7bf;font-weight:800;margin:17px 0 9px}
+.bl-categories{display:grid;grid-template-columns:1fr;gap:7px}
+.bl-category{display:flex;gap:10px;align-items:center;padding:10px 11px;background:#0b161e;border:1px solid rgba(255,255,255,.085);border-radius:11px}
+.bl-category:first-child{border-color:rgba(124,197,176,.45);background:rgba(91,166,143,.10)}
+.bl-position{font-size:13px;font-weight:900;color:#efd6a8;min-width:18px}
+.bl-class-text{display:flex;flex:1;min-width:0;flex-direction:column;gap:2px}
+.bl-class-text strong{font-size:12px;color:#f3f5f4}
+.bl-class-text span{font-size:10px;line-height:1.35;color:#9facb6}
+.bl-fit-level{font-size:10px;color:#c3e4dc;text-align:right;max-width:90px;line-height:1.25}
+.bl-subhead{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap;justify-content:space-between;margin-top:10px}
+.bl-subhead .bl-subtitle{margin-bottom:6px}.bl-subhead small{font-size:10px;color:#8da7ae}
+.bl-filters{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.bl-filters button,.bl-actions button,.bl-try{cursor:pointer;border:1px solid rgba(127,184,198,.23);border-radius:9px;background:rgba(74,138,157,.09);color:#d6e8ed;min-height:35px;padding:7px 10px;font-size:11px;font-weight:700}
+.bl-filters button.active{background:#b2dedb;color:#12313b;border-color:#b2dedb}
+.bl-filters button:focus-visible,.bl-actions button:focus-visible,.bl-try:focus-visible{outline:2px solid #e2c789;outline-offset:3px}
+.bl-summary{font-size:10px;color:#93abb5;margin:7px 1px}
+.bl-results{display:grid;gap:7px}
+.bl-liquid{padding:11px 12px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.026);border-radius:12px}
+.bl-liquid-top{display:flex;gap:8px;align-items:flex-start}
+.bl-liquid-n{min-width:18px;font-size:10px;font-weight:900;color:#e8cb98;padding-top:1px}
+.bl-liquid-name{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}
+.bl-liquid-name strong{font-size:12px;line-height:1.35;color:#f4f5f3;overflow-wrap:anywhere}
+.bl-liquid-name span{font-size:10px;color:#99acb7}
+.bl-liquid-grade{font-size:9px;white-space:nowrap;color:#c4e4dc}
+.bl-liquid p{font-size:11px;line-height:1.45;color:#acbbc5;margin:7px 0}
+.bl-try{min-height:30px;font-size:10px;padding:5px 9px;background:transparent;color:#a9e0e5}
+.bl-try:hover,.bl-actions button:hover{border-color:rgba(163,218,220,.75);background:rgba(98,166,177,.19)}
+.bl-actions{text-align:center;margin:11px 0}.bl-actions button{min-width:180px}
+.bl-no-results{padding:15px;text-align:center;color:#9fb0bb;font-size:12px}
+.bl-method{margin-top:11px;padding-top:10px;border-top:1px solid rgba(255,255,255,.09);font-size:10px;color:#8e9eaa}
+@media(min-width:690px){
+ .bl-categories{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bl-results{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .bl-liquid{display:flex;flex-direction:column}
+ .bl-try{align-self:flex-start;margin-top:auto}
+}
+@media(max-width:440px){.bl-liquid-top{flex-wrap:wrap}.bl-liquid-grade{margin-left:25px}.bl-fit-level{font-size:9px}}
