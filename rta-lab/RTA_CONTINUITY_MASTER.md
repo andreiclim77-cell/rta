@@ -410,3 +410,24 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 
 ### 16.3 Teste obligatorii înainte de integrarea în main
 `node tools/check-rta-sensory-core.js`, `node tools/check-rta-lab-mobile-clarity.js`, `node tools/check-rta-mood-match.js`, `node tools/check-rta-bell-fit.js`, plus workflow-ul integral `RTA Guide Quality Gate`. Verificarea CI nu înlocuiește testul vizual pe telefon real și confirmarea separată a versiunii publice.
+
+## 17. HOME COMMAND CENTER — redesignul ecranului de intrare, 13.10.2026
+
+**Problema rezolvată:** înainte, accesul la noul Sensory DNA era împins sub o prezentare lungă a sârmelor și sub Mood Match, astfel încât prima impresie mobilă părea neschimbată după implementarea cockpitului cu trei zone.
+
+### 17.1 Flux vizual nou
+- Primul ecran este `#rtaHome`: titlu clar, buton principal „Configurează un atomizor”, buton „Alege după stare”, prezentarea explicită a celor 3 zone Configurator → Sensory DNA → Recomandări.
+- Imediat după hero se află `#labTools`, cu **patru intrări reale**: atomizor/configurator; Mood Match; lichid/620 repere; referința de builduri și sârme.
+- Blocul lung al celor cinci familii de sârmă a fost mutat, fără ștergere, în `#wireReference`, o bibliotecă extensibilă după instrumentele principale. Datele și descrierile validate rămân intacte.
+- MASTER rămâne vizibil în partea de jos și are link direct din tabloul de instrumente.
+
+### 17.2 Logică de navigare
+- `rta-lab/home-ui.js` reutilizează `window.RTA_SENSORY_UI.switchMode()` înainte să dea scroll la configuratorul atomizorului sau la fluxul după lichid; nu creează un motor paralel.
+- Mood Match este accesat direct; referința de sârme se extinde la click. Legăturile sunt ancore HTML reale și au fallback când scriptul nu rulează.
+- Fișierul `rta-lab/home-ui.css` folosește layout responsive, elemente tactile lizibile, contrast și focus vizibil.
+- În `rta-lab/index.html` și `rta-lab/sw.js` resursele home-ui sunt versionate cu `v=10-home-20261013`; cheia cache se schimbă pentru utilizatorii PWA.
+
+### 17.3 QA de publicare
+- `node tools/check-rta-home-ui.js` validează ordinea ecranului, accesul la instrumente, schimbarea modului, deschiderea referințelor, linkurile MASTER, scenariul reduce-motion și precache.
+- Păstrează validările anterioare Sensory DNA, Mood Match, Bell Fit, mobil și RTA Guide Quality Gate.
+- Confirmă separat rezultatul CI, integrarea în `main`, publicarea GitHub Pages și aspectul pe telefon real. Nu confunda codul salvat într-o ramură cu versiunea publicată.
