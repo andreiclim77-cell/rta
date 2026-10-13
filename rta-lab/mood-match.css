@@ -46,12 +46,14 @@
 .mm-source button{justify-content:center;text-align:center;min-height:51px;font-size:13px;font-weight:700;padding:12px}
 .mm-manual{min-width:0;margin:14px 0 0}
 .mm-manual label{display:block;font-size:12px;color:#cbd8d8;margin:0 0 8px}
+.mm-selected-liquid{color:#e9d5ab;background:rgba(219,181,112,.085);border:1px solid rgba(219,181,112,.22);padding:9px 11px;font-size:12px;line-height:1.5;border-radius:9px;min-width:0;overflow-wrap:break-word}
 .mm-manual input{width:100%;max-width:100%;min-width:0;min-height:49px;border-radius:12px;background:#0c161c;border:1px solid rgba(150,197,194,.32);color:#f6f8f6;font-size:16px;padding:12px}
 .mm-suggestions{max-height:230px;overflow-y:auto;display:grid;gap:5px;margin-top:8px}
 .mm-suggestions button{display:flex;align-items:flex-start;flex-direction:column;gap:4px;text-align:left;min-height:45px;
   padding:10px 13px;border-radius:9px;background:rgba(105,155,156,.09);color:#f1f3ed;
   border:1px solid rgba(137,194,189,.12);cursor:pointer}
 .mm-suggestions button:hover,.mm-suggestions button:focus-visible{border-color:#a8ddca}
+.mm-suggestions button.selected{border-color:#e7c98c;background:rgba(227,190,116,.11)}
 .mm-suggestions button strong{font-size:12px}
 .mm-suggestions button small{color:#afc4c1;font-size:10px}
 .mm-method,.mm-hint{font-size:12px;line-height:1.6;color:#a8bdc0}
