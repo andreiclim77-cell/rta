@@ -102,8 +102,9 @@
         {...discovery,role:"Redescoperă colecția",roleType:"discover"}]};
   }
 
-  function autoLiquid(atomId, mood, moment, role, used) {
-    const sample = core.defaultConfig(atomId);
+  function autoLiquid(atomId, mood, moment, role, used, proposedBuild) {
+    // Match the liquid against the proposed build, not an unrelated factory preset.
+    const sample = core.config(atomId, proposedBuild) || core.defaultConfig(atomId);
     const offers = core.matchLiquids(sample,catalog,mood.goal,48);
     const cls = preferredClass(mood.id,moment.id);
     let group = offers.filter(x => x.liquid.class === cls && !used.has(x.index));
@@ -137,6 +138,7 @@
   }
 
   const state = {mood:null,moment:null,source:"auto",selectedIndex:-1};
+  let renderedPicks = [];
   function restore() {
     try {
       const saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY)||"{}");
@@ -169,6 +171,7 @@
       '<div id="mmManual" class="mm-manual" hidden>'+
       '<label for="mmSearch">Caută în toate cele 620 de lichide</label>'+
       '<input type="search" id="mmSearch" autocomplete="off" placeholder="Brand, nume, aromă, NET…">'+
+      '<p id="mmSelectedLiquid" class="mm-selected-liquid" role="status"></p>'+
       '<div id="mmSuggestions" class="mm-suggestions" aria-live="polite"></div></div>'+
       '<p class="mm-method">Potrivirile sunt <b>ipoteze senzoriale</b> bazate pe modelul RTA și observațiile tale validate. „Redescoperă” este o alternativă exploratorie, nu un loc 3 absolut.</p></section>'+
       '<div id="mmResults" class="mm-results" aria-live="polite"></div>'+
@@ -209,6 +212,10 @@
       button.setAttribute("aria-pressed",String(on));
     });
     document.getElementById("mmManual").hidden=state.source!=="manual";
+    const chosen=state.source==="manual"&&catalog[state.selectedIndex];
+    document.getElementById("mmSelectedLiquid").textContent=chosen
+      ? "Lichid selectat: "+liquidName(chosen)
+      : "Alege un lichid din lista de rezultate.";
   }
   function liquidName(liquid) {
     return [liquid.brand,liquid.name].filter(Boolean).join(" · ");
@@ -228,7 +235,8 @@
         hits.push({index:i,liquid:l});
     }
     list.innerHTML=hits.length?hits.map(x =>
-      '<button type="button" data-mm-liquid="'+x.index+'">'+
+      '<button type="button" data-mm-liquid="'+x.index+'" aria-pressed="'+(state.selectedIndex===x.index)+'"'+
+      (state.selectedIndex===x.index?' class="selected"':'')+'>'+
       '<strong>'+escape(liquidName(x.liquid))+'</strong><small>'+
       escape(x.liquid.class)+'</small></button>').join("")
       :'<p class="mm-hint">Nicio potrivire. Încearcă alt termen.</p>';
@@ -238,6 +246,7 @@
     const details=configurationDetails(pick.id,choice.liquid,getMood(state.mood).goal);
     if (!atom || !details) return "";
     const {result,config,wire,air,bell,mode}=details;
+    renderedPicks[ordinal-1]={atomId:pick.id,liquidIndex:choice.index,config};
     const reason=result.advantages && result.advantages[0] || "Personalitate distinctă a platformei.";
     const compromise=result.tradeoffs && result.tradeoffs[0] || "Necesită o probă practică.";
     const verified=result.anchors && result.anchors.length;
@@ -255,13 +264,14 @@
       '<p class="mm-reason"><b>De ce:</b> '+escape(reason)+'</p>'+
       '<p class="mm-compromise"><b>Compromis:</b> '+escape(compromise)+'</p>'+
       '<p class="mm-certainty">'+(verified?'Observație personală relevantă + extrapolare':'Estimare tehnică orientativă')+
-      '</p><button type="button" class="mm-use" data-mm-use="'+escape(pick.id)+
-      '" data-mm-use-liquid="'+choice.index+'">Deschide configurația ↗</button></article>';
+      '</p><button type="button" class="mm-use" data-mm-use="'+(ordinal-1)+
+      '">Deschide configurația completă ↗</button></article>';
   }
   function drawResults() {
     const box=document.getElementById("mmResults");
     const collection=document.getElementById("mmCollection");
     if (!box||!collection) return;
+    renderedPicks=[];
     if (!state.mood||!state.moment) {box.innerHTML="";collection.hidden=true;return;}
     if (state.source==="manual" && !catalog[state.selectedIndex]) {
       box.innerHTML='<p class="mm-hint mm-await">Selectează un lichid din rezultate ca să construim cele trei experiențe.</p>';
@@ -275,7 +285,7 @@
     }
     const used=new Set(), choices=decision.picks.map(p =>
       idx>=0 ? {index:idx,liquid:catalog[idx]} :
-      autoLiquid(p.id,decision.mood,decision.moment,p.roleType,used));
+      autoLiquid(p.id,decision.mood,decision.moment,p.roleType,used,p.best.config));
     box.innerHTML='<div class="mm-result-heading"><h4>Trei feluri de a te bucura de colecție</h4>'+
       '<p>'+escape(decision.mood.name)+' · '+escape(decision.moment.name)+
       ' · '+(idx>=0?'lichidul ales de tine':'lichide propuse din catalog')+'</p></div>'+
@@ -309,15 +319,16 @@
       if (d.mmSource) {state.source=d.mmSource;remember();drawSource();drawResults();return;}
       if (d.mmLiquid!=null) {
         const idx=Number(d.mmLiquid);
-        if (catalog[idx]) {state.selectedIndex=idx;remember();drawResults();}
+        if (catalog[idx]) {state.selectedIndex=idx;remember();drawSource();drawSuggestions();drawResults();}
         return;
       }
-      if (d.mmUse) {
-        const index=Number(d.mmUseLiquid);
-        if (Number.isInteger(index) && catalog[index] &&
-          window.RTA_SENSORY_UI && window.RTA_SENSORY_UI.applyLiquid) {
-          window.RTA_SENSORY_UI.applyLiquid(index,d.mmUse);
-          document.getElementById("labLiquidView").scrollIntoView({behavior:"smooth",block:"start"});
+      if (d.mmUse!=null) {
+        const selected=renderedPicks[Number(d.mmUse)];
+        if (selected && window.RTA_SENSORY_UI &&
+          typeof window.RTA_SENSORY_UI.applyConfiguration==="function" &&
+          window.RTA_SENSORY_UI.applyConfiguration(selected.liquidIndex,selected.atomId,selected.config)) {
+          const target=document.getElementById("labLiquidView");
+          if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
         }
         return;
       }
