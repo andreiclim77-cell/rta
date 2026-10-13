@@ -224,14 +224,30 @@ function switchMode(mode){
 }
 function applyLiquid(index,atom){
  const liquids=window.RTA_LIQUIDS||[];
- if(index<0||!liquids[index])return;
- if(typeof setCategory!=="function"||typeof activateLiquid!=="function"||typeof chooseAtom!=="function")return;
+ if(index<0||!liquids[index]||!getAtom(atom))return false;
+ if(typeof setCategory!=="function"||typeof activateLiquid!=="function"||typeof chooseAtom!=="function")return false;
  setCategory("ALL");
  activateLiquid(liquids[index]);
  const selector=el("liq"),atomSelector=el("atom");
  if(selector)selector.value=String(index);
  if(atomSelector){atomSelector.value=atom;chooseAtom();}
  switchMode("main");render("main");
+ return true;
+}
+// Mood Match must open the exact full build shown in the selected result card.
+function applyConfiguration(index,atom,selectedBuild){
+ if(!selectedBuild||!getAtom(atom))return false;
+ const normalized=core.config(atom,selectedBuild);
+ if(!normalized||normalized.wire!==selectedBuild.wire||
+    normalized.wraps!==Number(selectedBuild.wraps)||
+    normalized.air!==selectedBuild.air||normalized.bell!==selectedBuild.bell)return false;
+ if(!applyLiquid(index,atom))return false;
+ configs[atom]=normalized;
+ remember();
+ updateBellInLegacy("main",normalized.bell);
+ updateBellInLegacy("explorer",normalized.bell);
+ renderAll();
+ return true;
 }
 function updateBellInLegacy(view,id){
  const selector=el("bl-bell-"+view);
@@ -339,6 +355,6 @@ function init(){
  switchMode(active);
  renderAll();
 }
-window.RTA_SENSORY_UI={render,renderAll,switchMode,configFor,states,applyLiquid};
+window.RTA_SENSORY_UI={render,renderAll,switchMode,configFor,states,applyLiquid,applyConfiguration};
 document.addEventListener("DOMContentLoaded",init);
 })();
