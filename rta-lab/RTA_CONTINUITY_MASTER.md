@@ -1,6 +1,6 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-**Fișier canonic RTA Lab · stare consolidată 12.10.2026.**
+**Fișier canonic RTA Lab · stare consolidată 13.10.2026.**
 
 - Repo: `andreiclim77-cell/rta`
 - Branch: `main`
@@ -9,7 +9,7 @@
 - Trigger persistență: **„salvează”**
 - Trigger arhivă completă: **„da mi arhiva de continuitate la zi”**
 
-> REGULĂ DE OPERARE: la „du-te în Lab și actualizează-te!”, citește mai întâi acest fișier integral. Apoi citește `rta-lab/data/tuning-415.js`, `rta-lab/data/personal-5wrap.js`, `rta-lab/data/tc-platform-map.js`, `rta-lab/data/tc-sixwrap-global.js` și `rta-lab/data/clapton-platform-map.js`. Pentru materiale TC citește și `rta-lab/data/wires.js`. Pentru comportament/UI verifică `rta-lab/engine.js`, `rta-lab/index.html`, `rta-lab/sw.js`. Nu reconstrui proiectul din memorie dacă repo-ul este accesibil.
+> REGULĂ DE OPERARE: la „du-te în Lab și actualizează-te!”, citește mai întâi acest fișier integral. Apoi citește `rta-lab/data/tuning-415.js`, `rta-lab/data/personal-5wrap.js`, `rta-lab/data/tc-platform-map.js`, `rta-lab/data/tc-sixwrap-global.js` și `rta-lab/data/clapton-platform-map.js`. Pentru materiale TC citește și `rta-lab/data/wires.js`. Pentru comportament/UI verifică `rta-lab/engine.js`, `rta-lab/index.html`, `rta-lab/sw.js`, `rta-lab/sensory-ui.js`, `rta-lab/mood-match.js` și `rta-lab/mood-match.css`. Nu reconstrui proiectul din memorie dacă repo-ul este accesibil.
 
 > REGULĂ DE SALVARE: la „salvează”, persistă imediat concluzia în MASTER și sincronizează datele, regulile, UI-ul și cache-ul relevante. Marchează certitudinea: validat practic / confirmat direct / preferință personală / extrapolat / ipoteză. După update verifică Quality Gate efectiv.
 
@@ -33,6 +33,7 @@
 10. Harta TC: **GTR/KX → Dicodes NiFe30/6**; **K Prime → Zivipf NiFe52/6**; KLP rămâne exclus din harta NiFe.
 11. Clapton active: **415→K1**, **Dvarw FL→SS**.
 12. Asylum V3: Flat = claritate/separare; Dome = corp/integrare; **K1 Clapton/5 numai contextual**, fără prior de platformă.
+13. **Mood Match (aprobat 13.10.2026):** 7 stări × 5 momente × lichid automat/manual; toate cele 16 platforme rămân accesibile; trei interpretări, niciun câștigător universal.
 
 ## 2. Inventar activ — 16 platforme / 40 RTA
 
@@ -352,3 +353,39 @@ Reguli runtime:
 ### 14.6 Control
 - Verifică toate cele 16 platforme, materialele și opțiunile permise, 620 repere, clopotele, interdicțiile, observațiile A/B, UI mobil, consistența TOP3, fișierele PWA.
 - Nu publica decât după SUCCESS la Quality Gate și la deployment.
+
+
+## 15. RTA MOOD MATCH — selecție contextuală aprobată, 13.10.2026
+
+**Principiu acceptat:** utilizatorul apreciază toate atomizoarele păstrate în colecție; nu există atomizor „prost” sau un câștigător global. Experiența dorită este determinată de starea de moment, context, lichid și configurația completă. Nu forța aceeași platformă ca #1 la fiecare stare și nu transforma exemplele personale în asocieri obligatorii.
+
+### 15.1 Cele 7 stări aprobate (ordinea din UI)
+1. 🔥 **POWER** — forță, ofensivă, throat hit.
+2. ❤️ **PURE PLEASURE** — aromă bogată, prezență pe palat.
+3. ✨ **MAGIC & COMPLEXITY** — finețe, stratificare, naturalețe.
+4. 🕰️ **OLD SCHOOL** — tutun autentic, clasic, direct.
+5. 🌿 **CHILL & RELAX** — experiență blândă, rotundă.
+6. ♾️ **ALL DAY** — constanță, echilibru, fără oboseală.
+7. 🎲 **SURPRISE ME** — redescoperire și explorare.
+
+### 15.2 Fluxul de alegere
+- **Pas 1 — MOOD:** alegi starea, nu un atomizor.
+- **Pas 2 — MOMENT:** ☕ La cafea · ☀️ În timpul zilei · 🥤 La un suc · 🌙 Seara · 🛋️ În relaxare. „La un suc” înlocuiește formulările ambigue despre alcool.
+- **Pas 3 — LICHID:** aplicația poate sugera lichide din cele 620 de repere sau utilizatorul poate căuta și fixa unul; alegerea manuală nu trebuie schimbată de algoritm.
+- **Rezultate distincte:** (1) Potrivirea de moment; (2) O altă interpretare, cu alt caracter; (3) Redescoperă colecția, fără a pretinde că locul al treilea este un clasament absolut.
+- Toate **16** platformele pot fi explorate și deschise individual; slotul de redescoperire se rotește pe combinațiile de stări/momente.
+- Pentru fiecare rezultat: atomizor, lichid, clopot, airflow, sârmă, număr spire, Ø coil, WATT/TC, avantaj, compromis, certitudine. Butonul **„Deschide configurația completă”** trebuie să transfere în cockpit **toată configurația calculată**, nu doar atomizorul și lichidul.
+
+### 15.3 Preferințe personale utile, NU reguli fixe
+- Dvarw CL apare firesc în exemplele pentru **POWER** și/sau dimineața **la cafea**.
+- Kayfun Lite Plus a fost dat drept exemplu pentru **în timpul zilei**.
+- GTR a fost asociat spontan unei stări fericite, de explorare și complexitate.
+- GT One a fost dat drept exemplu pentru **ALL DAY / old-style**, nu exclusiv.
+- **Toate cele 16** pot apărea în mai multe stări în funcție de lichid și build. Nu transforma aceste exemple în blocaje algoritmice.
+
+### 15.4 Interfață, metodă, verificare
+- Pe **telefon**: mooduri și momente ca butoane mari, carduri pe o coloană, cuvinte care nu se rup vertical, navigare tactilă și menținerea lizibilității. Pe **desktop**: grile responsive cu 2–3 coloane.
+- Modelul de scoring rămâne o **ipoteză tehnico-senzorială** contextuală; plăcerea personală nu se exprimă ca probabilitate sau punctaj fabricat.
+- Fișiere: `rta-lab/mood-match.js`, `rta-lab/mood-match.css`; integrare: `rta-lab/index.html`, `rta-lab/sensory-ui.js`, `rta-lab/bootstrap.js`, `rta-lab/sw.js`.
+- Test obligatoriu înainte de publicare: `node tools/check-rta-mood-match.js` plus testele RTA existente în **RTA Guide Quality Gate**; verifică 7×5 contexte, 16 platforme, 620 lichide, cache și handoff complet.
+- După merge, confirmă separat versiunea publică și aspectul pe telefon real; trecerea testelor de cod nu echivalează automat cu un test vizual/deployment.

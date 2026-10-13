@@ -52,7 +52,9 @@ jobs:
           for file in rta-lab/data/*.js; do node --check "$file"; done
           node --check rta-lab/bell-liquid-ui.js
           node --check rta-lab/sensory-ui.js
+          node --check rta-lab/mood-match.js
           node tools/check-rta-sensory-core.js
+          node tools/check-rta-mood-match.js
           node tools/check-rta-lab-mobile-clarity.js
           node tools/check-rta-bell-fit.js
           test ! -e rta-lab/app.js

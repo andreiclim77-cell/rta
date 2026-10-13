@@ -27,10 +27,10 @@
         DESCARCĂ ARHIVA MASTER
       </a>`;
 
-    const hero = main.querySelector(".hero");
-    if (hero && hero.nextSibling) main.insertBefore(panel, hero.nextSibling);
-    else if (hero) hero.insertAdjacentElement("afterend", panel);
-    else main.insertBefore(panel, main.firstChild);
+    // The mood-first experience must remain above the continuity download utility.
+    const footer = main.querySelector(".footer");
+    if (footer) main.insertBefore(panel, footer);
+    else main.appendChild(panel);
   }
 
   async function cleanLegacyCaches() {
