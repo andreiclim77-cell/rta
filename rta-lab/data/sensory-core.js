@@ -231,6 +231,13 @@ function configuration(id,changes={}) {
  const base=defaults(id);
  if(!base)return null;
  const value={...base,...changes,atom:id};
+ // Selecting a different wire without explicit thermal settings loads the
+ // appropriate platform/wire preset. In particular KLP NiFe30 = DNA 220°C / 16 W.
+ if(changes.wire && WIRES[changes.wire] && changes.wire!==base.wire){
+  const wirePreset=wireSetup(id,changes.wire);
+  if(!Object.prototype.hasOwnProperty.call(changes,"power"))value.power=wirePreset.power;
+  if(!Object.prototype.hasOwnProperty.call(changes,"temp"))value.temp=wirePreset.temp;
+ }
  const model=PLATFORMS[id];
  if(!model.air.some(a=>a.id===value.air))value.air=base.air;
  value.bell=bellFor(id,value.bell).id;
