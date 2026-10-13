@@ -125,7 +125,7 @@ assert.equal(ui.views.explorer.analysis.total,620);
 assert.ok(panel.innerHTML.includes("disabled"));
 assert.ok(ui.views.explorer.analysis.total===620);
 const first=ui.views.explorer.analysis.matches[0];
-panel.trigger("click",{target:{closest:()=>({dataset:{blPick:String(first.index),blView:"explorer"}})}});
+panel.trigger("click",{closest:()=>({dataset:{blPick:String(first.index),blView:"explorer"}})});
 assert.equal(handoff.category,"ALL");
 assert.equal(handoff.liquid,catalog[first.index]);
 assert.equal(element("atom").value,"gtr");
@@ -135,7 +135,7 @@ assert.equal(ui.views.explorer.analysis.bell.id,"freehand","Selection must persi
 panel.trigger("input",{dataset:{blSearch:"explorer"},value:""});
 ui.filter("explorer","NET complex");
 assert.ok(panel.querySelector('[data-bl-summary="explorer"]').textContent.includes("din 170"));
-panel.trigger("click",{target:{closest:()=>({dataset:{blMore:"explorer"}})}});
+panel.trigger("click",{closest:()=>({dataset:{blMore:"explorer"}})});
 assert.ok(panel.querySelector('[data-bl-summary="explorer"]').textContent.includes("36 din 170"));
 element("atom").value="diplomat";element("atom").trigger("change");
 assert.equal(ui.views.main.analysis.bell.id,"freehand","Both views must use the same physical bell choice.");
