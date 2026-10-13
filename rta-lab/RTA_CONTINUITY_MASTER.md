@@ -299,3 +299,56 @@ Reguli runtime:
 - rta-lab/sw.js precache pentru toate resursele noi, cache separat 20261013; rămâne V10 cu 5 sârme.
 - .github/workflows/quality-gate.yml execută și tools/check-rta-bell-fit.js.
 - Quality Gate și deploy trebuie confirmate efectiv SUCCESS pe commitul publicat, nu doar sintaxa locală.
+
+
+## 14. RTA SENSORY DNA CORE — constituție integrată, 13.10.2026
+
+**Mod nou de recomandare:** configurația completă, nu modelul generic, este unitatea de analiză. Este introdus nucleul tehnic cu 16 profile de platforme, opțiuni documentate de clopot, layouturi airflow, materiale, variante contact 5/6, geometrie, poziție, WATT/TC și profilul unui lichid din catalogul de 620.
+
+### 14.1 Cele 10 axiome canonice
+1. Evaluează configurația completă; nu clasifica absolut platformele.
+2. Spectru aromatic ≠ intensitate.
+3. Simultaneitate ≠ separare.
+4. Prezență pe palat ≠ volum vapori.
+5. Ofensivă ≠ throat hit.
+6. Separare ≠ armonie.
+7. Plăcerea personală nu rezultă automat din geometrie.
+8. Personalitatea și atașamentul nu sunt ranguri universale.
+9. Validarea personală prevalează numai pentru setupul testat; extrapolările se marchează explicit.
+10. Explică avantajul, compromisul și gradul de certitudine al fiecărei recomandări.
+
+### 14.2 Cele cinci dimensiuni senzoriale
+- Arhitectură aromatică: spectru, separare, simultaneitate, Tobacco Core Visibility.
+- Prezență pe palat: bogăție, acoperire, corp, textură.
+- Energie senzorială: ofensivă și TH distinct.
+- Armonie/naturalețe: integrare, echilibru, fluiditate.
+- Plăcere/personalitate: NUMAI dacă există observații personale; fără scor predictiv.
+
+### 14.3 Observații personale 13.10.2026, contextuale
+- KLP + K1 28 GA / Ø2,5 / 5 contact: spectru bogat simultan, palat „îmbrățișat”, TH și ofensivă; preferat față de 28/6 și conform A/B anterior față de 29/6.
+- KLP + K1 28 GA / Ø2,5 / 6 contact: mai moale, analitic, TH și ofensivă reduse; nu generaliza fără condițiile de putere/airflow.
+- Dvarw CL + K1 28 GA / Ø2,5 / 6 contact, 3×0,6: muscular, ofensiv, focalizat; la insert 1×1,2 caracter perceput mai brut („Arnold” față de „Van Damme” 3×0,6). Rezultatul specific încă necesită A/B cu putere controlată.
+- GTR + Dicodes RESISTHERM NiFe30 TCR320 / 6 TC: feeling special, spectru și stratificare extraordinare, „magie pe palat”, plăcere maximă, TH modest; GTR + K1 28 GA foarte bun dar fără magia TC.
+- Prime Minister: specialist NET capabil, nu câștigă automat la armonie/atașament.
+- K Prime și GT One: caracter speciale fără câștigător forțat; GT One K1 29/6 preferat față de 28/5 în A/B direct.
+- Alte validări istorice 415, KX, Dvarw FL, Asylum Flat și KV3 Mini rămân active.
+
+### 14.4 Modele tehnice și limite de certitudine
+- Fișier canonic nou: rta-lab/data/sensory-core.js. Conține profile pentru toate cele 16 platforme, layouturi de airflow, 6 materiale (5 familii active: K1 28, K1 29, K1 Clapton, SS Clapton, NiFe TC cu NiFe30/NiFe52), geometrie coil, model senzorial, A/B și ordonare contextuală.
+- Nu șterge motorul legacy, care rămâne reper de control.
+- Aria nominală a orificiilor NU implică debit real; lungimea/masa termică sunt proximități geometrice, nu măsurători ale temperaturii.
+- Diametrele necunoscute sunt marcate orientativ/neconfirmat. Nu pretindem clopote sau inserturi deținute dacă avem doar compatibilitatea.
+- Implicit Ø2,5, contact pentru K1 29/5; varianta 29/5 distanțată rămâne ștearsă. NiFe30 și NiFe52 folosesc 6 spire; KLP exclus din harta NiFe, Asylum SS Clapton exclus, 415 K1 28/6 depășit.
+- Plăcerea personală nu primește niciodată scor calculat. Configurațiile nevalidate sunt marcate extrapolate; observațiile personale sunt condiționate de setup.
+- Ierarhia din profilul senzorial este estimare, nu măsurătoare, probabilitate sau sondaj.
+
+### 14.5 Interfață profesionistă și flux
+- Două moduri: „Pornește de la atomizor” și „Pornește de la lichid”.
+- Cockpit: scop, cameră, airflow, material, spire, reglaje avansate (Ø, poziție, WATT/TC), cinci dimensiuni senzoriale, avantaje și compromisuri, observații A/B, TOP3 variante și lichide analizate din toate cele 620.
+- Comparațiile vechi pe 5 familii și catalogul complet rămân accesibile în secțiuni extensibile pentru control și audit.
+- Configurația aleasă se memorează local dacă browserul permite. Noul motor folosește setarea pentru ambele direcții de recomandare.
+- Fișiere UI: rta-lab/sensory-ui.js și rta-lab/sensory-ui.css. Teste: tools/check-rta-sensory-core.js.
+
+### 14.6 Control
+- Verifică toate cele 16 platforme, materialele și opțiunile permise, 620 repere, clopotele, interdicțiile, observațiile A/B, UI mobil, consistența TOP3, fișierele PWA.
+- Nu publica decât după SUCCESS la Quality Gate și la deployment.
