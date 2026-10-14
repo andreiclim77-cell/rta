@@ -208,3 +208,11 @@ html,body{max-width:100%;overflow-x:clip}
  .cinema-caption{padding-right:0}
  .cinema-caption a{max-width:132px;font-size:9px;line-height:1.25}
 }
+
+/* GT One: the distributor photograph has printed branding at the edges.
+ * Vignette those borders, without distorting or hiding the centered product. */
+.cinema-frame[data-cinema-frame="1"]{background:#091217}
+.cinema-frame[data-cinema-frame="1"] img{
+ -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
+ mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
+}
