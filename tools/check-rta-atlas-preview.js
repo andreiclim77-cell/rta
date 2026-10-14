@@ -14,6 +14,7 @@ fs.readdirSync(path.join(root,"data")).filter(f=>/^liquids-.*\.js$/.test(f)).sor
 load("data/bell-liquid-fit.js");
 load("data/sensory-core.js");
 load("mood-match.js");
+load("atlas-preview/photo-sources.js");
 load("atlas-preview/app.js");
 const lib=env.window,api=lib.RTA_ATLAS_PREVIEW,moods=lib.RTA_MOOD_MATCH.moods,moments=lib.RTA_MOOD_MATCH.moments;
 assert.ok(api&&typeof api.compose==="function","Standalone prototype API missing");
@@ -21,7 +22,7 @@ assert.equal(api.getSourceModel().atoms,16);
 assert.equal(api.getSourceModel().liquids,620);
 assert.equal(moods.length,7);
 assert.equal(moments.length,5);
-assert.equal(api.version,"0.1-home-liquid-prototype");
+assert.equal(api.version,"0.2-real-photo-motion");
 const catalog=lib.RTA_LIQUIDS;
 const samples=["Tutun simplu","Tutun complex","NET simplu","NET complex"].map(category=>{
  const i=catalog.findIndex(x=>x.class===category);
@@ -106,15 +107,29 @@ assert.ok(html.includes("id=\"liquidSearch\"")&&html.includes("id=\"resultCards\
 assert.ok(html.includes("id=\"moodChips\"")&&html.includes("id=\"momentChips\""));
 assert.ok(html.includes('href="../"'),"Must preserve link to original V10 app");
 assert.ok(!html.includes("data-route=\"market\""),"Market not implemented in preview");
-assert.ok(html.includes("Reprezentare artistică")&&html.includes("nu model fizic"),"Diagram provenance missing");
+assert.ok(html.includes("id=\"cinemaReel\"")&&html.includes("photo-cinema"),"Real-photo stage missing");
 for(const str of ["@keyframes flowPaths","@keyframes drawWave","@keyframes cardReveal","prefers-reduced-motion:reduce"]){
  assert.ok(css.includes(str),"Motion or reduced-motion rule missing: "+str);
 }
 assert.ok(css.includes(".bottom-tabs")&&css.includes("max-width:440px"),"Mobile adaptation missing");
 assert.ok(js.includes("Semnalul extern")&&js.includes("Nu inventăm"),"No fabricated market review guard");
+const media=lib.RTA_ATLAS_PHOTOS;
+assert.ok(media&&Object.keys(media).length>=15,"Need real source photos for most platforms");
+for(const [id,p] of Object.entries(media)){
+ assert.ok(/^https:\/\//.test(p.src),"Photo must be an actual HTTPS URL: "+id);
+ assert.ok(/^https:\/\//.test(p.ref),"Photo must have original attribution URL: "+id);
+ assert.ok(p.credit,"Source credit required: "+id);
+}
+const v02=fs.readFileSync(path.join(preview,"v02.js"),"utf8");
+const v02css=fs.readFileSync(path.join(preview,"v02.css"),"utf8");
+assert.ok(v02.includes("cinemaReel")&&v02.includes("setInterval"),"Visible photo carousel missing");
+assert.ok(v02.includes("animateLiquid")&&v02.includes("airSvg"),"Liquid and airflow reactive animation missing");
+for(const key of ["cinemaKen","cinemaSwitch","airflowVisible","@media(max-width:390px)","prefers-reduced-motion:reduce"]){
+ assert.ok(v02css.includes(key),"V0.2 motion or mobile breakpoint missing: "+key);
+}
 assert.ok(js.includes("result.items[0]")||js.includes("result.items.map"));
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(refs.length,25,"Expected 21 catalog/atoms files plus fit, core, mood, app");
+assert.equal(refs.length,27,"Expected core scripts + real-photo sources + v02 motion");
 for(const ref of refs){
  assert.ok(ref.startsWith("../")||ref.startsWith("./"),"No unknown remote JS");
  const local=path.resolve(preview,ref.split("?")[0]);
@@ -123,5 +138,7 @@ for(const ref of refs){
 assert.ok(refs.findIndex(x=>x.includes("bell-liquid-fit.js"))<refs.findIndex(x=>x.includes("sensory-core.js")));
 assert.ok(refs.findIndex(x=>x.includes("sensory-core.js"))<refs.findIndex(x=>x.includes("mood-match.js")));
 assert.ok(refs.findIndex(x=>x.includes("mood-match.js"))<refs.findIndex(x=>x.includes("./app.js")));
+assert.ok(refs.findIndex(x=>x.includes("photo-sources.js"))<refs.findIndex(x=>x.includes("./app.js")));
+assert.ok(refs.findIndex(x=>x.includes("./app.js"))<refs.findIndex(x=>x.includes("./v02.js")));
 console.log("RTA ATLAS PREVIEW PASS: 16 platforms, 620 actual liquids, 4×7×5="+scenarios+
  " contexts, nine compatible builds each; visual motion, source honesty and no production modifications.");
