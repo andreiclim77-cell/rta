@@ -84,3 +84,23 @@ window.RTA_ATLAS_PHOTOS={
     "variant": "Fotografie din biblioteca existentă a proiectului"
   }
 };
+
+/* Already-hosted project photos: use only as graceful fallbacks if external hosts fail.
+ * Source/license verification remains required before wider distribution. */
+(function(){
+ const localFallbackPhotos={
+  "kx":"../../assets/instagram/atomizer-kayfun-x-243c328b6f.jpg",
+  "gtone":"../../assets/instagram/atomizer-taifun-gt-one-b29f733077.jpg",
+  "415":"../../assets/instagram/atomizer-four-one-five-415rta-mtl-ba219d9875.jpg",
+  "dvarwfl":"../../assets/instagram/atomizer-dvarw-mtl-fl-dda12456be.jpg",
+  "muted":"../../assets/instagram/atomizer-muted-23ed383402.jpg",
+  "diplomat":"../../assets/instagram/atomizer-centenary-diplomat-v1-5-mtl-rta-84d651448b.jpg",
+  "byka":"../../assets/instagram/atomizer-by-ka-v-11-c0e3147194.jpg",
+  "minister":"../../assets/instagram/atomizer-minister-mtl-aaa9a33507.jpg",
+  "pmstd":"../../assets/instagram/atomizer-prime-minister-standard-rhodesian-a53af75bbe.jpg",
+  "kv3":"../../assets/instagram/atomizer-kayfun-mini-v3-kv3-mini-38acece1e6.jpg"
+ };
+ for(const [id,src] of Object.entries(localFallbackPhotos)){
+  if(window.RTA_ATLAS_PHOTOS[id])window.RTA_ATLAS_PHOTOS[id].fallbackSrc=src;
+ }
+})();
