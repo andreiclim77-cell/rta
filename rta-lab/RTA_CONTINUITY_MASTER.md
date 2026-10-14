@@ -590,3 +590,13 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 **Corecție în același PR:** prototipul `atlas-preview/app.js` nu mai poate spune că un test KLP NiFe30 cu lichid **neprecizat** a avut loc „pe lichidul selectat”; îl marchează drept observație parțială cu aplicare contextuală extrapolată. Testul `tools/check-rta-atlas-preview.js` controlează exact această limitare.
 
 **Regulă permanentă:** un deployment Pages eșuat nu dovedește o eroare în motor; citește logul exact. Păstrează V10 neatins. Numai după rularea Pages `success` anunță disponibilitatea reală a `/rta-lab/atlas-preview/`.
+
+## 26. Feedback visual — prototipul Atlas V0.1 nu este aprobat (14.10.2026)
+
+**Declarația utilizatorului după deschiderea `https://ghid-rta.ro/rta-lab/atlas-preview/`:** „Nu e reală deloc, iar animată iar nu e și nici bine încadrată… arată banal.”
+
+**Status imediat:** **V0.1 RESPINS ca design / motion / încadrare mobilă**, chiar dacă testele de cod și GitHub Pages au trecut. Nu folosi „published successfully” drept sinonim pentru „interfață aprobată”. Nu crea celelalte 4 ecrane cu prezentarea respinsă, nu substitui pozele autentice cu siluete SVG impersonale.
+
+**Analiză punctuală în `rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md` §15:** reale fotografie/atribuire produse, mobile first cu hero și anim vizibile din primul viewport, interacțiune cu efect vizual vizibil, animații verificate pe screenshot/video multi-frame, nu doar prezența CSS. Dacă nu există posibilitate de a vedea browserul și captura, cere date utile sau folosește Work pentru test vizual; nu afirma că ai văzut exact ecranul telefonului doar analizând sursa.
+
+**NIMIC de refăcut din partea bună:** motorul V10, 620 lichide, TOP3 × TOP3 contextual calculat, 16 platforme / 42 exemplare și fișele celor 3 Dvarw CL, principiile de surse și procente. V0.2 = experiență grafică REALĂ, demonstrabil animată și bine încadrată; **macheta revizuită se aprobă înainte de orice extindere spre Atomizer Atlas, Wire Lab, Market Hall și Duel.**
