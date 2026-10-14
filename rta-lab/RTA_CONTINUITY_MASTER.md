@@ -494,3 +494,22 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 - **Preferință de familie păstrată:** pe CL utilizatorul preferă în general insertul **3×0,6 mm**, pentru care are test validat cu K1 28 GA / Ø2,5 / 6 spire. Această preferință **nu transformă 1×1,2 + K1 28/5 în variantă slabă**. Este o a doua configurație personală apreciată, distinctă.
 - **Cauzalitate:** o comparație CL 3×0,6/K1 28/6 vs CL 1×1,2/K1 28/5 modifică **două variabile importante simultan** (distribuția aerului și geometria/masa coilului); efectele nu pot fi atribuite doar insertului. Nu afirma rezultate A/B pe spectru/TH/palat pe 1×1,2/5 fără date.
 - **Lab:** înregistrare explicită de observație parțială pentru 1×1,2/K1 28/5 în Sensory DNA, opțiune selectabilă; 3×0,6/K1 28/6 rămâne presetul preferat. Motorul legacy trebuie să explice ambele configurații. Sunt valabile 16 platforme, 42 unități și 620 lichide.
+
+
+## 21. Dvarw CL — selectare rapidă a două setupuri reale în Sensory DNA (14.10.2026)
+
+**Scop:** transformarea concluziilor din §20.3 în două alegeri fizice funcționale în configurator, fără modificarea motorului de bază, a celor 16 platforme, 42 de RTA-uri fizice sau a catalogului cu 620 de lichide.
+
+**Configurații disponibile printr-un clic, NUMAI pentru Dvarw MTL CL:**
+1. **Principală personală:** insert **3×0,6 mm**, K1 **28 GA**, **6 spire**. Configurație validată anterior pentru caracter muscular, distribuție multipunct și dezvoltare aromatică; Ø2,5 este baseline Lab.
+2. **Alternativă reușită:** insert unic **1×1,2 mm**, K1 **28 GA**, **5 spire**. Utilizatorul spune explicit că „merge bine”. Nu se atribuie lichid, wattaj, diametru ori comparație controlată doar a insertului.
+
+**Interfață:** în prima zonă a cockpitului „Configurator” apar două carduri cu marcaj clar „Preferința principală” / „Alternativă reușită”, buton „Aplică setupul”, stare accesibilă aria-pressed și explicația nivelului de dovadă. O alegere schimbă împreună **airflow + material + wraps**, în ambele moduri atomizor/lichid și persistă pentru atomizor; power, coilMm și poziția sunt păstrate dacă sârma nu se schimbă, pentru a nu atribui testului valori inventate. Când se trece de la altă sârmă la K1 28, revine presetul orientativ al materialului, nu un W pretins măsurat. Cealaltă configurație rămâne mereu selectabilă. Nu schimba automat buildurile altor platforme.
+
+**Metodă:** nu este un A/B în care variația să fie doar insertul, deoarece se schimbă **5 vs 6 spire** și astfel geometria, rezistența și condițiile termice. Preferința 3×0,6 nu înseamnă că 1×1,2 cu 5 spire este slab; ambele sunt experiențe reale de păstrat, fără scor numeric fabricat al plăcerii.
+
+**Fișiere canonice:** `rta-lab/data/sensory-core.js` expune `personalSetups("dvarwcl")` (două configurații fără transfer la FL); `rta-lab/sensory-ui.js` oferă `applyPersonalSetup(view,id)`, două carduri în zona 01 și gestionarea clicurilor; `rta-lab/sensory-ui.css` asigură două coloane desktop și una pe mobil, vizibilitate stare și focus. `index.html` și `sw.js` au versiunea `10-cl-pair-20261014` pentru a evita vechiul cache PWA.
+
+**QA:** `node tools/check-rta-sensory-core.js` verifică numărul și parametrii presetelor, disponibilitatea doar pe CL, ambele moduri, selectarea prin eveniment real, actualizarea celor trei variabile, păstrarea puterii ajustate, eroare la ID invalid și lipsa efectelor laterale pe KLP. `tools/check-rta-lab-mobile-clarity.js` păstrează contractul de versiuni; se rulează și Quality Gate integral, apoi se verifică separat deploy GitHub Pages.
+
+**Stadiu:** implementat pentru verificare CI/publicare; nu confunda codul din ramura de lucru cu site-ul public până la confirmarea integrării și deployului.

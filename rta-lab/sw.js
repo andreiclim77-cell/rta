@@ -1,11 +1,11 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014-cl-pair-20261014";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
   "./styles.css?v=10",
   "./lab-update.css?v=10",
   "./bell-liquid.css?v=10",
-  "./sensory-ui.css?v=10-three-zone-20261013",
+  "./sensory-ui.css?v=10-cl-pair-20261014",
   "./mood-match.css?v=11-mood-20261013",
   "./home-ui.css?v=10-home-20261013",
   "./engine.js?v=10-personal-20261014",
@@ -16,8 +16,8 @@ const ASSETS = [
   "./data/clapton-platform-map.js?v=10",
   "./data/bell-liquid-fit.js?v=10",
   "./bell-liquid-ui.js?v=10",
-  "./data/sensory-core.js?v=10-personal-20261014",
-  "./sensory-ui.js?v=10-personal-20261014",
+  "./data/sensory-core.js?v=10-cl-pair-20261014",
+  "./sensory-ui.js?v=10-cl-pair-20261014",
   "./mood-match.js?v=11-mood-20261013",
   "./RTA_CONTINUITY_MASTER.md?v=10-personal-20261014",
   "./bootstrap.js?v=10-personal-20261014",

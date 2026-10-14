@@ -5,7 +5,7 @@
  */
 (function () {
 "use strict";
-const V="2026-10-14-personal-air-tc";
+const V="2026-10-14-cl-pairings";
 const AXIOMS=[
  "Configurația completă este unitatea de evaluare.",
  "Spectrul aromatic nu este același lucru cu intensitatea.",
@@ -122,6 +122,25 @@ const PERSONAL_PREFS=Object.freeze({
  dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
  evidence:"preferințe personale declarate direct 14.10.2026; fără identitate materială sau A/B universal"
 });
+/* Practical setup choices preserve physical configuration, not a universal
+   atomizer ranking. 28/5 with single insert has no measured W/Ø/liquid. */
+const PERSONAL_SETUPS=Object.freeze({
+ dvarwcl:Object.freeze([
+  Object.freeze({
+   id:"cl-triple-28-6",atom:"dvarwcl",air:"triple06",wire:"k128",wraps:6,
+   title:"3×0,6 mm · K1 28 GA / 6 spire",status:"Preferința principală",
+   detail:"Multipunct, mai multă dezvoltare aromatică; test personal anterior. Ø2,5 este baseline Lab.",
+   evidence:"Observație personală; nu inventăm wattajul ori lichidul."
+  }),
+  Object.freeze({
+   id:"cl-single-28-5",atom:"dvarwcl",air:"single12",wire:"k128",wraps:5,
+   title:"1×1,2 mm · K1 28 GA / 5 spire",status:"Alternativă reușită",
+   detail:"Merge bine, conform testului tău. Nu este o configurație inferioară universal.",
+   evidence:"Observație personală calitativă; lichidul, Ø și W neprecizate."
+  })
+ ])
+});
+function personalSetups(atomId){return (PERSONAL_SETUPS[atomId]||[]).map(x=>({...x}));}
 function personalPreference(config){
  if(PERSONAL_PREFS.tcEqualAtoms.includes(config.atom)){
   if(["nife30","nife52"].includes(config.wire)&&config.wraps===6)
@@ -528,6 +547,6 @@ function bestForLiquid(liquid,objective="complete",top=16){
  }).sort((a,b)=>b.score-a.score).slice(0,top);
 }
 window.RTA_SENSORY_CORE={version:V,axioms:AXIOMS,dimensions:DIMENSIONS,platforms:PLATFORMS,
- wires:WIRES,observations:OBS,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,
+ wires:WIRES,observations:OBS,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalSetups,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,
  physical,analyze,priority,rankBuilds,matchLiquids,bestForLiquid,liquidTags,permitted};
 })();

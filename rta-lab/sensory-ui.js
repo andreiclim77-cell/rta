@@ -1,4 +1,4 @@
-/* RTA Sensory DNA · professional working cockpit, 13.10.2026 */
+/* RTA Sensory DNA · complete build pairing controls, 14.10.2026 */
 (function(){
 "use strict";
 const core=window.RTA_SENSORY_CORE;
@@ -90,6 +90,23 @@ function selected(list,current,labelFn,valueFn){
 function buildSelect(config){
  const items=core.variants(config.atom).filter(x=>x.wire===config.wire);
  return choice("Spire","wraps",items.map(x=>({value:x.wraps,label:x.wraps+" contact",selected:config.wraps})),null,items.length===1);
+}
+function personalSetupsMarkup(config){
+ const rows=core.personalSetups(config.atom);
+ if(!rows.length)return "";
+ return '<div class="sd-setups" role="group" aria-label="Configurații Dvarw CL validate personal">'+
+  '<div class="sd-setups-heading"><strong>Două configurații Dvarw CL care funcționează</strong>'+
+  '<small>Alege simultan insertul, materialul și spirele</small></div>'+
+  '<div class="sd-setups-grid">'+rows.map(s=>{
+   const current=config.air===s.air&&config.wire===s.wire&&config.wraps===s.wraps;
+   return '<button type="button" data-sd-preset="'+esc(s.id)+'" class="sd-setup-choice'+
+    (current?' is-current':'')+'" aria-pressed="'+(current?'true':'false')+'">'+
+    '<span class="sd-setup-tag">'+esc(s.status)+'</span>'+
+    '<strong>'+esc(s.title)+'</strong><small>'+esc(s.detail)+'</small>'+
+    '<em>'+esc(s.evidence)+'</em>'+
+    '<span class="sd-setup-state">'+(current?'CONFIGURAȚIE ACTIVĂ':'APLICĂ SETUPUL')+'</span></button>';
+  }).join("")+'</div>'+
+  '<p class="sd-setup-caveat">Nu este un A/B izolat al insertului: între variante treci și de la 6 la 5 spire. Diametrul, puterea și poziția rămân cele alese în configurator; nu le prezentăm drept măsurători din test.</p></div>';
 }
 function narrative(result){
  const rows=core.dimensions.map(d=>{
@@ -198,7 +215,7 @@ function content(view){
    choice("Clopot / cameră","bell",bellOptions,view,bellOptions.length===1)+
    choice("Airflow / insert","air",airOptions)+
    choice("Sârmă / material","wire",wireOptions)+
-   buildSelect(config)+'</div>'+
+   buildSelect(config)+'</div>'+personalSetupsMarkup(config)+
   '<details class="sd-advanced"><summary>Calibrare fină · poziție coil, diametru, WATT / TC</summary>'+
   '<div class="sd-controls">'+
    choice("Diametru coil","coilMm",[2,2.5,3].map(x=>({value:x,label:"Ø"+String(x).replace(".",",")+" mm",selected:config.coilMm})))+
@@ -260,6 +277,20 @@ function switchMode(mode){
  }
  try{if(window.localStorage)window.localStorage.setItem(viewKey,mode);}catch(error){}
  render(mode);
+}
+function applyPersonalSetup(view,presetId){
+ if(!["explorer","main"].includes(view))return false;
+ const atom=states[view].atom;
+ if(!atom||!core.platforms[atom])return false;
+ const preset=core.personalSetups(atom).find(item=>item.id===presetId);
+ if(!preset || !core.permitted(atom,preset.wire,preset.wraps) ||
+  !core.platforms[atom].air.some(x=>x.id===preset.air))return false;
+ const next=setConfig(atom,{air:preset.air,wire:preset.wire,wraps:preset.wraps},view);
+ if(next.air!==preset.air || next.wire!==preset.wire || next.wraps!==preset.wraps)return false;
+ renderAll();
+ const fitUi=window.RTA_BELL_LIQUID_UI;
+ if(fitUi&&typeof fitUi.render==="function")fitUi.render(view);
+ return true;
 }
 function applyLiquid(index,atom){
  const liquids=window.RTA_LIQUIDS||[];
@@ -364,6 +395,7 @@ function init(){
    root.addEventListener("change",e=>handleChange(b,e.target));
    root.addEventListener("click",e=>{
     const button=e.target.closest("button");if(!button)return;
+    if(button.dataset.sdPreset){applyPersonalSetup(b,button.dataset.sdPreset);return;}
     if(button.dataset.sdPickWire){
      const atom=states[b].atom;
      setConfig(atom,{wire:button.dataset.sdPickWire,wraps:Number(button.dataset.sdPickWraps)},b);
@@ -394,6 +426,6 @@ function init(){
  switchMode(active);
  renderAll();
 }
-window.RTA_SENSORY_UI={render,renderAll,switchMode,configFor,states,applyLiquid,applyConfiguration};
+window.RTA_SENSORY_UI={render,renderAll,switchMode,configFor,states,applyLiquid,applyConfiguration,applyPersonalSetup};
 document.addEventListener("DOMContentLoaded",init);
 })();

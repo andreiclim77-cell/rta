@@ -151,6 +151,16 @@ const gtrRW=api.analyze({atom:"gtr",wire:"k128",wraps:5},sample);
 assert.ok(gtrTC.dimensions.palate>gtrRW.dimensions.palate);
 const noAnchor=api.analyze({atom:"gtr",wire:"nife30",wraps:6,air:"hole10"},sample);
 assert.equal(noAnchor.anchors.length,0,"No transfer of personal TC test to untested airflow.");
+// Two full physical Dvarw CL pairings: 3×0,6 / K1 28/6 and 1×1,2 / K1 28/5.
+const clPairings=api.personalSetups("dvarwcl");
+assert.equal(clPairings.length,2,"Both CL personal setups must be selectable");
+assert.deepEqual(JSON.parse(JSON.stringify(clPairings.map(x=>x.id))),["cl-triple-28-6","cl-single-28-5"]);
+assert.ok(clPairings.every(x=>x.atom==="dvarwcl"&&x.wire==="k128"&&api.permitted(x.atom,x.wire,x.wraps)));
+assert.equal(clPairings[0].air,"triple06");
+assert.equal(clPairings[0].wraps,6);
+assert.equal(clPairings[1].air,"single12");
+assert.equal(clPairings[1].wraps,5);
+assert.equal(api.personalSetups("gtr").length,0,"CL pairings must not leak to other platforms");
 const cl=api.analyze("dvarwcl",sample);
 const clSingle=api.analyze({atom:"dvarwcl",air:"single12"},sample);
 const clSingle5=api.analyze({atom:"dvarwcl",air:"single12",wire:"k128",wraps:5},sample);
@@ -264,6 +274,37 @@ assert.ok(find("sensoryExplorer").innerHTML.includes("Balkan Milestone"),
   "Current FL 3×0,6 K1 28/6 must surface personal Balkan comparison");
 assert.ok(find("sensoryExplorer").innerHTML.includes("Preferință personală declarată"),
   "Sensory DNA should show declared preferences separately from technical evidence");
+// Exercise real button event handling, full setup switch, persistence in both views,
+// custom power preservation, unrelated KLP TC, and invalid preset rejection.
+find("atomExplorer").value="dvarwcl";
+sandbox.window.RTA_SENSORY_UI.render("explorer");
+const clRoot=find("sensoryExplorer"),ui=sandbox.window.RTA_SENSORY_UI;
+for(const id of ["cl-triple-28-6","cl-single-28-5"])
+ assert.ok(clRoot.innerHTML.includes('data-sd-preset="'+id+'"'),"Dvarw CL setup card missing: "+id);
+assert.ok(clRoot.innerHTML.includes("Nu este un A/B izolat"),"Warn that airflow and wraps both change");
+assert.ok(clRoot.innerHTML.includes('aria-pressed="true"'),"Active setup needs accessible pressed state");
+const clickSetup=id=>clRoot.trigger("click",{target:{closest:()=>({dataset:{sdPreset:id}})}});
+clRoot.trigger("change",{target:{dataset:{sdField:"power"},value:"13"}});
+clickSetup("cl-single-28-5");
+let chosen=ui.configFor("dvarwcl","explorer");
+assert.equal(chosen.air,"single12");
+assert.equal(chosen.wire,"k128");
+assert.equal(chosen.wraps,5);
+assert.equal(chosen.power,13,"Switching the same wire must preserve explicitly adjusted power");
+assert.equal(ui.configFor("dvarwcl","main").air,"single12","Both modes share the chosen setup");
+assert.ok(/data-sd-preset="cl-single-28-5"[^>]*aria-pressed="true"/.test(clRoot.innerHTML));
+assert.ok(clRoot.innerHTML.includes("Alternativă reușită"));
+const unchanged=JSON.stringify(chosen);
+assert.equal(ui.applyPersonalSetup("explorer","unknown-setup"),false,"Invalid setup ID must be rejected");
+assert.equal(JSON.stringify(ui.configFor("dvarwcl","explorer")),unchanged);
+clickSetup("cl-triple-28-6");
+chosen=ui.configFor("dvarwcl","explorer");
+assert.equal(chosen.air,"triple06");
+assert.equal(chosen.wire,"k128");
+assert.equal(chosen.wraps,6);
+assert.equal(chosen.power,13);
+assert.ok(/data-sd-preset="cl-triple-28-6"[^>]*aria-pressed="true"/.test(clRoot.innerHTML));
+assert.equal(ui.configFor("klp","explorer").temp,220,"KLP DNA profile must remain intact");
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 const sw=fs.readFileSync(path.join(root,"sw.js"),"utf8");
 for(const token of ["sensoryExplorer","sensoryMain","mode-main","mode-explorer","data/sensory-core.js","sensory-ui.js","sensory-ui.css"])assert.ok(html.includes(token),token+" missing in HTML");
