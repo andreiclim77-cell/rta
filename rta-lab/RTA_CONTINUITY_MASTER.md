@@ -631,3 +631,11 @@ Rezultatul confirmat pe HEAD-ul precedent `90ba8d6a`: RTA Guide Quality Gate `38
 **Probe efective pentru commit de cod `8ee748f6d1f671898211e03aefa72f2b5216aac1`:** RTA Guide Quality Gate `38616814458` SUCCESS; Market Quality Gate `38616814764` SUCCESS; Atlas Visual Mobile Gate `38616815025` SUCCESS; artifact `11920830826` cu 13 capturi Chromium verificate, inclusiv 360×800 și 390×844, rezultatul contextului, clic rapid, căutare ArrowDown/Enter, fotografie decodată, fallback offline, airflow, selected chips și reduced-motion. Testele nu înlocuiesc aprobarea vizuală pe telefonul real.
 
 **Stare finală a acestei etape:** candidat îmbunătățit pentru review, PR #45 încă DRAFT, nu publicare nouă; site-ul live continuă să servească V0.2 din `main`. Urmează feedback/aprobare explicită → merge PR + verificare Pages/CI pe SHA exact → ulterior portretele Atomizer Atlas și Wire Lab. Celelalte patru ecrane nu se construiesc pe un design neaprobat.
+
+## 30. Mandat până la aplicația completă și preferință KLP (14.10.2026)
+
+Utilizatorul a cerut realizarea progresivă a tuturor celor șase module și continuarea autonomă, fără repetarea istoricului. Pragurile de oprire din §28-29 sunt istorice: construcția poate continua în branch separat, iar deciziile vizuale majore cer aprobare pe rezultate concrete. Nu declarați aplicația finală înaintea tuturor funcțiilor, testelor și publicării verificate. Producția V10, datele, cele 620 lichide, 16 platforme, 42 exemplare și fișele CL rămân conservate.
+
+**Declarație directă nouă:** KLP cu Dicodes NiFe30 sau Zivipf NiFe52 în TC este extraordinar; ambele sunt preferințe personale de prim nivel. Se consolidează preferința deja egală din §20, fără nou A/B controlat, fără scor de plăcere și fără transferul setărilor Dicodes DNA 220°C/16 W la Zivipf.
+
+Checkpoint de cod `1f7050231165f10cbf1b8128946989ee519d9efb`: corecții numai în Atlas și testele sale, rezumat BEST lizibil, motion/pauză și căutare îmbunătățite, copii locale ale fotografiilor GT One/415 cu proveniență. RTA `38619985170` și Market `38619985251` SUCCESS; Visual `38619985373` FAILURE la verificarea pauzei pe 390 px, deși testele locale au trecut. Corecția sincronizării testului și rerularea sunt obligatorii. Detalii și următorul pas: HANDOFF §9. Nu promovați artefactul parțial în acceptare.

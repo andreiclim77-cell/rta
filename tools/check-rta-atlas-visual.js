@@ -43,6 +43,10 @@ async function main(){
    check(slide!=="0","Carousel must visibly switch photos");
    await screenshot(page,"home-motion-"+width+".png");
    await page.locator("#cinemaPause").click();
+   await page.waitForFunction(()=>getComputedStyle(document.querySelector('.cinema-frame.is-visible img')).animationPlayState==="paused");
+   // Chromium's compositor may finish the already scheduled frame immediately
+   // after click. Compare two settled frames, then wait a full carousel period.
+   await page.waitForTimeout(120);
    const pausedFrame=await page.locator(".cinema-frame.is-visible").getAttribute("data-cinema-frame");
    const pausedTransform=await page.locator(".cinema-frame.is-visible img").evaluate(img=>getComputedStyle(img).transform);
    await page.waitForTimeout(3350);
