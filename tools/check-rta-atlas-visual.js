@@ -96,6 +96,8 @@ async function main(){
    await page.locator('[data-air="single"]').click();
    check(await page.locator("#airDemoVisual .air-flow-path").count()===1,"Single insert must draw 1 jet");
    await page.locator('[data-mood="power"]').click();
+   check(await page.locator(".live-scene").evaluate(el=>getComputedStyle(el).filter)==="none",
+    "Liquid Cinema motion must never blur the selected result or its text");
    const updatedBest=await page.evaluate(()=>{
     const m=window.RTA_ATLAS_PREVIEW;
     return m.compose(m.state.liquidIndex,m.state.mood,m.state.moment).items[0].atom.short;
