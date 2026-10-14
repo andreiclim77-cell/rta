@@ -1,4 +1,4 @@
-/* RTA Sensory DNA · complete build pairing controls, 14.10.2026 */
+/* RTA Sensory DNA · three independent physical Dvarw CL unit profiles, 14.10.2026 */
 (function(){
 "use strict";
 const core=window.RTA_SENSORY_CORE;
@@ -6,6 +6,10 @@ if(!core)return;
 const fit=window.RTA_BELL_LIQUID_FIT;
 const storeKey="rta-sensory-dna-choice-20261013";
 const viewKey="rta-sensory-dna-active-view";
+const physicalClKey="rta-cl-physical-units-v1-20261014";
+const physicalClCount=3;
+const configFields=["atom","bell","air","wire","wraps","coilMm","position","power","temp"];
+const blankClUnit=()=>({saved:null,draft:null,source:null});
 const states={explorer:{atom:"",category:"NET complex"},main:{atom:"",category:"NET complex"}};
 let configs={},active="explorer";
 try{
@@ -13,6 +17,69 @@ try{
  if(data&&typeof data==="object"&&!Array.isArray(data))configs=data;
  active=window.localStorage&&window.localStorage.getItem(viewKey)==="main"?"main":"explorer";
 }catch(error){configs={};}
+// The previous single per-platform CL choice is a DRAFT on CL #1, never
+// evidence that a physical unit has that coil or insert mounted.
+let physicalClUnits=Array.from({length:physicalClCount},blankClUnit);
+let activePhysicalCl=0;
+let physicalClStorageAvailable=true;
+function normalizedClConfig(raw){
+ if(!raw||typeof raw!=="object"||Array.isArray(raw) ||
+    (raw.atom!=null && raw.atom!=="dvarwcl"))return null;
+ const changes={};
+ for(const key of configFields)if(Object.prototype.hasOwnProperty.call(raw,key))
+  changes[key]=raw[key];
+ return core.config("dvarwcl",changes);
+}
+function loadPhysicalClUnits(){
+ try{
+  if(!window.localStorage){physicalClStorageAvailable=false;return;}
+  const raw=window.localStorage.getItem(physicalClKey);
+  if(raw!==null){
+   const data=JSON.parse(raw);
+   if(data&&data.schema===1&&Array.isArray(data.units)&&data.units.length===physicalClCount){
+    physicalClUnits=data.units.map(unit=>({
+     saved:normalizedClConfig(unit&&unit.saved),
+     draft:normalizedClConfig(unit&&unit.draft),
+     source:unit&&unit.source==="legacy"?"legacy":null
+    }));
+    if(Number.isInteger(data.active)&&data.active>=0&&data.active<physicalClCount)
+      activePhysicalCl=data.active;
+    return;
+   }
+  }
+  if(configs.dvarwcl){
+   physicalClUnits[0].draft=normalizedClConfig(configs.dvarwcl);
+   if(physicalClUnits[0].draft)physicalClUnits[0].source="legacy";
+  }
+ }catch(error){physicalClStorageAvailable=false;}
+}
+function persistPhysicalClUnits(){
+ if(!physicalClStorageAvailable)return;
+ try{
+  if(!window.localStorage){physicalClStorageAvailable=false;return;}
+  window.localStorage.setItem(physicalClKey,JSON.stringify({
+   schema:1,active:activePhysicalCl,units:physicalClUnits
+  }));
+ }catch(error){physicalClStorageAvailable=false;}
+}
+function equalPhysicalConfigs(a,b){
+ if(!a||!b)return a===b;
+ return configFields.every(k=>a[k]===b[k]);
+}
+function physicalClStatus(unit){
+ if(!unit.saved&&!unit.draft)return "Neînregistrat";
+ if(unit.source==="legacy"&&!unit.saved)return "Import vechi · nesalvat";
+ if(!unit.saved)return "Proiect nesalvat";
+ return equalPhysicalConfigs(unit.saved,unit.draft||unit.saved)?"Înregistrat":"Modificări nesalvate";
+}
+function physicalClState(){
+ return {active:activePhysicalCl+1,storageAvailable:physicalClStorageAvailable,
+  units:physicalClUnits.map((unit,i)=>({
+   number:i+1,status:physicalClStatus(unit),source:unit.source,
+   saved:unit.saved?{...unit.saved}:null,draft:unit.draft?{...unit.draft}:null
+  }))};
+}
+loadPhysicalClUnits();
 const el=id=>document.getElementById(id);
 const esc=x=>String(x==null?"":x).replace(/&/g,"&amp;").replace(/</g,"&lt;")
  .replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
@@ -51,6 +118,11 @@ function existingBell(view){
 function configFor(atomId,view){
  const preset=core.defaultConfig(atomId);
  if(!preset)return null;
+ if(atomId==="dvarwcl"){
+  const unit=physicalClUnits[activePhysicalCl];
+  const selected=unit.draft||unit.saved||preset;
+  return core.config(atomId,{...preset,...selected,bell:selected.bell||preset.bell});
+ }
  const saved=configs[atomId]||{};
  const target=core.config(atomId,{...preset,...saved,
   bell:saved.bell||existingBell(view)||preset.bell});
@@ -65,7 +137,13 @@ function setConfig(atomId,changes,view){
   next.power=preset.power;
   next.temp=preset.temp;
  }
- configs[atomId]=next;remember();
+ if(atomId==="dvarwcl"){
+  physicalClUnits[activePhysicalCl].draft=next;
+  persistPhysicalClUnits();
+ }else{
+  configs[atomId]=next;
+  remember();
+ }
  return next;
 }
 function representative(view){
@@ -90,6 +168,37 @@ function selected(list,current,labelFn,valueFn){
 function buildSelect(config){
  const items=core.variants(config.atom).filter(x=>x.wire===config.wire);
  return choice("Spire","wraps",items.map(x=>({value:x.wraps,label:x.wraps+" contact",selected:config.wraps})),null,items.length===1);
+}
+function physicalClMarkup(config){
+ if(config.atom!=="dvarwcl")return "";
+ const cards=physicalClUnits.map((unit,i)=>{
+  const current=i===activePhysicalCl,status=physicalClStatus(unit);
+  const details=unit.draft||unit.saved;
+  const air=details?core.platforms.dvarwcl.air.find(a=>a.id===details.air):null;
+  const summary=details?(air?air.label:"Insertul selectat")+" · "+
+   core.wires[details.wire].name+" · "+details.wraps+" spire":
+   "Fără configurație fizică înregistrată";
+  return '<button type="button" class="sd-cl-unit'+(current?' is-active':'')+
+   '" data-sd-cl-unit="'+(i+1)+'" aria-pressed="'+(current?'true':'false')+'">'+
+   '<strong>CL '+(i+1)+'</strong><span>'+esc(status)+'</span>'+
+   '<small>'+esc(summary)+'</small></button>';
+ }).join("");
+ const unit=physicalClUnits[activePhysicalCl],status=physicalClStatus(unit);
+ const changes=!!unit.draft&&(!unit.saved||!equalPhysicalConfigs(unit.saved,unit.draft));
+ return '<div class="sd-cl-instances" role="group" aria-label="Trei Dvarw CL fizice">'+
+  '<div class="sd-cl-instances-head"><strong>Cele 3 exemplare Dvarw CL</strong>'+
+  '<small>Fișe separate · fără suprascriere între exemplare</small></div>'+
+  '<div class="sd-cl-instances-grid">'+cards+'</div>'+
+  '<div class="sd-cl-edit-status" aria-live="polite">Editezi <strong>CL '+
+   (activePhysicalCl+1)+'</strong> · '+esc(status)+'</div>'+
+  '<div class="sd-cl-instance-actions">'+
+   '<button type="button" data-sd-cl-save="1">Înregistrează setupul pentru CL '+(activePhysicalCl+1)+'</button>'+
+   (changes?'<button type="button" class="sd-cl-secondary" data-sd-cl-revert="1">Renunță la modificările acestui CL</button>':'')+
+  '</div>'+
+  '<p class="sd-cl-instance-note">Un CL neînregistrat afișează doar un <b>preset orientativ</b>, nu un build presupus montat. Modificările sunt proiecte separate; butonul „Înregistrează” confirmă fișa pentru exemplarul ales. Înregistrarea nu verifică fizic montajul.'+
+  (unit.source==="legacy"&&!unit.saved?' Configurația veche la nivel de platformă a fost importată numai ca proiect pentru CL 1; verific-o înainte de a o înregistra.':'')+
+  (!physicalClStorageAvailable?' Stocarea locală nu este disponibilă: datele rămân numai în această sesiune.':'')+
+  '</p></div>';
 }
 function personalSetupsMarkup(config){
  const rows=core.personalSetups(config.atom);
@@ -210,6 +319,7 @@ function content(view){
   stageNav(view)+
   '<section class="sd-stage sd-stage--config" id="'+stage.config+'" aria-labelledby="'+stage.config+'-title">'+
   stageHeading(view,"config","01","Configurator","Alege configurația fizică; orice modificare recalculează întregul profil.")+
+  physicalClMarkup(config)+
   '<div class="sd-controls">'+profileControls+
    choice("Obiectiv senzorial","goal",opts)+
    choice("Clopot / cameră","bell",bellOptions,view,bellOptions.length===1)+
@@ -278,6 +388,38 @@ function switchMode(mode){
  try{if(window.localStorage)window.localStorage.setItem(viewKey,mode);}catch(error){}
  render(mode);
 }
+function selectPhysicalCl(view,number){
+ if(!["explorer","main"].includes(view)||states[view].atom!=="dvarwcl")return false;
+ const index=Number(number)-1;
+ if(!Number.isInteger(index)||index<0||index>=physicalClCount)return false;
+ activePhysicalCl=index;
+ persistPhysicalClUnits();
+ renderAll();
+ const fitUi=window.RTA_BELL_LIQUID_UI;
+ if(fitUi&&typeof fitUi.render==="function")fitUi.render(view);
+ return true;
+}
+function savePhysicalCl(view){
+ if(!["explorer","main"].includes(view)||states[view].atom!=="dvarwcl")return false;
+ const normalized=configFor("dvarwcl",view);
+ if(!normalized)return false;
+ physicalClUnits[activePhysicalCl].saved={...normalized};
+ physicalClUnits[activePhysicalCl].draft={...normalized};
+ physicalClUnits[activePhysicalCl].source=null;
+ persistPhysicalClUnits();
+ renderAll();
+ return true;
+}
+function revertPhysicalCl(view){
+ if(!["explorer","main"].includes(view)||states[view].atom!=="dvarwcl")return false;
+ const unit=physicalClUnits[activePhysicalCl];
+ if(!unit.draft)return false;
+ unit.draft=unit.saved?{...unit.saved}:null;
+ unit.source=null;
+ persistPhysicalClUnits();
+ renderAll();
+ return true;
+}
 function applyPersonalSetup(view,presetId){
  if(!["explorer","main"].includes(view))return false;
  const atom=states[view].atom;
@@ -312,8 +454,13 @@ function applyConfiguration(index,atom,selectedBuild){
     normalized.wraps!==Number(selectedBuild.wraps)||
     normalized.air!==selectedBuild.air||normalized.bell!==selectedBuild.bell)return false;
  if(!applyLiquid(index,atom))return false;
- configs[atom]=normalized;
- remember();
+ if(atom==="dvarwcl"){
+  physicalClUnits[activePhysicalCl].draft=normalized; // Mood Match only fills a draft, never claims a real installation.
+  persistPhysicalClUnits();
+ }else{
+  configs[atom]=normalized;
+  remember();
+ }
  updateBellInLegacy("main",normalized.bell);
  updateBellInLegacy("explorer",normalized.bell);
  renderAll();
@@ -395,6 +542,9 @@ function init(){
    root.addEventListener("change",e=>handleChange(b,e.target));
    root.addEventListener("click",e=>{
     const button=e.target.closest("button");if(!button)return;
+    if(button.dataset.sdClUnit){selectPhysicalCl(b,button.dataset.sdClUnit);return;}
+    if(button.dataset.sdClSave){savePhysicalCl(b);return;}
+    if(button.dataset.sdClRevert){revertPhysicalCl(b);return;}
     if(button.dataset.sdPreset){applyPersonalSetup(b,button.dataset.sdPreset);return;}
     if(button.dataset.sdPickWire){
      const atom=states[b].atom;
@@ -426,6 +576,6 @@ function init(){
  switchMode(active);
  renderAll();
 }
-window.RTA_SENSORY_UI={render,renderAll,switchMode,configFor,states,applyLiquid,applyConfiguration,applyPersonalSetup};
+window.RTA_SENSORY_UI={render,renderAll,switchMode,configFor,states,applyLiquid,applyConfiguration,applyPersonalSetup,selectPhysicalCl,savePhysicalCl,revertPhysicalCl,physicalClState};
 document.addEventListener("DOMContentLoaded",init);
 })();
