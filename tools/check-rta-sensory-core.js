@@ -3,6 +3,26 @@
 const assert=require("node:assert/strict");
 const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
 const root="rta-lab";
+// Physical ownership is distinct from the 16-platform sensory model.
+const inventoryMaster=fs.readFileSync(path.join(root,"RTA_CONTINUITY_MASTER.md"),"utf8");
+const physicalSection=(inventoryMaster.split("## 2. Inventar activ")[1]||"").split("## 3. Sârme")[0];
+const physicalRows=[...physicalSection.matchAll(/^\| ([^|]+) \| (\d+) \|/gm)]
+  .map(([,name,quantity])=>({name:name.trim(),quantity:Number(quantity)}));
+assert.equal(physicalRows.length,16,"Keep all 16 platforms in the canonical physical inventory");
+assert.equal(physicalRows.reduce((sum,item)=>sum+item.quantity,0),42,
+  "Total must reflect three Dvarw CL, not the previous single unit");
+for(const [name,expected] of [
+ ["Dvarw MTL CL 22",3],["Dvarw MTL FL",2],
+ ["KLP / Kayfun Lite Plus 2021",5],["Taifun GTR",5]
+]){
+ const row=physicalRows.find(item=>item.name===name);
+ assert.ok(row,"Missing physical inventory platform: "+name);
+ assert.equal(row.quantity,expected,"Incorrect count: "+name);
+}
+assert.ok(inventoryMaster.includes("Inserturi 3×0,6 mm achiziționate pentru FL"),
+  "Purchased FL insert must be recorded without claiming it is tested");
+assert.ok(inventoryMaster.includes("fără test/instalare confirmată"),
+  "Owned FL insert is not proof of a sensory result");
 const env={window:{}};
 vm.createContext(env);
 function load(p){vm.runInContext(fs.readFileSync(path.join(root,p),"utf8"),env,{filename:p});}
