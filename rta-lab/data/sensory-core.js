@@ -5,7 +5,7 @@
  */
 (function () {
 "use strict";
-const V="2026-10-13-nife30-klp";
+const V="2026-10-14-personal-air-tc";
 const AXIOMS=[
  "Configurația completă este unitatea de evaluare.",
  "Spectrul aromatic nu este același lucru cu intensitatea.",
@@ -57,9 +57,9 @@ const PLATFORMS={
  traits:{spectrum:4.95,simultaneity:4.75,focus:3.8,palate:4.8,offense:3.4,th:3.3,harmony:4.8},note:"Două jeturi oblice; magia TC este personal validată, nu proprietate universală."},
  dvarwfl:{pattern:"single",volume:"compact",air:[
  AIR("single12","Insert 1×1,2 mm (standard)","single",[1.2],1.25),
- AIR("triple06","Insert 3×0,6 mm (opțional)","multipoint",[.6,.6,.6],1.95,{optional:true}),
+ AIR("triple06","Insert 3×0,6 mm (preferat personal pe FL)","multipoint",[.6,.6,.6],1.95),
  AIR("dual08","Insert 2×0,8 mm (opțional)","multipoint",[.8,.8],1.7,{optional:true})],
- traits:{spectrum:4.65,simultaneity:4.25,focus:4.0,palate:4.0,offense:4.0,th:3.9,harmony:4.3},note:"FL favorizează delimitarea notelor, variabilă după insert."},
+ traits:{spectrum:4.65,simultaneity:4.25,focus:4.0,palate:4.0,offense:4.0,th:3.9,harmony:4.3},note:"FL favorizează delimitarea notelor; utilizatorul preferă 3×0,6 față de 1×1,2 în comparația cu Balkan Milestone, cu palat/simultaneitate mai bogate și TH puțin mai mic."},
  diplomat:{pattern:"diverter",volume:"mediu",air:[
  AIR("pin18","Diverter 24×0,9 + pin 1,8 mm","diverter",[1.8],2.05),
  AIR("pin12","Diverter 24×0,9 + pin 1,2 mm","diverter",[1.2],1.85)],
@@ -108,6 +108,38 @@ const NIFE30_FAMILY=Object.freeze({
  status:"afinitate personală preliminară; nu proiectare dedicată dovedită",
  explanation:"NiFe30 TC poate aduce finețe și prezență pe palat pe mai multe platforme, dar geometria fiecăreia decide caracterul. Nu atribui automat avantaje tuturor lichidelor sau buildurilor."
 });
+/* User-declared sensory preferences, not objective proof of alloy identity.
+   Dicodes NiFe30 (TCR320) and Zivipf NiFe52 (TCR310) are equal personal
+   FIRST choices on four platforms; K1 remains the second-family choice.
+   No cross-alloy controlled A/B is inferred on every platform. */
+const PERSONAL_PREFS=Object.freeze({
+ date:"2026-10-14",
+ tcEqualAtoms:["klp","gtr","kx","kprime"],
+ tcEqualWires:["nife30","nife52"],
+ gtone:{first:{wire:"k129",wraps:6},second:{wire:"k128",wraps:5}},
+ muted:{first:{wire:"k128",wraps:6},note:"diametrul, airflow-ul și puterea exacte nu au fost precizate de utilizator"},
+ dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
+ evidence:"preferințe personale declarate direct 14.10.2026; fără identitate materială sau A/B universal"
+});
+function personalPreference(config){
+ if(PERSONAL_PREFS.tcEqualAtoms.includes(config.atom)){
+  if(["nife30","nife52"].includes(config.wire)&&config.wraps===6)
+   return {tier:1,label:"Prima preferință personală · NiFe30 = NiFe52",note:"Egalitate în preferință, NU aliaje identice: Dicodes TCR320 / Zivipf TCR310; fiecare cu profilul TC propriu."};
+  if(["k128","k129"].includes(config.wire))
+   return {tier:2,label:"A doua preferință personală · K1",note:"Preferința K1 este sub familia NiFe TC, dar rămâne validă ca alternativă."};
+ }
+ if(config.atom==="gtone"){
+  if(config.wire==="k129"&&config.wraps===6)return {tier:1,label:"Prima preferință · K1 29 GA / 6"};
+  if(config.wire==="k128"&&config.wraps===5)return {tier:2,label:"A doua preferință · K1 28 GA / 5"};
+ }
+ if(config.atom==="muted"&&config.wire==="k128"&&config.wraps===6)
+  return {tier:1,label:"Prima preferință · Muted+ K1 28 GA / 6",note:"Airflow, diametru și putere încă neprecizate; Ø2,5 este doar presetul modelului."};
+ if(PERSONAL_PREFS.dvarw.atoms.includes(config.atom)){
+  if(config.air==="triple06")return {tier:1,label:"Airflow preferat · insert 3×0,6"};
+  if(config.air==="single12")return {tier:2,label:"Airflow alternativ · 1×1,2"};
+ }
+ return null;
+}
 const WIRES={
  k128:{name:"Kanthal A1 28 GA",type:"round",diameter:.321,mode:"WATT",power:12.5},
  k129:{name:"Kanthal A1 29 GA",type:"round",diameter:.286,mode:"WATT",power:12.3},
@@ -118,15 +150,15 @@ const WIRES={
 };
 const DEFAULTS={
  "415":{wire:"k1clap",wraps:5,air:"tasty"},
- kprime:{wire:"k129",wraps:5,air:"1.2"},
+ kprime:{wire:"nife52",wraps:6,air:"1.2"},
  gtone:{wire:"k129",wraps:6,air:"single12"},
  dvarwcl:{wire:"k128",wraps:6,air:"triple06"},
- muted:{wire:"k129",wraps:5,air:"triple"},
+ muted:{wire:"k128",wraps:6,air:"triple"},
  gtr:{wire:"nife30",wraps:6,air:"both"},
- dvarwfl:{wire:"ssclap",wraps:5,air:"single12"},
+ dvarwfl:{wire:"k128",wraps:6,air:"triple06"},
  diplomat:{wire:"k129",wraps:5,air:"pin18"},
- kx:{wire:"k128",wraps:5,air:"mid"},
- klp:{wire:"k128",wraps:5,air:"mid"},
+ kx:{wire:"nife30",wraps:6,air:"mid"},
+ klp:{wire:"nife30",wraps:6,air:"mid"},
  asylum:{wire:"k128",wraps:6,air:"stock"},
  pmfree:{wire:"k128",wraps:5,air:"pin12"},
  pmstd:{wire:"k129",wraps:5,air:"pin12"},
@@ -152,6 +184,11 @@ const OBS=[
  {atom:"klp",wire:"k128",wraps:6,title:"KLP 28/6: mai analitic, mai blând",
   text:"Scade ofensiva și TH; profil mai moale și analitic, considerat inferior lui 28/5.",
   patch:{separation:4.72,offense:3.35,th:3.55,palate:4.2},affinity:"mai puțin preferat",evidence:"A/B personal 13.10.2026"},
+ {atom:"dvarwfl",wire:"k128",wraps:6,air:"triple06",partial:true,liquidName:"Balkan Milestone",
+  title:"Dvarw FL 3×0,6 + K1 28 GA / 6 · Balkan Milestone",
+  text:"Comparat cu FL 1×1,2 + K1 / 6 pe Balkan Milestone: orizont aromatic mai larg, forță descrisă ca «mușchi 90%», palat ≈25% mai bogat perceput, arome clar simultane și TH foarte puțin mai mic; preferință fermă 3×0,6. Față de KLP K1 28/5, FL este mult mai ofensiv, dar nu egalează plăcerea GTR. Procentele sunt estimări senzoriale, nu măsurători.",
+  affinity:"3×0,6 preferat personal pe FL · Balkan Milestone",
+  evidence:"A/B personal raportat 14.10.2026; puterea, poziția coilului și Ø neconfirmate; comparatorul FL 1×1,2 a avut K1 / 6"},
  {atom:"dvarwcl",wire:"k128",wraps:6,title:"CL 28/6: ofensivă și focalizare",
   text:"Spectru prezent, dar livrare musculară; o notă poate domina percepția simultană.",
   patch:{offense:4.95,focus:4.9,simultaneity:3.65,palate:4.2},affinity:"caracter ofensiv",evidence:"observație practică 13.10.2026"},
@@ -179,7 +216,7 @@ const OBS=[
  {atom:"415",wire:"k1clap",wraps:5,title:"415 K1 Clapton pereche preferată",
   text:"Pereche Clapton preferată pentru densitate, integrare și corp.",
   patch:{palate:4.8},affinity:"Clapton preferat",evidence:"validare personală Lab"},
- {atom:"dvarwfl",wire:"ssclap",wraps:5,title:"FL SS316L Clapton dedicat",
+ {atom:"dvarwfl",wire:"ssclap",wraps:5,air:"single12",title:"FL SS316L Clapton dedicat",
   text:"Pereche pentru claritate, top-notes, layering, fără A/B pe toate lichidele.",
   patch:{separation:4.85},affinity:"dedicat · contextual",evidence:"hartă platformă Lab"},
  {atom:"asylum",wire:"k128",wraps:6,bell:"flat",title:"Asylum Flat 28/6 validat",
@@ -283,18 +320,22 @@ function anchorsFor(config) {
  const defaults=DEFAULTS[config.atom];
  const expectedBell=bellFor(config.atom,defaults&&defaults.bell).id;
  const preset=wireSetup(config.atom,config.wire);
- if(!defaults || config.air!==defaults.air || config.position!=="standard" ||
+ if(!defaults || config.position!=="standard" ||
     config.coilMm!==2.5 || Math.abs(config.power-preset.power)>1.25 ||
     config.bell!==expectedBell)return [];
  return OBS.filter(o=>!o.partial&&o.atom===config.atom&&o.wire===config.wire &&
+   (o.air?o.air===config.air:config.air===defaults.air) &&
    (o.wraps==null||o.wraps===config.wraps) &&
    (!o.bell||o.bell===config.bell));
 }
 function partialReportsFor(config){
  // Do not transfer this report to untested TC settings; airflow/liquid were not recorded.
  return OBS.filter(o=>o.partial && o.atom===config.atom && o.wire===config.wire &&
-   o.wraps===config.wraps && o.coilMm===config.coilMm &&
-   Math.abs(o.power-config.power)<0.1 && Math.abs(o.temp-config.temp)<1);
+   (o.wraps==null||o.wraps===config.wraps) &&
+   (o.air==null||o.air===config.air) &&
+   (o.coilMm==null||o.coilMm===config.coilMm) &&
+   (o.power==null||Math.abs(o.power-config.power)<0.1) &&
+   (o.temp==null||Math.abs(o.temp-config.temp)<1));
 }
 function technicalBaseline(config,liquid) {
  const tech=PLATFORMS[config.atom], phys=physical(config), bell=bellFor(config.atom,config.bell);
@@ -336,7 +377,15 @@ function technicalBaseline(config,liquid) {
   if(config.air==="single12"){result.offense+=.26;result.focus+=.25;result.simultaneity-=.12;}
   if(config.air==="triple06"){result.offense+=.08;result.simultaneity+=.1;result.focus-=.08;}
  }
- if(config.atom==="dvarwfl"&&config.air==="triple06"){result.separation+=.12;result.simultaneity+=.1;}
+ if(config.atom==="dvarwfl"&&config.air==="triple06"){
+  result.separation+=.12;result.simultaneity+=.1;
+  // Small directional hypothesis from the user's Balkan Milestone A/B,
+  // not a cross-liquid measured +25% or an automatic pleasure score.
+  if(config.wire==="k128"&&config.wraps===6){
+   result.spectrum+=.12;result.palate+=.22;result.simultaneity+=.19;
+   result.th-=.05;result.offense+=.07;
+  }
+ }
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6){
   result.offense-=.33;result.th-=.25;result.separation+=.10;
  }
@@ -386,6 +435,7 @@ function analyze(input,liquid={},objective="complete"){
  if(!tradeoffs.length)tradeoffs.push("depinde mult de lichid și reglaj");
  const status=anchors.length?"observație personală + extrapolare la lichid":
   partialReports.length?"observație personală parțială + extrapolare tehnică":"predicție tehnică orientativă";
+ const personalPref=personalPreference(config);
  const notes=[
   "Airflow: "+air.label+(res.physical.areaMm2!=null?", arie nominală "+res.physical.areaMm2+" mm²":"")+
    "; aria geometrică nu prezice singură debitul.",
@@ -394,6 +444,11 @@ function analyze(input,liquid={},objective="complete"){
   "Clopot: "+bellFor(config.atom,config.bell).name+"."
  ];
  if(air.optional||air.estimated)notes.push("Configurație airflow opțională/orientativă; verifică piesele deținute.");
+ if(personalPref)notes.push(personalPref.label+(personalPref.note?" — "+personalPref.note:"")+".");
+ if(config.atom==="dvarwfl"&&config.air==="triple06")
+  notes.push("Validare A/B numai pe Balkan Milestone: 3×0,6 a fost preferat lui 1×1,2 la 6 spire K1; ≈25% mai mult palat reprezintă aprecierea personală, nu un coeficient universal.");
+ if(config.atom==="dvarwcl"&&config.air==="triple06")
+  notes.push("Dvarw CL: insertul 3×0,6 este preferința personală explicit confirmată față de alte inserturi.");
  if(config.wire==="nife52")notes.push("NiFe52 rămâne fără verdict universal cross-alloy față de Dicodes NiFe30.");
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
@@ -406,8 +461,8 @@ function analyze(input,liquid={},objective="complete"){
  const modelWarning="Indicatorii interni sunt estimări, nu măsurători ale aromei sau garanții.";
  return {config,objective,signals:signal,dimensions,physical:res.physical,
   labels:Object.fromEntries(Object.entries(dimensions).filter(([k,v])=>v!=null).map(([k,v])=>[k,label(v)])),
-  pleasure:personal,anchors:ext,
-  partialEvidence:partialReports.map(o=>({title:o.title,text:o.text,evidence:o.evidence})),
+  pleasure:personal,anchors:ext,personalPreference:personalPref,
+  partialEvidence:partialReports.map(o=>({title:o.title,text:o.text,evidence:o.evidence,liquidName:o.liquidName||null})),
   certainty:status,advantages,tradeoffs,notes,modelWarning};
 }
 const GOALS={
@@ -423,12 +478,13 @@ function priority(result,objective="complete"){
  const score=Object.keys(weights).reduce((sum,k)=>sum+result.dimensions[k]*weights[k],0);
  let personalBoost=0;
  if(result.anchors.length && objective==="complete")personalBoost=.17;
- if(result.config.atom==="gtr"&&result.config.wire==="nife30" && objective!=="th")personalBoost+=.15;
- if(result.config.atom==="klp"&&result.config.wire==="k128"&&result.config.wraps===5)personalBoost+=.17;
+ // Preference tiers add the same personal boost for both TC alloys.
+ // Technical scores may still differ by setup/liquid: equal preference is not identical physics.
+ if(result.personalPreference?.tier===1)personalBoost+=.62;
+ else if(result.personalPreference?.tier===2)personalBoost+=.1;
  if(result.config.atom==="klp"&&result.config.wire==="k128"&&result.config.wraps===6)personalBoost-=.2;
- if(result.config.atom==="gtone"&&result.config.wire==="k129"&&result.config.wraps===6)personalBoost+=.15;
  if(result.config.atom==="415"&&result.config.wire==="k1clap")personalBoost+=.12;
- if(result.config.atom==="dvarwfl"&&result.config.wire==="ssclap")personalBoost+=.12;
+ if(result.config.atom==="dvarwfl"&&result.config.wire==="ssclap")personalBoost+=.12; // Dedicated alternative, not unconditional #1
  if(result.config.atom==="asylum"&&result.config.bell==="dome")personalBoost-=.06;
  return round(score+personalBoost);
 }
@@ -462,6 +518,6 @@ function bestForLiquid(liquid,objective="complete",top=16){
  }).sort((a,b)=>b.score-a.score).slice(0,top);
 }
 window.RTA_SENSORY_CORE={version:V,axioms:AXIOMS,dimensions:DIMENSIONS,platforms:PLATFORMS,
- wires:WIRES,observations:OBS,nife30Family:NIFE30_FAMILY,wireSetup,defaultConfig:defaults,config:configuration,variants,
+ wires:WIRES,observations:OBS,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,
  physical,analyze,priority,rankBuilds,matchLiquids,bestForLiquid,liquidTags,permitted};
 })();
