@@ -263,8 +263,9 @@ function renderSuggestions(){
  box.hidden=!rows.length;
  input.setAttribute("aria-expanded",String(!!rows.length));
  state.activeSuggestion=0;
+ input.setAttribute("aria-activedescendant",rows.length?"liquidOpt0":"");
  box.innerHTML=rows.map((x,i)=>
-  '<button type="button" class="suggestion'+(i===0?' is-active':'')+'" role="option" aria-selected="'+(i===0)+'" data-liquid="'+x.index+'">'+
+  '<button type="button" id="liquidOpt'+i+'" class="suggestion'+(i===0?' is-active':'')+'" role="option" aria-selected="'+(i===0)+'" data-liquid="'+x.index+'">'+
   '<strong>'+esc(liquidName(x.liquid))+'</strong><small>'+esc(x.liquid.class)+' · '+esc(x.liquid.profile||"")+'</small></button>').join("");
 }
 function route(to,push=true){
@@ -304,9 +305,28 @@ function init(){
  });
  element("liquidSearch").addEventListener("input",renderSuggestions);
  element("liquidSearch").addEventListener("keydown",ev=>{
-  if(ev.key==="Escape"){element("liquidSuggestions").hidden=true;ev.currentTarget.setAttribute("aria-expanded","false");return;}
+  const list=element("liquidSuggestions"),input=ev.currentTarget;
+  if(ev.key==="Escape"){
+   list.hidden=true;
+   input.setAttribute("aria-expanded","false");
+   input.removeAttribute("aria-activedescendant");
+   return;
+  }
+  if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){
+   const options=[...list.querySelectorAll("[data-liquid]")];
+   if(list.hidden||!options.length)return;
+   ev.preventDefault();
+   state.activeSuggestion=(state.activeSuggestion+(ev.key==="ArrowDown"?1:-1)+options.length)%options.length;
+   options.forEach((option,i)=>{
+    option.classList.toggle("is-active",i===state.activeSuggestion);
+    option.setAttribute("aria-selected",String(i===state.activeSuggestion));
+   });
+   input.setAttribute("aria-activedescendant",options[state.activeSuggestion].id);
+   options[state.activeSuggestion].scrollIntoView({block:"nearest"});
+   return;
+  }
   if(ev.key==="Enter"){
-   const hits=liquidSearch(ev.currentTarget.value,10);
+   const hits=liquidSearch(input.value,10);
    if(hits.length){ev.preventDefault();selectLiquid(hits[Math.min(state.activeSuggestion,hits.length-1)].index);}
   }
  });
