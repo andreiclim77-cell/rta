@@ -139,6 +139,13 @@ for(const key of ["cinemaKen","cinemaSwitch","airflowVisible","@media(max-width:
  assert.ok(v02css.includes(key),"V0.2 motion or mobile breakpoint missing: "+key);
 }
 assert.ok(js.includes("result.items[0]")||js.includes("result.items.map"));
+assert.ok(html.includes('id="sceneMatch"')&&html.includes('id="sceneMatchAtom"')&&html.includes("data-go-best"),"Contextual BEST preview missing");
+assert.ok(html.includes('role="combobox"')&&html.includes('aria-autocomplete="list"'),"Liquid search needs combobox semantics");
+assert.ok(js.includes("updateSceneMatch(result)")&&js.includes("scrollToBest()"),"Quick-path must derive from the real contextual engine");
+assert.ok(js.includes('ev.key==="ArrowDown"')&&js.includes('aria-activedescendant'),"Keyboard search contract missing");
+assert.ok(v02css.includes('::-webkit-search-cancel-button'),"Avoid native and custom duplicate clear icons");
+assert.ok(v02.includes('results.insertAdjacentElement("afterend",box)'),"Results must precede the airflow explainer");
+
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(refs.length,27,"Expected core scripts + real-photo sources + v02 motion");
 for(const ref of refs){
