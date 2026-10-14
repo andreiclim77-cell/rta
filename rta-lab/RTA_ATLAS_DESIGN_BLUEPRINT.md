@@ -332,3 +332,13 @@ Un modul de pregătire a dovezilor poate extrage BEST + WATCH A + WATCH B din MA
 **Suprascrie statusurile vechi strict pentru progresul V0.2:** Prototipul este implementat în `rta-lab/atlas-preview/`, cu resurse foto `photo-sources.js`, CSS `v02.css` și JS motion `v02.js`. PR #43 merged în `main` la commitul `935d949fe722fdfaf58d089c02ae15c722b38902`; testele RTA și deploymentul Pages sunt **SUCCESS**; Visual Mobile Gate a produs capturi reale în artefactul `atlas-v02-mobile-screenshots`. **V0.2 este publicat tehnic, dar nu a primit confirmarea finală a utilizatorului asupra aspectului.** V0.1 rămâne respins.
 
 **Noua ordine la reluare:** citește `rta-lab/RTA_CURRENT_HANDOFF.md` → MASTER → acest blueprint → ultimele fișiere din `main`; verifică SHA și rezultatele, nu reimplementa. Păstrează V10. Următorul pas: feedback vizual V0.2 pe telefon, apoi ajustări țintite; numai după aprobare extinderea celor patru ecrane rămase.
+
+## 17. V0.2 — checkpoint de rafinare în staging / PR #45 (14.10.2026)
+
+Designul V0.2 din §16 este deja implementat și publicat separat, **dar nu aprobat încă estetic pe telefon**. PR #45, `feature/atlas-v02-mobile-qa-fallback-20261014`, corectează doar detalii auditate vizual. Modificările rămân pe branch, fără a modifica V10 ori motorul.
+
+**Constatări din screenshoturi reale** (Artifact `11918768376` din Atlas Visual Mobile Gate `38613486194`, SUCCESS pe `90ba8d6a`): scena HOME 360/390 are fotografie de produs și CTA în primul viewport; cadrele Liquid Match includ scenă și context fără overflow; controalele airflow 1/3 se diferențiază. Fotografia retailerului pentru GT One cuprinde text publicitar în stânga și necesită mascarea marginilor, nu înlocuirea modelului. În `v02.css` a fost adăugat un vignette pentru acel cadru pe commitul ulterior `762c5ca1` (QA separat necesar).
+
+**Criterii suplimentare automate**: 360×800 și 390×844; decodare efectivă `img.complete && naturalWidth>0`; `object-fit:contain` pentru fotografie; CTA peste navigația de jos; carduri inițial comprimate pe mobil; schimbări foto și un/trei jeturi; scenariu de indisponibilitate a gazdei externe cu asset local existent și credit real; reduced-motion oprește autoplay dar păstrează selectarea manuală. Aceste verificări nu substituie capturile reale și validarea personală Samsung.
+
+**Decizia ulterioară:** nu extinde celelalte patru module până la validarea vizuală. Nu integra PR #45 în `main` și nu declara publicate aceste corecții până la aprobarea explicită și Pages SUCCESS. Nu include reclame ori text imprimat nedorit în zona principală dacă se poate evita fără a falsifica imaginea. Drepturile de reutilizare ale fotografiilor externe rămân un punct de verificat.
