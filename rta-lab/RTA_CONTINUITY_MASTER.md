@@ -513,3 +513,35 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 **QA:** `node tools/check-rta-sensory-core.js` verifică numărul și parametrii presetelor, disponibilitatea doar pe CL, ambele moduri, selectarea prin eveniment real, actualizarea celor trei variabile, păstrarea puterii ajustate, eroare la ID invalid și lipsa efectelor laterale pe KLP. `tools/check-rta-lab-mobile-clarity.js` păstrează contractul de versiuni; se rulează și Quality Gate integral, apoi se verifică separat deploy GitHub Pages.
 
 **Stadiu:** implementat pentru verificare CI/publicare; nu confunda codul din ramura de lucru cu site-ul public până la confirmarea integrării și deployului.
+
+
+## 22. Trei exemplare fizice Dvarw CL — fișe și proiecte independente (14.10.2026)
+
+**Obiectiv:** după cele două setupuri CL din §21, utilizatorul a aprobat administrarea distinctă a tuturor celor **3 Dvarw CL fizice**, fără suprascriere reciprocă. Nu atribui fără probă unui exemplar un coil/insert doar pentru că platforma are un preset personal.
+
+### 22.1 Model de date / siguranță
+
+- `rta-lab/sensory-ui.js` are **3 fișe pentru CL 1, CL 2, CL 3**, prin cheia separată de browser `rta-cl-physical-units-v1-20261014`; schema: `{schema:1,active:0..2,units:[{saved,draft,source},...3]}`.
+- Fiecare CL are **saved** (configurație înregistrată explicit) și **draft** (ce explorezi în configurator). `saved` se schimbă numai când utilizatorul apasă „Înregistrează setupul pentru CL X”; comutarea profilurilor/presetelor/lichidelor sau ajustarea W **nu salvează automat fișa fizică**.
+- Unitatea nouă are `saved:null,draft:null`; motorul prezintă doar **presetul orientativ CL 3×0,6/K1 28/6**, marcat **„Neînregistrat”**, nu presupune că este montat.
+- Schimbarea în CL 1 nu modifică CL 2 sau 3. Schimbările neînregistrate se păstrează ca `draft` separat între CL-uri și la revenirea în aplicație; butonul „Renunță la modificări” revine la `saved` (dacă există) sau la presetul orientativ fără a afirma un montaj.
+- **Migrare sigură:** alegerea CL stocată anterior în configurarea unică `rta-sensory-dna-choice-20261013` intră **numai ca `draft` pe CL 1**, marcat „Import vechi · nesalvat”; **nu** devine automat `saved` și nu se copiază pe CL 2/3. Celelalte platforme își păstrează setările existente.
+- Se salvează obiectul complet `atom,bell,air,wire,wraps,coilMm,position,power,temp` în fiecare fișă. Materialul NiFe rămâne profil TC separat; setările DNA 220°C/16 W pentru KLP nu se transferă la CL. Funcțiile de validare ale motorului normalizează fiecare build.
+- `localStorage` este **local acestui browser/dispozitiv**, fără sincronizare automată între telefoane, fără backup în GitHub al configurațiilor personale ale celor trei exemplare. Dacă stocarea nu este permisă, configuratorul rămâne funcțional în memorie pentru sesiunea curentă și afișează avertisment.
+
+### 22.2 UI / gesturi
+
+- În zona **01 Configurator** pentru platforma Dvarw CL (în ambele moduri: „Am un atomizor” și „Știu ce lichid vreau”) apare un selector cu trei butoane **CL 1 / CL 2 / CL 3** și statusuri *Neînregistrat*, *Proiect nesalvat*, *Modificări nesalvate*, *Înregistrat*. Eticheta arată și sumarul configurației efective sau al proiectului, fără a declara instalări neverificate.
+- Butonul **„Înregistrează setupul pentru CL X”** este confirmarea explicită. Butonul **„Renunță la modificări”** apare numai la diferențe față de înregistrarea curentă. Selectorul funcționează cu butoane accesibile (`aria-pressed`), vizibil pe telefon, fără a afecta layoutul celor trei zone.
+- Cele două preseturi personale CL din §21 rămân sub selector: **3×0,6/K1 28/6** și **1×1,2/K1 28/5**, funcționează acum pentru **CL-ul activ ca proiect**, nu pentru toate trei. Schimbarea între ele **nu** scrie `saved`.
+- Transferul unui build din Mood Match, dacă atomizorul ales este CL, completează tot **proiectul CL-ului activ**, fără confirmare implicită de montaj; pe alte atomizoare rămâne funcționalitatea anterioară.
+
+### 22.3 Integrare, QA și limite
+
+- **Fișiere:** `rta-lab/sensory-ui.js`, `rta-lab/sensory-ui.css`, `rta-lab/index.html`, `rta-lab/sw.js`, `rta-lab/bootstrap.js`, `tools/check-rta-sensory-core.js`, `tools/check-rta-lab-mobile-clarity.js`.
+- Activele UI folosesc versiunea `10-cl-units-20261014` și o cheie nouă pentru cache PWA; `bootstrap.js` păstrează intenționat `const VERSION = "10"` cerută de vechea verificare.
+- Teste de regresie: 3 fișe fără montări inventate, comutarea 1→2→3→1 cu configurații și wattaje distincte, `saved` vs `draft`, păstrarea proiectelor la schimbarea exemplarului, revenire, refuz selectare invalidă, integritate KLP/GTR/FL, persistență după reîncărcarea modulului, import vechi CL fără a atribui greșit echipament fizic și funcționare fără acces la stocare.
+- Calitatea senzorială rămâne cea raportată în §20–21. **Nu** se modifică scorurile aromatic/TH, 16 platforme, 42 atomizoare, 620 lichide ori cinci sloturi active în această etapă.
+- **Stadiu în proces:** implementare în ramura de lucru → CI RTA + Market Quality Gate → integrare `main` → confirmare GitHub Pages. Marcați rezultatele numai după verificare, nu înainte de deploy.
+
+**Următoarea îmbunătățire opțională:** export/import al fișelor fizice pentru transfer între dispozitive, numai la cererea utilizatorului (nu există sincronizare cross-device în această etapă).
