@@ -42,9 +42,9 @@ const PLATFORMS={
  traits:{spectrum:4.15,simultaneity:3.9,focus:4.9,palate:4.0,offense:4.65,th:4.6,harmony:4.1},note:"Jet vertical unic; K1 29/6 preferat în A/B direct."},
  dvarwcl:{pattern:"single",volume:"mediu",air:[
  AIR("triple06","Insert 3×0,6 mm (validat)","multipoint",[.6,.6,.6],1.95),
- AIR("single12","Insert 1×1,2 mm (standard)","single",[1.2],1.25),
+ AIR("single12","Insert 1×1,2 mm (alternativă reușită cu K1 28/5)","single",[1.2],1.25),
  AIR("dual08","Insert 2×0,8 mm (familie AFC)","multipoint",[.8,.8],1.65,{optional:true})],
- traits:{spectrum:4.5,simultaneity:3.7,focus:4.8,palate:4.15,offense:4.85,th:4.6,harmony:4.0},note:"Impact muscular, distribuție modificată de insert."},
+ traits:{spectrum:4.5,simultaneity:3.7,focus:4.8,palate:4.15,offense:4.85,th:4.6,harmony:4.0},note:"Impact muscular, distribuție modificată de insert; 3×0,6/K1 28/6 este preferința generală, dar 1×1,2/K1 28/5 a fost raportat ca reușit. Se schimbă și numărul de spire, nu doar insertul."},
  muted:{pattern:"hybrid",volume:"mediu",air:[
  AIR("triple","Triple-air: 2 laterale + 1 inferior","hybrid",null,2.05),
  AIR("bottom","Bottom-only","single",null,1.3),
@@ -118,6 +118,7 @@ const PERSONAL_PREFS=Object.freeze({
  tcEqualWires:["nife30","nife52"],
  gtone:{first:{wire:"k129",wraps:6},second:{wire:"k128",wraps:5}},
  muted:{first:{wire:"k128",wraps:6},note:"diametrul, airflow-ul și puterea exacte nu au fost precizate de utilizator"},
+ dvarwClSingle12:{wire:"k128",wraps:5,air:"single12",status:"alternativă personală reușită, nu A/B controlat față de 3×0,6/6"},
  dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
  evidence:"preferințe personale declarate direct 14.10.2026; fără identitate materială sau A/B universal"
 });
@@ -134,6 +135,8 @@ function personalPreference(config){
  }
  if(config.atom==="muted"&&config.wire==="k128"&&config.wraps===6)
   return {tier:1,label:"Prima preferință · Muted+ K1 28 GA / 6",note:"Airflow, diametru și putere încă neprecizate; Ø2,5 este doar presetul modelului."};
+ if(config.atom==="dvarwcl"&&config.air==="single12"&&config.wire==="k128"&&config.wraps===5)
+  return {tier:2,label:"Alternativă reușită · CL 1×1,2 + K1 28 GA / 5",note:"Utilizatorul confirmă că merge bine; preferința generală 3×0,6 nu invalidează acest build. Se modifică simultan insertul și numărul de spire."};
  if(PERSONAL_PREFS.dvarw.atoms.includes(config.atom)){
   if(config.air==="triple06")return {tier:1,label:"Airflow preferat · insert 3×0,6"};
   if(config.air==="single12")return {tier:2,label:"Airflow alternativ · 1×1,2"};
@@ -189,6 +192,11 @@ const OBS=[
   text:"Comparat cu FL 1×1,2 + K1 / 6 pe Balkan Milestone: orizont aromatic mai larg, forță descrisă ca «mușchi 90%», palat ≈25% mai bogat perceput, arome clar simultane și TH foarte puțin mai mic; preferință fermă 3×0,6. Față de KLP K1 28/5, FL este mult mai ofensiv, dar nu egalează plăcerea GTR. Procentele sunt estimări senzoriale, nu măsurători.",
   affinity:"3×0,6 preferat personal pe FL · Balkan Milestone",
   evidence:"A/B personal raportat 14.10.2026; puterea, poziția coilului și Ø neconfirmate; comparatorul FL 1×1,2 a avut K1 / 6"},
+ {atom:"dvarwcl",wire:"k128",wraps:5,air:"single12",partial:true,
+  title:"Dvarw CL 1×1,2 + K1 28 GA / 5 · alternativă reușită",
+  text:"Utilizatorul declară că insertul 1×1,2 merge bine pe Dvarw CL cu K1 28 GA / 5 spire. Rămâne o variantă reușită, nu una slabă, chiar dacă 3×0,6 este preferința generală. Diferența față de CL 3×0,6/6 nu poate fi atribuită exclusiv aerului deoarece și numărul de spire se schimbă.",
+  affinity:"configurație bună personal · CL 1×1,2 / K1 28/5",
+  evidence:"declarație personală 14.10.2026; lichid, Ø exact, poziție și W neprecizate; nu este comparație controlată doar a insertului"},
  {atom:"dvarwcl",wire:"k128",wraps:6,title:"CL 28/6: ofensivă și focalizare",
   text:"Spectru prezent, dar livrare musculară; o notă poate domina percepția simultană.",
   patch:{offense:4.95,focus:4.9,simultaneity:3.65,palate:4.2},affinity:"caracter ofensiv",evidence:"observație practică 13.10.2026"},
@@ -448,7 +456,9 @@ function analyze(input,liquid={},objective="complete"){
  if(config.atom==="dvarwfl"&&config.air==="triple06")
   notes.push("Validare A/B numai pe Balkan Milestone: 3×0,6 a fost preferat lui 1×1,2 la 6 spire K1; ≈25% mai mult palat reprezintă aprecierea personală, nu un coeficient universal.");
  if(config.atom==="dvarwcl"&&config.air==="triple06")
-  notes.push("Dvarw CL: insertul 3×0,6 este preferința personală explicit confirmată față de alte inserturi.");
+  notes.push("Dvarw CL: 3×0,6 + K1 28/6 este preferința generală. Separat, 1×1,2 + K1 28/5 a fost declarat reușit; schimbarea simultană a numărului de spire împiedică atribuirea diferențelor doar insertului.");
+ if(config.atom==="dvarwcl"&&config.air==="single12"&&config.wire==="k128"&&config.wraps===5)
+  notes.push("Dvarw CL: 1×1,2 cu K1 28 GA/5 merge bine conform testului personal; nu îl considera inferior în mod absolut lui 3×0,6/6. Lichidul și puterea nu au fost precizate.");
  if(config.wire==="nife52")notes.push("NiFe52 rămâne fără verdict universal cross-alloy față de Dicodes NiFe30.");
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
