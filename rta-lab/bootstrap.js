@@ -1,5 +1,5 @@
 (() => {
-  const VERSION = "10-personal-20261014";
+  const VERSION = "10";
   let reloading = false;
 
   function installContinuityPanel() {
