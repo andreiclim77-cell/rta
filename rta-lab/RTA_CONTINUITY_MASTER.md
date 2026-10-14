@@ -23,7 +23,7 @@
 
 1. Paradigmă: fără TOP global în pairing; motorul folosește lichid + obiectiv + ADN platformă + build.
 2. Preferință senzorială: tobacco-first, Tobacco Core Visibility, detaliu, layering, corp/mouthfeel; fără claritate sterilă și fără „tocăniță”.
-3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 16 platforme / 40 atomizoare fizice / 5 sloturi active**.
+3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 16 platforme / 42 atomizoare fizice / 5 sloturi active**.
 4. Catalog: 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex.
 5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar. Excepții validate: **KV3 Mini = 28/6 + 29/6**, **Dvarw CL 3×0,6 = 28/6**, **Asylum V3 Flat = 28/6**, toate pe Ø2,5.
 6. K1 29/6 contact rămâne numai când ADN-ul platformei sau A/B-ul îl justifică; **GT One = 29/6 validat practic și preferat față de 28/5 în A/B direct**.
@@ -35,17 +35,17 @@
 12. Asylum V3: Flat = claritate/separare; Dome = corp/integrare; **K1 Clapton/5 numai contextual**, fără prior de platformă.
 13. **Mood Match (aprobat 13.10.2026):** 7 stări × 5 momente × lichid automat/manual; toate cele 16 platforme rămân accesibile; trei interpretări, niciun câștigător universal.
 
-## 2. Inventar activ — 16 platforme / 40 RTA
+## 2. Inventar activ — 16 platforme / 42 RTA
 
 | Platformă | Buc. | ADN / rol curent |
 | --- | ---: | --- |
 | 415 RTA MTL Cool Edition | 1 | High-sensitivity / micro-geometry; 28/5 contact = echilibru/layering; 29/5 contact = concentrat/dulce; 29/6 contact = dry/tobacco; **K1 Clapton/5 = pereche Clapton preferată**. |
 | Kayfun Prime / K Prime | 2 | Echilibru premium; **29/5 contact** = round-wire principal curent; 28/5 = echilibru; TC curent NiFe52/6; NiFe30/6 benchmark istoric 80/20. |
 | Taifun GT One | 4 | Straight tobacco precision; **A/B direct 12.10.2026: K1 29 GA / Ø2,5 / 6 contact > K1 28 GA / Ø2,5 / 5**. 29/6 devine buildul round-wire preferat curent al platformei. |
-| Dvarw MTL CL 22 | 1 | Tobacco muscular; **configurație activă validată: insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire**; separat de FL. |
+| Dvarw MTL CL 22 | 3 | Tobacco muscular; **configurație testată pe un CL: insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire**. Cele 3 exemplare nu sunt presupuse configurate identic; separat de FL. |
 | Muted+ | 4 | Corp/mouthfeel + airflow configurabil; prior personal 29/5 contact dacă nu există excepție. |
 | Taifun GTR | 5 | TC specialist; Dicodes RESISTHERM NiFe30 320/6; finețe, layering, smoothness. |
-| Dvarw MTL FL | 2 | Analiză/separare; 28/5 excelent; **SS316L Clapton/5 = pereche dedicată**. |
+| Dvarw MTL FL | 2 | Analiză/separare; 28/5 excelent; **SS316L Clapton/5 = pereche dedicată**. **Inserturi 3×0,6 mm achiziționate pentru FL**, fără test/instalare confirmată pe ambele exemplare. |
 | Diplomat v1.5 | 3 | Camerele schimbă specializarea aromatică; calibrare separată; 29/5 contact prior personal. |
 | Kayfun X / KX | 4 | 28/5 extraordinar + Dicodes RESISTHERM NiFe30 320/6 TC; daily premium. |
 | KLP / Kayfun Lite Plus 2021 | 5 | **A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6 contact** pentru redarea generală/completă. 29/5 contact rămâne specialistul de hit/TH/focus; **KLP NiFe30/6 TC DNA 220°C / plafon 16 W este testat personal** (vezi §18). |
@@ -450,3 +450,18 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 **Regulă de cod:** vechea excludere KLP din familia NiFe TC este **DEPĂȘITĂ**, înlocuită de permisul NiFe30/6. Motorul oferă KLP NiFe30 preset 220°C/16 W; alte platforme păstrează preseturile lor. Observația KLP cu airflow/lichid necunoscute se afișează ca **dovadă parțială**, nu ca ancoră exactă pentru orice insert/clopot. KLP K1 28/5 rămâne reper round-wire; NiFe52 pe KLP și NiFe30 pe Mini V3 sunt experimentale, nu validate personal. Niciun scor numeric al plăcerii nu este fabricat.
 
 **Fișiere afectate:** data/sensory-core.js, data/tc-platform-map.js, sensory-ui.js, engine.js, index.html, sw.js și teste QA. Se verifică CI/deploy înainte de a confirma versiunea publică.
+
+## 19. Actualizare colecție fizică și inserturi Dvarw — 14.10.2026
+
+**Date declarate direct:** colecția are **42 atomizoare fizice**, fără modificarea celor **16 platforme** din motor. Față de vechiul inventar de 40, s-au adăugat **două exemplare Dvarw MTL CL**. Configurațiile reale se înregistrează separat pentru fiecare exemplar.
+
+| Platformă | Cantitate actuală | Modificare / accesorii |
+| --- | ---: | --- |
+| Dvarw MTL CL 22 | **3** | +2 față de inventarul precedent (1); nu se presupune că toate trei au același insert sau build |
+| Dvarw MTL FL | **2** | neschimbat ca număr; **achiziționate inserturi 3×0,6 mm pentru FL**, fără a declara că au fost deja montate ori comparate A/B |
+| Kayfun Lite Plus 2021 (KLP) | **5** | neschimbat; deja canonic |
+| Taifun GTR | **5** | neschimbat; deja canonic |
+
+**Consecințe pentru Sensory DNA:** Dvarw CL și FL au ADN-uri distincte, iar varianta multipunct 3×0,6 mm a FL este **accesoriu disponibil**, nu rezultat senzorial validat direct pe FL. La trei CL se pot păstra builduri/inserturi distincte pentru comparații ulterioare; nu le atribuim încă setări arbitrare. Varianta FL 3×0,6 poate fi selectată ca opțiune de hardware în configuratorul existent. Nu se modifică scoring-ul/calibrările istorice până la observații practice pe această combinație.
+
+**Control:** totalul inventarului tabelar din §2 trebuie să fie **42**, număr de platforme **16**, iar valorile **5 KLP / 5 GTR** rămân confirmate.
