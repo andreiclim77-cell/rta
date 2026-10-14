@@ -249,14 +249,14 @@ assert.equal(uiKlp.wire,"nife30");
 assert.equal(uiKlp.wraps,6);
 assert.equal(uiKlp.temp,220);
 assert.equal(uiKlp.power,16);
+assert.ok(find("sensoryExplorer").innerHTML.includes("OBSERVAȚIE PARȚIALĂ"));
+assert.ok(find("sensoryExplorer").innerHTML.includes("Kayfun Prime")||find("sensoryExplorer").innerHTML.includes("K Prime"));
 const flExplorer=find("atomExplorer");flExplorer.value="dvarwfl";
 sandbox.window.RTA_SENSORY_UI.render("explorer");
 assert.ok(find("sensoryExplorer").innerHTML.includes("Balkan Milestone"),
   "Current FL 3×0,6 K1 28/6 must surface personal Balkan comparison");
 assert.ok(find("sensoryExplorer").innerHTML.includes("Preferință personală declarată"),
   "Sensory DNA should show declared preferences separately from technical evidence");
-assert.ok(find("sensoryExplorer").innerHTML.includes("OBSERVAȚIE PARȚIALĂ"));
-assert.ok(find("sensoryExplorer").innerHTML.includes("Kayfun Prime")||find("sensoryExplorer").innerHTML.includes("K Prime"));
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 const sw=fs.readFileSync(path.join(root,"sw.js"),"utf8");
 for(const token of ["sensoryExplorer","sensoryMain","mode-main","mode-explorer","data/sensory-core.js","sensory-ui.js","sensory-ui.css"])assert.ok(html.includes(token),token+" missing in HTML");
