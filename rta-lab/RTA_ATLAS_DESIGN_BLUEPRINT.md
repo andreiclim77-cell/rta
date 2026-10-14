@@ -364,3 +364,9 @@ QA pe SHA indicat: RTA `38619985170` SUCCESS, Market `38619985251` SUCCESS, Visu
 ### 19.1. Capture review și implementare progresivă
 
 Pe `a511ef64`, toate cele trei gates au trecut: RTA `38620833175`, Market `38620833394`, Visual `38620833502`. Cele 23 de PNG din artifact `11921084143` au fost inspectate; captura offline KX aproape întunecată la intrare a fost respinsă și sincronizarea capturii corectată. CI verde nu înlocuiește inspecția vizuală. PR #45 rămâne mobil; Atlas/Wire și apoi Market/Duel continuă în `feature/atlas-complete-six-modules-20261014`, cu același sistem vizual. Cele două adaptoare noi există local și sunt testate mobil/desktop, fără aprobare estetică finală sau publicare.
+
+## 20. Atomizer Atlas și Wire Lab implementate pentru evaluare (14.10.2026)
+
+Candidatul separat adaugă două rute reale, păstrând HOME/Liquid Match și motorul. Atlas: platforme filtrabile, portrete fotografice, ADN, TOP3 builduri, familii/620 lichide, inventar fizic și fișele CL citite fără montări fictive. Wire: material și platformă vizibile devreme pe mobil, parametri canonici, limite, diagramă airflow/spire animată schematic, avantaje/compromisuri și proveniență. Objective se preia din mood până la alegerea explicită; navigarea păstrează lichidul.
+
+Teste locale PASS în 360×800/390×844/1440×1000, normale/erori/stres; capturi inspectate. Același sistem vizual este reutilizat, fără reconstruirea V0.2. Stare: două module candidate, nu acceptare estetică sau publicare. Market/Duel, funcțiile complete și verificarea releaseului rămân deschise.

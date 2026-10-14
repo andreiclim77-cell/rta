@@ -1,0 +1,64 @@
+'use strict';
+const {chromium}=require('playwright-core'),fs=require('node:fs'),path=require('node:path');
+const folder=path.resolve('artifacts/atlas-v02-mobile');fs.mkdirSync(folder,{recursive:true});
+const check=(ok,msg)=>{if(!ok)throw new Error(msg);};
+const shot=(page,name)=>page.screenshot({path:path.join(folder,name),fullPage:false});
+async function main(){
+ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']});
+ try{
+  for(const [width,height] of [[360,800],[390,844],[1440,1000]]){
+   const context=await browser.newContext({viewport:{width,height},isMobile:width<760,hasTouch:width<760});
+   const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+   await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#atlasPlatform');
+   await page.waitForTimeout(650);
+   check(await page.locator('#pageAtomizer').isVisible(),'Hash deep link must open Atomizer Atlas');
+   check(await page.locator('.platform-tile').count()===16,'All 16 platforms must be available');
+   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Atlas horizontal overflow');
+   await page.waitForFunction(()=>{const img=document.querySelector('.portrait-photo img');return img?.complete&&img.naturalWidth>0;});
+   await shot(page,'atomizer-'+width+'.png');
+   await page.locator('#atlasPlatform').selectOption('dvarwcl');
+   check(await page.locator('.unit-row').count()===3,'Three CL profiles must remain distinct');
+   check(await page.locator('.unit-row').first().textContent().then(t=>t.includes('Neînregistrat')),'Fresh test browser must not fabricate a physical mounting');
+   await page.locator('#atlasSearch').fill('nonexistent-platform');
+   check(await page.locator('.platform-tile').count()===0,'Missing search must show empty catalog');
+   await page.locator('#atlasSearch').fill('Dvarw');
+   check(await page.locator('.platform-tile').count()===2,'Search should match CL and FL independently');
+   await shot(page,'atomizer-search-'+width+'.png');
+   await page.locator('[data-edit-wire]').click();
+   await page.locator('#wireAtom').selectOption('klp');
+   check(await page.locator('#wireMaterial').inputValue()==='nife30','KLP default must remain Dicodes');
+   await page.locator('.wire-advanced summary').click();
+   check(await page.locator('#wirePower').inputValue()==='16','KLP Dicodes personal power ceiling');
+   check(await page.locator('#wireTemp').inputValue()==='220','KLP Dicodes personal TC setting');
+   await page.locator('#wireMaterial').selectOption('nife52');
+   check(await page.locator('#wirePower').inputValue()==='13','Do not transfer Dicodes ceiling to Zivipf');
+   check(await page.locator('#wireTemp').inputValue()==='230','Do not transfer Dicodes setting to Zivipf');
+   const prior=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config));
+   await page.locator('#wirePower').fill('200');await page.locator('#wirePower').press('Tab');
+   check(await page.locator('#wireValidation').textContent().then(t=>t.includes('intervalul')),'Invalid energy must be explained');
+   check(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config))===prior,'Invalid energy must not modify active configuration');
+   await page.locator('#wirePower').fill('14');await page.locator('#wirePower').press('Tab');
+   check(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.power)===14,'Valid energy must recompute model');
+   await page.locator('#wireAtom').selectOption('asylum');
+   check(await page.locator('#wireMaterial option[value=ssclap]').count()===0,'Asylum SS Clapton must be unavailable');
+   await page.locator('#wireAtom').selectOption('415');await page.locator('#wireMaterial').selectOption('k128');
+   check(await page.locator('#wireWraps option[value="6"]').count()===0,'Deprecated 415 28/6 must be unavailable');
+   await page.locator('#wireAtom').selectOption('dvarwcl');await page.locator('#wireAir').selectOption('triple06');
+   check(await page.locator('.coil-stage .air-beams').count()===3,'CL triple insert must show three channels');
+   await page.locator('#wireAir').selectOption('single12');
+   check(await page.locator('.coil-stage .air-beams').count()===1,'CL single insert must show one channel');
+   await page.locator('#wireAtom').selectOption('klp');
+   if(await page.locator('.wire-advanced').getAttribute('open')!==null)await page.locator('.wire-advanced summary').click();
+   await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(650);
+   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Wire horizontal overflow');
+   await shot(page,'wire-'+width+'.png');
+   await page.locator('#pageWire [data-route="liquid"]').click();
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Balkan Mixture')),'Cross-module navigation must retain liquid');
+   check(errors.length===0,'Module page errors: '+errors.join(' | '));
+   await context.close();
+  }
+  console.log('ATLAS MODULE VISUAL PASS: mobile/desktop deep links, catalog search, real photos, independent CL entries, wire/airflow interactions, bounds, KLP alloy isolation and context preserved.');
+ }finally{await browser.close();}
+}
+main().catch(e=>{console.error(e);process.exitCode=1;});

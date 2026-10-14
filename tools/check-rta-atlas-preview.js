@@ -148,7 +148,7 @@ assert.ok(v02css.includes('::-webkit-search-cancel-button'),"Avoid native and cu
 assert.ok(v02.includes('results.insertAdjacentElement("afterend",box)'),"Results must precede the airflow explainer");
 
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(refs.length,27,"Expected core scripts + real-photo sources + v02 motion");
+assert.equal(refs.length,28,"Expected core scripts + real-photo sources + v02 motion + Atlas adapters");
 for(const ref of refs){
  assert.ok(ref.startsWith("../")||ref.startsWith("./"),"No unknown remote JS");
  const local=path.resolve(preview,ref.split("?")[0]);

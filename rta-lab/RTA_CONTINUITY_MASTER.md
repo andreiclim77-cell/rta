@@ -643,3 +643,7 @@ Checkpoint de cod `1f7050231165f10cbf1b8128946989ee519d9efb`: corecții numai î
 ### 30.1. Dovezi ulterioare și ramură de extindere
 
 Rerularea pe `a511ef64`: RTA `38620833175`, Market `38620833394`, Visual `38620833502` SUCCESS. Artifact `11921084143`, 23 capturi, descărcat și inspectat; cadrul offline KX prins în animația de intrare nu este acceptat ca probă și a primit o corecție de sincronizare pentru rerulare. PR #45 păstrează scopul mobil. Cele patru module rămase continuă în draft separat `feature/atlas-complete-six-modules-20261014`. Adaptoarele locale Atomizer/Wire au trecut cazuri normale, restricții, erori, CL read-only/legacy, 620 lichide stres și browser mobil/desktop; nu sunt publicate. Motorul/datele/configurările originale nu au fost editate.
+
+## 31. Atlas/Wire — adaptoare în ramura aplicației complete (14.10.2026)
+
+`feature/atlas-complete-six-modules-20261014` continuă separat de PR #45 și main. Atomizer Atlas și Wire Lab sunt implementate local cu motoarele existente: 16 portrete, 42 inventar, ADN/builduri/lichide contextuale, citire CL fără rescriere și configurator de material/aer/geometrie/energie. Restricțiile Asylum SS Clapton și 415 K1 28/6 sunt păstrate; KLP Dicodes 220°C/16 W nu se transferă la NiFe52. Teste normale/erori, toate materialele și obiectivele, 620 lichide stres, CL legacy/read-only, browser mobil și desktop au trecut local. CI/publicarea/aprobarea vizuală rămân separate. Noul draft nu este aplicația finală; Market/Duel și integrarea completă sunt următoarele lucrări autorizate.

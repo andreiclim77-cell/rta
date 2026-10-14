@@ -107,7 +107,7 @@ function rankFor(liquidIndex,moodId,momentId){
 function renderAbstractAtom(atom,rank){
  const record=window.RTA_ATLAS_PHOTOS?.[atom.id];
  if(!record)return '<div class="atlas-missing-photo">Fotografie verificată încă indisponibilă pentru '+esc(atom.short)+'</div>';
- return '<figure class="atlas-product-photo">'+
+ return '<figure class="atlas-product-photo" data-photo-model="'+esc(atom.id)+'">'+
   '<img src="'+esc(record.src)+'" loading="lazy" decoding="async" alt="'+esc(atom.short)+' — fotografie de produs" />'+
   '<figcaption><a href="'+esc(record.ref)+'" target="_blank" rel="noopener noreferrer" title="Fotografie reală: '+esc(record.credit)+'">FOTO: '+esc(record.credit)+' ↗</a></figcaption>'+
   '</figure>';
@@ -280,19 +280,20 @@ function closeSuggestions(){
  element("liquidSearch").removeAttribute("aria-activedescendant");
 }
 function route(to,push=true){
- if(!["home","liquid"].includes(to))return false;
+ if(!["home","liquid",...(window.RTA_ATLAS_MODULES?.routes||[])].includes(to))return false;
  state.route=to;
  const isHome=to==="home";
  element("pageHome").hidden=!isHome;
- element("pageLiquid").hidden=isHome;
+ element("pageLiquid").hidden=to!=="liquid";
+ window.RTA_ATLAS_MODULES?.show(to);
  document.querySelectorAll("[data-route]").forEach(el=>{
-  if(el.tagName==="BUTTON"&&el.closest(".top-nav")){
+  if(el.tagName==="BUTTON"&&(el.closest(".top-nav")||el.closest(".bottom-tabs"))){
    if(el.dataset.route===to)el.setAttribute("aria-current","page");
    else el.removeAttribute("aria-current");
   }
  });
  if(push&&window.history?.pushState){
-  window.history.pushState(null,"",to==="liquid"?"#liquid":"#home");
+  window.history.pushState(null,"","#"+to);
  }
  window.scrollTo?.({top:0,behavior:"instant"});
  if(!isHome&&window.requestAnimationFrame)window.requestAnimationFrame(revealSelectedChips);
@@ -354,11 +355,11 @@ function init(){
   state.expandedId=null;renderResults();
   scrollToBest();
  });
- window.addEventListener("popstate",()=>route(window.location.hash==="#liquid"?"liquid":"home",false));
+ window.addEventListener("popstate",()=>route(window.location.hash.slice(1)||"home",false));
 }
 window.RTA_ATLAS_PREVIEW={
  version:"0.2-real-photo-motion",compose,liquidSearch,buildString,compactBuild,
- renderCoil,qualities,vapeDescription,evidenceFor,state,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
+ renderCoil,renderBuild,renderProductPhoto:renderAbstractAtom,qualities,vapeDescription,evidenceFor,state,route,selectLiquid,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
  init
 };
 if(typeof document!=="undefined")document.addEventListener("DOMContentLoaded",init);

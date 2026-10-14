@@ -4,6 +4,7 @@ on:
     paths:
       - "rta-lab/atlas-preview/**"
       - "tools/check-rta-atlas-visual.js"
+      - "tools/check-rta-atlas-modules-visual.js"
       - ".github/workflows/atlas-visual.yml"
   workflow_dispatch:
 permissions:
@@ -22,7 +23,9 @@ jobs:
           npm install --no-save --ignore-scripts playwright-core@1.56.1
           which google-chrome || which google-chrome-stable
       - name: Verify real mobile layout, photography, and interaction motion
-        run: node tools/check-rta-atlas-visual.js
+        run: |
+          node tools/check-rta-atlas-visual.js
+          node tools/check-rta-atlas-modules-visual.js
       - name: Save mobile screenshots for review
         if: always()
         uses: actions/upload-artifact@v4

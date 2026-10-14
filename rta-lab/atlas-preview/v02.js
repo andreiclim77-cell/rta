@@ -159,7 +159,7 @@ function installResultPhotoFallback(){
  document.addEventListener("error",ev=>{
   const img=ev.target;
   if(!(img instanceof HTMLImageElement)||!img.closest(".atlas-product-photo"))return;
-  const id=img.closest(".result-card")?.dataset.atom;
+  const id=img.closest(".atlas-product-photo")?.dataset.photoModel||img.closest(".result-card")?.dataset.atom;
   const fallback=window.RTA_ATLAS_PHOTOS?.[id]?.fallbackSrc;
   const figure=img.closest(".atlas-product-photo");
   if(fallback&&!img.dataset.photoFallback){

@@ -1,0 +1,45 @@
+"use strict";
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
+const env={window:{}};vm.createContext(env);
+const load=p=>vm.runInContext(fs.readFileSync(path.join('rta-lab',p),'utf8'),env,{filename:p});
+for(const n of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+n);
+fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forEach(n=>load('data/'+n));
+for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js'])load(p);
+const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
+assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),42);
+const original=JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]);
+assert.equal(m.filteredAtoms('').length,16);assert.equal(m.filteredAtoms('Dvarw').length,2);assert.equal(m.filteredAtoms('nonexistent platform').length,0);
+assert.equal(m.selectAtom('invalid'),false);assert.equal(m.contextual('invalid'),null);
+for(const id of Object.keys(m.inventory)){
+ assert.equal(m.selectAtom(id),true);
+ for(const variant of c.variants(id)){
+  assert.equal(m.setConfig({wire:variant.wire}),true);assert.equal(m.setConfig({wraps:variant.wraps}),true);
+  for(const [goal] of [['complete'],['layers'],['th'],['tobacco'],['body'],['smooth']]){
+   m.state.objective=goal;const result=m.contextual();
+   assert.ok(result&&result.builds.length===3);assert.equal(result.result.dimensions.pleasure,null);
+   assert.equal(result.config.atom,id);assert.ok(c.permitted(id,result.config.wire,result.config.wraps));
+   assert.ok(!/\d+\s*%/.test(a.compactBuild(result.result)),'Do not turn heuristics into percentages');
+  }
+ }
+}
+m.selectAtom('klp');m.setConfig({wire:'nife30'});assert.equal(m.state.config.temp,220);assert.equal(m.state.config.power,16);
+m.setConfig({wire:'nife52'});assert.equal(m.state.config.temp,230);assert.equal(m.state.config.power,13);
+assert.equal(c.personalPreference(m.state.config).tier,1,'KLP NiFe52 is first-level preference');
+m.setConfig({wire:'nife30'});assert.equal(c.personalPreference(m.state.config).tier,1);
+const before=JSON.stringify(m.state.config);assert.equal(m.setConfig({wraps:5}),false);assert.equal(JSON.stringify(m.state.config),before);
+m.selectAtom('asylum');assert.equal(m.setConfig({wire:'ssclap'}),false);
+m.selectAtom('415');m.setConfig({wire:'k128'});assert.equal(m.setConfig({wraps:6}),false);
+const key='rta-cl-physical-units-v1-20261014';
+const configs=[c.config('dvarwcl',{wire:'k128',wraps:6,power:12}),c.config('dvarwcl',{wire:'k128',wraps:5,air:'single12',power:14}),c.config('dvarwcl',{wire:'k129',wraps:6,power:11})];
+const store={schema:1,active:2,units:configs.map((cfg,i)=>({saved:cfg,draft:{...cfg,power:cfg.power+i*.5},source:null}))};
+const bytes=JSON.stringify(store),storage={getItem:k=>k===key?bytes:null,setItem:()=>{throw new Error('Unexpected write');}};
+const snapshot=m.clSnapshot(storage);assert.equal(snapshot.units.length,3);assert.equal(JSON.stringify(snapshot.units[1].saved),JSON.stringify(configs[1]));
+assert.equal(storage.getItem(key),bytes,'Atlas must never overwrite existing physical unit profiles');
+const legacy=m.clSnapshot({getItem:k=>k===key?null:JSON.stringify({dvarwcl:configs[0]})});
+assert.equal(legacy.units[0].saved,null);assert.equal(legacy.units[0].draft.atom,'dvarwcl');assert.equal(legacy.units[1].draft,null);assert.equal(legacy.units[2].saved,null);
+assert.equal(m.clSnapshot({getItem:()=>'{malformed'}).available,false);assert.equal(m.clSnapshot({getItem:()=>{throw new Error('blocked');}}).available,false);
+assert.equal(m.clSnapshot(null).available,false);
+m.selectAtom('gtr');let stress=0;
+for(let i=0;i<w.RTA_LIQUIDS.length;i++){a.state.liquidIndex=i;const result=m.contextual();assert.equal(result.builds.length,3);assert.equal(result.config.atom,'gtr');stress++;}
+assert.equal(stress,620);assert.equal(JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]),original,'Adapters must preserve all canonical data');
+console.log('ATLAS MODULES PASS: 16 platforms / 42 units, all permitted materials and objectives, 620-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
