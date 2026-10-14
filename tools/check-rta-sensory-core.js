@@ -6,7 +6,7 @@ const root="rta-lab";
 // Physical ownership is distinct from the 16-platform sensory model.
 const inventoryMaster=fs.readFileSync(path.join(root,"RTA_CONTINUITY_MASTER.md"),"utf8");
 const physicalSection=(inventoryMaster.split("## 2. Inventar activ")[1]||"").split("## 3. Sârme")[0];
-const physicalRows=[...physicalSection.matchAll(/^\\| ([^|]+) \\| (\\d+) \\|/gm)]
+const physicalRows=[...physicalSection.matchAll(/^\| ([^|]+) \| (\d+) \|/gm)]
   .map(([,name,quantity])=>({name:name.trim(),quantity:Number(quantity)}));
 assert.equal(physicalRows.length,16,"Keep all 16 platforms in the canonical physical inventory");
 assert.equal(physicalRows.reduce((sum,item)=>sum+item.quantity,0),42,
