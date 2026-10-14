@@ -108,6 +108,9 @@ assert.ok(html.includes("id=\"moodChips\"")&&html.includes("id=\"momentChips\"")
 assert.ok(html.includes('href="../"'),"Must preserve link to original V10 app");
 assert.ok(!html.includes("data-route=\"market\""),"Market not implemented in preview");
 assert.ok(html.includes("id=\"cinemaReel\"")&&html.includes("photo-cinema"),"Real-photo stage missing");
+assert.ok(html.includes("PREVIEW V0.2")&&!html.includes("PREVIEW V0.1"),"Preview footer must match actual version");
+assert.ok(js.includes('!window.matchMedia?.("(max-width:760px)").matches'),
+ "Mobile best-build panels must start collapsed");
 for(const str of ["@keyframes flowPaths","@keyframes drawWave","@keyframes cardReveal","prefers-reduced-motion:reduce"]){
  assert.ok(css.includes(str),"Motion or reduced-motion rule missing: "+str);
 }
@@ -118,6 +121,10 @@ assert.ok(media&&Object.keys(media).length>=15,"Need real source photos for most
 for(const [id,p] of Object.entries(media)){
  assert.ok(/^https:\/\//.test(p.src)||p.src.startsWith("../../assets/instagram/"),"Photo must be HTTPS or a verified existing project image: "+id);
  if(p.src.startsWith("../../"))assert.ok(fs.existsSync(path.resolve(preview,p.src)),"Missing locally hosted real photo: "+id);
+ if(p.fallbackSrc){
+  assert.ok(p.fallbackSrc.startsWith("../../assets/instagram/"),"Fallback must reuse project assets: "+id);
+  assert.ok(fs.existsSync(path.resolve(preview,p.fallbackSrc)),"Missing decoded-photo fallback candidate: "+id);
+ }
  assert.ok(/^https:\/\//.test(p.ref),"Photo must have original attribution URL: "+id);
  assert.ok(p.credit,"Source credit required: "+id);
 }
@@ -125,6 +132,9 @@ const v02=fs.readFileSync(path.join(preview,"v02.js"),"utf8");
 const v02css=fs.readFileSync(path.join(preview,"v02.css"),"utf8");
 assert.ok(v02.includes("cinemaReel")&&v02.includes("setInterval"),"Visible photo carousel missing");
 assert.ok(v02.includes("animateLiquid")&&v02.includes("airSvg"),"Liquid and airflow reactive animation missing");
+assert.ok(v02.includes("installResultPhotoFallback")&&v02.includes("photoFallback"),"Broken remote photos need local recovery");
+for(const id of ["kx","gtone","415"])assert.ok(media[id]?.fallbackSrc,"Gallery model needs local photo fallback: "+id);
+assert.ok(v02css.includes(".cinema-frame img{object-fit:contain"),"Photographic hero cannot crop product");
 for(const key of ["cinemaKen","cinemaSwitch","airflowVisible","@media(max-width:390px)","prefers-reduced-motion:reduce"]){
  assert.ok(v02css.includes(key),"V0.2 motion or mobile breakpoint missing: "+key);
 }
