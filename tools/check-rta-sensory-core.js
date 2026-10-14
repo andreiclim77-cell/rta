@@ -153,6 +153,13 @@ const noAnchor=api.analyze({atom:"gtr",wire:"nife30",wraps:6,air:"hole10"},sampl
 assert.equal(noAnchor.anchors.length,0,"No transfer of personal TC test to untested airflow.");
 const cl=api.analyze("dvarwcl",sample);
 const clSingle=api.analyze({atom:"dvarwcl",air:"single12"},sample);
+const clSingle5=api.analyze({atom:"dvarwcl",air:"single12",wire:"k128",wraps:5},sample);
+assert.equal(clSingle5.anchors.length,0);
+assert.equal(clSingle5.partialEvidence.length,1);
+assert.ok(clSingle5.partialEvidence[0].text.includes("merge bine"));
+assert.ok(clSingle5.personalPreference.label.includes("Alternativă reușită"));
+assert.equal(clSingle.partialEvidence.length,0);
+assert.equal(api.defaultConfig("dvarwcl").wraps,6);
 assert.ok(clSingle.signals.offense>=cl.signals.offense);
 assert.equal(clSingle.anchors.length,0);
 assert.equal(api.config("dvarwcl").air,"triple06");
