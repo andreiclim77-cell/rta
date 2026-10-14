@@ -120,7 +120,7 @@ function installAirflowDemo(){
   '<button type="button" data-air="triple" aria-pressed="false">3×0,6</button></div></div>'+
   '<div class="air-visual" id="airDemoVisual">'+airSvg(1)+'</div>'+
   '<span class="air-caption" id="airDemoText">JET CENTRAL · ARIE NOMINALĂ 1,131 mm²</span>';
- results.parentNode.insertBefore(box,results);
+ results.insertAdjacentElement("afterend",box);
  box.addEventListener("click",e=>{
   const b=e.target.closest("[data-air]");
   if(!b)return;
