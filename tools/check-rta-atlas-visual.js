@@ -32,6 +32,9 @@ async function main(){
    check(slide!=="0","Carousel must visibly switch photos");
    await screenshot(page,"home-motion-"+width+".png");
    await page.locator(".primary-action").click();
+   // Wait for pageReveal + the reactive liquid-scene animation before snapshots.
+   // Capturing at transition frame zero produced an almost black image despite passing layout tests.
+   await page.waitForTimeout(1150);
    const liquid=await page.evaluate(()=>{
     const a=document.querySelector(".live-scene").getBoundingClientRect();
     const b=document.querySelector("#liquidSearch").getBoundingClientRect();
