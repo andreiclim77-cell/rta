@@ -189,3 +189,22 @@ html,body{max-width:100%;overflow-x:clip}
 .result-card[data-atom="minister"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-minister-mtl-aaa9a33507.jpg")}
 .result-card[data-atom="pmstd"] .atlas-product-photo,.result-card[data-atom="pmfree"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-prime-minister-standard-rhodesian-a53af75bbe.jpg")}
 .result-card[data-atom="kv3"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-kayfun-mini-v3-kv3-mini-38acece1e6.jpg")}
+
+/* V0.2 mobile refinement: the authentic product stays fully inside the frame.
+ * Atmosphere is supplied by the existing local full-bleed image underneath. */
+.cinema-frame img{object-fit:contain;object-position:50% 50%;animation-name:cinemaKenSafe}
+@keyframes cinemaKenSafe{from{transform:scale(1.005)}to{transform:scale(1.055)}}
+/* Controls are tappable above the image; the product caption is never covered. */
+.cinema-controls{top:11px;bottom:auto;right:11px;gap:3px;padding:3px;background:rgba(4,12,16,.66);border:1px solid rgba(226,210,184,.17);border-radius:24px;backdrop-filter:blur(6px)}
+.cinema-controls button:not(#cinemaPause){width:29px;min-width:29px;height:31px;border:0;border-radius:12px;opacity:1;background:transparent;display:grid;place-items:center}
+.cinema-controls button:not(#cinemaPause)::before{content:"";display:block;width:8px;height:8px;border-radius:20px;background:#9dad9f;transition:width .25s,background .25s}
+.cinema-controls button[aria-pressed=true]:not(#cinemaPause){width:29px;background:rgba(237,219,192,.07)}
+.cinema-controls button[aria-pressed=true]:not(#cinemaPause)::before{width:18px;background:#f1d5a8}
+.cinema-controls #cinemaPause{width:31px;height:31px;border-radius:50%}
+.cinema-controls #cinemaPause[hidden]{display:none}
+.cinema-caption{padding-right:0}
+@media(max-width:760px){
+ .cinema-controls{right:9px;top:9px}
+ .cinema-caption{padding-right:0}
+ .cinema-caption a{max-width:132px;font-size:9px;line-height:1.25}
+}
