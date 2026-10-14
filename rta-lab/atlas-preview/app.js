@@ -76,9 +76,14 @@ function vapeDescription(result,liquid){
  return first+", "+pal+", "+force+" și "+th+". Interpretare tehnică orientativă pentru "+liquid.name+" / "+(mood?.name||"context")+".";
 }
 function evidenceFor(result,liquid){
- const namedReports=(result.partialEvidence||[]).filter(r=>!r.liquidName||norm(r.liquidName)===norm(liquid.name));
+ // Distinguish a report tied to this named liquid from an unspecified-liquid
+ // user report (e.g. KLP NiFe30) and a report on a DIFFERENT named liquid.
+ const partial=result.partialEvidence||[];
+ const exact=partial.some(r=>r.liquidName&&norm(r.liquidName)===norm(liquid.name));
+ const unknownLiquid=partial.some(r=>!r.liquidName);
  if(result.anchors?.length)return {label:"Build observat · potrivire pe lichid modelată",kind:"user"};
- if(namedReports.length)return {label:"Observație personală parțială pe acest lichid",kind:"partial"};
+ if(exact)return {label:"Observație personală parțială pe lichidul selectat",kind:"partial"};
+ if(unknownLiquid)return {label:"Observație personală cu lichid neprecizat · aplicarea aici este extrapolată",kind:"partial-context"};
  if(result.personalPreference?.tier===1)return {label:"Preferință personală declarată · rezultat contextual",kind:"user"};
  return {label:"Extrapolare tehnică · nu A/B pe acest lichid",kind:"model"};
 }
