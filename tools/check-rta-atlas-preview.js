@@ -116,7 +116,8 @@ assert.ok(js.includes("Semnalul extern")&&js.includes("Nu inventăm"),"No fabric
 const media=lib.RTA_ATLAS_PHOTOS;
 assert.ok(media&&Object.keys(media).length>=15,"Need real source photos for most platforms");
 for(const [id,p] of Object.entries(media)){
- assert.ok(/^https:\/\//.test(p.src),"Photo must be an actual HTTPS URL: "+id);
+ assert.ok(/^https:\/\//.test(p.src)||p.src.startsWith("../../assets/instagram/"),"Photo must be HTTPS or a verified existing project image: "+id);
+ if(p.src.startsWith("../../"))assert.ok(fs.existsSync(path.resolve(preview,p.src)),"Missing locally hosted real photo: "+id);
  assert.ok(/^https:\/\//.test(p.ref),"Photo must have original attribution URL: "+id);
  assert.ok(p.credit,"Source credit required: "+id);
 }
