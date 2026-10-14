@@ -216,3 +216,9 @@ html,body{max-width:100%;overflow-x:clip}
  -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
  mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
 }
+
+/* Retail packaging headline at top belongs to photo, not the Atlas UI. */
+.cinema-frame[data-cinema-frame="1"]::after{
+ content:"";position:absolute;left:0;right:0;top:0;height:42px;z-index:2;pointer-events:none;
+ background:linear-gradient(180deg,#091217 0%,#091217 18px,rgba(9,18,23,.9) 27px,transparent 100%);
+}
