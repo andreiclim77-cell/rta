@@ -289,3 +289,22 @@ Un modul de pregătire a dovezilor poate extrage BEST + WATCH A + WATCH B din MA
 ---
 
 **Ultima decizie confirmată de utilizator:** să proiectăm cele șase ecrane în conversația curentă, păstrând continuitatea pentru viitorul Work; identitatea vizuală Precision Motion Lab + atmosferă cinematică 30% + rafinament Gallery 10%; multe imagini și motion relevant; istoricul exhaustiv NU este prezentat; BEST + două atenționări, piață verificată, TOP3 atomizoare × TOP3 builduri, Atlas atomizoare, Wire Lab, 4×Top10 și Duel. **Următorul pas:** aprobarea/ajustarea structurii, apoi machete vizuale mobile cu motion demonstrabil.
+## 14. Implementarea machetei vii HOME + LIQUID MATCH (14.10.2026) — PREVIEW, nu produs final
+
+**Status:** prototip funcțional în ramură separată, de evaluat vizual de utilizator; **nu** înlocuiește UI V10. Adresă țintă numai DUPĂ merge + GitHub Pages SUCCESS: `https://ghid-rta.ro/rta-lab/atlas-preview/`.
+
+**Fișiere noi:** `rta-lab/atlas-preview/index.html`, `styles.css`, `app.js`. Resurse canonice importate relativ din `rta-lab/data`: 16 platforme, 620 lichide, 5 familii de sârme, `bell-liquid-fit.js`, `sensory-core.js` și `mood-match.js`. Motorul existent rămâne neatins.
+
+**Ce există deja în această machetă:**
+- Home premium cu ilustrație SVG originală, straturi vizuale, animații de vapori stilizate, microinteracțiuni, 16/42/620, navigație activă și carduri pentru viitoarele module;
+- Liquid Match cu căutare reală din toate cele 620, 3 sugestii rapide rezolvate din catalog, 7 moods și 5 momente selectabile, vizualizator „Liquid Cinema” artistic animat;
+- rezultate **TOP 3 platforme contextuale** din `moodEngine.recommend().ranked.slice(0,3)` (NU „slot de redescoperire” aleatoriu), cu **TOP 3 builduri** generate separat pentru fiecare platformă din `sensory-core.rankBuilds`; setările complete, descrieri senzoriale euristice și scheme SVG animate distincte per build;
+- două note la fiecare atomizor: una extrapolată din alternate builds disponibile și una „piață neinvestigată încă”; **fără review-uri inventate**;
+- demonstrație motion real CSS/SVG, `prefers-reduced-motion`, layout mobile cu navigație jos, acces la V10 vechi, fără date noi adăugate în catalog;
+- afișare zero procente artificiale din scoruri, mențiuni explicite despre certitudine și diferența dintre machetă, simulare și A/B direct.
+
+**Ce NU înseamnă această machetă:** nu conține fotografii finale ale fiecărui RTA (portretele sunt **siluete originale schematice, clar etichetate**, în așteptarea unor imagini autentice/licențiate), nu oferă încă 4×TOP10 verificate și nici interfețele Atomizer Atlas, Wire Lab, Market și Duel; acestea sunt faze ulterioare. Nu afirmă că a fost testată pe un dispozitiv mobil real.
+
+**Testare:** `tools/check-rta-atlas-preview.js` validează cele 140 scenarii 4 clase × 7 mood × 5 moments, cele trei platforme distincte cu trei builduri valide, catalog 620, lipsa procentelor fabricate, căutarea, ordinea scripturilor, motion și reduced-motion; este conectat la Quality Gate. GitHub Pages poate eșua independent de CI; numai raportul de deploy SUCCESS la commitul curent permite distribuirea linkului ca versiune publicată.
+
+**Următorul pas:** validarea QA și deploy, apoi utilizatorul testează prototipul mobil și dă feedback specific asupra imaginilor, mișcării, structurii TOP 3×3 și impresiei „WOW”. Se ajustează numai prototipul, nu aplicația V10.
