@@ -10,7 +10,7 @@ const engine=read("rta-lab/engine.js");
 const sensory=read("rta-lab/sensory-ui.js");
 const css=read("rta-lab/sensory-ui.css");
 const sw=read("rta-lab/sw.js");
-for(const [f,version] of [["engine.js","10-personal-20261014"],["sensory-ui.js","10-personal-20261014"],["sensory-ui.css","10-three-zone-20261013"]]){
+for(const [f,version] of [["engine.js","10-personal-20261014"],["sensory-ui.js","10-cl-pair-20261014"],["sensory-ui.css","10-cl-pair-20261014"]]){
  const asset="./"+f+"?v="+version;
  assert.ok(html.includes(asset),"HTML must load updated "+f);
  assert.ok(sw.includes(asset),"service worker must precache updated "+f);
