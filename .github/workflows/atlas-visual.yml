@@ -1,0 +1,33 @@
+name: RTA Atlas V02 Visual Mobile Gate
+on:
+  pull_request:
+    paths:
+      - "rta-lab/atlas-preview/**"
+      - "tools/check-rta-atlas-visual.js"
+      - ".github/workflows/atlas-visual.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  mobile-chrome:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Install headless browser driver
+        run: |
+          npm install --no-save --ignore-scripts playwright-core@1.56.1
+          which google-chrome || which google-chrome-stable
+      - name: Verify real mobile layout, photography, and interaction motion
+        run: node tools/check-rta-atlas-visual.js
+      - name: Save mobile screenshots for review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: atlas-v02-mobile-screenshots
+          path: artifacts/atlas-v02-mobile/
+          if-no-files-found: warn
+          retention-days: 14
