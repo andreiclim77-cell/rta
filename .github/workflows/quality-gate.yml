@@ -124,6 +124,15 @@ jobs:
           if (!/insert 3×0,6 mm/.test(dvarwClAtomLine) || !/K1 28 GA = Ø2,5 \/ 6 spire/.test(dvarwClAtomLine)) {
             throw new Error('Dvarw CL atom DNA must contain insert 3×0,6 + K1 28/6 on Ø2,5');
           }
+          const mutedAtomLine = atomLine('muted');
+          if (!/K1 28 GA \/ 6 spire/.test(mutedAtomLine)) {
+            throw new Error('Muted+ platform DNA must include direct preference for K1 28/6');
+          }
+          const dvarwFlAtomLine = atomLine('dvarwfl');
+          if (!/insert 3×0,6/.test(dvarwFlAtomLine) || !/K1 28 GA\/6/.test(dvarwFlAtomLine) ||
+              !/Balkan Milestone/.test(dvarwFlAtomLine)) {
+            throw new Error('Dvarw FL must document 3×0,6 / K1 28/6 Balkan Milestone A/B');
+          }
           const asylumAtomLine = atomLine('asylum');
           if (!/clopot Flat/.test(asylumAtomLine) || !/K1 28 GA = Ø2,5 \/ 6 spire/.test(asylumAtomLine)) {
             throw new Error('Asylum atom DNA must contain Flat + K1 28/6 on Ø2,5');
@@ -132,7 +141,7 @@ jobs:
           const rules = [...engine.matchAll(/"([^"]+)"\s*:\s*\{\s*k128:\s*(\d+),\s*k129:\s*(\d+)/g)];
           if (rules.length !== 16) throw new Error(`Expected 16 airflow rules; found ${rules.length}`);
           for (const [, atom, k128, k129] of rules) {
-            if (['kv3', 'dvarwcl', 'asylum'].includes(atom)) {
+            if (['kv3', 'dvarwcl', 'dvarwfl', 'muted', 'asylum'].includes(atom)) {
               if (Number(k128) !== 6) throw new Error(`${atom}: K1 28 GA must be 6 wraps`);
             } else if (Number(k128) !== 5) throw new Error(`${atom}: K1 28 GA must be 5 wraps`);
             if (atom === 'kv3') {
