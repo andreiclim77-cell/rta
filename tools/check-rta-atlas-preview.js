@@ -96,7 +96,7 @@ for(const str of ["@keyframes flowPaths","@keyframes drawWave","@keyframes cardR
  assert.ok(css.includes(str),"Motion or reduced-motion rule missing: "+str);
 }
 assert.ok(css.includes(".bottom-tabs")&&css.includes("max-width:440px"),"Mobile adaptation missing");
-assert.ok(js.includes("Semnalul extern")&&js.includes("nu inventăm"),"No fabricated market review guard");
+assert.ok(js.includes("Semnalul extern")&&js.includes("Nu inventăm"),"No fabricated market review guard");
 assert.ok(js.includes("result.items[0]")||js.includes("result.items.map"));
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(refs.length,25,"Expected 21 catalog/atoms files plus fit, core, mood, app");
