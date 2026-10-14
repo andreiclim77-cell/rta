@@ -1,10 +1,11 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-**Fișier canonic RTA Lab · stare consolidată 13.10.2026.**
+**Fișier canonic RTA Lab · stare consolidată 14.10.2026; există separat un blueprint UI în curs de aprobare.**
 
 - Repo: `andreiclim77-cell/rta`
 - Branch: `main`
 - Cale stabilă: `rta-lab/RTA_CONTINUITY_MASTER.md`
+- **Design nou, neimplementat încă:** [`rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md`](RTA_ATLAS_DESIGN_BLUEPRINT.md) — proiectul RTA Sensory Atlas / Precision Motion Lab, 6 ecrane, media/motion și predare în Work.
 - Trigger reîncărcare: **„du-te în Lab și actualizează-te!”**
 - Trigger persistență: **„salvează”**
 - Trigger arhivă completă: **„da mi arhiva de continuitate la zi”**
@@ -545,3 +546,27 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 - **Stadiu în proces:** implementare în ramura de lucru → CI RTA + Market Quality Gate → integrare `main` → confirmare GitHub Pages. Marcați rezultatele numai după verificare, nu înainte de deploy.
 
 **Următoarea îmbunătățire opțională:** export/import al fișelor fizice pentru transfer între dispozitive, numai la cererea utilizatorului (nu există sincronizare cross-device în această etapă).
+
+## 23. PRECISION MOTION LAB — direcție vizuală + blueprint de șase ecrane (14.10.2026)
+
+**Status: arhitectură PROPUSĂ pentru aprobare; INTERFAȚA FUNCȚIONALĂ NU A FOST RESCRISĂ.**
+
+**Cererea actuală a utilizatorului:** noul RTA Lab să valorifice rezultatele cele mai bune din experiența personală, **fără a relata întregul șir de experimente** (multe pot fi depășite, irelevante ori greșite). Pentru fiecare rezultat principal: **două atenționări/oportunități**, una extrapolată din know-how-ul propriu și una susținută de experiența/review-urile reale ale pieței, fără consens inventat. Utilizatorul vrea multe imagini, animații explicative și atmosferice cu adevărat funcționale, nu doar descrieri ale mișcării.
+
+**Identitatea vizuală aleasă:** **Concept B — Precision Motion Lab** ca bază, cu **30% atmosferă A Cinematic Atlas + 10% rafinament C Collector's Gallery**. Compoziția normalizată orientativă este **60/30/10**. Eleganță tehnică, imagini de produs autentice/licențiate, scenografie atmosferică proprie, airflow și coil animate schematic, UI mobil prioritar, performanță și reduced-motion. Designul concret urmează să fie validat prin machete.
+
+**Cele șase ecrane stabilite drept obiect al proiectării:**
+1. **HOME** — acces rapid prin lichid / atomizor / sârmă, plus Market și Duel.
+2. **LIQUID MATCH** — lichid + moment + stare + obiectiv → **TOP 3 atomizoare contextuale × TOP 3 builduri complete per atomizor**, cu BEST actual, două direcții WATCH, descriere senzorială și proveniență. Integrare **Liquid Cinema**.
+3. **ATOMIZER ATLAS** — 16 portrete de platforme; ADN complet, familiile de lichide și sârme favorizate, TOP3 builduri, apoi cele 42 de exemplare fizice la nivel de fișe; păstrează local saved/draft pentru 3 CL.
+4. **WIRE LAB** — cele cinci familii de sârme și aliajele Dicodes NiFe30/Zivipf NiFe52 distincte; WATT/TC corect, variații geometrice, influența setărilor, animații explicative, fără simulări termice false.
+5. **MARKET HALL OF FAME** — cercetare cu surse, **4 × TOP 10** pentru NET simplu / NET complex / tutunos simplu / tutunos complex; nu umple locurile fără dovezi, fără prețuri sau popularitate inventate.
+6. **DUEL MODE** — două configurații complete într-un context comun, comparații care explică variabilele și compromisul.
+
+**Procentuale:** doar diferențe **strict peste 10%** și *documentate pe bază comparabilă reală*, cu sursă și context; **nu** calcula procente din scoruri heuristice 1–5 și nu inventa procente de plăcere. Exemplul FL 3×0,6 + Balkan Milestone „palat ~25%” este **autoevaluarea personală** pentru cazul respectiv, nu procent universal.
+
+**Sursa documentară completă, obligatorie înainte de Work:** [`RTA_ATLAS_DESIGN_BLUEPRINT.md`](RTA_ATLAS_DESIGN_BLUEPRINT.md). Conține structura/wireframe-ul textual, ierarhia vizuală, fluxul de date, media/motion, UX mobil, gardurile, criteriile de acceptare, planul de implementare și protocolul de continuitate. Citește **atât acest blueprint, cât și MASTER**, apoi codul real din `main`; nu cere utilizatorului să repete istoricul.
+
+**Ordinea de lucru aprobată:** arhitectură în conversația actuală → revizie conceptuală → **machete mobile/animabile demonstrate** → aprobare utilizator → implementare în branch/staging, eventual în **Work în același fir dacă UI permite** → testele automate și vizuale → lansare numai când clar mai bun. Nu pretinde că Work preia automat toate detaliile; fișierele din GitHub asigură predarea, inclusiv dacă interfața inițiază o sesiune nouă. Nicio mutare în Work și nicio editare de cod de producție nu s-a făcut în acest checkpoint.
+
+**Următorul pas:** să prezentăm utilizatorului în conversație arhitectura vizibilă a tuturor celor șase ecrane, apoi să obținem feedback asupra ierarhiei și să realizăm **machetele mobile ale Home și Liquid Match, cu motion adevărat**, înaintea celorlalte patru.
