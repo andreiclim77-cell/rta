@@ -122,8 +122,9 @@ for(const [id,p] of Object.entries(media)){
  assert.ok(/^https:\/\//.test(p.src)||p.src.startsWith("../../assets/instagram/"),"Photo must be HTTPS or a verified existing project image: "+id);
  if(p.src.startsWith("../../"))assert.ok(fs.existsSync(path.resolve(preview,p.src)),"Missing locally hosted real photo: "+id);
  if(p.fallbackSrc){
-  assert.ok(p.fallbackSrc.startsWith("../../assets/instagram/"),"Fallback must reuse project assets: "+id);
+  assert.ok(p.fallbackSrc.startsWith("../../assets/instagram/")||p.fallbackSrc.startsWith("./media/"),"Fallback must use traceable project media: "+id);
   assert.ok(fs.existsSync(path.resolve(preview,p.fallbackSrc)),"Missing decoded-photo fallback candidate: "+id);
+  if(p.fallbackSrc.startsWith("./media/"))assert.ok(p.fallbackCredit&&p.fallbackRef,"Local vendor photo must retain actual attribution: "+id);
  }
  assert.ok(/^https:\/\//.test(p.ref),"Photo must have original attribution URL: "+id);
  assert.ok(p.credit,"Source credit required: "+id);

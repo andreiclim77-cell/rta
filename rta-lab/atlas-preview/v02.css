@@ -212,13 +212,13 @@ html,body{max-width:100%;overflow-x:clip}
 /* GT One: the distributor photograph has printed branding at the edges.
  * Vignette those borders, without distorting or hiding the centered product. */
 .cinema-frame[data-cinema-frame="1"]{background:#091217}
-.cinema-frame[data-cinema-frame="1"] img{
+.cinema-frame[data-cinema-frame="1"]:not(.project-archive-fallback) img{
  -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
  mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
 }
 
 /* Retail packaging headline at top belongs to photo, not the Atlas UI. */
-.cinema-frame[data-cinema-frame="1"]::after{
+.cinema-frame[data-cinema-frame="1"]:not(.project-archive-fallback)::after{
  content:"";position:absolute;left:0;right:0;top:0;height:42px;z-index:2;pointer-events:none;
  background:linear-gradient(180deg,#091217 0%,#091217 18px,rgba(9,18,23,.9) 27px,transparent 100%);
 }
@@ -272,3 +272,18 @@ html,body{max-width:100%;overflow-x:clip}
 /* Motion refinement: keep actionable text sharp at all times.
    Only the SVG waves morph via the existing requestAnimation/WAAPI path. */
 .live-scene.cinema-react{animation:none!important;filter:none!important}
+
+/* Keep the full compact setup readable, and pause the photograph itself. */
+.photo-cinema.is-paused .cinema-frame img,.photo-cinema.is-paused .cinema-live{animation-play-state:paused}
+.live-scene .wave{animation-name:cinemaTrace}
+@keyframes cinemaTrace{from{stroke-dashoffset:130;opacity:.7}to{stroke-dashoffset:0;opacity:1}}
+.cinema-frame.has-local-fallback,.atlas-product-photo.has-local-fallback{background-image:none}
+.suggestions{top:100%;margin-top:4px}
+@media(max-width:760px){
+ .scene-match{min-height:69px}
+ .scene-match-copy small{white-space:normal;overflow:visible;text-overflow:clip;font-size:10px;line-height:1.4}
+ .live-scene .chromatogram{height:69px;max-height:69px;opacity:1}
+ .search-surface .clear-search{min-width:36px;min-height:40px}
+ .air-flow-path path{stroke-width:5}
+ .air-flow-path .air-particle{r:4.5}
+}

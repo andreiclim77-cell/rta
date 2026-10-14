@@ -3,12 +3,18 @@ window.RTA_ATLAS_PHOTOS={
   "415": {
     "src": "https://thevapinggentlemen.club/cdn/shop/products/415v2_1.jpg?v=1593263577",
     "ref": "https://thevapinggentlemen.club/products/415-rta-mtl",
-    "credit": "The Vaping Gentlemen Club"
+    "credit": "The Vaping Gentlemen Club",
+    "fallbackSrc": "./media/415-mtl.jpg",
+    "fallbackRef": "https://thevapinggentlemen.club/products/415-rta-mtl",
+    "fallbackCredit": "The Vaping Gentlemen Club · copie locale"
   },
   "gtone": {
     "src": "https://thevapinggentlemen.club/cdn/shop/products/gt-one001.jpg?v=1633109546&width=1080",
     "ref": "https://thevapinggentlemen.club/products/copia-del-taifun-gt-one",
-    "credit": "The Vaping Gentlemen Club"
+    "credit": "The Vaping Gentlemen Club",
+    "fallbackSrc": "./media/taifun-gt-one.jpg",
+    "fallbackRef": "https://thevapinggentlemen.club/products/copia-del-taifun-gt-one",
+    "fallbackCredit": "The Vaping Gentlemen Club · copie locale"
   },
   "kx": {
     "src": "https://thevapinggentlemen.club/cdn/shop/products/KayfunX2.jpg?v=1658321198",
@@ -90,8 +96,6 @@ window.RTA_ATLAS_PHOTOS={
 (function(){
  const localFallbackPhotos={
   "kx":"../../assets/instagram/atomizer-kayfun-x-243c328b6f.jpg",
-  "gtone":"../../assets/instagram/atomizer-taifun-gt-one-b29f733077.jpg",
-  "415":"../../assets/instagram/atomizer-four-one-five-415rta-mtl-ba219d9875.jpg",
   "dvarwfl":"../../assets/instagram/atomizer-dvarw-mtl-fl-dda12456be.jpg",
   "muted":"../../assets/instagram/atomizer-muted-23ed383402.jpg",
   "diplomat":"../../assets/instagram/atomizer-centenary-diplomat-v1-5-mtl-rta-84d651448b.jpg",

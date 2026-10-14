@@ -32,7 +32,9 @@ function gallery(){
    const media=photos[scenes[i].id];
    if(media?.fallbackSrc&&!img.dataset.photoFallback){
     img.dataset.photoFallback="local";
-    img.alt=scenes[i].name+" — fotografie din arhiva RTA (proveniență de verificat)";
+    img.parentElement.classList.add("has-local-fallback");
+    if(!media.fallbackRef)img.parentElement.classList.add("project-archive-fallback");
+    img.alt=scenes[i].name+(media.fallbackRef?" — copie locală a fotografiei de produs":" — fotografie din arhiva RTA (proveniență de verificat)");
     img.src=media.fallbackSrc;
     if(i===position)updateCredit(i);
     return;
@@ -54,6 +56,7 @@ function gallery(){
    setSlide(Number(b.dataset.cinemaSelect));resetClock();
   }else if(b.id==="cinemaPause"){
    paused=!paused;
+   host.classList.toggle("is-paused",paused);
    b.setAttribute("aria-pressed",String(paused));
    b.setAttribute("aria-label",paused?"Pornește animația":"Oprește animația");
    b.textContent=paused?"▶":"Ⅱ";
@@ -68,6 +71,11 @@ function updateCredit(index){
  const img=document.querySelector('[data-cinema-frame="'+index+'"] img');
  if(!photo||!link)return;
  if(img?.dataset.photoFallback==="local"){
+  if(photo.fallbackRef){
+   link.href=photo.fallbackRef;link.target="_blank";
+   link.textContent="FOTO / "+photo.fallbackCredit+" ↗";
+   return;
+  }
   link.removeAttribute("href");
   link.removeAttribute("target");
   link.textContent="FOTO / Arhiva RTA · sursa de verificat";
@@ -90,7 +98,8 @@ function setSlide(index){
 }
 function resetClock(){
  if(clock){clearInterval(clock);clock=null;}
- if(!paused&&!prefersReduced()&&!document.hidden)clock=setInterval(()=>setSlide((position+1)%scenes.length),3200);
+ if(!paused&&!prefersReduced()&&!document.hidden&&!document.getElementById("pageHome")?.hidden)
+  clock=setInterval(()=>setSlide((position+1)%scenes.length),3200);
 }
 function animateLiquid(){
  const scene=document.querySelector(".live-scene");
@@ -155,12 +164,14 @@ function installResultPhotoFallback(){
   const figure=img.closest(".atlas-product-photo");
   if(fallback&&!img.dataset.photoFallback){
    img.dataset.photoFallback="local";
+   figure.classList.add("has-local-fallback");
    img.alt="Fotografie din arhiva RTA · proveniență de verificat";
    img.src=fallback;
    const credit=figure.querySelector("figcaption a");
    if(credit){
-    credit.removeAttribute("href");credit.removeAttribute("target");
-    credit.textContent="FOTO / Arhiva RTA · sursa de verificat";
+    const photo=window.RTA_ATLAS_PHOTOS[id];
+    if(photo.fallbackRef){credit.href=photo.fallbackRef;credit.textContent="FOTO / "+photo.fallbackCredit+" ↗";}
+    else{credit.removeAttribute("href");credit.removeAttribute("target");credit.textContent="FOTO / Arhiva RTA · sursa de verificat";}
    }
    return;
   }
@@ -185,6 +196,8 @@ function init(){
   if(e.target.closest("[data-mood],[data-moment],[data-liquid]"))animateLiquid();
  });
  document.addEventListener("visibilitychange",resetClock);
+ const home=document.getElementById("pageHome");
+ if(home&&window.MutationObserver)new MutationObserver(resetClock).observe(home,{attributes:true,attributeFilter:["hidden"]});
 }
 window.RTA_ATLAS_V02={setSlide,animateLiquid,airSvg};
 document.addEventListener("DOMContentLoaded",init);

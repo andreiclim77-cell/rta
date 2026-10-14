@@ -49,6 +49,11 @@ function setupSummary(result){
  const c=result.config;
  return "Ø"+String(c.coilMm).replace(".",",")+" mm · "+buildEnergy(result);
 }
+function compactBuild(result){
+ const c=result.config,w=core.wires[c.wire];
+ const name=w.name.replace("Dicodes RESISTHERM ","Dicodes ").replace("Kanthal A1 ","K1 ");
+ return name+" · "+c.wraps+" spire · Ø"+String(c.coilMm).replace(".",",")+" · "+buildEnergy(result);
+}
 function labelScore(v){
  if(v>=4.65)return "foarte pronunțat";
  if(v>=4.2)return "pronunțat";
@@ -191,7 +196,8 @@ function updateSceneMatch(result){
  const atom=element("sceneMatchAtom"),detail=element("sceneMatchBuild");
  if(!atom||!detail)return;
  atom.textContent=build?(item.atom?.short||item.id):"Context indisponibil";
- detail.textContent=build?buildString(build)+" · "+setupSummary(build):"Alege alt context.";
+ detail.textContent=build?compactBuild(build):"Alege alt context.";
+ detail.title=build?buildString(build)+" · "+setupSummary(build):"";
 }
 function scrollToBest(){
  const target=element("resultCards")?.querySelector(".result-card")||element("resultsSection");
@@ -268,6 +274,11 @@ function renderSuggestions(){
   '<button type="button" id="liquidOpt'+i+'" class="suggestion'+(i===0?' is-active':'')+'" role="option" aria-selected="'+(i===0)+'" data-liquid="'+x.index+'">'+
   '<strong>'+esc(liquidName(x.liquid))+'</strong><small>'+esc(x.liquid.class)+' · '+esc(x.liquid.profile||"")+'</small></button>').join("");
 }
+function closeSuggestions(){
+ element("liquidSuggestions").hidden=true;
+ element("liquidSearch").setAttribute("aria-expanded","false");
+ element("liquidSearch").removeAttribute("aria-activedescendant");
+}
 function route(to,push=true){
  if(!["home","liquid"].includes(to))return false;
  state.route=to;
@@ -307,9 +318,7 @@ function init(){
  element("liquidSearch").addEventListener("keydown",ev=>{
   const list=element("liquidSuggestions"),input=ev.currentTarget;
   if(ev.key==="Escape"){
-   list.hidden=true;
-   input.setAttribute("aria-expanded","false");
-   input.removeAttribute("aria-activedescendant");
+   closeSuggestions();
    return;
   }
   if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){
@@ -325,10 +334,16 @@ function init(){
    options[state.activeSuggestion].scrollIntoView({block:"nearest"});
    return;
   }
-  if(ev.key==="Enter"){
+  if(ev.key==="Enter"&&!list.hidden){
    const hits=liquidSearch(input.value,10);
    if(hits.length){ev.preventDefault();selectLiquid(hits[Math.min(state.activeSuggestion,hits.length-1)].index);}
   }
+ });
+ document.addEventListener("focusin",ev=>{
+  if(!ev.target.closest?.(".liquid-search-wrap"))closeSuggestions();
+ });
+ document.addEventListener("click",ev=>{
+  if(!ev.target.closest?.(".liquid-search-wrap"))closeSuggestions();
  });
  element("clearSearch").addEventListener("click",()=>{
   element("liquidSearch").value="";
@@ -342,7 +357,7 @@ function init(){
  window.addEventListener("popstate",()=>route(window.location.hash==="#liquid"?"liquid":"home",false));
 }
 window.RTA_ATLAS_PREVIEW={
- version:"0.2-real-photo-motion",compose,liquidSearch,buildString,
+ version:"0.2-real-photo-motion",compose,liquidSearch,buildString,compactBuild,
  renderCoil,qualities,vapeDescription,evidenceFor,state,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
  init
 };
