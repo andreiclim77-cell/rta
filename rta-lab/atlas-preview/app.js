@@ -100,25 +100,12 @@ function rankFor(liquidIndex,moodId,momentId){
  return {liquid,mood,moment:momentById(momentId),items:selected};
 }
 function renderAbstractAtom(atom,rank){
- const id=esc(atom.id).replace(/[^a-z0-9_-]/gi,"");
- const long=["gtr","kx","kprime","klp","diplomat","muted"].includes(atom.id);
- const fl=["dvarwfl","dvarwcl"].includes(atom.id);
- const w=fl?70:long?75:80;
- const x=130-w/2;
- const bodyH=fl?83:long?95:79;
- const y=45;
- const tag=rank===1?"A":"B";
- return '<svg viewBox="0 0 260 180" role="img" aria-label="Siluetă stilizată a unui atomizor, nu fotografie">'+
- '<defs><linearGradient id="metal-'+id+'" x1="0" x2="1"><stop stop-color="#243940"/><stop offset=".2" stop-color="#b6c7c2"/><stop offset=".47" stop-color="#384f56"/><stop offset=".76" stop-color="#d9d4c7"/><stop offset="1" stop-color="#294049"/></linearGradient></defs>'+
- '<ellipse cx="130" cy="159" rx="75" ry="11" fill="#99b8aa" opacity=".12"/>'+
- '<path d="M112 24H148V48H112Z" rx="6" fill="url(#metal-'+id+')" stroke="#b5d0be" stroke-opacity=".37"/>'+
- '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+bodyH+'" rx="8" fill="url(#metal-'+id+')" stroke="#e5d1b0" stroke-opacity=".32"/>'+
- '<rect x="'+(x+9)+'" y="'+(y+16)+'" width="'+(w-18)+'" height="'+(bodyH-32)+'" rx="5" fill="#23454b" opacity=".76" stroke="#9bc8bd" stroke-opacity=".27"/>'+
- '<path d="M'+(x+16)+' '+(y+20)+'V'+(y+bodyH-19)+' M'+(x+w-16)+' '+(y+20)+'V'+(y+bodyH-19)+'" stroke="#dce3d1" stroke-opacity=".27" stroke-width="3"/>'+
- '<rect x="'+(x+4)+'" y="'+(y+bodyH)+'" width="'+(w-8)+'" height="14" rx="4" fill="url(#metal-'+id+')"/>'+
- '<path d="M'+(x+6)+' '+(y+8)+'H'+(x+w-6)+' M'+(x+6)+' '+(y+bodyH-8)+'H'+(x+w-6)+'" stroke="#263941" stroke-width="3" opacity=".5"/>'+
- '<text x="214" y="36" fill="#cbb894" font-size="9" letter-spacing="2">'+tag+' / '+rank+'</text>'+
- '</svg>';
+ const record=window.RTA_ATLAS_PHOTOS?.[atom.id];
+ if(!record)return '<div class="atlas-missing-photo">Fotografie verificată încă indisponibilă pentru '+esc(atom.short)+'</div>';
+ return '<figure class="atlas-product-photo">'+
+  '<img src="'+esc(record.src)+'" loading="lazy" decoding="async" alt="'+esc(atom.short)+' — fotografie de produs" />'+
+  '<figcaption><a href="'+esc(record.ref)+'" target="_blank" rel="noopener noreferrer" title="Fotografie reală: '+esc(record.credit)+'">FOTO: '+esc(record.credit)+' ↗</a></figcaption>'+
+  '</figure>';
 }
 function renderCoil(config){
  const a=tech(config.atom)?.air.find(x=>x.id===config.air);
@@ -307,7 +294,7 @@ function init(){
  window.addEventListener("popstate",()=>route(window.location.hash==="#liquid"?"liquid":"home",false));
 }
 window.RTA_ATLAS_PREVIEW={
- version:"0.1-home-liquid-prototype",compose,liquidSearch,buildString,
+ version:"0.2-real-photo-motion",compose,liquidSearch,buildString,
  renderCoil,qualities,vapeDescription,evidenceFor,state,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
  init
 };
