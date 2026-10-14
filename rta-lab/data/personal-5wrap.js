@@ -66,7 +66,7 @@
         output.wraps = "6";
         output.status = "Validat practic · Dvarw CL · 3×0,6 · 28/6";
         output.noteClass = "valid";
-        output.note = "Dvarw MTL CL cu insert 3×0,6 păstrează K1 28 GA / Ø2,5 / 6 spire ca regulă activă validată: airflow multipunct mai lat, layering și dezvoltare aromatică mai completă.";
+        output.note = "Dvarw MTL CL cu 3×0,6 și K1 28 GA / Ø2,5 / 6 spire rămâne prima alegere personală de airflow. Separat, insertul 1×1,2 cu K1 28 GA / 5 spire a fost raportat ca mergând bine: este o alternativă reușită, nu un setup slab. Nu compara inserturile ca singura variabilă, fiindcă se schimbă și numărul de spire.";
         return output;
       }
       if (atom.id === "dvarwfl") {
@@ -147,7 +147,7 @@
         return `${base}; 29/5 contact are prior personal transversal pentru gustul utilizatorului`;
       }
       if (wire.id === "k128" && atom.id === "kv3") return `${base}; pe KV3 Mini 28/6 este excepția activă validată`;
-      if (wire.id === "k128" && atom.id === "dvarwcl") return `${base}; pe Dvarw CL cu 3×0,6, 28/6 este regula activă validată`;
+      if (wire.id === "k128" && atom.id === "dvarwcl") return `${base}; Dvarw CL 3×0,6 + K1 28/6 este preferat, dar și 1×1,2 + K1 28/5 merge bine, separat validat personal`;
       if (wire.id === "k128" && atom.id === "asylum") return `${base}; pe Asylum V3 Flat, 28/6 este regula activă validată`;
       if (wire.id === "k128" && atom.id === "dvarwfl") return `${base}; pe Dvarw FL 3×0,6 cu Balkan Milestone, 28/6 și-a demonstrat preferința față de FL 1×1,2/6`;
       if (wire.id === "k128" && atom.id === "muted") return `${base}; pe Muted+ K1 28/6 este prima preferință declarată, fără airflow specificat`;
@@ -165,7 +165,7 @@
         return `${base} · Prior personal: 29/5 contact înainte de 29/6, dacă platforma nu are o excepție validată.`;
       }
       if (wire.id === "k128" && atom.id === "kv3") return `${base} · Excepție KV3 Mini validată: 28/6 pe Ø2,5.`;
-      if (wire.id === "k128" && atom.id === "dvarwcl") return `${base} · Dvarw CL 3×0,6 validat: 28/6 pe Ø2,5.`;
+      if (wire.id === "k128" && atom.id === "dvarwcl") return `${base} · Dvarw CL: preferat 3×0,6 / K1 28/6; reușit și 1×1,2 / K1 28/5. Nu deduce diferența doar din insert.`;
       if (wire.id === "k128" && atom.id === "dvarwfl") return `${base} · Dvarw FL 3×0,6 / K1 28/6 testat pe Balkan Milestone, mai mult palat și spectru decât 1×1,2 la 6 spire.`;
       if (wire.id === "k128" && atom.id === "muted") return `${base} · Muted+ preferință direct declarată: K1 28/6, parametri suplimentari de confirmat.`;
       if (wire.id === "k128" && atom.id === "asylum") return `${base} · Asylum V3 Flat validat: 28/6 pe Ø2,5.`;
