@@ -20,7 +20,7 @@ function gallery(){
    '<img alt="'+item.name+' — fotografie reală de produs" src="'+media.src+'" decoding="async" '+(i===0?'fetchpriority="high"':'loading="lazy"')+'></div>';
  }).join("");
  host.innerHTML=slides+'<div class="cinema-vignette" aria-hidden="true"></div>'+
-  '<div class="cinema-top"><span class="cinema-live"></span> YOUR REAL ATOMIZERS</div>'+
+  '<div class="cinema-top"><span class="cinema-live"></span> MODELE / FOTO REALĂ</div>'+
   '<div class="cinema-caption"><strong id="cinemaProduct">'+scenes[0].name+'</strong>'+
   '<a id="cinemaCredit" target="_blank" rel="noopener noreferrer" href="'+photos[scenes[0].id].ref+'">FOTO / '+photos[scenes[0].id].credit+' ↗</a></div>'+
   '<div class="cinema-controls" role="group" aria-label="Schimbă fotografia">'+
