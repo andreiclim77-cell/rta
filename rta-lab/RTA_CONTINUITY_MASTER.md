@@ -619,3 +619,15 @@ Rezultatul confirmat pe HEAD-ul precedent `90ba8d6a`: RTA Guide Quality Gate `38
 Îmbunătățiri incrementale: foto reală afișată integral, carousel motion limitat și controlabil, credite corecte pentru fallback local, TOP1 închis inițial pe mobil, verificare automată 360×800 și 390×844 a încărcării reale a imaginilor și interacțiunilor. Nu se inventează fotografii, recenzii, procente de plăcere sau montări fizice.
 
 **Nu declara publicată această corecție înainte de merge + GitHub Pages SUCCESS pe SHA-ul de merge. Nu declara design aprobat fără review-ul pe telefon al utilizatorului.** Nu începe Atomizer Atlas / Wire Lab / Market / Duel pe un stil încă neaprobat. Handofful §7 este checkpointul operațional detaliat.
+
+## 29. Atlas V0.2 — Quick-Path mobil verificat în PR #45 (14.10.2026)
+
+**Actualizare față de §28:** implementarea V0.2 continuă **doar în ramura PR #45**, fără nicio schimbare a V10, motorului, celor 620 de lichide, 16 platforme, 42 atomizoare, 120 Hall of Fame, fișelor Dvarw CL saved/draft sau configurațiilor validate. Respingerea V0.1 și lipsa aprobării finale V0.2 sunt în continuare valide.
+
+**Problema identificată în 13 capturi reale de mobil:** titlul + scena și formularul împingeau primul rezultat sub viewport; la căutare apăreau două controale de ștergere, iar unele stări selectate rămâneau retezate. La schimbarea stării, `cinemaSwitch` aplica temporar blur întregului panou, inclusiv informației contextuale.
+
+**Rezolvare în `rta-lab/atlas-preview/{index.html,app.js,v02.css,v02.js}`:** scena Liquid Cinema prezintă potrivirea #1 derivată din **același clasament contextual** folosit pentru 3×3, nu un nou motor; linkul din scenă face scroll la primul card vizibil; ierarhia mobilă este condensată fără a elimina controalele 7×5 sau exemplarele de lichide; selecțiile active din rail sunt aduse în aria vizibilă. Inputul ascunde X-ul nativ și are control tastatură combobox; demonstrația airflow rămâne după cele trei rezultate. SVG-ul se mișcă, dar cardul de informație rămâne clar. Scorurile sunt **euristice**, nu procente de plăcere; evidența și cele două watchlist-uri rămân neschimbate.
+
+**Probe efective pentru commit de cod `8ee748f6d1f671898211e03aefa72f2b5216aac1`:** RTA Guide Quality Gate `38616814458` SUCCESS; Market Quality Gate `38616814764` SUCCESS; Atlas Visual Mobile Gate `38616815025` SUCCESS; artifact `11920830826` cu 13 capturi Chromium verificate, inclusiv 360×800 și 390×844, rezultatul contextului, clic rapid, căutare ArrowDown/Enter, fotografie decodată, fallback offline, airflow, selected chips și reduced-motion. Testele nu înlocuiesc aprobarea vizuală pe telefonul real.
+
+**Stare finală a acestei etape:** candidat îmbunătățit pentru review, PR #45 încă DRAFT, nu publicare nouă; site-ul live continuă să servească V0.2 din `main`. Urmează feedback/aprobare explicită → merge PR + verificare Pages/CI pe SHA exact → ulterior portretele Atomizer Atlas și Wire Lab. Celelalte patru ecrane nu se construiesc pe un design neaprobat.
