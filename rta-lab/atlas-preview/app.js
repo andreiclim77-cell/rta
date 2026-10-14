@@ -141,7 +141,7 @@ function renderBuild(result,rank,liquid){
   '<b>Clopot:</b> '+esc(window.RTA_BELL_LIQUID_FIT.config(cfg.atom)?.bells?.find(b=>b.id===cfg.bell)?.name||"standard")+'<br>'+
   '<b>Regim:</b> '+esc(setupSummary(result))+'</div>'+
   '<p class="build-sensory">'+esc(line)+'</p>'+
-  '<div class="build-evidence">'+esc(evidence.label)+'</div></article>';
+  '<div class="build-evidence">'+esc(evidence.label)+'</div><button type="button" class="module-link" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(cfg)))+'">Compară acest build ↗</button></article>';
 }
 function watchInternal(item){
  const alt=item.builds[1];

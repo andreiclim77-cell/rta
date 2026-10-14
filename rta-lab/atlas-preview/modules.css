@@ -40,6 +40,12 @@
 .wire-advanced{grid-column:1/-1;padding:10px 0}.wire-advanced summary{cursor:pointer;font-size:12px;color:#dbc399;margin-bottom:15px}
 .gain-trade{display:grid;grid-template-columns:1fr 1fr;gap:20px}.gain-trade h3{font-size:15px}.gain-trade li{font-size:12px;color:#b6cabe;line-height:1.9}
 .liquid-links{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px}.liquid-links button{display:flex;flex-direction:column;text-align:left;gap:5px;background:#14292c;color:#ecedde;border:1px solid #315054;padding:13px;border-radius:10px}.liquid-links b{font-size:12px}.liquid-links small{font-size:10px;color:#9eb8b1}
+.duel-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.duel-card{padding:19px;border:1px solid #34504d;border-radius:16px;background:linear-gradient(130deg,#162729,#0b181c)}
+.duel-card label{display:flex;flex-direction:column;gap:7px;font-size:11px;color:#afc8c0;margin:15px 0}.duel-card select{min-width:0;width:100%;min-height:43px;border:1px solid #35504e;border-radius:8px;background:#08171b;color:#e3e8da;padding:10px;font-size:12px}
+.duel-photo{height:245px;border-radius:11px;overflow:hidden;margin:12px 0}.duel-card h2{margin:13px 0 9px;font-size:28px}.duel-setup{font-size:13px;color:#d4c7a9;line-height:1.6}
+.duel-change,.duel-verdict{padding:16px;border:1px solid #3c544b;border-radius:10px;background:rgba(139,170,130,.08);font-size:13px;line-height:1.8}
+.duel-metrics{margin:18px 0}.duel-metric{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:13px 10px;border-bottom:1px solid #2a4441;font-size:12px}.duel-metric strong{font-size:11px;color:#d4e2ca}.metric-head{color:#dbbd8c}.duel-return{grid-column:1/-1}
+@media(max-width:760px){.duel-grid{grid-template-columns:1fr}.duel-card{padding:15px}.duel-photo{height:195px}.duel-metric{font-size:10px}.duel-metric strong{font-size:10px}.duel-change,.duel-verdict{font-size:11px}}
 @media(max-width:760px){
  .bottom-tabs{grid-template-columns:repeat(4,minmax(0,1fr))}.bottom-tabs small{font-size:8px;letter-spacing:.4px}.bottom-tabs button[aria-current=page]{color:#e5c795}
  .atlas-module{padding-top:12px}.module-intro h1{font-size:30px;margin:6px 0}.module-intro>p{font-size:11px}
@@ -54,3 +60,6 @@
  .coil-stage{min-height:155px;margin:10px 0}.geometry-readout b{font-size:20px}.gain-trade{gap:12px}
  .liquid-links{grid-template-columns:minmax(0,1fr)}.dna-row{padding:11px}.dna-row strong{max-width:170px;font-size:11px}
 }
+
+.duel-shortcuts{display:flex;gap:10px;flex-wrap:wrap;padding:10px 0 20px}#duelDifferences{scroll-margin-top:82px}
+@media(max-width:760px){.duel-shortcuts{position:sticky;top:49px;z-index:12;background:#0c171b;padding:8px 0 10px;gap:7px}.duel-shortcuts .module-link{font-size:10px;padding:9px}.duel-shortcuts button:first-child{color:#e5c795}#duelDifferences{scroll-margin-top:116px}}

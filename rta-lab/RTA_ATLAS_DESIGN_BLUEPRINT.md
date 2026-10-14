@@ -370,3 +370,7 @@ Pe `a511ef64`, toate cele trei gates au trecut: RTA `38620833175`, Market `38620
 Candidatul separat adaugă două rute reale, păstrând HOME/Liquid Match și motorul. Atlas: platforme filtrabile, portrete fotografice, ADN, TOP3 builduri, familii/620 lichide, inventar fizic și fișele CL citite fără montări fictive. Wire: material și platformă vizibile devreme pe mobil, parametri canonici, limite, diagramă airflow/spire animată schematic, avantaje/compromisuri și proveniență. Objective se preia din mood până la alegerea explicită; navigarea păstrează lichidul.
 
 Teste locale PASS în 360×800/390×844/1440×1000, normale/erori/stres; capturi inspectate. Același sistem vizual este reutilizat, fără reconstruirea V0.2. Stare: două module candidate, nu acceptare estetică sau publicare. Market/Duel, funcțiile complete și verificarea releaseului rămân deschise.
+
+## 21. Duel — implementare incrementală în PR #46
+
+Două portrete reale, configurații complete, context comun și salt compact la diferențe pe telefon; setările se editează în Wire și revin integral în slotul ales. Filtrul diferențelor folosește semnale interne ca estimări calitative, fără procente. Nu este comparație A/B externă validată. Teste locale model/browser normale/identice/multiple variabile/energie invalidă PASS; cadre 360/390/1440 inspectate. Noul CI și aprobarea vizuală rămân deschise. Cele trei documente se raportează la HANDOFF §11 pentru SHA/runs actuale; main și V10 sunt păstrate.

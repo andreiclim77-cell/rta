@@ -647,3 +647,7 @@ Rerularea pe `a511ef64`: RTA `38620833175`, Market `38620833394`, Visual `386208
 ## 31. Atlas/Wire — adaptoare în ramura aplicației complete (14.10.2026)
 
 `feature/atlas-complete-six-modules-20261014` continuă separat de PR #45 și main. Atomizer Atlas și Wire Lab sunt implementate local cu motoarele existente: 16 portrete, 42 inventar, ADN/builduri/lichide contextuale, citire CL fără rescriere și configurator de material/aer/geometrie/energie. Restricțiile Asylum SS Clapton și 415 K1 28/6 sunt păstrate; KLP Dicodes 220°C/16 W nu se transferă la NiFe52. Teste normale/erori, toate materialele și obiectivele, 620 lichide stres, CL legacy/read-only, browser mobil și desktop au trecut local. CI/publicarea/aprobarea vizuală rămân separate. Noul draft nu este aplicația finală; Market/Duel și integrarea completă sunt următoarele lucrări autorizate.
+
+## 32. Duel Mode candidat / 14.10.2026
+
+DUEL compară două configurații complete, nu doar două nume de atomizoare. Snapshotul se păstrează la transferul din rezultate și la editare Wire. Diferențele sunt calitative pe semnalele existente; mai multe variabile sunt declarate explicit și nu se atribuie cauzalitate unei singure variabile. Lichid/mood/moment/obiectiv comun, sursa personală și estimarea rămân separate; Watch B nu inventează teste pe buildurile personale. Identice → niciun câștigător; apropiate → verdict neconcludent. 360/390/1440 local PASS, capturi inspectate; CI nou pending. Dovezile exacte Atlas/Wire și branchul sunt în HANDOFF §11.
