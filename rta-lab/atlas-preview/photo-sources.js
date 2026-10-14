@@ -76,5 +76,11 @@ window.RTA_ATLAS_PHOTOS={
     "src": "https://www.intaste.de/media/image/product/106686/md/minister-mtl-rta~3.png",
     "ref": "https://www.intaste.de/Minister-MTL-RTA",
     "credit": "InTaste"
+  },
+  "asylum": {
+    "src": "../../assets/instagram/atomizer-asylum-rta-v3-yg-creations-c41adc2e42.jpg",
+    "ref": "https://www.vapstor.fr/en/atomiseurs/4037-asylum-rta-v3-by-yg-creations.html",
+    "credit": "Arhiva foto RTA · produsul V3 identificat",
+    "variant": "Fotografie din biblioteca existentă a proiectului"
   }
 };
