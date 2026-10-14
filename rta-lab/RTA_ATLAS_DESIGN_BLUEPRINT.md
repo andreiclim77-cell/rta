@@ -308,3 +308,21 @@ Un modul de pregătire a dovezilor poate extrage BEST + WATCH A + WATCH B din MA
 **Testare:** `tools/check-rta-atlas-preview.js` validează cele 140 scenarii 4 clase × 7 mood × 5 moments, cele trei platforme distincte cu trei builduri valide, catalog 620, lipsa procentelor fabricate, căutarea, ordinea scripturilor, motion și reduced-motion; este conectat la Quality Gate. GitHub Pages poate eșua independent de CI; numai raportul de deploy SUCCESS la commitul curent permite distribuirea linkului ca versiune publicată.
 
 **Următorul pas:** validarea QA și deploy, apoi utilizatorul testează prototipul mobil și dă feedback specific asupra imaginilor, mișcării, structurii TOP 3×3 și impresiei „WOW”. Se ajustează numai prototipul, nu aplicația V10.
+
+## 15. REVIEW UTILIZATOR — PREVIEW V0.1 RESPINS VIZUAL (14.10.2026)
+
+> **DECIZIE FERMĂ:** utilizatorul a deschis `/rta-lab/atlas-preview/` și l-a respins ca experiență vizuală: „Nu e reală deloc, iar animată iar nu e și nici bine încadrată… arată banal”. **NU este aprobat.** Nu îl prezenta ca interfață nouă, nu construi restul celor patru ecrane peste această direcție vizuală, nu pretinde că QA automat înseamnă UX validat. Motorul existent și V10 rămân păstrate.
+
+### Cauze vizibile în cod, de corectat
+- **Imagini false/abstracte:** profilul produsului vine din `renderAbstractAtom()`, generând siluete SVG similare, nu fotografii ale atomizoarelor deținute. Ecranul trebuie construit în jurul **imaginilor reale și corect atribuite de la producători** sau fotografiilor utilizatorului, când sunt disponibile și drepturile de utilizare o permit. Ex.: imagini oficiale Kayfun Lite Plus 2021 (SvoëMesto), Dvarw (KHW Mods), Taifun GTR (SmokerStore). Pentru produse fără fotografie, marchează explicit „imagine încă indisponibilă” — nu pretinde că o siluetă generată reprezintă produsul exact.
+- **Animație aproape invizibilă / cosmetică:** prototipul folosește `@keyframes atomFloat` (~8 s/8px), `flowPaths` și `drawWave` fără mecanism clar de scene storyboard/interacțiune. Faptul că CSS include keyframes NU dovedește motion semnificativ văzut de utilizator.
+- **Încadrare mobilă:** `hero-stage` este fixat la 260px sub hero-copy pe ecrane mici; `hero-art` are viewport 480×510 cu înălțime forțată; scena `.live-scene` este afișată DUPĂ panoul lung de mood/moment și devine invizibilă în primul viewport. Layoutul trebuie gândit de la 360×800 și ~390×850 în sus, verificat prin screenshot real înainte de livrare.
+
+### Criterii obligatorii pentru V0.2 înainte de alt link
+1. Realism: vizuale verificabile pentru produsele reale; portret fotografic încadrat corect, `object-fit: contain` și zone de siguranță; nu folosi nume de produs peste fotografie nepotrivită.
+2. WOW demonstrat: **cel puțin două mișcări semnificative, văzute imediat și declanșate de acțiune** — (a) schimbarea lichidului transformă scena senzorială, (b) schimbarea insertului/coi­lului schimbă vizibil schema airflow/spire. Dacă nu se poate demonstra prin video/captură multi-frame, nu afirma că „este animat”. Respectă `prefers-reduced-motion` și oferă control clar dacă dispozitivul reduce implicit animațiile.
+3. Compoziție mobilă: captura/simularea `360×800` și `390×844` arată titlu, imagine bine încadrată și prima acțiune/primul rezultat **fără scroll interminabil**, fără decupaj, text suprapus sau controale sufocate. Navigație permanentă discretă.
+4. Vizualizare în browser: Playwright/Chromium capturi în mobile viewport, screenshot înainte/după interacțiune, clip scurt demonstrativ dacă există posibilitatea, test de scroll/orientare/focus. Testele logice (140 contexte/3×3/620 lichide) rămân neschimbate. **Nu înlocui vizualizarea reală cu test de prezență CSS**.
+5. Abia după prezentarea machetei V0.2 și aprobarea explicită a utilizatorului începe extinderea Atomizer Atlas / Wire Lab / Market / Duel. Nu face „cosmetizare” superficială a V0.1 dacă trebuie regândite compoziția și limbajul vizual.
+
+**Păstrăm ce e bun:** motor RTA, 620 lichide, 16 platforme, fișele celor 42 de exemplare, 3 CL saved/draft, calculele 3×3 și proveniența corectă. **Respingerea privește înfățișarea, mișcarea și felul de a prezenta**, nu algoritmul deja verificat.
