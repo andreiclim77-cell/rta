@@ -56,19 +56,62 @@ async function main(){
    check(liquid.sceneTop<liquid.searchTop,"Cinema must be above controls");
    check(liquid.sceneTop<240,"Cinema must appear early on mobile");
    check(liquid.cards===3,"Need three atomizers");
+   const sceneBest=await page.locator("#sceneMatchAtom").textContent();
+   const expectedBest=await page.evaluate(()=>{
+    const m=window.RTA_ATLAS_PREVIEW,ctx=m.compose(m.state.liquidIndex,m.state.mood,m.state.moment);
+    return ctx.items[0].atom.short;
+   });
+   check(sceneBest===expectedBest,"Liquid Cinema preview must show top-ranked contextual model");
+   const sceneBox=await page.locator("#sceneMatch").boundingBox();
+   check(sceneBox&&sceneBox.y>0&&sceneBox.y+sceneBox.height<height-60,
+    "Computed best must be visible within first mobile viewport");
+   const activeRail=await page.locator("#moodChips").evaluate(rail=>{
+    const active=rail.querySelector(".chip.active"),a=active.getBoundingClientRect(),b=rail.getBoundingClientRect();
+    return {left:a.left,railLeft:b.left,right:a.right,railRight:b.right};
+   });
+   check(activeRail.left>=activeRail.railLeft-3&&activeRail.right<=activeRail.railRight+3,
+    "Selected mood must not be clipped outside its mobile rail");
+   const resultsBeforeDemo=await page.evaluate(()=>{
+    const results=document.getElementById("resultsSection"),demo=document.querySelector(".air-demo");
+    return !!(results.compareDocumentPosition(demo)&Node.DOCUMENT_POSITION_FOLLOWING);
+   });
+   check(resultsBeforeDemo,"Results should appear before the secondary airflow explainer");
    const details=await page.locator(".result-card .card-detail").evaluateAll(nodes=>nodes.map(n=>n.hidden));
    check(details.length===3&&details.every(Boolean),"TOP 1 must start compact on phone");
    await screenshot(page,"liquid-"+width+".png");
+   await page.locator("#liquidSearch").fill("Balkan");
+   const suggestions=await page.locator("#liquidSuggestions [role=option]").count();
+   check(suggestions>=2,"Keyboard search fixture needs at least two Balkan catalog entries");
+   await page.locator("#liquidSearch").press("ArrowDown");
+   check(await page.locator("#liquidSearch").getAttribute("aria-activedescendant")==="liquidOpt1",
+    "ArrowDown must update active keyboard suggestion");
+   const selectedByKeyboard=await page.locator("#liquidOpt1").textContent();
+   await page.locator("#liquidSearch").press("Enter");
+   check(await page.locator("#selectedLiquid").textContent()!==null,"Keyboard selection must update liquid context");
+   check((await page.locator("#selectedLiquid").textContent()).includes(selectedByKeyboard.split("·")[0].trim()),
+    "Keyboard Enter must choose highlighted catalog item");
    await page.locator('[data-air="triple"]').click();
    check(await page.locator("#airDemoVisual .air-flow-path").count()===3,"Triple insert must draw 3 jets");
    await screenshot(page,"three-jets-"+width+".png");
    await page.locator('[data-air="single"]').click();
    check(await page.locator("#airDemoVisual .air-flow-path").count()===1,"Single insert must draw 1 jet");
    await page.locator('[data-mood="power"]').click();
+   const updatedBest=await page.evaluate(()=>{
+    const m=window.RTA_ATLAS_PREVIEW;
+    return m.compose(m.state.liquidIndex,m.state.mood,m.state.moment).items[0].atom.short;
+   });
+   check((await page.locator("#sceneMatchAtom").textContent())===updatedBest,
+    "Best preview must react to mood changes");
    check(await page.locator(".result-card").count()===3,"TOP3 must remain available");
    check(await page.locator(".atlas-product-photo img").count()>0,"Missing real product photo");
    check(errors.length===0,"Uncaught JS errors: "+errors.join(" | "));
    await screenshot(page,"after-interaction-"+width+".png");
+   await page.locator("#matchButton").click();
+   await page.waitForTimeout(850);
+   const firstCard=await page.locator(".result-card").first().boundingBox();
+   check(firstCard&&firstCard.y>=45&&firstCard.y<height-180,
+    "Compose action must bring the first actual result into view");
+   await screenshot(page,"best-in-view-"+width+".png");
    await context.close();
   }
   // Force vendor outages: the fallback must be an actual decoded local image,
@@ -97,7 +140,7 @@ async function main(){
   check(await page.locator(".cinema-frame.is-visible").getAttribute("data-cinema-frame")==="1",
    "Reduced motion must preserve manual slide selection");
   await reduced.close();
-  console.log("ATLAS VISUAL PASS: 360x800/390x844, decoded framed photography, compact 3x3 cards, offline image fallback, interaction motion and accessible reduced-motion.");
+  console.log("ATLAS VISUAL PASS: 360x800/390x844, decoded photos, contextual BEST in first viewport, selected mood in view, keyboard search, genuine first-card reveal, airflow, offline fallback, reduced-motion.");
  }finally{await browser.close();}
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});
