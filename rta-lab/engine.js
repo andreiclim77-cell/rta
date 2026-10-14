@@ -29,7 +29,7 @@ const BUILD_RULES = {
   "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa round-wire mai plină." },
   "kprime":   { k128: 5, k129: 5, reason: "Bottom-air direct și concentrat; ambele round-wire-uri funcționează optim cu footprint compact." },
   "gtone":    { k128: 5, k129: 6, reason: "Validat practic 12.10.2026: K1 29 GA / Ø2,5 / 6 contact este preferat față de K1 28 GA / Ø2,5 / 5; 28/5 rămâne alternativa mai plină." },
-  "dvarwcl":  { k128: 6, k129: 5, reason: "Configurație activă validată: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire pentru acoperire mai uniformă și layering; 29 GA rămâne contextual după obiectiv." },
+  "dvarwcl":  { k128: 6, k129: 5, reason: "Preferință principală: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire pentru airflow multipunct și layering; alternativă bună validată personal: 1×1,2 mm + K1 28 GA / 5 spire. Se schimbă simultan și insertul, și numărul de spire; nu declara 1×1,2 inferior universal. 29 GA rămâne contextual." },
   "muted":    { k128: 6, k129: 6, reason: "Preferință directă 14.10.2026: Muted+ + K1 28 GA / 6 spire. Diametrul și airflow-ul efectiv nu sunt precizate; 29/6 rămâne doar alternativă tehnică, nu prima alegere." },
   "gtr":      { k128: 5, k129: 6, reason: "Cele două jeturi oblice cer 29/6 pentru acoperire; 28/5 păstrează un footprint apropiat, cu mai mult corp." },
   "dvarwfl":  { k128: 6, k129: 5, reason: "Dvarw FL: insertul 3×0,6 mm este airflow-ul preferat personal. K1 28/6 a fost testat pe Balkan Milestone cu orizont mai larg, palat ≈25% mai bogat perceput și simultaneitate superioară față de FL 1×1,2/K1/6, cu TH doar puțin mai mic. Pe single 1×1,2, 28/5 rămâne alternativă." },
