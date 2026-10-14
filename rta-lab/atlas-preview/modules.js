@@ -82,7 +82,7 @@ function method(result){
  return '<details class="module-method"><summary>De ce propune această configurație?</summary><p>'+esc(api.evidenceFor(result,liquid()).label)+'</p>'+result.notes.map(n=>'<p>'+esc(n)+'</p>').join('')+'<p>'+esc(result.modelWarning)+'</p></details>';
 }
 function watchPanel(builds){
- return '<div class="watchlist"><div class="watch-item"><b>WATCH A / din experiența ta</b><p>'+esc(builds[1]?'Merită comparat '+api.buildString(builds[1])+'. Este o direcție contextuală, nu A/B confirmat pe lichidul ales.':'Nu există altă combinație compatibilă documentată.')+'</p></div><div class="watch-item market"><b>WATCH B / din piață</b><p>Semnal de piață insuficient pentru această configurație. Sursele vor fi legate numai după verificare.</p></div></div>';
+ return '<div class="watchlist"><div class="watch-item"><b>WATCH A / din experiența ta</b><p>'+esc(builds[1]?'Merită comparat '+api.buildString(builds[1])+'. Este o direcție contextuală, nu A/B confirmat pe lichidul ales.':'Nu există altă combinație compatibilă documentată.')+'</p></div><div class="watch-item market"><b>WATCH B / din piață</b><p>'+(window.RTA_ATLAS_MARKET?.watch(liquid())||'Semnal de piață insuficient pentru această configurație. Sursele vor fi legate numai după verificare.')+'</p></div></div>';
 }
 function physicalUnits(id){
  if(id!=='dvarwcl')return '<div class="physical-units"><h3>'+inventory[id]+' '+(inventory[id]===1?'exemplar fizic':'exemplare fizice')+'</h3><p>Inventar confirmat. Configurațiile individuale nu sunt presupuse identice sau montate.</p></div>';

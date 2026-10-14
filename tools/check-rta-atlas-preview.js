@@ -106,7 +106,7 @@ assert.ok(html.includes("id=\"pageHome\"")&&html.includes("id=\"pageLiquid\""),"
 assert.ok(html.includes("id=\"liquidSearch\"")&&html.includes("id=\"resultCards\""));
 assert.ok(html.includes("id=\"moodChips\"")&&html.includes("id=\"momentChips\""));
 assert.ok(html.includes('href="../"'),"Must preserve link to original V10 app");
-assert.ok(!html.includes("data-route=\"market\""),"Market not implemented in preview");
+assert.ok(html.includes("./market-evidence.js")&&html.includes("./market.js"),"Market adapter and provenance records must be connected");
 assert.ok(html.includes("id=\"cinemaReel\"")&&html.includes("photo-cinema"),"Real-photo stage missing");
 assert.ok(html.includes("PREVIEW V0.2")&&!html.includes("PREVIEW V0.1"),"Preview footer must match actual version");
 assert.ok(js.includes('!window.matchMedia?.("(max-width:760px)").matches'),
@@ -148,7 +148,7 @@ assert.ok(v02css.includes('::-webkit-search-cancel-button'),"Avoid native and cu
 assert.ok(v02.includes('results.insertAdjacentElement("afterend",box)'),"Results must precede the airflow explainer");
 
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(refs.length,29,"Expected canonical scripts, photography, Atlas adapters and Duel");
+assert.equal(refs.length,31,"Expected canonical scripts, photography, Atlas adapters and Duel");
 for(const ref of refs){
  assert.ok(ref.startsWith("../")||ref.startsWith("./"),"No unknown remote JS");
  const local=path.resolve(preview,ref.split("?")[0]);

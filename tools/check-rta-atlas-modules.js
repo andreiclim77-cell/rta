@@ -4,7 +4,7 @@ const env={window:{}};vm.createContext(env);
 const load=p=>vm.runInContext(fs.readFileSync(path.join('rta-lab',p),'utf8'),env,{filename:p});
 for(const n of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+n);
 fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forEach(n=>load('data/'+n));
-for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js'])load(p);
+for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
 const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
 assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),42);
 const original=JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]);
@@ -56,3 +56,32 @@ assert.ok(multi.changed.length>=3,'Changing platform and material cannot be adve
 assert.ok(multi.left.result.dimensions.pleasure===null&&multi.right.result.dimensions.pleasure===null);
 assert.equal(duel.compare({atom:'invalid'},duel.state.left),null);
 console.log('ATLAS MODULES PASS: 16 platforms / 42 units, all permitted materials and objectives, 620-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
+
+const market=w.RTA_ATLAS_MARKET;
+assert.equal(market.data.rows.length,24);assert.equal(new Set(market.data.rows.map(e=>e.id)).size,24);
+assert.equal(JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]),original);
+for(const category of market.data.categories){
+ const selected=market.select(category,'','evidence');assert.ok(selected.length>0&&selected.length<=10);
+ assert.equal(JSON.stringify(market.select(category,'','evidence')),JSON.stringify(selected),'Market order deterministic');
+ assert.equal(market.select(category,'nonexistent-product').length,0);
+ for(const e of selected){assert.equal(e.category,category);assert.equal(market.qualifying(e),true);assert.equal(e.consensus,false);assert.equal(e.confidence,'Review singular');assert.ok(e.version&&e.caveat);
+  for(const id of e.sourceIds){const source=market.data.sources[id];assert.ok(source.authors&&source.bias&&source.title);assert.match(source.url,/^https:\/\//);assert.match(source.accessed,/^\d{4}-\d{2}-\d{2}$/);assert.ok(source.date===null||/^\d{4}-\d{2}-\d{2}$/.test(source.date));}
+ }
+}
+assert.equal(market.match(market.data.rows.find(e=>e.id==='lt-single-burley')),-1,'Do not transfer a 4Pod review to classic extracts');
+assert.equal(market.match(market.data.rows.find(e=>e.id==='bn-special-3')),-1,'Do not collapse Special Blend versions');
+assert.equal(market.match(market.data.rows.find(e=>e.id==='halo-tribeca')),-1,'Catalog does not identify Shake N Vap version');
+assert.ok(market.match(market.data.rows.find(e=>e.id==='bn-prelude'))>=0,'Explicit commercial alias to existing repertoire');
+assert.ok(market.match(market.data.rows.find(e=>e.id==='manabush-powwow'))>=0);
+assert.equal(market.match({match:{brand:'FlavourArt',name:'Maxx Blend'}}),-1,'Ambiguous catalog keys fail closed');
+assert.equal(market.qualifying({...market.data.rows[0],sourceIds:['fabricated']}),false);
+assert.equal(w.RTA_LIQUIDS.length,620);
+
+
+const sameSourceRows=market.select('NET simplu').filter(e=>e.sourceIds[0]==='bn');
+assert.equal(JSON.stringify(sameSourceRows.map(e=>e.name)),JSON.stringify([...sameSourceRows.map(e=>e.name)].sort((x,y)=>('Black Note '+x).localeCompare('Black Note '+y,'ro'))),'Equal dated sources have a stable name tie-break');
+
+console.log('MARKET EVIDENCE PASS: 24 sourced entries, four categories, deterministic capped lists, no invented consensus, explicit aliases and version isolation; 620 catalog preserved.');
+
+assert.ok(market.watch(w.RTA_LIQUIDS[market.match(market.data.rows.find(e=>e.id==='manabush-powwow'))]).includes('nu este probă A/B'));
+assert.equal(market.watch({name:'Profil liber',isFreeProfile:true}),'');

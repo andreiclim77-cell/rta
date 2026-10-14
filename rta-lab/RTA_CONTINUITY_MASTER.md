@@ -651,3 +651,11 @@ Rerularea pe `a511ef64`: RTA `38620833175`, Market `38620833394`, Visual `386208
 ## 32. Duel Mode candidat / 14.10.2026
 
 DUEL compară două configurații complete, nu doar două nume de atomizoare. Snapshotul se păstrează la transferul din rezultate și la editare Wire. Diferențele sunt calitative pe semnalele existente; mai multe variabile sunt declarate explicit și nu se atribuie cauzalitate unei singure variabile. Lichid/mood/moment/obiectiv comun, sursa personală și estimarea rămân separate; Watch B nu inventează teste pe buildurile personale. Identice → niciun câștigător; apropiate → verdict neconcludent. 360/390/1440 local PASS, capturi inspectate; CI nou pending. Dovezile exacte Atlas/Wire și branchul sunt în HANDOFF §11.
+
+## 33. Market — proveniență și versiuni, nu consens inventat
+
+24 fișe sursate în patru galerii, separate de catalogul canonic 620. Review singular este eticheta actuală pentru toate. O traducere nu este sursă independentă; trei opinii pe mostrele aceluiași articol Omusa nu devin consens independent. Data afișată a actualizării Ecigclick nu este data articolului inițial. Publicările nedatate rămân explicit nedatate, cu data accesului.
+
+NET simplu descrie o semnătură comercială, nu o demonstrație botanică/chimică; Cavendish rămâne termen de procesare cu caveat. Tutunos simplu/complex sunt clase editoriale de profil, nu dovadă de molecule sintetice. Notele percepute nu sunt automat ingrediente adăugate. Review-urile nu confirmă instalațiile personale, temperatura reală, siguranța sau disponibilitatea actuală.
+
+Asocierea bibliotecii cere cheie exactă brand/nume/linie/clasă și alias editorial explicit; niciun 4Pod nou nu se transferă la extractul clasic, nici Special Blend 3.0/Menthol la versiunea fără sufix. Doar acțiunea explicită Explorează schimbă lichidul, cu versiunea declarată. Watch B leagă review-ul de profil, separat de build. HANDOFF §12 înregistrează dovezile CI și limitele actuale.

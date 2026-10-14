@@ -374,3 +374,9 @@ Teste locale PASS în 360×800/390×844/1440×1000, normale/erori/stres; capturi
 ## 21. Duel — implementare incrementală în PR #46
 
 Două portrete reale, configurații complete, context comun și salt compact la diferențe pe telefon; setările se editează în Wire și revin integral în slotul ales. Filtrul diferențelor folosește semnale interne ca estimări calitative, fără procente. Nu este comparație A/B externă validată. Teste locale model/browser normale/identice/multiple variabile/energie invalidă PASS; cadre 360/390/1440 inspectate. Noul CI și aprobarea vizuală rămân deschise. Cele trei documente se raportează la HANDOFF §11 pentru SHA/runs actuale; main și V10 sunt păstrate.
+
+## 22. Market — galerie candidat cu traseu de surse
+
+Patru categorii cu 24 fișe reale, filtrare/sortare și detalii de review; locurile fără dovezi rămân libere. 10/4/1/9 este numărul de fișe admise în cercetarea curentă, nu procent de popularitate și nu verdict universal. Sunt păstrate distincțiile ediție/concentrat/longfill/reper. Foto oficială curentă Virginia este explicit separată de Prelude original. Restul discurilor sunt grafică editorială originală; fotografiile suplimentare și drepturile rămân deschise.
+
+Navigarea mobilă are acum acces la toate cele șase module. Cadrele de source trail se iau numai după finalul animației, iar căutarea Atlas după finalul scrollului; o imagine decodată nu dovedește singură cadrul pictat. Continuitatea exactă este în HANDOFF §12. Nu este acceptare estetică ori publicare.

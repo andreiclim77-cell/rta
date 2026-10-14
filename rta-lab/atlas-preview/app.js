@@ -167,7 +167,7 @@ function renderResult(item,liquid){
  '<p class="detail-intro"><strong>'+esc(evidence.label)+'.</strong> Configurațiile sunt ordonate pentru '+esc(liquid.name)+' în contextul ales; experiența ta directă primează unde există un test relevant.</p>'+
  '<div class="detail-grid">'+item.builds.map((b,i)=>renderBuild(b,i+1,liquid)).join("")+'</div>'+
  '<div class="watchlist"><div class="watch-item"><b>01 / De urmărit — din experiența ta</b><p>'+esc(watchInternal(item))+'</p></div>'+
- '<div class="watch-item market"><b>02 / De urmărit — din piață</b><p>Semnalul extern pentru acest setup este încă în cercetare. Nu inventăm consensul din review-uri; această zonă va primi surse și date înainte de a recomanda ferm.</p></div></div>'+
+ '<div class="watch-item market"><b>02 / De urmărit — din piață</b><p>'+(window.RTA_ATLAS_MARKET?.watch(liquid)||'Semnalul extern pentru acest setup este încă în cercetare. Nu inventăm consensul din review-uri; sursele vor fi legate numai după verificare.')+'</p></div></div>'+
  '<p class="detail-foot">Graficele și schemele sunt ilustrații tehnice. Nu sunt măsurători ale temperaturii, debitului, gustului sau procente ale plăcerii.</p></div></article>';
 }
 function compose(liquidIndex,moodId,momentId){

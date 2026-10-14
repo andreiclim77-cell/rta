@@ -26,7 +26,7 @@ async function main(){
    check(await page.locator('.platform-tile').count()===0,'Missing search must show empty catalog');
    await page.locator('#atlasSearch').fill('Dvarw');
    check(await page.locator('.platform-tile').count()===2,'Search should match CL and FL independently');
-   await page.locator('#atlasSearch').evaluate(el=>el.scrollIntoView({block:'start'}));
+   await page.locator('#atlasSearch').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
    await page.waitForTimeout(400);
    await shot(page,'atomizer-search-'+width+'.png');
    await page.locator('[data-edit-wire]').click();
@@ -78,6 +78,36 @@ async function main(){
    await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(650);
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Duel horizontal overflow');
    await shot(page,'duel-'+width+'.png');
+   await page.locator(width<760?'.bottom-tabs [data-route="market"]':'.top-nav [data-route="market"]').click();
+   check(await page.locator('#pageMarket').isVisible(),'Market navigation must open the real module');
+   check(await page.locator('.bottom-tabs button').count()===6,'All six modules must be directly navigable');
+   const liquidBefore=await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.liquidIndex);
+   for(const [category,count] of [['NET simplu',10],['NET complex',4],['Tutun simplu',1],['Tutun complex',9]]){
+    await page.locator('[data-market-category="'+category+'"]').click();
+    check(await page.locator('.market-card').count()===count,'Market count '+category+' must reflect actual source records');
+    check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.liquidIndex)===liquidBefore,'Market browsing must not substitute the selected liquid');
+    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Market overflow '+category);
+   }
+   await page.locator('[data-market-category="NET simplu"]').click();
+   await page.waitForTimeout(400);await shot(page,'market-'+width+'.png');
+   await page.locator('.market-trail summary').first().click();
+   await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.market-trail[open] ol')).opacity)===1);
+   check(await page.locator('.market-trail').first().textContent().then(t=>t.includes('2025-04-30')&&t.includes('Selene')),'Date and source author must be visible');
+   await page.locator('.market-card').first().evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+   await shot(page,'market-source-'+width+'.png');
+   await page.locator('#marketSearch').fill('nonexistent-product');
+   check(await page.locator('.market-card').count()===0,'Market missing search must not invent a result');
+   await page.locator('#marketSearch').fill('Prelude');
+   check(await page.locator('.market-card').count()===1,'Explicit alias search must identify the correct record');
+   await page.waitForFunction(()=>{const img=document.querySelector('.market-photo img');return img?.complete&&img.naturalWidth>0;});
+   await page.locator('.market-photo img').evaluate(async img=>{await img.decode();await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});
+   check(await page.locator('.market-photo figcaption').textContent().then(t=>t.includes('Ambalaj actual')),'Current packaging must not impersonate the reviewed edition');
+   await page.locator('#marketSearch').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+   await shot(page,'market-photo-'+width+'.png');
+   await page.locator('[data-market-explore="bn-prelude"]').click();
+   check(await page.locator('#pageLiquid').isVisible(),'Explicit explore action must open Liquid Match');
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia (Prelude)')),'Market must transfer the associated repertoire without adding a liquid');
+   check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===620,'Catalog must stay at 620');
    check(errors.length===0,'Module page errors: '+errors.join(' | '));
    await context.close();
   }
