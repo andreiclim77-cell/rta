@@ -169,3 +169,23 @@ html,body{max-width:100%;overflow-x:clip}
  .cinema-frame{transition:none!important}
  .live-scene.cinema-react,.air-visual.air-switching{animation:none!important}
 }
+
+
+/* Site-hosted, genuine atomizer photos provide an immediate offline-friendly
+   backdrop while specialist-shop original product photos finish loading. */
+.cinema-frame[data-cinema-frame="0"]{background:#111d20 url("../../assets/instagram/atomizer-kayfun-x-243c328b6f.jpg") center 49% /cover no-repeat}
+.cinema-frame[data-cinema-frame="1"]{background:#111d20 url("../../assets/instagram/atomizer-taifun-gt-one-b29f733077.jpg") center 53% /cover no-repeat}
+.cinema-frame[data-cinema-frame="2"]{background:#111d20 url("../../assets/instagram/atomizer-four-one-five-415rta-mtl-ba219d9875.jpg") center 51% /cover no-repeat}
+.cinema-frame img{position:relative;z-index:1}
+.atlas-product-photo{background:#e6e3dc center center /cover no-repeat}
+.result-card[data-atom="kx"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-kayfun-x-243c328b6f.jpg")}
+.result-card[data-atom="gtone"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-taifun-gt-one-b29f733077.jpg")}
+.result-card[data-atom="415"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-four-one-five-415rta-mtl-ba219d9875.jpg")}
+.result-card[data-atom="dvarwfl"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-dvarw-mtl-fl-dda12456be.jpg")}
+.result-card[data-atom="muted"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-muted-23ed383402.jpg")}
+.result-card[data-atom="diplomat"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-centenary-diplomat-v1-5-mtl-rta-84d651448b.jpg")}
+.result-card[data-atom="asylum"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-asylum-rta-v3-yg-creations-c41adc2e42.jpg")}
+.result-card[data-atom="byka"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-by-ka-v-11-c0e3147194.jpg")}
+.result-card[data-atom="minister"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-minister-mtl-aaa9a33507.jpg")}
+.result-card[data-atom="pmstd"] .atlas-product-photo,.result-card[data-atom="pmfree"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-prime-minister-standard-rhodesian-a53af75bbe.jpg")}
+.result-card[data-atom="kv3"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-kayfun-mini-v3-kv3-mini-38acece1e6.jpg")}
