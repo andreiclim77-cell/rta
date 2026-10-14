@@ -50,3 +50,14 @@ Repo: **`andreiclim77-cell/rta`**, ramură canonică **`main`**. Site live V10: 
 
 ---
 **Aceasta este o arhivă de continuitate, nu un înlocuitor pentru verificarea commitului GitHub curent.**
+
+## 7. Etapă ulterioară documentată — PR #45 V0.2 mobile review (14.10.2026)
+
+**Stare de lucru: ramură DRAFT, NU producție și NU aprobare vizuală a utilizatorului.**
+- Branch `feature/atlas-v02-mobile-qa-fallback-20261014`; PR `https://github.com/andreiclim77-cell/rta/pull/45` (draft, păstrat separat de `main`). Bazat pe `main` `c268b2fc0ab36baaa44a0d29b810d1f0da2d9ec2`.
+- Scop: rafinare strictă a V0.2 deja realizate; **niciun fișier V10 / motor / date / preset / fișă CL nu a fost schimbat**.
+- Modificări: fotografie `object-fit: contain` cu mișcare Ken Burns redusă, butoane de galerie tactil accesibile separate de creditul sursei, fallback din imaginile deja existente în repository dacă gazda externă nu răspunde (sursa arhivei afișată distinct, fără a pretinde că este sursa externă), galerie controlabilă manual la reduced-motion, carduri TOP3 mobile închise inițial, footer V0.2 corectat. Cadrul GT One are un vignette CSS localizat pentru banda publicitară din fotografia retailerului.
+- QA logic + vizual amplificat: **360×800 și 390×844**, încărcare efectivă a pixelilor `naturalWidth>0`, cadru `contain`, CTA în viewport, TOP 1 inițial compact, fallback la indisponibilitatea furnizorului, fotografii schimbate, airflow 1/3 jeturi, preferință reduced-motion. Originalul 140 de contexte (4 clase × 7 stări × 5 momente), 3×3 builduri și cataloagele rămâne obligatoriu.
+- Validare observată pe primul commit de modificări `90ba8d6a`: RTA Guide Quality Gate `38613486125` **SUCCESS**, Market Quality Gate `38613486251` **SUCCESS**, Atlas Visual Mobile Gate `38613486194` **SUCCESS**; artifact `atlas-v02-mobile-screenshots` `11918768376` (2,26 MB) descărcat și analizat. Acest status privește **exact** acel commit. Vignette GT One de pe commitul ulterior `762c5ca1` necesită verificarea propriului run.
+- Analiza reală a capturilor a identificat că fotografia GT One conținea tipar publicitar nedorit în lateral; s-a aplicat numai vignette-ul cadrului, fără a altera fotografia originală ori motorul. Rezultatele CI și capturile nu sunt echivalente cu aprobarea pe telefon Samsung real.
+- **Urmează:** verifică ultima rulare CI pe HEAD-ul PR #45; inspectează noul artifact pentru GT One; numai după opinia vizuală explicită a utilizatorului integrarea PR + verificarea Pages la SHA post-merge. Până atunci, site-ul `/rta-lab/atlas-preview/` servește V0.2 existentă din `main`, NU modificările PR #45. Drepturile pentru fotografii externe și conformitatea exactă a variantelor trebuie verificate înaintea reutilizării externe extinse.
