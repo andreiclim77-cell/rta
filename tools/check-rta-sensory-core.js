@@ -378,6 +378,54 @@ assert.equal(persisted.active,1);
 assert.equal(persisted.units.length,3);
 assert.deepEqual(persisted.units.map(u=>u.saved.air),["triple06","single12","triple06"]);
 assert.equal(persisted.units[2].saved.wire,"k129");
+// Drafts survive switching without silently rewriting the committed physical record.
+clickUnit(1);
+clRoot.trigger("change",{target:{dataset:{sdField:"position"},value:"high"}});
+assert.equal(ui.physicalClState().units[0].status,"Modificări nesalvate");
+assert.equal(ui.physicalClState().units[0].saved.position,"standard");
+clickUnit(2);
+clickUnit(1);
+assert.equal(ui.configFor("dvarwcl","explorer").position,"high");
+assert.equal(ui.physicalClState().units[0].saved.position,"standard");
+clickClAction("sdClRevert");
+assert.equal(ui.configFor("dvarwcl","explorer").position,"standard");
+clickUnit(2);
+// Verify fresh app initialization reads independent saved physical records.
+// The second context has its own DOM/fit wrapper but shares only the storage payload.
+function loadFreshPhysicalUi(storage){
+ const n={},get=id=>n[id]??(n[id]=new Node(id));
+ const d={getElementById:get,querySelectorAll:()=>[],events:{},
+  addEventListener(k,fn){this.events[k]=fn;}};
+ const fresh={window:{RTA_CORE:env.window.RTA_CORE,RTA_LIQUIDS:catalog,
+   RTA_SENSORY_CORE:api,RTA_BELL_LIQUID_FIT:{...env.window.RTA_BELL_LIQUID_FIT},
+   localStorage:storage},document:d,
+  Event:class{constructor(type,opts){this.type=type;this.bubbles=opts&&opts.bubbles;}},
+  state:{objective:"complete",liquid:null},setObjective:()=>{}};
+ vm.createContext(fresh);
+ vm.runInContext(fs.readFileSync(path.join(root,"sensory-ui.js"),"utf8"),fresh);
+ return fresh.window.RTA_SENSORY_UI;
+}
+const reopened=loadFreshPhysicalUi(localStorage);
+assert.equal(reopened.physicalClState().active,2);
+assert.deepEqual(reopened.physicalClState().units.map(u=>u.saved.air),["triple06","single12","triple06"]);
+assert.equal(reopened.configFor("dvarwcl","explorer").wraps,5);
+assert.equal(reopened.configFor("dvarwcl","main").air,"single12");
+const legacyData={dvarwcl:{atom:"dvarwcl",air:"single12",wire:"k128",
+ wraps:5,power:14,coilMm:2.5,position:"standard"}};
+const legacyStorage={getItem:k=>k==="rta-sensory-dna-choice-20261013"?JSON.stringify(legacyData):null,
+ setItem(){}};
+const migrated=loadFreshPhysicalUi(legacyStorage).physicalClState();
+assert.equal(migrated.units[0].source,"legacy");
+assert.equal(migrated.units[0].status,"Import vechi · nesalvat");
+assert.equal(migrated.units[0].saved,null,"Legacy generic choice must not be claimed as a verified physical CL");
+assert.equal(migrated.units[0].draft.air,"single12");
+assert.equal(migrated.units[0].draft.wraps,5);
+assert.equal(migrated.units[1].draft,null);
+assert.equal(migrated.units[2].draft,null);
+const blockedStorage={getItem(){throw new Error("Blocked");},setItem(){throw new Error("Blocked");}};
+const blocked=loadFreshPhysicalUi(blockedStorage).physicalClState();
+assert.equal(blocked.storageAvailable,false);
+assert.equal(blocked.units.length,3,"No storage must not break the configurator");
 const genericStore=JSON.parse(browserStore.get("rta-sensory-dna-choice-20261013")||"{}");
 assert.equal(genericStore.dvarwcl,undefined,"Physical CL records must not overwrite generic legacy config");
 
