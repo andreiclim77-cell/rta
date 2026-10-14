@@ -56,7 +56,7 @@ for(const i of samples){
      assert.ok(build.dimensions.pleasure===null,"No fabricated numeric pleasure");
      assert.ok(build.signals&&Number.isFinite(build.signals.spectrum));
      assert.ok(!("probability" in build),"No invented experience probability");
-     assert.ok(!/(?:TH|palat|spectru|ofensivă|plăcere|simultaneitate)\\s*[+\-]\\s*\\d+(?:[.,]\\d+)?\\s*%/i.test(api.vapeDescription(build,catalog[i])),
+     assert.ok(!/(?:TH|palat|spectru|ofensivă|plăcere|simultaneitate)\s*[+-]\s*\d+(?:[.,]\d+)?\s*%/i.test(api.vapeDescription(build,catalog[i])),
       "No artificial sensory improvement percentages; product names can legitimately contain %");
      assert.ok(api.renderCoil(c).includes('role="img"'),"Build diagrams must be accessible");
      same.add(c.wire+"-"+c.wraps);
