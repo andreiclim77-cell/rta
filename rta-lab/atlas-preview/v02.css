@@ -268,3 +268,7 @@ html,body{max-width:100%;overflow-x:clip}
  .results-heading p{font-size:11px}
  .result-card{scroll-margin-top:68px}
 }
+
+/* Motion refinement: keep actionable text sharp at all times.
+   Only the SVG waves morph via the existing requestAnimation/WAAPI path. */
+.live-scene.cinema-react{animation:none!important;filter:none!important}
