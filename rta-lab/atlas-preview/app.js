@@ -194,7 +194,7 @@ function renderResults(){
   box.innerHTML='<div class="empty-results">Nu avem suficiente date pentru acest context. Selectează alt lichid sau altă stare.</div>';
   return;
  }
- if(state.expandedId===null&&result.items.length)state.expandedId=result.items[0].id;
+ if(state.expandedId===null&&result.items.length&&!window.matchMedia?.("(max-width:760px)").matches)state.expandedId=result.items[0].id;
  if(state.expandedId&&!result.items.some(x=>x.id===state.expandedId))
   state.expandedId=result.items[0]?.id||null;
  element("resultsSummary").textContent=liquidName(result.liquid)+" · "+result.mood.name+" · "+result.moment.name+
