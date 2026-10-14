@@ -222,3 +222,49 @@ html,body{max-width:100%;overflow-x:clip}
  content:"";position:absolute;left:0;right:0;top:0;height:42px;z-index:2;pointer-events:none;
  background:linear-gradient(180deg,#091217 0%,#091217 18px,rgba(9,18,23,.9) 27px,transparent 100%);
 }
+
+/* V0.2 quick-path: the first contextual match now appears in the live
+   Liquid Cinema scene, with a real 3×3 source, before a long form or scroll. */
+.search-surface input[type="search"]::-webkit-search-cancel-button,
+.search-surface input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+.scene-match{display:none}
+.result-card{scroll-margin-top:72px}
+@media(max-width:760px){
+ .page-intro{padding-top:8px;padding-bottom:8px}
+ .page-intro .breadcrumb{display:none}
+ .page-intro .overline{font-size:8px;letter-spacing:1.1px}
+ .page-intro h1{font-size:clamp(23px,6.3vw,28px);line-height:1.05;margin:5px 0 0}
+ .page-intro p{display:none}
+ .live-scene{height:163px;max-height:163px;padding:12px 13px}
+ .live-scene .chromatogram{width:88%;height:83px;max-height:83px;margin:0 auto auto;opacity:.82}
+ .scene-middle,.scene-bottom{display:none}
+ .scene-match{display:flex;align-items:center;justify-content:space-between;gap:9px;position:absolute;z-index:3;left:9px;right:9px;bottom:8px;min-height:56px;padding:7px 8px 7px 11px;background:linear-gradient(105deg,rgba(7,20,24,.94),rgba(16,40,40,.9));border:1px solid rgba(197,212,184,.3);border-radius:11px;box-shadow:0 9px 30px rgba(0,0,0,.25)}
+ .scene-match-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+ .scene-match-copy>span{font-size:8px;letter-spacing:1px;font-weight:800;color:#d7b78a}
+ .scene-match-copy strong{font-size:13px;color:#fff1df;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .scene-match-copy small{font-size:10px;color:#b4cec7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+ .scene-match button{flex:none;width:44px;height:43px;border:1px solid rgba(230,200,156,.45);border-radius:10px;background:linear-gradient(130deg,#dab888,#ecd2a7);color:#192d2e;font-size:22px;font-weight:800}
+ .scene-match button:focus-visible{outline:2px solid white;outline-offset:2px}
+ .selection-panel{padding:13px 13px 15px}
+ .selection-panel>.eyebrow{display:none}
+ .selection-panel h2{font-size:18px;margin:0 0 9px}
+ .liquid-search-wrap>label{margin-bottom:5px}
+ .search-surface{min-height:44px}
+ .search-surface input{font-size:13px;padding:8px 0}
+ .selected-liquid{min-height:0;line-height:1.35;margin-top:6px}
+ .selected-liquid b{font-size:11px}
+ .quick-liquids{margin:9px 0 9px;gap:7px;align-items:center}
+ .quick-liquids>span{margin-top:0;font-size:8px}
+ .quick-list{gap:4px;flex-wrap:nowrap;min-width:0;overflow-x:auto;scrollbar-width:none}
+ .quick-list button{flex:0 0 auto}
+ .control-group{margin-top:8px}
+ .control-group-title{margin-bottom:4px}
+ .chip-rail{gap:5px;padding:2px 1px 4px;scrollbar-width:none}
+ .chip{font-size:11px;white-space:nowrap;min-height:39px;padding:8px 11px}
+ .match-button{margin-top:11px;min-height:46px}
+ .match-micro{display:none}
+ .results-section{padding-top:18px}
+ .results-heading h2{margin:5px 0}
+ .results-heading p{font-size:11px}
+ .result-card{scroll-margin-top:68px}
+}
