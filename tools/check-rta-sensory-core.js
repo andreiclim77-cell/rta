@@ -407,7 +407,7 @@ function loadFreshPhysicalUi(storage){
 }
 const reopened=loadFreshPhysicalUi(localStorage);
 assert.equal(reopened.physicalClState().active,2);
-assert.deepEqual(reopened.physicalClState().units.map(u=>u.saved.air),["triple06","single12","triple06"]);
+assert.deepEqual(JSON.parse(JSON.stringify(reopened.physicalClState().units.map(u=>u.saved.air))),["triple06","single12","triple06"]);
 assert.equal(reopened.configFor("dvarwcl","explorer").wraps,5);
 assert.equal(reopened.configFor("dvarwcl","main").air,"single12");
 const legacyData={dvarwcl:{atom:"dvarwcl",air:"single12",wire:"k128",
