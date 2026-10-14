@@ -186,12 +186,35 @@ function drawScene(){
  const dark=/(latakia|kentucky|dark|cigar)/i.test([l.profile,...(l.tags||[])].join(" "));
  document.querySelector(".live-scene")?.classList.toggle("scene-dark",dark);
 }
+function updateSceneMatch(result){
+ const item=result?.items?.[0],build=item?.builds?.[0];
+ const atom=element("sceneMatchAtom"),detail=element("sceneMatchBuild");
+ if(!atom||!detail)return;
+ atom.textContent=build?(item.atom?.short||item.id):"Context indisponibil";
+ detail.textContent=build?buildString(build)+" · "+setupSummary(build):"Alege alt context.";
+}
+function scrollToBest(){
+ const target=element("resultCards")?.querySelector(".result-card")||element("resultsSection");
+ target?.scrollIntoView({block:"start",behavior:window.matchMedia?.("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+}
+function revealSelectedChips(){
+ if(!window.matchMedia?.("(max-width:760px)").matches)return;
+ for(const id of ["moodChips","momentChips"]){
+  const rail=element(id),chip=rail?.querySelector(".chip.active");
+  if(!rail||!chip)continue;
+  const box=rail.getBoundingClientRect(),item=chip.getBoundingClientRect();
+  if(!box.width||!item.width)continue;
+  if(item.right>box.right-8)rail.scrollLeft+=item.right-box.right+12;
+  else if(item.left<box.left+8)rail.scrollLeft-=box.left-item.left+12;
+ }
+}
 function renderResults(){
  const result=compose(state.liquidIndex,state.mood,state.moment);
  const box=element("resultCards");
  if(!box)return;
  if(!result){
   box.innerHTML='<div class="empty-results">Nu avem suficiente date pentru acest context. Selectează alt lichid sau altă stare.</div>';
+  updateSceneMatch(null);
   return;
  }
  if(state.expandedId===null&&result.items.length&&!window.matchMedia?.("(max-width:760px)").matches)state.expandedId=result.items[0].id;
@@ -201,12 +224,14 @@ function renderResults(){
  " · ordonare contextuală din 16 platforme.";
  element("resultCounter").textContent="TOP 3 · 3 × 3";
  box.innerHTML=result.items.map(x=>renderResult(x,result.liquid)).join("");
+ updateSceneMatch(result);
 }
 function renderMoodMoment(){
  element("moodChips").innerHTML=moodList.map(m=>
  '<button class="chip'+(state.mood===m.id?' active':'')+'" type="button" data-mood="'+esc(m.id)+'" aria-pressed="'+(state.mood===m.id)+'"><span class="chip-emoji">'+m.icon+'</span>'+esc(m.name)+'</button>').join("");
  element("momentChips").innerHTML=momentList.map(m=>
  '<button class="chip'+(state.moment===m.id?' active':'')+'" type="button" data-moment="'+esc(m.id)+'" aria-pressed="'+(state.moment===m.id)+'"><span class="chip-emoji">'+m.icon+'</span>'+esc(m.name)+'</button>').join("");
+ revealSelectedChips();
 }
 function selectLiquid(index,manual=true){
  if(!Number.isInteger(index)||!catalog[index])return false;
@@ -216,6 +241,7 @@ function selectLiquid(index,manual=true){
  (state.fromDemo?' · exemplu din catalog':' · ales de tine')+'</span>';
  element("liquidSuggestions").hidden=true;
  element("liquidSearch").setAttribute("aria-expanded","false");
+ element("liquidSearch").removeAttribute("aria-activedescendant");
  drawScene();
  renderResults();
  return true;
@@ -257,6 +283,7 @@ function route(to,push=true){
   window.history.pushState(null,"",to==="liquid"?"#liquid":"#home");
  }
  window.scrollTo?.({top:0,behavior:"instant"});
+ if(!isHome&&window.requestAnimationFrame)window.requestAnimationFrame(revealSelectedChips);
  return true;
 }
 function init(){
@@ -265,10 +292,11 @@ function init(){
  selectLiquid(state.liquidIndex,false);
  route(window.location?.hash==="#liquid"?"liquid":"home",false);
  document.addEventListener("click",ev=>{
-  const target=ev.target.closest?.("[data-route],[data-liquid],[data-mood],[data-moment],[data-expand]");
+  const target=ev.target.closest?.("[data-route],[data-liquid],[data-mood],[data-moment],[data-expand],[data-go-best]");
   if(!target)return;
   const d=target.dataset;
   if(d.route){ev.preventDefault();route(d.route);return;}
+  if(d.goBest!=null){scrollToBest();return;}
   if(d.liquid!=null){selectLiquid(Number(d.liquid));return;}
   if(d.mood){state.mood=d.mood;state.expandedId=null;renderMoodMoment();renderResults();return;}
   if(d.moment){state.moment=d.moment;state.expandedId=null;renderMoodMoment();renderResults();return;}
@@ -289,7 +317,7 @@ function init(){
  });
  element("matchButton").addEventListener("click",()=>{
   state.expandedId=null;renderResults();
-  element("resultsSection").scrollIntoView({block:"start",behavior:window.matchMedia?.("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  scrollToBest();
  });
  window.addEventListener("popstate",()=>route(window.location.hash==="#liquid"?"liquid":"home",false));
 }
