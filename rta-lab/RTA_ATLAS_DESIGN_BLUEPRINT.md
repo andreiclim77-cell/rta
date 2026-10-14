@@ -326,3 +326,9 @@ Un modul de pregătire a dovezilor poate extrage BEST + WATCH A + WATCH B din MA
 5. Abia după prezentarea machetei V0.2 și aprobarea explicită a utilizatorului începe extinderea Atomizer Atlas / Wire Lab / Market / Duel. Nu face „cosmetizare” superficială a V0.1 dacă trebuie regândite compoziția și limbajul vizual.
 
 **Păstrăm ce e bun:** motor RTA, 620 lichide, 16 platforme, fișele celor 42 de exemplare, 3 CL saved/draft, calculele 3×3 și proveniența corectă. **Respingerea privește înfățișarea, mișcarea și felul de a prezenta**, nu algoritmul deja verificat.
+
+## 16. Implementare V0.2 și reluare sigură (14.10.2026)
+
+**Suprascrie statusurile vechi strict pentru progresul V0.2:** Prototipul este implementat în `rta-lab/atlas-preview/`, cu resurse foto `photo-sources.js`, CSS `v02.css` și JS motion `v02.js`. PR #43 merged în `main` la commitul `935d949fe722fdfaf58d089c02ae15c722b38902`; testele RTA și deploymentul Pages sunt **SUCCESS**; Visual Mobile Gate a produs capturi reale în artefactul `atlas-v02-mobile-screenshots`. **V0.2 este publicat tehnic, dar nu a primit confirmarea finală a utilizatorului asupra aspectului.** V0.1 rămâne respins.
+
+**Noua ordine la reluare:** citește `rta-lab/RTA_CURRENT_HANDOFF.md` → MASTER → acest blueprint → ultimele fișiere din `main`; verifică SHA și rezultatele, nu reimplementa. Păstrează V10. Următorul pas: feedback vizual V0.2 pe telefon, apoi ajustări țintite; numai după aprobare extinderea celor patru ecrane rămase.
