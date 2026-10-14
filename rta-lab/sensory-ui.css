@@ -255,3 +255,25 @@ input,select{font-size:14px;min-height:47px;border-color:rgba(171,201,205,.21)}
  .sd-journey a{transition:none}
  html{scroll-behavior:auto}
 }
+
+
+/* Dvarw CL · two observed pairings, selectable as complete air/wire/wrap sets. */
+.sd-setups{margin-top:14px;padding:13px;border:1px solid rgba(141,205,190,.26);border-radius:15px;background:rgba(13,31,35,.72)}
+.sd-setups-heading{display:flex;justify-content:space-between;gap:8px 15px;align-items:baseline;flex-wrap:wrap;margin-bottom:11px}
+.sd-setups-heading strong{font-size:13px;color:#e9f4f0;font-weight:780}
+.sd-setups-heading small{font-size:11px;color:#abc8c6}
+.sd-setups-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.sd-setup-choice{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:7px;text-align:left;cursor:pointer;border:1px solid rgba(145,191,193,.27);background:rgba(15,25,32,.87);border-radius:13px;padding:13px 14px;color:#edf3f1;min-height:178px;overflow-wrap:anywhere}
+.sd-setup-choice:hover,.sd-setup-choice.is-current{border-color:#94d5c5;background:rgba(65,135,122,.14)}
+.sd-setup-choice:focus-visible{outline:3px solid #dfc18f;outline-offset:3px}
+.sd-setup-tag{font-size:10px;text-transform:uppercase;letter-spacing:.45px;font-weight:760;color:#a8d9cd}
+.sd-setup-choice strong{font-size:14px;font-weight:740;line-height:1.42}
+.sd-setup-choice small{font-size:11px;color:#b5c8cb;line-height:1.45}
+.sd-setup-choice em{font-size:10px;line-height:1.42;font-style:normal;color:#d0c09d}
+.sd-setup-state{font-size:10px;letter-spacing:.35px;font-weight:800;color:#b4e2d6;margin-top:auto}
+.sd-setup-caveat{font-size:11px;line-height:1.55;color:#acbfc3;margin:11px 2px 0}
+@media(max-width:625px){
+ .sd-setups{padding:11px}
+ .sd-setups-grid{grid-template-columns:minmax(0,1fr)}
+ .sd-setup-choice{min-height:0;padding:12px 13px}
+}
