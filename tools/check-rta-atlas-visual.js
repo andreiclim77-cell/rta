@@ -154,14 +154,15 @@ async function main(){
   await offline.route("https://thevapinggentlemen.club/**",route=>route.abort());
   const fallbackPage=await offline.newPage();
   await fallbackPage.goto(entry,{waitUntil:"domcontentloaded"});
+  await fallbackPage.locator("#cinemaPause").click();
   await fallbackPage.waitForFunction(()=>{
    const img=document.querySelector('#cinemaReel .cinema-frame.is-visible img');
    return img?.dataset.photoFallback==="local"&&img.complete&&img.naturalWidth>0;
   },null,{timeout:12000});
   check(await fallbackPage.locator("#cinemaCredit").getAttribute("href")===null,
    "Project-hosted fallback must not be credited as external original");
+  await fallbackPage.waitForTimeout(850);
   await screenshot(fallbackPage,"hero-vendor-offline-360.png");
-  await fallbackPage.locator("#cinemaPause").click();
   for(const frame of [1,2]){
    await fallbackPage.locator('[data-cinema-select="'+frame+'"]').click();
    await fallbackPage.waitForFunction(()=>{

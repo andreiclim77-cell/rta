@@ -360,3 +360,7 @@ Utilizatorul autorizează continuarea autonomă până la aplicația completă c
 Revizia mobilă `1f705023`: preview BEST cu spire/Ø/TC-WATT lizibil, amplitudine vizuală utilă a scenelor, pauză și rotație oprite efectiv, căutare cu închidere Escape/focus exterior. Capturile se extind la lista deschisă, shortcutul din scenă, pauză și toate fallbackurile galeriei. GT One și 415 au copii locale nealterate ale fotografiilor folosite, cu atribuirea originală și condiția de licență deschisă.
 
 QA pe SHA indicat: RTA `38619985170` SUCCESS, Market `38619985251` SUCCESS, Visual `38619985373` FAILURE la comparația transformării imediat după click Pause pe 390 px. Corecția testului așteaptă starea CSS paused și stabilizarea cadrului compositorului înainte de comparația pe 3,35 secunde. Verificați noul HEAD și noile capturi înainte de a considera etapa CI verde. HANDOFF §9 este sursa operațională pentru continuare.
+
+### 19.1. Capture review și implementare progresivă
+
+Pe `a511ef64`, toate cele trei gates au trecut: RTA `38620833175`, Market `38620833394`, Visual `38620833502`. Cele 23 de PNG din artifact `11921084143` au fost inspectate; captura offline KX aproape întunecată la intrare a fost respinsă și sincronizarea capturii corectată. CI verde nu înlocuiește inspecția vizuală. PR #45 rămâne mobil; Atlas/Wire și apoi Market/Duel continuă în `feature/atlas-complete-six-modules-20261014`, cu același sistem vizual. Cele două adaptoare noi există local și sunt testate mobil/desktop, fără aprobare estetică finală sau publicare.
