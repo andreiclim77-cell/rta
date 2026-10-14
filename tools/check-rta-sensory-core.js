@@ -191,7 +191,7 @@ assert.equal(JSON.stringify(catalog),sameInput);
 const global=api.bestForLiquid(sample,"complete");
 assert.equal(global.length,16);
 assert.equal(new Set(global.map(x=>x.atom)).size,16);
-// Browser-side UI state smoke test without network or localStorage access.
+// Browser-side UI functional test with memory-backed localStorage and no network.
 class Classes{
  constructor(){this.values=new Set(["hidden"]);}
  add(v){this.values.add(v);}
@@ -209,12 +209,15 @@ class Node{
  dispatchEvent(){return true;}
 }
 const nodes={},find=id=>nodes[id]??(nodes[id]=new Node(id));
+const browserStore=new Map();
+const localStorage={getItem:k=>browserStore.has(k)?browserStore.get(k):null,
+ setItem:(k,v)=>{browserStore.set(k,String(v));}};
 const doc={getElementById:find,querySelectorAll:()=>[],events:{},
  addEventListener(k,f){this.events[k]=f;}};
 const sandbox={
  window:{RTA_CORE:env.window.RTA_CORE,RTA_LIQUIDS:catalog,
  RTA_SENSORY_CORE:api,RTA_BELL_LIQUID_FIT:env.window.RTA_BELL_LIQUID_FIT,
- localStorage:{getItem:()=>{throw new Error("Storage denied");},setItem:()=>{throw new Error("Storage denied");}}},
+ localStorage},
  document:doc,Event:class{constructor(type,opts){this.type=type;this.bubbles=opts&&opts.bubbles;}},
  state:{objective:"complete",liquid:null},
  setObjective:o=>{sandbox.state.objective=o;},
@@ -305,6 +308,146 @@ assert.equal(chosen.wraps,6);
 assert.equal(chosen.power,13);
 assert.ok(/data-sd-preset="cl-triple-28-6"[^>]*aria-pressed="true"/.test(clRoot.innerHTML));
 assert.equal(ui.configFor("klp","explorer").temp,220,"KLP DNA profile must remain intact");
+// Three separate physical units, none silently marked as already mounted.
+const physicalAtStart=ui.physicalClState();
+assert.equal(physicalAtStart.active,1);
+assert.equal(physicalAtStart.units.length,3);
+assert.equal(physicalAtStart.storageAvailable,true);
+assert.ok(physicalAtStart.units.every(u=>!u.saved),"Fresh units must start unregistered");
+assert.ok(clRoot.innerHTML.includes("Cele 3 exemplare Dvarw CL"));
+for(const n of [1,2,3])assert.ok(clRoot.innerHTML.includes('data-sd-cl-unit="'+n+'"'));
+assert.ok(clRoot.innerHTML.includes("preset orientativ"),"No physical installation should be inferred");
+const clickUnit=n=>clRoot.trigger("click",{target:{closest:()=>({dataset:{sdClUnit:String(n)}})}});
+const clickClAction=key=>clRoot.trigger("click",{target:{closest:()=>({dataset:{[key]:"1"}})}});
+// Record physical CL #1 only after explicit confirmation; keep W 13 from prior A/B.
+clickClAction("sdClSave");
+assert.equal(ui.physicalClState().units[0].status,"Înregistrat");
+assert.equal(ui.physicalClState().units[0].saved.air,"triple06");
+assert.equal(ui.physicalClState().units[0].saved.wraps,6);
+assert.equal(ui.physicalClState().units[0].saved.power,13);
+// CL #2 is still unset; initialize independent single-hole/5-wrap profile.
+clickUnit(2);
+assert.equal(ui.physicalClState().active,2);
+assert.equal(ui.physicalClState().units[1].saved,null);
+assert.equal(ui.physicalClState().units[1].draft,null);
+assert.equal(ui.configFor("dvarwcl","explorer").air,"triple06");
+clickSetup("cl-single-28-5");
+assert.equal(ui.physicalClState().units[1].saved,null,"Choosing preset is only a draft");
+assert.equal(ui.physicalClState().units[1].draft.air,"single12");
+assert.equal(ui.physicalClState().units[1].draft.wraps,5);
+clickClAction("sdClSave");
+assert.equal(ui.physicalClState().units[1].saved.air,"single12");
+assert.equal(ui.physicalClState().units[1].saved.wraps,5);
+assert.equal(ui.physicalClState().units[0].saved.air,"triple06","Saving CL2 must not overwrite CL1");
+// CL #3 gets an independent K1 29/5 build and unsaved power edit that can be reverted.
+clickUnit(3);
+assert.equal(ui.physicalClState().units[2].saved,null);
+clRoot.trigger("change",{target:{dataset:{sdField:"wire"},value:"k129"}});
+clRoot.trigger("change",{target:{dataset:{sdField:"wraps"},value:"5"}});
+assert.equal(ui.physicalClState().units[2].saved,null);
+assert.equal(ui.physicalClState().units[2].draft.wire,"k129");
+clickClAction("sdClSave");
+const thirdSaved=ui.physicalClState().units[2].saved;
+assert.equal(thirdSaved.wire,"k129");
+assert.equal(thirdSaved.wraps,5);
+clRoot.trigger("change",{target:{dataset:{sdField:"power"},value:"11"}});
+assert.equal(ui.physicalClState().units[2].status,"Modificări nesalvate");
+assert.equal(ui.physicalClState().units[2].saved.power,thirdSaved.power,"Draft edits must not mutate committed record");
+clickClAction("sdClRevert");
+assert.equal(ui.physicalClState().units[2].status,"Înregistrat");
+assert.equal(ui.configFor("dvarwcl","explorer").power,thirdSaved.power);
+// Invalid switching must not mutate selection or another device.
+assert.equal(ui.selectPhysicalCl("explorer",0),false);
+assert.equal(ui.selectPhysicalCl("explorer",4),false);
+assert.equal(ui.selectPhysicalCl("explorer","x"),false);
+assert.equal(ui.physicalClState().active,3);
+clickUnit(1);
+assert.equal(ui.configFor("dvarwcl","explorer").air,"triple06");
+assert.equal(ui.configFor("dvarwcl","explorer").wraps,6);
+assert.equal(ui.configFor("dvarwcl","explorer").power,13);
+clickUnit(2);
+assert.equal(ui.configFor("dvarwcl","explorer").air,"single12");
+assert.equal(ui.configFor("dvarwcl","explorer").wraps,5);
+assert.equal(ui.configFor("dvarwcl","main").air,"single12","Main and explorer must share CL2 active state");
+assert.equal(ui.configFor("klp","explorer").temp,220,"KLP must not change when switching CLs");
+assert.equal(ui.configFor("dvarwfl","explorer").air,"triple06","Dvarw FL must remain separate");
+// Ensure all three committed records survive in storage; never leak into generic CL slot.
+const persisted=JSON.parse(browserStore.get("rta-cl-physical-units-v1-20261014"));
+assert.equal(persisted.schema,1);
+assert.equal(persisted.active,1);
+assert.equal(persisted.units.length,3);
+assert.deepEqual(persisted.units.map(u=>u.saved.air),["triple06","single12","triple06"]);
+assert.equal(persisted.units[2].saved.wire,"k129");
+// Drafts survive switching without silently rewriting the committed physical record.
+clickUnit(1);
+clRoot.trigger("change",{target:{dataset:{sdField:"position"},value:"high"}});
+assert.equal(ui.physicalClState().units[0].status,"Modificări nesalvate");
+assert.equal(ui.physicalClState().units[0].saved.position,"standard");
+clickUnit(2);
+clickUnit(1);
+assert.equal(ui.configFor("dvarwcl","explorer").position,"high");
+assert.equal(ui.physicalClState().units[0].saved.position,"standard");
+clickClAction("sdClRevert");
+assert.equal(ui.configFor("dvarwcl","explorer").position,"standard");
+clickUnit(2);
+// Verify fresh app initialization reads independent saved physical records.
+// The second context has its own DOM/fit wrapper but shares only the storage payload.
+function loadFreshPhysicalUi(storage){
+ const n={},get=id=>n[id]??(n[id]=new Node(id));
+ const d={getElementById:get,querySelectorAll:()=>[],events:{},
+  addEventListener(k,fn){this.events[k]=fn;}};
+ const fresh={window:{RTA_CORE:env.window.RTA_CORE,RTA_LIQUIDS:catalog,
+   RTA_SENSORY_CORE:api,RTA_BELL_LIQUID_FIT:{...env.window.RTA_BELL_LIQUID_FIT},
+   localStorage:storage},document:d,
+  Event:class{constructor(type,opts){this.type=type;this.bubbles=opts&&opts.bubbles;}},
+  state:{objective:"complete",liquid:null},setObjective:()=>{}};
+ vm.createContext(fresh);
+ vm.runInContext(fs.readFileSync(path.join(root,"sensory-ui.js"),"utf8"),fresh);
+ return fresh.window.RTA_SENSORY_UI;
+}
+const reopened=loadFreshPhysicalUi(localStorage);
+assert.equal(reopened.physicalClState().active,2);
+assert.deepEqual(JSON.parse(JSON.stringify(reopened.physicalClState().units.map(u=>u.saved.air))),["triple06","single12","triple06"]);
+assert.equal(reopened.configFor("dvarwcl","explorer").wraps,5);
+assert.equal(reopened.configFor("dvarwcl","main").air,"single12");
+const legacyData={dvarwcl:{atom:"dvarwcl",air:"single12",wire:"k128",
+ wraps:5,power:14,coilMm:2.5,position:"standard"}};
+const legacyStorage={getItem:k=>k==="rta-sensory-dna-choice-20261013"?JSON.stringify(legacyData):null,
+ setItem(){}};
+const migrated=loadFreshPhysicalUi(legacyStorage).physicalClState();
+assert.equal(migrated.units[0].source,"legacy");
+assert.equal(migrated.units[0].status,"Import vechi · nesalvat");
+assert.equal(migrated.units[0].saved,null,"Legacy generic choice must not be claimed as a verified physical CL");
+assert.equal(migrated.units[0].draft.air,"single12");
+assert.equal(migrated.units[0].draft.wraps,5);
+assert.equal(migrated.units[1].draft,null);
+assert.equal(migrated.units[2].draft,null);
+const blockedStorage={getItem(){throw new Error("Blocked");},setItem(){throw new Error("Blocked");}};
+const blocked=loadFreshPhysicalUi(blockedStorage).physicalClState();
+assert.equal(blocked.storageAvailable,false);
+assert.equal(blocked.units.length,3,"No storage must not break the configurator");
+// Mood Match opens a full CL build as a DRAFT of the active physical unit.
+sandbox.setCategory=()=>{};
+sandbox.activateLiquid=liquid=>{sandbox.state.liquid=liquid;};
+sandbox.chooseAtom=()=>{};
+const savedBeforeMood=ui.physicalClState().units[1].saved;
+const fromMood={...ui.configFor("dvarwcl","explorer"),air:"triple06",wire:"k128",wraps:6};
+assert.equal(ui.applyConfiguration(0,"dvarwcl",fromMood),true);
+assert.equal(ui.physicalClState().active,2);
+assert.equal(ui.physicalClState().units[1].draft.air,"triple06");
+assert.equal(ui.physicalClState().units[1].draft.wraps,6);
+assert.equal(ui.physicalClState().units[1].saved.air,savedBeforeMood.air,
+ "Mood Match must not confirm a physical build on CL2");
+assert.equal(ui.physicalClState().units[0].saved.air,"triple06",
+ "Mood Match must not overwrite another physical CL");
+assert.equal(ui.physicalClState().units[2].saved.wire,"k129",
+ "Mood Match must not overwrite CL3");
+assert.equal(ui.revertPhysicalCl("main"),true);
+assert.equal(ui.physicalClState().units[1].draft.air,"single12",
+ "Revert must restore the last registered CL2 build");
+const genericStore=JSON.parse(browserStore.get("rta-sensory-dna-choice-20261013")||"{}");
+assert.equal(genericStore.dvarwcl,undefined,"Physical CL records must not overwrite generic legacy config");
+
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 const sw=fs.readFileSync(path.join(root,"sw.js"),"utf8");
 for(const token of ["sensoryExplorer","sensoryMain","mode-main","mode-explorer","data/sensory-core.js","sensory-ui.js","sensory-ui.css"])assert.ok(html.includes(token),token+" missing in HTML");
