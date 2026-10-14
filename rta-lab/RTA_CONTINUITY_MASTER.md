@@ -25,12 +25,12 @@
 2. Preferință senzorială: tobacco-first, Tobacco Core Visibility, detaliu, layering, corp/mouthfeel; fără claritate sterilă și fără „tocăniță”.
 3. RTA Lab: **V10 / 620 repere / 120 Hall of Fame / 16 platforme / 42 atomizoare fizice / 5 sloturi active**.
 4. Catalog: 145 tutun simplu + 155 tutun complex + 150 NET simplu + 170 NET complex.
-5. Prior personal: **K1 29/5 contact** principal; **K1 28/5 contact** secundar. Excepții validate: **KV3 Mini = 28/6 + 29/6**, **Dvarw CL 3×0,6 = 28/6**, **Asylum V3 Flat = 28/6**, toate pe Ø2,5.
+5. Prior general K1 29/5 contact > 28/5 contact **doar fără preferință de platformă explicită**. Actual: **TC NiFe30 = NiFe52 pe KLP/GTR/KX/Prime, apoi K1**; **GT One K1 29/6 apoi 28/5**; **Muted+ K1 28/6**; **Dvarw CL/FL preferă insert 3×0,6**. Excepții mai vechi: KV3 28/6+29/6 și Asylum Flat 28/6.
 6. K1 29/6 contact rămâne numai când ADN-ul platformei sau A/B-ul îl justifică; **GT One = 29/6 validat practic și preferat față de 28/5 în A/B direct**.
 7. Varianta K1 29/5 distanțată este **ȘTEARSĂ / DEPĂȘITĂ** și nu trebuie reintrodusă în UI, motor, Explorer sau arhivă.
 8. TC global: **NiFe30/6 + NiFe52/6**, ambele Ø2,5.
 9. Dicodes personal: **RESISTHERM NiFe30, TCR320, 5,5 Ω/m** confirmat direct de pe eticheta rolei.
-10. Harta TC: **GTR/KX → Dicodes NiFe30/6**, **K Prime → Zivipf NiFe52/6** (și benchmark Dicodes NiFe30); **KLP → Dicodes NiFe30/6 DNA 220°C / plafon 16 W, test personal 13.10.2026**; NiFe52 KLP încă netestat.
+10. **PREFERINȚA PERSONALĂ TC ACTUALĂ, 14.10.2026:** pe **KLP, GTR, KX și K Prime**, **Dicodes NiFe30/6 = Zivipf NiFe52/6 ca prioritate senzorială #1**; **K1 este #2**. TCR320 vs TCR310 sunt aliaje diferite; egalitatea preferinței nu este A/B universal. KLP NiFe30 a fost testat la DNA 220°C/16 W, fără transfer automat al setărilor spre NiFe52.
 11. Clapton active: **415→K1**, **Dvarw FL→SS**.
 12. Asylum V3: Flat = claritate/separare; Dome = corp/integrare; **K1 Clapton/5 numai contextual**, fără prior de platformă.
 13. **Mood Match (aprobat 13.10.2026):** 7 stări × 5 momente × lichid automat/manual; toate cele 16 platforme rămân accesibile; trei interpretări, niciun câștigător universal.
@@ -40,15 +40,15 @@
 | Platformă | Buc. | ADN / rol curent |
 | --- | ---: | --- |
 | 415 RTA MTL Cool Edition | 1 | High-sensitivity / micro-geometry; 28/5 contact = echilibru/layering; 29/5 contact = concentrat/dulce; 29/6 contact = dry/tobacco; **K1 Clapton/5 = pereche Clapton preferată**. |
-| Kayfun Prime / K Prime | 2 | Echilibru premium; **29/5 contact** = round-wire principal curent; 28/5 = echilibru; TC curent NiFe52/6; NiFe30/6 benchmark istoric 80/20. |
+| Kayfun Prime / K Prime | 2 | TC #1 la egalitate: **Dicodes NiFe30/6 = Zivipf NiFe52/6** ca preferință; apoi **K1 29/5 contact** (alternativa round-wire), K1 28/5 contextual. Dicodes NiFe30 are și benchmarkul istoric 80/20. |
 | Taifun GT One | 4 | Straight tobacco precision; **A/B direct 12.10.2026: K1 29 GA / Ø2,5 / 6 contact > K1 28 GA / Ø2,5 / 5**. 29/6 devine buildul round-wire preferat curent al platformei. |
 | Dvarw MTL CL 22 | 3 | Tobacco muscular; **configurație testată pe un CL: insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire**. Cele 3 exemplare nu sunt presupuse configurate identic; separat de FL. |
-| Muted+ | 4 | Corp/mouthfeel + airflow configurabil; prior personal 29/5 contact dacă nu există excepție. |
-| Taifun GTR | 5 | TC specialist; Dicodes RESISTHERM NiFe30 320/6; finețe, layering, smoothness. |
-| Dvarw MTL FL | 2 | Analiză/separare; 28/5 excelent; **SS316L Clapton/5 = pereche dedicată**. **Inserturi 3×0,6 mm achiziționate pentru FL**, fără test/instalare confirmată pe ambele exemplare. |
+| Muted+ | 4 | **K1 28 GA / 6 spire = prima preferință personală declarată** (14.10.2026); airflow/putere/Ø exacte nu au fost precizate. Alte builduri rămân contextuale. |
+| Taifun GTR | 5 | TC #1 la egalitate: **Dicodes NiFe30 TCR320/6 = Zivipf NiFe52 TCR310/6** ca preferință; apoi K1. Magia GTR cu NiFe30 rămâne observație proprie. |
+| Dvarw MTL FL | 2 | **Insert 3×0,6 = preferință personală validată A/B pe Balkan Milestone** cu K1 28 GA/6: orizont și simultaneitate superioare, palat ≈25% mai bogat perceput vs FL 1×1,2/K1/6, TH foarte puțin mai mic; SS316L Clapton/5 rămâne alternativă dedicată pentru layering. |
 | Diplomat v1.5 | 3 | Camerele schimbă specializarea aromatică; calibrare separată; 29/5 contact prior personal. |
-| Kayfun X / KX | 4 | 28/5 extraordinar + Dicodes RESISTHERM NiFe30 320/6 TC; daily premium. |
-| KLP / Kayfun Lite Plus 2021 | 5 | **A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6 contact** pentru redarea generală/completă. 29/5 contact rămâne specialistul de hit/TH/focus; **KLP NiFe30/6 TC DNA 220°C / plafon 16 W este testat personal** (vezi §18). |
+| Kayfun X / KX | 4 | TC #1 egal: **Dicodes NiFe30 TCR320/6 = Zivipf NiFe52 TCR310/6** ca preferință; apoi **K1 28/5** ca alternativă round-wire validată. |
+| KLP / Kayfun Lite Plus 2021 | 5 | **A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact > K1 29 GA / Ø2,5 / 6 contact** pentru redarea generală/completă. 29/5 contact rămâne specialistul de hit/TH/focus; **NiFe30/6 = NiFe52/6 pe primul nivel de preferință**, urmate de K1 28/5; **KLP NiFe30/6 DNA 220°C / 16 W a fost testat**, NiFe52 este egalitatea preferinței declarate (nu A/B controlat). |
 | Asylum V3 SS/DLC | 2 | **Flat = configurația activă validată cu K1 28 GA / Ø2,5 / 6 spire** pentru claritate/separare + corp/completitudine; Dome = corp/integrare; K1 Clapton/5 rămâne contextual. |
 | Prime Minister Freehand | 2 | NET specialist; 28/5 = corp/layering; 29/6 contact = frunză/dry/tobacco-first. |
 | Prime Minister Standard/Rhodesian | 2 | Mai saturat/cuminte; calibrare separată; 29/5 contact prior personal. |
@@ -89,8 +89,7 @@
 
 - **29/5 contact = round-wire principal curent**.
 - 28/5 = echilibru, corp, mouthfeel, completitudine.
-- Zivipf NiFe52 / TCR310 / Ø2,5 / 6 = preferință TC curentă.
-- Dicodes NiFe30 / TCR320 / 5,5 Ω/m / Ø2,5 / 6 = benchmark istoric actualizat pentru 80% trabuc / 20% cireșe.
+- **TC preferat la egalitate: Zivipf NiFe52 TCR310/6 = Dicodes NiFe30 TCR320/6**; K1 29/5 rămâne alternativa în watt. Dicodes NiFe30/6 păstrează benchmarkul istoric 80% trabuc / 20% cireșe. Nu sunt aliaje identice.
 - Fără verdict universal cross-alloy fără A/B controlat.
 
 ### 4.3. GT One
@@ -101,26 +100,24 @@
 
 ### 4.4. GTR
 
-- Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 = baseline TC canonic.
-- Rol: finețe, layering, smoothness, consistență termică.
+- **NiFe30 Dicodes TCR320/6 și NiFe52 Zivipf TCR310/6 la egalitate ca preferință TC**, apoi K1. Testul personal cu Dicodes păstrează separat „magia pe palat”, finețea și layeringul.
 
 ### 4.5. KX
 
-- K1 28/5 = extraordinar, echilibrat și natural.
-- Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 · 6 = TC canonic; smooth, constant, natural.
+- **NiFe30 Dicodes/6 = NiFe52 Zivipf/6 ca preferință TC #1**, apoi K1 28/5, apreciat drept extraordinar și natural. Nu se extrapolează automat efectele validate cu Dicodes la Zivipf.
 
 ### 4.6. Dvarw
 
 - CL și FL rămân calibrate separat.
-- **Dvarw MTL CL + insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire = configurație activă validată 27.09.2026** pentru airflow multipunct, layering și completitudine.
-- Dvarw FL păstrează validarea round-wire 28/5 și → **SS316L Clapton/5 dedicat** pentru claritate, top-notes și layering.
+- **Dvarw MTL CL + insert 3×0,6 + K1 28 GA / Ø2,5 / 6 spire = configurație activă validată 27.09.2026**, preferată pentru airflow multipunct, layering și completitudine. **Nou 14.10.2026: CL + insert 1×1,2 + K1 28 GA / 5 spire este și el un setup apreciat ca foarte reușit**. Nu compara doar insertul: diferă și numărul de spire.
+- **Dvarw FL și CL au acum preferință explicită pentru insert 3×0,6**. Pe FL: K1 28 GA/6 + 3×0,6 a câștigat direct cu Balkan Milestone față de FL 1×1,2 / K1 6 (cu foarte puțin TH pierdut și ≈25% palat perceput în plus); K1 28/5 și SS316L Clapton/5 rămân alternative de testat în contexte proprii. FL nu egalează plăcerea pe GTR.
 
 ### 4.7. KLP
 
 - **A/B direct 12.10.2026: 28/5 contact este preferat față de 29/6 contact** pentru redare generală/completă; 28/6 a fost mai blând/analitic față de 28/5.
 - 29/5 contact rămâne specialistul de hit/TH, focus, viteză și tobacco-first; 29/6 rămâne contextual.
 - **Nou 13.10.2026:** KLP + Dicodes NiFe30 TCR320 / Ø2,5 / 6 spire / DNA TC **220°C, plafon 16 W** a fost raportat cu spectru și palat îmbunătățite față de KLP Kanthal K1, TH și ofensivă ușor mai puternice și o magie senzorială, apropiindu-se de K Prime cu aceeași sârmă.
-- **Incertitudine:** lichidul, airflow-ul și condițiile exacte ale comparatorului rămân neprecizate; nu declara A/B complet controlat sau avantaj universal. KLP K1 28/5 rămâne referință round-wire; NiFe52 pe KLP rămâne nevalidat.
+- **Actualizare preferință 14.10.2026:** pe KLP, **NiFe30 = NiFe52 ca prioritate senzorială**, apoi K1 28/5. Egalitatea este o alegere personală declarată, nu A/B NiFe52/30 pe același KLP. Testul NiFe30 rămâne raportat cu airflow și lichid neprecizate; Ø2,5/6, DNA 220°C / plafon 16 W sunt numai datele pentru Dicodes.
 
 ### 4.8. Prime Minister Freehand
 
@@ -458,10 +455,42 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 | Platformă | Cantitate actuală | Modificare / accesorii |
 | --- | ---: | --- |
 | Dvarw MTL CL 22 | **3** | +2 față de inventarul precedent (1); nu se presupune că toate trei au același insert sau build |
-| Dvarw MTL FL | **2** | neschimbat ca număr; **achiziționate inserturi 3×0,6 mm pentru FL**, fără a declara că au fost deja montate ori comparate A/B |
+| Dvarw MTL FL | **2** | neschimbat ca număr; inserturi 3×0,6 mm achiziționate; **între timp testul FL/3×0,6 cu Balkan Milestone a fost confirmat la §20** |
 | Kayfun Lite Plus 2021 (KLP) | **5** | neschimbat; deja canonic |
 | Taifun GTR | **5** | neschimbat; deja canonic |
 
-**Consecințe pentru Sensory DNA:** Dvarw CL și FL au ADN-uri distincte, iar varianta multipunct 3×0,6 mm a FL este **accesoriu disponibil**, nu rezultat senzorial validat direct pe FL. La trei CL se pot păstra builduri/inserturi distincte pentru comparații ulterioare; nu le atribuim încă setări arbitrare. Varianta FL 3×0,6 poate fi selectată ca opțiune de hardware în configuratorul existent. Nu se modifică scoring-ul/calibrările istorice până la observații practice pe această combinație.
+**Consecințe pentru Sensory DNA la momentul consemnării §19 (depășite de §20):** Dvarw CL și FL au ADN-uri distincte, iar varianta multipunct 3×0,6 mm a FL era atunci **accesoriu disponibil**, nu încă testat direct pe FL. La trei CL se pot păstra builduri/inserturi distincte pentru comparații ulterioare; nu le atribuim încă setări arbitrare. Varianta FL 3×0,6 poate fi selectată ca opțiune de hardware în configuratorul existent. Nu se modifică scoring-ul/calibrările istorice până la observații practice pe această combinație.
 
 **Control:** totalul inventarului tabelar din §2 trebuie să fie **42**, număr de platforme **16**, iar valorile **5 KLP / 5 GTR** rămân confirmate.
+
+## 20. Preferințe și comparația Balkan Milestone — 14.10.2026 (CURRENT)
+
+**Autoritate:** declarații senzoriale directe ale utilizatorului din 14.10.2026, nu adevăruri universale despre materiale, flux sau toți cei 620 de lichizi. Această secțiune are prioritate față de preferințele mai vechi incompatibile din §4/§18/§19.
+
+### 20.1. Dvarw CL / Dvarw FL — airflow preferat
+- **CL și FL: insertul 3×0,6 mm este prima alegere personală clară.** 1×1,2 rămâne alternativă, nu presetul personal implicit. **Pe CL, 1×1,2 împreună cu K1 28 GA / 5 spire merge și el bine**, validare personală distinctă; nu-l eticheta inferior în sine.
+- **A/B nou Dvarw FL cu „Balkan Milestone”**, K1 28 GA / **6 spire**, insert **3×0,6**, versus Dvarw FL cu insert **1×1,2**, tot K1/6 spire: **TH foarte puțin mai mic**, dar **orizont aromatic mai larg**, „**mușchi 90%**” ca descriere subiectivă, **palat ≈25% mai bogat perceput** și **arome clar simultane**. Preferință FL 3×0,6 fermă.
+- În același context, FL 3×0,6 este raportat drept **mult mai puternic decât KLP cu K1 28/5**, fără să atingă însă **plăcerea particulară GTR**. Nu deduce de aici o superioritate universală a FL.
+- Declarația ulterioară: **NiFe30 în TC scoate ceva senzorial din lichid pe care utilizatorul nu-l regăsește cu K1**; nu atribui exclusiv chimiei aliajului ceea ce poate ține de coil/TC/temperatură.
+- **Date lipsă A/B:** wattaj, poziția coilului, diametru efectiv raportat pentru FL și toate setările comparatorului. Ø2,5 este **presetul tehnic Lab**, nu observație măsurată în acest test; „+25%” și „90%” sunt autoevaluări, nu instrumente de măsură. „Balkan Milestone” nu a fost identificat cu certitudine între cele 620 de fișe de lichide existente, deci nu-i inventăm brand/clasă/descriere în catalog.
+- **Motor:** FL default K1 28/6 + 3×0,6, CL default K1 28/6 + 3×0,6. Pe FL SS316L Clapton/5 rămâne pereche dedicată contextuală; nu compara cu noul A/B fără test direct pe SS. În Sensory DNA, observația FL/Balkan este probă **parțial contextuală**, nu efect garantat pentru toate lichidele.
+
+### 20.2. Priorități pe platforme
+| Platforme | #1 preferință actuală | #2 / alternativă | Certitudine |
+| --- | --- | --- | --- |
+| **KLP, GTR, Kayfun X, K Prime** | **Dicodes RESISTHERM NiFe30 = Zivipf NiFe52**, în TC cu 6 spire | **K1** în WATT; pe KLP K1 28/5, KX 28/5, K Prime 29/5; GTR K1 28/5 reper watt | egalitate **declarată** între aliaje, **nu** identitate fizică ori A/B direct cross-alloy pe fiecare platformă |
+| **GT One** | **K1 29 GA / 6 spire** | **K1 28 GA / 5 spire** | A/B direct anterior, reconfirmare explicită 14.10.2026 |
+| **Muted+** | **K1 28 GA / 6 spire** | de testat | preferință personală declarată; airflow, Ø și W exacte neprecizate |
+| **Dvarw CL și FL** | **insert 3×0,6 mm** (CL K1 28/6; FL K1 28/6 pe Balkan Milestone) | **CL 1×1,2 + K1 28/5 este tot reușit**; FL 1×1,2 rămâne alternativă | CL 1×1,2/5 = validare personală calitativă, nu A/B controlat; FL 3×0,6/6 = A/B pe Balkan Milestone |
+| **Toate celelalte platforme** | **NESTABILIT** | de testat | nu inventa clasamente sau transferuri |
+
+**Separarea materialelor:** Dicodes NiFe30 = **TCR320**, cu etichetă de rolă confirmată 5,5 Ω/m; Zivipf NiFe52 = **TCR310**; ambele au 6 spire/Ø2,5 în baseline, dar **nu sunt același aliaj**, nici nu folosesc automat aceleași setări TC. Egalitatea înseamnă că utilizatorul nu dorește să fie ierarhizate între ele la capitolul **preferință personală**. KLP DNA **220°C, 16 W** reprezintă exclusiv setarea raportată pentru **Dicodes NiFe30**.
+
+**Reguli de scoring:** în Sensory DNA, „preferință personală” este o etichetă și un prior transparent separate de dovezile testului. Niciun scor numeric de plăcere nu se calculează. Cele două NiFe primesc același bonus de prioritate personală pe platformele declarate, iar diferențele de rezultat tehnic/lichid rămân posibile și etichetate. Păstrează 16 platforme, 42 RTA fizice, 620 lichide și numai cinci familii de sârme active. Metodă: A/B direct > preferință declarată > extrapolare tehnică, fără transfer între lichide sau platforme.
+
+### 20.3. Nuanțare suplimentară: Dvarw CL 1×1,2 cu K1 28/5 (14.10.2026)
+
+- **Declarație directă:** „Pe CL totuși insertul de 1,2 merge bine cu 5 spire K1 28 GA”. Configurația completă observată este **Dvarw MTL CL 22 + insert unic 1×1,2 mm + Kanthal A1 28 GA / 5 spire**. Nu inventa lichidul, temperatura, wattajul, poziția coilului sau Ø exact pentru acest test.
+- **Preferință de familie păstrată:** pe CL utilizatorul preferă în general insertul **3×0,6 mm**, pentru care are test validat cu K1 28 GA / Ø2,5 / 6 spire. Această preferință **nu transformă 1×1,2 + K1 28/5 în variantă slabă**. Este o a doua configurație personală apreciată, distinctă.
+- **Cauzalitate:** o comparație CL 3×0,6/K1 28/6 vs CL 1×1,2/K1 28/5 modifică **două variabile importante simultan** (distribuția aerului și geometria/masa coilului); efectele nu pot fi atribuite doar insertului. Nu afirma rezultate A/B pe spectru/TH/palat pe 1×1,2/5 fără date.
+- **Lab:** înregistrare explicită de observație parțială pentru 1×1,2/K1 28/5 în Sensory DNA, opțiune selectabilă; 3×0,6/K1 28/6 rămâne presetul preferat. Motorul legacy trebuie să explice ambele configurații. Sunt valabile 16 platforme, 42 unități și 620 lichide.

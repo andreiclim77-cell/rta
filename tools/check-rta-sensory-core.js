@@ -19,10 +19,14 @@ for(const [name,expected] of [
  assert.ok(row,"Missing physical inventory platform: "+name);
  assert.equal(row.quantity,expected,"Incorrect count: "+name);
 }
-assert.ok(inventoryMaster.includes("Inserturi 3×0,6 mm achiziționate pentru FL"),
-  "Purchased FL insert must be recorded without claiming it is tested");
-assert.ok(inventoryMaster.includes("fără test/instalare confirmată"),
-  "Owned FL insert is not proof of a sensory result");
+assert.ok(inventoryMaster.includes("## 20. Preferințe și comparația Balkan Milestone"),
+  "Canonical MASTER must record the new personal FL A/B");
+assert.ok(inventoryMaster.includes("insertul 3×0,6 mm este prima alegere personală clară"),
+  "Both Dvarw platforms must adopt user's 3×0.6 airflow preference");
+assert.ok(inventoryMaster.includes("egalitate")&&inventoryMaster.includes("NiFe52"),
+  "NiFe30/NiFe52 personal equality should not be lost");
+assert.ok(!inventoryMaster.includes("fără test/instalare confirmată"),
+  "Historical untested FL state must no longer be stated as active");
 const env={window:{}};
 vm.createContext(env);
 function load(p){vm.runInContext(fs.readFileSync(path.join(root,p),"utf8"),env,{filename:p});}
@@ -96,6 +100,50 @@ assert.equal(klpOtherPower.partialEvidence.length,0);
 assert.ok(api.nife30Family.candidates.includes("kv3"));
 assert.ok(api.nife30Family.untested.includes("kv3"));
 assert.equal(api.nife30Family.reported.includes("klp"),true);
+// Directly declared platform preferences must supersede generic compact-coil priors.
+assert.equal(api.defaultConfig("muted").wire,"k128");
+assert.equal(api.defaultConfig("muted").wraps,6);
+assert.equal(api.personalPreference({atom:"muted",wire:"k128",wraps:6}).tier,1);
+assert.equal(api.defaultConfig("gtone").wire,"k129");
+assert.equal(api.defaultConfig("gtone").wraps,6);
+assert.equal(api.personalPreference({atom:"gtone",wire:"k129",wraps:6}).tier,1);
+assert.equal(api.personalPreference({atom:"gtone",wire:"k128",wraps:5}).tier,2);
+assert.equal(api.defaultConfig("dvarwcl").air,"triple06");
+const fDefault=api.defaultConfig("dvarwfl");
+assert.equal(fDefault.air,"triple06");
+assert.equal(fDefault.wire,"k128");
+assert.equal(fDefault.wraps,6);
+assert.equal(api.personalPreference(fDefault).tier,1);
+assert.equal(api.personalPreference({...fDefault,air:"single12"}).tier,2);
+// Balkan Milestone is a named personal test, not a fabricated 621st catalog entry.
+assert.equal(catalog.some(x=>x.name==="Balkan Milestone"),false);
+const balkan={name:"Balkan Milestone",brand:"A/B personal",class:"profil netipizat",tags:[]};
+const flThree=api.analyze(fDefault,balkan);
+const flSingle=api.analyze({...fDefault,air:"single12"},balkan);
+assert.equal(flThree.anchors.length,0,"Missing wattage/coil position: do not invent fully controlled A/B");
+assert.equal(flThree.partialEvidence.length,1,"Keep user Balkan Milestone comparison as partial evidence");
+assert.equal(flThree.partialEvidence[0].liquidName,"Balkan Milestone");
+assert.equal(flSingle.partialEvidence.length,0,"Do not transfer triple-insert report to single 1.2 mm");
+assert.ok(flThree.signals.spectrum>flSingle.signals.spectrum);
+assert.ok(flThree.signals.palate>flSingle.signals.palate);
+assert.ok(flThree.signals.simultaneity>flSingle.signals.simultaneity);
+assert.ok(flThree.signals.th<flSingle.signals.th);
+for(const atom of ["klp","gtr","kx","kprime"]){
+ const a=api.personalPreference({atom,wire:"nife30",wraps:6});
+ const b=api.personalPreference({atom,wire:"nife52",wraps:6});
+ assert.equal(a.tier,1,atom);
+ assert.equal(b.tier,1,atom);
+ assert.equal(a.label,b.label,"Personal first-choice tie across different NiFe alloys");
+ assert.equal(api.personalPreference({atom,wire:"k128",wraps:5}).tier,2);
+ const d={config:{atom,wire:"nife30",wraps:6},dimensions:{architecture:4,palate:4,harmony:4,energy:4},anchors:[],personalPreference:a};
+ const e={...d,config:{atom,wire:"nife52",wraps:6},personalPreference:b};
+ assert.equal(api.priority(d,"complete"),api.priority(e,"complete"),
+  "Equal personal boost for NiFe30 and NiFe52, independent of actual technical differences");
+}
+assert.equal(api.defaultConfig("klp").wire,"nife30");
+assert.equal(api.defaultConfig("kx").wire,"nife30");
+assert.equal(api.defaultConfig("kprime").wire,"nife52");
+// Old custom benchmark and GTR personal pleasure remain anchored.
 const gtrTC=api.analyze("gtr",sample);
 assert.equal(gtrTC.config.wire,"nife30");
 assert.ok(gtrTC.pleasure.includes("magie"));
@@ -105,6 +153,13 @@ const noAnchor=api.analyze({atom:"gtr",wire:"nife30",wraps:6,air:"hole10"},sampl
 assert.equal(noAnchor.anchors.length,0,"No transfer of personal TC test to untested airflow.");
 const cl=api.analyze("dvarwcl",sample);
 const clSingle=api.analyze({atom:"dvarwcl",air:"single12"},sample);
+const clSingle5=api.analyze({atom:"dvarwcl",air:"single12",wire:"k128",wraps:5},sample);
+assert.equal(clSingle5.anchors.length,0);
+assert.equal(clSingle5.partialEvidence.length,1);
+assert.ok(clSingle5.partialEvidence[0].text.includes("merge bine"));
+assert.ok(clSingle5.personalPreference.label.includes("Alternativă reușită"));
+assert.equal(clSingle.partialEvidence.length,0);
+assert.equal(api.defaultConfig("dvarwcl").wraps,6);
 assert.ok(clSingle.signals.offense>=cl.signals.offense);
 assert.equal(clSingle.anchors.length,0);
 assert.equal(api.config("dvarwcl").air,"triple06");
@@ -203,6 +258,12 @@ assert.equal(uiKlp.temp,220);
 assert.equal(uiKlp.power,16);
 assert.ok(find("sensoryExplorer").innerHTML.includes("OBSERVAȚIE PARȚIALĂ"));
 assert.ok(find("sensoryExplorer").innerHTML.includes("Kayfun Prime")||find("sensoryExplorer").innerHTML.includes("K Prime"));
+const flExplorer=find("atomExplorer");flExplorer.value="dvarwfl";
+sandbox.window.RTA_SENSORY_UI.render("explorer");
+assert.ok(find("sensoryExplorer").innerHTML.includes("Balkan Milestone"),
+  "Current FL 3×0,6 K1 28/6 must surface personal Balkan comparison");
+assert.ok(find("sensoryExplorer").innerHTML.includes("Preferință personală declarată"),
+  "Sensory DNA should show declared preferences separately from technical evidence");
 const html=fs.readFileSync(path.join(root,"index.html"),"utf8");
 const sw=fs.readFileSync(path.join(root,"sw.js"),"utf8");
 for(const token of ["sensoryExplorer","sensoryMain","mode-main","mode-explorer","data/sensory-core.js","sensory-ui.js","sensory-ui.css"])assert.ok(html.includes(token),token+" missing in HTML");

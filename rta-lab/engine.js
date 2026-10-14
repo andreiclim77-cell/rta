@@ -29,10 +29,10 @@ const BUILD_RULES = {
   "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa round-wire mai plină." },
   "kprime":   { k128: 5, k129: 5, reason: "Bottom-air direct și concentrat; ambele round-wire-uri funcționează optim cu footprint compact." },
   "gtone":    { k128: 5, k129: 6, reason: "Validat practic 12.10.2026: K1 29 GA / Ø2,5 / 6 contact este preferat față de K1 28 GA / Ø2,5 / 5; 28/5 rămâne alternativa mai plină." },
-  "dvarwcl":  { k128: 6, k129: 5, reason: "Configurație activă validată: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire pentru acoperire mai uniformă și layering; 29 GA rămâne contextual după obiectiv." },
-  "muted":    { k128: 5, k129: 6, reason: "Triple-air spală o zonă mai lată: 29/6 acoperă jeturile, iar 28/5 oferă round-wire cu mai mult mouthfeel." },
+  "dvarwcl":  { k128: 6, k129: 5, reason: "Preferință principală: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire pentru airflow multipunct și layering; alternativă bună validată personal: 1×1,2 mm + K1 28 GA / 5 spire. Se schimbă simultan și insertul, și numărul de spire; nu declara 1×1,2 inferior universal. 29 GA rămâne contextual." },
+  "muted":    { k128: 6, k129: 6, reason: "Preferință directă 14.10.2026: Muted+ + K1 28 GA / 6 spire. Diametrul și airflow-ul efectiv nu sunt precizate; 29/6 rămâne doar alternativă tehnică, nu prima alegere." },
   "gtr":      { k128: 5, k129: 6, reason: "Cele două jeturi oblice cer 29/6 pentru acoperire; 28/5 păstrează un footprint apropiat, cu mai mult corp." },
-  "dvarwfl":  { k128: 5, k129: 5, reason: "Cu insertul single/stock 1×1,2 mm, jetul este concentrat; 5 spire sunt aproape optim." },
+  "dvarwfl":  { k128: 6, k129: 5, reason: "Dvarw FL: insertul 3×0,6 mm este airflow-ul preferat personal. K1 28/6 a fost testat pe Balkan Milestone cu orizont mai larg, palat ≈25% mai bogat perceput și simultaneitate superioară față de FL 1×1,2/K1/6, cu TH doar puțin mai mic. Pe single 1×1,2, 28/5 rămâne alternativă." },
   "diplomat": { k128: 5, k129: 6, reason: "Diverterul multipunct este lat: 29/6 favorizează acoperirea, iar 28/5 este alternativa round-wire mai densă." },
   "kx":       { k128: 5, k129: 5, reason: "Aerokon restricționează direct sub coil; 5 spire păstrează footprint-ul compact și eficient." },
   "klp":      { k128: 5, k129: 5, reason: "Validat practic 12.10.2026: 28/5 este preferat față de 29/6 pentru redare generală/completă; 29/5 rămâne specialistul de hit/TH/focus." },
@@ -237,6 +237,8 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (objective === "complete") bonus += 0.8;
     if (objective === "tobacco") bonus += 0.35;
     if (["415", "muted", "gtr", "diplomat", "asylum", "pmfree", "pmstd", "minister"].includes(atom.id)) bonus += 0.45;
+    if (atom.id==="muted") bonus+=0.75; // personal K1 28/6
+    if (atom.id==="dvarwfl") bonus+=0.25; // FL 3×0,6 / K1 28/6 on Balkan Milestone
   }
 
   if (wire.id === "k1clap") {
@@ -277,7 +279,8 @@ function wireBonus(atom, wire, ax, objective, liquid) {
     if (objective === "complete") bonus += 1.0;
     if (objective === "th") bonus -= 0.95;
     if (simple && dry && objective === "tobacco") bonus -= 0.35;
-    if (["klp", "kprime", "gtr", "kx", "gtone", "kv3"].includes(atom.id)) bonus += 0.75;
+    if (["klp", "kprime", "gtr", "kx"].includes(atom.id)) bonus += 1.05; // Single NiFe legacy slot = NiFe30 / NiFe52 equal personal preferences
+    else if (["gtone","kv3"].includes(atom.id)) bonus += 0.75;
   }
 
   if (atom.id === "klp") {
@@ -359,6 +362,9 @@ function buildOutput(atom, wire, liquid) {
       output.status = "Validat";
       output.noteClass = "valid";
     }
+  }
+  if(wire.id==="nife30"&&["klp","gtr","kx","kprime"].includes(atom.id)){
+    output.note += " PREFERINȚĂ PERSONALĂ: Dicodes NiFe30 (TCR320) = Zivipf NiFe52 (TCR310) la alegere, apoi K1; aceste două aliaje NU sunt identice.";
   }
   return output;
 }

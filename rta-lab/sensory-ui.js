@@ -118,7 +118,7 @@ function topBuilds(config,liquid,objective){
   return '<button type="button" class="sd-build'+(sel?' selected':'')+'" data-sd-pick-wire="'+
    esc(b.wire)+'" data-sd-pick-wraps="'+b.wraps+'"><span class="sd-build-rank">'+
    (i+1)+'</span><span class="sd-build-title"><strong>'+esc(wire.name)+
-   ' · '+b.wraps+' spire</strong><small>'+t+' · '+esc(x.certainty)+
+   ' · '+b.wraps+' spire</strong><small>'+t+' · '+esc(x.personalPreference?x.personalPreference.label:x.certainty)+
    '</small></span><span class="sd-build-indicator">'+(sel?'SELECTAT':'ALEGE')+'</span></button>';
  }).join("");
 }
@@ -216,13 +216,14 @@ function content(view){
   narrative(analysis)+
   '<div class="sd-trade"><div><h5>Ce câștigi</h5>'+listSummary(analysis.advantages)+'</div>'+
   '<div><h5>Ce sacrifici</h5>'+listSummary(analysis.tradeoffs)+'</div></div>'+
+  (analysis.personalPreference?'<div class="sd-evidence"><b>Preferință personală declarată (distinctă de scorul tehnic)</b><p><strong>'+esc(analysis.personalPreference.label)+'</strong>'+(analysis.personalPreference.note?' — '+esc(analysis.personalPreference.note):'')+'</p></div>':'')+
   (analysis.anchors.length?'<div class="sd-evidence"><b>Observații folosite în calibrare</b>'+
    analysis.anchors.map(o=>'<p><strong>'+esc(o.title)+'</strong> — '+esc(o.text)+
    ' <em>('+esc(o.evidence)+')</em></p>').join("")+'</div>':'')+
   (analysis.partialEvidence&&analysis.partialEvidence.length?'<div class="sd-evidence"><b>Test personal raportat · parametri parțiali</b>'+
    analysis.partialEvidence.map(o=>'<p><strong>'+esc(o.title)+'</strong> — '+esc(o.text)+
    ' <em>('+esc(o.evidence)+')</em></p>').join("")+
-   '<p><em>Nu este o validare complet controlată a lichidului sau airflow-ului; comparația nu se transferă automat.</em></p></div>':'')+
+   '<p><em>Observație raportată cu context parțial. Lichidul și airflow-ul sunt cele indicate în fiecare test, dacă există; comparația nu se transferă automat către alte lichide, aliaje sau inserții.</em></p></div>':'')+
   '</section>'+
   '<section class="sd-stage sd-stage--recommendations" id="'+stage.recommendations+'" aria-labelledby="'+stage.recommendations+'-title">'+
   stageHeading(view,"recommendations","03","Recomandări","Alternative calculate contextual, nu un clasament universal.")+
