@@ -1,0 +1,62 @@
+# One-shot recovery for a specific orphaned GitHub Pages deployment.
+# Its job timed out but Pages still blocks subsequent releases.
+name: Recover stuck RTA Pages deployment
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/recover-rta-pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+
+jobs:
+  cancel-orphan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Cancel only stale deployment 8b65
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          ORPHANED_DEPLOYMENT: 8b65bd28e17c0be2b621c86c29771b707420d1cb
+        run: |
+          set -euo pipefail
+          url="https://api.github.com/repos/$REPOSITORY/pages/deployments/$ORPHANED_DEPLOYMENT"
+          echo "Checking the specific orphaned Pages deployment."
+          http=$(curl -L -sS -o /tmp/pages-before.json -w "%{http_code}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" "$url")
+          if [[ "$http" == 404 ]]; then
+            echo "Deployment no longer exists; nothing to cancel."
+            exit 0
+          fi
+          if [[ "$http" != 200 ]]; then
+            echo "Deployment lookup failed with HTTP $http"
+            cat /tmp/pages-before.json
+            exit 1
+          fi
+          current=$(node -p 'JSON.parse(require("fs").readFileSync("/tmp/pages-before.json","utf8")).status')
+          echo "Orphaned deployment status: $current"
+          case "$current" in
+            succeed|success|failed|cancelled|canceled)
+              echo "Already terminal; no cancellation required."
+              exit 0
+              ;;
+          esac
+          code=$(curl -L -sS -X POST -o /tmp/pages-cancel.json -w "%{http_code}" \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "X-GitHub-Api-Version: 2022-11-28" "$url/cancel")
+          if [[ "$code" == 204 ]]; then
+            echo "Cancellation requested successfully for exact orphaned deployment."
+          else
+            echo "Cancellation returned HTTP $code"
+            cat /tmp/pages-cancel.json
+            exit 1
+          fi
