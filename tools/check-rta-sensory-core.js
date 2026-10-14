@@ -426,6 +426,25 @@ const blockedStorage={getItem(){throw new Error("Blocked");},setItem(){throw new
 const blocked=loadFreshPhysicalUi(blockedStorage).physicalClState();
 assert.equal(blocked.storageAvailable,false);
 assert.equal(blocked.units.length,3,"No storage must not break the configurator");
+// Mood Match opens a full CL build as a DRAFT of the active physical unit.
+sandbox.setCategory=()=>{};
+sandbox.activateLiquid=liquid=>{sandbox.state.liquid=liquid;};
+sandbox.chooseAtom=()=>{};
+const savedBeforeMood=ui.physicalClState().units[1].saved;
+const fromMood={...ui.configFor("dvarwcl","explorer"),air:"triple06",wire:"k128",wraps:6};
+assert.equal(ui.applyConfiguration(0,"dvarwcl",fromMood),true);
+assert.equal(ui.physicalClState().active,2);
+assert.equal(ui.physicalClState().units[1].draft.air,"triple06");
+assert.equal(ui.physicalClState().units[1].draft.wraps,6);
+assert.equal(ui.physicalClState().units[1].saved.air,savedBeforeMood.air,
+ "Mood Match must not confirm a physical build on CL2");
+assert.equal(ui.physicalClState().units[0].saved.air,"triple06",
+ "Mood Match must not overwrite another physical CL");
+assert.equal(ui.physicalClState().units[2].saved.wire,"k129",
+ "Mood Match must not overwrite CL3");
+assert.equal(ui.revertPhysicalCl("main"),true);
+assert.equal(ui.physicalClState().units[1].draft.air,"single12",
+ "Revert must restore the last registered CL2 build");
 const genericStore=JSON.parse(browserStore.get("rta-sensory-dna-choice-20261013")||"{}");
 assert.equal(genericStore.dvarwcl,undefined,"Physical CL records must not overwrite generic legacy config");
 
