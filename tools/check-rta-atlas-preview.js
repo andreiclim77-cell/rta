@@ -84,6 +84,20 @@ if(source.partialEvidence.length){
  const match=api.evidenceFor(source,other);
  assert.notEqual(match.kind,"partial","Do not claim Balkan Milestone test on another liquid");
 }
+// A personal KLP TC report with an unspecified liquid must not be dressed
+// up as a controlled A/B on any arbitrary selected catalog product.
+const unknownLiquidReport=lib.RTA_SENSORY_CORE.analyze({
+ atom:"klp",wire:"nife30",wraps:6,coilMm:2.5,temp:220,power:16
+},catalog[samples[3]]);
+assert.ok(unknownLiquidReport.partialEvidence.length>0,"KLP has a real partial personal report");
+const neutralEvidence=api.evidenceFor(unknownLiquidReport,catalog[samples[3]]);
+assert.equal(neutralEvidence.kind,"partial-context");
+assert.ok(neutralEvidence.label.includes("lichid neprecizat"));
+const secondLiquid=catalog[samples[2]];
+const altEvidence=api.evidenceFor(unknownLiquidReport,secondLiquid);
+assert.equal(altEvidence.kind,"partial-context");
+assert.ok(!altEvidence.label.includes("pe acest lichid"));
+
 const html=fs.readFileSync(path.join(preview,"index.html"),"utf8");
 const css=fs.readFileSync(path.join(preview,"styles.css"),"utf8");
 const js=fs.readFileSync(path.join(preview,"app.js"),"utf8");
