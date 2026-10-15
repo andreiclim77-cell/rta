@@ -113,7 +113,8 @@ const NIFE30_FAMILY=Object.freeze({
    FIRST choices on four platforms; K1 remains the second-family choice.
    No cross-alloy controlled A/B is inferred on every platform. */
 const PERSONAL_PREFS=Object.freeze({
- date:"2026-10-14",
+ date:"2026-10-15",
+ gtrTC:{dicodes:{wire:"nife30",wraps:7},zivipf:{wire:"nife52",wraps:6},legacyNiFe30:{wire:"nife30",wraps:6}},
  tcEqualAtoms:["klp","gtr","kx","kprime"],
  tcEqualWires:["nife30","nife52"],
  gtone:{first:{wire:"k129",wraps:6},second:{wire:"k128",wraps:5}},
@@ -142,6 +143,17 @@ const PERSONAL_SETUPS=Object.freeze({
 });
 function personalSetups(atomId){return (PERSONAL_SETUPS[atomId]||[]).map(x=>({...x}));}
 function personalPreference(config){
+ // New GTR-specific personal finding, 15.10.2026: alloy-specific wraps.
+ // NiFe30/6 remains usable; NiFe30/7 and NiFe52/6 share tier #1.
+ if(config.atom==="gtr"){
+  if((config.wire==="nife30"&&config.wraps===7)||
+     (config.wire==="nife52"&&config.wraps===6))
+   return {tier:1,label:"Prima preferință personală · NiFe30/7 = NiFe52/6",
+     note:"Dicodes RESISTHERM NiFe30 TCR320 cu 7 spire pe GTR sau Zivipf NiFe52 TCR310 cu 6; egale ca preferință, nu aliaje/temperaturi identice."};
+  if(config.wire==="nife30"&&config.wraps===6)
+   return {tier:2,label:"NiFe30/6 funcțional · alternativă GTR",
+     note:"6 spire funcționează, însă noul montaj cu 7 a fost perceput mai coerent în TC. Refacerea coilului a schimbat și alte condiții."};
+ }
  if(PERSONAL_PREFS.tcEqualAtoms.includes(config.atom)){
   if(["nife30","nife52"].includes(config.wire)&&config.wraps===6)
    return {tier:1,label:"Prima preferință personală · NiFe30 = NiFe52",note:"Egalitate în preferință, NU aliaje identice: Dicodes TCR320 / Zivipf TCR310; fiecare cu profilul TC propriu."};
@@ -176,7 +188,7 @@ const DEFAULTS={
  gtone:{wire:"k129",wraps:6,air:"single12"},
  dvarwcl:{wire:"k128",wraps:6,air:"triple06"},
  muted:{wire:"k128",wraps:6,air:"triple"},
- gtr:{wire:"nife30",wraps:6,air:"both"},
+ gtr:{wire:"nife30",wraps:7,air:"both"},
  dvarwfl:{wire:"k128",wraps:6,air:"triple06"},
  diplomat:{wire:"k129",wraps:5,air:"pin18"},
  kx:{wire:"nife30",wraps:6,air:"mid"},
@@ -192,6 +204,7 @@ function wireSetup(atom,wire){
  const w=WIRES[wire];if(!w)return null;
  // KLP DNA personal test: 220°C / 16 W. Other devices retain their own presets.
  if(atom==="klp"&&wire==="nife30")return {power:16,temp:220};
+ if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // Reported limit, not constant draw.
  return {power:w.power,temp:w.temp||230};
 }
 const OBS=[
@@ -219,6 +232,11 @@ const OBS=[
  {atom:"dvarwcl",wire:"k128",wraps:6,title:"CL 28/6: ofensivă și focalizare",
   text:"Spectru prezent, dar livrare musculară; o notă poate domina percepția simultană.",
   patch:{offense:4.95,focus:4.9,simultaneity:3.65,palate:4.2},affinity:"caracter ofensiv",evidence:"observație practică 13.10.2026"},
+ {atom:"gtr",wire:"nife30",wraps:7,temp:230,power:16,partial:true,
+  title:"GTR · Dicodes NiFe30/7 · TC coerent la 230°C",
+  text:"Utilizatorul confirmă că montajul nou NiFe30 cu 7 spire pe GTR funcționează normal/coerent la 230°C în TC pe dispozitive Dicodes; limita setată 16 W, aproximativ 12 W indicat în test. NiFe30/6 funcționează și el, însă într-o comparație anterioară pe Dani Box 21700 era perceput mai rece la 230°C. Refacerea coilului/bumbacului și contactele împiedică atribuirea certă a schimbării numai celei de-a șaptea spire.",
+  affinity:"coerență TC raportată personal · GTR NiFe30/7",
+  evidence:"raport personal 15.10.2026, fără lichid/airflow/poziție și A/B cu o singură variabilă documentate"},
  {atom:"gtr",wire:"nife30",wraps:6,title:"GTR + Dicodes TC: magia pe palat",
   text:"Feeling și stratificare extraordinare; plăcere senzorială maximă, TH mai scăzut.",
   patch:{spectrum:5,separation:5,simultaneity:4.9,palate:5,harmony:4.98,offense:3.25,th:3.1},
@@ -271,13 +289,14 @@ function permitted(id,wire,wraps){
  if(wire==="ssclap"&&id==="asylum")return false;
  if(wire==="k128"&&id==="415"&&wraps===6)return false; // deprecated per MASTER
  if(wire==="k128"||wire==="k129")return wraps===5||wraps===6;
+ if(id==="gtr"&&wire==="nife30")return wraps===6||wraps===7;
  return wraps===(WIRES[wire].type==="tc"?6:5);
 }
 function variants(id){
  if(!PLATFORMS[id])return [];
  const opts=[];
  for(const w of Object.keys(WIRES)){
-  for(const wraps of ((w==="k128"||w==="k129")?[5,6]:[WIRES[w].type==="tc"?6:5])){
+  for(const wraps of ((w==="k128"||w==="k129")?[5,6]:(id==="gtr"&&w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
    if(permitted(id,w,wraps))opts.push({wire:w,wraps});
   }
  }
@@ -479,6 +498,12 @@ function analyze(input,liquid={},objective="complete"){
  if(config.atom==="dvarwcl"&&config.air==="single12"&&config.wire==="k128"&&config.wraps===5)
   notes.push("Dvarw CL: 1×1,2 cu K1 28 GA/5 merge bine conform testului personal; nu îl considera inferior în mod absolut lui 3×0,6/6. Lichidul și puterea nu au fost precizate.");
  if(config.wire==="nife52")notes.push("NiFe52 rămâne fără verdict universal cross-alloy față de Dicodes NiFe30.");
+ if(config.atom==="gtr"&&config.wire==="nife30")
+  notes.push(config.wraps===7?
+   "GTR + Dicodes NiFe30/7: utilizatorul raportează TC coerent la 230°C, limită 16 W; NiFe30/6 rămâne funcțional. Efectul izolat al unei spire în plus NU a fost demonstrat.":
+   "GTR + Dicodes NiFe30/6: variantă funcțională istorică; noul NiFe30/7 este preferat personal pentru reglare TC mai coerentă, fără concluzie universală.");
+ if(config.atom==="gtr"&&config.wire==="nife52"&&config.wraps===6)
+  notes.push("GTR + Zivipf NiFe52/6 TCR310: alegere personală la egalitate cu Dicodes NiFe30/7, nu cu setări TC identice.");
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
  if(config.atom==="klp"&&config.wire==="nife30")notes.push(
