@@ -4,7 +4,7 @@ const renderCache=require('./build-rta-atlas-cache');
 const source=path.resolve('rta-lab/atlas-preview'),target=path.resolve('rta-lab/atlas'),check=process.argv.includes('--check');
 assert.equal(path.dirname(target),path.dirname(source));assert.equal(path.basename(target),'atlas');
 function inventory(root,prefix=''){
- return fs.readdirSync(path.join(root,prefix),{withFileTypes:true}).flatMap(e=>e.isDirectory()?inventory(root,path.join(prefix,e.name)):[path.join(prefix,e.name).replaceAll('\\','/')]);
+ return fs.readdirSync(path.join(root,prefix),{withFileTypes:true}).flatMap(e=>e.isDirectory()?inventory(root,path.join(prefix,e.name)):[path.join(prefix,e.name).replaceAll('\\','/')]).sort();
 }
 const files=new Map();
 for(const relative of inventory(source)){

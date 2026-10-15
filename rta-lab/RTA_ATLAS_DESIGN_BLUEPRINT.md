@@ -1,5 +1,10 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
+## Verificarea candidatului 8480c550 — 15.10.2026
+
+Pe 8480c5508240ad7bdefb26fdfb86d749d509b9c7, Market 38688443129 și Visual 38688443195 sunt SUCCESS. Artifact 11951032081 conține 69 PNG descărcate; inspecția vizuală continuă. RTA 38688443027 a eșuat la compararea receiptului de release: ordinea fișierelor diferă între Windows și Linux, fără diferențe în fișierele aplicației. Generarea sortează acum căile normalizate înaintea receiptului; CI nou este obligatoriu. Releaseul rămâne izolat, ambele PR rămân DRAFT, iar aprobarea vizuală este încă în așteptare.
+
+
 ## Candidat de publicare în pregătire — 15.10.2026
 
 Candidatul verificat a015160a9c421806ca074422b9551a21dcdf6d87: RTA 38686560987, Market 38686560921 și Visual 38686560942 sunt SUCCESS. Artifact 11950766588 conține 54 PNG, toate descărcate și inspectate; fotografiile locale sunt pictate, cadrul mobil și sursele sunt lizibile. Înregistrare MP4 reală realizată în browser pentru HOME, Liquid Cinema și schimbarea airflow/spirelor. Capturile și clipul au fost prezentate utilizatorului; aprobarea vizuală expresă este solicitată și încă nu a sosit. Nu transformați așteptarea în aprobare.
