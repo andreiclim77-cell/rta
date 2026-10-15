@@ -51,7 +51,7 @@ for(const atom of atoms){
  assert.ok(api.permitted(atom.id,base.wire,base.wraps),atom.id);
  assert.ok(tech.air.some(a=>a.id===base.air),atom.id);
  const models=api.variants(atom.id);
- assert.ok(models.length>=5 && models.length<=8,atom.id);
+ assert.ok(models.length>=5 && models.length<=(atom.id==="gtr"?9:8),atom.id);
  totalVariants+=models.length;
  assert.equal(new Set(models.map(x=>x.wire+"-"+x.wraps)).size,models.length);
  for(const v of models){
@@ -129,13 +129,14 @@ assert.ok(flThree.signals.palate>flSingle.signals.palate);
 assert.ok(flThree.signals.simultaneity>flSingle.signals.simultaneity);
 assert.ok(flThree.signals.th<flSingle.signals.th);
 for(const atom of ["klp","gtr","kx","kprime"]){
- const a=api.personalPreference({atom,wire:"nife30",wraps:6});
+ const dicodesWraps=atom==="gtr"?7:6;
+ const a=api.personalPreference({atom,wire:"nife30",wraps:dicodesWraps});
  const b=api.personalPreference({atom,wire:"nife52",wraps:6});
  assert.equal(a.tier,1,atom);
  assert.equal(b.tier,1,atom);
  assert.equal(a.label,b.label,"Personal first-choice tie across different NiFe alloys");
  assert.equal(api.personalPreference({atom,wire:"k128",wraps:5}).tier,2);
- const d={config:{atom,wire:"nife30",wraps:6},dimensions:{architecture:4,palate:4,harmony:4,energy:4},anchors:[],personalPreference:a};
+ const d={config:{atom,wire:"nife30",wraps:dicodesWraps},dimensions:{architecture:4,palate:4,harmony:4,energy:4},anchors:[],personalPreference:a};
  const e={...d,config:{atom,wire:"nife52",wraps:6},personalPreference:b};
  assert.equal(api.priority(d,"complete"),api.priority(e,"complete"),
   "Equal personal boost for NiFe30 and NiFe52, independent of actual technical differences");
@@ -143,10 +144,32 @@ for(const atom of ["klp","gtr","kx","kprime"]){
 assert.equal(api.defaultConfig("klp").wire,"nife30");
 assert.equal(api.defaultConfig("kx").wire,"nife30");
 assert.equal(api.defaultConfig("kprime").wire,"nife52");
-// Old custom benchmark and GTR personal pleasure remain anchored.
+// GTR new preference is NiFe30/7 and NiFe52/6; legacy NiFe30/6 still works.
 const gtrTC=api.analyze("gtr",sample);
 assert.equal(gtrTC.config.wire,"nife30");
-assert.ok(gtrTC.pleasure.includes("magie"));
+assert.equal(gtrTC.config.wraps,7);
+assert.equal(gtrTC.config.temp,230);
+assert.equal(gtrTC.config.power,16);
+assert.equal(gtrTC.personalPreference.tier,1);
+assert.equal(gtrTC.anchors.length,0,"7-wrap result is not a controlled same-liquid A/B");
+assert.equal(gtrTC.partialEvidence.length,1,"Keep 7-wrap report as partial evidence");
+assert.ok(gtrTC.pleasure.includes("coerență"));
+const gtrSix=api.analyze({atom:"gtr",wire:"nife30",wraps:6},sample);
+assert.ok(gtrSix.pleasure?.includes("magie"),"Retain historical NiFe30/6 sensory report");
+assert.equal(gtrSix.personalPreference.tier,2,"6-wrap still usable but not GTR first-choice");
+assert.equal(api.personalPreference({atom:"gtr",wire:"nife52",wraps:6}).tier,1);
+assert.equal(api.config("gtr",{wire:"nife52",wraps:6}).wraps,6);
+assert.equal(api.permitted("gtr","nife52",7),false);
+assert.ok(api.variants("gtr").some(v=>v.wire==="nife30"&&v.wraps===7));
+assert.ok(api.variants("gtr").some(v=>v.wire==="nife30"&&v.wraps===6));
+for(const other of atoms.filter(a=>a.id!=="gtr")){
+ assert.equal(api.permitted(other.id,"nife30",7),false,"Seven wraps only on GTR NiFe30");
+ assert.equal(api.permitted(other.id,"nife52",7),false);
+}
+for(const id of ["klp","kx","kprime"]){
+ assert.equal(api.permitted(id,"nife30",6),true);
+ assert.equal(api.permitted(id,"nife52",6),true);
+}
 const gtrRW=api.analyze({atom:"gtr",wire:"k128",wraps:5},sample);
 assert.ok(gtrTC.dimensions.palate>gtrRW.dimensions.palate);
 const noAnchor=api.analyze({atom:"gtr",wire:"nife30",wraps:6,air:"hole10"},sample);
@@ -227,7 +250,7 @@ vm.runInContext(fs.readFileSync(path.join(root,"sensory-ui.js"),"utf8"),sandbox)
 find("atomExplorer").value="gtr";
 doc.events.DOMContentLoaded();
 assert.ok(find("sensoryExplorer").innerHTML.includes("GTR"));
-assert.ok(find("sensoryExplorer").innerHTML.includes("magie pe palat"));
+assert.ok(find("sensoryExplorer").innerHTML.includes("coerență TC"),"GTR must show the new personal seven-wrap finding");
 // Three-zone navigation and landmarks must be present in both paths.
 function checkThreeZones(view){
  const html=find("sensory"+(view==="explorer"?"Explorer":"Main")).innerHTML;

@@ -1,5 +1,13 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
+## Actualizare personală GTR / TC — 15.10.2026 (în verificare GitHub)
+
+**Preferință nouă, limitată STRICT la Taifun GTR:** **Dicodes RESISTHERM NiFe30 TCR320 / 7 spire** și **Zivipf NiFe52 TCR310 / 6 spire** sunt cele două opțiuni TC preferate personal, fără ierarhie de plăcere între aliaje. **NiFe30/6 funcționează** și rămâne selectabil ca alternativă; nu îl marca defect sau interzis. Ø2,5 mm este presetul geometric al Lab-ului, nu o nouă măsurătoare a coilului utilizat.
+
+Utilizatorul raportează pentru noul NiFe30/7 pe GTR: **230°C**, plafon **16 W**, aproximativ **12 W** indicați la sfârșitul inhalării și comportament TC perceput din nou normal pe mai multe Dicodes. Cu montajul anterior NiFe30/6 pe Dani 21700, la 230°C puterea afișată la final era circa 6 W și vape-ul era perceput prea rece, deși 6 spire funcționează. Pentru Zivipf NiFe52/6, a confirmat experiență excelentă la TCR310; reglajele și rezistențele memorate nu se transferă între dispozitive sau aliaje. **Nu este A/B cu o singură variabilă**: refacerea coilului, bumbacul, fixarea și calibrarea pot contribui. Nu deriva procente de aromă sau temperatură reală din wații afișați.
+
+**Restul rămâne neschimbat:** KLP / K Prime / Kayfun X păstrează NiFe30/6 și NiFe52/6 conform validărilor; cele 16 platforme, 42 exemplare, cinci sloturi de sârme și fișele CL rămân protejate. **V10 are catalogul original de 620**; **Atlas comercial are 700 produse verificate** după PR #51/#52. Introducerea este în branchul `feature/gtr-nife30-7-nife52-6-20261015`; nu declara producția actualizată înainte de Quality Gate, sincronizarea release/cache și Pages pentru commitul final.
+
 ## Producție verificată — revizia întregii biblioteci, 15.10.2026
 
 **Checkpoint curent, prioritar față de istoricul de mai jos.** PR #51 MERGED; candidat verificat `a9074c91d9b1476d6c2edf56c0e623c5893219d2`, integrare `2bf23ed4b2c12a58fbbbe01e0ac1b88843d59cf8`. Public: https://ghid-rta.ro/rta-lab/atlas/?v=catalog-700-20261015 . Cerința este revizia integrală, nu doar adăugarea celor două exemple Centenary. Catalogul Atlas are acum 700 de produse / 61 de mărci, cu surse și ediții explicite. Fișier editabil: `catalog/liquids-20261015.json`; SHA256 `d4b29f707c0a964ab3c94188bb11be283eae107dcdd23d29a9e842392fee3a11`; cache preview `690635981392b410`, release `dc1f06b8c21ebed1`; câte 67 resurse / 63 fișiere release.
