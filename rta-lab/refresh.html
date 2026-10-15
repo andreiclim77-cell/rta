@@ -22,7 +22,7 @@
         if ('serviceWorker' in navigator) {
           const registrations = await navigator.serviceWorker.getRegistrations();
           await Promise.all(registrations
-            .filter(registration => registration.scope.includes('/rta-lab/'))
+            .filter(registration => registration.scope === new URL('./', location.href).href)
             .map(registration => registration.unregister()));
         }
         if ('caches' in window) {
@@ -36,7 +36,7 @@
         setTimeout(() => location.replace('./?v=10&reset=' + Date.now()), 350);
       } catch (error) {
         status.className = 'err';
-        status.textContent = 'Nu am putut curăța automat cache-ul. Șterge datele site-ului ghid-rta.ro și redeschide Lab-ul.';
+        status.textContent = 'Actualizare incompletă. Redeschide Lab-ul când ai conexiune și încearcă din nou. Configurațiile personale nu au fost șterse.';
       }
     })();
   </script>

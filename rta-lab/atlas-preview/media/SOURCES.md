@@ -8,3 +8,16 @@ Original, unedited copies fetched on 2026-10-14 from the product image URLs alre
 | 415-mtl.jpg | https://thevapinggentlemen.club/cdn/shop/products/415v2_1.jpg?v=1593263577 | https://thevapinggentlemen.club/products/415-rta-mtl |
 
 Source: The Vaping Gentlemen Club. Accessibility, matching image bytes and source attribution are verified; an express redistribution license has not been established. Source attribution is not a license certificate. Keep that acceptance condition open before wider publication.
+
+## Black Note Virginia — current packaging reference
+
+Unedited official image: https://www.blacknote.com/wp-content/uploads/2026/08/black-note-virginia-tobacco-60ml-01-bottle-carton-front-tight-2026-07-31.webp
+Product source inspected 2026-10-14: https://www.blacknote.com/e-juice/virginia-tobacco-e-liquid/
+Local copy: `black-note-virginia-current.webp`. The UI explicitly separates the current 60 ml packaging from the original Prelude edition in the historical review. No claim of matching the reviewed lot/formula. Credit: Black Note; express redistribution permission has not been independently established.
+SHA256: `BDFD72ED2A719D908B916DBF75F38942F6397C2733B4FAA72D933B3E66B22A8A`.
+
+## Full local product set and local typography — 2026-10-15
+
+All 16 platform images are available without vendor connectivity. PRODUCT_PHOTO_RECEIPT.json records original URL, credit, byte count and SHA256. Fifteen are exact copies of the public product images already identified by photo-sources.js; Asylum retains its existing project archive source. No image was AI-generated or edited. Variant finish is not asserted to be the user's physical unit. The 16-photo contact sheet was inspected; hashes are validated by the offline gate. Attribution and accessible source URLs do not establish express redistribution permission.
+
+Manrope Latin and extended Latin use the existing root assets. Playfair Display 400/500 normal/italic are unchanged files distributed by Google Fonts. SIL Open Font License 1.1 texts are preserved in media/fonts/MANROPE-OFL.txt and PLAYFAIR-OFL.txt; upstream license sources: https://raw.githubusercontent.com/google/fonts/main/ofl/manrope/OFL.txt and https://raw.githubusercontent.com/google/fonts/main/ofl/playfairdisplay/OFL.txt. Local fonts avoid remote-font dependency for first view and offline operation.

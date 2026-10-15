@@ -1,5 +1,73 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+## Candidat integrat, verificare de publicare — 15.10.2026
+
+Cod candidat sincronizat 47ccee906c69844ced4fa94a1d23ac5ce2b44b7e: RTA 38692198611, Market 38692198344, Market Final Report 38692198338, Hype Global 38692198409 și Visual 38692198551 sunt toate SUCCESS. Artifact 11953025258 are 78 PNG descărcate și inspectate integral; imaginile Market 360/390 sunt acum încadrate complet după rezervarea dimensiunilor lor naturale. Corecțiile de cache/refresh au trecut în browser real și CI, inclusiv activarea workerului ghidului, refresh V10, revenirea offline și păstrarea exactă a bytes CL.
+
+Main a avansat independent la 7f1137b47231fb34c130402bb457718b235244c8 prin actualizări automate de catalog public și jurnale sociale. Niciun fișier rta-lab/ sau /sw.js nu diferă între main actual și baza c268b2fc. Drafturile au fost sincronizate fără conflicte și fără modificarea main: #45 eb3de20a8dfa851e5993ee9b716db4724b652fd2; #46 47ccee906c69844ced4fa94a1d23ac5ce2b44b7e. Sunt commituri de integrare a main în drafturi, nu merge al PR-urilor în producție. PR #45 sincronizat are RTA 38692180564, Market 38692180620 și Visual 38692180556 SUCCESS. Fișierele mobile sunt identice cu 0f16be22, iar fișierele Atlas sunt identice cu cba10dd; sincronizarea păstrează actualizările automate. Rezultatele documentației ulterioare se raportează separat, fără atribuirea unui run altui SHA.
+
+Implementate în candidat: toate cele șase module, profil liber/review fără inserare în catalog, obiectiv comun, configurații complete, Duel cu două alegeri explicite și izolarea unei variabile, 40 fișe Market (10 în fiecare clasă), 16 fotografii de platforme, fotografie Dicodes și 12 vizualuri originale de review cu proveniență, fonturi locale și offline. Materialele fără fotografie certă și edițiile de ambalaj neidentificate sunt reprezentate schematic/editorial, nu fabricate. Licențele exprese ale fotografiilor externe nu sunt certificate.
+
+Aprobarea vizuală majoră solicitată este încă în așteptare. Ambele PR rămân DRAFT. Ruta finală /rta-lab/atlas/ este pregătită, dar nepublicată. Numai după acord se integrează #45, apoi #46 retargetat pe main, cu păstrarea actualizărilor automate; se verifică exact CI/Pages și toate fluxurile live înaintea oricărei declarații de finalizare. Nu deduceți aprobarea din timpul trecut sau din CI.
+
+
+## Integrare cache / refresh — 15.10.2026
+
+7503d38c936d33ab13f9349c2f63a69501bc11c9: RTA 38690903490, Market 38690903391 și Visual 38690903494 sunt SUCCESS. Artifact 11952089482: 78 PNG descărcate și inspectate integral, inclusiv profile lungi, macro Dicodes, vizualul original Kentucky, cele patru categorii și cazurile offline. Testul de captură exclude corect imaginile lazy din details închis, dar decodează imaginile vizibile. Clipul MP4 al releaseului este înregistrare de browser reală, nu animație generată.
+
+Inspecția celor 78 cadre a respins încadrarea imaginii Kentucky în captura mobilă: încărcarea lazy fără dimensiuni rezervate muta poziția după scroll. Cele 12 vizualuri au acum lățimea/înălțimea naturală din fișier, păstrate în receipt și în HTML; imaginile nu sunt tăiate sau editate. Retestarea și noile capturi sunt obligatorii la SHA-ul următor.
+
+Verificarea extinsă a descoperit și reprodus două defecte de integrare: activarea /sw.js a ghidului ștergea cacheul Atlas; refresh.html V10 dezînregistra și workerii Atlas din subrute. Baseline-ul real a eșuat succesiv la ambele aserțiuni. Corecția limitează curățarea ghidului la ghid-rta-static-, iar dezînregistrarea refresh la scope-ul exact /rta-lab/. Mesajul de eroare nu mai îndrumă spre ștergerea tuturor datelor site-ului. Retestarea locală reală PASS: activare preview/release/V10/ghid, refresh V10 cu încărcarea celor 620 lichide, worker Atlas păstrat, bytes CL saved/draft identici și revenire Atlas offline. CI nou este obligatoriu la SHA-ul următor; nu atribuiți aceste dovezi locale unui run anterior.
+
+Motorul, datele canonice, intrarea V10 și configurațiile sunt păstrate; modificările suplimentare sunt exclusiv întreținerea cacheului și scopul refreshului. PR #45/#46 rămân DRAFT; aprobarea vizuală expresă este în așteptare. Main și publicarea nu sunt modificate de această lucrare.
+
+
+## Verificare candidat — 15.10.2026
+
+Pe 7d50cc0f836fdf79770f2706d9caa1c283895b6b, RTA 38690625927 și Market 38690625833 sunt SUCCESS. Visual 38690625816 este în curs, fără verdict atribuit. Testul local de captură a rămas în așteptarea decode() pentru o imagine lazy din details închis, cu dreptunghi de înălțime zero; capturarea exclude acum explicit panourile închise și suprafețele fără dimensiuni. Imaginile deschise rămân decodate și verificate. Testul local precedent a fost întrerupt, nu declarat PASS; retestarea și CI nou rămân obligatorii.
+
+
+790268e35c3524a5997e8a434cf45297b7bf083b: RTA 38688911407, Market 38688911503, Visual 38688911394 sunt SUCCESS. Corecția ordinii receiptului Windows/Linux a fost confirmată în CI. Pe candidatul anterior 8480c5508240ad7bdefb26fdfb86d749d509b9c7: Market 38688443129 și Visual 38688443195 SUCCESS; artifact 11951032081, toate cele 69 PNG descărcate și inspectate în 360×800, 390×844 și 1440×1000. RTA 38688443027 eșuase numai la ordinea receiptului; nu îi atribuiți SUCCESS.
+
+Continuarea adaugă fotografia originală Dicodes RESISTHERM NiFe30, inspectată, cu SHA256/proveniență în media/WIRE_PHOTO_RECEIPT.json. Apare numai când materialul este Dicodes, nu Zivipf. Ambalajul de referință nu este declarat rola personală sau lotul actual. Fotografia generică Zivipf mică, fără identitate vizibilă, a fost respinsă; macrofotografiile lipsă nu sunt fabricate. Testele browser suplimentare ale materialului pe 360/390/1440 și releaseul offline au trecut local; noul CI se verifică la SHA-ul următor. Eticheta ATLAS a rutei finale este acum verificată și nu păstrează V0.2.
+
+Verificare locală suplimentară: toate cele șase rute în 320×568, 768×1024, 844×390 și 1920×1080; patru cazuri cu nume de profil de 80 caractere. PASS, fără overflow/erori de pagină; 28 PNG inspectate. Nu este probă pe un dispozitiv fizic și nu înlocuiește aprobarea estetică.
+
+Au fost verificate și admise 12 vizualuri editoriale din recenziile originale, afișate numai lângă sursa și ediția lor în Market. Originalele sunt nealterate; receiptul media/MARKET_VISUAL_RECEIPT.json păstrează URL/hashuri și excluderile pentru imagini generice sau ediții ilizibile. Nu sunt declarate fotografii ale lotului actual ori ale colecției personale. Cacheul are acum 79 resurse, releaseul 59 fișiere. Testarea cu 80 caractere a identificat text tăiat, deși documentul nu avea overflow; împărțirea pe rânduri a fost corectată și sunt verificate separat limitele etichetelor. Retestarea locală a celor 28 de cadre responsive este PASS.
+
+Releaseul /rta-lab/atlas/ are acum 59 fișiere generate și cache cu 79 resurse, separat de preview și V10. Motorul, datele canonice, catalogul 620/16/42 și intrarea V10 sunt identice cu baza c268b2fc. Singura corecție de infrastructură V10 rămâne limitarea curățării cacheului din sw.js la prefixul său. Ambele PR sunt DRAFT, main nu este modificat de această lucrare și aprobarea vizuală este încă în așteptare. Publicarea nu este efectuată.
+
+
+## Candidat de publicare în pregătire — 15.10.2026
+
+Candidatul verificat a015160a9c421806ca074422b9551a21dcdf6d87: RTA 38686560987, Market 38686560921 și Visual 38686560942 sunt SUCCESS. Artifact 11950766588 conține 54 PNG, toate descărcate și inspectate; fotografiile locale sunt pictate, cadrul mobil și sursele sunt lizibile. Înregistrare MP4 reală realizată în browser pentru HOME, Liquid Cinema și schimbarea airflow/spirelor. Capturile și clipul au fost prezentate utilizatorului; aprobarea vizuală expresă este solicitată și încă nu a sosit. Nu transformați așteptarea în aprobare.
+
+Continuarea locală adaugă 16 fișe Market, până la 40 (10 în fiecare categorie), după verificarea pasajelor de degustare originale. Metadatele și excluderile sunt în MARKET_RESEARCH.md / market-evidence.js; relatările cu autor identificat doar generic sunt limitate explicit și ordonate ultimele. Nicio fișă nu susține consens universal, configurație personală A/B sau disponibilitate actuală. Catalogul protejat rămâne 620. Testele pure pentru toate cele 40 de profile și testul browser 360/390/1440 au trecut; CI nou rămâne de verificat la commitul nou.
+
+Ruta finală /rta-lab/atlas/ este generată reproductibil din candidatul evaluat, prin tools/build-rta-atlas-release.js, cu receipt de hashuri. Reutilizează direct datele și modelele V10, fără o copie a motorului. --check verifică fiecare fișier și păstrarea intrării V10. Previewul rămâne separat. Rutele au scope și prefixuri cache distincte. Niciuna dintre aceste modificări locale nu este declarată publicată.
+
+Testul real de activare V10 a demonstrat o problemă de integrare: rta-lab/sw.js ștergea cacheurile tuturor aplicațiilor de pe origine. Corecția candidatului limitează strict activarea/mesajul CLEAR_RTA_LAB_CACHES la prefixul rta-lab-. Este singura modificare de infrastructură V10 din această etapă; motorul, presetul, catalogul, configurările și datele personale rămân neatinse. Testul acoperă instalarea preview/release/V10, refresh V10, revenire offline și bytes CL saved/draft. Retestarea locală este PASS: activarea reală și comanda de refresh V10 păstrează cacheurile Atlas, revenirea offline și bytes CL. CI nou se verifică la noul SHA.
+
+Rămân obligatorii: CI la noul SHA și inspecția tuturor capturilor suplimentare; media/proveniența completă fără fotografii de sârmă fabricate; aprobarea vizuală cerută; merge în ordine cu păstrarea jurnalelor automate actuale din main; Pages SUCCESS la SHA post-merge și fluxurile live ale tuturor modulelor. Proiectul nu este declarat finalizat înaintea acestor dovezi.
+
+
+## Checkpoint precedent — 15.10.2026
+
+Mandat: finalizare autonomă a tuturor celor șase module, fără reconstruirea V10. Acest checkpoint prevalează asupra limitelor istorice de implementare din secțiunile vechi. PR #45 și #46 rămân DRAFT; aprobarea vizuală expresă și publicarea nu au avut loc.
+
+- Main observat: 612da18de45b8341b81b5e6edd2bc21c5d750c95. După baza c268b2fc, două commituri automate au modificat numai data/instagram-publish-state.json. V10, motorul, 620 lichide, 16 platforme, 42 exemplare și configurațiile nu au fost editate de această continuare.
+- PR #45 HEAD 0f16be22aaf2c5c334877ed443d87537d35dab50: RTA 38623585477, Market 38623585776, Visual 38623585623 SUCCESS; artifact 11923445312, 23 PNG inspectate.
+- PR #46 HEAD verificat ac37f8eeed6d3764b1daa8973041d7e1fa3906c8: RTA 38631372771, Market 38631372911, Visual 38631372768 SUCCESS; artifact 11926625971, 44 PNG descărcate și inspectate. Unele fotografii de rezultat nu erau pictate complet: aceste cadre nu au fost acceptate ca dovadă estetică finală.
+- Continuarea locală: profil liber și profil din review în afara catalogului, obiectiv comun între module, două selecții explicite pentru Duel, izolarea unei variabile și două scheme sincronizate, acces direct la configurația completă în Wire, fotografii locale nealterate pentru toate platformele, fonturi locale OFL, pauză Liquid Cinema, PWA/offline în scope separat, eroare explicită la date incomplete și citire CL fără completarea parametrilor lipsă.
+- Teste locale PASS: 140 contexte originale; 140 comparații exacte adaptor/Mood Match; 210 contexte de profil liber; toate materialele/obiectivele și stres pe 620; 24 profiluri de review fără al 621-lea lichid; browser 360×800, 390×844, 1440×1000; șase module offline cu hashurile fotografiilor și bytes CL saved/draft păstrate. Ultimele reglaje și CI nou trebuie reverificate la SHA-ul lor. Nu deduceți SUCCESS pentru un commit ulterior.
+
+Market are 24 fișe admise, 10/4/1/9, review singular și versiuni explicit separate. Cele 16 locuri fără dovezi nu sunt umplute fictiv. Profili din review dau estimări 3×3, nu A/B atribuit autorului. Fotografia actuală Black Note nu este declarată ambalajul Prelude istoric. Copiile celor 15 fotografii externe + imaginea Asylum din arhivă au fost inspectate; proveniența/hashurile sunt în media/PRODUCT_PHOTO_RECEIPT.json. Atribuirea nu certifică drepturi de redistribuire. Macrofotografiile de sârmă neprocurate nu sunt înlocuite cu fotografii fabricate.
+
+KLP Dicodes NiFe30 și Zivipf NiFe52 TC: ambele preferințe personale de prim nivel. DNA 220°C/16 W rămâne exclusiv observația Dicodes; Zivipf nu moștenește acest caz.
+
+Urmează fără alt „continuă”: commit pe ramura PR #46, toate gates la SHA exact, descărcare și inspecție integrală a noilor capturi, remediere/retestare; completarea surselor și a media verificabile; candidat concret pentru aprobarea vizuală majoră; pregătire release separat de V10, apoi numai după aprobare merge și Pages/live verificate. Noul candidat nu este cel de pe site. Finalizarea rămâne deschisă.
+
+
 **Fișier canonic RTA Lab · stare consolidată 14.10.2026; există separat un blueprint UI în curs de aprobare.**
 
 - Repo: `andreiclim77-cell/rta`
@@ -643,3 +711,19 @@ Checkpoint de cod `1f7050231165f10cbf1b8128946989ee519d9efb`: corecții numai î
 ### 30.1. Dovezi ulterioare și ramură de extindere
 
 Rerularea pe `a511ef64`: RTA `38620833175`, Market `38620833394`, Visual `38620833502` SUCCESS. Artifact `11921084143`, 23 capturi, descărcat și inspectat; cadrul offline KX prins în animația de intrare nu este acceptat ca probă și a primit o corecție de sincronizare pentru rerulare. PR #45 păstrează scopul mobil. Cele patru module rămase continuă în draft separat `feature/atlas-complete-six-modules-20261014`. Adaptoarele locale Atomizer/Wire au trecut cazuri normale, restricții, erori, CL read-only/legacy, 620 lichide stres și browser mobil/desktop; nu sunt publicate. Motorul/datele/configurările originale nu au fost editate.
+
+## 31. Atlas/Wire — adaptoare în ramura aplicației complete (14.10.2026)
+
+`feature/atlas-complete-six-modules-20261014` continuă separat de PR #45 și main. Atomizer Atlas și Wire Lab sunt implementate local cu motoarele existente: 16 portrete, 42 inventar, ADN/builduri/lichide contextuale, citire CL fără rescriere și configurator de material/aer/geometrie/energie. Restricțiile Asylum SS Clapton și 415 K1 28/6 sunt păstrate; KLP Dicodes 220°C/16 W nu se transferă la NiFe52. Teste normale/erori, toate materialele și obiectivele, 620 lichide stres, CL legacy/read-only, browser mobil și desktop au trecut local. CI/publicarea/aprobarea vizuală rămân separate. Noul draft nu este aplicația finală; Market/Duel și integrarea completă sunt următoarele lucrări autorizate.
+
+## 32. Duel Mode candidat / 14.10.2026
+
+DUEL compară două configurații complete, nu doar două nume de atomizoare. Snapshotul se păstrează la transferul din rezultate și la editare Wire. Diferențele sunt calitative pe semnalele existente; mai multe variabile sunt declarate explicit și nu se atribuie cauzalitate unei singure variabile. Lichid/mood/moment/obiectiv comun, sursa personală și estimarea rămân separate; Watch B nu inventează teste pe buildurile personale. Identice → niciun câștigător; apropiate → verdict neconcludent. 360/390/1440 local PASS, capturi inspectate; CI nou pending. Dovezile exacte Atlas/Wire și branchul sunt în HANDOFF §11.
+
+## 33. Market — proveniență și versiuni, nu consens inventat
+
+24 fișe sursate în patru galerii, separate de catalogul canonic 620. Review singular este eticheta actuală pentru toate. O traducere nu este sursă independentă; trei opinii pe mostrele aceluiași articol Omusa nu devin consens independent. Data afișată a actualizării Ecigclick nu este data articolului inițial. Publicările nedatate rămân explicit nedatate, cu data accesului.
+
+NET simplu descrie o semnătură comercială, nu o demonstrație botanică/chimică; Cavendish rămâne termen de procesare cu caveat. Tutunos simplu/complex sunt clase editoriale de profil, nu dovadă de molecule sintetice. Notele percepute nu sunt automat ingrediente adăugate. Review-urile nu confirmă instalațiile personale, temperatura reală, siguranța sau disponibilitatea actuală.
+
+Asocierea bibliotecii cere cheie exactă brand/nume/linie/clasă și alias editorial explicit; niciun 4Pod nou nu se transferă la extractul clasic, nici Special Blend 3.0/Menthol la versiunea fără sufix. Doar acțiunea explicită Explorează schimbă lichidul, cu versiunea declarată. Watch B leagă review-ul de profil, separat de build. HANDOFF §12 înregistrează dovezile CI și limitele actuale.

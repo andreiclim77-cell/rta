@@ -1,0 +1,289 @@
+/* RTA SENSORY ATLAS V0.2 — complete visual correction after real Android screenshot.
+ * Mobile first, photographic product cinema, instantly visible motion, honest source credits. */
+:root{--v2-gold:#e3c49c;--v2-sea:#9bcfc2}
+html,body{max-width:100%;overflow-x:clip}
+.mast{min-height:62px;padding-block:9px}
+.mast .identity-mark{width:34px;height:34px;border-radius:9px}
+.mast .identity-inner{font-size:22px}
+.mast .identity{gap:9px;min-width:0}
+.mast .identity-copy strong{font-size:14px;letter-spacing:1.6px}
+.mast .identity-copy small{font-size:7px;letter-spacing:1.25px}
+.mast .current-lab{padding:7px 9px;border-radius:8px;white-space:nowrap;font-size:10px}
+.hero{min-height:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:stretch}
+.hero-copy{min-width:0;padding:clamp(24px,4vw,47px);position:relative}
+.hero h1{font-size:clamp(32px,4.1vw,50px);max-width:100%;overflow-wrap:normal;word-break:normal;text-wrap:balance;letter-spacing:-1.2px;margin:18px 0 14px}
+.hero-lead{font-size:12px;line-height:1.66;margin-bottom:18px}
+.hero-stats{margin-top:28px}
+.hero-stage.photo-cinema{position:relative;display:block;overflow:hidden;background:#050709;isolation:isolate;min-height:438px}
+.cinema-frame{position:absolute;inset:0;opacity:0;visibility:hidden;transition:opacity .72s ease,visibility .72s;overflow:hidden;background:#080a0c}
+.cinema-frame.is-visible{opacity:1;visibility:visible;z-index:1}
+.cinema-frame img{display:block;width:100%;height:100%;object-fit:cover;object-position:center center;filter:contrast(1.04) saturate(.87);transform:scale(1.01);animation:cinemaKen 5.8s ease-out both}
+.cinema-frame:not(.is-visible) img{animation:none}
+.cinema-vignette{position:absolute;inset:0;pointer-events:none;z-index:2;background:linear-gradient(180deg,rgba(5,10,13,.08) 28%,transparent 38%,rgba(3,9,11,.89) 100%);box-shadow:inset 0 0 30px rgba(0,0,0,.11)}
+.cinema-top{z-index:3;position:absolute;top:15px;left:17px;padding:7px 11px;border:1px solid rgba(237,231,211,.19);border-radius:30px;background:rgba(4,10,14,.48);backdrop-filter:blur(7px);color:#e8ece8;font-size:9px;letter-spacing:1.5px;font-weight:800}
+.cinema-live{display:inline-block;width:7px;height:7px;background:#8bd4c0;box-shadow:0 0 15px #9fdcc5;border-radius:50%;vertical-align:middle;margin-right:8px;animation:cinemaLive 1.6s ease-in-out infinite}
+.cinema-caption{z-index:3;position:absolute;bottom:17px;left:18px;right:18px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px;padding-right:74px}
+.cinema-caption strong{font-size:21px;font-weight:750;letter-spacing:-.5px;color:#fff9f0;text-shadow:0 2px 9px #000}
+.cinema-caption a{font-size:8px;line-height:1.3;letter-spacing:.3px;color:#dfc8ab;text-align:right;max-width:125px}
+.cinema-controls{z-index:4;position:absolute;bottom:20px;right:13px;display:flex;gap:7px;align-items:center}
+.cinema-controls button{width:8px;height:8px;border:0;border-radius:50%;padding:0;background:#839e9b;opacity:.7;transition:width .25s,background .25s}
+.cinema-controls button[aria-pressed=true]:not(#cinemaPause){width:23px;border-radius:20px;background:#f1d5a8;opacity:1}
+.cinema-controls #cinemaPause{width:22px;height:22px;background:rgba(8,18,20,.63);border:1px solid rgba(211,213,194,.25);border-radius:8px;color:#e5d7c0;font-size:11px;opacity:1}
+.cinema-frame.photo-error{display:grid;place-items:center}
+.cinema-frame img.unavailable{display:none}
+.cinema-photo-error{position:absolute;color:#c4c4bb;font-size:11px;text-align:center;padding:18px}
+.gateway{padding-top:27px}
+.gateway-grid{gap:11px}
+.gateway-card{background:linear-gradient(135deg,rgba(16,32,36,.95),rgba(10,19,23,.97));border-color:rgba(192,208,193,.2)}
+.gateway-visual{background:radial-gradient(circle,rgba(197,175,132,.08),transparent 72%)}
+.gateway-future .gateway-visual{opacity:.8}
+.page-intro{padding-top:20px}
+.page-intro h1{font-size:clamp(29px,4vw,42px);letter-spacing:-.8px;margin:8px 0 10px}
+.page-intro p{font-size:11px;line-height:1.6;margin:0}
+.page-intro .scene-mini{height:106px}
+.match-workspace{align-items:stretch}
+.live-scene{min-height:350px;background:radial-gradient(circle at 47% 45%,rgba(144,95,46,.17),transparent 71%),linear-gradient(137deg,#101e22,#0b1419)}
+.live-scene[data-character=direct]{background:radial-gradient(circle at 47% 45%,rgba(108,175,153,.16),transparent 71%),linear-gradient(137deg,#102322,#0a171c)}
+.live-scene .chromatogram{max-height:200px}
+.live-scene.cinema-react{animation:cinemaSwitch .8s cubic-bezier(.18,1,.3,1) both}
+.live-scene.cinema-react .wave-one{stroke-width:5}
+.live-scene.cinema-react .wave-two{stroke-width:4}
+.result-card{border-color:rgba(168,201,188,.26)}
+.atom-portrait{min-height:185px;background:#eae8e1}
+.atlas-product-photo{display:flex;flex-direction:column;align-items:stretch;justify-content:center;width:100%;height:100%;margin:0;overflow:hidden;background:#ebe8e0}
+.atlas-product-photo img{display:block;width:100%;min-height:0;max-height:100%;height:100%;flex:1;object-fit:contain;object-position:50% 50%;animation:photoReveal .65s cubic-bezier(.22,.75,.21,1) both}
+.atlas-product-photo figcaption{display:flex;justify-content:center;align-items:center;padding:4px 5px;min-height:18px;background:#202b2f;color:#c9d4ce}
+.atlas-product-photo figcaption a{font-size:8px;line-height:1.35;text-align:center;color:#cee2d9;text-decoration:underline;text-underline-offset:2px}
+.atom-portrait>span{display:none}
+.atlas-missing-photo{font-size:11px;line-height:1.5;color:#697a77;padding:18px;text-align:center}
+.air-demo{display:grid;grid-template-columns:1fr minmax(0,240px);gap:8px 14px;align-items:center;padding:19px 24px;margin:24px 0 5px;border:1px solid rgba(151,202,187,.26);border-radius:17px;background:linear-gradient(135deg,rgba(15,36,39,.94),rgba(7,19,25,.95))}
+.air-head{display:contents}
+.air-head>div:first-child{grid-column:1;grid-row:1;min-width:0}
+.air-head h3{font-size:22px;font-weight:680;margin:5px 0 4px}
+.air-head p{color:#a0b7b5;font-size:11px;margin:0}
+.air-head span{font-size:9px;color:#dabb89;font-weight:800;letter-spacing:1.3px}
+.air-toggle{grid-column:1;grid-row:2;display:flex;gap:6px}
+.air-toggle button{background:#162a2d;color:#b4c6c3;border:1px solid rgba(159,208,187,.29);padding:10px 13px;border-radius:9px;font-size:11px;font-weight:800}
+.air-toggle button[aria-pressed=true]{color:#0c2221;background:#b4dbce}
+.air-visual{grid-column:2;grid-row:1/4;min-height:110px;display:grid;place-items:center}
+.air-visual svg{max-width:100%;width:240px;height:110px}
+.air-caption{grid-column:1;font-size:9px;color:#94b9b0;font-weight:720;letter-spacing:.5px}
+.air-visual.air-switching{animation:airSwitch .72s cubic-bezier(.18,.8,.22,1) both}
+.air-flow-path path{stroke-dasharray:7 8;animation:airflowVisible .65s linear infinite}
+.air-flow-path .air-particle{animation:airParticle .8s ease-in-out infinite alternate}
+@keyframes cinemaKen{from{transform:scale(1.01)}to{transform:scale(1.12)}}
+@keyframes cinemaLive{0%,100%{opacity:.45}50%{opacity:1;box-shadow:0 0 17px #a8ead5}}
+@keyframes cinemaSwitch{0%{filter:brightness(.55) blur(5px)}55%{filter:brightness(1.52) blur(0)}100%{filter:brightness(1) blur(0)}}
+@keyframes photoReveal{from{transform:scale(.94);opacity:.6}to{transform:scale(1);opacity:1}}
+@keyframes airSwitch{0%{opacity:.25;transform:translateY(12px) scale(.92)}100%{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes airflowVisible{to{stroke-dashoffset:-15}}
+@keyframes airParticle{from{transform:translateY(8px);opacity:.25}to{transform:translateY(-10px);opacity:1}}
+@media(max-width:760px){
+ .mast{padding:7px 12px;min-height:51px}
+ .mast .identity-copy strong{font-size:12px;letter-spacing:1px}
+ .mast .identity-copy small{font-size:7px;letter-spacing:.65px}
+ .mast .current-lab{font-size:10px}
+ main{padding:8px 10px 30px}
+ .hero{display:flex;flex-direction:column;min-width:0;min-height:0;border-radius:15px}
+ .hero-stage.photo-cinema{order:0;min-height:0;height:clamp(210px,42svh,290px);max-height:310px}
+ .hero-copy{order:1;padding:14px 16px 16px;display:block;min-width:0}
+ .hero .overline{font-size:8px;letter-spacing:.9px;max-width:100%}
+ .hero .edition{font-size:8px}
+ .hero h1{font-size:clamp(24px,6.6vw,30px);line-height:1.18;letter-spacing:-.5px;max-width:100%;margin:9px 0 6px;overflow-wrap:normal}
+ .hero-lead{font-size:10.5px;line-height:1.45;margin:0 0 11px;max-width:100%}
+ .hero-stats{display:none}
+ .primary-action{min-height:45px;width:100%;font-size:12px;padding:9px 12px;justify-content:space-between;border-radius:10px}
+ .cinema-caption{bottom:14px;left:12px;right:12px;gap:7px;padding-right:68px}
+ .cinema-caption strong{font-size:16px}
+ .cinema-caption a{font-size:7px;max-width:105px}
+ .cinema-top{top:12px;left:12px;font-size:8px}
+ .cinema-controls{right:12px;bottom:13px}
+ .section-heading h2{font-size:24px}
+ .gateway{padding-top:21px}
+ .page-intro{padding:14px 0 10px}
+ .page-intro .breadcrumb{font-size:8px;letter-spacing:.45px}
+ .page-intro h1{font-size:clamp(26px,7vw,35px);line-height:1.15;margin:7px 0}
+ .page-intro p{font-size:10px;line-height:1.55}
+ .page-intro-grid{display:block}
+ .page-intro .scene-mini{display:none}
+ .match-workspace{display:flex;flex-direction:column;gap:10px}
+ .live-scene{order:-1;min-height:0;height:176px;max-height:176px;padding:12px 13px;border-radius:15px}
+ .live-scene::before{display:none}
+ .live-scene .chromatogram{width:72%;height:105px;max-height:105px;flex:none;margin:0 auto}
+ .scene-middle{font-size:16px;margin:0}
+ .scene-tags{display:none}
+ .scene-top{font-size:7px;letter-spacing:.8px}
+ .scene-bottom{font-size:7px;letter-spacing:.4px}
+ .selection-panel{order:1;padding:16px 14px;border-radius:14px}
+ .selection-panel h2{font-size:20px;margin:5px 0 12px}
+ .quick-liquids{margin:7px 0 12px}
+ .quick-list button{font-size:9px;padding:6px 8px}
+ .control-group{margin-top:11px}
+ .control-group-title{font-size:9px;margin-bottom:7px}
+ .chip-rail{display:flex;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:3px 0 7px}
+ .chip-rail::-webkit-scrollbar{display:none}
+ .chip{flex:0 0 auto;padding:8px 11px}
+ .match-button{margin-top:14px}
+ .results-section{padding-top:14px}
+ .result-cards{gap:10px}
+ .results-heading h2{font-size:22px}
+ .card-main{grid-template-columns:104px minmax(0,1fr);gap:10px;padding:11px}
+ .atom-portrait{min-height:132px;border-radius:10px}
+ .card-body h3{font-size:19px;margin:4px 0}
+ .card-body>p{font-size:10px;max-height:85px;overflow:auto}
+ .card-side{grid-column:1/-1;display:flex;flex-direction:row;align-items:center;justify-content:space-between;min-height:39px}
+ .card-rank{font-size:24px}
+ .card-detail{padding:0 12px 15px}
+ .detail-grid{grid-template-columns:1fr}
+ .air-demo{grid-template-columns:minmax(0,1fr) minmax(0,120px);padding:12px 13px;margin:11px 0}
+ .air-head h3{font-size:17px}
+ .air-head p{font-size:9px}
+ .air-toggle button{padding:7px 8px;font-size:10px}
+ .air-visual svg{width:125px;height:83px}
+ .air-caption{font-size:8px;line-height:1.4}
+ .bottom-tabs{padding:4px 8px calc(3px + env(safe-area-inset-bottom));min-height:43px}
+ .bottom-tabs button,.bottom-tabs a{min-height:38px;gap:1px}
+ .bottom-tabs button span,.bottom-tabs a span{font-size:17px}
+ .bottom-tabs small{font-size:8px}
+ .bottom-tabs a{display:none}
+ body{padding-bottom:47px}
+}
+@media(max-width:390px){
+ .hero-stage.photo-cinema{height:clamp(205px,39svh,260px)}
+ .hero-copy{padding:12px 13px 14px}
+ .hero h1{font-size:clamp(23px,6.6vw,27px);line-height:1.14}
+ .hero-lead{font-size:10px}
+ .primary-action{min-height:44px}
+ .cinema-top{font-size:7px}
+ .cinema-caption strong{font-size:15px}
+ .mast .identity-copy strong{font-size:11px}
+ .mast .current-lab{padding:6px}
+ .card-main{grid-template-columns:89px minmax(0,1fr)}
+ .atom-portrait{min-height:120px}
+ .card-body h3{font-size:17px}
+ .card-body>p{font-size:9px;line-height:1.5}
+ .best-config{font-size:10px}
+}
+@media(prefers-reduced-motion:reduce){
+ .cinema-frame img,.cinema-live,.air-flow-path path,.air-flow-path .air-particle{animation:none!important}
+ .cinema-frame{transition:none!important}
+ .live-scene.cinema-react,.air-visual.air-switching{animation:none!important}
+}
+
+
+/* Site-hosted, genuine atomizer photos provide an immediate offline-friendly
+   backdrop while specialist-shop original product photos finish loading. */
+.cinema-frame[data-cinema-frame="0"]{background:#111d20 url("../../assets/instagram/atomizer-kayfun-x-243c328b6f.jpg") center 49% /cover no-repeat}
+.cinema-frame[data-cinema-frame="1"]{background:#111d20 url("../../assets/instagram/atomizer-taifun-gt-one-b29f733077.jpg") center 53% /cover no-repeat}
+.cinema-frame[data-cinema-frame="2"]{background:#111d20 url("../../assets/instagram/atomizer-four-one-five-415rta-mtl-ba219d9875.jpg") center 51% /cover no-repeat}
+.cinema-frame img{position:relative;z-index:1}
+.atlas-product-photo{background:#e6e3dc center center /cover no-repeat}
+.result-card[data-atom="kx"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-kayfun-x-243c328b6f.jpg")}
+.result-card[data-atom="gtone"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-taifun-gt-one-b29f733077.jpg")}
+.result-card[data-atom="415"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-four-one-five-415rta-mtl-ba219d9875.jpg")}
+.result-card[data-atom="dvarwfl"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-dvarw-mtl-fl-dda12456be.jpg")}
+.result-card[data-atom="muted"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-muted-23ed383402.jpg")}
+.result-card[data-atom="diplomat"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-centenary-diplomat-v1-5-mtl-rta-84d651448b.jpg")}
+.result-card[data-atom="asylum"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-asylum-rta-v3-yg-creations-c41adc2e42.jpg")}
+.result-card[data-atom="byka"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-by-ka-v-11-c0e3147194.jpg")}
+.result-card[data-atom="minister"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-minister-mtl-aaa9a33507.jpg")}
+.result-card[data-atom="pmstd"] .atlas-product-photo,.result-card[data-atom="pmfree"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-prime-minister-standard-rhodesian-a53af75bbe.jpg")}
+.result-card[data-atom="kv3"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-kayfun-mini-v3-kv3-mini-38acece1e6.jpg")}
+
+/* V0.2 mobile refinement: the authentic product stays fully inside the frame.
+ * Atmosphere is supplied by the existing local full-bleed image underneath. */
+.cinema-frame img{object-fit:contain;object-position:50% 50%;animation-name:cinemaKenSafe}
+@keyframes cinemaKenSafe{from{transform:scale(1.005)}to{transform:scale(1.055)}}
+/* Controls are tappable above the image; the product caption is never covered. */
+.cinema-controls{top:11px;bottom:auto;right:11px;gap:3px;padding:3px;background:rgba(4,12,16,.66);border:1px solid rgba(226,210,184,.17);border-radius:24px;backdrop-filter:blur(6px)}
+.cinema-controls button:not(#cinemaPause){width:29px;min-width:29px;height:31px;border:0;border-radius:12px;opacity:1;background:transparent;display:grid;place-items:center}
+.cinema-controls button:not(#cinemaPause)::before{content:"";display:block;width:8px;height:8px;border-radius:20px;background:#9dad9f;transition:width .25s,background .25s}
+.cinema-controls button[aria-pressed=true]:not(#cinemaPause){width:29px;background:rgba(237,219,192,.07)}
+.cinema-controls button[aria-pressed=true]:not(#cinemaPause)::before{width:18px;background:#f1d5a8}
+.cinema-controls #cinemaPause{width:31px;height:31px;border-radius:50%}
+.cinema-controls #cinemaPause[hidden]{display:none}
+.cinema-caption{padding-right:0}
+@media(max-width:760px){
+ .cinema-controls{right:9px;top:9px}
+ .cinema-caption{padding-right:0}
+ .cinema-caption a{max-width:132px;font-size:9px;line-height:1.25}
+}
+
+/* GT One: the distributor photograph has printed branding at the edges.
+ * Vignette those borders, without distorting or hiding the centered product. */
+.cinema-frame[data-cinema-frame="1"]{background:#091217}
+.cinema-frame[data-cinema-frame="1"]:not(.project-archive-fallback) img{
+ -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
+ mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
+}
+
+/* Retail packaging headline at top belongs to photo, not the Atlas UI. */
+.cinema-frame[data-cinema-frame="1"]:not(.project-archive-fallback)::after{
+ content:"";position:absolute;left:0;right:0;top:0;height:42px;z-index:2;pointer-events:none;
+ background:linear-gradient(180deg,#091217 0%,#091217 18px,rgba(9,18,23,.9) 27px,transparent 100%);
+}
+
+/* V0.2 quick-path: the first contextual match now appears in the live
+   Liquid Cinema scene, with a real 3×3 source, before a long form or scroll. */
+.search-surface input[type="search"]::-webkit-search-cancel-button,
+.search-surface input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+.scene-match{display:none}
+.result-card{scroll-margin-top:72px}
+@media(max-width:760px){
+ .page-intro{padding-top:8px;padding-bottom:8px}
+ .page-intro .breadcrumb{display:none}
+ .page-intro .overline{font-size:8px;letter-spacing:1.1px}
+ .page-intro h1{font-size:clamp(23px,6.3vw,28px);line-height:1.05;margin:5px 0 0}
+ .page-intro p{display:none}
+ .live-scene{height:163px;max-height:163px;padding:12px 13px}
+ .live-scene .chromatogram{width:88%;height:83px;max-height:83px;margin:0 auto auto;opacity:.82}
+ .scene-middle,.scene-bottom{display:none}
+ .scene-match{display:flex;align-items:center;justify-content:space-between;gap:9px;position:absolute;z-index:3;left:9px;right:9px;bottom:8px;min-height:56px;padding:7px 8px 7px 11px;background:linear-gradient(105deg,rgba(7,20,24,.94),rgba(16,40,40,.9));border:1px solid rgba(197,212,184,.3);border-radius:11px;box-shadow:0 9px 30px rgba(0,0,0,.25)}
+ .scene-match-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+ .scene-match-copy>span{font-size:8px;letter-spacing:1px;font-weight:800;color:#d7b78a}
+ .scene-match-copy strong{font-size:13px;color:#fff1df;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .scene-match-copy small{font-size:10px;color:#b4cec7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+ .scene-match button{flex:none;width:44px;height:43px;border:1px solid rgba(230,200,156,.45);border-radius:10px;background:linear-gradient(130deg,#dab888,#ecd2a7);color:#192d2e;font-size:22px;font-weight:800}
+ .scene-match button:focus-visible{outline:2px solid white;outline-offset:2px}
+ .selection-panel{padding:13px 13px 15px}
+ .selection-panel>.eyebrow{display:none}
+ .selection-panel h2{font-size:18px;margin:0 0 9px}
+ .liquid-search-wrap>label{margin-bottom:5px}
+ .search-surface{min-height:44px}
+ .search-surface input{font-size:13px;padding:8px 0}
+ .selected-liquid{min-height:0;line-height:1.35;margin-top:6px}
+ .selected-liquid b{font-size:11px}
+ .quick-liquids{margin:9px 0 9px;gap:7px;align-items:center}
+ .quick-liquids>span{margin-top:0;font-size:8px}
+ .quick-list{gap:4px;flex-wrap:nowrap;min-width:0;overflow-x:auto;scrollbar-width:none}
+ .quick-list button{flex:0 0 auto}
+ .control-group{margin-top:8px}
+ .control-group-title{margin-bottom:4px}
+ .chip-rail{gap:5px;padding:2px 1px 4px;scrollbar-width:none}
+ .chip{font-size:11px;white-space:nowrap;min-height:39px;padding:8px 11px}
+ .match-button{margin-top:11px;min-height:46px}
+ .match-micro{display:none}
+ .results-section{padding-top:18px}
+ .results-heading h2{margin:5px 0}
+ .results-heading p{font-size:11px}
+ .result-card{scroll-margin-top:68px}
+}
+
+/* Motion refinement: keep actionable text sharp at all times.
+   Only the SVG waves morph via the existing requestAnimation/WAAPI path. */
+.live-scene.cinema-react{animation:none!important;filter:none!important}
+
+/* Keep the full compact setup readable, and pause the photograph itself. */
+.photo-cinema.is-paused .cinema-frame img,.photo-cinema.is-paused .cinema-live{animation-play-state:paused}
+.live-scene .wave{animation-name:cinemaTrace}
+@keyframes cinemaTrace{from{stroke-dashoffset:130;opacity:.7}to{stroke-dashoffset:0;opacity:1}}
+.cinema-frame.has-local-fallback,.atlas-product-photo.has-local-fallback{background-image:none}
+.suggestions{top:100%;margin-top:4px}
+@media(max-width:760px){
+ .scene-match{min-height:69px}
+ .scene-match-copy small{white-space:normal;overflow:visible;text-overflow:clip;font-size:10px;line-height:1.4}
+ .live-scene .chromatogram{height:69px;max-height:69px;opacity:1}
+ .search-surface .clear-search{min-width:36px;min-height:40px}
+ .air-flow-path path{stroke-width:5}
+ .air-flow-path .air-particle{r:4.5}
+}

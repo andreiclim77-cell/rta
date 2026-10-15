@@ -102,6 +102,7 @@ function resetClock(){
   clock=setInterval(()=>setSlide((position+1)%scenes.length),3200);
 }
 function animateLiquid(){
+ if(window.RTA_ATLAS_PREVIEW?.state.scenePaused)return;
  const scene=document.querySelector(".live-scene");
  if(!scene)return;
  const category=document.getElementById("sceneCategory")?.textContent||"";
@@ -159,7 +160,7 @@ function installResultPhotoFallback(){
  document.addEventListener("error",ev=>{
   const img=ev.target;
   if(!(img instanceof HTMLImageElement)||!img.closest(".atlas-product-photo"))return;
-  const id=img.closest(".result-card")?.dataset.atom;
+  const id=img.closest(".atlas-product-photo")?.dataset.photoModel||img.closest(".result-card")?.dataset.atom;
   const fallback=window.RTA_ATLAS_PHOTOS?.[id]?.fallbackSrc;
   const figure=img.closest(".atlas-product-photo");
   if(fallback&&!img.dataset.photoFallback){
@@ -185,6 +186,10 @@ function installResultPhotoFallback(){
  },true);
 }
 function init(){
+ for(const [id,copy] of Object.entries(window.RTA_ATLAS_LOCAL_PHOTOS||{})){
+  const photo=window.RTA_ATLAS_PHOTOS?.[id];if(photo&&copy.provenance==='exact-source-copy'){photo.fallbackSrc=copy.src;photo.fallbackRef=copy.ref;photo.fallbackCredit=copy.credit+' · copie locală';}
+ }
+
  installResultPhotoFallback();
  gallery();
  installAirflowDemo();
