@@ -14,7 +14,7 @@ for(const file of [...files].sort()){const clean=file.split('?')[0];if(clean==='
 const revision=hash.digest('hex').slice(0,16),prefix='rta-atlas-'+(path.basename(root)==='atlas'?'release':'preview')+'-',template=`/* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
 const CACHE=${JSON.stringify(prefix+revision)},PREFIX=${JSON.stringify(prefix)};
 const ASSETS=${JSON.stringify([...files].sort(),null,2)};
-self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS)).then(()=>self.skipWaiting())));
+self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addAll(ASSETS.map(asset=>new Request(asset,{cache:"reload"})))).then(()=>self.skipWaiting())));
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith(PREFIX)&&key!==CACHE)await caches.delete(key);await self.clients.claim();})()));
 self.addEventListener('fetch',e=>{
  const request=e.request,url=new URL(request.url);if(request.method!=='GET'||url.origin!==self.location.origin)return;
