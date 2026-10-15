@@ -1,6 +1,25 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
-## Corecții cerute de utilizator: acces și filtre conectate — 15.10.2026
+## Corecții publicate și verificate: acces și filtre conectate — 15.10.2026
+
+**Stare curentă, prioritară față de toate checkpointurile istorice de mai jos:** cele cinci observații ale utilizatorului sunt implementate și publicate prin PR #47 MERGED. Cod candidat final: `5aa19ee79e009d95950931b7ad50b6061084671d`; integrare: `5a031c774898dc589b63f578afdafee687b9ff11`. Actualizările independente ale main sunt păstrate, inclusiv auditul și snapshotul de piață din `b1562a34dfd4edb938714d5c0e337d80b2b73979`. Aprobarea expresă de publicare primită anterior rămâne valabilă.
+
+Intrare curentă: https://ghid-rta.ro/rta-lab/atlas/?v=filters-20261015 . Vechea adresă /rta-lab/ și lansarea instalată deschid online Atlas prin URL cu versiune; V10 rămâne explicit la https://ghid-rta.ro/rta-lab/?view=v10, la ancorele vechilor unelte și offline. Cauza versiunii vechi era vechiul start_url/redirect și resursele vechi încă valide în cache HTTP. Migrarea reîncarcă resursele la instalarea cache-ului Atlas și nu șterge date personale. Marcaj vizibil: „Atlas · filtre conectate · 15.10.2026”.
+
+Liquid Match nu mai oferă cele trei exemple fixe. Selectorul comun caută toate cele 620 de identități, acceptă mai multe cuvinte în orice ordine și diacritice, prioritizează numele/brandul exact, oferă filtre brand/familie/trăsătură cu numărători dependente și paginare. Sugestiile aproximative sunt etichetate și apar numai dacă nu există potriviri exacte. Nicio alegere nu este schimbată automat.
+
+Atlas: platformă → sârmă compatibilă → obiectiv; primele cinci lichide sunt calculate pentru configurația completă și obiectivul curent prin motorul existent. Atlas, Wire și Duel schimbă lichidul local din catalogul complet, păstrând reglajele și ambele builduri Duel; Duel are obiectiv comun. Wire afișează și topul contextual. Căutarea platformelor și Market acceptă termeni multipli; Market poate căuta toate cele 40 de fișe. Topurile sunt estimări ale motorului, nu cinci experiențe personale ori consens de piață.
+
+Dovezi candidat exact: RTA 38701154372, Market 38701154364 și Visual 38701154439 — toate SUCCESS; artifact 11956337532, 93 PNG descărcate și inspectate. Testul de migrare folosește vechiul Atlas/V10 real din 8cb1b18, workers încălziți și cache HTTP de o oră: PASS; varianta de control cu vechiul install cache eșuează la verificarea HTML-ului nou. Cele 620 de căutări de identitate și echivalența topurilor cu motorul trec.
+
+Publicare integrare: Pages 38702086762 și RTA 38702087125 SUCCESS. Direct pe domeniul public: 15 capturi noi la 360×800, 390×844 și 1440×1000 inspectate; toate cele patru selectoare, schimbările topului, păstrarea configurațiilor Wire/Duel și bytes CL, vechea intrare → Atlas și V10 explicit — PASS. Integritate: 89 fișiere HTTP 200 coincid cu codul verificat, 80 resurse în cache. Offline live: șase module funcționale, 16 hashuri foto, recuperare după exact un 503 injectat în workerul izolat și revenire după preview/ghid/refresh V10 — PASS; patru capturi suplimentare inspectate. Două încercări inițiale ale testului live au concurat cu reloadul automat V10; adaptorul QA așteaptă acum ambele navigări reale, fără relaxarea aserțiunilor. Codul aplicației nu a fost schimbat pentru acest adaptor.
+
+Motorul V10, rta-lab/data/**, mood-match.js și index.html V10 sunt identice cu baza c268b2fc; 620 lichide, 16 platforme, 42 exemplare, configurațiile validate și bytes saved/draft CL sunt conservate. KLP + Dicodes NiFe30 și KLP + Zivipf NiFe52 în TC rămân preferințe personale de prim nivel distincte. Nu sunt inventate recenzii/procente. Verificarea este Chromium în dimensiunile raportate, nu telefon fizic/Safari.
+
+Incident separat raportat de utilizator: Hype Radar programat 38701133473 (baza 0eafc43) FAILURE: 43/48 surse directe au reușit, sub pragul de 90%; publicarea snapshotului a fost blocată corect. Pragul nu este redus și eșecul nu este declarat rezolvat. Acest colector extern este separat de Market Hall of Fame și de publicarea filtrelor Atlas. Detalii: ATLAS_FILTERS_VERIFICATION_20261015.md.
+
+
+## Istoric: candidat pentru acces și filtre conectate — 15.10.2026
 
 Acest checkpoint prevalează asupra declarației anterioare de finalizare: utilizatorul a raportat intrarea în versiunea veche și cinci lipsuri de filtrare. Cauza verificată a intrării: /rta-lab/ și manifestul scurtăturii instalate deschideau V10, în timp ce Atlas era publicat numai la /rta-lab/atlas/. Candidatul direcționează lansarea veche online către Atlas; V10 rămâne explicit la /rta-lab/?view=v10, la ancorele uneltelor sale și offline. Indexul, motorul, mood-match.js, catalogul și configurațiile canonice V10 nu sunt rescrise.
 
