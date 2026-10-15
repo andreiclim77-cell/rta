@@ -57,6 +57,7 @@ jobs:
           node tools/check-rta-atlas-preview.js
           node tools/check-rta-atlas-modules.js
           node tools/check-rta-atlas-context.js
+          node tools/check-rta-atlas-search.js
           node tools/build-rta-atlas-cache.js --check
           node tools/build-rta-atlas-release.js --check
           node tools/check-rta-mood-match.js
@@ -214,7 +215,7 @@ jobs:
           }
           if (!serviceWorker.includes('rta-lab-v10-five-wire-clapton-620')) throw new Error('V10 service-worker cache name is missing');
           if (!bootstrap.includes('const VERSION = "10"')) throw new Error('Bootstrap is not on V10');
-          if (manifest.start_url !== './?v=10') throw new Error(`Manifest start_url invalid: ${manifest.start_url}`);
+          if (manifest.start_url !== './atlas/') throw new Error(`Manifest start_url invalid: ${manifest.start_url}`);
           if (!refresh.includes('motorul V10 cu 620 de lichide și 5 sârme active')) throw new Error('Refresh page is not on V10');
           NODE
           node -e "JSON.parse(require('fs').readFileSync('site.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('site-en.webmanifest','utf8')); JSON.parse(require('fs').readFileSync('sync-status.json','utf8')); JSON.parse(require('fs').readFileSync('data/facebook-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/instagram-publish-state.json','utf8')); JSON.parse(require('fs').readFileSync('data/social-reels-state.json','utf8'))"

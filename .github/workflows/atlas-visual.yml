@@ -12,6 +12,10 @@ on:
       - "tools/check-rta-atlas-visual.js"
       - "tools/check-rta-atlas-modules-visual.js"
       - "tools/check-rta-atlas-offline.js"
+      - "tools/check-rta-atlas-filters-visual.js"
+      - "tools/check-rta-atlas-upgrade.js"
+      - "rta-lab/home-ui.js"
+      - "rta-lab/manifest.webmanifest"
       - ".github/workflows/atlas-visual.yml"
   workflow_dispatch:
 permissions:
@@ -33,8 +37,11 @@ jobs:
         run: |
           node tools/check-rta-atlas-visual.js
           node tools/check-rta-atlas-modules-visual.js
+          node tools/check-rta-atlas-filters-visual.js
           node tools/check-rta-atlas-offline.js
           RTA_ATLAS_ROUTE=atlas node tools/check-rta-atlas-offline.js
+          git fetch --no-tags --depth=1 origin 8cb1b1895d5efa7182ef3f4b9f09cd8ee7ac5a1f
+          node tools/check-rta-atlas-upgrade.js
       - name: Save mobile screenshots for review
         if: always()
         uses: actions/upload-artifact@v4

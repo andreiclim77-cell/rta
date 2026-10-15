@@ -75,7 +75,7 @@ async function main(){
    assert.equal(await page.evaluate(async()=>!!(await caches.keys()).find(k=>k.startsWith('rta-atlas-release-'))),true,'Public guide activation must preserve Atlas release cache');
    assert.equal(await page.evaluate(async()=>!!(await caches.match('/v10-sentinel'))),true,'Public guide activation must preserve V10 cache owner');
    await page.goto(origin+'/rta-lab/refresh.html');
-   await page.waitForURL(/\/rta-lab\/\?v=10&reset=/);
+   await page.waitForURL(/\/rta-lab\/\?v=10&view=v10&reset=/);
    await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===620);
    assert.equal(await page.evaluate(async()=>(await navigator.serviceWorker.getRegistrations()).some(r=>r.scope===location.origin+'/rta-lab/atlas/')),true,'V10 refresh must preserve the independent Atlas service worker');
    assert.equal(await page.evaluate(()=>localStorage.getItem('rta-cl-physical-units-v1-20261014')),cl,'V10 refresh must preserve CL saved/draft bytes');

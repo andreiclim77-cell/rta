@@ -1,5 +1,17 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+## Corecții cerute de utilizator: acces și filtre conectate — 15.10.2026
+
+Acest checkpoint prevalează asupra declarației anterioare de finalizare: utilizatorul a raportat intrarea în versiunea veche și cinci lipsuri de filtrare. Cauza verificată a intrării: /rta-lab/ și manifestul scurtăturii instalate deschideau V10, în timp ce Atlas era publicat numai la /rta-lab/atlas/. Candidatul direcționează lansarea veche online către Atlas; V10 rămâne explicit la /rta-lab/?view=v10, la ancorele uneltelor sale și offline. Indexul, motorul, mood-match.js, catalogul și configurațiile canonice V10 nu sunt rescrise.
+
+Implementare în feature/atlas-intelligent-filters-20261015: dispar cele trei exemple fixe ÎNCEARCĂ; selector comun în Liquid Match, Atlas, Wire și Duel pentru toate cele 620 lichide, cu termeni multipli în orice ordine, diacritice, brand/familie/trăsătură, contoare dependente și paginare. Denumirile apropiate sunt etichetate numai când nu există potriviri exacte. Nu se selectează automat un alt lichid. Schimbarea rămâne în modulul curent și păstrează configurația Wire, ambele builduri Duel și bytes CL.
+
+Atlas are selecție platformă → sârmă → obiectiv și primele cinci lichide calculate din core.matchLiquids pentru configurația completă afișată; se recalculează la schimbarea alegerilor. Și Wire afișează topul contextual. Duel are lichid și obiectiv comun schimbabile local. Căutările Atlas/Market acceptă termeni multipli; Market permite și căutarea în toate cele 40 fișe. Nicio identitate/review/procent nu este inventat.
+
+Probe locale: căutare pentru fiecare dintre cele 620 identități, filtre și greșeli minore, echivalența topurilor cu motorul; scenarii în browser 360×800/390×844/1440×1000 pentru patru selectoare, top cinci, păstrarea buildurilor/CL, vechiul start_url și V10 explicit. 15 capturi noi inspectate; regresiile modulelor, căutării mobile și offline au trecut local. Cache 80 resurse, release 60 fișiere. Lista de sugestii nu acoperă filtrele; Escape nu selectează o sugestie ascunsă.
+
+Candidatul este în verificare. CI, capturile din artifact și publicarea trebuie confirmate la noile SHA; nu prezentați încă aceste corecții ca publicate. Publicarea anterioară rămâne cea din checkpointul de mai jos până la noul deployment verificat.
+
 ## Publicare verificată — 15.10.2026
 
 Această stare prevalează asupra checkpointurilor istorice de mai jos. Utilizatorul a aprobat expres direcția vizuală și a cerut «continuă până la publicarea verificată». Aprobarea a fost primită; nu mai există o aprobare vizuală în așteptare pentru această versiune.
