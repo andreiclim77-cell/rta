@@ -203,73 +203,97 @@ const reviewVisuals={
   "src": "./media/market-ltKentucky.webp",
   "ref": "https://www.levapelier.com/kentucky-gamme-single-line-par-la-tabaccheria/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "lt-single-cavendish": {
   "src": "./media/market-ltCavendish.jpg",
   "ref": "https://www.levapelier.com/cavendish-gamme-single-line-par-la-tabaccheria/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "halo-prime": {
   "src": "./media/market-prime.jpg",
   "ref": "https://www.levapelier.com/prime-15-gamme-shake-n-vap-par-halo/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "halo-tribeca": {
   "src": "./media/market-tribeca.jpg",
   "ref": "https://www.levapelier.com/tribeca-gamme-shake-n-vap-par-halo/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "fa-virginia": {
   "src": "./media/market-faVirginia.jpg",
   "ref": "https://www.levapelier.com/virginia-par-flavour-art/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "fa-desert": {
   "src": "./media/market-faDesert.jpg",
   "ref": "https://www.levapelier.com/desert-ship-par-flavour-art/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "pulp-kentucky": {
   "src": "./media/market-pulpKentucky.jpg",
   "ref": "https://www.levapelier.com/kentucky-brun-par-pulp/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "pulp-tennessee": {
   "src": "./media/market-pulpTennessee.jpg",
   "ref": "https://www.levapelier.com/tabac-blend-tennessee-par-pulp/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 894,
+  "height": 600
  },
  "pulp-mozambique": {
   "src": "./media/market-pulpMozambique.jpg",
   "ref": "https://www.levapelier.com/tabac-mozambique-train-2-par-pulp/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "nhoss-blond": {
   "src": "./media/market-nhossBlond.jpg",
   "ref": "https://www.levapelier.com/classic-blond-par-nhoss/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "tevap-garonne": {
   "src": "./media/market-tevap.jpg",
   "ref": "https://www.levapelier.com/blond-de-garonne-par-terroir-vapeur-tevap/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 1024,
+  "height": 600
  },
  "pulp-alabama": {
   "src": "./media/market-pulpAlabama.jpg",
   "ref": "https://www.levapelier.com/tabac-alabama-par-pulp/",
   "credit": "Le Vapelier",
-  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual",
+  "width": 932,
+  "height": 565
  }
 };
 for(const entry of rows)if(reviewVisuals[entry.id])entry.reviewVisual=reviewVisuals[entry.id];

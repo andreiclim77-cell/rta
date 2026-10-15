@@ -1,5 +1,16 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+## Integrare cache / refresh — 15.10.2026
+
+7503d38c936d33ab13f9349c2f63a69501bc11c9: RTA 38690903490, Market 38690903391 și Visual 38690903494 sunt SUCCESS. Artifact 11952089482: 78 PNG descărcate și inspectate integral, inclusiv profile lungi, macro Dicodes, vizualul original Kentucky, cele patru categorii și cazurile offline. Testul de captură exclude corect imaginile lazy din details închis, dar decodează imaginile vizibile. Clipul MP4 al releaseului este înregistrare de browser reală, nu animație generată.
+
+Inspecția celor 78 cadre a respins încadrarea imaginii Kentucky în captura mobilă: încărcarea lazy fără dimensiuni rezervate muta poziția după scroll. Cele 12 vizualuri au acum lățimea/înălțimea naturală din fișier, păstrate în receipt și în HTML; imaginile nu sunt tăiate sau editate. Retestarea și noile capturi sunt obligatorii la SHA-ul următor.
+
+Verificarea extinsă a descoperit și reprodus două defecte de integrare: activarea /sw.js a ghidului ștergea cacheul Atlas; refresh.html V10 dezînregistra și workerii Atlas din subrute. Baseline-ul real a eșuat succesiv la ambele aserțiuni. Corecția limitează curățarea ghidului la ghid-rta-static-, iar dezînregistrarea refresh la scope-ul exact /rta-lab/. Mesajul de eroare nu mai îndrumă spre ștergerea tuturor datelor site-ului. Retestarea locală reală PASS: activare preview/release/V10/ghid, refresh V10 cu încărcarea celor 620 lichide, worker Atlas păstrat, bytes CL saved/draft identici și revenire Atlas offline. CI nou este obligatoriu la SHA-ul următor; nu atribuiți aceste dovezi locale unui run anterior.
+
+Motorul, datele canonice, intrarea V10 și configurațiile sunt păstrate; modificările suplimentare sunt exclusiv întreținerea cacheului și scopul refreshului. PR #45/#46 rămân DRAFT; aprobarea vizuală expresă este în așteptare. Main și publicarea nu sunt modificate de această lucrare.
+
+
 ## Verificare candidat — 15.10.2026
 
 Pe 7d50cc0f836fdf79770f2706d9caa1c283895b6b, RTA 38690625927 și Market 38690625833 sunt SUCCESS. Visual 38690625816 este în curs, fără verdict atribuit. Testul local de captură a rămas în așteptarea decode() pentru o imagine lazy din details închis, cu dreptunghi de înălțime zero; capturarea exclude acum explicit panourile închise și suprafețele fără dimensiuni. Imaginile deschise rămân decodate și verificate. Testul local precedent a fost întrerupt, nu declarat PASS; retestarea și CI nou rămân obligatorii.

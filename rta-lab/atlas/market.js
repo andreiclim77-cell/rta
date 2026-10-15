@@ -25,7 +25,7 @@ function sourceTrail(entry){return entry.sourceIds.map(id=>{
 function reviewVisual(entry){
  if(!entry.reviewVisual)return '';
  const p=entry.reviewVisual;
- return '<figure class="market-review-visual"><img src="'+esc(p.src)+'" alt="'+esc(entry.brand+' '+entry.name+' — vizual din recenzia originală')+'" loading="lazy" decoding="async"><figcaption><a href="'+esc(p.ref)+'" target="_blank" rel="noopener noreferrer">Vizual: '+esc(p.credit)+' ↗</a><span>'+esc(p.edition)+'</span></figcaption></figure>';
+ return '<figure class="market-review-visual"><img width="'+p.width+'" height="'+p.height+'" src="'+esc(p.src)+'" alt="'+esc(entry.brand+' '+entry.name+' — vizual din recenzia originală')+'" loading="lazy" decoding="async"><figcaption><a href="'+esc(p.ref)+'" target="_blank" rel="noopener noreferrer">Vizual: '+esc(p.credit)+' ↗</a><span>'+esc(p.edition)+'</span></figcaption></figure>';
 }
 function card(e,index){
  const catalogIndex=match(e);
