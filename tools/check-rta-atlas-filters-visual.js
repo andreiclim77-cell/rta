@@ -75,7 +75,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   await page.evaluate(()=>scrollTo(0,0));await shot(page,'flow-wire-context-'+width+'.png');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));assert.equal(await page.evaluate(key=>localStorage.getItem(key),storageKey),saved);
   // Old installed launch URLs now land in Atlas; explicit V10 and its tool anchors still work.
-  await page.goto(origin+'/rta-lab/?v=10');await page.waitForURL(/\/rta-lab\/atlas\/\?v=filters-20261015$/);await page.waitForSelector('#matchButton',{state:'attached'});
+  await page.goto(origin+'/rta-lab/?v=10');await page.waitForURL(/\/rta-lab\/atlas\/\?v=guided-20261015$/);await page.waitForSelector('#matchButton',{state:'attached'});
   await page.goto(origin+'/rta-lab/?view=v10');await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===620&&window.RTA_HOME_UI);assert.ok(page.url().includes('?view=v10'));
   assert.equal(await page.evaluate(key=>localStorage.getItem(key),storageKey),saved);assert.equal(errors.length,0,errors.join(' | '));await context.close();
  }
