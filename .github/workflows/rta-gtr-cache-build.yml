@@ -1,0 +1,38 @@
+name: RTA GTR TC temporary generated-assets handoff
+on:
+  pull_request:
+    paths:
+      - "rta-lab/data/sensory-core.js"
+      - "rta-lab/data/wires.js"
+      - "rta-lab/atlas-preview/**"
+      - ".github/workflows/rta-gtr-cache-build.yml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  generate-cache-artifact:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Rebuild Atlas-only cache and release from checked-in source
+        run: |
+          node tools/build-rta-atlas-cache.js
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-release.js --check
+      - name: Export only regenerated UTF-8 assets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: gtr-nife-atlas-generated-assets
+          path: |
+            rta-lab/atlas-preview/sw.js
+            rta-lab/atlas/sw.js
+            rta-lab/atlas/index.html
+            rta-lab/atlas/modules.js
+            rta-lab/atlas/ATLAS_RELEASE_RECEIPT.json
+          if-no-files-found: error
+          retention-days: 1
