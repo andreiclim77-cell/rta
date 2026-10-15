@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "status": "PUBLISHED_VERIFIED",
+  "verifiedAt": "2026-10-15T14:21:18.630016+00:00",
+  "url": "https://ghid-rta.ro/rta-lab/atlas/?v=catalog-700-20261015",
+  "pullRequest": 51,
+  "testedAppHead": "a9074c91d9b1476d6c2edf56c0e623c5893219d2",
+  "applicationMerge": "2bf23ed4b2c12a58fbbbe01e0ac1b88843d59cf8",
+  "catalogEdition": "20261015-700-v1",
+  "catalogSha256": "d4b29f707c0a964ab3c94188bb11be283eae107dcdd23d29a9e842392fee3a11",
+  "catalog": {
+    "products": 700,
+    "brands": 61,
+    "retainedDistinctProducts": 469,
+    "newDocumentedProducts": 231,
+    "legacyRowsReviewed": 620,
+    "mergedDuplicateRows": 31,
+    "genericReferenceRowsRetired": 100,
+    "automaticTopEligible": 505,
+    "manualWithProfileLimit": 195
+  },
+  "ci": {
+    "rta": 38746803087,
+    "market": 38746802599,
+    "visual": 38746803089,
+    "conclusion": "success",
+    "pagesAfterMerge": 38748354904,
+    "rtaAfterMerge": 38748355317
+  },
+  "artifact": {
+    "id": 11979252385,
+    "pngs": 246,
+    "sha256": "5571f2e21944ab206deba3204da33f7f5f46b050baa987ca9ccd5c2a88d48cc4",
+    "crc": "PASS",
+    "inspection": "24 contact sheets / 140 catalog-search-layout images plus key originals inspected. Other archive images are retained, not claimed individually inspected."
+  },
+  "rankingsVerified": 756,
+  "contextsVerified": 140,
+  "live": {
+    "releaseHttpFilesMatching": 76,
+    "previewHttpFilesMatching": 75,
+    "cacheAssetsEach": 67,
+    "catalogBrowserViewports": [
+      "360x800",
+      "390x844",
+      "1440x1000"
+    ],
+    "catalogScreenshots": 15,
+    "layoutCases": 10,
+    "layoutScreenshots": 110,
+    "minimumRealFontsPx": [
+      18,
+      24
+    ],
+    "offlineScreenshots": 4,
+    "offline": "PASS: six modules, injected HTTP 503 recovery, preview/guide/V10 coexistence, unchanged personal CL saved/draft",
+    "visualReview": {
+      "status": "INSPECTED",
+      "at": "2026-10-15T14:21:18.420760+00:00",
+      "contactSheets": 17,
+      "totalPngs": 129,
+      "layoutPngs": 110,
+      "catalogPngs": 15,
+      "offlinePngs": 4,
+      "originalsAlsoInspected": [
+        "fit-default-390-02-values.png",
+        "fit-default-390-04-atlas.png",
+        "fit-default-1440-09-duel.png",
+        "fit-font24-390-02-values.png",
+        "fit-font24-320-01-home.png"
+      ],
+      "finding": "No overlapping chart labels or navigation found in inspected matrix; large text reflows, names have full captions. Cold missing catalog deliberately shows error instead of results. Desktop layout inspected in original size.",
+      "limit": "Contact sheets plus key originals; Chromium emulation and actual minimum-font profiles, not a physical-device certification."
+    }
+  },
+  "cacheIds": {
+    "preview": "690635981392b410",
+    "release": "dc1f06b8c21ebed1"
+  },
+  "protected": {
+    "originalV10Liquids": 620,
+    "platforms": 16,
+    "physicalAtomizers": 42,
+    "engineAndOriginalDataChanged": false,
+    "personalCLBytesChanged": false,
+    "klpNife30AndNife52TCPreserved": true
+  },
+  "testHostIncident": "First live layout attempt exhausted the local disk; preview worker activation also timed out while disk was depleted. Public preview integrity passed and fresh activation succeeded after lossless archival of local research evidence. Offline and full layout reruns passed; no application workaround was introduced.",
+  "limits": [
+    "Editorial selection of 700 documented products; no claim of global sales/search ranking.",
+    "195 selectable products lack sufficient disclosed profile for automatic top inclusion.",
+    "Chromium desktop/mobile viewport and real minimum-font tests; not a physical-phone/Safari certification.",
+    "40 existing attributed Market review records are preserved; no reviews or reputation scores invented."
+  ]
+}
