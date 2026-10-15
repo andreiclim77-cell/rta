@@ -1,0 +1,65 @@
+/* Let text occupy real space, including browser minimum-font preferences. */
+html{scroll-padding-top:calc(var(--atlas-mast-height,62px) + 12px);scroll-padding-bottom:calc(var(--atlas-tabs-height,0px) + var(--atlas-tray-height,0px) + 16px)}
+.mast{flex-wrap:wrap}.mast .identity{min-width:0}.identity-mark{flex-shrink:0}.identity-copy{min-width:0}.identity-copy strong,.identity-copy small{line-height:1.4;overflow-wrap:anywhere}
+.top-nav{min-width:0;max-width:100%;flex-wrap:wrap}.top-nav button{min-width:0;line-height:1.5;white-space:normal}
+.atlas-back{flex-shrink:0;max-width:100%;line-height:1.5}
+.page :is(button,label,summary,figcaption,strong,small){min-width:0}
+.page button{max-width:100%;line-height:1.5;overflow-wrap:anywhere}
+.page :is(input,select){max-width:100%;line-height:1.5}
+.selection-full-label{display:block;color:#b9d0c3;font-size:12px;font-weight:500;line-height:1.5;overflow-wrap:anywhere;margin-top:5px}
+.selection-full-label[hidden]{display:none}
+.comparison-axis{grid-template-columns:120px minmax(0,1fr);gap:16px;padding:14px 0}
+.comparison-axis>b{font-size:12px;line-height:1.5;overflow-wrap:normal}
+.comparison-axis>div{min-width:0;display:grid;gap:10px}
+.comparison-track{display:grid;grid-template-columns:minmax(0,1fr);gap:5px;height:auto;margin:0;min-width:0;background:none;overflow:visible}
+.comparison-track::before{content:"";grid-area:2/1;height:8px;border-radius:5px;background:#071317}
+.comparison-track>span{grid-area:2/1;height:8px;min-width:0;max-width:100%;border-radius:5px}
+.comparison-track>small{position:static;inset:auto;grid-area:1/1;display:block;min-width:0;font-size:12px;line-height:1.5;text-align:left;overflow-wrap:anywhere;text-shadow:none;color:#e1e9df}
+.comparison-legend>span{min-width:0;overflow-wrap:anywhere}.comparison-legend i{flex-shrink:0}
+.is-large-type .comparison-axis{grid-template-columns:minmax(0,1fr);gap:9px}
+.sensory-comparison figcaption h3{line-height:1.4}.sensory-comparison figcaption p{line-height:1.6}
+.atlas-context,.context-settings,.duel-card,.market-copy,.geometry-readout>*{min-width:0}
+.dna-row>*{min-width:0;line-height:1.5}.duel-metric>*{min-width:0;overflow-wrap:anywhere;line-height:1.5}
+.module-link,.open-builds{white-space:normal;line-height:1.5}
+.card-body>p{max-height:none;overflow:visible}
+.duel-selection{max-width:calc(100% - 16px);flex-wrap:wrap;line-height:1.5}.duel-selection>span{min-width:0;overflow-wrap:anywhere}.duel-selection button{line-height:1.5}
+#liquidComparison,.sensory-comparison,.result-card,#atlasSearch,.market-card{scroll-margin-top:12px}
+#duelDifferences{scroll-margin-top:calc(var(--atlas-shortcuts-height,0px) + 12px)}
+@media(max-width:760px){
+ body{padding-bottom:calc(var(--atlas-tabs-height,58px) + var(--atlas-tray-height,0px) + 16px)}
+ .mast{gap:10px;padding-inline:max(12px,env(safe-area-inset-left)) max(12px,env(safe-area-inset-right))}
+ .mast .identity{flex:1;min-width:0}.mast .identity-copy{min-width:0}.mast .identity-copy small{letter-spacing:.06em;white-space:normal}.mast.is-compact .identity-copy small{display:none}
+ .atlas-back{padding:8px 10px;white-space:normal}
+ .bottom-tabs{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:2px;padding:5px max(6px,env(safe-area-inset-left)) calc(5px + env(safe-area-inset-bottom));align-items:stretch}
+ .bottom-tabs.is-wrapped{grid-template-columns:repeat(3,minmax(0,1fr))}
+ .bottom-tabs button{min-height:44px;min-width:0;padding:4px 2px;gap:3px;line-height:1.4}
+ .bottom-tabs button span{line-height:1.25;flex-shrink:0}.bottom-tabs small{line-height:1.4;white-space:nowrap;letter-spacing:0}
+ .duel-selection{bottom:calc(var(--atlas-tabs-height,58px) + 8px);gap:8px}
+ .duel-selection>span{flex:1 1 120px}.duel-selection button{min-height:40px}
+ .duel-shortcuts{top:auto;position:static;flex-wrap:wrap}
+ .duel-shortcuts .module-link{flex:1 1 120px;text-align:center}
+ .flow-steps li{line-height:1.5}.flow-steps b{flex-shrink:0}
+ .comparison-axis{grid-template-columns:minmax(0,1fr);gap:9px;padding:15px 0}.comparison-axis>b{font-size:13px}
+ .sensory-comparison{padding:16px}.sensory-comparison figcaption p{font-size:11px}
+ .comparison-axis>div{gap:10px}.comparison-track>small{font-size:12px;line-height:1.5}
+ .dna-row{grid-template-columns:minmax(0,1fr)}.dna-row strong{max-width:none;text-align:left}
+ .duel-metric{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 14px}.duel-metric:not(.metric-head)>span{grid-column:1/-1}.metric-head>span{display:none}
+ .open-builds{max-width:100%;flex:0 1 auto}.card-rank{flex-shrink:0}
+ .scene-match{position:relative;inset:auto;min-height:0;margin:10px 0 0;flex-shrink:0}.scene-match-copy strong{white-space:normal;overflow:visible;line-height:1.4}.scene-match-copy small{line-height:1.5}
+ .live-scene{height:auto;max-height:none;min-height:163px}.scene-top{flex-wrap:wrap}.scene-match button{min-width:44px;min-height:44px;height:auto}
+ .is-large-type .flow-steps,.is-large-type .platform-picker,.is-large-type .wire-controls,.is-large-type .liquid-facet-grid,.is-large-type .market-filters,.is-large-type .free-tags,.is-large-type .gain-trade{grid-template-columns:minmax(0,1fr)}
+ .is-large-type .market-card{grid-template-columns:minmax(0,1fr);gap:14px}
+ .is-large-type .air-demo{grid-template-columns:minmax(0,1fr)}.is-large-type .air-visual{grid-column:1;grid-row:auto}.is-large-type .air-toggle{flex-wrap:wrap}
+ .market-record small{white-space:normal;max-width:100%;line-height:1.5;overflow-wrap:anywhere}
+ .is-large-type .market-record{margin-bottom:0;justify-self:start}
+ .is-large-type .market-record small{left:84px;top:0;display:flex;align-items:center;width:180px;max-width:calc(100vw - 160px);height:70px;text-align:left;text-transform:none;overflow-wrap:normal}
+ .atom-portrait,.portrait-photo,.platform-photo,.duel-photo{height:auto;min-height:0;overflow:visible}
+ .atlas-product-photo{height:auto;min-height:0;overflow:visible;border-radius:9px}
+ .atlas-product-photo img{height:170px;min-height:0;max-height:none;flex:none}
+ .atlas-product-photo figcaption{flex:none;line-height:1.5;overflow-wrap:anywhere}.atlas-product-photo figcaption a{max-width:100%;line-height:1.5}
+ .atom-portrait .atlas-product-photo img{height:115px}.portrait-photo .atlas-product-photo img{height:185px}.platform-photo .atlas-product-photo img{height:136px}.duel-photo .atlas-product-photo img{height:195px}
+ .wire-platform-photo .atlas-product-photo{height:auto!important}
+ .is-large-type .card-main{grid-template-columns:minmax(0,1fr)}.is-large-type .card-main .atlas-product-photo img{height:180px}
+ .is-large-type .cinema-caption{flex-wrap:wrap;align-items:flex-start}.is-large-type .cinema-caption a{max-width:100%;text-align:left}
+ .is-large-type .cinema-top{max-width:calc(100% - 150px);line-height:1.5}
+}
