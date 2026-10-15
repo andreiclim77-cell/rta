@@ -180,7 +180,7 @@
     };
   }
 
-  /* Autoritate finală pentru Explorer: 415 păstrează K1 Clapton primul; Asylum exclude firul dezactivat. */
+  /* Explorer final: 415 Cool arată familia NiFe prima, apoi K1 28/6; K1 Clapton rămâne specialist, Asylum păstrează excluderea. */
   if (typeof renderAtomExplorer === "function") {
     renderAtomExplorer = function() {
       const id = $("atomExplorer").value;
@@ -203,13 +203,13 @@
 
       let orderedWires = atom.id === "asylum" ? WIRES.filter(wire => wire.id !== "ssclap") : [...WIRES];
       if (atom.id === "415") {
-        const order = ["k1clap", "k128", "k129", "nife30", "ssclap"];
+        const order = ["nife30", "k128", "k1clap", "k129", "ssclap"];
         orderedWires = orderedWires.sort((left, right) => order.indexOf(left.id) - order.indexOf(right.id));
       }
 
       const cards = orderedWires.map((wire, index) => {
         const output = buildOutput(atom, wire, neutralLiquid);
-        const preferredClass = atom.id === "415" && wire.id === "k1clap";
+        const preferredClass = atom.id === "415" && wire.id === "nife30";
         return `<article class="build explorer-build ${preferredClass ? "best" : wire.id === "k128" ? "baseline-build" : ""}">
           <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span>${preferredClass ? '<span class="besttxt">PREFERINȚĂ PLATFORMĂ</span>' : ""}</div>
           <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
@@ -226,12 +226,12 @@
         <p class="explorer-air"><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
         ${geometrySummary(atom)}
         <div class="explorer-builds explorer-builds-five">${cards}</div>
-        <div class="explorer-tip"><b>Cum folosești rezultatul:</b> pe 415, K1 Clapton este afișat primul; pe celelalte platforme apar numai buildurile active și compatibilitatea este decisă de ADN-ul platformei.</div>`;
+        <div class="explorer-tip"><b>Cum folosești rezultatul:</b> pe 415 Cool, NiFe30/7 și NiFe52/6 sunt primele preferințe TC (un singur slot legacy), apoi K1 28/6; K1 Clapton/5 rămâne specialist în familia Clapton; pe celelalte platforme apar numai buildurile active și compatibilitatea este decisă de ADN-ul platformei.</div>`;
     };
   }
 
   document.addEventListener("DOMContentLoaded", () => {
     const explorerText = document.querySelector(".explorer-panel .ptitle p");
-    if (explorerText) explorerText.textContent = "Alege platforma și vezi ADN-ul ei și buildurile active. Pe 415, K1 Clapton este afișat primul; restul urmează regulile active de platformă.";
+    if (explorerText) explorerText.textContent = "Alege platforma și vezi ADN-ul ei și buildurile active. Pe 415 Cool, NiFe30/7 și NiFe52/6 sunt primele preferințe, apoi K1 28/6; K1 Clapton/5 rămâne pereche dedicată Clapton. Restul urmează regulile active.";
   });
 })();
