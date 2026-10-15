@@ -1,8 +1,17 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+## Stare de lucru — biblioteca 700 și topurile, 15.10.2026
+
+Utilizatorul cere acum explicit 700 de produse tutunoase comerciale distincte, de marcă, fără profiluri generice sau repetări; păstrează fișele bune, completează lipsurile corect și reface topurile. Aceasta prevalează exclusiv asupra vechii limite de catalog 620. Motorul, 16 platforme / 42 exemplare, configurațiile validate, datele personale și cele trei CL saved/draft rămân protejate. Aprobarea anterioară de publicare după verificări este în vigoare.
+
+Auditul confirmă: Centenary Mods / Balkan Milestone / Merde de Cheval lipsesc; cele 620 includ 100 Profil reper, un benchmark personal și 19 grupuri repetate de marcă+nume+gamă. Biblioteca nouă nu este încă integrată sau publicată. Au fost citite cataloage publice cu 6.528 de produse de toate tipurile și fișe suplimentare ale producătorilor; acest inventar nu este numărul de lichide acceptate. Se normalizează identitățile, formulările, proveniența și clasele, fără a număra ambalajele ca produse noi. Nu afirmați că există deja 700 verificate și nici un top global de cerere fără dovezi.
+
+Planul și regulile de acceptare sunt în CATALOG_REVIEW_700_20261015.md. Urmează selecția finală, integrarea în toate cele patru selectoare, recalcularea topurilor contextuale și revizia Hall of Fame pe surse, testele/CI/capturile candidatului exact, apoi publicarea și verificarea live. Versiunea publică verificată anterior este checkpointul de încadrare #49/#50 de mai jos.
 
 
-## Stare curentă — încadrare corectată, publicată și verificată, 15.10.2026
+
+
+## Producție verificată înaintea reviziei bibliotecii — încadrare, 15.10.2026
 
 **Acest checkpoint prevalează asupra etapelor istorice de mai jos.** Corecția reclamată în captura telefonului este publicată la https://ghid-rta.ro/rta-lab/atlas/?v=fit-20261015 . PR #49 și #50 sunt MERGED. Candidat final 319a777da0874ae4b1613c60e91cbab0ae2b0fe3; integrare 78385907e6ce37b3ba49aed5e16dce4401e65275; Pages 38725622934 și RTA post-merge 38725623138 — SUCCESS. Aprobarea expresă de publicare primită anterior a fost aplicată.
 
