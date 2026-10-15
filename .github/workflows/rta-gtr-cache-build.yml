@@ -8,13 +8,15 @@ on:
       - ".github/workflows/rta-gtr-cache-build.yml"
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   generate-cache-artifact:
     runs-on: ubuntu-latest
     timeout-minutes: 6
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
@@ -23,6 +25,16 @@ jobs:
           node tools/build-rta-atlas-cache.js
           node tools/build-rta-atlas-release.js
           node tools/build-rta-atlas-release.js --check
+      - name: Commit generated files only to the same-repository PR branch
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas/sw.js rta-lab/atlas/index.html rta-lab/atlas/modules.js rta-lab/atlas/ATLAS_RELEASE_RECEIPT.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(atlas): sync generated GTR TC release and isolated caches'
+            git push origin HEAD:refs/heads/feature/gtr-nife30-7-nife52-6-20261015
+          fi
       - name: Export only regenerated UTF-8 assets
         if: always()
         uses: actions/upload-artifact@v4
