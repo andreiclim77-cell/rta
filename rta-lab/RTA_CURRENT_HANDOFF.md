@@ -1,12 +1,26 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
-## Revizie în curs — fluxuri ghidate și Înapoi, 15.10.2026
+## Stare prioritară — fluxuri ghidate publicate și verificate, 15.10.2026
+
+**Acest checkpoint prevalează asupra tuturor etapelor istorice de mai jos.** PR #48 este MERGED. Candidat exact: 45842b6133aaa204f3d7ae6489a2d32a4d41283f; integrare publicată: 9abb360f1fd23827606a76643901f81d9046c8c6. Actualizările independente main, inclusiv f5cf821f8190971abd8bcfcbc2c286059be5f482, sunt păstrate. Aprobarea expresă de publicare primită anterior a fost aplicată.
+
+Aplicația curentă: https://ghid-rta.ro/rta-lab/atlas/?v=guided-20261015 . HOME și toate cele cinci instrumente sunt funcționale. Liquid Match: alegere explicită din 620 → trei atomizoare × trei builduri, fotografii, avantaje/compromisuri, comparații. Atlas: atomizor → identitate reală → trei materiale distincte, fiecare cu cinci lichide calculate și comparație în context comun. Wire: alegi materialul → toate și numai platformele compatibile (16; SS Clapton 15, fără Asylum) → alegi platforma și explorezi experiența, topul și comparațiile. Market păstrează cele 40 fișe și sursele. Duel păstrează lichidul/obiectivul comun și primește configurația Wire exactă, inclusiv reglajele curente.
+
+Înapoi există în toate instrumentele, păstrează lichidul, configurațiile și pozițiile; starea/momentul se modifică pe loc. Toate cele patru selectoare de lichid au biblioteca completă și filtre dependente. Nu există rezultate pe un lichid implicit înaintea alegerii. Șapte dimensiuni în grafice provin din motor, cu legende A/B/C și etichete calitative; nu sunt procente ale plăcerii ori măsurători. Direcția aprobată B60/A30/C10 și fotografiile autentice cu proveniență sunt păstrate.
+
+Atlas nu mai afișează trimiteri către interfața veche. Lansarea /rta-lab/?v=10 deschide Atlas online și, după instalarea cache-ului nou, offline. V10 rămâne recuperabil numai explicit și nu este rescris. Pornirea ascunde structura provizorie până sunt gata toate modulele/catalogul; o lipsă reală arată eroare cu reîncărcare. Recuperarea automată este limitată la o singură reîncărcare pe tab la preluarea workerului nou; nu șterge date personale. Asset version: atlas-guided-20261015-4.
+
+CI exact: RTA 38713343229, Market 38713343205, Visual 38713343215 — SUCCESS. Artifact 11962710355: 121 PNG descărcate și inspectate integral, CRC PASS, SHA256 dcb729a0c03e9200840ff8a0c8f221fab83b8d6fbed49bc23b5b7a8a453954e4. Pages 38714168574 și RTA post-merge 38714170065 — SUCCESS. Direct pe domeniu: fluxuri la 360×800/390×844/1440×1000, toate patru selectoarele, matrice completă compatibilitate, topuri exacte, Back și păstrare CL/configurații, recuperare încărcare incompletă, lipsă modul — PASS; 49 PNG live plus 4 offline, inspectate. Integritate: 89 fișiere HTTP 200 identice, 80 resurse cache. Offline: șase module, 16 hashuri foto, exact un 503 injectat/restaurat, revenire după preview/ghid/refresh V10 — PASS. Migrarea CI pornește din vechiul 8cb1b18 cu workers încălziți și cache HTTP de o oră; și vechea scurtătură offline revine în Atlas.
+
+Motorul, rta-lab/data/**, mood-match.js și index.html V10 sunt identice cu c268b2fc; 620 lichide, 16 platforme, 42 exemplare, configurațiile validate și cele trei CL saved/draft sunt conservate. KLP + Dicodes NiFe30 și KLP + Zivipf NiFe52 TC sunt ambele preferințe personale de prim nivel; presetul Dicodes 220°C/16 W nu este transferat Zivipf. Verificare în Chromium la dimensiunile declarate, fără afirmație de testare pe telefon fizic/Safari. Incidentul separat Hype Radar 43/48 surse rămâne istoric deschis, nu este prezentat drept rezolvat de aceste gates. Detalii și limite: ATLAS_GUIDED_FLOWS_VERIFICATION_20261015.md.
+
+## Istoric — candidat fluxuri ghidate, înainte de publicarea #48
 
 Ultima cerință explicită fixează traseele: Liquid Match pornește de la lichid și oferă trei atomizoare × trei builduri, efecte și diferențe grafice; Atlas pornește de la atomizor, îi explică identitatea și propune trei sârme distincte, fiecare cu cinci lichide calculate și comparații; Wire Lab pornește de la sârmă, arată toate atomizoarele compatibile și apoi experiența detaliată după alegerea unuia. Market păstrează sursele, iar Duel compară două configurații în același lichid/obiectiv. Toate instrumentele au Înapoi, păstrează alegerile și permit modificarea contextului pe loc. Atlas nu mai oferă trimiteri vizibile către interfața veche.
 
 Candidat local: feature/atlas-guided-instruments-20261015, baza db917772f6b42e69d8a0c630acb6c4727ef910b0. Încă în verificare, nepublicat. Probele checkpointului anterior sunt istorice și nu dovedesc aceste trasee noi. Motorul, catalogul 620/16/42 și bytes saved/draft CL rămân protejate. Graficele folosesc semnalele existente ale motorului, fără procente de plăcere; fotografiile autentice existente sunt refolosite cu proveniență.
 
-## Corecții publicate și verificate: acces și filtre conectate — 15.10.2026
+## Istoric — publicare filtre conectate #47, înlocuită de #48
 
 **Stare curentă, prioritară față de toate checkpointurile istorice de mai jos:** cele cinci observații ale utilizatorului sunt implementate și publicate prin PR #47 MERGED. Cod candidat final: `5aa19ee79e009d95950931b7ad50b6061084671d`; integrare: `5a031c774898dc589b63f578afdafee687b9ff11`. Actualizările independente ale main sunt păstrate, inclusiv auditul și snapshotul de piață din `b1562a34dfd4edb938714d5c0e337d80b2b73979`. Aprobarea expresă de publicare primită anterior rămâne valabilă.
 
