@@ -1,0 +1,16 @@
+(function(){
+'use strict';
+const api=window.RTA_ATLAS_PREVIEW,context=window.RTA_ATLAS_CONTEXT;if(!api||!context)return;
+function init(){
+ const scene=document.querySelector('.live-scene'),pause=document.createElement('button');pause.type='button';pause.id='scenePause';pause.className='scene-pause';pause.textContent='Ⅱ';pause.setAttribute('aria-label','Oprește animația Liquid Cinema');pause.setAttribute('aria-pressed','false');scene.querySelector('.scene-top').appendChild(pause);
+ pause.addEventListener('click',()=>{const paused=pause.getAttribute('aria-pressed')!=='true';api.state.scenePaused=paused;scene.classList.toggle('is-paused',paused);pause.setAttribute('aria-pressed',String(paused));pause.setAttribute('aria-label',paused?'Pornește animația Liquid Cinema':'Oprește animația Liquid Cinema');pause.textContent=paused?'▶':'Ⅱ';for(const animation of scene.getAnimations({subtree:true})){if(paused)animation.pause();else animation.play();}});
+ const quick=document.querySelector('.quick-liquids');
+ const free=document.createElement('details');free.className='free-profile module-method';free.innerHTML='<summary>Nu este în catalog? Definește un profil ↗</summary><p class="module-note">Profil declarat de tine. Fără brand inventat, fără review-uri atribuite și fără modificarea celor 620 de repere.</p><form id="freeProfileForm"><label>Numele profilului<input id="freeProfileName" maxlength="80" placeholder="Profil personal"></label><label>Familie declarată<select id="freeProfileClass">'+['NET simplu','NET complex','Tutun simplu','Tutun complex'].map(c=>'<option>'+c+'</option>').join('')+'</select></label><fieldset><legend>Trăsături pe care le cunoști</legend><div class="free-tags">'+context.tags.map(t=>'<label><input type="checkbox" name="freeTag" value="'+t+'">'+({nuts:'Nuci',sweet:'Dulce',layers:'Straturi',cigar:'Țigară de foi'}[t]||t)+'</label>').join('')+'</div></fieldset><button type="submit" class="module-link">Folosește profilul declarat ↗</button><button type="button" class="module-link" id="returnCatalog">Revino la lichidul din catalog</button></form>';
+ quick.insertAdjacentElement('afterend',free);
+ const goal=document.createElement('div');goal.className='control-group optional-goal';goal.innerHTML='<label for="liquidObjective">Ce vreau mai mult <small>opțional</small></label><select id="liquidObjective"><option value="">Din starea aleasă</option>'+context.goals.map(([id,label])=>'<option value="'+id+'">'+label+'</option>').join('')+'</select>';document.getElementById('matchButton').insertAdjacentElement('beforebegin',goal);
+ document.getElementById('freeProfileForm').addEventListener('submit',e=>{e.preventDefault();api.setFreeProfile({name:document.getElementById('freeProfileName').value,class:document.getElementById('freeProfileClass').value,tags:[...free.querySelectorAll('input[name=freeTag]:checked')].map(t=>t.value)});free.open=false;});
+ document.getElementById('returnCatalog').addEventListener('click',()=>{api.selectLiquid(api.state.liquidIndex);free.open=false;});
+ document.getElementById('liquidObjective').addEventListener('change',e=>api.setObjective(e.target.value));
+}
+if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
+})();

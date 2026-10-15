@@ -104,11 +104,12 @@ async function main(){
    check(await page.locator('#pageMarket').isVisible(),'Market navigation must open the real module');
    check(await page.locator('.bottom-tabs button').count()===6,'All six modules must be directly navigable');
    const liquidBefore=await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.liquidIndex);
-   for(const [category,count] of [['NET simplu',10],['NET complex',4],['Tutun simplu',1],['Tutun complex',9]]){
+   for(const [category,count] of [['NET simplu',10],['NET complex',10],['Tutun simplu',10],['Tutun complex',10]]){
     await page.locator('[data-market-category="'+category+'"]').click();
     check(await page.locator('.market-card').count()===count,'Market count '+category+' must reflect actual source records');
     check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.liquidIndex)===liquidBefore,'Market browsing must not substitute the selected liquid');
     check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Market overflow '+category);
+    if(category!=='NET simplu')await shot(page,'market-'+category.toLowerCase().replaceAll(' ','-')+'-'+width+'.png');
    }
    await page.locator('[data-market-category="NET simplu"]').click();
    await page.waitForTimeout(400);await shot(page,'market-'+width+'.png');
@@ -156,6 +157,7 @@ async function main(){
    check(await page.locator('#liquidObjective').inputValue()==='smooth','Liquid controls must reflect the objective chosen in Wire');
    await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.waitForTimeout(450);
    await shot(page,'free-profile-'+width+'.png');
+   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Free profile horizontal overflow');
    const playing=await page.locator('.wave').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).strokeDashoffset));await page.waitForTimeout(450);
    check(JSON.stringify(await page.locator('.wave').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).strokeDashoffset)))!==JSON.stringify(playing),'Scene must visibly animate before pause');
    await page.locator('#scenePause').click();await page.waitForTimeout(120);
@@ -166,6 +168,10 @@ async function main(){
    await page.locator('.free-profile summary').click();await page.locator('#returnCatalog').click();
    check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia (Prelude)')),'Return restores the explicit preceding catalog liquid');
    check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.freeProfile)===null,'Catalog return clears only the free profile');
+   if(width===1440){
+    await page.locator('.top-nav [data-route="home"]').click();await shot(page,'home-1440.png');
+    await page.locator('.top-nav [data-route="liquid"]').click();await shot(page,'liquid-1440.png');
+   }
    check(errors.length===0,'Module page errors: '+errors.join(' | '));
    await context.close();
   }

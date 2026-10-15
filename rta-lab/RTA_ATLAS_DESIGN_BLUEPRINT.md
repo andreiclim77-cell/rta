@@ -1,6 +1,19 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
-## Checkpoint operațional curent — 15.10.2026
+## Candidat de publicare în pregătire — 15.10.2026
+
+Candidatul verificat a015160a9c421806ca074422b9551a21dcdf6d87: RTA 38686560987, Market 38686560921 și Visual 38686560942 sunt SUCCESS. Artifact 11950766588 conține 54 PNG, toate descărcate și inspectate; fotografiile locale sunt pictate, cadrul mobil și sursele sunt lizibile. Înregistrare MP4 reală realizată în browser pentru HOME, Liquid Cinema și schimbarea airflow/spirelor. Capturile și clipul au fost prezentate utilizatorului; aprobarea vizuală expresă este solicitată și încă nu a sosit. Nu transformați așteptarea în aprobare.
+
+Continuarea locală adaugă 16 fișe Market, până la 40 (10 în fiecare categorie), după verificarea pasajelor de degustare originale. Metadatele și excluderile sunt în MARKET_RESEARCH.md / market-evidence.js; relatările cu autor identificat doar generic sunt limitate explicit și ordonate ultimele. Nicio fișă nu susține consens universal, configurație personală A/B sau disponibilitate actuală. Catalogul protejat rămâne 620. Testele pure pentru toate cele 40 de profile și testul browser 360/390/1440 au trecut; CI nou rămâne de verificat la commitul nou.
+
+Ruta finală /rta-lab/atlas/ este generată reproductibil din candidatul evaluat, prin tools/build-rta-atlas-release.js, cu receipt de hashuri. Reutilizează direct datele și modelele V10, fără o copie a motorului. --check verifică fiecare fișier și păstrarea intrării V10. Previewul rămâne separat. Rutele au scope și prefixuri cache distincte. Niciuna dintre aceste modificări locale nu este declarată publicată.
+
+Testul real de activare V10 a demonstrat o problemă de integrare: rta-lab/sw.js ștergea cacheurile tuturor aplicațiilor de pe origine. Corecția candidatului limitează strict activarea/mesajul CLEAR_RTA_LAB_CACHES la prefixul rta-lab-. Este singura modificare de infrastructură V10 din această etapă; motorul, presetul, catalogul, configurările și datele personale rămân neatinse. Testul acoperă instalarea preview/release/V10, refresh V10, revenire offline și bytes CL saved/draft. Retestarea locală este PASS: activarea reală și comanda de refresh V10 păstrează cacheurile Atlas, revenirea offline și bytes CL. CI nou se verifică la noul SHA.
+
+Rămân obligatorii: CI la noul SHA și inspecția tuturor capturilor suplimentare; media/proveniența completă fără fotografii de sârmă fabricate; aprobarea vizuală cerută; merge în ordine cu păstrarea jurnalelor automate actuale din main; Pages SUCCESS la SHA post-merge și fluxurile live ale tuturor modulelor. Proiectul nu este declarat finalizat înaintea acestor dovezi.
+
+
+## Checkpoint precedent — 15.10.2026
 
 Mandat: finalizare autonomă a tuturor celor șase module, fără reconstruirea V10. Acest checkpoint prevalează asupra limitelor istorice de implementare din secțiunile vechi. PR #45 și #46 rămân DRAFT; aprobarea vizuală expresă și publicarea nu au avut loc.
 

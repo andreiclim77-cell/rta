@@ -81,7 +81,7 @@ self.addEventListener("install", event => {
 self.addEventListener("activate", event => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
-    await Promise.all(keys.map(key => key === CACHE ? Promise.resolve(false) : caches.delete(key)));
+    await Promise.all(keys.map(key => key.startsWith("rta-lab-") && key !== CACHE ? caches.delete(key) : Promise.resolve(false)));
     if (self.registration.navigationPreload) await self.registration.navigationPreload.enable();
     await self.clients.claim();
   })());
@@ -90,7 +90,7 @@ self.addEventListener("activate", event => {
 self.addEventListener("message", event => {
   if (event.data === "SKIP_WAITING") self.skipWaiting();
   if (event.data === "CLEAR_RTA_LAB_CACHES") {
-    event.waitUntil(caches.keys().then(keys => Promise.all(keys.map(key => caches.delete(key)))));
+    event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith("rta-lab-")).map(key => caches.delete(key)))));
   }
 });
 

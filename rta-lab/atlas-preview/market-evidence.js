@@ -15,6 +15,135 @@ const sources={
  omusa:{title:'Omusa by Manabush',publisher:'Planet of the Vapes',authors:'VapeMaster; MrTeaTime; dw1986',url:'https://www.planetofthevapes.co.uk/reviews/e-liquids/vapemaster_omusa-by-manabush.html',date:'2015-08-03',bias:'Mostre trimise de Manabush; trei opinii în același articol, nu trei surse independente',accessed},
  deadwood:{title:'Deadwood Blends by Manabush',publisher:'Planet of the Vapes',authors:'Michelle (Purplefowler)',url:'https://www.planetofthevapes.co.uk/reviews/e-liquids/deadwood-blends-by-manabush.html',date:null,bias:'Gama trimisă de Manabush',accessed}
 };
+Object.assign(sources,{
+ "faVirginia": {
+  "title": "Virginia par Flavour Art",
+  "publisher": "Le Vapelier",
+  "authors": "papagallo",
+  "url": "https://www.levapelier.com/virginia-par-flavour-art/",
+  "date": "2017-05-13",
+  "bias": "Material furnizat de Flavour Art",
+  "accessed": "2026-10-15"
+ },
+ "faDesert": {
+  "title": "Desert Ship par Flavour Art",
+  "publisher": "Le Vapelier",
+  "authors": "papagallo",
+  "url": "https://www.levapelier.com/desert-ship-par-flavour-art/",
+  "date": "2017-05-28",
+  "bias": "Material furnizat de Flavour Art",
+  "accessed": "2026-10-15"
+ },
+ "pulpKentucky": {
+  "title": "Kentucky Brun par Pulp",
+  "publisher": "Le Vapelier",
+  "authors": "Nérilka",
+  "url": "https://www.levapelier.com/kentucky-brun-par-pulp/",
+  "date": "2022-04-14",
+  "bias": "Material furnizat de Pulp Liquide",
+  "accessed": "2026-10-15"
+ },
+ "pulpTennessee": {
+  "title": "Tabac Blend Tennessee par Pulp",
+  "publisher": "Le Vapelier",
+  "authors": "papagallo",
+  "url": "https://www.levapelier.com/tabac-blend-tennessee-par-pulp/",
+  "date": "2015-01-05",
+  "bias": "Material furnizat de Pulp",
+  "accessed": "2026-10-15"
+ },
+ "pulpMozambique": {
+  "title": "Tabac Mozambique (train 2) par Pulp",
+  "publisher": "Le Vapelier",
+  "authors": "jedivapes",
+  "url": "https://www.levapelier.com/tabac-mozambique-train-2-par-pulp/",
+  "date": "2016-03-26",
+  "bias": "Material furnizat de Pulp",
+  "accessed": "2026-10-15"
+ },
+ "nhossBlond": {
+  "title": "Classic Blond par Nhoss",
+  "publisher": "Le Vapelier",
+  "authors": "Marquolive",
+  "url": "https://www.levapelier.com/classic-blond-par-nhoss/",
+  "date": "2018-08-25",
+  "bias": "Material furnizat de Nhoss",
+  "accessed": "2026-10-15"
+ },
+ "tevap": {
+  "title": "Blond de Garonne par Terroir & Vapeur",
+  "publisher": "Le Vapelier",
+  "authors": "sylvie.i",
+  "url": "https://www.levapelier.com/blond-de-garonne-par-terroir-vapeur-tevap/",
+  "date": "2017-05-04",
+  "bias": "Material furnizat de TeVap",
+  "accessed": "2026-10-15"
+ },
+ "leaf": {
+  "title": "Manabush Leaf tobacco range",
+  "publisher": "POTV Forum",
+  "authors": "eyeball kid",
+  "url": "https://forum.planetofthevapes.co.uk/threads/manabush-leaf-tobacco-range.208069/",
+  "date": "2021-08-27",
+  "bias": "Mostre menționate; autorul declară afinitate pentru Manabush",
+  "accessed": "2026-10-15"
+ },
+ "purosDark": {
+  "title": "El-Toro Puros Dark by House of Liquid",
+  "publisher": "Vaping Giraffe",
+  "authors": "Morten Moe / Vaping Giraffe",
+  "url": "https://vapingiraffe.blogspot.com/2015/06/juice-review-el-toro-puros-dark-by.html",
+  "date": "2015-06-13",
+  "bias": "Mostră gratuită de la Georgio/eBaron; autorul declară că articolul nu conține linkuri afiliate",
+  "accessed": "2026-10-15"
+ },
+ "elToro": {
+  "title": "El Toro Range by Absolute Toro",
+  "publisher": "POTV Forum",
+  "authors": "Rob; include citate dw1986/VapeMaster",
+  "url": "https://forum.planetofthevapes.co.uk/threads/el-toro-range-by-absolute-toro.164601/",
+  "date": "2018-07-04",
+  "bias": "Mostre primite menționate; reia review-uri din 2015. Articolul POTV republicat nu este o sursă independentă",
+  "accessed": "2026-10-15"
+ },
+ "kind": {
+  "title": "Kind Juice E-Liquid Review",
+  "publisher": "Ecigclick",
+  "authors": "Neil Humber",
+  "url": "https://www.ecigclick.co.uk/kind-juice-e-liquid-review/",
+  "date": "2019-06-08",
+  "bias": "Mostre gratuite de la Kind Juice; publicație cu afiliere comercială",
+  "accessed": "2026-10-15"
+ },
+ "ltEnglish": {
+  "title": "La Tabaccheria English Mixture – postările 4 și 6",
+  "publisher": "Sigaretta Elettronica Forum",
+  "authors": "Alvi",
+  "url": "https://www.sigarettaelettronicaforum.com/threads/la-tabaccheria-english-mixture.11094/",
+  "date": "2016-07-12",
+  "bias": "Relatare personală în forum; finanțarea nu este precizată. Mai multe postări ale aceluiași autor nu sunt surse independente",
+  "accessed": "2026-10-15"
+ },
+ "ltReserve": {
+  "title": "La Tabaccheria Baffometto Reserve – postarea 1",
+  "publisher": "Sigaretta Elettronica Forum",
+  "authors": "Utente 29335 (identificatorul afișat)",
+  "url": "https://www.sigarettaelettronicaforum.com/threads/la-tabaccheria-baffometto-reserve.32004/",
+  "date": "2019-10-30",
+  "bias": "Achiziție proprie declarată; autor identificat doar prin ID, nu expertiză verificată",
+  "accessed": "2026-10-15"
+ },
+ "pulpAlabama": {
+  "title": "Tabac Alabama par Pulp",
+  "publisher": "Le Vapelier",
+  "authors": "papagallo",
+  "url": "https://www.levapelier.com/tabac-alabama-par-pulp/",
+  "date": "2015-01-15",
+  "bias": "Material furnizat de Pulp",
+  "accessed": "2026-10-15"
+ }
+});
+sources.ltReserve.identityLimited=true;
 const rows=[];
 function add(id,brand,name,category,version,profile,why,sourceId,matchName=null,line=null,caveat=''){
  rows.push({id,brand,name,category,version,profile,why,sourceIds:[sourceId],match:matchName?{brand,name:matchName,line,category}:null,caveat,confidence:'Review singular',consensus:false});
@@ -52,7 +181,23 @@ add('manabush-omusa','Manabush','Omusa','Tutun complex','Omusa original / e-liqu
  ['wildbil','Wild Bil','Tutun, whisky și cremă.','Reviewerul apreciază diferențierea profilului.'],
  ['calamity','Calamity AM','Migdale, vanilie, smochină și tutun.','Reviewerul apreciază combinația distinctă.']
 ].forEach(([id,name,profile,why])=>add('deadwood-'+id,'Manabush',name,'Tutun complex','Deadwood Blends / shortfill evaluat',profile,why,'deadwood',name,'Deadwood Blends','Reper comercial asociat; nu certifică versiunea, lotul sau disponibilitatea actuală.'));
+add("fa-virginia","FlavourArt","Virginia","Tutun simplu","E-liquid 10 ml evaluat în 2017","Blond delicat, dulce, cu final lemnos.","Review favorabil fineții; intensitate aromatică redusă.","faVirginia",null,null,"Nu este review al concentratului; nu certifică o formulă actuală sau o extracție NET.");
+add("fa-desert","FlavourArt","Desert Ship","Tutun simplu","E-liquid 10 ml evaluat în 2017","Profil oriental, rotund, cu condimente discrete.","Reviewerul apreciază echilibrul; nu îl recomandă ca gust foarte puternic.","faDesert",null,null,"Profil de aromă, nu dovadă a frunzei ori a unui ingredient. E-liquidul nu se confundă cu aroma concentrată.");
+add("pulp-kentucky","Pulp","Kentucky Brun","Tutun simplu","E-liquid 10 ml, review 2022","Brun uscat, ușor afumat și discret dulce.","Top Jus în review; putere aromatică apreciată.","pulpKentucky",null,null,"Reperul de 10 ml evaluat, fără transfer la alt format/formulă; NET nu este documentat de această sursă.");
+add("pulp-tennessee","Pulp","Tabac Blend Tennessee","Tutun simplu","E-liquid 20 ml, review 2015","Tutun sec, floral discret, nuanță de nucă verde.","Review favorabil echilibrului, cu caracter convențional.","pulpTennessee",null,null,"Selecție editorială pentru profilul de tutun; nu premiu sau consens. Nu certifică ediția actuală.");
+add("pulp-mozambique","Pulp","Tabac Mozambique","Tutun simplu","Train 2 / e-liquid 20 ml, review 2016","Blond blând, cu miros ușor anasonat.","Top Jus în review; gustul de tutun este dominant.","pulpMozambique",null,null,"Se păstrează formatul și ediția din review; mirosul anasonat nu probează ingredient adăugat.");
+add("nhoss-blond","Nhoss","Classic Blond","Tutun simplu","E-liquid 10 ml, review 2018","Blond prăjit, toastat, moderat în gură.","Review favorabil utilizării simple; profil convențional, nu etalon de realism.","nhossBlond",null,null,"Review-ul distinge experiența pe pod de cea pe dripper. Nu generalizăm experiența la configurațiile personale.");
+add("tevap-garonne","TeVap","Blond de Garonne","Tutun simplu","E-liquid 10 ml, review 2017","Blond cu tonalități brune și dulceață discretă.","Top Jus în review; echilibru și caracter apreciate.","tevap",null,null,"Titlul identifică Garonne; textul are și o mențiune Gascogne. Nu asociem automat un alt nume din catalog.");
+add("leaf-cigarillo","Manabush","Cafe Cigarillo","Tutun simplu","Leaf / gama evaluată în 2021","Țigară de foi blândă, parfumată și rotundă.","Recomandare personală puternică a autorului.","leaf",null,null,"Cafe denumește stilul cigarillo, nu cafea, potrivit review-ului. Nu deducem extracție NET; formatul exact al probei nu este precizat.");
+add("leaf-corona","Manabush","Gran Corona","Tutun simplu","Leaf / gama evaluată în 2021","Țigară de foi intensă, parfumată.","Preferat de autor pentru caracterul de trabuc.","leaf",null,null,"Comparațiile geografice sunt impresiile autorului, nu analize de origine. Nu deducem extracție NET sau un lot actual.");
+add("el-toro-puros-dark","House of Liquid","Puros Dark","NET complex","El Toro Fusion / ediția evaluată în 2015","Tutun cubanez, ciocolată și cafea discrete.","Reviewerul apreciază susținerea tutunului de către aromele secundare.","purosDark",null,null,"Review al ediției originale, nu rebrand actual sau baze NET. Mostră furnizată; nu confirmă un build personal.");
+add("el-toro-eden","Absolute Toro","Eden","NET complex","El Toro / rebrand evaluat în 2018","Tutun cubanez și măr proaspăt, nuanțe condimentate.","Preferință personală de durată relatată de Rob.","elToro",null,null,"Rebrandul din 2018 nu certifică formula disponibilă azi. Forumul și articolul republicat sunt aceeași relatare.");
+add("el-toro-minotor","Absolute Toro","Minotor","NET complex","El Toro / rebrand evaluat în 2018","Tutun aromatizat, scorțișoară, corp condimentat.","Rob apreciază varianta mai echilibrată decât vechiul Minotaur.","elToro",null,null,"Minotor nu se confundă cu versiunea veche Minotaur sau cu bazele NET.");
+add("kind-patriots","Kind Juice","Patriots Brew","NET complex","Tobacco Ridge / proba 12 mg evaluată în 2019","Tutun, arțar afumat și caracter de stejar.","Review favorabil straturilor și echilibrului.","kind",null,null,"NET aromatizat din gama Tobacco Ridge; nu extindem către eNectar. Proporția bazei este contradictorie în articol și nu este preluată.");
+add("lt-english-barrique","La Tabaccheria","English Mixture","NET complex","Barrique / concentrat evaluat în 2016","Lemn, tămâie de Latakia și dulceață de Virginia.","Alvi descrie favorabil profilul și evoluția sa.","ltEnglish",null,null,"Concentratul istoric nu se confundă cu 4Pod sau edițiile actuale. Relatare singulară, fără consens; nu preluăm instrucțiuni de preparare.");
+add("lt-baffometto-reserve","La Tabaccheria","Baffometto Reserve","NET complex","Concentratul evaluat în octombrie 2019","Black Cavendish dulce, Latakia și Virginia.","Autorul recomandă lichidul, fără a-l considera miraculos.","ltReserve",null,null,"Încredere limitată de identitatea generică afișată. Nu se transferă către 4Pod, Baffometto simplu sau reformulări.");
+add("pulp-alabama","Pulp","Tabac Alabama","Tutun complex","E-liquid 20 ml, review 2015","Tutun rotund, cereale, vanilie și nuci prăjite.","Review favorabil rețetei; asemănarea cu Tribeca este subiectivă.","pulpAlabama",null,null,"Nu este o comparație directă cu Tribeca: autorul precizează că nu avea proba alături. Ediția actuală nu este certificată.");
 rows.find(e=>e.id==='bn-prelude').photo={src:'./media/black-note-virginia-current.webp',ref:'https://www.blacknote.com/e-juice/virginia-tobacco-e-liquid/',credit:'Black Note',edition:'Ambalaj actual Virginia 60 ml; review-ul privește Prelude original'};
 for(const entry of rows){const text=entry.name+' '+entry.profile;entry.modelTags=[];for(const tag of ['latakia','kentucky','perique','oriental','cigar'])if(new RegExp(tag,'i').test(text))entry.modelTags.push(tag);if(/nuc|migdale/i.test(text))entry.modelTags.push('nuts');if(/dulc|miere|vanili|caramel|toffee/i.test(text))entry.modelTags.push('sweet');if(entry.category.includes('complex'))entry.modelTags.push('layers');}
-window.RTA_MARKET_EVIDENCE={version:1,revised:accessed,categories:['NET simplu','NET complex','Tutun simplu','Tutun complex'],sources,rows};
+window.RTA_MARKET_EVIDENCE={version:1,revised:'2026-10-15',categories:['NET simplu','NET complex','Tutun simplu','Tutun complex'],sources,rows};
 })();

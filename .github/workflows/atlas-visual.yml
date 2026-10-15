@@ -3,6 +3,10 @@ on:
   pull_request:
     paths:
       - "rta-lab/atlas-preview/**"
+      - "rta-lab/atlas/**"
+      - "rta-lab/sw.js"
+      - "tools/build-rta-atlas-release.js"
+      - "tools/build-rta-atlas-cache.js"
       - "tools/check-rta-atlas-visual.js"
       - "tools/check-rta-atlas-modules-visual.js"
       - "tools/check-rta-atlas-offline.js"
@@ -28,6 +32,7 @@ jobs:
           node tools/check-rta-atlas-visual.js
           node tools/check-rta-atlas-modules-visual.js
           node tools/check-rta-atlas-offline.js
+          RTA_ATLAS_ROUTE=atlas node tools/check-rta-atlas-offline.js
       - name: Save mobile screenshots for review
         if: always()
         uses: actions/upload-artifact@v4
