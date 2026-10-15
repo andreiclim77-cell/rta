@@ -4,7 +4,7 @@ const folder=path.resolve('artifacts/atlas-v02-mobile');fs.mkdirSync(folder,{rec
 const check=(ok,msg)=>{if(!ok)throw new Error(msg);};
 async function shot(page,name){
  await page.waitForFunction(()=>{const active=document.querySelector('.page:not([hidden])');return !active||Number(getComputedStyle(active).opacity)>=.999;});
- await page.locator('.page:not([hidden]) img').evaluateAll(async imgs=>{for(const img of imgs){const b=img.getBoundingClientRect();if(b.top<innerHeight&&b.bottom>0){await img.decode();}}await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});
+ await page.locator('.page:not([hidden]) img').evaluateAll(async imgs=>{for(const img of imgs){if(img.closest('details:not([open])'))continue;const b=img.getBoundingClientRect();if(b.width>0&&b.height>0&&b.top<innerHeight&&b.bottom>0){await img.decode();}}await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});
  await page.screenshot({path:path.join(folder,name),fullPage:false});
 }
 async function main(){
