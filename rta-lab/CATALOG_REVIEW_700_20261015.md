@@ -17,14 +17,14 @@ Utilizatorul a cerut explicit înlocuirea bibliotecii vizibile cu **700 de produ
 
 ## Surse și inventar de lucru
 
-Inventar public citit: 6.528 de produse distincte din cataloagele La Tabaccheria (287), E-Tobacco (1.196), TiSvapo (4.877) și Manabush (168). Aceste totaluri includ și produse în afara scopului; **nu sunt numărul de lichide acceptate**. Filtrarea și normalizarea sunt în curs. Alte fișe oficiale sunt colectate pentru Centenary Mods, Drake’s, Ripe Vapes, Five Pawns, Black Note, Halo și Vape Cellar.
+Inventar public citit: 6.528 de produse distincte din cataloagele La Tabaccheria (287), E-Tobacco (1.196), TiSvapo (4.877) și Manabush (168). Aceste totaluri includ și produse în afara scopului; **nu sunt numărul de lichide acceptate**. Filtrarea a fost completată cu verificarea fișelor istorice și a surselor oficiale individuale. Alte fișe oficiale au fost verificate pentru Centenary Mods, Drake’s, Ripe Vapes, Five Pawns, Black Note, Halo și Vape Cellar.
 
 Surse principale:
 
 - [Centenary Mods — Balkan Milestone](https://centenarymods.com/shop/flavor-concentrates/centenary-mods-12ml/balkan-milestone/) și [Merde de Cheval](https://centenarymods.com/shop/flavor-concentrates/centenary-mods-12ml/merde-de-cheval/); catalog public structurat al categoriei 106, 12 produse.
 - [La Tabaccheria — catalog și formulări](https://latabaccheria.net/concentrati/) și [produse](https://latabaccheria.net/shop/).
 - [Azhad — Semplici](https://www.azhadelixirs.it/semplici/), [Aromi](https://www.azhadelixirs.it/aromi/), Hyperion, My Way, Back in Black și Bacco e Tabacco.
-- [Blendfeel — SOLO](https://blendfeel.com/en/solo/) și [catalog](https://blendfeel.com/linee/).
+- [Blendfeel — SOLO](https://blendfeel.com/solo/) și [catalog](https://blendfeel.com/linee/).
 - [Drake’s](https://drakesvapes.co.uk/), [Ripe Vapes](https://www.ripevapes.com/), [Five Pawns](https://fivepawns.com/), [Black Note](https://www.blacknote.com/brands/black-note/), [Halo](https://halovapeclub.com/pages/american-made-tobacco-eliquid), [Vape Cellar](https://www.vapecellar.eu/en/).
 - [TNT / The Alchemist’s Leaves](https://thealchemistsleaves.com/en/), [TNT catalog](https://tnt-vape.com/2-tnt-vape-liquidi-aromi-e-distillati-per-sigarette-elettroniche).
 - [E-Tobacco — portofoliu și fișe](https://www.e-tobacco.it/officine-svapo-3/) și [TiSvapo](https://www.tisvapo.it/). Fișele comercianților sunt atribuite ca atare, nu prezentate drept teste independente.
@@ -54,16 +54,22 @@ Pregătire de interfață în branch: numărătoare dinamică în texte, denumir
 7. Teste de integritate, duplicate și sinonime; toate cele 700 căutabile; scenarii normale/eroare/stres, patru selectoare, topuri, Înapoi, font mărit, 360×800, 390×844 și desktop; lipsa fișierului nou trebuie să producă eroare explicită; migrare cache, offline și CL saved/draft păstrate.
 8. CI și capturi ale candidatului exact, inspecție efectivă, apoi integrare și verificare Pages/HTTP/browser. Până atunci, producția rămâne la versiunea verificată anterior.
 
-## Următoarea execuție
+## Verificarea publicării
 
-Închide normalizarea între game și sinonime; verifică fișele istorice față de surse; finalizează selecția și clasificarea celor 700 fără a umple cu repere nedovedite. Integrează datasetul Atlas separat de arhiva V10, actualizează căutarea/topurile/Market și versiunea cache, rulează și inspectează verificările, publică în domeniul aprobării existente și consemnează SHA/runs reale.
+Execută și inspectează verificările pe candidatul exact de mai jos; publică în domeniul aprobării existente și consemnează SHA/runs reale. Nu transfera rezultatele checkpointului anterior la noul dataset.
 
-## Acoperire și limite ale candidatului integrat
+## Acoperire și reconciliere integrală — candidat de verificat
 
-37 mărci; 496 profiluri pe descrieri oficiale, 184 pe descrieri de comerciant atribuite și 20 pe ediții documentate în recenzii. 535 produse au suficiente informații pentru topurile automate; celelalte pot fi alese manual cu limita afișată. Numărul de produse nu probează cererea globală sau disponibilitatea curentă.
+PR #51 DRAFT, branch `feature/atlas-library-700-20261015`; baza `7ad3813c42d22841496e14884ac295b8bcd75ed3`. Cerința este revizia integrală, nu doar adăugarea celor două exemple Centenary. Catalogul Atlas are acum 700 de produse / 61 de mărci, cu surse și ediții explicite. Fișier editabil: `catalog/liquids-20261015.json`; SHA256 `d4b29f707c0a964ab3c94188bb11be283eae107dcdd23d29a9e842392fee3a11`; cache `690635981392b410` / 67 resurse / 63 fișiere release.
 
-Sunt păstrate prin aliasuri 281 fișe vechi identificate în sursele revizuite; acestea includ repetări ale aceleiași identități. Fișele istorice fără asociere verificată nu sunt declarate automat false: rămân recuperabile în datele originale V10.
+Toate cele 620 de rânduri inițiale au o decizie în `catalog/LEGACY_RECONCILIATION_20261015.json`: 500 de rânduri confirmate devin 469 identități distincte (31 dubluri/aliasuri comasate); se adaugă 231 identități documentate. Se scot din catalogul comercial 100 Profil reper și benchmarkul personal. Alte 8 rânduri au profil în afara scopului, unul are surse contradictorii și 10 nu au identitatea/ediția confirmată suficient; acestea nu sunt declarate false și rămân recuperabile în datele originale V10. Nu se inventează aliasuri către altă rețetă.
 
-Acoperirea a fost extinsă și pentru [Flavorah](https://shop.flavorah.com/shop/category/water-soluble-flavor-concentrates-herbal-t-64), [The Flavor Apprentice](https://shop.perfumersapprentice.com/c-153-tobacco-flavors-no-natural-tobacco.aspx), [Flavor West](https://flavorwest.com/), [FlavourArt](https://flavourart.com/store/en/store/flavors-en/flavors/tobacco-flavors/) și [Inawera / Flavorika — fișe Vapable](https://vapable.com/product/gold-ducat-inawera-flavour-concentrate/). Flavor West folosește denumiri actuale precum Gritty; acestea nu sunt inventate local. Aromele fără profil tutunos, simplele recomandări de a combina un fruct/mentă cu tutun și accesoriile sunt excluse.
+Clase: 210 NET simplu, 253 NET complex, 107 Tutun simplu, 130 Tutun complex. Proveniență: 384 descrieri oficiale, 287 de comerciant atribuit și 29 ediții/observații din review-uri istorice. 505 produse cu profil suficient intră în topurile automate; celelalte 195 rămân căutabile și selectabile cu limita afișată. Niciun număr lipsă de review-uri nu este publicat ca zero, iar ordinea unui magazin nu este prezentată ca popularitate globală.
 
-Exemple de control semantic: cuvântul «smoker» nu devine notă afumată; «fără dulceață adăugată» nu produce eticheta dulce; comparația cu alt produs nu îi transferă aromele. [VCT Original](https://www.joyetech.eu/en/e-liquids/flavour-shots/ripe-vapes-vct-20ml-60ml) păstrează profilul vanilie/custard/migdale cu sursa de comerciant explicită, întrucât descrierea curentă a producătorului nu îl detaliază.
+Reținerea verificată acoperă inclusiv Blendfeel SOLO/Private Reserve, Azhad Semplici/Hyperion/Pure/Signature, La Tabaccheria clasic/Macerati/Elite, Pod Salt Origin, Flavorah, FlavourArt, The Flavor Apprentice, Flavor West, Inawera, House of Liquid, Charlie Noble și alte mărci vechi. Pro Vape / Cronos și Black Note / Concerto au marca corectată fără duplicarea produsului. Formulele distincte (de exemplu RY4 Double CC și Manabush Powwow Extended) nu sunt comasate ca simple ambalaje. Van&Illa nu primește Cavendish pe care producătorul îl exclude; Booms Origin nu primește eticheta dulce dintr-o negație; Liquor Tobacco păstrează absintul/lemnul dulce.
+
+Teste locale ale datelor: 700 identități și căutări, toate cele 500 aliasuri/rânduri vechi păstrate, 756 topuri configurație permisă/obiectiv, 140 contexte, stress pe 700; PASS. Motorul original trece separat cu 620, 16 platforme, 126 variante permise; KLP NiFe30/NiFe52 TC și CL saved/draft sunt păstrate. Diferența față de baza protejată pentru `data/`, `engine.js`, `mood-match.js`, `index.html` este goală.
+
+CI pe checkpointul anterior `efaf78f5163a477918acd17238e5274d9e43312b`: RTA 38740026843, Market 38740026849, Visual 38740026866 — toate SUCCESS. Aceste rulări NU certifică datasetul revizuit ulterior de mai sus. Pe noul dataset: browserul local 360×800 / 390×844 / 1440×1000, căutările mărcilor reintegrate și cele zece combinații ecran/font real 18/24 px sunt PASS. Offline, cache-upgrade, CI final, inspecția capturilor CI și publicarea sunt încă PENDING.
+
+Motorul, datele originale V10, inventarul 16 platforme / 42 exemplare, preferințele și configurațiile personale nu sunt modificate. Hall of Fame păstrează cele 40 de recenzii atribuite; descrierile comerciale și noile fișe nu inventează consens ori rezultate personale. Direcția vizuală și publicarea au aprobarea expresă anterioară; se publică după verificările candidatului exact, fără o nouă cerere pentru această revizie de date. Selecția de 700 este editorială documentată, nu un clasament global demonstrat al căutărilor/vânzărilor.

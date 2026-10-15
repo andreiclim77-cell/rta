@@ -18,6 +18,16 @@ try{for(const [width,height] of [[360,800],[390,844],[1440,1000]]){
   await page.locator('#selectedLiquid').scrollIntoViewIfNeeded();await stable(page);await page.screenshot({path:path.join(out,'catalog-'+file+'-selected-'+width+'.png')});
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
  }
+ // The original Centenary examples are only two regressions in a whole-library revision.
+ for(const query of ['Blendfeel Balkan River','Inawera Gold Ducat','Pod Salt Origin Royal Tobacco','Cronos Tab Plus','Ernocciola']){
+  await page.locator('#liquidSearch').fill(query);
+  const options=page.locator('#liquidSuggestions [data-lp-index]');assert.ok(await options.count()>0,'Retained commercial product must be available: '+query);
+ }
+ await page.locator('#liquidSearch').fill('Blendfeel Balkan River');await page.locator('#liquidSearch').press('Enter');
+ assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().name),'Balkan River');
+ assert.ok(await page.locator('#selectedLiquid .catalog-source-note a').first().getAttribute('href').then(u=>u.startsWith('https://blendfeel.com/')));
+ await page.locator('#selectedLiquid').scrollIntoViewIfNeeded();await stable(page);await page.screenshot({path:path.join(out,'catalog-retained-blendfeel-'+width+'.png')});
+ await page.locator('#liquidSearch').fill('Mer de cheval');await page.locator('#liquidSearch').press('Enter');
  const nav=width<760?'.bottom-tabs':'.top-nav';for(const route of ['atomizer','wire','duel']){await page.locator(nav+' [data-route="'+route+'"]').click();assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().name),'Merde de Cheval');}
  assert.deepEqual(errors,[]);await context.close();
 }
