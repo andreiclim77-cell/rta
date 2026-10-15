@@ -63,7 +63,7 @@ async function main(){
    check(await page.locator('.live-scene').isHidden(),"Do not show a default liquid's Cinema before choice");
    await page.waitForTimeout(650);
    await screenshot(page,'liquid-first-empty-'+width+'.png');
-   await page.locator('#liquidSearch').fill('Mixture Balkan Tabaccheria');
+   await page.locator('#liquidSearch').fill('Milestone Balkan Centenary Mods');
    await screenshot(page,'liquid-first-search-'+width+'.png');
    await page.locator('#liquidSearch').press('Enter');
    // Wait for pageReveal + the reactive liquid-scene animation before snapshots.

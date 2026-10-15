@@ -8,7 +8,7 @@ const categories=['NET simplu','NET complex','Tutun simplu','Tutun complex'];
 for(const row of rows){
  assert.ok(row.brand&&row.name&&row.profile&&categories.includes(row.class));
  assert.ok(!['Profil reper','Personal'].includes(row.brand),'Generic reference and personal benchmark are not commercial products');
- assert.ok(row.sources.some(s=>s.type==='manufacturer'||s.type==='independent_review'||['E-Tobacco','Joyetech EU'].includes(s.publisher)));
+ assert.ok(row.sources.some(s=>s.type==='manufacturer'||s.type==='independent_review'||['E-Tobacco','Joyetech EU','Vapable'].includes(s.publisher)));
  assert.ok(row.sources.every(s=>/^https:\/\//.test(s.url)&&s.publisher&&s.accessed==='2026-10-15'));
  assert.ok(row.evidenceLimit&&row.classReason&&row.recipeGroup);
  assert.ok(!/\b(?:\d+\s*ml|\d+\s*mg|liquido pronto|aroma concentrato)\b/i.test(row.name),'Bottle and strength are not product identities: '+row.name);

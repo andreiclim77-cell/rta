@@ -57,3 +57,13 @@ Pregătire de interfață în branch: numărătoare dinamică în texte, denumir
 ## Următoarea execuție
 
 Închide normalizarea între game și sinonime; verifică fișele istorice față de surse; finalizează selecția și clasificarea celor 700 fără a umple cu repere nedovedite. Integrează datasetul Atlas separat de arhiva V10, actualizează căutarea/topurile/Market și versiunea cache, rulează și inspectează verificările, publică în domeniul aprobării existente și consemnează SHA/runs reale.
+
+## Acoperire și limite ale candidatului integrat
+
+37 mărci; 496 profiluri pe descrieri oficiale, 184 pe descrieri de comerciant atribuite și 20 pe ediții documentate în recenzii. 553 produse au suficiente informații pentru topurile automate; celelalte pot fi alese manual cu limita afișată. Numărul de produse nu probează cererea globală sau disponibilitatea curentă.
+
+Sunt păstrate prin aliasuri 281 fișe vechi identificate în sursele revizuite; acestea includ repetări ale aceleiași identități. Fișele istorice fără asociere verificată nu sunt declarate automat false: rămân recuperabile în datele originale V10.
+
+Acoperirea a fost extinsă și pentru [Flavorah](https://shop.flavorah.com/shop/category/water-soluble-flavor-concentrates-herbal-t-64), [The Flavor Apprentice](https://shop.perfumersapprentice.com/c-153-tobacco-flavors-no-natural-tobacco.aspx), [Flavor West](https://flavorwest.com/), [FlavourArt](https://flavourart.com/store/en/store/flavors-en/flavors/tobacco-flavors/) și [Inawera / Flavorika — fișe Vapable](https://vapable.com/product/gold-ducat-inawera-flavour-concentrate/). Flavor West folosește denumiri actuale precum Gritty; acestea nu sunt inventate local. Aromele fără profil tutunos, simplele recomandări de a combina un fruct/mentă cu tutun și accesoriile sunt excluse.
+
+Exemple de control semantic: cuvântul «smoker» nu devine notă afumată; «fără dulceață adăugată» nu produce eticheta dulce; comparația cu alt produs nu îi transferă aromele. [VCT Original](https://www.joyetech.eu/en/e-liquids/flavour-shots/ripe-vapes-vct-20ml-60ml) păstrează profilul vanilie/custard/migdale cu sursa de comerciant explicită, întrucât descrierea curentă a producătorului nu îl detaliază.

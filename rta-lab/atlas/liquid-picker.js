@@ -9,7 +9,7 @@ const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>
 const label=l=>[l?.brand,l?.name,l?.id&&l?.line].filter(Boolean).join(' · ');
 function sourceNote(l){
  if(!l?.id||!l.sources?.length)return '';
- const sources=l.sources.slice(0,2).filter(s=>/^https:\/\//.test(s.url));
+ const publishers=new Set();const sources=l.sources.filter(s=>{if(!/^https:\/\//.test(s.url)||publishers.has(s.publisher))return false;publishers.add(s.publisher);return true;}).slice(0,2);
  return '<small class="catalog-source-note">'+esc(l.evidenceLimit||'Profil documentat; potrivire estimată din motor.')+' <span>Surse: '+sources.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer">'+esc(s.publisher)+' ↗</a>').join(' · ')+'</span></small>';
 }
 const indexed=catalog.map((liquid,index)=>({liquid,index,name:norm(liquid.name),brand:norm(liquid.brand),words:tokens([liquid.brand,liquid.name,liquid.profile,liquid.class,liquid.line,...(liquid.aliases||[]),...(liquid.tags||[])].join(' '))}));
