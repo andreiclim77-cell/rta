@@ -2,6 +2,7 @@
 const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict'),crypto=require('node:crypto');
 const rows=JSON.parse(fs.readFileSync('rta-lab/catalog/liquids-20261015.json','utf8'));
 const norm=s=>s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+assert.ok(!JSON.stringify(rows).includes('\ufffd'),'Catalog text must decode as UTF-8 without replacement characters');
 assert.equal(rows.length,700);assert.equal(new Set(rows.map(r=>r.id)).size,700);
 assert.equal(new Set(rows.map(r=>[r.brand,r.name,r.line].map(norm).join('|'))).size,700);
 const categories=['NET simplu','NET complex','Tutun simplu','Tutun complex'];
@@ -32,12 +33,12 @@ assert.equal(search.find('Mer de cheval').rows[0].liquid.id,secret.id);
 assert.equal(search.find('Virginia Hangsen').rows[0].liquid.name,'Virginia Tobacco');
 assert.ok(search.find('7 Foglie').rows.some(r=>r.liquid.brand==='FlavourArt'&&r.liquid.name==='7 Leaves'));
 const audit={edition:w.RTA_ATLAS_CATALOG,method:'Model fit, not a popularity or personal A/B score',rankings:[]};
-for(const atom of w.RTA_CORE.atoms)for(const [goal] of w.RTA_ATLAS_CONTEXT.goals){
- const config=core.defaultConfig(atom.id),top=search.top(config,goal,5);
+for(const atom of w.RTA_CORE.atoms)for(const variant of core.variants(atom.id))for(const [goal] of w.RTA_ATLAS_CONTEXT.goals){
+ const config=core.config(atom.id,variant),top=search.top(config,goal,5);
  assert.equal(top.length,5);assert.equal(new Set(top.map(r=>r.liquid.recipeGroup)).size,5);
  assert.ok(top.every(r=>r.liquid.recommendable!==false&&rows.some(x=>x.id===r.liquid.id)&&Number.isFinite(r.score)));
  assert.ok(top.every((r,i)=>i===0||top[i-1].score>=r.score));
  audit.rankings.push({config,goal,top:top.map(r=>({id:r.liquid.id,brand:r.liquid.brand,name:r.liquid.name,line:r.liquid.line}))});
 }
 if(process.env.RTA_CATALOG_RECEIPT==='1'){fs.mkdirSync('artifacts/atlas-v02-mobile',{recursive:true});fs.writeFileSync('artifacts/atlas-v02-mobile/catalog-top-audit.json',JSON.stringify(audit,null,2));}
-console.log('CATALOG QUALITY PASS: 700 sourced identities, no packaging duplicates or generic references; Centenary aliases/secret formula, all 96 platform/objective top-fives recalculated, one result per named recipe.');
+console.log('CATALOG QUALITY PASS: 700 sourced identities, no packaging duplicates or generic references; Centenary aliases/secret formula, all '+audit.rankings.length+' permitted-build/objective top-fives recalculated, one result per named recipe.');

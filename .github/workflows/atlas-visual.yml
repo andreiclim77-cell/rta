@@ -14,6 +14,7 @@ on:
       - "tools/check-rta-atlas-offline.js"
       - "tools/check-rta-atlas-filters-visual.js"
       - "tools/check-rta-atlas-layout-visual.js"
+      - "tools/check-rta-atlas-catalog-visual.js"
       - "tools/check-rta-atlas-upgrade.js"
       - "rta-lab/home-ui.js"
       - "rta-lab/manifest.webmanifest"
@@ -40,6 +41,7 @@ jobs:
           node tools/check-rta-atlas-visual.js
           node tools/check-rta-atlas-modules-visual.js
           node tools/check-rta-atlas-filters-visual.js
+          node tools/check-rta-atlas-catalog-visual.js
           node tools/check-rta-atlas-layout-visual.js
           node tools/check-rta-atlas-offline.js
           RTA_ATLAS_ROUTE=atlas node tools/check-rta-atlas-offline.js
