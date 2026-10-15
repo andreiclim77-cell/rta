@@ -155,7 +155,7 @@ function renderBuild(result,rank,liquid){
 }
 function comparisonGraphic(entries,title){
  const axes=[['spectrum','Spectru'],['separation','Separare'],['simultaneity','Simultaneitate'],['palate','Palat'],['offense','Ofensivă'],['th','Throat hit'],['harmony','Armonie']];
- return '<figure class="sensory-comparison"><figcaption><h3>'+esc(title)+'</h3><p>Același lichid și obiectiv. Lungimea barelor arată indicatori ai modelului; nu măsurători sau procente de plăcere.</p></figcaption><div class="comparison-legend">'+entries.map((e,i)=>'<span class="series-'+i+'"><i></i>'+esc(e.label)+'</span>').join('')+'</div>'+axes.map(([key,label])=>'<div class="comparison-axis"><b>'+label+'</b><div>'+entries.map((e,i)=>'<div class="comparison-track series-'+i+'" data-signal="'+key+'" data-value="'+e.result.signals[key]+'" role="img" aria-label="'+esc(e.label+' · '+label+' · '+labelScore(e.result.signals[key]))+'"><span style="width:'+Math.max(0,Math.min(100,e.result.signals[key]*20))+'%"></span><small>'+esc(labelScore(e.result.signals[key]))+'</small></div>').join('')+'</div></div>').join('')+'</figure>';
+ return '<figure class="sensory-comparison"><figcaption><h3>'+esc(title)+'</h3><p>Același lichid și obiectiv. Lungimea barelor arată indicatori ai modelului; nu măsurători sau procente de plăcere.</p></figcaption><div class="comparison-legend">'+entries.map((e,i)=>'<span class="series-'+i+'"><i></i>'+esc(/^[ABC] · /.test(e.label)?e.label:String.fromCharCode(65+i)+' · '+e.label)+'</span>').join('')+'</div>'+axes.map(([key,label])=>'<div class="comparison-axis"><b>'+label+'</b><div>'+entries.map((e,i)=>'<div class="comparison-track series-'+i+'" data-signal="'+key+'" data-value="'+e.result.signals[key]+'" role="img" aria-label="'+esc(e.label+' · '+label+' · '+labelScore(e.result.signals[key]))+'"><span style="width:'+Math.max(0,Math.min(100,e.result.signals[key]*20))+'%"></span><small>'+String.fromCharCode(65+i)+' · '+esc(labelScore(e.result.signals[key]))+'</small></div>').join('')+'</div></div>').join('')+'</figure>';
 }
 function watchInternal(item){
  const alt=item.builds[1];
@@ -341,7 +341,7 @@ function init(){
   const d=target.dataset;
   if(d.route){ev.preventDefault();route(d.route);return;}
   if(d.goBest!=null){scrollToBest();return;}
-  if(d.compareAtoms!=null){element('liquidComparison')?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});return;}
+  if(d.compareAtoms!=null){const graph=element('liquidComparison'),header=document.querySelector('.mast');if(graph)window.scrollTo({top:Math.max(0,window.scrollY+graph.getBoundingClientRect().top-(header?.getBoundingClientRect().height||60)-12),behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});return;}
   if(d.liquid!=null){selectLiquid(Number(d.liquid));return;}
   if(d.mood){state.mood=d.mood;state.expandedId=null;renderMoodMoment();renderResults();return;}
   if(d.moment){state.moment=d.moment;state.expandedId=null;renderMoodMoment();renderResults();return;}
