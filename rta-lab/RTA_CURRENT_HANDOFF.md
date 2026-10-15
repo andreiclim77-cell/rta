@@ -1,5 +1,11 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+## Revizie în curs — fluxuri ghidate și Înapoi, 15.10.2026
+
+Ultima cerință explicită fixează traseele: Liquid Match pornește de la lichid și oferă trei atomizoare × trei builduri, efecte și diferențe grafice; Atlas pornește de la atomizor, îi explică identitatea și propune trei sârme distincte, fiecare cu cinci lichide calculate și comparații; Wire Lab pornește de la sârmă, arată toate atomizoarele compatibile și apoi experiența detaliată după alegerea unuia. Market păstrează sursele, iar Duel compară două configurații în același lichid/obiectiv. Toate instrumentele au Înapoi, păstrează alegerile și permit modificarea contextului pe loc. Atlas nu mai oferă trimiteri vizibile către interfața veche.
+
+Candidat local: feature/atlas-guided-instruments-20261015, baza db917772f6b42e69d8a0c630acb6c4727ef910b0. Încă în verificare, nepublicat. Probele checkpointului anterior sunt istorice și nu dovedesc aceste trasee noi. Motorul, catalogul 620/16/42 și bytes saved/draft CL rămân protejate. Graficele folosesc semnalele existente ale motorului, fără procente de plăcere; fotografiile autentice existente sunt refolosite cu proveniență.
+
 ## Corecții publicate și verificate: acces și filtre conectate — 15.10.2026
 
 **Stare curentă, prioritară față de toate checkpointurile istorice de mai jos:** cele cinci observații ale utilizatorului sunt implementate și publicate prin PR #47 MERGED. Cod candidat final: `5aa19ee79e009d95950931b7ad50b6061084671d`; integrare: `5a031c774898dc589b63f578afdafee687b9ff11`. Actualizările independente ale main sunt păstrate, inclusiv auditul și snapshotul de piață din `b1562a34dfd4edb938714d5c0e337d80b2b73979`. Aprobarea expresă de publicare primită anterior rămâne valabilă.

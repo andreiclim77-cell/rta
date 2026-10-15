@@ -8,9 +8,11 @@
   // Explicit V10 links, legacy tool anchors and offline V10 remain available.
   if(window.location && /^https?:$/.test(window.location.protocol)){
     const params=new URLSearchParams(window.location.search),hash=window.location.hash.slice(1);
-    if(params.get('view')!=='v10'&&(!hash||['home','rtaHome','liquid','atomizer','wire','market','duel'].includes(hash))&&navigator.onLine!==false){
-      const destination=new URL('./atlas/',window.location.href);destination.search='?v=filters-20261015';if(hash&&hash!=='rtaHome')destination.hash=hash;
-      window.location.replace(destination.href);return;
+    if(params.get('view')!=='v10'&&(!hash||['home','rtaHome','liquid','atomizer','wire','market','duel'].includes(hash))){
+      const destination=new URL('./atlas/',window.location.href);destination.search='?v=guided-20261015';if(hash&&hash!=='rtaHome')destination.hash=hash;
+      if(navigator.onLine!==false){window.location.replace(destination.href);return;}
+      // Existing installed shortcuts also use the cached current Atlas offline.
+      if('caches' in window){const oldVisibility=document.documentElement.style.visibility;document.documentElement.style.visibility='hidden';caches.keys().then(keys=>{if(keys.some(key=>key.startsWith('rta-atlas-release-')))window.location.replace(destination.href);else document.documentElement.style.visibility=oldVisibility;}).catch(()=>{document.documentElement.style.visibility=oldVisibility;});}
     }
   }
   const TARGETS = Object.freeze({

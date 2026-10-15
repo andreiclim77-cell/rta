@@ -106,7 +106,7 @@ const js=fs.readFileSync(path.join(preview,"app.js"),"utf8");
 assert.ok(html.includes("id=\"pageHome\"")&&html.includes("id=\"pageLiquid\""),"Two routed screens missing");
 assert.ok(html.includes("id=\"liquidSearch\"")&&html.includes("id=\"resultCards\""));
 assert.ok(html.includes("id=\"moodChips\"")&&html.includes("id=\"momentChips\""));
-assert.ok(html.includes('href="../?view=v10"'),"Must preserve link to original V10 app");
+assert.ok(!html.includes('href="../?view=v10"'),"Atlas must not expose the old interface in its navigation");
 assert.ok(html.includes("./market-evidence.js")&&html.includes("./market.js"),"Market adapter and provenance records must be connected");
 assert.ok(html.includes("id=\"cinemaReel\"")&&html.includes("photo-cinema"),"Real-photo stage missing");
 assert.ok(html.includes("PREVIEW V0.2")&&!html.includes("PREVIEW V0.1"),"Preview footer must match actual version");

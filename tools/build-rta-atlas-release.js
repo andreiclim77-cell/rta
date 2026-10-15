@@ -16,7 +16,7 @@ for(const relative of inventory(source)){
    .replace('/ V0.2</span>','/ ATLAS</span>').replace('VERSIUNE CANDIDAT','COLECȚIA TA')
    .replace('aria-label="Navigare prototip"','aria-label="Navigare Atlas"')
    .replace('PREVIEW V0.2','PRECISION MOTION LAB')
-   .replace('Concept interactiv pentru evaluarea designului. Nu înlocuiește aplicația actuală.','Sursele și limitele dovezilor sunt disponibile la fiecare rezultat. Lab V10 rămâne accesibil separat.')
+   .replace('Concept interactiv pentru evaluarea designului. Nu înlocuiește aplicația actuală.','Sursele și limitele dovezilor sunt disponibile la fiecare rezultat.')
    .replace('Prototipul animat necesită JavaScript.','Atlas necesită JavaScript.');
   assert.ok(!/V0\.2|PREVIEW|VERSIUNE CANDIDAT/.test(html),'Release identity must not retain preview labels');
   bytes=Buffer.from(html);

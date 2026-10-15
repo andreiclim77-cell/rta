@@ -15,6 +15,8 @@ async function main(){
    const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
+   await page.locator('#atlasLiquidSearch').fill('Mixture Balkan Tabaccheria');
+   await page.locator('#atlasLiquidSearch').press('Enter');
    await page.waitForTimeout(650);
    check(await page.locator('#pageAtomizer').isVisible(),'Hash deep link must open Atomizer Atlas');
    check(await page.locator('.platform-tile').count()===16,'All 16 platforms must be available');
@@ -34,8 +36,9 @@ async function main(){
    await page.waitForTimeout(400);
    await shot(page,'atomizer-search-'+width+'.png');
    await page.locator('[data-edit-wire]').click();
+   await page.locator('#wireMaterial').selectOption('nife30');
    await page.locator('#wireAtom').selectOption('klp');
-   check(await page.locator('#wireMaterial').inputValue()==='nife30','KLP default must remain Dicodes');
+   check(await page.locator('#wireMaterial').inputValue()==='nife30','Wire-first flow must keep the explicitly selected Dicodes material');
    await page.locator('.wire-advanced summary').click();
    check(await page.locator('#wirePower').inputValue()==='16','KLP Dicodes personal power ceiling');
    check(await page.locator('#wireTemp').inputValue()==='220','KLP Dicodes personal TC setting');
@@ -53,7 +56,9 @@ async function main(){
    await page.locator('#wirePower').fill('14');await page.locator('#wirePower').press('Tab');
    check(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.power)===14,'Valid energy must recompute model');
    await page.locator('#wireAtom').selectOption('asylum');
-   check(await page.locator('#wireMaterial option[value=ssclap]').count()===0,'Asylum SS Clapton must be unavailable');
+   await page.locator('#wireMaterial').selectOption('ssclap');
+   check(await page.locator('#wireAtom option[value=asylum]').count()===0,'Wire-first compatibility must exclude Asylum for SS Clapton');
+   await page.locator('#wireMaterial').selectOption('nife52');
    await page.locator('#wireAtom').selectOption('415');await page.locator('#wireMaterial').selectOption('k128');
    check(await page.locator('#wireWraps option[value="6"]').count()===0,'Deprecated 415 28/6 must be unavailable');
    await page.locator('#wireAtom').selectOption('dvarwcl');await page.locator('#wireAir').selectOption('triple06');
