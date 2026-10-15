@@ -18,7 +18,7 @@ self.addEventListener('install',e=>e.waitUntil(caches.open(CACHE).then(c=>c.addA
 self.addEventListener('activate',e=>e.waitUntil((async()=>{for(const key of await caches.keys())if(key.startsWith(PREFIX)&&key!==CACHE)await caches.delete(key);await self.clients.claim();})()));
 self.addEventListener('fetch',e=>{
  const request=e.request,url=new URL(request.url);if(request.method!=='GET'||url.origin!==self.location.origin)return;
- e.respondWith((async()=>{const cache=await caches.open(CACHE);try{const response=await fetch(request);if(response.ok)await cache.put(request,response.clone());else return (await cache.match(request))||response;return response;}catch(error){const found=await cache.match(request);if(found)return found;if(request.mode==='navigate'&&url.pathname.startsWith(new URL('./',self.location.href).pathname))return (await cache.match('./index.html'))||Response.error();return Response.error();}})());
+ e.respondWith((async()=>{const cache=await caches.open(CACHE);try{const response=await fetch(new Request(request,{cache:"no-store"}));if(response.ok)await cache.put(request,response.clone());else return (await cache.match(request))||response;return response;}catch(error){const found=await cache.match(request);if(found)return found;if(request.mode==='navigate'&&url.pathname.startsWith(new URL('./',self.location.href).pathname))return (await cache.match('./index.html'))||Response.error();return Response.error();}})());
 });
 `;
 return {source:template,root,revision,count:files.size};

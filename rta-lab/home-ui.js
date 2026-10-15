@@ -9,7 +9,7 @@
   if(window.location && /^https?:$/.test(window.location.protocol)){
     const params=new URLSearchParams(window.location.search),hash=window.location.hash.slice(1);
     if(params.get('view')!=='v10'&&(!hash||['home','rtaHome','liquid','atomizer','wire','market','duel'].includes(hash))&&navigator.onLine!==false){
-      const destination=new URL('./atlas/',window.location.href);if(hash&&hash!=='rtaHome')destination.hash=hash;
+      const destination=new URL('./atlas/',window.location.href);destination.search='?v=filters-20261015';if(hash&&hash!=='rtaHome')destination.hash=hash;
       window.location.replace(destination.href);return;
     }
   }
