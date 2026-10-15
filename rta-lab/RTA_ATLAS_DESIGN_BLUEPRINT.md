@@ -1,5 +1,17 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
+## 415 RTA MTL Cool — prioritate personală actuală (15.10.2026)
+
+**Noua observație directă:** pe **415 RTA MTL Cool**, prima alegere personală este la egalitate între **Dicodes RESISTHERM NiFe30 TCR320 / 7 spire** și **Zivipf NiFe52 TCR310 / 6 spire**. **Următoarea preferință: Kanthal K1 28 GA / 6 spire.** Utilizatorul confirmă că toate funcționează bine; nu pretinde un câștig senzorial măsurat sau o egalitate chimică între aliaje.
+
+**Corecție față de arhiva istorică:** interdicția „415 K1 28/6 este depășit” și ordinea „415 K1 Clapton primul în Explorer” au fost depășite de această observație nouă. **K1 28/5 contact**, **K1 Clapton/5** (în continuare pereche Clapton specialistă), K1 29/5 contact, K1 29/6 contact și vechiul NiFe30/6 **nu se șterg**. Nu se reactivează K1 29/5 distanțat. Cele cinci familii de sârme V10 nu se extind.
+
+**Limite de probă:** lichidul, poziția, bumbacul, deschiderea airflow, wattajul și temperatura TC exacte ale acestor trei montări pe 415 nu au fost comunicate în noul test. Ø2,5 mm rămâne doar *presetul Lab*. Configurația GTR NiFe30/7 la 230°C/limită 16 W **NU** se transferă drept observație pe 415. Preferința se înregistrează separat de scorurile tehnico-senzoriale și nu reprezintă A/B controlat. Pentru TC se păstrează calibrarea la rece și TCR distinct.
+
+**Integrare izolată:** pe platforma `415` Sensory DNA permite NiFe30/7 și /6, NiFe52/6, K1 28/6 și /5; preferințe prima categorie NiFe30/7 și NiFe52/6, a doua K1 28/6. Legacy V10 arată slotul NiFe TC cu detalierea celor două aliaje; `clapton-platform-map.js`, încărcat ultimul, nu mai trebuie să readucă în față Clapton/5. Celelalte platforme (GTR NiFe30/7, KLP/KX/Prime NiFe30/6 etc.), inventarul de 16 platforme/42 exemplare, cele trei fișe CL și cataloagele **V10 620 / Atlas 700** rămân păstrate.
+
+**Stadiu:** implementare pe branch `feature/415-cool-personal-tc-7-6-k128-6-20261015`; teste RTA/Atlas/Market și regenerare cache/deploy de verificat la SHA exact. Nu confunda branchul cu producția.
+
 ## Actualizare GTR / TC — 15.10.2026 (INTEGRATĂ / PUBLICATĂ)
 
 **Preferință nouă, limitată STRICT la Taifun GTR:** **Dicodes RESISTHERM NiFe30 TCR320 / 7 spire** și **Zivipf NiFe52 TCR310 / 6 spire** sunt cele două opțiuni TC preferate personal, fără ierarhie de plăcere între aliaje. **NiFe30/6 funcționează** și rămâne selectabil ca alternativă; nu îl marca defect sau interzis. Ø2,5 mm este presetul geometric al Lab-ului, nu o nouă măsurătoare a coilului utilizat.
