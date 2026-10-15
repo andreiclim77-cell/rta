@@ -28,6 +28,7 @@ const element=id=>typeof document!=="undefined"?document.getElementById(id):null
 function liquidSearch(q,limit=10){
  const needle=norm(q).trim();
  if(needle.length<2)return [];
+ if(window.RTA_ATLAS_SEARCH)return window.RTA_ATLAS_SEARCH.find(q).rows.slice(0,limit);
  const hits=[];
  for(let i=0;i<catalog.length&&hits.length<limit;i++){
   const l=catalog[i];
@@ -271,17 +272,6 @@ function setFreeProfile(input){
  if(element('liquidSearch')){element('liquidSearch').value='';element('selectedLiquid').innerHTML='<span class="check" aria-hidden="true">◎</span><span><b>'+esc(free.name)+'</b> · '+(free.sourceReview?'profil din review':'profil declarat')+' / '+esc(free.class)+'</span>';closeSuggestions();drawScene();renderResults();}
  return true;
 }
-function renderQuick(){
- const desired=[
-  {brand:"La Tabaccheria",name:"Balkan Mixture"},
-  {brand:"Vapor Cave",name:"Black Balkan"},
-  {brand:"Hangsen",name:"Virginia"}
- ];
- const ids=desired.map(t=>catalog.findIndex(l=>l.brand===t.brand&&l.name===t.name)).filter(i=>i>=0);
- if(ids.length<2)ids.push(...catalog.map((x,i)=>x.class==="NET complex"?i:-1).filter(i=>i>=0).slice(0,3-ids.length));
- const indexes=[...new Set(ids)].slice(0,3);
- element("sampleLiquids").innerHTML=indexes.map(i=>'<button type="button" data-liquid="'+i+'">'+esc(catalog[i].name)+'</button>').join("");
-}
 function renderSuggestions(){
  const input=element("liquidSearch"),box=element("liquidSuggestions");
  const rows=liquidSearch(input.value,10);
@@ -320,7 +310,7 @@ function route(to,push=true){
 }
 function init(){
  if(!element("pageHome")||!element("pageLiquid"))return;
- renderMoodMoment();renderQuick();
+ renderMoodMoment();
  selectLiquid(state.liquidIndex,false);
  route(window.location?.hash==="#liquid"?"liquid":"home",false);
  document.addEventListener("click",ev=>{
@@ -334,6 +324,7 @@ function init(){
   if(d.moment){state.moment=d.moment;state.expandedId=null;renderMoodMoment();renderResults();return;}
   if(d.expand){state.expandedId=state.expandedId===d.expand?"":d.expand;renderResults();}
  });
+ if(!window.RTA_ATLAS_SEARCH_UI){
  element("liquidSearch").addEventListener("input",renderSuggestions);
  element("liquidSearch").addEventListener("keydown",ev=>{
   const list=element("liquidSuggestions"),input=ev.currentTarget;
@@ -370,6 +361,7 @@ function init(){
   element("liquidSearch").focus();
   renderSuggestions();
  });
+ }
  element("matchButton").addEventListener("click",()=>{
   state.expandedId=null;renderResults();
   scrollToBest();

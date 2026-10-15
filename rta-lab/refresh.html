@@ -33,7 +33,7 @@
         }
         status.className = 'ok';
         status.textContent = 'Cache curățat. Se deschide V10 cu K1 Clapton și SS Clapton…';
-        setTimeout(() => location.replace('./?v=10&reset=' + Date.now()), 350);
+        setTimeout(() => location.replace('./?v=10&view=v10&reset=' + Date.now()), 350);
       } catch (error) {
         status.className = 'err';
         status.textContent = 'Actualizare incompletă. Redeschide Lab-ul când ai conexiune și încearcă din nou. Configurațiile personale nu au fost șterse.';

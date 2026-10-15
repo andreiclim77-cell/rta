@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014-cl-pair-20261014-3cl-units";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014-cl-pair-20261014-3cl-units-atlas-entry-20261015";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
