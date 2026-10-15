@@ -14,6 +14,7 @@ for(const relative of inventory(source)){
  if(relative==='index.html'){
   const html=bytes.toString('utf8').replace('Precision Motion Lab Preview','Precision Motion Lab')
    .replace('/ V0.2</span>','/ ATLAS</span>').replace('VERSIUNE CANDIDAT','COLECȚIA TA')
+   .replace('aria-label="Navigare prototip"','aria-label="Navigare Atlas"')
    .replace('PREVIEW V0.2','PRECISION MOTION LAB')
    .replace('Concept interactiv pentru evaluarea designului. Nu înlocuiește aplicația actuală.','Sursele și limitele dovezilor sunt disponibile la fiecare rezultat. Lab V10 rămâne accesibil separat.')
    .replace('Prototipul animat necesită JavaScript.','Atlas necesită JavaScript.');
