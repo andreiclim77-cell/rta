@@ -28,6 +28,26 @@ m.setConfig({wire:'nife52'});assert.equal(m.state.config.temp,230);assert.equal(
 assert.equal(c.personalPreference(m.state.config).tier,1,'KLP NiFe52 is first-level preference');
 m.setConfig({wire:'nife30'});assert.equal(c.personalPreference(m.state.config).tier,1);
 const before=JSON.stringify(m.state.config);assert.equal(m.setConfig({wraps:5}),false);assert.equal(JSON.stringify(m.state.config),before);
+
+m.selectAtom('gtr');
+assert.equal(m.state.config.wire,'nife30');
+assert.equal(m.state.config.wraps,7,'New GTR Dicodes default must have seven wraps');
+assert.equal(m.state.config.temp,230);
+assert.equal(m.state.config.power,16);
+assert.equal(c.personalPreference(m.state.config).tier,1);
+assert.equal(m.setConfig({wraps:6}),true,'Historical GTR NiFe30/6 remains selectable');
+assert.equal(c.personalPreference(m.state.config).tier,2);
+assert.equal(m.setConfig({wire:'nife52'}),true);
+assert.equal(m.state.config.wraps,6);
+assert.equal(c.personalPreference(m.state.config).tier,1);
+const gtr52=JSON.stringify(m.state.config);
+assert.equal(m.setConfig({wraps:7}),false,'NiFe52/7 must never be enabled');
+assert.equal(JSON.stringify(m.state.config),gtr52);
+assert.equal(m.wireConfig('gtr','nife30').wraps,7,
+ 'Cross-material GTR pairing must choose dedicated NiFe30/7 instead of inheriting NiFe52/6');
+assert.equal(m.setConfig({wire:'nife30'}),true);
+assert.equal(m.state.config.wraps,7,'Switch back to NiFe30 must restore 7');
+
 m.selectAtom('asylum');assert.equal(m.setConfig({wire:'ssclap'}),false);
 m.selectAtom('415');m.setConfig({wire:'k128'});assert.equal(m.setConfig({wraps:6}),false);
 const key='rta-cl-physical-units-v1-20261014';
