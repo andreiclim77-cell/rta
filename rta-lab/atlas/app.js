@@ -308,6 +308,7 @@ function closeSuggestions(){
  element("liquidSearch").removeAttribute("aria-activedescendant");
 }
 function route(to,push=true){
+ if(state.incomplete)return false;
  if(!["home","liquid",...(window.RTA_ATLAS_MODULES?.routes||[])].includes(to))return false;
  const from=state.route;if(from==='wire'&&to!=='wire'&&window.RTA_ATLAS_DUEL?.state.editing)window.RTA_ATLAS_DUEL.state.editing=null;if(from!==to)routePositions.set(from,window.scrollY||0);if(push&&from!==to)navigationTrail.push(from);
  state.route=to;

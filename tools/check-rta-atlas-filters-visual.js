@@ -12,6 +12,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   const storageKey='rta-cl-physical-units-v1-20261014',saved=JSON.stringify({schema:1,units:[{saved:{atom:'dvarwcl',wire:'k128',wraps:6},draft:{atom:'dvarwcl',wire:'k128',wraps:5}},{saved:null,draft:null},{saved:{atom:'dvarwcl',wire:'k129',wraps:5},draft:null}]});
   await page.addInitScript(({key,value})=>{if(!localStorage.getItem(key))localStorage.setItem(key,value);},{key:storageKey,value:saved});
   await page.goto(origin+'/rta-lab/atlas/');await page.waitForSelector('#matchButton',{state:'attached'});
+  assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('atlas-loading')),false,'Ready app must finish its loading state');
   const nav=width<760?'.bottom-tabs':'.top-nav';
   assert.equal(await page.locator('a[href*="view=v10"],a[href*="#atomExplorer"]').count(),0,'Atlas must not expose the old interface');
   await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');await page.locator(nav+' [data-route="wire"]').click();await page.locator('[data-wire-family="nife52"]').click();
@@ -89,6 +90,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
  await recoverPage.goto(origin+'/rta-lab/atlas/#liquid');await recoverPage.waitForFunction(()=>!!window.RTA_ATLAS_PREVIEW&&window.RTA_LIQUIDS?.length===620&&!document.querySelector('.atlas-unavailable'),null,{timeout:30000});
  assert.ok(aborted>=1,'The first incomplete load must actually be injected');assert.equal(await recoverPage.locator('#liquidSearch').inputValue(),'');assert.equal(await recoverPage.locator('.result-card').count(),0);
  await shot(recoverPage,'flow-recovered-incomplete-390.png');await recovering.close();
+ const missingModule=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});await missingModule.route('**/duel.js?*',route=>route.abort());const missingPage=await missingModule.newPage();await missingPage.goto(origin+'/rta-lab/atlas/');await missingPage.waitForSelector('.atlas-unavailable');await missingPage.locator('.identity').click();assert.equal(await missingPage.locator('.page:not([hidden])').count(),0,'A missing instrument must not appear as a complete application');assert.equal(await missingPage.locator('#atlasLoading').isVisible(),false);await shot(missingPage,'flow-missing-module-390.png');await missingModule.close();
  console.log('ATLAS FILTERS VISUAL PASS: explicit liquid-first entry, wire-first full compatibility, three material paths with exact top-five liquids, model charts, inline context, Back with state/CL preservation, incomplete-load recovery and current entry.');
 }finally{await browser.close();await new Promise(r=>server.close(r));}}
 main().catch(e=>{console.error(e);server.close();process.exitCode=1;});
