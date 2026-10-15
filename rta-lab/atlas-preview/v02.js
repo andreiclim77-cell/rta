@@ -102,6 +102,7 @@ function resetClock(){
   clock=setInterval(()=>setSlide((position+1)%scenes.length),3200);
 }
 function animateLiquid(){
+ if(window.RTA_ATLAS_PREVIEW?.state.scenePaused)return;
  const scene=document.querySelector(".live-scene");
  if(!scene)return;
  const category=document.getElementById("sceneCategory")?.textContent||"";
@@ -185,6 +186,10 @@ function installResultPhotoFallback(){
  },true);
 }
 function init(){
+ for(const [id,copy] of Object.entries(window.RTA_ATLAS_LOCAL_PHOTOS||{})){
+  const photo=window.RTA_ATLAS_PHOTOS?.[id];if(photo&&copy.provenance==='exact-source-copy'){photo.fallbackSrc=copy.src;photo.fallbackRef=copy.ref;photo.fallbackCredit=copy.credit+' · copie locală';}
+ }
+
  installResultPhotoFallback();
  gallery();
  installAirflowDemo();

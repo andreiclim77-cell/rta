@@ -5,7 +5,10 @@ const entry="file://"+path.resolve("rta-lab/atlas-preview/index.html");
 const folder=path.resolve("artifacts/atlas-v02-mobile");
 fs.mkdirSync(folder,{recursive:true});
 function check(condition,message){if(!condition)throw new Error(message);}
-async function screenshot(page,name){await page.screenshot({path:path.join(folder,name),fullPage:false});}
+async function screenshot(page,name){
+ await page.locator('.page:not([hidden]) .atlas-product-photo img').evaluateAll(async imgs=>{for(const img of imgs){const b=img.getBoundingClientRect();if(b.top<innerHeight&&b.bottom>0)await img.decode();}await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});
+ await page.screenshot({path:path.join(folder,name),fullPage:false});
+}
 async function main(){
  const browser=await chromium.launch({channel:"chrome",headless:true,args:["--no-sandbox"]});
  try{
@@ -159,8 +162,8 @@ async function main(){
    const img=document.querySelector('#cinemaReel .cinema-frame.is-visible img');
    return img?.dataset.photoFallback==="local"&&img.complete&&img.naturalWidth>0;
   },null,{timeout:12000});
-  check(await fallbackPage.locator("#cinemaCredit").getAttribute("href")===null,
-   "Project-hosted fallback must not be credited as external original");
+  check(await fallbackPage.locator("#cinemaCredit").textContent().then(t=>t.includes('copie locală')),
+   "Verified local fallback must retain the original photographer and declare the copy");
   await fallbackPage.waitForTimeout(850);
   await screenshot(fallbackPage,"hero-vendor-offline-360.png");
   for(const frame of [1,2]){
@@ -170,7 +173,7 @@ async function main(){
     return img?.dataset.photoFallback==="local"&&img.complete&&img.naturalWidth>0;
    });
    await fallbackPage.waitForTimeout(800);
-   check((await fallbackPage.locator("#cinemaCredit").textContent()).includes("copie locale"),"Exact vendor photo copy must retain its source");
+   check(/copie local[ăe]/.test(await fallbackPage.locator("#cinemaCredit").textContent()),"Exact vendor photo copy must retain its source");
    if(frame===2)check(await fallbackPage.locator(".cinema-frame.is-visible img").evaluate(img=>getComputedStyle(img).maskImage)==="none","415 fallback must not receive the GT One mask");
    await screenshot(fallbackPage,"hero-vendor-offline-frame-"+frame+"-360.png");
   }

@@ -9,7 +9,7 @@ const objectives=[['complete','Armonie + palat'],['layers','Stratificare'],['th'
 const state={atom:'gtr',query:'',category:'all',config:core.defaultConfig('gtr'),objective:'layers',goalLocked:false,liquidsOpen:false,advanced:false};
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const el=id=>document.getElementById(id);
-const liquid=()=>catalog[api.state.liquidIndex];
+const liquid=()=>api.currentLiquid();
 const atom=id=>atoms.find(a=>a.id===id);
 const name=id=>atom(id)?.short||id;
 const objectiveLabel=id=>objectives.find(x=>x[0]===id)?.[1]||id;
@@ -32,7 +32,7 @@ function clSnapshot(storage){
   if(!raw){
    const units=Array.from({length:3},()=>({saved:null,draft:null}));
    const old=JSON.parse(storage?.getItem('rta-sensory-dna-choice-20261013')||'{}');
-   if(old.dvarwcl&&typeof old.dvarwcl==='object'){units[0].draft=core.config('dvarwcl',old.dvarwcl);units[0].source='legacy';}
+   if(old.dvarwcl&&typeof old.dvarwcl==='object'){units[0].draft={...old.dvarwcl,atom:'dvarwcl'};units[0].source='legacy';}
    return {available:!!storage,units};
   }
   const data=JSON.parse(raw);
@@ -84,10 +84,16 @@ function method(result){
 function watchPanel(builds){
  return '<div class="watchlist"><div class="watch-item"><b>WATCH A / din experiența ta</b><p>'+esc(builds[1]?'Merită comparat '+api.buildString(builds[1])+'. Este o direcție contextuală, nu A/B confirmat pe lichidul ales.':'Nu există altă combinație compatibilă documentată.')+'</p></div><div class="watch-item market"><b>WATCH B / din piață</b><p>'+(window.RTA_ATLAS_MARKET?.watch(liquid())||'Semnal de piață insuficient pentru această configurație. Sursele vor fi legate numai după verificare.')+'</p></div></div>';
 }
+function storedBuild(raw){
+ if(!raw)return 'Niciun montaj declarat';
+ const wire=core.wires[raw.wire]?.name||'Material neprecizat',wraps=Number.isFinite(Number(raw.wraps))&&Number(raw.wraps)>0?raw.wraps+' spire':'Spire neprecizate',air=core.platforms.dvarwcl.air.find(a=>a.id===raw.air)?.label||'Airflow neprecizat';
+ return wire+' · '+wraps+' · '+air;
+}
+function sameStored(a,b){const keys=[...new Set([...Object.keys(a||{}),...Object.keys(b||{})])].sort();return keys.every(k=>JSON.stringify(a?.[k])===JSON.stringify(b?.[k]));}
 function physicalUnits(id){
  if(id!=='dvarwcl')return '<div class="physical-units"><h3>'+inventory[id]+' '+(inventory[id]===1?'exemplar fizic':'exemplare fizice')+'</h3><p>Inventar confirmat. Configurațiile individuale nu sunt presupuse identice sau montate.</p></div>';
  const snapshot=clSnapshot();
- return '<div class="physical-units"><h3>Cele trei Dvarw CL</h3>'+(!snapshot.available?'<p role="status">'+esc(snapshot.error||'Stocare indisponibilă')+'</p>':snapshot.units.map((u,i)=>'<div class="unit-row"><b>CL '+(i+1)+'</b><span>'+esc(u.saved?'Înregistrat'+(u.draft&&JSON.stringify(u.draft)!==JSON.stringify(u.saved)?' · modificări nesalvate':''):u.draft?'Proiect nesalvat':'Neînregistrat')+'</span><small>'+esc(u.saved?api.buildString({config:core.config('dvarwcl',u.saved)}):u.draft?api.buildString({config:core.config('dvarwcl',u.draft)}):'Niciun montaj declarat')+'</small></div>').join(''))+'<p>Fișele sunt citite din același browser, fără rescriere. Înregistrarea sau modificarea unui montaj se face în configuratorul V10.</p><a class="module-link" href="../#atomExplorer">Deschide fișele CL în V10 ↗</a></div>';
+ return '<div class="physical-units"><h3>Cele trei Dvarw CL</h3>'+(!snapshot.available?'<p role="status">'+esc(snapshot.error||'Stocare indisponibilă')+'</p>':snapshot.units.map((u,i)=>'<div class="unit-row"><b>CL '+(i+1)+'</b><span>'+esc(u.saved?'Înregistrat'+(u.draft&&!sameStored(u.draft,u.saved)?' · modificări nesalvate':''):u.draft?'Proiect nesalvat':'Neînregistrat')+'</span><small>'+esc(storedBuild(u.saved||u.draft))+'</small></div>').join(''))+'<p>Fișele sunt citite din același browser, fără rescriere. Înregistrarea sau modificarea unui montaj se face în configuratorul V10.</p><a class="module-link" href="../#atomExplorer">Deschide configuratorul V10 ↗</a></div>';
 }
 function catalogCards(){
  const rows=filteredAtoms();
@@ -122,7 +128,7 @@ function renderWire(){
  window.RTA_ATLAS_DUEL?.onWireRendered();
 }
 function show(to){
- if(!state.goalLocked)state.objective=window.RTA_MOOD_MATCH.moods.find(m=>m.id===api.state.mood)?.goal||'complete';
+ state.objective=api.effectiveGoal();
  for(const [route,id] of [['atomizer','pageAtomizer'],['wire','pageWire']]){const page=el(id);if(page)page.hidden=route!==to;}
  if(to==='atomizer')renderAtomizer();if(to==='wire')renderWire();
 }
@@ -132,13 +138,15 @@ function init(){
   const section=document.createElement('section');section.id=id;section.className='page atlas-module frame';section.hidden=true;section.setAttribute('aria-label',label);host.appendChild(section);
  }
  document.querySelectorAll('.gateway-future').forEach((card,i)=>{
-  card.setAttribute('role','button');card.setAttribute('tabindex','0');card.dataset.route=i===0?'atomizer':'wire';
+  card.setAttribute('role','button');card.setAttribute('tabindex','0');card.dataset.route=i===0?'atomizer':'wire';card.setAttribute('aria-label',i===0?'Deschide Atomizer Atlas':'Deschide Wire Lab');
   const caption=card.querySelector('.gateway-bottom');if(caption)caption.textContent='EXPLOREAZĂ ↗';
   card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();api.route(card.dataset.route);}});
  });
  document.addEventListener('click',e=>{
-  const target=e.target.closest?.('[data-platform],[data-edit-wire],[data-show-liquids],[data-atlas-liquid],[data-pick-build]');if(!target)return;
+  const target=e.target.closest?.('[data-platform],[data-edit-wire],[data-show-liquids],[data-atlas-liquid],[data-pick-build],[data-wire-open]');if(!target)return;
   const d=target.dataset;
+  if(d.wireOpen!=null){try{const cfg=window.RTA_ATLAS_DUEL.valid(JSON.parse(decodeURIComponent(d.wireOpen)));if(cfg){state.atom=cfg.atom;state.config={...cfg};api.state.selectedFullBuild={...cfg};window.RTA_ATLAS_DUEL.state.editing=null;api.route('wire');}}catch(error){}return;}
+
   if(d.platform){selectAtom(d.platform);renderAtomizer();el('pageAtomizer').scrollIntoView({block:'start',behavior:'instant'});}
   if(d.editWire!=null)api.route('wire');
   if(d.showLiquids!=null){
@@ -156,7 +164,7 @@ function init(){
   if(id==='atlasPlatform'){selectAtom(value);renderAtomizer();el(id).focus({preventScroll:true});return;}
   if(id==='wireAtom'){selectAtom(value);renderWire();return;}
   if(id==='wireObjective'||id==='atlasObjective'){
-   if(objectives.some(x=>x[0]===value)){state.objective=value;state.goalLocked=true;}
+   if(objectives.some(x=>x[0]===value)){state.objective=value;state.goalLocked=true;api.setObjective(value);}
    if(id==='atlasObjective')renderAtomizer();else renderWire();el(id)?.focus({preventScroll:true});return;
   }
   const field={wireMaterial:'wire',wireWraps:'wraps',wireAir:'air',wireBell:'bell',wireDiameter:'coilMm',wirePosition:'position',wirePower:'power',wireTemp:'temp'}[id];
@@ -167,6 +175,6 @@ function init(){
  });
  const route=window.location.hash.slice(1);if(['atomizer','wire'].includes(route))api.route(route,false);
 }
-window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel};
+window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();

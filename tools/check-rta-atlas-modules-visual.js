@@ -2,7 +2,11 @@
 const {chromium}=require('playwright-core'),fs=require('node:fs'),path=require('node:path');
 const folder=path.resolve('artifacts/atlas-v02-mobile');fs.mkdirSync(folder,{recursive:true});
 const check=(ok,msg)=>{if(!ok)throw new Error(msg);};
-const shot=(page,name)=>page.screenshot({path:path.join(folder,name),fullPage:false});
+async function shot(page,name){
+ await page.waitForFunction(()=>{const active=document.querySelector('.page:not([hidden])');return !active||Number(getComputedStyle(active).opacity)>=.999;});
+ await page.locator('.page:not([hidden]) img').evaluateAll(async imgs=>{for(const img of imgs){const b=img.getBoundingClientRect();if(b.top<innerHeight&&b.bottom>0){await img.decode();}}await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));});
+ await page.screenshot({path:path.join(folder,name),fullPage:false});
+}
 async function main(){
  const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']});
  try{
@@ -60,7 +64,14 @@ async function main(){
    await page.locator('#pageWire [data-route="liquid"]').click();
    check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Balkan Mixture')),'Cross-module navigation must retain liquid');
    if(await page.locator('#pageLiquid .open-builds').first().getAttribute('aria-expanded')!=='true')await page.locator('#pageLiquid .open-builds').first().click();
+   const openCfg=await page.locator('#pageLiquid [data-wire-open]').first().getAttribute('data-wire-open');
+   await page.locator('#pageLiquid [data-wire-open]').first().click();
+   check(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config))===JSON.stringify(JSON.parse(decodeURIComponent(openCfg))),'Direct Wire opening must preserve every config field');
+   await page.locator('#pageWire [data-route="liquid"]').click();
    await page.locator('#pageLiquid .card-detail [data-duel-pick]').first().click();
+   check(await page.locator('#pageLiquid').isVisible(),'First selection must preserve the result list');
+   check(await page.locator('[data-duel-open]').isDisabled(),'Comparison waits for two explicit selections');
+   await page.locator('#pageLiquid .card-detail [data-duel-pick]').nth(1).click();
    check(await page.locator('#pageDuel').isVisible(),'Real result must open Duel');
    const duelSnapshot=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_DUEL.state.left));
    await page.locator('[data-duel-edit="left"]').click();
@@ -78,6 +89,17 @@ async function main(){
    await page.evaluate(()=>window.scrollTo(0,0));await page.waitForTimeout(650);
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Duel horizontal overflow');
    await shot(page,'duel-'+width+'.png');
+   await page.locator('#duelIsolation').selectOption('power');
+   check(await page.locator('.duel-change').textContent().then(t=>t.includes('Aceeași configurație')),'Isolated comparison must start with equal whole configurations');
+   await page.locator('[data-duel-edit="right"]').click();
+   if(await page.locator('.wire-advanced').getAttribute('open')===null)await page.locator('.wire-advanced summary').click();
+   check(await page.locator('#wireAtom').isDisabled()&&await page.locator('#wireMaterial').isDisabled()&&await page.locator('#wireAir').isDisabled(),'All unrelated variables must be locked');
+   check(await page.locator('#wirePower').isEnabled(),'The isolated variable remains editable');
+   await page.locator('#wirePower').fill('14');await page.locator('#wirePower').press('Tab');
+   await page.locator('[data-duel-update]').click();
+   check(await page.locator('.duel-change').textContent().then(t=>t.includes('o singură variabilă: Putere')),'Duel must explain the one-variable comparison');
+   await page.locator('[data-duel-results]').click();await page.waitForTimeout(500);await shot(page,'duel-isolated-'+width+'.png');
+   await page.locator('#duelIsolation').selectOption('');
    await page.locator(width<760?'.bottom-tabs [data-route="market"]':'.top-nav [data-route="market"]').click();
    check(await page.locator('#pageMarket').isVisible(),'Market navigation must open the real module');
    check(await page.locator('.bottom-tabs button').count()===6,'All six modules must be directly navigable');
@@ -90,6 +112,12 @@ async function main(){
    }
    await page.locator('[data-market-category="NET simplu"]').click();
    await page.waitForTimeout(400);await shot(page,'market-'+width+'.png');
+   await page.locator('[data-market-profile="lt-single-latakia"]').click();
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('profil din review')),'Unmatched edition is an explicit source profile');
+   check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().sourceReview)==='lt-single-latakia','Exact source identity remains attached');
+   check(await page.locator('#resultCards .result-card').count()===3,'Reviewed profile must produce three platforms');
+   check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===620,'No 621st liquid from Market profile');
+   await page.locator(width<760?'.bottom-tabs [data-route="market"]':'.top-nav [data-route="market"]').click();
    await page.locator('.market-trail summary').first().click();
    await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.market-trail[open] ol')).opacity)===1);
    check(await page.locator('.market-trail').first().textContent().then(t=>t.includes('2025-04-30')&&t.includes('Selene')),'Date and source author must be visible');
@@ -108,6 +136,36 @@ async function main(){
    check(await page.locator('#pageLiquid').isVisible(),'Explicit explore action must open Liquid Match');
    check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia (Prelude)')),'Market must transfer the associated repertoire without adding a liquid');
    check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===620,'Catalog must stay at 620');
+   await page.locator('.free-profile summary').click();
+   await page.locator('#freeProfileName').fill('Profil propriu de test');
+   await page.locator('#freeProfileClass').selectOption('NET complex');
+   await page.locator('input[name="freeTag"][value="latakia"]').check();
+   await page.locator('input[name="freeTag"][value="layers"]').check();
+   await page.locator('#freeProfileForm button[type="submit"]').click();
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('profil declarat')),'Free profile must be explicitly identified');
+   await page.locator('#liquidObjective').selectOption('th');
+   check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.effectiveGoal())==='th','Liquid objective must update shared state');
+   await page.locator(width<760?'.bottom-tabs [data-route="atomizer"]':'.top-nav [data-route="atomizer"]').click();
+   check(await page.locator('#atlasObjective').inputValue()==='th','Atlas must inherit the explicit objective');
+   check(await page.locator('#pageAtomizer .atlas-context').textContent().then(t=>t.includes('Profil propriu de test')),'Atlas must retain the free profile');
+   await page.locator('[data-edit-wire]').click();await page.locator('#wireObjective').selectOption('smooth');
+   check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.effectiveGoal())==='smooth','Wire objective must update common context');
+   await page.locator('#pageWire [data-duel-pick]').first().click();
+   check(await page.locator('#pageDuel .atlas-context').textContent().then(t=>t.includes('Profil propriu de test')&&t.includes('Finețe')),'Duel must retain free profile and shared objective');
+   await page.locator('#pageDuel [data-route="liquid"]').first().click();
+   check(await page.locator('#liquidObjective').inputValue()==='smooth','Liquid controls must reflect the objective chosen in Wire');
+   await page.evaluate(()=>window.scrollTo({top:0,behavior:'instant'}));await page.waitForTimeout(450);
+   await shot(page,'free-profile-'+width+'.png');
+   const playing=await page.locator('.wave').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).strokeDashoffset));await page.waitForTimeout(450);
+   check(JSON.stringify(await page.locator('.wave').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).strokeDashoffset)))!==JSON.stringify(playing),'Scene must visibly animate before pause');
+   await page.locator('#scenePause').click();await page.waitForTimeout(120);
+   check(await page.locator('#scenePause').getAttribute('aria-pressed')==='true','Liquid Cinema pause must be explicit');
+   const wavesBefore=await page.locator('.wave').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).strokeDashoffset));await page.waitForTimeout(450);
+   check(JSON.stringify(await page.locator('.wave').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).strokeDashoffset)))===JSON.stringify(wavesBefore),'Paused scene must stay static');
+   await page.locator('#scenePause').click();
+   await page.locator('.free-profile summary').click();await page.locator('#returnCatalog').click();
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia (Prelude)')),'Return restores the explicit preceding catalog liquid');
+   check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.freeProfile)===null,'Catalog return clears only the free profile');
    check(errors.length===0,'Module page errors: '+errors.join(' | '));
    await context.close();
   }

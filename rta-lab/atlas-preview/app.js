@@ -7,7 +7,7 @@ const catalog=window.RTA_LIQUIDS||[];
 const atoms=window.RTA_CORE?.atoms||[];
 const core=window.RTA_SENSORY_CORE;
 const moodEngine=window.RTA_MOOD_MATCH;
-if(!core||!moodEngine||catalog.length<1||atoms.length<1)return;
+if(!core||!moodEngine||catalog.length!==620||atoms.length!==16)return;
 const moodList=moodEngine.moods, momentList=moodEngine.moments;
 const defaultLiquid=(()=>{
  const exact=catalog.findIndex(x=>x.brand==="La Tabaccheria"&&x.name==="Balkan Mixture");
@@ -15,7 +15,7 @@ const defaultLiquid=(()=>{
  const similar=catalog.findIndex(x=>x.class==="NET complex"&&/Balkan/i.test(x.name));
  return similar>=0?similar:catalog.findIndex(x=>x.class==="NET complex");
 })();
-const state={route:"home",liquidIndex:Math.max(0,defaultLiquid),mood:"magic",moment:"evening",expandedId:null,search:"",activeSuggestion:0,fromDemo:true};
+const state={route:"home",liquidIndex:Math.max(0,defaultLiquid),mood:"magic",moment:"evening",expandedId:null,search:"",activeSuggestion:0,fromDemo:true,freeProfile:null,objective:null};
 const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const liquidName=l=>[l?.brand,l?.name].filter(Boolean).join(" · ");
@@ -24,7 +24,7 @@ const momentById=id=>momentList.find(m=>m.id===id);
 const atomById=id=>atoms.find(a=>a.id===id);
 const tech=atomId=>core.platforms[atomId];
 const round=n=>Math.round(n*100)/100;
-const element=id=>document.getElementById(id);
+const element=id=>typeof document!=="undefined"?document.getElementById(id):null;
 function liquidSearch(q,limit=10){
  const needle=norm(q).trim();
  if(needle.length<2)return [];
@@ -36,7 +36,8 @@ function liquidSearch(q,limit=10){
  }
  return hits;
 }
-function currentLiquid(){return catalog[state.liquidIndex]||catalog[0];}
+function currentLiquid(){return state.freeProfile||catalog[state.liquidIndex]||catalog[0];}
+function effectiveGoal(moodId=state.mood){return state.objective||moodById(moodId)?.goal||"complete";}
 function buildString(result){
  const cfg=result.config,w=core.wires[cfg.wire],air=tech(cfg.atom)?.air.find(a=>a.id===cfg.air);
  return w.name+" · "+cfg.wraps+" spire · "+(air?air.label:"airflow configurabil");
@@ -83,6 +84,7 @@ function vapeDescription(result,liquid){
 function evidenceFor(result,liquid){
  // Distinguish a report tied to this named liquid from an unspecified-liquid
  // user report (e.g. KLP NiFe30) and a report on a DIFFERENT named liquid.
+ if(liquid?.isFreeProfile)return {label:liquid.sourceReview?"Extrapolare pe profil de review · nu testul acestui build":"Estimare pentru profilul declarat · fără A/B pe un lichid comercial",kind:"model"};
  const partial=result.partialEvidence||[];
  const exact=partial.some(r=>r.liquidName&&norm(r.liquidName)===norm(liquid.name));
  const unknownLiquid=partial.some(r=>!r.liquidName);
@@ -92,20 +94,24 @@ function evidenceFor(result,liquid){
  if(result.personalPreference?.tier===1)return {label:"Preferință personală declarată · rezultat contextual",kind:"user"};
  return {label:"Extrapolare tehnică · nu A/B pe acest lichid",kind:"model"};
 }
-function rankFor(liquidIndex,moodId,momentId){
- if(!catalog[liquidIndex]||!moodById(moodId)||!momentById(momentId))return null;
- const base=moodEngine.recommend(moodId,momentId,liquidIndex);
+function rankFor(liquidIndex,moodId,momentId,override={}){
+ const liquid=override.liquid||catalog[liquidIndex],mood=moodById(moodId),goal=override.objective||mood?.goal;
+ if(!liquid||!mood||!momentById(momentId))return null;
+ const adapted=override.liquid?.isFreeProfile||override.objective;
+ const base=adapted?{ranked:window.RTA_ATLAS_CONTEXT.rank(liquid,moodId,momentId,goal)}:moodEngine.recommend(moodId,momentId,liquidIndex);
  if(!base||!Array.isArray(base.ranked))return null;
  // Use actual sorted contextual ranking, NOT Mood Match's exploratory third slot.
- const liquid=catalog[liquidIndex],mood=moodById(moodId);
+
  const selected=base.ranked.slice(0,3).map((a,i)=>{
-  const picks=core.rankBuilds(a.id,liquid,mood.goal).slice(0,3);
+  const picks=core.rankBuilds(a.id,liquid,goal).slice(0,3);
   return {id:a.id,atom:atomById(a.id),score:a.score,position:i+1,builds:picks};
  });
- return {liquid,mood,moment:momentById(momentId),items:selected};
+ return {liquid,mood,moment:momentById(momentId),objective:goal,items:selected};
 }
 function renderAbstractAtom(atom,rank){
- const record=window.RTA_ATLAS_PHOTOS?.[atom.id];
+ const originalRecord=window.RTA_ATLAS_PHOTOS?.[atom.id];
+ const local=window.RTA_ATLAS_LOCAL_PHOTOS?.[atom.id];
+ const record=originalRecord&&{...originalRecord,src:local?.src||originalRecord.src,credit:originalRecord.credit+(local?.provenance==="exact-source-copy"?" · copie locală":"")};
  if(!record)return '<div class="atlas-missing-photo">Fotografie verificată încă indisponibilă pentru '+esc(atom.short)+'</div>';
  return '<figure class="atlas-product-photo" data-photo-model="'+esc(atom.id)+'">'+
   '<img src="'+esc(record.src)+'" loading="lazy" decoding="async" alt="'+esc(atom.short)+' — fotografie de produs" />'+
@@ -117,7 +123,8 @@ function renderCoil(config){
  const holes=Array.isArray(a?.holes)?a.holes.length:((a?.pattern==="multipoint")?3:1);
  const number=Math.min(7,Math.max(3,config.wraps));
  const coilWidth=number*20,offset=120-coilWidth/2;
- const rings=Array.from({length:number},(_,i)=>'<ellipse cx="'+(offset+10+i*20)+'" cy="39" rx="11" ry="16" fill="none" stroke="#d6b990" stroke-width="3.5"/>').join("");
+ const coilCy=config.position==="low"?47:config.position==="high"?31:39,coilRy=16*(config.coilMm/2.5);
+ const rings=Array.from({length:number},(_,i)=>'<ellipse cx="'+(offset+10+i*20)+'" cy="'+coilCy+'" rx="11" ry="'+coilRy+'" fill="none" stroke="#d6b990" stroke-width="3.5"/>').join("");
  const holeDots=Array.from({length:Math.min(5,holes)},(_,i)=>{
   const cx=120+(i-(Math.min(5,holes)-1)/2)*30;
   return '<circle cx="'+cx+'" cy="79" r="4" fill="#80c9bc"/>'+
@@ -141,7 +148,7 @@ function renderBuild(result,rank,liquid){
   '<b>Clopot:</b> '+esc(window.RTA_BELL_LIQUID_FIT.config(cfg.atom)?.bells?.find(b=>b.id===cfg.bell)?.name||"standard")+'<br>'+
   '<b>Regim:</b> '+esc(setupSummary(result))+'</div>'+
   '<p class="build-sensory">'+esc(line)+'</p>'+
-  '<div class="build-evidence">'+esc(evidence.label)+'</div><button type="button" class="module-link" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(cfg)))+'">Compară acest build ↗</button></article>';
+  '<div class="build-evidence">'+esc(evidence.label)+'</div><button type="button" class="module-link" data-wire-open="'+esc(encodeURIComponent(JSON.stringify(cfg)))+'">Deschide în Wire Lab ↗</button><button type="button" class="module-link" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(cfg)))+'">Adaugă la Duel ↗</button></article>';
 }
 function watchInternal(item){
  const alt=item.builds[1];
@@ -170,14 +177,14 @@ function renderResult(item,liquid){
  '<div class="watch-item market"><b>02 / De urmărit — din piață</b><p>'+(window.RTA_ATLAS_MARKET?.watch(liquid)||'Semnalul extern pentru acest setup este încă în cercetare. Nu inventăm consensul din review-uri; sursele vor fi legate numai după verificare.')+'</p></div></div>'+
  '<p class="detail-foot">Graficele și schemele sunt ilustrații tehnice. Nu sunt măsurători ale temperaturii, debitului, gustului sau procente ale plăcerii.</p></div></article>';
 }
-function compose(liquidIndex,moodId,momentId){
- const ranked=rankFor(liquidIndex,moodId,momentId);
+function compose(liquidIndex,moodId,momentId,override={}){
+ const ranked=rankFor(liquidIndex,moodId,momentId,override);
  if(!ranked)return null;
  return {
   ...ranked, countAtoms:atoms.length,countLiquids:catalog.length,
   distinctAtoms:new Set(ranked.items.map(i=>i.id)).size,
   distinctBuilds:ranked.items.reduce((n,i)=>n+i.builds.length,0),
-  source:"RTA_SENSORY_CORE.rankBuilds + RTA_MOOD_MATCH.recommend.ranked"
+  source:(override.liquid?.isFreeProfile||override.objective)?"RTA_SENSORY_CORE + adapter al formulei Mood Match":"RTA_SENSORY_CORE.rankBuilds + RTA_MOOD_MATCH.recommend.ranked"
  };
 }
 function drawScene(){
@@ -187,7 +194,7 @@ function drawScene(){
  element("sceneCategory").textContent=l.class.toUpperCase();
  element("sceneLabel").textContent=/(complex)/i.test(l.class)?"Straturi. Profunzime. Simultaneitate.":"Un caracter. Un centru aromatic.";
  element("sceneTags").innerHTML=tags.length?tags.map(t=>'<span>'+esc(t.toUpperCase())+'</span>').join(""):
- '<span>PROFIL DIN CATALOG</span>';
+ '<span>'+(l.isFreeProfile?"PROFIL DECLARAT":"PROFIL DIN CATALOG")+'</span>';
  const dark=/(latakia|kentucky|dark|cigar)/i.test([l.profile,...(l.tags||[])].join(" "));
  document.querySelector(".live-scene")?.classList.toggle("scene-dark",dark);
 }
@@ -215,7 +222,7 @@ function revealSelectedChips(){
  }
 }
 function renderResults(){
- const result=compose(state.liquidIndex,state.mood,state.moment);
+ const result=compose(state.liquidIndex,state.mood,state.moment,{liquid:currentLiquid(),objective:state.objective});
  const box=element("resultCards");
  if(!box)return;
  if(!result){
@@ -226,7 +233,7 @@ function renderResults(){
  if(state.expandedId===null&&result.items.length&&!window.matchMedia?.("(max-width:760px)").matches)state.expandedId=result.items[0].id;
  if(state.expandedId&&!result.items.some(x=>x.id===state.expandedId))
   state.expandedId=result.items[0]?.id||null;
- element("resultsSummary").textContent=liquidName(result.liquid)+" · "+result.mood.name+" · "+result.moment.name+
+ element("resultsSummary").textContent=liquidName(result.liquid)+" · "+result.mood.name+" · "+result.moment.name+" · "+(window.RTA_ATLAS_CONTEXT.goals.find(g=>g[0]===result.objective)?.[1]||result.objective)+
  " · ordonare contextuală din 16 platforme.";
  element("resultCounter").textContent="TOP 3 · 3 × 3";
  box.innerHTML=result.items.map(x=>renderResult(x,result.liquid)).join("");
@@ -241,7 +248,7 @@ function renderMoodMoment(){
 }
 function selectLiquid(index,manual=true){
  if(!Number.isInteger(index)||!catalog[index])return false;
- state.liquidIndex=index;state.fromDemo=!manual;state.expandedId=null;
+ state.freeProfile=null;state.liquidIndex=index;state.fromDemo=!manual;state.expandedId=null;
  element("liquidSearch").value=liquidName(catalog[index]);
  element("selectedLiquid").innerHTML='<span class="check" aria-hidden="true">✓</span><span><b>'+esc(liquidName(catalog[index]))+'</b>'+
  (state.fromDemo?' · exemplu din catalog':' · ales de tine')+'</span>';
@@ -250,6 +257,18 @@ function selectLiquid(index,manual=true){
  element("liquidSearch").removeAttribute("aria-activedescendant");
  drawScene();
  renderResults();
+ return true;
+}
+function setObjective(id){
+ if(id!==''&&id!==null&&!window.RTA_ATLAS_CONTEXT.goals.some(g=>g[0]===id))return false;
+ state.objective=id||null;
+ const mod=window.RTA_ATLAS_MODULES;if(mod){mod.state.objective=effectiveGoal();mod.state.goalLocked=!!state.objective;}
+ if(element('liquidObjective'))element('liquidObjective').value=state.objective||'';
+ if(element('resultCards'))renderResults();return true;
+}
+function setFreeProfile(input){
+ const free=window.RTA_ATLAS_CONTEXT.profile(input);if(!free)return false;state.freeProfile=free;state.fromDemo=false;state.expandedId=null;
+ if(element('liquidSearch')){element('liquidSearch').value='';element('selectedLiquid').innerHTML='<span class="check" aria-hidden="true">◎</span><span><b>'+esc(free.name)+'</b> · '+(free.sourceReview?'profil din review':'profil declarat')+' / '+esc(free.class)+'</span>';closeSuggestions();drawScene();renderResults();}
  return true;
 }
 function renderQuick(){
@@ -358,8 +377,8 @@ function init(){
  window.addEventListener("popstate",()=>route(window.location.hash.slice(1)||"home",false));
 }
 window.RTA_ATLAS_PREVIEW={
- version:"0.2-real-photo-motion",compose,liquidSearch,buildString,compactBuild,
- renderCoil,renderBuild,renderProductPhoto:renderAbstractAtom,qualities,vapeDescription,evidenceFor,state,route,selectLiquid,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
+ version:"0.2-real-photo-motion",setFreeProfile,setObjective,compose,liquidSearch,buildString,compactBuild,
+ currentLiquid,effectiveGoal,renderResults,drawScene,renderCoil,renderBuild,renderProductPhoto:renderAbstractAtom,qualities,vapeDescription,evidenceFor,state,route,selectLiquid,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
  init
 };
 if(typeof document!=="undefined")document.addEventListener("DOMContentLoaded",init);

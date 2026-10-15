@@ -53,5 +53,6 @@ add('manabush-omusa','Manabush','Omusa','Tutun complex','Omusa original / e-liqu
  ['calamity','Calamity AM','Migdale, vanilie, smochină și tutun.','Reviewerul apreciază combinația distinctă.']
 ].forEach(([id,name,profile,why])=>add('deadwood-'+id,'Manabush',name,'Tutun complex','Deadwood Blends / shortfill evaluat',profile,why,'deadwood',name,'Deadwood Blends','Reper comercial asociat; nu certifică versiunea, lotul sau disponibilitatea actuală.'));
 rows.find(e=>e.id==='bn-prelude').photo={src:'./media/black-note-virginia-current.webp',ref:'https://www.blacknote.com/e-juice/virginia-tobacco-e-liquid/',credit:'Black Note',edition:'Ambalaj actual Virginia 60 ml; review-ul privește Prelude original'};
+for(const entry of rows){const text=entry.name+' '+entry.profile;entry.modelTags=[];for(const tag of ['latakia','kentucky','perique','oriental','cigar'])if(new RegExp(tag,'i').test(text))entry.modelTags.push(tag);if(/nuc|migdale/i.test(text))entry.modelTags.push('nuts');if(/dulc|miere|vanili|caramel|toffee/i.test(text))entry.modelTags.push('sweet');if(entry.category.includes('complex'))entry.modelTags.push('layers');}
 window.RTA_MARKET_EVIDENCE={version:1,revised:accessed,categories:['NET simplu','NET complex','Tutun simplu','Tutun complex'],sources,rows};
 })();

@@ -1,5 +1,22 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+## Checkpoint operațional curent — 15.10.2026
+
+Mandat: finalizare autonomă a tuturor celor șase module, fără reconstruirea V10. Acest checkpoint prevalează asupra limitelor istorice de implementare din secțiunile vechi. PR #45 și #46 rămân DRAFT; aprobarea vizuală expresă și publicarea nu au avut loc.
+
+- Main observat: 612da18de45b8341b81b5e6edd2bc21c5d750c95. După baza c268b2fc, două commituri automate au modificat numai data/instagram-publish-state.json. V10, motorul, 620 lichide, 16 platforme, 42 exemplare și configurațiile nu au fost editate de această continuare.
+- PR #45 HEAD 0f16be22aaf2c5c334877ed443d87537d35dab50: RTA 38623585477, Market 38623585776, Visual 38623585623 SUCCESS; artifact 11923445312, 23 PNG inspectate.
+- PR #46 HEAD verificat ac37f8eeed6d3764b1daa8973041d7e1fa3906c8: RTA 38631372771, Market 38631372911, Visual 38631372768 SUCCESS; artifact 11926625971, 44 PNG descărcate și inspectate. Unele fotografii de rezultat nu erau pictate complet: aceste cadre nu au fost acceptate ca dovadă estetică finală.
+- Continuarea locală: profil liber și profil din review în afara catalogului, obiectiv comun între module, două selecții explicite pentru Duel, izolarea unei variabile și două scheme sincronizate, acces direct la configurația completă în Wire, fotografii locale nealterate pentru toate platformele, fonturi locale OFL, pauză Liquid Cinema, PWA/offline în scope separat, eroare explicită la date incomplete și citire CL fără completarea parametrilor lipsă.
+- Teste locale PASS: 140 contexte originale; 140 comparații exacte adaptor/Mood Match; 210 contexte de profil liber; toate materialele/obiectivele și stres pe 620; 24 profiluri de review fără al 621-lea lichid; browser 360×800, 390×844, 1440×1000; șase module offline cu hashurile fotografiilor și bytes CL saved/draft păstrate. Ultimele reglaje și CI nou trebuie reverificate la SHA-ul lor. Nu deduceți SUCCESS pentru un commit ulterior.
+
+Market are 24 fișe admise, 10/4/1/9, review singular și versiuni explicit separate. Cele 16 locuri fără dovezi nu sunt umplute fictiv. Profili din review dau estimări 3×3, nu A/B atribuit autorului. Fotografia actuală Black Note nu este declarată ambalajul Prelude istoric. Copiile celor 15 fotografii externe + imaginea Asylum din arhivă au fost inspectate; proveniența/hashurile sunt în media/PRODUCT_PHOTO_RECEIPT.json. Atribuirea nu certifică drepturi de redistribuire. Macrofotografiile de sârmă neprocurate nu sunt înlocuite cu fotografii fabricate.
+
+KLP Dicodes NiFe30 și Zivipf NiFe52 TC: ambele preferințe personale de prim nivel. DNA 220°C/16 W rămâne exclusiv observația Dicodes; Zivipf nu moștenește acest caz.
+
+Urmează fără alt „continuă”: commit pe ramura PR #46, toate gates la SHA exact, descărcare și inspecție integrală a noilor capturi, remediere/retestare; completarea surselor și a media verificabile; candidat concret pentru aprobarea vizuală majoră; pregătire release separat de V10, apoi numai după aprobare merge și Pages/live verificate. Noul candidat nu este cel de pe site. Finalizarea rămâne deschisă.
+
+
 **Fișier canonic RTA Lab · stare consolidată 14.10.2026; există separat un blueprint UI în curs de aprobare.**
 
 - Repo: `andreiclim77-cell/rta`

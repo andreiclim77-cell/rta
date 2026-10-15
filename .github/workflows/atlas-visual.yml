@@ -5,6 +5,7 @@ on:
       - "rta-lab/atlas-preview/**"
       - "tools/check-rta-atlas-visual.js"
       - "tools/check-rta-atlas-modules-visual.js"
+      - "tools/check-rta-atlas-offline.js"
       - ".github/workflows/atlas-visual.yml"
   workflow_dispatch:
 permissions:
@@ -26,6 +27,7 @@ jobs:
         run: |
           node tools/check-rta-atlas-visual.js
           node tools/check-rta-atlas-modules-visual.js
+          node tools/check-rta-atlas-offline.js
       - name: Save mobile screenshots for review
         if: always()
         uses: actions/upload-artifact@v4

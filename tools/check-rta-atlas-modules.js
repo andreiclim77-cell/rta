@@ -4,7 +4,7 @@ const env={window:{}};vm.createContext(env);
 const load=p=>vm.runInContext(fs.readFileSync(path.join('rta-lab',p),'utf8'),env,{filename:p});
 for(const n of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+n);
 fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forEach(n=>load('data/'+n));
-for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
+for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
 const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
 assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),42);
 const original=JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]);
@@ -85,3 +85,11 @@ console.log('MARKET EVIDENCE PASS: 24 sourced entries, four categories, determin
 
 assert.ok(market.watch(w.RTA_LIQUIDS[market.match(market.data.rows.find(e=>e.id==='manabush-powwow'))]).includes('nu este probă A/B'));
 assert.equal(market.watch({name:'Profil liber',isFreeProfile:true}),'');
+
+assert.ok(m.storedBuild({wire:'k128',wraps:6}).includes('Airflow neprecizat'),'Do not fabricate a mounting insert for a partial saved record');
+assert.equal(m.sameStored({wire:'k128',wraps:6},{wraps:6,wire:'k128'}),true,'Key order is not an unsaved physical change');
+
+assert.equal(w.RTA_ATLAS_CONTEXT.profile({reviewId:'fabricated'}),null);
+for(const entry of market.data.rows){const sourceProfile=w.RTA_ATLAS_CONTEXT.profile({reviewId:entry.id});assert.equal(sourceProfile.sourceReview,entry.id);assert.equal(sourceProfile.class,entry.category);const result=a.compose(a.state.liquidIndex,'magic','evening',{liquid:sourceProfile});assert.equal(result.distinctBuilds,9);assert.equal(a.evidenceFor(result.items[0].builds[0],sourceProfile).kind,'model');assert.ok(market.watch(sourceProfile).includes('nu este probă A/B'));}
+assert.equal(w.RTA_LIQUIDS.length,620);
+console.log('REVIEW PROFILE PASS: all 24 source profiles can use 3×3 estimates without catalog insertion or exact-build review claims.');

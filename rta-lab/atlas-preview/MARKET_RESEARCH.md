@@ -13,3 +13,7 @@ Not admitted as new TOP evidence: POTV Part 2's currently accessible body lacks 
 Catalog links use an explicit four-field key (brand/name/line/class) with curated commercial aliases and version caveats. Single Line 4Pod never maps to classic extracts; Special Blend 3.0/Menthol never collapse into Special Blend; Halo Shake N Vap does not map to unspecified catalog versions. Browsing does not replace the user's liquid. Only a clear Explore action selects the associated catalog repertoire. No 621st liquid is inserted.
 
 Authentic Black Note current Virginia packaging is credited and clearly separated from the historical Prelude review. Other cards use original editorial discs while edition-specific product photographs remain to be documented. Express image redistribution rights are not asserted.
+
+## Review profiles and shared context — 2026-10-15
+
+An unmatched reviewed edition can be explicitly explored as a profile derived from the documented tasting notes. This yields model-only 3×3 estimates and remains outside the 620 catalog. The review identity and URL are retained for Watch B; inferred model tags are editorial interpretation of the admitted notes, not chemically measured ingredients. No reviewer is credited with testing the generated builds. Browse still preserves the selected liquid until an explicit Explore action. The preceding catalog repertoire can be restored.

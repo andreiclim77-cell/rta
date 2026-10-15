@@ -25,7 +25,7 @@ function sourceTrail(entry){return entry.sourceIds.map(id=>{
 function card(e,index){
  const catalogIndex=match(e);
  const photo=e.photo?'<figure class="market-photo"><img src="'+esc(e.photo.src)+'" alt="'+esc(e.brand+' '+e.name+' — '+e.photo.edition)+'" loading="lazy" decoding="async"><figcaption><a href="'+esc(e.photo.ref)+'" target="_blank" rel="noopener noreferrer">Foto: '+esc(e.photo.credit)+' ↗</a><span>'+esc(e.photo.edition)+'</span></figcaption></figure>':'';
- return '<article class="market-card'+(e.photo?' has-market-photo':'')+'"><div class="market-record" aria-hidden="true"><span>'+String(index+1).padStart(2,'0')+'</span><i></i><small>'+esc(e.category)+'</small></div>'+photo+'<div class="market-copy"><span class="eyebrow">'+esc(e.brand)+'</span><h2>'+esc(e.name)+'</h2><p class="market-version">'+esc(e.version)+'</p><p>'+esc(e.profile)+'</p><p class="market-reputation">'+esc(e.why)+'</p><span class="evidence-chip">'+esc(e.confidence)+' · '+esc(data.sources[e.sourceIds[0]].publisher)+'</span><details class="market-trail"><summary>De ce apare în selecție? ↗</summary><ol>'+sourceTrail(e)+'</ol><p>'+esc(e.caveat)+'</p><p>Review-urile sunt experiențe subiective. Nu confirmă buildurile personale, un lot nou, disponibilitatea sau un consens universal.</p></details>'+(catalogIndex>=0?'<button type="button" class="module-link" data-market-explore="'+e.id+'">Explorează reperul din colecția mea ↗</button><small class="market-match-note">'+esc(e.caveat)+'</small>':'<p class="market-unmatched">Versiunea evaluată nu este identificată în biblioteca actuală.</p>')+'</div></article>';
+ return '<article class="market-card'+(e.photo?' has-market-photo':'')+'"><div class="market-record" aria-hidden="true"><span>'+String(index+1).padStart(2,'0')+'</span><i></i><small>'+esc(e.category)+'</small></div>'+photo+'<div class="market-copy"><span class="eyebrow">'+esc(e.brand)+'</span><h2>'+esc(e.name)+'</h2><p class="market-version">'+esc(e.version)+'</p><p>'+esc(e.profile)+'</p><p class="market-reputation">'+esc(e.why)+'</p><span class="evidence-chip">'+esc(e.confidence)+' · '+esc(data.sources[e.sourceIds[0]].publisher)+'</span><details class="market-trail"><summary>De ce apare în selecție? ↗</summary><ol>'+sourceTrail(e)+'</ol><p>'+esc(e.caveat)+'</p><p>Review-urile sunt experiențe subiective. Nu confirmă buildurile personale, un lot nou, disponibilitatea sau un consens universal.</p></details>'+(catalogIndex>=0?'<button type="button" class="module-link" data-market-explore="'+e.id+'">Explorează reperul din colecția mea ↗</button><small class="market-match-note">'+esc(e.caveat)+'</small>':'<p class="market-unmatched">Versiunea evaluată nu este identificată în biblioteca actuală.</p><button type="button" class="module-link" data-market-profile="'+e.id+'">Explorează profilul din review ↗</button><small class="market-match-note">3 × 3 estimări pe profil. Fără produs adăugat în catalog sau A/B atribuit reviewerului.</small>')+'</div></article>';
 }
 function renderList(){
  const list=document.getElementById('marketList');if(!list)return;
@@ -38,8 +38,8 @@ function render(){
  renderList();
 }
 function watch(liquid){
- if(!liquid||liquid.isFreeProfile)return '';
- const index=catalog.indexOf(liquid),entry=data.rows.find(e=>match(e)===index&&index>=0);if(!entry)return '';
+ if(!liquid)return '';
+ const index=catalog.indexOf(liquid),entry=liquid.sourceReview?data.rows.find(e=>e.id===liquid.sourceReview):data.rows.find(e=>match(e)===index&&index>=0);if(!entry)return '';
  const source=data.sources[entry.sourceIds[0]];
  return 'Review pentru profilul lichidului: '+esc(entry.profile)+' <a href="'+esc(source.url)+'" target="_blank" rel="noopener noreferrer">'+esc(source.publisher)+' ↗</a> · '+esc(source.date||'publicare nedatată')+' · acces '+source.accessed+'. '+esc(source.bias)+'. Reper asociat, versiuni posibil diferite; nu este probă A/B pe acest setup.';
 }
@@ -48,10 +48,11 @@ function init(){
  const nav=document.querySelector('.top-nav'),button=document.createElement('button');button.type='button';button.dataset.route='market';button.textContent='Market';nav.insertBefore(button,nav.querySelector('[data-route="duel"]'));
  const gateway=document.querySelector('.gateway-card[data-open="market"],.gateway-card[data-route="market"]');
  if(gateway){gateway.dataset.route='market';gateway.removeAttribute('data-open');gateway.classList.add('gateway-active');gateway.setAttribute('role','button');gateway.tabIndex=0;gateway.querySelector('.gateway-bottom').textContent='EXPLOREAZĂ SURSELE ↗';}
- else{const card=document.createElement('button');card.type='button';card.className='gateway-card gateway-active';card.dataset.route='market';card.innerHTML='<span class="gateway-overline">05 / SOURCE TRAIL</span><strong>Market Hall of Fame.</strong><small>Patru galerii cu review-uri, versiuni și surse reale.</small><span class="gateway-bottom">EXPLOREAZĂ ↗</span>';document.querySelector('.gateway-grid').appendChild(card);}
+ else{const card=document.createElement('button');card.type='button';card.className='gateway-card gateway-active';card.dataset.route='market';card.innerHTML='<span class="gateway-overline">04 / SOURCE TRAIL</span><strong>Market Hall of Fame.</strong><small>Patru galerii cu review-uri, versiuni și surse reale.</small><span class="gateway-bottom">EXPLOREAZĂ ↗</span>';document.querySelector('.gateway-grid').insertBefore(card,document.querySelector('.gateway-card[data-route=duel]'));}
  const tabs=document.querySelector('.bottom-tabs');for(const [route,label,icon] of [['market','PIAȚĂ','◉'],['duel','DUEL','⇄']]){const b=document.createElement('button');b.type='button';b.dataset.route=route;b.innerHTML='<span aria-hidden="true">'+icon+'</span><small>'+label+'</small>';tabs.appendChild(b);}
  document.addEventListener('click',e=>{
   const category=e.target.closest?.('[data-market-category]');if(category){state.category=category.dataset.marketCategory;state.query='';render();return;}
+  const profile=e.target.closest?.('[data-market-profile]');if(profile){if(api.setFreeProfile({reviewId:profile.dataset.marketProfile}))api.route('liquid');return;}
   const explore=e.target.closest?.('[data-market-explore]');if(explore){const entry=data.rows.find(r=>r.id===explore.dataset.marketExplore),index=match(entry);if(index>=0){api.selectLiquid(index);api.route('liquid');}}
  });
  document.addEventListener('input',e=>{if(e.target.id==='marketSearch'){state.query=e.target.value;renderList();}});

@@ -15,6 +15,7 @@ load("data/bell-liquid-fit.js");
 load("data/sensory-core.js");
 load("mood-match.js");
 load("atlas-preview/photo-sources.js");
+load("atlas-preview/context.js");
 load("atlas-preview/app.js");
 const lib=env.window,api=lib.RTA_ATLAS_PREVIEW,moods=lib.RTA_MOOD_MATCH.moods,moments=lib.RTA_MOOD_MATCH.moments;
 assert.ok(api&&typeof api.compose==="function","Standalone prototype API missing");
@@ -148,7 +149,7 @@ assert.ok(v02css.includes('::-webkit-search-cancel-button'),"Avoid native and cu
 assert.ok(v02.includes('results.insertAdjacentElement("afterend",box)'),"Results must precede the airflow explainer");
 
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(refs.length,31,"Expected canonical scripts, photography, Atlas adapters and Duel");
+assert.equal(refs.length,35,"Expected canonical scripts, photography, Atlas adapters and Duel");
 for(const ref of refs){
  assert.ok(ref.startsWith("../")||ref.startsWith("./"),"No unknown remote JS");
  const local=path.resolve(preview,ref.split("?")[0]);
