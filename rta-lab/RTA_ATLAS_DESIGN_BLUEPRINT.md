@@ -1,7 +1,22 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
 
-## Verificare finală HOME după corecția de încadrare — 15.10.2026
+
+## Stare curentă — încadrare corectată, publicată și verificată, 15.10.2026
+
+**Acest checkpoint prevalează asupra etapelor istorice de mai jos.** Corecția reclamată în captura telefonului este publicată la https://ghid-rta.ro/rta-lab/atlas/?v=fit-20261015 . PR #49 și #50 sunt MERGED. Candidat final 319a777da0874ae4b1613c60e91cbab0ae2b0fe3; integrare 78385907e6ce37b3ba49aed5e16dce4401e65275; Pages 38725622934 și RTA post-merge 38725623138 — SUCCESS. Aprobarea expresă de publicare primită anterior a fost aplicată.
+
+Etichetele A/B/C sunt deasupra barelor, cu înălțime naturală; antetul și Înapoi încap, navigarea inferioară trece pe două rânduri numai când textul o cere și își rezervă înălțimea reală. Selectoarele arată integral valorile lungi; pașii, panourile, fotografiile cu sursă, DNA, Market și Duel se rearanjează la text mărit. HOME păstrează numele/sursa fotografiei și controlul pauză; eticheta foto decorativă este ascunsă la text mare pe mobil pentru a elimina suprapunerea observată după #49. Asset layout: atlas-fit-20261015-2; 82 resurse cache, 62 fișiere release. Mărirea textului din browser rămâne activă.
+
+CI pe candidatul exact: RTA 38724599791, Market 38724599619, Visual 38724599749 — SUCCESS. Artifact 11967761374: 231 PNG descărcate și inspectate, CRC PASS, SHA256 f629fbe8738772d21b61102501d61546a195937d0f39b1da943217abf20cdd94. Matricea nouă are zece combinații ecran/font: 320/360/390/768/1440, font minim real 18/24 px, landscape 844×390. Parcurge șase module, grafice, selecții, Înapoi și limitele reale ale textului/taburilor. Noul test detectează suprapunerea foto pe versiunea #49. Capturile vechi în timpul derulării sau capturile de element lung cu antet inclus nu sunt probe ale marginilor viewportului; pentru încadrare sunt folosite matricea nouă și capturile live stabilizate.
+
+Pe domeniu: zece cazuri — PASS; 110 capturi matrice + 3 controale + 9 foto fallback + 4 offline = 126 PNG inspectate. Toate cele trei fotografii HOME au fost verificate cu vendor blocat la font18-360/font24-320/font24-390 și creditul copiei locale. 91 fișiere HTTP 200 identice prin hash cu sursa verificată. Offline: șase module, 16 hashuri foto, saved/draft CL identice, revenire după workers existenți și refresh V10 — PASS; exact un 503 injectat în profilul QA, catalogul 620 restaurat și fetch repus. Browserul interactiv confirmă assetul final și fluxul explicit lichid → rezultate → Atlas → Înapoi.
+
+Direcția B60/A30/C10 și toate fluxurile #48 rămân. Motorul, rta-lab/data/**, mood-match.js și index.html V10 sunt identice cu c268b2fc; 620 lichide, 16 platforme, 42 exemplare, configurațiile validate, datele personale și cele trei CL saved/draft sunt păstrate. KLP + Dicodes NiFe30 și KLP + Zivipf NiFe52 TC rămân preferințe personale distincte de prim nivel. Nicio recenzie, valoare senzorială ori procent nu este inventat.
+
+Domeniul probelor: Chromium la configurațiile declarate, fără afirmație de test pe telefon fizic/Safari sau accesibilitate universală. Captura originală a utilizatorului a fost doar citită, nu publicată. Raport: ATLAS_RESPONSIVE_FIT_VERIFICATION_20261015.md. Ultimul commit de continuitate modifică numai cele trei documente canonice și raportul; SHA și runs finale sunt în FIT_FINAL_PUBLICATION.json din pachetul local de dovezi. Incidentul separat Hype Radar 43/48 surse rămâne istoric deschis.
+
+## Istoric — candidat HOME #50 înainte de publicare
 
 PR #49 este integrat la 70fcf0ce6233f78900bfe5cb06518cfbcc84e163; Pages 38723431508 și RTA 38723431716 sunt SUCCESS. Matricea live de zece ecrane/fonturi, 91 hashuri HTTP, selecțiile complete și offline au trecut. La inspecția manuală a fost observată suplimentar o suprapunere HOME la font minim 24 px pe 320×740: eticheta decorativă foto ajunge peste numele produsului. Un test nou reproduce exact suprapunerea pe versiunea publică; corecția ascunde acea etichetă decorativă numai la text mare, păstrând fotografia, numele, sursa și controlul pauză, dimensionat pentru text mare. Această ultimă ajustare urmează verificarea CI și publicarea separată; nu este încă declarată publicată. Motorul/datele/configurațiile rămân identice.
 
@@ -15,9 +30,9 @@ Local: probele pure 620/16/42, cele 140 contexte × nouă builduri, căutările/
 
 Motorul, rta-lab/data/**, mood-match.js și index.html V10 rămân identice; preferințele KLP, catalogul 620/16/42 și saved/draft CL sunt protejate. Nu sunt cerute alte aprobări pentru această corecție de încadrare în direcția deja aprobată.
 
-## Stare prioritară — fluxuri ghidate publicate și verificate, 15.10.2026
+## Istoric — publicare fluxuri ghidate #48, înlocuită de #49/#50
 
-**Acest checkpoint prevalează asupra tuturor etapelor istorice de mai jos.** PR #48 este MERGED. Candidat exact: 45842b6133aaa204f3d7ae6489a2d32a4d41283f; integrare publicată: 9abb360f1fd23827606a76643901f81d9046c8c6. Actualizările independente main, inclusiv f5cf821f8190971abd8bcfcbc2c286059be5f482, sunt păstrate. Aprobarea expresă de publicare primită anterior a fost aplicată.
+Checkpoint istoric al publicării #48, înlocuit de starea curentă de la începutul documentului. PR #48 este MERGED. Candidat exact: 45842b6133aaa204f3d7ae6489a2d32a4d41283f; integrare publicată: 9abb360f1fd23827606a76643901f81d9046c8c6. Actualizările independente main, inclusiv f5cf821f8190971abd8bcfcbc2c286059be5f482, sunt păstrate. Aprobarea expresă de publicare primită anterior a fost aplicată.
 
 Aplicația curentă: https://ghid-rta.ro/rta-lab/atlas/?v=guided-20261015 . HOME și toate cele cinci instrumente sunt funcționale. Liquid Match: alegere explicită din 620 → trei atomizoare × trei builduri, fotografii, avantaje/compromisuri, comparații. Atlas: atomizor → identitate reală → trei materiale distincte, fiecare cu cinci lichide calculate și comparație în context comun. Wire: alegi materialul → toate și numai platformele compatibile (16; SS Clapton 15, fără Asylum) → alegi platforma și explorezi experiența, topul și comparațiile. Market păstrează cele 40 fișe și sursele. Duel păstrează lichidul/obiectivul comun și primește configurația Wire exactă, inclusiv reglajele curente.
 
