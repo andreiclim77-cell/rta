@@ -1,5 +1,16 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+## Candidat integrat, verificare de publicare — 15.10.2026
+
+Cod candidat sincronizat 47ccee906c69844ced4fa94a1d23ac5ce2b44b7e: RTA 38692198611, Market 38692198344, Market Final Report 38692198338, Hype Global 38692198409 și Visual 38692198551 sunt toate SUCCESS. Artifact 11953025258 are 78 PNG descărcate și inspectate integral; imaginile Market 360/390 sunt acum încadrate complet după rezervarea dimensiunilor lor naturale. Corecțiile de cache/refresh au trecut în browser real și CI, inclusiv activarea workerului ghidului, refresh V10, revenirea offline și păstrarea exactă a bytes CL.
+
+Main a avansat independent la 7f1137b47231fb34c130402bb457718b235244c8 prin actualizări automate de catalog public și jurnale sociale. Niciun fișier rta-lab/ sau /sw.js nu diferă între main actual și baza c268b2fc. Drafturile au fost sincronizate fără conflicte și fără modificarea main: #45 eb3de20a8dfa851e5993ee9b716db4724b652fd2; #46 47ccee906c69844ced4fa94a1d23ac5ce2b44b7e. Sunt commituri de integrare a main în drafturi, nu merge al PR-urilor în producție. PR #45 sincronizat are RTA 38692180564, Market 38692180620 și Visual 38692180556 SUCCESS. Fișierele mobile sunt identice cu 0f16be22, iar fișierele Atlas sunt identice cu cba10dd; sincronizarea păstrează actualizările automate. Rezultatele documentației ulterioare se raportează separat, fără atribuirea unui run altui SHA.
+
+Implementate în candidat: toate cele șase module, profil liber/review fără inserare în catalog, obiectiv comun, configurații complete, Duel cu două alegeri explicite și izolarea unei variabile, 40 fișe Market (10 în fiecare clasă), 16 fotografii de platforme, fotografie Dicodes și 12 vizualuri originale de review cu proveniență, fonturi locale și offline. Materialele fără fotografie certă și edițiile de ambalaj neidentificate sunt reprezentate schematic/editorial, nu fabricate. Licențele exprese ale fotografiilor externe nu sunt certificate.
+
+Aprobarea vizuală majoră solicitată este încă în așteptare. Ambele PR rămân DRAFT. Ruta finală /rta-lab/atlas/ este pregătită, dar nepublicată. Numai după acord se integrează #45, apoi #46 retargetat pe main, cu păstrarea actualizărilor automate; se verifică exact CI/Pages și toate fluxurile live înaintea oricărei declarații de finalizare. Nu deduceți aprobarea din timpul trecut sau din CI.
+
+
 ## Integrare cache / refresh — 15.10.2026
 
 7503d38c936d33ab13f9349c2f63a69501bc11c9: RTA 38690903490, Market 38690903391 și Visual 38690903494 sunt SUCCESS. Artifact 11952089482: 78 PNG descărcate și inspectate integral, inclusiv profile lungi, macro Dicodes, vizualul original Kentucky, cele patru categorii și cazurile offline. Testul de captură exclude corect imaginile lazy din details închis, dar decodează imaginile vizibile. Clipul MP4 al releaseului este înregistrare de browser reală, nu animație generată.
