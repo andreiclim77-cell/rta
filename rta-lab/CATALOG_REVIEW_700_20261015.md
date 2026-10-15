@@ -31,6 +31,14 @@ Surse principale:
 
 Copiile de lucru și chitanțele SHA256 sunt în `qa-atlas/catalog-sources` din workspace. Nu se publică dumpurile HTML, texte comerciale integrale sau datele clienților. Datasetul final trebuie să conțină fapte normalizate, identități, surse și limite.
 
+## Control suplimentar al surselor — candidat automat neacceptat
+
+Prima selecție automată de 700 este numai un candidat local, marcat PROVISIONAL_NOT_ACCEPTED. Nu este integrată în aplicație. Au rămas sinonime de format și clasificări care cer confirmare. Nu prezentați acest fișier ca bibliotecă verificată.
+
+A fost reprodus un conflict concret: TiSvapo descrie Blendfeel Ghiaccio și Piperita ca tutunoase; [producătorul arată că gama Pianeta Menta este mentă](https://blendfeel.com/pianeta-menta/). Aceste produse sunt excluse din biblioteca tutunoasă; descrierile magazinului nu sunt acceptate singure ca dovadă a compoziției. Ordinea publicată de popularitate poate rămâne doar un semnal comercial local, distinct de profil. Se verifică direct fișele oficiale pentru a rezolva aceste diferențe.
+
+Pregătire de interfață în branch: numărătoare dinamică în texte, denumirea gamei la fișele curate, aliasul Balcan/Balkan, câmpuri pentru surse și limite și selecție de topuri care poate exclude profilurile insuficient cunoscute și repetițiile aceleiași rețete. Acești conectori sunt testați încă pe biblioteca publică inițială; nu sunt probă a acceptării celor 700.
+
 ## Reguli de acceptare
 
 1. Exact 700 de identități comerciale distincte, în cele patru clase: Tutun simplu, Tutun complex, NET simplu, NET complex. Niciun `Profil reper`, benchmark personal, accesoriu, dispozitiv, lichid fără aromă ori aromă fără tutun.

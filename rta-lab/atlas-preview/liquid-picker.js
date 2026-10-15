@@ -3,11 +3,16 @@
 'use strict';
 const catalog=window.RTA_LIQUIDS,core=window.RTA_SENSORY_CORE;if(!catalog||!core)return;
 const norm=v=>String(v??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
-const aliases={alune:'nuts',nuci:'nuts',dulce:'sweet',dulci:'sweet',straturi:'layers',afumat:'smoky',fum:'smoky',trabuc:'cigar',foi:'cigar',vanilie:'vanilla',ciocolata:'chocolate',cafea:'coffee'};
+const aliases={balcan:'balkan',centenarymods:'centenary',alune:'nuts',nuci:'nuts',dulce:'sweet',dulci:'sweet',straturi:'layers',afumat:'smoky',fum:'smoky',trabuc:'cigar',foi:'cigar',vanilie:'vanilla',ciocolata:'chocolate',cafea:'coffee'};
 const tokens=v=>norm(v).split(' ').filter(Boolean).map(t=>aliases[t]||t);
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-const label=l=>[l?.brand,l?.name].filter(Boolean).join(' · ');
-const indexed=catalog.map((liquid,index)=>({liquid,index,name:norm(liquid.name),brand:norm(liquid.brand),words:tokens([liquid.brand,liquid.name,liquid.profile,liquid.class,liquid.line,...(liquid.tags||[])].join(' '))}));
+const label=l=>[l?.brand,l?.name,l?.id&&l?.line].filter(Boolean).join(' · ');
+function sourceNote(l){
+ if(!l?.id||!l.sources?.length)return '';
+ const sources=l.sources.slice(0,2).filter(s=>/^https:\/\//.test(s.url));
+ return '<small class="catalog-source-note">'+esc(l.evidenceLimit||'Profil documentat; potrivire estimată din motor.')+' <span>Surse: '+sources.map(s=>'<a href="'+esc(s.url)+'" target="_blank" rel="noopener noreferrer">'+esc(s.publisher)+' ↗</a>').join(' · ')+'</span></small>';
+}
+const indexed=catalog.map((liquid,index)=>({liquid,index,name:norm(liquid.name),brand:norm(liquid.brand),words:tokens([liquid.brand,liquid.name,liquid.profile,liquid.class,liquid.line,...(liquid.aliases||[]),...(liquid.tags||[])].join(' '))}));
 function near(a,b){
  if(a.length<4||Math.abs(a.length-b.length)>1)return false;
  let i=0,j=0,errors=0;while(i<a.length&&j<b.length){if(a[i]===b[j]){i++;j++;continue;}if(++errors>1)return false;if(a.length===b.length&&a[i]===b[j+1]&&a[i+1]===b[j]){i+=2;j+=2;continue;}if(a.length>=b.length)i++;if(b.length>=a.length)j++;}return errors+(i<a.length||j<b.length?1:0)<=1;
@@ -23,6 +28,9 @@ function ranked(config,goal='complete'){
  const key=JSON.stringify([config,goal]);if(cache.has(key))return cache.get(key);
  const rows=core.matchLiquids(config,catalog,goal,0);if(cache.size>=12)cache.delete(cache.keys().next().value);cache.set(key,rows);return rows;
 }
+function top(config,goal='complete',limit=5){
+ const seen=new Set();return ranked(config,goal).filter(row=>{if(row.liquid.recommendable===false)return false;const key=row.liquid.recipeGroup||row.index;if(seen.has(key))return false;seen.add(key);return true;}).slice(0,limit);
+}
 function find(q='',filters={}){
  const query=norm(q),base=indexed.filter(r=>(!filters.family||r.liquid.class===filters.family)&&(!filters.brand||r.liquid.brand===filters.brand)&&(!filters.tag||(r.liquid.tags||[]).includes(filters.tag)));
  if(query.length===1)return {rows:[],total:0,approximate:false};
@@ -33,7 +41,7 @@ function find(q='',filters={}){
  return {rows,total:rows.length,approximate};
 }
 function matchesText(text,q){const row={name:norm(text),brand:'',words:tokens(text)};return textScore(row,q)>=0;}
-window.RTA_ATLAS_SEARCH={norm,find,ranked,matchesText,textScore};
+window.RTA_ATLAS_SEARCH={norm,find,ranked,top,matchesText,textScore,label,sourceNote};
 
 const states=new Map(),api=()=>window.RTA_ATLAS_PREVIEW;
 const ids=p=>p==='liquid'?{input:'liquidSearch',list:'liquidSuggestions',selected:'selectedLiquid'}:{input:p+'LiquidSearch',list:p+'LiquidOptions',selected:p+'SelectedLiquid'};
@@ -45,7 +53,7 @@ function facets(p){
 }
 function render(p){
  const i=ids(p),s=state(p),l=api().currentLiquid();
- return '<section class="shared-liquid-picker" data-liquid-picker="'+p+'" aria-label="Alege lichidul pentru '+esc(p==='atlas'?'Atomizer Atlas':p==='wire'?'Wire Lab':'Duel')+'"><label for="'+i.input+'">Lichidul · toate cele '+catalog.length+' repere</label><div class="search-surface"><span aria-hidden="true">⌕</span><input type="search" id="'+i.input+'" value="'+(api().state.fromDemo?'':esc(label(l)))+'" placeholder="Brand, nume, profil · poți combina cuvinte" autocomplete="off" role="combobox" aria-haspopup="listbox" aria-controls="'+i.list+'" aria-expanded="false" aria-autocomplete="list"><button type="button" class="clear-search" data-lp-clear aria-label="Caută alt lichid">×</button></div><div id="'+i.list+'" class="suggestions picker-options" role="listbox" aria-label="Lichide din biblioteca ta" hidden></div><p id="'+i.selected+'" class="picker-selected">'+(api().state.fromDemo?'Niciun lichid ales. Caută în catalog sau alege o potrivire din top.':esc(label(l))+(l.isFreeProfile?' · profil separat de catalog':' · '+esc(l.class)))+'</p>'+facets(p)+'<p class="picker-count" data-lp-count role="status"></p></section>';
+ return '<section class="shared-liquid-picker" data-liquid-picker="'+p+'" aria-label="Alege lichidul pentru '+esc(p==='atlas'?'Atomizer Atlas':p==='wire'?'Wire Lab':'Duel')+'"><label for="'+i.input+'">Lichidul · toate cele '+catalog.length+' repere</label><div class="search-surface"><span aria-hidden="true">⌕</span><input type="search" id="'+i.input+'" value="'+(api().state.fromDemo?'':esc(label(l)))+'" placeholder="Brand, nume, profil · poți combina cuvinte" autocomplete="off" role="combobox" aria-haspopup="listbox" aria-controls="'+i.list+'" aria-expanded="false" aria-autocomplete="list"><button type="button" class="clear-search" data-lp-clear aria-label="Caută alt lichid">×</button></div><div id="'+i.list+'" class="suggestions picker-options" role="listbox" aria-label="Lichide din biblioteca ta" hidden></div><p id="'+i.selected+'" class="picker-selected">'+(api().state.fromDemo?'Niciun lichid ales. Caută în catalog sau alege o potrivire din top.':esc(label(l))+(l.isFreeProfile?' · profil separat de catalog':' · '+esc(l.class)))+'</p>'+(api().state.fromDemo?'':sourceNote(l))+facets(p)+'<p class="picker-count" data-lp-count role="status"></p></section>';
 }
 function close(host){if(!host)return;const p=host.dataset.liquidPicker,i=ids(p);state(p).open=false;host.querySelector('#'+i.list).hidden=true;host.querySelector('#'+i.input).setAttribute('aria-expanded','false');host.querySelector('#'+i.input).removeAttribute('aria-activedescendant');const count=host.querySelector('[data-lp-count]');if(count)count.textContent=count.textContent.replace(/ · \d+–\d+ afișate\./,'.');}
 function update(host){

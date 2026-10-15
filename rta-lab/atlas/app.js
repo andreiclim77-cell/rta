@@ -20,7 +20,7 @@ const navigationTrail=[];
 const routePositions=new Map();
 const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-const liquidName=l=>[l?.brand,l?.name].filter(Boolean).join(" · ");
+const liquidName=l=>window.RTA_ATLAS_SEARCH?.label(l)||[l?.brand,l?.name].filter(Boolean).join(" · ");
 const moodById=id=>moodList.find(m=>m.id===id);
 const momentById=id=>momentList.find(m=>m.id===id);
 const atomById=id=>atoms.find(a=>a.id===id);
@@ -265,7 +265,8 @@ function selectLiquid(index,manual=true){
  if(!Number.isInteger(index)||!catalog[index])return false;
  state.freeProfile=null;state.liquidIndex=index;state.fromDemo=!manual;state.expandedId=null;
  element("liquidSearch").value=manual?liquidName(catalog[index]):'';
- element("selectedLiquid").innerHTML=manual?'<span class="check" aria-hidden="true">✓</span><span><b>'+esc(liquidName(catalog[index]))+'</b> · ales de tine</span>':'<span>Caută și alege lichidul tău din cele 620. Rezultatele apar după alegere.</span>';
+ element("selectedLiquid").innerHTML=manual?'<span class="check" aria-hidden="true">✓</span><span><b>'+esc(liquidName(catalog[index]))+'</b> · ales de tine</span>':'<span>Caută și alege lichidul tău din cele '+catalog.length+'. Rezultatele apar după alegere.</span>';
+ if(manual&&window.RTA_ATLAS_SEARCH)element("selectedLiquid").insertAdjacentHTML("beforeend",window.RTA_ATLAS_SEARCH.sourceNote(catalog[index]));
  element("liquidSuggestions").hidden=true;
  element("liquidSearch").setAttribute("aria-expanded","false");
  element("liquidSearch").removeAttribute("aria-activedescendant");
