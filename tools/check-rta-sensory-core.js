@@ -250,7 +250,7 @@ vm.runInContext(fs.readFileSync(path.join(root,"sensory-ui.js"),"utf8"),sandbox)
 find("atomExplorer").value="gtr";
 doc.events.DOMContentLoaded();
 assert.ok(find("sensoryExplorer").innerHTML.includes("GTR"));
-assert.ok(find("sensoryExplorer").innerHTML.includes("magie pe palat"));
+assert.ok(find("sensoryExplorer").innerHTML.includes("coerență TC"),"GTR must show the new personal seven-wrap finding");
 // Three-zone navigation and landmarks must be present in both paths.
 function checkThreeZones(view){
  const html=find("sensory"+(view==="explorer"?"Explorer":"Main")).innerHTML;
