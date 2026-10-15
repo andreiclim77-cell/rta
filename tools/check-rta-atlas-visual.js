@@ -57,9 +57,19 @@ async function main(){
    check(await page.locator(".cinema-frame.is-visible img").evaluate(img=>getComputedStyle(img).transform)===pausedTransform,"Pause must stop photo motion too");
    await screenshot(page,"home-paused-"+width+".png");
    await page.locator(".primary-action").click();
+   check(await page.locator('#liquidSearch').inputValue()==='',"Explore must begin with an empty liquid field");
+   check(await page.locator('.result-card').count()===0,"No atomizers before an explicit liquid choice");
+   check(await page.locator('#matchButton').isDisabled(),"Composition requires the user's liquid choice");
+   check(await page.locator('.live-scene').isHidden(),"Do not show a default liquid's Cinema before choice");
+   await page.waitForTimeout(650);
+   await screenshot(page,'liquid-first-empty-'+width+'.png');
+   await page.locator('#liquidSearch').fill('Mixture Balkan Tabaccheria');
+   await screenshot(page,'liquid-first-search-'+width+'.png');
+   await page.locator('#liquidSearch').press('Enter');
    // Wait for pageReveal + the reactive liquid-scene animation before snapshots.
    // Capturing at transition frame zero produced an almost black image despite passing layout tests.
    await page.waitForTimeout(1150);
+   await page.evaluate(()=>scrollTo(0,0));
    const liquid=await page.evaluate(()=>{
     const a=document.querySelector(".live-scene").getBoundingClientRect();
     const b=document.querySelector("#liquidSearch").getBoundingClientRect();

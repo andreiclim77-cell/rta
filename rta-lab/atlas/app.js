@@ -16,6 +16,8 @@ const defaultLiquid=(()=>{
  return similar>=0?similar:catalog.findIndex(x=>x.class==="NET complex");
 })();
 const state={route:"home",liquidIndex:Math.max(0,defaultLiquid),mood:"magic",moment:"evening",expandedId:null,search:"",activeSuggestion:0,fromDemo:true,freeProfile:null,objective:null};
+const navigationTrail=[];
+const routePositions=new Map();
 const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
 const liquidName=l=>[l?.brand,l?.name].filter(Boolean).join(" · ");
@@ -148,8 +150,12 @@ function renderBuild(result,rank,liquid){
   '<div class="build-technical"><b>Insert:</b> '+esc(tech(cfg.atom).air.find(a=>a.id===cfg.air)?.label||"variabil")+'<br>'+
   '<b>Clopot:</b> '+esc(window.RTA_BELL_LIQUID_FIT.config(cfg.atom)?.bells?.find(b=>b.id===cfg.bell)?.name||"standard")+'<br>'+
   '<b>Regim:</b> '+esc(setupSummary(result))+'</div>'+
-  '<p class="build-sensory">'+esc(line)+'</p>'+
+  '<p class="build-sensory">'+esc(line)+'</p><p class="build-trade"><b>Accent:</b> '+esc(result.advantages.slice(0,2).join(' · '))+'<br><b>Compromis:</b> '+esc(result.tradeoffs[0]||'Verifică practic echilibrul în contextul tău.')+'</p>'+
   '<div class="build-evidence">'+esc(evidence.label)+'</div><button type="button" class="module-link" data-wire-open="'+esc(encodeURIComponent(JSON.stringify(cfg)))+'">Deschide în Wire Lab ↗</button><button type="button" class="module-link" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(cfg)))+'">Adaugă la Duel ↗</button></article>';
+}
+function comparisonGraphic(entries,title){
+ const axes=[['spectrum','Spectru'],['separation','Separare'],['simultaneity','Simultaneitate'],['palate','Palat'],['offense','Ofensivă'],['th','Throat hit'],['harmony','Armonie']];
+ return '<figure class="sensory-comparison"><figcaption><h3>'+esc(title)+'</h3><p>Același lichid și obiectiv. Lungimea barelor arată indicatori ai modelului; nu măsurători sau procente de plăcere.</p></figcaption><div class="comparison-legend">'+entries.map((e,i)=>'<span class="series-'+i+'"><i></i>'+esc(e.label)+'</span>').join('')+'</div>'+axes.map(([key,label])=>'<div class="comparison-axis"><b>'+label+'</b><div>'+entries.map((e,i)=>'<div class="comparison-track series-'+i+'" data-signal="'+key+'" data-value="'+e.result.signals[key]+'" role="img" aria-label="'+esc(e.label+' · '+label+' · '+labelScore(e.result.signals[key]))+'"><span style="width:'+Math.max(0,Math.min(100,e.result.signals[key]*20))+'%"></span><small>'+esc(labelScore(e.result.signals[key]))+'</small></div>').join('')+'</div></div>').join('')+'</figure>';
 }
 function watchInternal(item){
  const alt=item.builds[1];
@@ -170,10 +176,11 @@ function renderResult(item,liquid){
  '<div class="best-config"><span>BEST BUILD</span> · '+esc(buildString(best))+'</div>'+
  '<div class="sensory-tokens">'+strengths+'</div></div>'+
  '<div class="card-side"><span class="card-rank">0'+item.position+'</span>'+
- '<button type="button" class="open-builds" data-expand="'+esc(item.id)+'" aria-expanded="'+String(selected)+'" aria-controls="detail-'+esc(item.id)+'">'+(selected?'Închide':'Cele '+count+' builduri')+' <span aria-hidden="true">'+(selected?'−':'+')+'</span></button></div></div>'+
+ '<button type="button" class="open-builds" data-expand="'+esc(item.id)+'" aria-expanded="'+String(selected)+'" aria-controls="detail-'+esc(item.id)+'">'+(selected?'Închide buildurile':'Vezi '+count+' builduri și diferențele')+' <span aria-hidden="true">'+(selected?'−':'+')+'</span></button></div></div>'+
  '<div class="card-detail" id="detail-'+esc(item.id)+'"'+(selected?'':' hidden')+'>'+
  '<p class="detail-intro"><strong>'+esc(evidence.label)+'.</strong> Configurațiile sunt ordonate pentru '+esc(liquid.name)+' în contextul ales; experiența ta directă primează unde există un test relevant.</p>'+
  '<div class="detail-grid">'+item.builds.map((b,i)=>renderBuild(b,i+1,liquid)).join("")+'</div>'+
+ comparisonGraphic(item.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+b.config.wraps+' spire',result:b})),'Cum diferă cele trei builduri')+
  '<div class="watchlist"><div class="watch-item"><b>01 / De urmărit — din experiența ta</b><p>'+esc(watchInternal(item))+'</p></div>'+
  '<div class="watch-item market"><b>02 / De urmărit — din piață</b><p>'+(window.RTA_ATLAS_MARKET?.watch(liquid)||'Semnalul extern pentru acest setup este încă în cercetare. Nu inventăm consensul din review-uri; sursele vor fi legate numai după verificare.')+'</p></div></div>'+
  '<p class="detail-foot">Graficele și schemele sunt ilustrații tehnice. Nu sunt măsurători ale temperaturii, debitului, gustului sau procente ale plăcerii.</p></div></article>';
@@ -223,9 +230,14 @@ function revealSelectedChips(){
  }
 }
 function renderResults(){
- const result=compose(state.liquidIndex,state.mood,state.moment,{liquid:currentLiquid(),objective:state.objective});
  const box=element("resultCards");
  if(!box)return;
+ const awaiting=state.fromDemo&&!state.freeProfile;
+ element("pageLiquid").classList.toggle("is-awaiting-liquid",awaiting);
+ element("matchButton").disabled=awaiting;
+ element("liquidTitle").innerHTML=awaiting?'Alege lichidul.<br><em>Apoi configurația.</em>':'Lichidul tău.<br><em>9 configurații.</em>';
+ if(awaiting){box.innerHTML='';element("resultsSummary").textContent='Alege întâi lichidul din catalog.';element("resultCounter").textContent='—';updateSceneMatch(null);return;}
+ const result=compose(state.liquidIndex,state.mood,state.moment,{liquid:currentLiquid(),objective:state.objective});
  if(!result){
   box.innerHTML='<div class="empty-results">Nu avem suficiente date pentru acest context. Selectează alt lichid sau altă stare.</div>';
   updateSceneMatch(null);
@@ -238,7 +250,9 @@ function renderResults(){
  " · ordonare contextuală din 16 platforme.";
  element("resultCounter").textContent="TOP 3 · 3 × 3";
  box.innerHTML=result.items.map(x=>renderResult(x,result.liquid)).join("");
+ if(element('liquidComparison'))element('liquidComparison').innerHTML=comparisonGraphic(result.items.map(x=>({label:x.atom.short,result:x.builds[0]})),'Cum diferă cele trei atomizoare');
  updateSceneMatch(result);
+ if(state.route==='liquid'&&window.requestAnimationFrame)window.requestAnimationFrame(revealSelectedChips);
 }
 function renderMoodMoment(){
  element("moodChips").innerHTML=moodList.map(m=>
@@ -250,9 +264,8 @@ function renderMoodMoment(){
 function selectLiquid(index,manual=true){
  if(!Number.isInteger(index)||!catalog[index])return false;
  state.freeProfile=null;state.liquidIndex=index;state.fromDemo=!manual;state.expandedId=null;
- element("liquidSearch").value=liquidName(catalog[index]);
- element("selectedLiquid").innerHTML='<span class="check" aria-hidden="true">✓</span><span><b>'+esc(liquidName(catalog[index]))+'</b>'+
- (state.fromDemo?' · exemplu din catalog':' · ales de tine')+'</span>';
+ element("liquidSearch").value=manual?liquidName(catalog[index]):'';
+ element("selectedLiquid").innerHTML=manual?'<span class="check" aria-hidden="true">✓</span><span><b>'+esc(liquidName(catalog[index]))+'</b> · ales de tine</span>':'<span>Caută și alege lichidul tău din cele 620. Rezultatele apar după alegere.</span>';
  element("liquidSuggestions").hidden=true;
  element("liquidSearch").setAttribute("aria-expanded","false");
  element("liquidSearch").removeAttribute("aria-activedescendant");
@@ -272,6 +285,12 @@ function setFreeProfile(input){
  if(element('liquidSearch')){element('liquidSearch').value='';element('selectedLiquid').innerHTML='<span class="check" aria-hidden="true">◎</span><span><b>'+esc(free.name)+'</b> · '+(free.sourceReview?'profil din review':'profil declarat')+' / '+esc(free.class)+'</span>';closeSuggestions();drawScene();renderResults();}
  return true;
 }
+function setContext(changes){
+ if(changes.mood&&!moodById(changes.mood)||changes.moment&&!momentById(changes.moment))return false;
+ if(changes.mood)state.mood=changes.mood;if(changes.moment)state.moment=changes.moment;
+ state.expandedId=null;renderMoodMoment();renderResults();
+ window.RTA_ATLAS_MODULES?.show(state.route);return true;
+}
 function renderSuggestions(){
  const input=element("liquidSearch"),box=element("liquidSuggestions");
  const rows=liquidSearch(input.value,10);
@@ -290,6 +309,7 @@ function closeSuggestions(){
 }
 function route(to,push=true){
  if(!["home","liquid",...(window.RTA_ATLAS_MODULES?.routes||[])].includes(to))return false;
+ const from=state.route;if(from==='wire'&&to!=='wire'&&window.RTA_ATLAS_DUEL?.state.editing)window.RTA_ATLAS_DUEL.state.editing=null;if(from!==to)routePositions.set(from,window.scrollY||0);if(push&&from!==to)navigationTrail.push(from);
  state.route=to;
  const isHome=to==="home";
  element("pageHome").hidden=!isHome;
@@ -301,10 +321,12 @@ function route(to,push=true){
    else el.removeAttribute("aria-current");
   }
  });
- if(push&&window.history?.pushState){
+ const back=element('atlasBack');if(back){back.hidden=isHome;back.title='Revino la instrumentul anterior; alegerile sunt păstrate';}
+ if(push&&from!==to&&window.history?.pushState){
   window.history.pushState(null,"","#"+to);
  }
- window.scrollTo?.({top:0,behavior:"instant"});
+ window.scrollTo?.({top:push?0:routePositions.get(to)||0,behavior:"instant"});
+ if(to==="liquid"&&push&&state.fromDemo&&!state.freeProfile)element("liquidSearch")?.focus({preventScroll:true});
  if(!isHome&&window.requestAnimationFrame)window.requestAnimationFrame(revealSelectedChips);
  return true;
 }
@@ -314,11 +336,12 @@ function init(){
  selectLiquid(state.liquidIndex,false);
  route(window.location?.hash==="#liquid"?"liquid":"home",false);
  document.addEventListener("click",ev=>{
-  const target=ev.target.closest?.("[data-route],[data-liquid],[data-mood],[data-moment],[data-expand],[data-go-best]");
+  const target=ev.target.closest?.("[data-route],[data-liquid],[data-mood],[data-moment],[data-expand],[data-go-best],[data-compare-atoms]");
   if(!target)return;
   const d=target.dataset;
   if(d.route){ev.preventDefault();route(d.route);return;}
   if(d.goBest!=null){scrollToBest();return;}
+  if(d.compareAtoms!=null){element('liquidComparison')?.scrollIntoView({block:'start',behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth'});return;}
   if(d.liquid!=null){selectLiquid(Number(d.liquid));return;}
   if(d.mood){state.mood=d.mood;state.expandedId=null;renderMoodMoment();renderResults();return;}
   if(d.moment){state.moment=d.moment;state.expandedId=null;renderMoodMoment();renderResults();return;}
@@ -366,11 +389,12 @@ function init(){
   state.expandedId=null;renderResults();
   scrollToBest();
  });
- window.addEventListener("popstate",()=>route(window.location.hash.slice(1)||"home",false));
+ element('atlasBack')?.addEventListener('click',()=>{if(navigationTrail.length){window.history.back();}else{route('home',false);window.history.replaceState(null,'','#home');}});
+ window.addEventListener("popstate",()=>{const to=window.location.hash.slice(1)||'home';if(navigationTrail[navigationTrail.length-1]===to)navigationTrail.pop();else if(to!==state.route)navigationTrail.push(state.route);route(to,false);});
 }
 window.RTA_ATLAS_PREVIEW={
- version:"0.2-real-photo-motion",setFreeProfile,setObjective,compose,liquidSearch,buildString,compactBuild,
- currentLiquid,effectiveGoal,renderResults,drawScene,renderCoil,renderBuild,renderProductPhoto:renderAbstractAtom,qualities,vapeDescription,evidenceFor,state,route,selectLiquid,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
+ version:"0.2-real-photo-motion",setFreeProfile,setObjective,setContext,compose,liquidSearch,buildString,compactBuild,
+ currentLiquid,effectiveGoal,renderResults,drawScene,renderCoil,renderBuild,comparisonGraphic,renderProductPhoto:renderAbstractAtom,qualities,vapeDescription,evidenceFor,state,route,selectLiquid,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
  init
 };
 if(typeof document!=="undefined")document.addEventListener("DOMContentLoaded",init);

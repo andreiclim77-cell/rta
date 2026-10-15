@@ -9,9 +9,9 @@
 <title>RTA SENSORY ATLAS — Precision Motion Lab Preview</title>
 <link rel="manifest" href="./manifest.webmanifest">
 <link rel="icon" href="../icon-192.png" sizes="192x192">
-<link rel="stylesheet" href="./styles.css?v=atlas-intelligent-20261015-1">
-<link rel="stylesheet" href="./v02.css?v=atlas-intelligent-20261015-1">
-<link rel="stylesheet" href="./modules.css?v=atlas-intelligent-20261015-1">
+<link rel="stylesheet" href="./styles.css?v=atlas-liquid-first-20261015-2">
+<link rel="stylesheet" href="./v02.css?v=atlas-liquid-first-20261015-2">
+<link rel="stylesheet" href="./modules.css?v=atlas-liquid-first-20261015-2">
 </head>
 <body>
 <a class="skip" href="#main">Sari la conținut</a>
@@ -28,7 +28,7 @@
     <button type="button" data-route="atomizer">Atomizer Atlas</button>
     <button type="button" data-route="wire">Wire Lab</button>
   </nav>
-  <a class="current-lab" href="../?view=v10" title="Deschide aplicația existentă">Lab V10 <span aria-hidden="true">↗</span></a>
+  <button type="button" id="atlasBack" class="atlas-back" hidden>← Înapoi</button>
 </header>
 <main id="main">
   <section id="pageHome" class="page page-home" aria-labelledby="homeTitle">
@@ -74,7 +74,7 @@
         </div>
       </div>
     </section>
-    <div class="home-endcap frame"><span><i></i> VERSIUNE CANDIDAT</span><span>Lab V10 este disponibil separat.</span></div>
+    <div class="home-endcap frame"><span><i></i> VERSIUNE CANDIDAT</span><span>Un singur atlas. Toată colecția conectată.</span></div>
   </section>
 
   <section id="pageLiquid" class="page page-liquid" aria-labelledby="liquidTitle" hidden>
@@ -82,7 +82,7 @@
       <div class="breadcrumb"><button type="button" data-route="home">ACASĂ</button><span>/</span> LIQUID MATCH <span>/</span> EXPERIENȚĂ CONTEXTUALĂ</div>
       <div class="page-intro-grid">
         <div><div class="overline"><span class="tiny-spark"></span> LIQUID CINEMA / REAL ENGINE</div><h1 id="liquidTitle">Lichidul tău.<br><em>9 configurații.</em></h1>
-        <p>Alegi momentul și starea. Motorul existent compune trei atomizoare, fiecare cu trei builduri. Nu ștergem ce ai descoperit deja.</p></div>
+        <p>Caută și alege lichidul tău. Apoi primești trei atomizoare, fiecare cu trei builduri, adaptate stării și momentului ales.</p></div>
         <div class="scene-mini" aria-hidden="true">
           <div class="mini-orbit orbit-a"></div><div class="mini-orbit orbit-b"></div>
           <div class="mini-core"></div><div class="mini-scent scent-a"></div><div class="mini-scent scent-b"></div>
@@ -91,11 +91,12 @@
       </div>
     </div>
 
+    <div class="frame"><ol class="flow-steps" aria-label="Pașii instrumentului"><li><b>1</b><span>Alege lichidul</span></li><li><b>2</b><span>Stare și moment</span></li><li><b>3</b><span>3 atomizoare × 3 builduri</span></li></ol></div>
     <div class="match-workspace frame">
       <section class="selection-panel" aria-labelledby="chooseTitle">
-        <div class="eyebrow">01 — ALEGERE / CONTEXT</div><h2 id="chooseTitle">Ce interpretezi acum?</h2>
+        <div class="eyebrow">01 — ALEGERE / CONTEXT</div><h2 id="chooseTitle">Alege lichidul tău.</h2>
         <div class="liquid-search-wrap">
-          <label for="liquidSearch">Lichidul</label>
+          <label for="liquidSearch">Caută în cele 620 de lichide</label>
           <div class="search-surface"><span aria-hidden="true">⌕</span><input type="search" id="liquidSearch" placeholder="Caută brand, lichid, profil..." autocomplete="off" role="combobox" aria-haspopup="listbox" aria-controls="liquidSuggestions" aria-expanded="false" aria-autocomplete="list"><button type="button" class="clear-search" id="clearSearch" title="Șterge căutarea" aria-label="Șterge căutarea">×</button></div>
           <div id="liquidSuggestions" class="suggestions" role="listbox" aria-label="Rezultate lichide" hidden></div>
           <div id="selectedLiquid" class="selected-liquid" role="status"></div>
@@ -108,7 +109,7 @@
           <div class="control-group-title"><span>MOMENTUL</span><span>03 / 03</span></div>
           <div id="momentChips" class="chip-rail" role="group" aria-label="Momentul"></div>
         </div>
-        <button id="matchButton" class="match-button" type="button"><span>Compune cele 3 experiențe</span><span aria-hidden="true">↗</span></button>
+        <button id="matchButton" class="match-button" type="button"><span>Vezi cele 3 atomizoare și buildurile</span><span aria-hidden="true">↗</span></button>
         <p class="match-micro">16 platforme analizate · 3 rezultate afișate · caracterul este estimat contextual, nu un verdict universal.</p>
       </section>
 
@@ -141,7 +142,9 @@
 
     <section class="results-section frame" id="resultsSection" aria-labelledby="resultsTitle">
       <div class="results-heading"><div><span class="eyebrow">02 — INTERPRETĂRI / 3 × 3</span><h2 id="resultsTitle">Trei feluri de a reda același lichid.</h2><p id="resultsSummary">Alege un lichid și un context. Aici vor apărea rezultatele calculate din motorul original.</p></div><span id="resultCounter" class="result-counter">—</span></div>
+      <button type="button" class="module-link" data-compare-atoms>Compară grafic cele 3 atomizoare ↓</button>
       <div id="resultCards" class="result-cards"></div>
+      <div id="liquidComparison"></div>
       <div class="evidence-footer">
         <span class="evidence-glyph" aria-hidden="true">◎</span>
         <p><strong>Cum sunt construite rezultatele</strong><br>TOP 3 se bazează pe motorul RTA/Mood Match existent, nu pe un clasament universal. „Câștiguri în %” apar doar când sunt susținute de o comparație reală peste 10%. Semnalele din piață rămân nemarcate ca „confirmate” până la documentarea review-urilor.</p>
@@ -154,45 +157,44 @@
   <button type="button" data-route="liquid"><span aria-hidden="true">◈</span><small>LICHID</small></button>
   <button type="button" data-route="atomizer" aria-label="ATOMIZOARE"><span aria-hidden="true">◎</span><small>ATLAS</small></button>
   <button type="button" data-route="wire"><span aria-hidden="true">∿</span><small>SÂRME</small></button>
-  <a href="../?view=v10"><span aria-hidden="true">↗</span><small>LAB V10</small></a>
 </div>
-<footer class="footer"><div>RTA SENSORY ATLAS <span>—</span> PREVIEW V0.2</div><p>Concept interactiv pentru evaluarea designului. Nu înlocuiește aplicația actuală. Fotografiile sunt imagini reale de produs, nu neapărat ale finisajului personal. Schemele de airflow și lichid sunt ilustrative, nu simulări fizice.</p><a href="../?view=v10">Înapoi la Lab-ul actual ↗</a></footer>
-<noscript><p style="padding:40px;color:#eee">Prototipul animat necesită JavaScript. Aplicația existentă este disponibilă <a href="../?view=v10">aici</a>.</p></noscript>
+<footer class="footer"><div>RTA SENSORY ATLAS <span>—</span> PREVIEW V0.2</div><p>Concept interactiv pentru evaluarea designului. Nu înlocuiește aplicația actuală. Fotografiile sunt imagini reale de produs, nu neapărat ale finisajului personal. Schemele de airflow și lichid sunt ilustrative, nu simulări fizice.</p></footer>
+<noscript><p style="padding:40px;color:#eee">Prototipul animat necesită JavaScript. Activează JavaScript și reîncarcă Atlas.</p></noscript>
 
-<script src="../data/atoms-1.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/atoms-2.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/atoms-3.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/wires.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/core.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-1a.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-1b.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-2a.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-2b.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-3a.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-3b.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-4a.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-4b.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-5-tutun-simplu.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-5-tutun-complex.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-5-net-simplu.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-5-net-complex.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-6-hof-tutun-simplu.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-6-hof-tutun-complex.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-6-hof-net-simplu.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/liquids-6-hof-net-complex.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/bell-liquid-fit.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../data/sensory-core.js?v=atlas-intelligent-20261015-1"></script>
-<script src="../mood-match.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./local-photos.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./context.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./photo-sources.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./liquid-picker.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./app.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./v02.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./modules.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./duel.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./market-evidence.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./market.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./context-ui.js?v=atlas-intelligent-20261015-1"></script>
-<script src="./bootstrap.js?v=atlas-intelligent-20261015-1"></script>
+<script src="../data/atoms-1.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/atoms-2.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/atoms-3.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/wires.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/core.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-1a.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-1b.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-2a.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-2b.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-3a.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-3b.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-4a.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-4b.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-5-tutun-simplu.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-5-tutun-complex.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-5-net-simplu.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-5-net-complex.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-6-hof-tutun-simplu.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-6-hof-tutun-complex.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-6-hof-net-simplu.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/liquids-6-hof-net-complex.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/bell-liquid-fit.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../data/sensory-core.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="../mood-match.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./local-photos.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./context.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./photo-sources.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./liquid-picker.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./app.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./v02.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./modules.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./duel.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./market-evidence.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./market.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./context-ui.js?v=atlas-liquid-first-20261015-2"></script>
+<script src="./bootstrap.js?v=atlas-liquid-first-20261015-2"></script>
 </body></html>

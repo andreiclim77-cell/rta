@@ -42,6 +42,7 @@ async function main(){
   await page.waitForTimeout(850);await page.screenshot({path:path.join(folder,prefix+'offline-home-390.png')});
   for(const route of ['liquid','atomizer','wire','market','duel']){
    await page.locator('.bottom-tabs [data-route="'+route+'"]').click();
+   if(route==='liquid'){await page.locator('#liquidSearch').fill('Mixture Balkan Tabaccheria');await page.locator('#liquidSearch').press('Enter');assert.equal(await page.locator('.result-card').count(),3,'Explicit offline choice must produce three atomizers');}
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),route);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,'Offline overflow '+route);
    assert.equal(await page.locator('.page:not([hidden])').count(),1,'Only one module is visible');
