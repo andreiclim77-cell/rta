@@ -1,5 +1,25 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+## Publicare verificată — 15.10.2026
+
+Această stare prevalează asupra checkpointurilor istorice de mai jos. Utilizatorul a aprobat expres direcția vizuală și a cerut «continuă până la publicarea verificată». Aprobarea a fost primită; nu mai există o aprobare vizuală în așteptare pentru această versiune.
+
+PR #45 și #46 sunt MERGED, în ordine, prin merge commits; #46 a fost retargetat pe main. Integrare funcțională publicată: 64d28cccc8adbea6e8e41bb82d7b8c8ea3e197bc (arbore identic candidatului verificat 606aab3732d683e67c77aaa35ea4aff97385cf88). Versiune finală publicată: 79f7a1d40048899dfdb42cf588af19abc2c54797, care corectează numai eticheta ARIA Navigare Atlas și regenerează receipt/cache; aspectul și modulele sunt identice. Main păstrează toate actualizările automate existente. Ruta finală este https://ghid-rta.ro/rta-lab/atlas/ ; V10 este păstrat la https://ghid-rta.ro/rta-lab/ ; previewul rămâne separat.
+
+La SHA final 79f7a1d: Pages 38694013076 și RTA 38694013836 SUCCESS; integritatea celor 86 resurse, mobil/motion și offline au fost retestate după această publicare. Cele 27 PNG suplimentare au fost inspectate integral. Actualizarea a fost confirmată și în browserul deja deschis, după reload, fără resetarea datelor.
+
+Pages 38693180338 SUCCESS la SHA 64d28cc. Verificări post-merge SUCCESS: RTA 38693181313, Market 38693181270, Market Final Report 38693181389, Hype Global 38693181240; IndexNow 38693181301 SUCCESS. La candidatul exact 606aab3, toate cele cinci gates au trecut, inclusiv Visual 38692656827; celelalte runs: RTA 38692656829, Market 38692656822, Final Report 38692656850, Hype 38692656811. Capturile CI ale codului identic 47ccee9: artifact 11953025258, 78 PNG descărcate și inspectate.
+
+Verificări executate direct pe domeniul public după deployment: mobil 360×800 și 390×844, desktop 1440×1000, toate cele șase module, căutare/keyboard, BEST contextual și salt la primul card, 3×3 builduri, obiectiv/profil comun, Atlas 16/42 și cele 3 CL distincte, Wire limite/compatibilitate și separarea celor două NiFe KLP, Duel două selecții explicite/izolarea unei variabile, Market patru clase a câte 10 surse, proveniență/imagini/ediții, profil de 80 caractere, motion/pauză/reduced-motion, cădere furnizor foto, date lipsă la rece și recuperare 503. Injectarea temporară în fetch-ul workerului izolat a înregistrat exact un răspuns 503, urmat de restaurarea catalogului 620; o primă variantă de simulator nu interceptase cererea workerului și nu este atribuită drept probă de 503. PASS; 74 PNG live inspectate, fără overflow sau erori de pagină în scenariile executate. Testul offline real a parcurs cele șase module, instalarea preview/V10/ghid, comanda de cache și pagina refresh V10; Atlas revine offline și bytes saved/draft CL de test rămân identici. Aceste scenarii au fost executate în profiluri izolate, fără modificarea datelor browserului personal.
+
+Integritate live: 86 fișiere HTTP 200 coincid prin SHA256 cu versiunea integrată, inclusiv 79 resurse din cache, fotografii/fonturi, catalogul și infrastructura V10. Compararea Git cu baza c268b2fc confirmă motorul, rta-lab/data, mood-match.js și index.html V10 identice. Singurele corecții de infrastructură protejată sunt prefixurile de curățare cache (ghid/V10) și scope-ul exact pentru refresh; nu șterg datele personale.
+
+Toate cele șase module sunt implementate și publicate: HOME, LIQUID MATCH, ATOMIZER ATLAS, WIRE LAB, MARKET HALL OF FAME, DUEL MODE. Cele 620 lichide, 16 platforme, 42 exemplare și configurațiile canonice sunt conservate. KLP cu Dicodes NiFe30 sau Zivipf NiFe52 în TC sunt ambele preferințe personale de prim nivel; experiența Dicodes 220°C/16 W nu este transferată Zivipf.
+
+Limite explicite păstrate în produs: rezultate tehnico-senzoriale estimate, fără procente de plăcere sau consens inventat; reviewuri singulare și ediții distincte; fotografii reale cu proveniență, scheme acolo unde nu există o fotografie certă; licențele exprese de redistribuire ale fotografiilor externe nu sunt certificate. Verificarea browserului este în Chromium la dimensiunile raportate, nu o probă pe telefon fizic ori Safari. Nu rămâne o etapă funcțională sau publicarea în așteptare în mandatul celor șase module; aceste limite nu sunt ascunse printr-un verdict universal.
+
+Detalii și legături: ATLAS_PUBLICATION_VERIFICATION_20261015.md.
+
 ## Candidat integrat, verificare de publicare — 15.10.2026
 
 Cod candidat sincronizat 47ccee906c69844ced4fa94a1d23ac5ce2b44b7e: RTA 38692198611, Market 38692198344, Market Final Report 38692198338, Hype Global 38692198409 și Visual 38692198551 sunt toate SUCCESS. Artifact 11953025258 are 78 PNG descărcate și inspectate integral; imaginile Market 360/390 sunt acum încadrate complet după rezervarea dimensiunilor lor naturale. Corecțiile de cache/refresh au trecut în browser real și CI, inclusiv activarea workerului ghidului, refresh V10, revenirea offline și păstrarea exactă a bytes CL.
