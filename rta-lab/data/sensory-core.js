@@ -115,6 +115,7 @@ const NIFE30_FAMILY=Object.freeze({
 const PERSONAL_PREFS=Object.freeze({
  date:"2026-10-15",
  gtrTC:{dicodes:{wire:"nife30",wraps:7},zivipf:{wire:"nife52",wraps:6},legacyNiFe30:{wire:"nife30",wraps:6}},
+ cool415:{first:[{wire:"nife30",wraps:7},{wire:"nife52",wraps:6}],second:{wire:"k128",wraps:6},historical:[{wire:"k128",wraps:5},{wire:"k1clap",wraps:5}]},
  tcEqualAtoms:["klp","gtr","kx","kprime"],
  tcEqualWires:["nife30","nife52"],
  gtone:{first:{wire:"k129",wraps:6},second:{wire:"k128",wraps:5}},
@@ -143,6 +144,15 @@ const PERSONAL_SETUPS=Object.freeze({
 });
 function personalSetups(atomId){return (PERSONAL_SETUPS[atomId]||[]).map(x=>({...x}));}
 function personalPreference(config){
+ // 415 Cool, personal priority 15.10.2026; not universal chemical equivalence.
+ if(config.atom==="415"){
+  if((config.wire==="nife30"&&config.wraps===7)||(config.wire==="nife52"&&config.wraps===6))
+   return {tier:1,label:"415 Cool · NiFe30/7 = NiFe52/6 · prima alegere",
+    note:"Preferință declarată, TCR320/310 distincte; lichid, temperatură, wattaj și A/B controlat neprecizate."};
+  if(config.wire==="k128"&&config.wraps===6)
+   return {tier:2,label:"415 Cool · K1 28 GA / 6 spire · a doua alegere",
+    note:"Preferință personală nouă; 28/5 istoric și K1 Clapton/5 specialist rămân disponibile."};
+ }
  // New GTR-specific personal finding, 15.10.2026: alloy-specific wraps.
  // NiFe30/6 remains usable; NiFe30/7 and NiFe52/6 share tier #1.
  if(config.atom==="gtr"){
@@ -183,7 +193,7 @@ const WIRES={
  nife52:{name:"Zivipf NiFe52 TCR310",type:"tc",mode:"TC",temp:230,power:13}
 };
 const DEFAULTS={
- "415":{wire:"k1clap",wraps:5,air:"tasty"},
+ "415":{wire:"nife30",wraps:7,air:"tasty"},
  kprime:{wire:"nife52",wraps:6,air:"1.2"},
  gtone:{wire:"k129",wraps:6,air:"single12"},
  dvarwcl:{wire:"k128",wraps:6,air:"triple06"},
@@ -258,8 +268,17 @@ const OBS=[
  {atom:"kprime",wire:"k129",wraps:5,title:"K Prime 29/5 special",
   text:"Round-wire principal curent; atomizor cu atașament personal aparte.",
   patch:{harmony:4.6},affinity:"caracter special",evidence:"preferință personală în Lab"},
- {atom:"415",wire:"k1clap",wraps:5,title:"415 K1 Clapton pereche preferată",
-  text:"Pereche Clapton preferată pentru densitate, integrare și corp.",
+ {atom:"415",wire:"nife30",wraps:7,partial:true,title:"415 Cool · Dicodes NiFe30 / 7 spire",
+  text:"Utilizatorul raportează o experiență bună pe 415 Cool cu NiFe30 TCR320/7; preferă egal Zivipf NiFe52 TCR310/6, apoi K1 28 GA/6. Nu există date despre lichid, TC, W sau montaj pentru a afirma un A/B controlat.",
+  affinity:"preferință personală 415 Cool · NiFe30/7",evidence:"declarație directă 15.10.2026, observație parțială"},
+ {atom:"415",wire:"nife52",wraps:6,partial:true,title:"415 Cool · Zivipf NiFe52 / 6 spire",
+  text:"Zivipf NiFe52 TCR310/6 merge bine pe 415 Cool, la egalitate personală cu Dicodes NiFe30/7, fără A/B controlat.",
+  affinity:"preferință personală 415 Cool · NiFe52/6",evidence:"declarație 15.10.2026; lichid și TC neprecizate"},
+ {atom:"415",wire:"k128",wraps:6,partial:true,title:"415 Cool · Kanthal K1 28 GA / 6 spire",
+  text:"K1 28 GA/6 merge bine pe 415 Cool și este alegerea următoare după NiFe30/7 și NiFe52/6. K1 28/5 și K1 Clapton/5 rămân istorice, fără a fi eliminate.",
+  affinity:"a doua preferință personală 415 Cool · K1 28/6",evidence:"declarație directă 15.10.2026, fără lichid/W/A-B controlat"},
+ {atom:"415",wire:"k1clap",wraps:5,title:"415 K1 Clapton preferat istoric în familia Clapton",
+  text:"Pereche Clapton dedicată pentru densitate, integrare și corp. Noua ordine personală generală pe 415 este NiFe30/7 = NiFe52/6, apoi K1 28/6.",
   patch:{palate:4.8},affinity:"Clapton preferat",evidence:"validare personală Lab"},
  {atom:"dvarwfl",wire:"ssclap",wraps:5,air:"single12",title:"FL SS316L Clapton dedicat",
   text:"Pereche pentru claritate, top-notes, layering, fără A/B pe toate lichidele.",
@@ -287,16 +306,15 @@ function bellFor(id,bellId){
 function permitted(id,wire,wraps){
  if(!PLATFORMS[id]||!WIRES[wire])return false;
  if(wire==="ssclap"&&id==="asylum")return false;
- if(wire==="k128"&&id==="415"&&wraps===6)return false; // deprecated per MASTER
  if(wire==="k128"||wire==="k129")return wraps===5||wraps===6;
- if(id==="gtr"&&wire==="nife30")return wraps===6||wraps===7;
+ if((id==="gtr"||id==="415")&&wire==="nife30")return wraps===6||wraps===7;
  return wraps===(WIRES[wire].type==="tc"?6:5);
 }
 function variants(id){
  if(!PLATFORMS[id])return [];
  const opts=[];
  for(const w of Object.keys(WIRES)){
-  for(const wraps of ((w==="k128"||w==="k129")?[5,6]:(id==="gtr"&&w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
+  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):((id==="gtr"||id==="415")&&w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
    if(permitted(id,w,wraps))opts.push({wire:w,wraps});
   }
  }
@@ -504,6 +522,11 @@ function analyze(input,liquid={},objective="complete"){
    "GTR + Dicodes NiFe30/6: variantă funcțională istorică; noul NiFe30/7 este preferat personal pentru reglare TC mai coerentă, fără concluzie universală.");
  if(config.atom==="gtr"&&config.wire==="nife52"&&config.wraps===6)
   notes.push("GTR + Zivipf NiFe52/6 TCR310: alegere personală la egalitate cu Dicodes NiFe30/7, nu cu setări TC identice.");
+ if(config.atom==="415"){
+  if(config.wire==="nife30"&&config.wraps===7)notes.push("415 Cool + Dicodes NiFe30/7 TCR320: egal preferat cu Zivipf NiFe52/6 TCR310; nu se transferă setări TC de pe GTR.");
+  if(config.wire==="nife52"&&config.wraps===6)notes.push("415 Cool + Zivipf NiFe52/6 TCR310: egal preferat cu Dicodes NiFe30/7.");
+  if(config.wire==="k128"&&config.wraps===6)notes.push("415 Cool + Kanthal K1 28 GA / 6 spire: a doua alegere; 28/5 rămâne disponibil istoric.");
+ }
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
  if(config.atom==="klp"&&config.wire==="nife30")notes.push(
