@@ -4,6 +4,7 @@ const env={window:{}};vm.createContext(env);
 const load=p=>vm.runInContext(fs.readFileSync(path.join('rta-lab',p),'utf8'),env,{filename:p});
 for(const n of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+n);
 fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forEach(n=>load('data/'+n));
+load('atlas-preview/catalog.js');
 for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
 const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
 assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),42);
@@ -41,7 +42,7 @@ assert.equal(m.clSnapshot({getItem:()=>'{malformed'}).available,false);assert.eq
 assert.equal(m.clSnapshot(null).available,false);
 m.selectAtom('gtr');let stress=0;
 for(let i=0;i<w.RTA_LIQUIDS.length;i++){a.state.liquidIndex=i;const result=m.contextual();assert.equal(result.builds.length,3);assert.equal(result.config.atom,'gtr');stress++;}
-assert.equal(stress,620);assert.equal(JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]),original,'Adapters must preserve all canonical data');
+assert.equal(stress,700);assert.equal(JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]),original,'Adapters must preserve all canonical data');
 const duel=w.RTA_ATLAS_DUEL;
 const base=c.config('klp',{wire:'nife30',wraps:6,power:16,temp:220});
 assert.equal(duel.pick(base,'left'),true);
@@ -55,7 +56,7 @@ const multi=duel.compare(duel.state.left,c.defaultConfig('gtone'));
 assert.ok(multi.changed.length>=3,'Changing platform and material cannot be advertised as a one-variable A/B');
 assert.ok(multi.left.result.dimensions.pleasure===null&&multi.right.result.dimensions.pleasure===null);
 assert.equal(duel.compare({atom:'invalid'},duel.state.left),null);
-console.log('ATLAS MODULES PASS: 16 platforms / 42 units, all permitted materials and objectives, 620-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
+console.log('ATLAS MODULES PASS: 16 platforms / 42 units, all permitted materials and objectives, 700-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
 
 const market=w.RTA_ATLAS_MARKET;
 assert.equal(market.data.rows.length,40);assert.equal(new Set(market.data.rows.map(e=>e.id)).size,40);
@@ -75,14 +76,14 @@ assert.ok(market.match(market.data.rows.find(e=>e.id==='bn-prelude'))>=0,'Explic
 assert.ok(market.match(market.data.rows.find(e=>e.id==='manabush-powwow'))>=0);
 assert.equal(market.match({match:{brand:'FlavourArt',name:'Maxx Blend'}}),-1,'Ambiguous catalog keys fail closed');
 assert.equal(market.qualifying({...market.data.rows[0],sourceIds:['fabricated']}),false);
-assert.equal(w.RTA_LIQUIDS.length,620);
+assert.equal(w.RTA_LIQUIDS.length,700);
 assert.equal(market.select('NET complex').at(-1).id,'lt-baffometto-reserve','Limited author identity follows clearly attributed reviews');
 
 
 const sameSourceRows=market.select('NET simplu').filter(e=>e.sourceIds[0]==='bn');
 assert.equal(JSON.stringify(sameSourceRows.map(e=>e.name)),JSON.stringify([...sameSourceRows.map(e=>e.name)].sort((x,y)=>('Black Note '+x).localeCompare('Black Note '+y,'ro'))),'Equal dated sources have a stable name tie-break');
 
-console.log('MARKET EVIDENCE PASS: 40 sourced entries, four complete categories, deterministic capped lists, no invented consensus, explicit aliases and version isolation; 620 catalog preserved.');
+console.log('MARKET EVIDENCE PASS: 40 sourced entries, four complete categories, deterministic capped lists, no invented consensus, explicit aliases and version isolation; 700 catalog preserved.');
 
 assert.ok(market.watch(w.RTA_LIQUIDS[market.match(market.data.rows.find(e=>e.id==='manabush-powwow'))]).includes('nu este probă A/B'));
 assert.equal(market.watch({name:'Profil liber',isFreeProfile:true}),'');
@@ -92,5 +93,5 @@ assert.equal(m.sameStored({wire:'k128',wraps:6},{wraps:6,wire:'k128'}),true,'Key
 
 assert.equal(w.RTA_ATLAS_CONTEXT.profile({reviewId:'fabricated'}),null);
 for(const entry of market.data.rows){const sourceProfile=w.RTA_ATLAS_CONTEXT.profile({reviewId:entry.id});assert.equal(sourceProfile.sourceReview,entry.id);assert.equal(sourceProfile.class,entry.category);const result=a.compose(a.state.liquidIndex,'magic','evening',{liquid:sourceProfile});assert.equal(result.distinctBuilds,9);assert.equal(a.evidenceFor(result.items[0].builds[0],sourceProfile).kind,'model');assert.ok(market.watch(sourceProfile).includes('nu este probă A/B'));}
-assert.equal(w.RTA_LIQUIDS.length,620);
+assert.equal(w.RTA_LIQUIDS.length,700);
 console.log('REVIEW PROFILE PASS: all 40 source profiles can use 3×3 estimates without catalog insertion or exact-build review claims.');

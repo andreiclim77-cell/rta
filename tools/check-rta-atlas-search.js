@@ -3,12 +3,14 @@ const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/st
 const env={window:{}};vm.createContext(env);const load=p=>vm.runInContext(fs.readFileSync('rta-lab/'+p,'utf8'),env,{filename:p});
 for(const n of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+n);
 fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forEach(n=>load('data/'+n));
+load('atlas-preview/catalog.js');
 for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/liquid-picker.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
 const w=env.window,s=w.RTA_ATLAS_SEARCH,c=w.RTA_SENSORY_CORE,all=w.RTA_LIQUIDS,original=JSON.stringify([all,w.RTA_CORE.atoms,c.observations,c.personalPreferences]);
-assert.equal(s.find().total,620);assert.equal(s.find('x').total,0);assert.equal(s.find('no-such-liquid-827379').total,0);
+assert.equal(s.find().total,700);assert.equal(s.find('x').total,0);assert.equal(s.find('no-such-liquid-827379').total,0);
 for(let i=0;i<all.length;i++)assert.ok(s.find(all[i].brand+' '+all[i].name).rows.some(r=>r.index===i),'Every catalog identity remains reachable: '+i);
-const b=s.find('Balkan Tabaccheria');assert.ok(b.total>0);assert.equal(b.rows[0].liquid.name,'Balkan Mixture');assert.ok(b.rows.every(r=>r.liquid.brand==='La Tabaccheria'&&/Balkan/i.test(r.liquid.name+' '+r.liquid.profile)));
-assert.equal(s.find('Virginia Hangsen').rows[0].liquid.name,'Virginia','An exact brand/name identity wins over longer names even when query words are reversed');
+const b=s.find('Balkan Centenary');assert.ok(b.total>0);assert.equal(b.rows[0].liquid.name,'Balkan Milestone');assert.ok(b.rows.every(r=>r.liquid.brand==='Centenary Mods'&&/Balkan/i.test(r.liquid.name+' '+r.liquid.profile)));
+assert.deepEqual(Array.from(s.find('Balcan Centenary').rows,r=>r.index),Array.from(b.rows,r=>r.index),'Balcan is a search spelling alias of Balkan, never a new liquid');
+assert.equal(s.find('Virginia Hangsen').rows[0].liquid.name,'Virginia Tobacco','An exact brand/name identity wins over longer names even when query words are reversed');
 assert.ok(s.find('Virgnia').approximate,'A one-character omission must be identified as approximate');
 assert.ok(s.find('Vigrinia').approximate,'A transposition must be identified as approximate');
 for(const family of [...new Set(all.map(l=>l.class))]){const rows=s.find('',{family});assert.equal(rows.total,all.filter(l=>l.class===family).length);assert.ok(rows.rows.every(r=>r.liquid.class===family));}
@@ -34,4 +36,4 @@ for(const wire of Object.keys(c.wires)){
 w.RTA_ATLAS_PREVIEW.state.liquidIndex=619;assert.equal(JSON.stringify(m.state.config),before);assert.equal(JSON.stringify(w.RTA_ATLAS_DUEL.state),duelBefore);
 assert.equal(JSON.stringify([all,w.RTA_CORE.atoms,c.observations,c.personalPreferences]),original,'Search/ranking must never mutate canonical data');
 assert.equal(JSON.parse(fs.readFileSync('rta-lab/manifest.webmanifest')).start_url,'./atlas/');
-console.log('ATLAS SEARCH PASS: all 620 identities reachable, multiword/diacritic/facet/typo/empty queries, exact engine top-five rankings, all 40 Market records, canonical data and selected builds preserved.');
+console.log('ATLAS SEARCH PASS: all 700 identities reachable, multiword/diacritic/facet/typo/empty queries, exact engine top-five rankings, all 40 Market records, canonical data and selected builds preserved.');

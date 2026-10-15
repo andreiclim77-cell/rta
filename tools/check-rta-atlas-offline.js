@@ -5,7 +5,7 @@ const root=path.resolve('.'),folder=path.resolve('artifacts/atlas-v02-mobile'),p
 const mime={'.html':'text/html','.js':'application/javascript','.css':'text/css','.json':'application/json','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.ttf':'font/ttf','.woff2':'font/woff2'};
 let failWarmAsset=false;
 const server=http.createServer((request,response)=>{
- if(failWarmAsset&&request.url.includes('/data/liquids-2a.js')){response.writeHead(503).end('temporary failure');return;}
+ if(failWarmAsset&&request.url.includes('/catalog.js')){response.writeHead(503).end('temporary failure');return;}
  let file=path.resolve(root,'.'+decodeURIComponent(new URL(request.url,'http://localhost').pathname));
  if(!file.startsWith(root+path.sep)||file.includes(path.sep+'.git'+path.sep)){response.writeHead(403).end();return;}
  if(fs.existsSync(file)&&fs.statSync(file).isDirectory())file=path.join(file,'index.html');
@@ -33,16 +33,16 @@ async function main(){
   assert.equal(await page.evaluate(async()=>!!(await caches.match('/sentinel'))),true,'Atlas activation must preserve other cache owners');
   const cacheSize=await page.evaluate(async route=>{const prefix=route==='atlas'?'rta-atlas-release-':'rta-atlas-preview-';const key=(await caches.keys()).find(k=>k.startsWith(prefix));return (await (await caches.open(key)).keys()).length;},targetRoute);assert.ok(cacheSize>=60,'Offline manifest must be fully installed');
   failWarmAsset=true;await page.reload({waitUntil:'domcontentloaded'});await page.waitForSelector('#matchButton',{state:'attached'});
-  assert.equal(await page.evaluate(()=>window.RTA_LIQUIDS.length),620,'Warm HTTP 503 must recover the verified cached catalog');
+  assert.equal(await page.evaluate(()=>window.RTA_LIQUIDS.length),700,'Warm HTTP 503 must recover the verified cached catalog');
   assert.equal(await page.locator('.atlas-unavailable').count(),0);failWarmAsset=false;
   await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});
-  await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===620);
+  await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===700);
   assert.equal(await page.locator('#atlasConnection').textContent().then(t=>t.includes('Offline')),true,'Offline state must be explained');
   await page.locator('#cinemaPause').click();await page.waitForFunction(()=>{const img=document.querySelector('.cinema-frame.is-visible img');return img?.complete&&img.naturalWidth>0;});
   await page.waitForTimeout(850);await page.screenshot({path:path.join(folder,prefix+'offline-home-390.png')});
   for(const route of ['liquid','atomizer','wire','market','duel']){
    await page.locator('.bottom-tabs [data-route="'+route+'"]').click();
-   if(route==='liquid'){await page.locator('#liquidSearch').fill('Mixture Balkan Tabaccheria');await page.locator('#liquidSearch').press('Enter');assert.equal(await page.locator('.result-card').count(),3,'Explicit offline choice must produce three atomizers');}
+   if(route==='liquid'){await page.locator('#liquidSearch').fill('Milestone Balcan Centenary Mods');await page.locator('#liquidSearch').press('Enter');assert.equal(await page.locator('.result-card').count(),3,'Explicit offline choice must produce three atomizers');}
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),route);
    assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),true,'Offline overflow '+route);
    assert.equal(await page.locator('.page:not([hidden])').count(),1,'Only one module is visible');
@@ -60,7 +60,7 @@ async function main(){
    await context.setOffline(false);await page.goto(origin+'/rta-lab/atlas-preview/');
    await page.waitForFunction(()=>navigator.serviceWorker.controller?.scriptURL.includes('/atlas-preview/'));
    assert.equal(await page.evaluate(async()=>!!(await caches.keys()).find(k=>k.startsWith('rta-atlas-release-'))),true,'Preview activation must preserve release cache');
-   await context.setOffline(true);await page.goto(origin+'/rta-lab/atlas/');await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===620);
+   await context.setOffline(true);await page.goto(origin+'/rta-lab/atlas/');await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===700);
    assert.equal(await page.locator('.atlas-unavailable').count(),0,'Release returns offline after independent preview activation');
    assert.equal(await page.evaluate(()=>localStorage.getItem('rta-cl-physical-units-v1-20261014')),cl);
    await context.setOffline(false);
@@ -69,7 +69,7 @@ async function main(){
    await page.evaluate(async()=>{const registration=(await navigator.serviceWorker.getRegistrations()).find(r=>r.scope===location.origin+'/rta-lab/');registration.active.postMessage('CLEAR_RTA_LAB_CACHES');});
    await page.evaluate(async()=>{for(let attempt=0;attempt<100;attempt++){if(!(await caches.keys()).some(k=>k.startsWith('rta-lab-v')))return;await new Promise(resolve=>setTimeout(resolve,20));}throw new Error('V10 cache clear did not complete');});
    assert.equal(await page.evaluate(async()=>!!(await caches.keys()).find(k=>k.startsWith('rta-atlas-release-'))),true,'V10 refresh must preserve Atlas release cache');
-   await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===620);
+   await context.setOffline(true);await page.reload({waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===700);
    assert.equal(await page.evaluate(()=>localStorage.getItem('rta-cl-physical-units-v1-20261014')),cl);
    await context.setOffline(false);
    await page.evaluate(async()=>{await caches.open('rta-lab-coexistence-sentinel').then(c=>c.put('/v10-sentinel',new Response('V10 owner')));const registration=await navigator.serviceWorker.register('/sw.js',{scope:'/'});const worker=registration.installing||registration.waiting||registration.active;await new Promise((resolve,reject)=>{const inspect=()=>{if(worker.state==='activated')resolve();if(worker.state==='redundant')reject(new Error('Guide service worker installation failed'));};worker.addEventListener('statechange',inspect);inspect();});});
@@ -80,12 +80,12 @@ async function main(){
    await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===620);
    assert.equal(await page.evaluate(async()=>(await navigator.serviceWorker.getRegistrations()).some(r=>r.scope===location.origin+'/rta-lab/atlas/')),true,'V10 refresh must preserve the independent Atlas service worker');
    assert.equal(await page.evaluate(()=>localStorage.getItem('rta-cl-physical-units-v1-20261014')),cl,'V10 refresh must preserve CL saved/draft bytes');
-   await context.setOffline(true);await page.goto(origin+'/rta-lab/atlas/');await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===620);
+   await context.setOffline(true);await page.goto(origin+'/rta-lab/atlas/');await page.waitForFunction(()=>window.RTA_LIQUIDS?.length===700);
    assert.equal(await page.locator('.atlas-unavailable').count(),0,'Atlas remains available offline after real guide and V10 refresh journeys');
   }
   assert.equal(errors.length,0,errors.join(' | '));await context.close();
   const failed=await browser.newContext({viewport:{width:360,height:800},serviceWorkers:'block'});
-  await failed.route('**/data/liquids-2a.js?**',route=>route.abort());const failedPage=await failed.newPage();await failedPage.goto(origin+'/rta-lab/'+targetRoute+'/',{waitUntil:'domcontentloaded'});
+  await failed.route('**/catalog.js?**',route=>route.abort());const failedPage=await failed.newPage();await failedPage.goto(origin+'/rta-lab/'+targetRoute+'/',{waitUntil:'domcontentloaded'});
   await failedPage.waitForSelector('.atlas-unavailable');assert.equal(await failedPage.locator('#resultCards .result-card').count(),0,'Missing catalog input must not yield fake complete results');
   assert.equal(await failedPage.locator('.atlas-unavailable').textContent().then(t=>t.includes('date incomplete')),true);await failedPage.screenshot({path:path.join(folder,prefix+'cold-missing-data-360.png')});await failed.close();
   console.log('ATLAS OFFLINE PASS: 16 image hashes, fully installed scoped cache, six functioning modules offline, real portraits, existing cache owners and CL saved/draft bytes preserved.');

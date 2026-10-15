@@ -35,7 +35,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   for(const card of await page.locator('.material-path').all()){
    const wire=await card.locator('[data-journey-wire]').first().getAttribute('data-journey-wire');
    const actual=await card.locator('[data-journey-liquid]').evaluateAll(buttons=>buttons.map(b=>Number(b.dataset.journeyLiquid)));
-   const expected=await page.evaluate(wire=>{const m=window.RTA_ATLAS_MODULES;return window.RTA_SENSORY_CORE.matchLiquids(m.wireConfig(m.state.atom,wire),window.RTA_LIQUIDS,m.state.objective,5).map(r=>r.index);},wire);assert.deepEqual(actual,expected,'Each material has its own exact top-five liquids');
+   const expected=await page.evaluate(wire=>{const m=window.RTA_ATLAS_MODULES;return window.RTA_ATLAS_SEARCH.top(m.wireConfig(m.state.atom,wire),m.state.objective,5).map(r=>r.index);},wire);assert.deepEqual(actual,expected,'Each material has its own exact top-five liquids');
   }
   await page.locator('.material-paths').scrollIntoViewIfNeeded();await shot(page,'flow-atlas-three-wires-'+width+'.png');
   await page.goto(origin+'/rta-lab/atlas/');await page.waitForSelector('#matchButton',{state:'attached'});
@@ -49,17 +49,17 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   await shot(page,'liquid-first-empty-'+width+'.png');
   assert.equal(await page.locator('.quick-liquids').count(),0,'Fixed three-liquid demos must be removed');
   await page.locator('#clearSearch').click();await page.locator('[data-liquid-picker="liquid"] .liquid-facets summary').click();
-  await page.locator('[data-liquid-picker="liquid"] [data-lp-filter="family"]').selectOption('NET complex');await page.locator('[data-liquid-picker="liquid"] [data-lp-filter="brand"]').selectOption('La Tabaccheria');await page.locator('#liquidSearch').fill('Mixture Balkan');
+  await page.locator('[data-liquid-picker="liquid"] [data-lp-filter="family"]').selectOption('NET complex');await page.locator('[data-liquid-picker="liquid"] [data-lp-filter="brand"]').selectOption('Centenary Mods');await page.locator('#liquidSearch').fill('Milestone Balkan');
   assert.ok(await page.locator('#liquidSuggestions [data-lp-index]').count()>0);await page.locator('#liquidSearch').press('Enter');
-  assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().name),'Balkan Mixture');
+  assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().name),'Balkan Milestone');
   assert.equal(await page.locator('#matchButton').isEnabled(),true);assert.equal(await page.locator('.result-card').count(),3);assert.equal(await page.locator('.live-scene').isVisible(),true);
-  await page.locator('#liquidSearch').fill('Virgnia');assert.ok(await page.locator('[data-liquid-picker="liquid"] [data-lp-count]').textContent().then(t=>t.includes('Nicio potrivire exactă')||t.includes('0 din')));await page.locator('#liquidSearch').press('Escape');await page.locator('#liquidSearch').press('Enter');assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().name),'Balkan Mixture');
-  await page.locator('#liquidSearch').fill('Mixture Balkan');await shot(page,'smart-liquid-'+width+'.png');await page.locator('#liquidSearch').press('Escape');
+  await page.locator('#liquidSearch').fill('Virgnia');assert.ok(await page.locator('[data-liquid-picker="liquid"] [data-lp-count]').textContent().then(t=>t.includes('Nicio potrivire exactă')||t.includes('0 din')));await page.locator('#liquidSearch').press('Escape');await page.locator('#liquidSearch').press('Enter');assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().name),'Balkan Milestone');
+  await page.locator('#liquidSearch').fill('Milestone Balkan');await shot(page,'smart-liquid-'+width+'.png');await page.locator('#liquidSearch').press('Escape');
   assert.equal(await page.locator('#liquidComparison .comparison-track').count(),21,'Three actual atomizers on seven model signals');
   await chartShot(page,page.locator('#liquidComparison .sensory-comparison'),'flow-liquid-comparison-'+width+'.png');
   await page.locator(nav+' [data-route="atomizer"]').click();
   await page.locator('#atlasPlatform').selectOption('klp');await page.locator('#atlasWire').selectOption('k128');await page.locator('#atlasObjective').selectOption('th');
-  const assertTop=async()=>assert.equal(await page.evaluate(()=>JSON.stringify([...document.querySelectorAll('#atlasTopLiquids [data-context-liquid]')].map(b=>Number(b.dataset.contextLiquid)))===JSON.stringify(window.RTA_SENSORY_CORE.matchLiquids(window.RTA_ATLAS_MODULES.state.config,window.RTA_LIQUIDS,window.RTA_ATLAS_MODULES.state.objective,5).map(r=>r.index))),true,'Top five must follow the exact current full config and objective');
+  const assertTop=async()=>assert.equal(await page.evaluate(()=>JSON.stringify([...document.querySelectorAll('#atlasTopLiquids [data-context-liquid]')].map(b=>Number(b.dataset.contextLiquid)))===JSON.stringify(window.RTA_ATLAS_SEARCH.top(window.RTA_ATLAS_MODULES.state.config,window.RTA_ATLAS_MODULES.state.objective,5).map(r=>r.index))),true,'Top five must follow the exact current full config and objective');
   await assertTop();await page.locator('#atlasTopLiquids').scrollIntoViewIfNeeded();await shot(page,'smart-atlas-top5-'+width+'.png');
   await page.locator('#atlasWire').selectOption('nife52');await page.locator('#atlasObjective').selectOption('layers');await assertTop();
   let config=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config));
@@ -86,8 +86,8 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   assert.equal(await page.evaluate(key=>localStorage.getItem(key),storageKey),saved);assert.equal(errors.length,0,errors.join(' | '));await context.close();
  }
  const recovering=await browser.newContext({viewport:{width:390,height:844}}),recoverPage=await recovering.newPage();let aborted=0;
- await recovering.route('**/data/liquids-2a.js?*',route=>{if(aborted++===0)return route.abort();return route.continue();});
- await recoverPage.goto(origin+'/rta-lab/atlas/#liquid');await recoverPage.waitForFunction(()=>!!window.RTA_ATLAS_PREVIEW&&window.RTA_LIQUIDS?.length===620&&!document.querySelector('.atlas-unavailable'),null,{timeout:30000});
+ await recovering.route('**/catalog.js?*',route=>{if(aborted++===0)return route.abort();return route.continue();});
+ await recoverPage.goto(origin+'/rta-lab/atlas/#liquid');await recoverPage.waitForFunction(()=>!!window.RTA_ATLAS_PREVIEW&&window.RTA_LIQUIDS?.length===700&&!document.querySelector('.atlas-unavailable'),null,{timeout:30000});
  assert.ok(aborted>=1,'The first incomplete load must actually be injected');assert.equal(await recoverPage.locator('#liquidSearch').inputValue(),'');assert.equal(await recoverPage.locator('.result-card').count(),0);
  await shot(recoverPage,'flow-recovered-incomplete-390.png');await recovering.close();
  const missingModule=await browser.newContext({viewport:{width:390,height:844},serviceWorkers:'block'});await missingModule.route('**/duel.js?*',route=>route.abort());const missingPage=await missingModule.newPage();await missingPage.goto(origin+'/rta-lab/atlas/');await missingPage.waitForSelector('.atlas-unavailable');await missingPage.locator('.identity').click();assert.equal(await missingPage.locator('.page:not([hidden])').count(),0,'A missing instrument must not appear as a complete application');assert.equal(await missingPage.locator('#atlasLoading').isVisible(),false);await shot(missingPage,'flow-missing-module-390.png');await missingModule.close();

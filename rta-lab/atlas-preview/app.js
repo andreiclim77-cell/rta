@@ -1,5 +1,5 @@
 /* RTA Sensory Atlas · standalone Home + Liquid Cinema prototype.
-   Real 620 catalog / 16 platforms / established Mood Match + Sensory DNA.
+   Verified commercial 700 catalog / 16 platforms / established Mood Match + Sensory DNA.
    Concept preview: no edits to V10 engine, no invented reviews, percentages or product photos. */
 (function(){
 "use strict";
@@ -7,7 +7,7 @@ const catalog=window.RTA_LIQUIDS||[];
 const atoms=window.RTA_CORE?.atoms||[];
 const core=window.RTA_SENSORY_CORE;
 const moodEngine=window.RTA_MOOD_MATCH;
-if(!core||!moodEngine||catalog.length!==620||atoms.length!==16)return;
+if(!core||!moodEngine||catalog.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1'||atoms.length!==16)return;
 const moodList=moodEngine.moods, momentList=moodEngine.moments;
 const defaultLiquid=(()=>{
  const exact=catalog.findIndex(x=>x.brand==="La Tabaccheria"&&x.name==="Balkan Mixture");
@@ -20,7 +20,7 @@ const navigationTrail=[];
 const routePositions=new Map();
 const esc=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;");
 const norm=s=>String(s||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
-const liquidName=l=>[l?.brand,l?.name].filter(Boolean).join(" · ");
+const liquidName=l=>window.RTA_ATLAS_SEARCH?.label(l)||[l?.brand,l?.name].filter(Boolean).join(" · ");
 const moodById=id=>moodList.find(m=>m.id===id);
 const momentById=id=>momentList.find(m=>m.id===id);
 const atomById=id=>atoms.find(a=>a.id===id);
@@ -265,7 +265,8 @@ function selectLiquid(index,manual=true){
  if(!Number.isInteger(index)||!catalog[index])return false;
  state.freeProfile=null;state.liquidIndex=index;state.fromDemo=!manual;state.expandedId=null;
  element("liquidSearch").value=manual?liquidName(catalog[index]):'';
- element("selectedLiquid").innerHTML=manual?'<span class="check" aria-hidden="true">✓</span><span><b>'+esc(liquidName(catalog[index]))+'</b> · ales de tine</span>':'<span>Caută și alege lichidul tău din cele 620. Rezultatele apar după alegere.</span>';
+ element("selectedLiquid").innerHTML=manual?'<span class="check" aria-hidden="true">✓</span><span><b>'+esc(liquidName(catalog[index]))+'</b> · ales de tine</span>':'<span>Caută și alege lichidul tău din cele '+catalog.length+'. Rezultatele apar după alegere.</span>';
+ if(manual&&window.RTA_ATLAS_SEARCH)element("selectedLiquid").insertAdjacentHTML("beforeend",window.RTA_ATLAS_SEARCH.sourceNote(catalog[index]));
  element("liquidSuggestions").hidden=true;
  element("liquidSearch").setAttribute("aria-expanded","false");
  element("liquidSearch").removeAttribute("aria-activedescendant");

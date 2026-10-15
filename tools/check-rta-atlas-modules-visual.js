@@ -15,7 +15,7 @@ async function main(){
    const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
-   await page.locator('#atlasLiquidSearch').fill('Mixture Balkan Tabaccheria');
+   await page.locator('#atlasLiquidSearch').fill('Milestone Balcan Centenary Mods');
    await page.locator('#atlasLiquidSearch').press('Enter');
    await page.waitForTimeout(650);
    check(await page.locator('#pageAtomizer').isVisible(),'Hash deep link must open Atomizer Atlas');
@@ -71,7 +71,7 @@ async function main(){
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Wire horizontal overflow');
    await shot(page,'wire-'+width+'.png');
    await page.locator('#pageWire [data-route="liquid"]').click();
-   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Balkan Mixture')),'Cross-module navigation must retain liquid');
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Balkan Milestone')),'Cross-module navigation must retain liquid');
    if(await page.locator('#pageLiquid .open-builds').first().getAttribute('aria-expanded')!=='true')await page.locator('#pageLiquid .open-builds').first().click();
    const openCfg=await page.locator('#pageLiquid [data-wire-open]').first().getAttribute('data-wire-open');
    await page.locator('#pageLiquid [data-wire-open]').first().click();
@@ -126,7 +126,7 @@ async function main(){
    check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('profil din review')),'Unmatched edition is an explicit source profile');
    check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.currentLiquid().sourceReview)==='lt-single-latakia','Exact source identity remains attached');
    check(await page.locator('#resultCards .result-card').count()===3,'Reviewed profile must produce three platforms');
-   check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===620,'No 621st liquid from Market profile');
+   check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===700,'No 701st liquid from Market profile');
    await page.locator(width<760?'.bottom-tabs [data-route="market"]':'.top-nav [data-route="market"]').click();
    await page.locator('.market-trail summary').first().click();
    await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('.market-trail[open] ol')).opacity)===1);
@@ -150,8 +150,8 @@ async function main(){
    await shot(page,'market-photo-'+width+'.png');
    await page.locator('[data-market-explore="bn-prelude"]').click();
    check(await page.locator('#pageLiquid').isVisible(),'Explicit explore action must open Liquid Match');
-   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia (Prelude)')),'Market must transfer the associated repertoire without adding a liquid');
-   check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===620,'Catalog must stay at 620');
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia')),'Market must transfer the associated repertoire without adding a liquid');
+   check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===700,'Catalog must stay at 700');
    await page.locator('.free-profile summary').click();
    await page.locator('#freeProfileName').fill('W'.repeat(80));
    await page.locator('#freeProfileForm button[type="submit"]').click();
@@ -188,7 +188,7 @@ async function main(){
    check(JSON.stringify(await page.locator('.wave').evaluateAll(nodes=>nodes.map(n=>getComputedStyle(n).strokeDashoffset)))===JSON.stringify(wavesBefore),'Paused scene must stay static');
    await page.locator('#scenePause').click();
    await page.locator('.free-profile summary').click();await page.locator('#returnCatalog').click();
-   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia (Prelude)')),'Return restores the explicit preceding catalog liquid');
+   check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia')),'Return restores the explicit preceding catalog liquid');
    check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.freeProfile)===null,'Catalog return clears only the free profile');
    if(width===1440){
     await page.locator('.top-nav [data-route="home"]').click();await shot(page,'home-1440.png');

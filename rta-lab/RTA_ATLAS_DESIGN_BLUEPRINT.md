@@ -1,8 +1,22 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
+## Stare de lucru — revizia întregii biblioteci, 15.10.2026
 
+PR #51 DRAFT, branch `feature/atlas-library-700-20261015`; baza `7ad3813c42d22841496e14884ac295b8bcd75ed3`. Cerința este revizia integrală, nu doar adăugarea celor două exemple Centenary. Catalogul Atlas are acum 700 de produse / 61 de mărci, cu surse și ediții explicite. Fișier editabil: `catalog/liquids-20261015.json`; SHA256 `d4b29f707c0a964ab3c94188bb11be283eae107dcdd23d29a9e842392fee3a11`; cache `690635981392b410` / 67 resurse / 63 fișiere release.
 
-## Stare curentă — încadrare corectată, publicată și verificată, 15.10.2026
+Toate cele 620 de rânduri inițiale au o decizie în `catalog/LEGACY_RECONCILIATION_20261015.json`: 500 de rânduri confirmate devin 469 identități distincte (31 dubluri/aliasuri comasate); se adaugă 231 identități documentate. Se scot din catalogul comercial 100 Profil reper și benchmarkul personal. Alte 8 rânduri au profil în afara scopului, unul are surse contradictorii și 10 nu au identitatea/ediția confirmată suficient; acestea nu sunt declarate false și rămân recuperabile în datele originale V10. Nu se inventează aliasuri către altă rețetă.
+
+Clase: 210 NET simplu, 253 NET complex, 107 Tutun simplu, 130 Tutun complex. Proveniență: 384 descrieri oficiale, 287 de comerciant atribuit și 29 ediții/observații din review-uri istorice. 505 produse cu profil suficient intră în topurile automate; celelalte 195 rămân căutabile și selectabile cu limita afișată. Niciun număr lipsă de review-uri nu este publicat ca zero, iar ordinea unui magazin nu este prezentată ca popularitate globală.
+
+Reținerea verificată acoperă inclusiv Blendfeel SOLO/Private Reserve, Azhad Semplici/Hyperion/Pure/Signature, La Tabaccheria clasic/Macerati/Elite, Pod Salt Origin, Flavorah, FlavourArt, The Flavor Apprentice, Flavor West, Inawera, House of Liquid, Charlie Noble și alte mărci vechi. Pro Vape / Cronos și Black Note / Concerto au marca corectată fără duplicarea produsului. Formulele distincte (de exemplu RY4 Double CC și Manabush Powwow Extended) nu sunt comasate ca simple ambalaje. Van&Illa nu primește Cavendish pe care producătorul îl exclude; Booms Origin nu primește eticheta dulce dintr-o negație; Liquor Tobacco păstrează absintul/lemnul dulce.
+
+Teste locale ale datelor: 700 identități și căutări, toate cele 500 aliasuri/rânduri vechi păstrate, 756 topuri configurație permisă/obiectiv, 140 contexte, stress pe 700; PASS. Motorul original trece separat cu 620, 16 platforme, 126 variante permise; KLP NiFe30/NiFe52 TC și CL saved/draft sunt păstrate. Diferența față de baza protejată pentru `data/`, `engine.js`, `mood-match.js`, `index.html` este goală.
+
+CI pe checkpointul anterior `efaf78f5163a477918acd17238e5274d9e43312b`: RTA 38740026843, Market 38740026849, Visual 38740026866 — toate SUCCESS. Aceste rulări NU certifică datasetul revizuit ulterior de mai sus. Pe noul dataset: browserul local 360×800 / 390×844 / 1440×1000, căutările mărcilor reintegrate și cele zece combinații ecran/font real 18/24 px sunt PASS. Offline, cache-upgrade, CI final, inspecția capturilor CI și publicarea sunt încă PENDING.
+
+Motorul, datele originale V10, inventarul 16 platforme / 42 exemplare, preferințele și configurațiile personale nu sunt modificate. Hall of Fame păstrează cele 40 de recenzii atribuite; descrierile comerciale și noile fișe nu inventează consens ori rezultate personale. Direcția vizuală și publicarea au aprobarea expresă anterioară; se publică după verificările candidatului exact, fără o nouă cerere pentru această revizie de date. Selecția de 700 este editorială documentată, nu un clasament global demonstrat al căutărilor/vânzărilor.
+
+## Producție verificată înaintea reviziei bibliotecii — încadrare, 15.10.2026
 
 **Acest checkpoint prevalează asupra etapelor istorice de mai jos.** Corecția reclamată în captura telefonului este publicată la https://ghid-rta.ro/rta-lab/atlas/?v=fit-20261015 . PR #49 și #50 sunt MERGED. Candidat final 319a777da0874ae4b1613c60e91cbab0ae2b0fe3; integrare 78385907e6ce37b3ba49aed5e16dce4401e65275; Pages 38725622934 și RTA post-merge 38725623138 — SUCCESS. Aprobarea expresă de publicare primită anterior a fost aplicată.
 

@@ -4,6 +4,7 @@ const env={window:{}};vm.createContext(env);
 const load=p=>vm.runInContext(fs.readFileSync(path.join('rta-lab',p),'utf8'),env,{filename:p});
 for(const p of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+p);
 fs.readdirSync('rta-lab/data').filter(p=>/^liquids-.*\.js$/.test(p)).sort().forEach(p=>load('data/'+p));
+load('atlas-preview/catalog.js');
 for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js'])load(p);
 const w=env.window,ctx=w.RTA_ATLAS_CONTEXT,api=w.RTA_ATLAS_PREVIEW,core=w.RTA_SENSORY_CORE;
 const original=JSON.stringify([w.RTA_LIQUIDS,w.RTA_CORE.atoms,core.observations,core.personalPreferences]);

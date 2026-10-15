@@ -35,7 +35,7 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
    await page.goto(origin+'/rta-lab/atlas/');await page.waitForFunction(()=>!!window.RTA_ATLAS_SEARCH_UI&&!document.body.classList.contains('atlas-loading'));await stable(page);
    if(font)assert.ok(await page.evaluate(()=>parseFloat(getComputedStyle(document.querySelector('.comparison-track small')||document.body).fontSize))>=font,'The browser preference must really enlarge text');
    await fit(page,label+' Home');await shot(page,'fit-'+label+'-01-home.png');
-   await page.locator('.primary-action').click();await page.locator('#liquidSearch').fill('Balkan Mixture');await page.locator('#liquidSearch').press('Enter');await stable(page);await fit(page,label+' Liquid');
+   await page.locator('.primary-action').click();await page.locator('#liquidSearch').fill('Balkan Milestone');await page.locator('#liquidSearch').press('Enter');await stable(page);await fit(page,label+' Liquid');
    await align(page,'#liquidComparison');assert.equal(await page.locator('#liquidComparison .comparison-track').count(),21);await shot(page,'fit-'+label+'-02-chart.png');await align(page,'#liquidComparison .comparison-axis');await shot(page,'fit-'+label+'-02-values.png');
    await align(page,'.result-card');await shot(page,'fit-'+label+'-03-result.png');
    await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');await page.locator('#atlasWire').selectOption('nife30');await stable(page);await fit(page,label+' Atlas');await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await shot(page,'fit-'+label+'-04-atlas.png');
@@ -47,7 +47,7 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
    await align(page,'#duelDifferences');await shot(page,'fit-'+label+'-10-duel-results.png');
    await page.locator('#atlasBack').click();await stable(page);assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'market');await fit(page,label+' Back');assert.equal(errors.length,0,errors.join(' | '));
    console.log('LAYOUT CASE PASS: '+label+' '+height+'px; six modules, unclipped text, header/tabs, exact selections and charts.');count++;
-  }finally{await context.close();}
+  }finally{await context.close();if(profile){const resolved=path.resolve(profile),owned=path.resolve('artifacts')+path.sep;assert.ok(resolved.startsWith(owned)&&path.basename(resolved).startsWith('layout-profile-'),'Only this test-created profile may be removed');fs.rmSync(resolved,{recursive:true,force:true});}}
  }
  console.log('ATLAS LAYOUT VISUAL PASS: '+count+' viewport/font cases, real browser minimum fonts 18/24px, six modules, text bounds, dynamic chrome and selected-value captions.');
  }finally{await browser.close();await new Promise(r=>server.close(r));}}

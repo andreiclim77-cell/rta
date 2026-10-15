@@ -1,5 +1,5 @@
 /* RTA Sensory Atlas isolated HOME + LIQUID MATCH prototype regression.
- * Reuses source catalog (620), physical models (16), Mood Match 7x5,
+ * Reuses source catalog (700), physical models (16), Mood Match 7x5,
  * without altering the existing V10 live app or inventing public reviews.
  */
 "use strict";
@@ -11,6 +11,7 @@ vm.createContext(env);
 function load(p){vm.runInContext(fs.readFileSync(path.join(root,p),"utf8"),env,{filename:p});}
 for(const name of ["atoms-1.js","atoms-2.js","atoms-3.js","wires.js","core.js"])load("data/"+name);
 fs.readdirSync(path.join(root,"data")).filter(f=>/^liquids-.*\.js$/.test(f)).sort().forEach(f=>load("data/"+f));
+load('atlas-preview/catalog.js');
 load("data/bell-liquid-fit.js");
 load("data/sensory-core.js");
 load("mood-match.js");
@@ -20,7 +21,7 @@ load("atlas-preview/app.js");
 const lib=env.window,api=lib.RTA_ATLAS_PREVIEW,moods=lib.RTA_MOOD_MATCH.moods,moments=lib.RTA_MOOD_MATCH.moments;
 assert.ok(api&&typeof api.compose==="function","Standalone prototype API missing");
 assert.equal(api.getSourceModel().atoms,16);
-assert.equal(api.getSourceModel().liquids,620);
+assert.equal(api.getSourceModel().liquids,700);
 assert.equal(moods.length,7);
 assert.equal(moments.length,5);
 assert.equal(api.version,"0.2-real-photo-motion");
@@ -149,7 +150,7 @@ assert.ok(v02css.includes('::-webkit-search-cancel-button'),"Avoid native and cu
 assert.ok(v02.includes('results.insertAdjacentElement("afterend",box)'),"Results must precede the airflow explainer");
 
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(refs.length,37,"Expected canonical scripts, photography, Atlas adapters, Duel and responsive fitting");
+assert.equal(refs.length,22,"Expected canonical scripts, photography, Atlas adapters, Duel and responsive fitting");
 assert.ok(html.includes('./layout.css?')&&refs.some(ref=>ref.startsWith('./layout.js?')),'Responsive text fitting must ship with the application');
 for(const ref of refs){
  assert.ok(ref.startsWith("../")||ref.startsWith("./"),"No unknown remote JS");
@@ -161,5 +162,5 @@ assert.ok(refs.findIndex(x=>x.includes("sensory-core.js"))<refs.findIndex(x=>x.i
 assert.ok(refs.findIndex(x=>x.includes("mood-match.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("photo-sources.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("./app.js"))<refs.findIndex(x=>x.includes("./v02.js")));
-console.log("RTA ATLAS PREVIEW PASS: 16 platforms, 620 actual liquids, 4×7×5="+scenarios+
+console.log("RTA ATLAS PREVIEW PASS: 16 platforms, 700 actual liquids, 4×7×5="+scenarios+
  " contexts, nine compatible builds each; visual motion, source honesty and no production modifications.");
