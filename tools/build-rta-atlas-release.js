@@ -13,10 +13,11 @@ for(const relative of inventory(source)){
  if(/\.(js|css|html|svg|webmanifest|json|md|txt)$/.test(relative))bytes=Buffer.from(bytes.toString('utf8').replaceAll('\r\n','\n'));
  if(relative==='index.html'){
   const html=bytes.toString('utf8').replace('Precision Motion Lab Preview','Precision Motion Lab')
-   .replace('PRECISION MOTION LAB / V0.2','PRECISION MOTION LAB / ATLAS').replace('VERSIUNE CANDIDAT','COLECȚIA TA')
+   .replace('/ V0.2</span>','/ ATLAS</span>').replace('VERSIUNE CANDIDAT','COLECȚIA TA')
    .replace('PREVIEW V0.2','PRECISION MOTION LAB')
    .replace('Concept interactiv pentru evaluarea designului. Nu înlocuiește aplicația actuală.','Sursele și limitele dovezilor sunt disponibile la fiecare rezultat. Lab V10 rămâne accesibil separat.')
    .replace('Prototipul animat necesită JavaScript.','Atlas necesită JavaScript.');
+  assert.ok(!/V0\.2|PREVIEW|VERSIUNE CANDIDAT/.test(html),'Release identity must not retain preview labels');
   bytes=Buffer.from(html);
  }
  files.set(relative,bytes);

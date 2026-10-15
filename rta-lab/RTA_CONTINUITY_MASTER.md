@@ -1,8 +1,16 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-## Verificarea candidatului 8480c550 — 15.10.2026
+## Verificare candidat — 15.10.2026
 
-Pe 8480c5508240ad7bdefb26fdfb86d749d509b9c7, Market 38688443129 și Visual 38688443195 sunt SUCCESS. Artifact 11951032081 conține 69 PNG descărcate; inspecția vizuală continuă. RTA 38688443027 a eșuat la compararea receiptului de release: ordinea fișierelor diferă între Windows și Linux, fără diferențe în fișierele aplicației. Generarea sortează acum căile normalizate înaintea receiptului; CI nou este obligatoriu. Releaseul rămâne izolat, ambele PR rămân DRAFT, iar aprobarea vizuală este încă în așteptare.
+790268e35c3524a5997e8a434cf45297b7bf083b: RTA 38688911407, Market 38688911503, Visual 38688911394 sunt SUCCESS. Corecția ordinii receiptului Windows/Linux a fost confirmată în CI. Pe candidatul anterior 8480c5508240ad7bdefb26fdfb86d749d509b9c7: Market 38688443129 și Visual 38688443195 SUCCESS; artifact 11951032081, toate cele 69 PNG descărcate și inspectate în 360×800, 390×844 și 1440×1000. RTA 38688443027 eșuase numai la ordinea receiptului; nu îi atribuiți SUCCESS.
+
+Continuarea adaugă fotografia originală Dicodes RESISTHERM NiFe30, inspectată, cu SHA256/proveniență în media/WIRE_PHOTO_RECEIPT.json. Apare numai când materialul este Dicodes, nu Zivipf. Ambalajul de referință nu este declarat rola personală sau lotul actual. Fotografia generică Zivipf mică, fără identitate vizibilă, a fost respinsă; macrofotografiile lipsă nu sunt fabricate. Testele browser suplimentare ale materialului pe 360/390/1440 și releaseul offline au trecut local; noul CI se verifică la SHA-ul următor. Eticheta ATLAS a rutei finale este acum verificată și nu păstrează V0.2.
+
+Verificare locală suplimentară: toate cele șase rute în 320×568, 768×1024, 844×390 și 1920×1080; patru cazuri cu nume de profil de 80 caractere. PASS, fără overflow/erori de pagină; 28 PNG inspectate. Nu este probă pe un dispozitiv fizic și nu înlocuiește aprobarea estetică.
+
+Au fost verificate și admise 12 vizualuri editoriale din recenziile originale, afișate numai lângă sursa și ediția lor în Market. Originalele sunt nealterate; receiptul media/MARKET_VISUAL_RECEIPT.json păstrează URL/hashuri și excluderile pentru imagini generice sau ediții ilizibile. Nu sunt declarate fotografii ale lotului actual ori ale colecției personale. Cacheul are acum 79 resurse, releaseul 59 fișiere. Testarea cu 80 caractere a identificat text tăiat, deși documentul nu avea overflow; împărțirea pe rânduri a fost corectată și sunt verificate separat limitele etichetelor. Retestarea locală a celor 28 de cadre responsive este PASS.
+
+Releaseul /rta-lab/atlas/ are acum 59 fișiere generate și cache cu 79 resurse, separat de preview și V10. Motorul, datele canonice, catalogul 620/16/42 și intrarea V10 sunt identice cu baza c268b2fc. Singura corecție de infrastructură V10 rămâne limitarea curățării cacheului din sw.js la prefixul său. Ambele PR sunt DRAFT, main nu este modificat de această lucrare și aprobarea vizuală este încă în așteptare. Publicarea nu este efectuată.
 
 
 ## Candidat de publicare în pregătire — 15.10.2026

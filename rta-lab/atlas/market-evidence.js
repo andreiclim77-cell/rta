@@ -198,6 +198,81 @@ add("lt-english-barrique","La Tabaccheria","English Mixture","NET complex","Barr
 add("lt-baffometto-reserve","La Tabaccheria","Baffometto Reserve","NET complex","Concentratul evaluat în octombrie 2019","Black Cavendish dulce, Latakia și Virginia.","Autorul recomandă lichidul, fără a-l considera miraculos.","ltReserve",null,null,"Încredere limitată de identitatea generică afișată. Nu se transferă către 4Pod, Baffometto simplu sau reformulări.");
 add("pulp-alabama","Pulp","Tabac Alabama","Tutun complex","E-liquid 20 ml, review 2015","Tutun rotund, cereale, vanilie și nuci prăjite.","Review favorabil rețetei; asemănarea cu Tribeca este subiectivă.","pulpAlabama",null,null,"Nu este o comparație directă cu Tribeca: autorul precizează că nu avea proba alături. Ediția actuală nu este certificată.");
 rows.find(e=>e.id==='bn-prelude').photo={src:'./media/black-note-virginia-current.webp',ref:'https://www.blacknote.com/e-juice/virginia-tobacco-e-liquid/',credit:'Black Note',edition:'Ambalaj actual Virginia 60 ml; review-ul privește Prelude original'};
+const reviewVisuals={
+ "lt-single-kentucky": {
+  "src": "./media/market-ltKentucky.webp",
+  "ref": "https://www.levapelier.com/kentucky-gamme-single-line-par-la-tabaccheria/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "lt-single-cavendish": {
+  "src": "./media/market-ltCavendish.jpg",
+  "ref": "https://www.levapelier.com/cavendish-gamme-single-line-par-la-tabaccheria/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "halo-prime": {
+  "src": "./media/market-prime.jpg",
+  "ref": "https://www.levapelier.com/prime-15-gamme-shake-n-vap-par-halo/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "halo-tribeca": {
+  "src": "./media/market-tribeca.jpg",
+  "ref": "https://www.levapelier.com/tribeca-gamme-shake-n-vap-par-halo/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "fa-virginia": {
+  "src": "./media/market-faVirginia.jpg",
+  "ref": "https://www.levapelier.com/virginia-par-flavour-art/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "fa-desert": {
+  "src": "./media/market-faDesert.jpg",
+  "ref": "https://www.levapelier.com/desert-ship-par-flavour-art/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "pulp-kentucky": {
+  "src": "./media/market-pulpKentucky.jpg",
+  "ref": "https://www.levapelier.com/kentucky-brun-par-pulp/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "pulp-tennessee": {
+  "src": "./media/market-pulpTennessee.jpg",
+  "ref": "https://www.levapelier.com/tabac-blend-tennessee-par-pulp/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "pulp-mozambique": {
+  "src": "./media/market-pulpMozambique.jpg",
+  "ref": "https://www.levapelier.com/tabac-mozambique-train-2-par-pulp/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "nhoss-blond": {
+  "src": "./media/market-nhossBlond.jpg",
+  "ref": "https://www.levapelier.com/classic-blond-par-nhoss/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "tevap-garonne": {
+  "src": "./media/market-tevap.jpg",
+  "ref": "https://www.levapelier.com/blond-de-garonne-par-terroir-vapeur-tevap/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ },
+ "pulp-alabama": {
+  "src": "./media/market-pulpAlabama.jpg",
+  "ref": "https://www.levapelier.com/tabac-alabama-par-pulp/",
+  "credit": "Le Vapelier",
+  "edition": "Vizualul recenziei originale; ediția evaluată, nu un lot actual"
+ }
+};
+for(const entry of rows)if(reviewVisuals[entry.id])entry.reviewVisual=reviewVisuals[entry.id];
 for(const entry of rows){const text=entry.name+' '+entry.profile;entry.modelTags=[];for(const tag of ['latakia','kentucky','perique','oriental','cigar'])if(new RegExp(tag,'i').test(text))entry.modelTags.push(tag);if(/nuc|migdale/i.test(text))entry.modelTags.push('nuts');if(/dulc|miere|vanili|caramel|toffee/i.test(text))entry.modelTags.push('sweet');if(entry.category.includes('complex'))entry.modelTags.push('layers');}
 window.RTA_MARKET_EVIDENCE={version:1,revised:'2026-10-15',categories:['NET simplu','NET complex','Tutun simplu','Tutun complex'],sources,rows};
 })();

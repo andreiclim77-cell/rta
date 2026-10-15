@@ -29,3 +29,7 @@ Pulp Tabac Alabama adds the tenth tobacco-complex record. Its similarity to Trib
 Additional exclusions: FlavourArt Burley is not promoted from an unfavorable review; Classic Light/Classic Brun by Eliquid France and Aimé Gold are not reclassified as plain tobacco to fill space. Alfaliquid Gaia Blond Sec is described as a tobacco distillate and was not placed into the non-NET category. YouTube descriptions were research leads, not substituted for a watched video.
 
 All extra source metadata and concise original paraphrases are in market-evidence.js. No prices, health assertions, nicotine preparation or reviewer wattage are imported as advice. Taxonomy describes commercial/sensory profile and declared origin, never analytical composition.
+
+## Vizualuri din sursele originale — 15.10.2026
+
+12 imagini din recenziile Le Vapelier sunt identificate pentru edițiile evaluate și apar în source trail, cu atribuire și integritatea originalelor păstrată în media/MARKET_VISUAL_RECEIPT.json. Nu sunt declarate fotografii ale lotului actual. Vizualul generic El Toro, logo-ul forumului English Mixture și imaginea Baffometto fără numele Reserve lizibil au fost excluse. Răspunsurile HTTP 403 ale altor surse nu au fost ocolite; nu au fost înlocuite cu imagini fabricate. Licența expresă de redistribuire rămâne neverificată pentru fotografiile externe; atribuire nu înseamnă licență.

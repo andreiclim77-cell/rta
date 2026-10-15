@@ -15,6 +15,11 @@ const server=http.createServer((request,response)=>{
 const receipt=JSON.parse(fs.readFileSync('rta-lab/atlas-preview/media/PRODUCT_PHOTO_RECEIPT.json','utf8'));
 assert.equal(Object.keys(receipt.records).length,16);assert.equal(receipt.failures.length,0);
 for(const [id,r] of Object.entries(receipt.records)){const bytes=fs.readFileSync(path.resolve('rta-lab/atlas-preview',r.src));assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),r.sha256,'Unedited image integrity '+id);}
+const wireReceipt=JSON.parse(fs.readFileSync('rta-lab/atlas-preview/media/WIRE_PHOTO_RECEIPT.json','utf8'));
+for(const r of wireReceipt.records){const bytes=fs.readFileSync(path.resolve('rta-lab/atlas-preview',r.src));assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),r.sha256,'Unedited wire image '+r.wire);}
+const marketReceipt=JSON.parse(fs.readFileSync('rta-lab/atlas-preview/media/MARKET_VISUAL_RECEIPT.json','utf8'));
+assert.equal(marketReceipt.records.length,12);
+for(const r of marketReceipt.records){const bytes=fs.readFileSync(path.resolve('rta-lab/atlas-preview',r.src));assert.equal(crypto.createHash('sha256').update(bytes).digest('hex'),r.sha256,'Original review visual '+r.entryId);}
 async function main(){
  await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
  const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']});

@@ -39,7 +39,11 @@ async function main(){
    await page.locator('.wire-advanced summary').click();
    check(await page.locator('#wirePower').inputValue()==='16','KLP Dicodes personal power ceiling');
    check(await page.locator('#wireTemp').inputValue()==='220','KLP Dicodes personal TC setting');
+   await page.locator('.wire-product-photo').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+   await shot(page,'wire-material-photo-'+width+'.png');
+   check(await page.locator('.wire-product-photo img').evaluate(img=>img.naturalWidth)===500,'Original Dicodes photograph must load');
    await page.locator('#wireMaterial').selectOption('nife52');
+   check(await page.locator('.wire-product-photo').count()===0,'Dicodes photograph must never impersonate Zivipf');
    check(await page.locator('#wirePower').inputValue()==='13','Do not transfer Dicodes ceiling to Zivipf');
    check(await page.locator('#wireTemp').inputValue()==='230','Do not transfer Dicodes setting to Zivipf');
    const prior=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config));
@@ -124,6 +128,12 @@ async function main(){
    check(await page.locator('.market-trail').first().textContent().then(t=>t.includes('2025-04-30')&&t.includes('Selene')),'Date and source author must be visible');
    await page.locator('.market-card').first().evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
    await shot(page,'market-source-'+width+'.png');
+   const visualCard=page.locator('[data-market-id="lt-single-kentucky"]');
+   await visualCard.locator('.market-trail summary').click();
+   await visualCard.locator('.market-review-visual').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
+   await shot(page,'market-review-visual-'+width+'.png');
+   check(await visualCard.locator('.market-review-visual img').evaluate(img=>img.naturalWidth)===1024,'Original Kentucky review image must load');
+   check(await visualCard.locator('figcaption').textContent().then(t=>t.includes('ediția evaluată')),'Review image must not impersonate a current lot');
    await page.locator('#marketSearch').fill('nonexistent-product');
    check(await page.locator('.market-card').count()===0,'Market missing search must not invent a result');
    await page.locator('#marketSearch').fill('Prelude');
@@ -137,6 +147,13 @@ async function main(){
    check(await page.locator('#pageLiquid').isVisible(),'Explicit explore action must open Liquid Match');
    check(await page.locator('#selectedLiquid').textContent().then(t=>t.includes('Virginia (Prelude)')),'Market must transfer the associated repertoire without adding a liquid');
    check(await page.evaluate(()=>window.RTA_LIQUIDS.length)===620,'Catalog must stay at 620');
+   await page.locator('.free-profile summary').click();
+   await page.locator('#freeProfileName').fill('W'.repeat(80));
+   await page.locator('#freeProfileForm button[type="submit"]').click();
+   await page.waitForTimeout(600);
+   check(await page.locator('#resultsSummary').evaluate(el=>el.scrollWidth<=el.clientWidth+1),'Long profile name must wrap in result context');
+   check(await page.locator('#selectedLiquid').evaluate(el=>el.scrollWidth<=el.clientWidth+1),'Long profile name must wrap in selected label');
+   await shot(page,'long-profile-'+width+'.png');
    await page.locator('.free-profile summary').click();
    await page.locator('#freeProfileName').fill('Profil propriu de test');
    await page.locator('#freeProfileClass').selectOption('NET complex');
