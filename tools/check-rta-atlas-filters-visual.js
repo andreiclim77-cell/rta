@@ -13,6 +13,10 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   await page.goto(origin+'/rta-lab/atlas/');await page.waitForSelector('#matchButton',{state:'attached'});
   const nav=width<760?'.bottom-tabs':'.top-nav';
   assert.equal(await page.locator('a[href*="view=v10"],a[href*="#atomExplorer"]').count(),0,'Atlas must not expose the old interface');
+  await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');await page.locator(nav+' [data-route="wire"]').click();await page.locator('[data-wire-family="nife52"]').click();
+  assert.equal(await page.locator('#wireAtom').inputValue(),'klp','An explicitly selected Atlas platform must survive a later wire choice');
+  assert.equal(await page.locator('#wireMaterial').inputValue(),'nife52');
+  await page.goto(origin+'/rta-lab/atlas/');await page.waitForSelector('#matchButton',{state:'attached'});
   await page.locator(nav+' [data-route="wire"]').click();
   assert.equal(await page.locator('#wireMaterial').inputValue(),'','A wire must also be chosen explicitly');
   assert.equal(await page.locator('#wireAtom').inputValue(),'','Wire-first entry must await a platform choice');
