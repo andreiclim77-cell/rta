@@ -1,6 +1,11 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
-## Corecție în verificare — text, taburi și cadrane pe mobil, 15.10.2026
+
+## Verificare finală HOME după corecția de încadrare — 15.10.2026
+
+PR #49 este integrat la 70fcf0ce6233f78900bfe5cb06518cfbcc84e163; Pages 38723431508 și RTA 38723431716 sunt SUCCESS. Matricea live de zece ecrane/fonturi, 91 hashuri HTTP, selecțiile complete și offline au trecut. La inspecția manuală a fost observată suplimentar o suprapunere HOME la font minim 24 px pe 320×740: eticheta decorativă foto ajunge peste numele produsului. Un test nou reproduce exact suprapunerea pe versiunea publică; corecția ascunde acea etichetă decorativă numai la text mare, păstrând fotografia, numele, sursa și controlul pauză, dimensionat pentru text mare. Această ultimă ajustare urmează verificarea CI și publicarea separată; nu este încă declarată publicată. Motorul/datele/configurațiile rămân identice.
+
+## Istoric — candidat pentru corecția #49, înainte de integrare
 
 Utilizatorul a trimis o captură reală cu etichetele graficului rupte și tăiate. Cauza este reprodusă în Chromium cu dimensiune minimă de font 18 px: textul depășește înălțimea fixă de 16 px, marca/Înapoi și cele șase taburi se aglomerează. Preferința de font este reală în profilul QA izolat; setarea experimentală OSTextScale nu a schimbat textul și nu este folosită ca probă de mărire.
 
