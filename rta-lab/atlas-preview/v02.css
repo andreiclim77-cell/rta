@@ -189,3 +189,101 @@ html,body{max-width:100%;overflow-x:clip}
 .result-card[data-atom="minister"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-minister-mtl-aaa9a33507.jpg")}
 .result-card[data-atom="pmstd"] .atlas-product-photo,.result-card[data-atom="pmfree"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-prime-minister-standard-rhodesian-a53af75bbe.jpg")}
 .result-card[data-atom="kv3"] .atlas-product-photo{background-image:url("../../assets/instagram/atomizer-kayfun-mini-v3-kv3-mini-38acece1e6.jpg")}
+
+/* V0.2 mobile refinement: the authentic product stays fully inside the frame.
+ * Atmosphere is supplied by the existing local full-bleed image underneath. */
+.cinema-frame img{object-fit:contain;object-position:50% 50%;animation-name:cinemaKenSafe}
+@keyframes cinemaKenSafe{from{transform:scale(1.005)}to{transform:scale(1.055)}}
+/* Controls are tappable above the image; the product caption is never covered. */
+.cinema-controls{top:11px;bottom:auto;right:11px;gap:3px;padding:3px;background:rgba(4,12,16,.66);border:1px solid rgba(226,210,184,.17);border-radius:24px;backdrop-filter:blur(6px)}
+.cinema-controls button:not(#cinemaPause){width:29px;min-width:29px;height:31px;border:0;border-radius:12px;opacity:1;background:transparent;display:grid;place-items:center}
+.cinema-controls button:not(#cinemaPause)::before{content:"";display:block;width:8px;height:8px;border-radius:20px;background:#9dad9f;transition:width .25s,background .25s}
+.cinema-controls button[aria-pressed=true]:not(#cinemaPause){width:29px;background:rgba(237,219,192,.07)}
+.cinema-controls button[aria-pressed=true]:not(#cinemaPause)::before{width:18px;background:#f1d5a8}
+.cinema-controls #cinemaPause{width:31px;height:31px;border-radius:50%}
+.cinema-controls #cinemaPause[hidden]{display:none}
+.cinema-caption{padding-right:0}
+@media(max-width:760px){
+ .cinema-controls{right:9px;top:9px}
+ .cinema-caption{padding-right:0}
+ .cinema-caption a{max-width:132px;font-size:9px;line-height:1.25}
+}
+
+/* GT One: the distributor photograph has printed branding at the edges.
+ * Vignette those borders, without distorting or hiding the centered product. */
+.cinema-frame[data-cinema-frame="1"]{background:#091217}
+.cinema-frame[data-cinema-frame="1"]:not(.project-archive-fallback) img{
+ -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
+ mask-image:linear-gradient(90deg,transparent 0%,transparent 13%,#000 33%,#000 73%,transparent 95%);
+}
+
+/* Retail packaging headline at top belongs to photo, not the Atlas UI. */
+.cinema-frame[data-cinema-frame="1"]:not(.project-archive-fallback)::after{
+ content:"";position:absolute;left:0;right:0;top:0;height:42px;z-index:2;pointer-events:none;
+ background:linear-gradient(180deg,#091217 0%,#091217 18px,rgba(9,18,23,.9) 27px,transparent 100%);
+}
+
+/* V0.2 quick-path: the first contextual match now appears in the live
+   Liquid Cinema scene, with a real 3×3 source, before a long form or scroll. */
+.search-surface input[type="search"]::-webkit-search-cancel-button,
+.search-surface input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+.scene-match{display:none}
+.result-card{scroll-margin-top:72px}
+@media(max-width:760px){
+ .page-intro{padding-top:8px;padding-bottom:8px}
+ .page-intro .breadcrumb{display:none}
+ .page-intro .overline{font-size:8px;letter-spacing:1.1px}
+ .page-intro h1{font-size:clamp(23px,6.3vw,28px);line-height:1.05;margin:5px 0 0}
+ .page-intro p{display:none}
+ .live-scene{height:163px;max-height:163px;padding:12px 13px}
+ .live-scene .chromatogram{width:88%;height:83px;max-height:83px;margin:0 auto auto;opacity:.82}
+ .scene-middle,.scene-bottom{display:none}
+ .scene-match{display:flex;align-items:center;justify-content:space-between;gap:9px;position:absolute;z-index:3;left:9px;right:9px;bottom:8px;min-height:56px;padding:7px 8px 7px 11px;background:linear-gradient(105deg,rgba(7,20,24,.94),rgba(16,40,40,.9));border:1px solid rgba(197,212,184,.3);border-radius:11px;box-shadow:0 9px 30px rgba(0,0,0,.25)}
+ .scene-match-copy{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+ .scene-match-copy>span{font-size:8px;letter-spacing:1px;font-weight:800;color:#d7b78a}
+ .scene-match-copy strong{font-size:13px;color:#fff1df;line-height:1.16;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .scene-match-copy small{font-size:10px;color:#b4cec7;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:block}
+ .scene-match button{flex:none;width:44px;height:43px;border:1px solid rgba(230,200,156,.45);border-radius:10px;background:linear-gradient(130deg,#dab888,#ecd2a7);color:#192d2e;font-size:22px;font-weight:800}
+ .scene-match button:focus-visible{outline:2px solid white;outline-offset:2px}
+ .selection-panel{padding:13px 13px 15px}
+ .selection-panel>.eyebrow{display:none}
+ .selection-panel h2{font-size:18px;margin:0 0 9px}
+ .liquid-search-wrap>label{margin-bottom:5px}
+ .search-surface{min-height:44px}
+ .search-surface input{font-size:13px;padding:8px 0}
+ .selected-liquid{min-height:0;line-height:1.35;margin-top:6px}
+ .selected-liquid b{font-size:11px}
+ .quick-liquids{margin:9px 0 9px;gap:7px;align-items:center}
+ .quick-liquids>span{margin-top:0;font-size:8px}
+ .quick-list{gap:4px;flex-wrap:nowrap;min-width:0;overflow-x:auto;scrollbar-width:none}
+ .quick-list button{flex:0 0 auto}
+ .control-group{margin-top:8px}
+ .control-group-title{margin-bottom:4px}
+ .chip-rail{gap:5px;padding:2px 1px 4px;scrollbar-width:none}
+ .chip{font-size:11px;white-space:nowrap;min-height:39px;padding:8px 11px}
+ .match-button{margin-top:11px;min-height:46px}
+ .match-micro{display:none}
+ .results-section{padding-top:18px}
+ .results-heading h2{margin:5px 0}
+ .results-heading p{font-size:11px}
+ .result-card{scroll-margin-top:68px}
+}
+
+/* Motion refinement: keep actionable text sharp at all times.
+   Only the SVG waves morph via the existing requestAnimation/WAAPI path. */
+.live-scene.cinema-react{animation:none!important;filter:none!important}
+
+/* Keep the full compact setup readable, and pause the photograph itself. */
+.photo-cinema.is-paused .cinema-frame img,.photo-cinema.is-paused .cinema-live{animation-play-state:paused}
+.live-scene .wave{animation-name:cinemaTrace}
+@keyframes cinemaTrace{from{stroke-dashoffset:130;opacity:.7}to{stroke-dashoffset:0;opacity:1}}
+.cinema-frame.has-local-fallback,.atlas-product-photo.has-local-fallback{background-image:none}
+.suggestions{top:100%;margin-top:4px}
+@media(max-width:760px){
+ .scene-match{min-height:69px}
+ .scene-match-copy small{white-space:normal;overflow:visible;text-overflow:clip;font-size:10px;line-height:1.4}
+ .live-scene .chromatogram{height:69px;max-height:69px;opacity:1}
+ .search-surface .clear-search{min-width:36px;min-height:40px}
+ .air-flow-path path{stroke-width:5}
+ .air-flow-path .air-particle{r:4.5}
+}

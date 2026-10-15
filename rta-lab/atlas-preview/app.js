@@ -49,6 +49,11 @@ function setupSummary(result){
  const c=result.config;
  return "Ø"+String(c.coilMm).replace(".",",")+" mm · "+buildEnergy(result);
 }
+function compactBuild(result){
+ const c=result.config,w=core.wires[c.wire];
+ const name=w.name.replace("Dicodes RESISTHERM ","Dicodes ").replace("Kanthal A1 ","K1 ");
+ return name+" · "+c.wraps+" spire · Ø"+String(c.coilMm).replace(".",",")+" · "+buildEnergy(result);
+}
 function labelScore(v){
  if(v>=4.65)return "foarte pronunțat";
  if(v>=4.2)return "pronunțat";
@@ -186,27 +191,53 @@ function drawScene(){
  const dark=/(latakia|kentucky|dark|cigar)/i.test([l.profile,...(l.tags||[])].join(" "));
  document.querySelector(".live-scene")?.classList.toggle("scene-dark",dark);
 }
+function updateSceneMatch(result){
+ const item=result?.items?.[0],build=item?.builds?.[0];
+ const atom=element("sceneMatchAtom"),detail=element("sceneMatchBuild");
+ if(!atom||!detail)return;
+ atom.textContent=build?(item.atom?.short||item.id):"Context indisponibil";
+ detail.textContent=build?compactBuild(build):"Alege alt context.";
+ detail.title=build?buildString(build)+" · "+setupSummary(build):"";
+}
+function scrollToBest(){
+ const target=element("resultCards")?.querySelector(".result-card")||element("resultsSection");
+ target?.scrollIntoView({block:"start",behavior:window.matchMedia?.("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+}
+function revealSelectedChips(){
+ if(!window.matchMedia?.("(max-width:760px)").matches)return;
+ for(const id of ["moodChips","momentChips"]){
+  const rail=element(id),chip=rail?.querySelector(".chip.active");
+  if(!rail||!chip)continue;
+  const box=rail.getBoundingClientRect(),item=chip.getBoundingClientRect();
+  if(!box.width||!item.width)continue;
+  if(item.right>box.right-8)rail.scrollLeft+=item.right-box.right+12;
+  else if(item.left<box.left+8)rail.scrollLeft-=box.left-item.left+12;
+ }
+}
 function renderResults(){
  const result=compose(state.liquidIndex,state.mood,state.moment);
  const box=element("resultCards");
  if(!box)return;
  if(!result){
   box.innerHTML='<div class="empty-results">Nu avem suficiente date pentru acest context. Selectează alt lichid sau altă stare.</div>';
+  updateSceneMatch(null);
   return;
  }
- if(state.expandedId===null&&result.items.length)state.expandedId=result.items[0].id;
+ if(state.expandedId===null&&result.items.length&&!window.matchMedia?.("(max-width:760px)").matches)state.expandedId=result.items[0].id;
  if(state.expandedId&&!result.items.some(x=>x.id===state.expandedId))
   state.expandedId=result.items[0]?.id||null;
  element("resultsSummary").textContent=liquidName(result.liquid)+" · "+result.mood.name+" · "+result.moment.name+
  " · ordonare contextuală din 16 platforme.";
  element("resultCounter").textContent="TOP 3 · 3 × 3";
  box.innerHTML=result.items.map(x=>renderResult(x,result.liquid)).join("");
+ updateSceneMatch(result);
 }
 function renderMoodMoment(){
  element("moodChips").innerHTML=moodList.map(m=>
  '<button class="chip'+(state.mood===m.id?' active':'')+'" type="button" data-mood="'+esc(m.id)+'" aria-pressed="'+(state.mood===m.id)+'"><span class="chip-emoji">'+m.icon+'</span>'+esc(m.name)+'</button>').join("");
  element("momentChips").innerHTML=momentList.map(m=>
  '<button class="chip'+(state.moment===m.id?' active':'')+'" type="button" data-moment="'+esc(m.id)+'" aria-pressed="'+(state.moment===m.id)+'"><span class="chip-emoji">'+m.icon+'</span>'+esc(m.name)+'</button>').join("");
+ revealSelectedChips();
 }
 function selectLiquid(index,manual=true){
  if(!Number.isInteger(index)||!catalog[index])return false;
@@ -216,6 +247,7 @@ function selectLiquid(index,manual=true){
  (state.fromDemo?' · exemplu din catalog':' · ales de tine')+'</span>';
  element("liquidSuggestions").hidden=true;
  element("liquidSearch").setAttribute("aria-expanded","false");
+ element("liquidSearch").removeAttribute("aria-activedescendant");
  drawScene();
  renderResults();
  return true;
@@ -237,9 +269,15 @@ function renderSuggestions(){
  box.hidden=!rows.length;
  input.setAttribute("aria-expanded",String(!!rows.length));
  state.activeSuggestion=0;
+ input.setAttribute("aria-activedescendant",rows.length?"liquidOpt0":"");
  box.innerHTML=rows.map((x,i)=>
-  '<button type="button" class="suggestion'+(i===0?' is-active':'')+'" role="option" aria-selected="'+(i===0)+'" data-liquid="'+x.index+'">'+
+  '<button type="button" id="liquidOpt'+i+'" class="suggestion'+(i===0?' is-active':'')+'" role="option" aria-selected="'+(i===0)+'" data-liquid="'+x.index+'">'+
   '<strong>'+esc(liquidName(x.liquid))+'</strong><small>'+esc(x.liquid.class)+' · '+esc(x.liquid.profile||"")+'</small></button>').join("");
+}
+function closeSuggestions(){
+ element("liquidSuggestions").hidden=true;
+ element("liquidSearch").setAttribute("aria-expanded","false");
+ element("liquidSearch").removeAttribute("aria-activedescendant");
 }
 function route(to,push=true){
  if(!["home","liquid"].includes(to))return false;
@@ -257,6 +295,7 @@ function route(to,push=true){
   window.history.pushState(null,"",to==="liquid"?"#liquid":"#home");
  }
  window.scrollTo?.({top:0,behavior:"instant"});
+ if(!isHome&&window.requestAnimationFrame)window.requestAnimationFrame(revealSelectedChips);
  return true;
 }
 function init(){
@@ -265,10 +304,11 @@ function init(){
  selectLiquid(state.liquidIndex,false);
  route(window.location?.hash==="#liquid"?"liquid":"home",false);
  document.addEventListener("click",ev=>{
-  const target=ev.target.closest?.("[data-route],[data-liquid],[data-mood],[data-moment],[data-expand]");
+  const target=ev.target.closest?.("[data-route],[data-liquid],[data-mood],[data-moment],[data-expand],[data-go-best]");
   if(!target)return;
   const d=target.dataset;
   if(d.route){ev.preventDefault();route(d.route);return;}
+  if(d.goBest!=null){scrollToBest();return;}
   if(d.liquid!=null){selectLiquid(Number(d.liquid));return;}
   if(d.mood){state.mood=d.mood;state.expandedId=null;renderMoodMoment();renderResults();return;}
   if(d.moment){state.moment=d.moment;state.expandedId=null;renderMoodMoment();renderResults();return;}
@@ -276,11 +316,34 @@ function init(){
  });
  element("liquidSearch").addEventListener("input",renderSuggestions);
  element("liquidSearch").addEventListener("keydown",ev=>{
-  if(ev.key==="Escape"){element("liquidSuggestions").hidden=true;ev.currentTarget.setAttribute("aria-expanded","false");return;}
-  if(ev.key==="Enter"){
-   const hits=liquidSearch(ev.currentTarget.value,10);
+  const list=element("liquidSuggestions"),input=ev.currentTarget;
+  if(ev.key==="Escape"){
+   closeSuggestions();
+   return;
+  }
+  if(ev.key==="ArrowDown"||ev.key==="ArrowUp"){
+   const options=[...list.querySelectorAll("[data-liquid]")];
+   if(list.hidden||!options.length)return;
+   ev.preventDefault();
+   state.activeSuggestion=(state.activeSuggestion+(ev.key==="ArrowDown"?1:-1)+options.length)%options.length;
+   options.forEach((option,i)=>{
+    option.classList.toggle("is-active",i===state.activeSuggestion);
+    option.setAttribute("aria-selected",String(i===state.activeSuggestion));
+   });
+   input.setAttribute("aria-activedescendant",options[state.activeSuggestion].id);
+   options[state.activeSuggestion].scrollIntoView({block:"nearest"});
+   return;
+  }
+  if(ev.key==="Enter"&&!list.hidden){
+   const hits=liquidSearch(input.value,10);
    if(hits.length){ev.preventDefault();selectLiquid(hits[Math.min(state.activeSuggestion,hits.length-1)].index);}
   }
+ });
+ document.addEventListener("focusin",ev=>{
+  if(!ev.target.closest?.(".liquid-search-wrap"))closeSuggestions();
+ });
+ document.addEventListener("click",ev=>{
+  if(!ev.target.closest?.(".liquid-search-wrap"))closeSuggestions();
  });
  element("clearSearch").addEventListener("click",()=>{
   element("liquidSearch").value="";
@@ -289,12 +352,12 @@ function init(){
  });
  element("matchButton").addEventListener("click",()=>{
   state.expandedId=null;renderResults();
-  element("resultsSection").scrollIntoView({block:"start",behavior:window.matchMedia?.("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});
+  scrollToBest();
  });
  window.addEventListener("popstate",()=>route(window.location.hash==="#liquid"?"liquid":"home",false));
 }
 window.RTA_ATLAS_PREVIEW={
- version:"0.2-real-photo-motion",compose,liquidSearch,buildString,
+ version:"0.2-real-photo-motion",compose,liquidSearch,buildString,compactBuild,
  renderCoil,qualities,vapeDescription,evidenceFor,state,getSourceModel:()=>({atoms:atoms.length,liquids:catalog.length}),
  init
 };

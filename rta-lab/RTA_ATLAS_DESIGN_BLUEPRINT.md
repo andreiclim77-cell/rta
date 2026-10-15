@@ -332,3 +332,35 @@ Un modul de pregătire a dovezilor poate extrage BEST + WATCH A + WATCH B din MA
 **Suprascrie statusurile vechi strict pentru progresul V0.2:** Prototipul este implementat în `rta-lab/atlas-preview/`, cu resurse foto `photo-sources.js`, CSS `v02.css` și JS motion `v02.js`. PR #43 merged în `main` la commitul `935d949fe722fdfaf58d089c02ae15c722b38902`; testele RTA și deploymentul Pages sunt **SUCCESS**; Visual Mobile Gate a produs capturi reale în artefactul `atlas-v02-mobile-screenshots`. **V0.2 este publicat tehnic, dar nu a primit confirmarea finală a utilizatorului asupra aspectului.** V0.1 rămâne respins.
 
 **Noua ordine la reluare:** citește `rta-lab/RTA_CURRENT_HANDOFF.md` → MASTER → acest blueprint → ultimele fișiere din `main`; verifică SHA și rezultatele, nu reimplementa. Păstrează V10. Următorul pas: feedback vizual V0.2 pe telefon, apoi ajustări țintite; numai după aprobare extinderea celor patru ecrane rămase.
+
+## 17. V0.2 — checkpoint de rafinare în staging / PR #45 (14.10.2026)
+
+Designul V0.2 din §16 este deja implementat și publicat separat, **dar nu aprobat încă estetic pe telefon**. PR #45, `feature/atlas-v02-mobile-qa-fallback-20261014`, corectează doar detalii auditate vizual. Modificările rămân pe branch, fără a modifica V10 ori motorul.
+
+**Constatări din screenshoturi reale** (Artifact `11918768376` din Atlas Visual Mobile Gate `38613486194`, SUCCESS pe `90ba8d6a`): scena HOME 360/390 are fotografie de produs și CTA în primul viewport; cadrele Liquid Match includ scenă și context fără overflow; controalele airflow 1/3 se diferențiază. Fotografia retailerului pentru GT One cuprinde text publicitar în stânga și necesită mascarea marginilor, nu înlocuirea modelului. În `v02.css` a fost aplicat un vignette și un strat discret pentru banda publicitară de sus, fără a ascunde produsul. Corecția de cod `c2f33881` a trecut Visual Mobile Gate `38614545086`, RTA Guide Quality Gate `38614545140` și Market Quality Gate `38614545066`, toate SUCCESS; artifact final `11918649458` a fost descărcat și inspectat. Aceste rezultate privesc commitul de cod indicat; documentația modificată ulterior se verifică separat.
+
+**Criterii suplimentare automate**: 360×800 și 390×844; decodare efectivă `img.complete && naturalWidth>0`; `object-fit:contain` pentru fotografie; CTA peste navigația de jos; carduri inițial comprimate pe mobil; schimbări foto și un/trei jeturi; scenariu de indisponibilitate a gazdei externe cu asset local existent și credit real; reduced-motion oprește autoplay dar păstrează selectarea manuală. Aceste verificări nu substituie capturile reale și validarea personală Samsung.
+
+**Decizia ulterioară:** nu extinde celelalte patru module până la validarea vizuală. Nu integra PR #45 în `main` și nu declara publicate aceste corecții până la aprobarea explicită și Pages SUCCESS. Nu include reclame ori text imprimat nedorit în zona principală dacă se poate evita fără a falsifica imaginea. Drepturile de reutilizare ale fotografiilor externe rămân un punct de verificat.
+
+## 18. V0.2 — Liquid Match „Best at First Sight” / criterii verificate în staging (14.10.2026)
+
+**Sursa:** PR #45 (DRAFT), branch `feature/atlas-v02-mobile-qa-fallback-20261014`; V10 și `main` neschimbate. Completează §16–17, fără a rescrie ecranele bune.
+
+Înainte: în captura reală de 360×800, Liquid Cinema era vizibil, dar primul rezultat urma numai după un formular lung; browserul adăuga încă un buton X, chipul selectat putea fi parțial mascat și reactivitatea aplica blur asupra textului. Acum pe mobil: un intro editorial compact, scenă animată cu **BEST CONTEXTUAL calculat din motor** (nu câștigător universal), acces direct la cardul TOP 1, chip activ adus în rail și interfață de căutare cu tastatură/ARIA. Scena nu estompează etichetele când se schimbă lichidul/moodul. Rezultatele 3×3 apar înaintea ilustrației airflow. Nu este o simulare termică, un nou scoring ori un transfer al observațiilor personale de pe alt lichid.
+
+**Criterii automate completate în `tools/check-rta-atlas-preview.js` și `tools/check-rta-atlas-visual.js`:** potrivirea #1 afișată = primul element din `RTA_ATLAS_PREVIEW.compose`; poziție în viewport mobil; chip activ vizibil; listă tastatură ArrowDown/Enter; primul card efectiv vizibil după buton; ordinea `resultsSection` înainte de `air-demo`; absența blurului pe panou; regresiile preexistente pentru 140 contexte, 620 lichide, 3×3, 16 platforme, fotografii reale și fallback. Rulările pe commitul de cod `8ee748f6`: RTA `38616814458`, Market `38616814764`, Visual Mobile `38616815025` — toate **SUCCESS**; artefact `11920830826` descărcat și comparat în 13 capturi. Statusul aprobat estetic rămâne **NU**.
+
+**Prag de acceptare în continuare:** fotografie și rezultate îngrijite pe Samsung real + feedback utilizator; apoi se poate integra PR, verifica Pages SUCCESS și trece la Atomizer Atlas și Wire Lab. Drepturile pozelor externe nu au fost certificate prin testele tehnice.
+
+## 19. Mandat curent pentru toate modulele și QA suplimentar (14.10.2026)
+
+Utilizatorul autorizează continuarea autonomă până la aplicația completă cu toate cele șase module, în conceptul B60/A30/C10. Se păstrează designul și motorul funcționale; nu se reia V0.1. Construcția celorlalte patru module în staging este acum cerută explicit. Aprobarea rămâne necesară pentru decizii vizuale majore și nu este dedusă din rezultate automate. Publicarea și validarea estetică se raportează separat.
+
+Revizia mobilă `1f705023`: preview BEST cu spire/Ø/TC-WATT lizibil, amplitudine vizuală utilă a scenelor, pauză și rotație oprite efectiv, căutare cu închidere Escape/focus exterior. Capturile se extind la lista deschisă, shortcutul din scenă, pauză și toate fallbackurile galeriei. GT One și 415 au copii locale nealterate ale fotografiilor folosite, cu atribuirea originală și condiția de licență deschisă.
+
+QA pe SHA indicat: RTA `38619985170` SUCCESS, Market `38619985251` SUCCESS, Visual `38619985373` FAILURE la comparația transformării imediat după click Pause pe 390 px. Corecția testului așteaptă starea CSS paused și stabilizarea cadrului compositorului înainte de comparația pe 3,35 secunde. Verificați noul HEAD și noile capturi înainte de a considera etapa CI verde. HANDOFF §9 este sursa operațională pentru continuare.
+
+### 19.1. Capture review și implementare progresivă
+
+Pe `a511ef64`, toate cele trei gates au trecut: RTA `38620833175`, Market `38620833394`, Visual `38620833502`. Cele 23 de PNG din artifact `11921084143` au fost inspectate; captura offline KX aproape întunecată la intrare a fost respinsă și sincronizarea capturii corectată. CI verde nu înlocuiește inspecția vizuală. PR #45 rămâne mobil; Atlas/Wire și apoi Market/Duel continuă în `feature/atlas-complete-six-modules-20261014`, cu același sistem vizual. Cele două adaptoare noi există local și sunt testate mobil/desktop, fără aprobare estetică finală sau publicare.

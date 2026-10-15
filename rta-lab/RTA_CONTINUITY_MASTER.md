@@ -609,3 +609,37 @@ Interfața păstrează selecțiile persistente deja existente; modificarea build
 **Actualizare față de §23–26 (care rămân documente istorice):** PR **#43** pentru prototipul Atlas **V0.2** cu fotografii de atomizoare, layout mobil reorganizat și motion reactiv a fost **integrat în `main`**, commit **`935d949fe722fdfaf58d089c02ae15c722b38902`**; Quality Gate pe `main` `38610224639` **SUCCESS**, Pages pe `main` `38610222734` **SUCCESS**. Visual Mobile Gate pe PR `38609948910` **SUCCESS**, capturi în artifact **`atlas-v02-mobile-screenshots`**. Preview separat: `https://ghid-rta.ro/rta-lab/atlas-preview/`. **Interfața existentă V10 nu a fost înlocuită.** Succesul testelor și al publicării **NU** confirmă aprobarea vizuală finală din partea utilizatorului. V0.1 rămâne respins.
 
 **Ultima solicitare a utilizatorului:** „E f bine asa acum spune mi daca incepebo alta discutie ce sa ti spun sa sti sa continui?” — este o solicitare de **continuitate sigură**, nu neapărat un nou verdict UX asupra V0.2. Utilizează mesajul scurt exact din handoff §6. Nu schimba experiența bună, nu inventa review-uri și nu pierde datele canonice.
+
+## 28. Atlas V0.2 — verificare vizuală concretă și corecții incrementale în PR #45 (14.10.2026)
+
+**Continuitate operațională actuală:** citește `rta-lab/RTA_CURRENT_HANDOFF.md` §7, apoi PR `https://github.com/andreiclim77-cell/rta/pull/45`, încă **DRAFT, neintegrat în main**. Separarea de V10 și conservarea catalogului **620**, platformelor **16**, atomizoarelor fizice **42**, **120 Hall of Fame**, celor **5** sloturi și tuturor configurațiilor validate au fost menținute: această intervenție atinge doar `atlas-preview/` și testele sale.
+
+Rezultatul confirmat pe HEAD-ul precedent `90ba8d6a`: RTA Guide Quality Gate `38613486125` SUCCESS; Market `38613486251` SUCCESS; Visual Mobile Gate `38613486194` SUCCESS, cu artifact `11918768376`, capturi vizuale reale examinate pentru Home, Liquid Match, tranziție foto, airflow și fallback. Capturile originale se pot redescărca din GitHub Actions. Pe imaginea GT One au fost observate marginile cu text promoțional al retailerului; corecția exclusiv CSS pentru margini și banda tipărită de sus a fost finalizată pe `c2f33881` și verificată: RTA Guide Quality Gate `38614545140` SUCCESS; Market `38614545066` SUCCESS; Visual Mobile Gate `38614545086` SUCCESS. Artifact final `11918649458` (11 capturi) a fost descărcat și inspectat. Statusul rămâne al commitului `c2f33881`, înainte de eventuale actualizări exclusiv documentare.
+
+Îmbunătățiri incrementale: foto reală afișată integral, carousel motion limitat și controlabil, credite corecte pentru fallback local, TOP1 închis inițial pe mobil, verificare automată 360×800 și 390×844 a încărcării reale a imaginilor și interacțiunilor. Nu se inventează fotografii, recenzii, procente de plăcere sau montări fizice.
+
+**Nu declara publicată această corecție înainte de merge + GitHub Pages SUCCESS pe SHA-ul de merge. Nu declara design aprobat fără review-ul pe telefon al utilizatorului.** Nu începe Atomizer Atlas / Wire Lab / Market / Duel pe un stil încă neaprobat. Handofful §7 este checkpointul operațional detaliat.
+
+## 29. Atlas V0.2 — Quick-Path mobil verificat în PR #45 (14.10.2026)
+
+**Actualizare față de §28:** implementarea V0.2 continuă **doar în ramura PR #45**, fără nicio schimbare a V10, motorului, celor 620 de lichide, 16 platforme, 42 atomizoare, 120 Hall of Fame, fișelor Dvarw CL saved/draft sau configurațiilor validate. Respingerea V0.1 și lipsa aprobării finale V0.2 sunt în continuare valide.
+
+**Problema identificată în 13 capturi reale de mobil:** titlul + scena și formularul împingeau primul rezultat sub viewport; la căutare apăreau două controale de ștergere, iar unele stări selectate rămâneau retezate. La schimbarea stării, `cinemaSwitch` aplica temporar blur întregului panou, inclusiv informației contextuale.
+
+**Rezolvare în `rta-lab/atlas-preview/{index.html,app.js,v02.css,v02.js}`:** scena Liquid Cinema prezintă potrivirea #1 derivată din **același clasament contextual** folosit pentru 3×3, nu un nou motor; linkul din scenă face scroll la primul card vizibil; ierarhia mobilă este condensată fără a elimina controalele 7×5 sau exemplarele de lichide; selecțiile active din rail sunt aduse în aria vizibilă. Inputul ascunde X-ul nativ și are control tastatură combobox; demonstrația airflow rămâne după cele trei rezultate. SVG-ul se mișcă, dar cardul de informație rămâne clar. Scorurile sunt **euristice**, nu procente de plăcere; evidența și cele două watchlist-uri rămân neschimbate.
+
+**Probe efective pentru commit de cod `8ee748f6d1f671898211e03aefa72f2b5216aac1`:** RTA Guide Quality Gate `38616814458` SUCCESS; Market Quality Gate `38616814764` SUCCESS; Atlas Visual Mobile Gate `38616815025` SUCCESS; artifact `11920830826` cu 13 capturi Chromium verificate, inclusiv 360×800 și 390×844, rezultatul contextului, clic rapid, căutare ArrowDown/Enter, fotografie decodată, fallback offline, airflow, selected chips și reduced-motion. Testele nu înlocuiesc aprobarea vizuală pe telefonul real.
+
+**Stare finală a acestei etape:** candidat îmbunătățit pentru review, PR #45 încă DRAFT, nu publicare nouă; site-ul live continuă să servească V0.2 din `main`. Urmează feedback/aprobare explicită → merge PR + verificare Pages/CI pe SHA exact → ulterior portretele Atomizer Atlas și Wire Lab. Celelalte patru ecrane nu se construiesc pe un design neaprobat.
+
+## 30. Mandat până la aplicația completă și preferință KLP (14.10.2026)
+
+Utilizatorul a cerut realizarea progresivă a tuturor celor șase module și continuarea autonomă, fără repetarea istoricului. Pragurile de oprire din §28-29 sunt istorice: construcția poate continua în branch separat, iar deciziile vizuale majore cer aprobare pe rezultate concrete. Nu declarați aplicația finală înaintea tuturor funcțiilor, testelor și publicării verificate. Producția V10, datele, cele 620 lichide, 16 platforme, 42 exemplare și fișele CL rămân conservate.
+
+**Declarație directă nouă:** KLP cu Dicodes NiFe30 sau Zivipf NiFe52 în TC este extraordinar; ambele sunt preferințe personale de prim nivel. Se consolidează preferința deja egală din §20, fără nou A/B controlat, fără scor de plăcere și fără transferul setărilor Dicodes DNA 220°C/16 W la Zivipf.
+
+Checkpoint de cod `1f7050231165f10cbf1b8128946989ee519d9efb`: corecții numai în Atlas și testele sale, rezumat BEST lizibil, motion/pauză și căutare îmbunătățite, copii locale ale fotografiilor GT One/415 cu proveniență. RTA `38619985170` și Market `38619985251` SUCCESS; Visual `38619985373` FAILURE la verificarea pauzei pe 390 px, deși testele locale au trecut. Corecția sincronizării testului și rerularea sunt obligatorii. Detalii și următorul pas: HANDOFF §9. Nu promovați artefactul parțial în acceptare.
+
+### 30.1. Dovezi ulterioare și ramură de extindere
+
+Rerularea pe `a511ef64`: RTA `38620833175`, Market `38620833394`, Visual `38620833502` SUCCESS. Artifact `11921084143`, 23 capturi, descărcat și inspectat; cadrul offline KX prins în animația de intrare nu este acceptat ca probă și a primit o corecție de sincronizare pentru rerulare. PR #45 păstrează scopul mobil. Cele patru module rămase continuă în draft separat `feature/atlas-complete-six-modules-20261014`. Adaptoarele locale Atomizer/Wire au trecut cazuri normale, restricții, erori, CL read-only/legacy, 620 lichide stres și browser mobil/desktop; nu sunt publicate. Motorul/datele/configurările originale nu au fost editate.

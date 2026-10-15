@@ -3,12 +3,18 @@ window.RTA_ATLAS_PHOTOS={
   "415": {
     "src": "https://thevapinggentlemen.club/cdn/shop/products/415v2_1.jpg?v=1593263577",
     "ref": "https://thevapinggentlemen.club/products/415-rta-mtl",
-    "credit": "The Vaping Gentlemen Club"
+    "credit": "The Vaping Gentlemen Club",
+    "fallbackSrc": "./media/415-mtl.jpg",
+    "fallbackRef": "https://thevapinggentlemen.club/products/415-rta-mtl",
+    "fallbackCredit": "The Vaping Gentlemen Club · copie locale"
   },
   "gtone": {
     "src": "https://thevapinggentlemen.club/cdn/shop/products/gt-one001.jpg?v=1633109546&width=1080",
     "ref": "https://thevapinggentlemen.club/products/copia-del-taifun-gt-one",
-    "credit": "The Vaping Gentlemen Club"
+    "credit": "The Vaping Gentlemen Club",
+    "fallbackSrc": "./media/taifun-gt-one.jpg",
+    "fallbackRef": "https://thevapinggentlemen.club/products/copia-del-taifun-gt-one",
+    "fallbackCredit": "The Vaping Gentlemen Club · copie locale"
   },
   "kx": {
     "src": "https://thevapinggentlemen.club/cdn/shop/products/KayfunX2.jpg?v=1658321198",
@@ -84,3 +90,21 @@ window.RTA_ATLAS_PHOTOS={
     "variant": "Fotografie din biblioteca existentă a proiectului"
   }
 };
+
+/* Already-hosted project photos: use only as graceful fallbacks if external hosts fail.
+ * Source/license verification remains required before wider distribution. */
+(function(){
+ const localFallbackPhotos={
+  "kx":"../../assets/instagram/atomizer-kayfun-x-243c328b6f.jpg",
+  "dvarwfl":"../../assets/instagram/atomizer-dvarw-mtl-fl-dda12456be.jpg",
+  "muted":"../../assets/instagram/atomizer-muted-23ed383402.jpg",
+  "diplomat":"../../assets/instagram/atomizer-centenary-diplomat-v1-5-mtl-rta-84d651448b.jpg",
+  "byka":"../../assets/instagram/atomizer-by-ka-v-11-c0e3147194.jpg",
+  "minister":"../../assets/instagram/atomizer-minister-mtl-aaa9a33507.jpg",
+  "pmstd":"../../assets/instagram/atomizer-prime-minister-standard-rhodesian-a53af75bbe.jpg",
+  "kv3":"../../assets/instagram/atomizer-kayfun-mini-v3-kv3-mini-38acece1e6.jpg"
+ };
+ for(const [id,src] of Object.entries(localFallbackPhotos)){
+  if(window.RTA_ATLAS_PHOTOS[id])window.RTA_ATLAS_PHOTOS[id].fallbackSrc=src;
+ }
+})();
