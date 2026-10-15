@@ -48,10 +48,11 @@ html{scroll-padding-top:calc(var(--atlas-mast-height,62px) + 12px);scroll-paddin
  .scene-match{position:relative;inset:auto;min-height:0;margin:10px 0 0;flex-shrink:0}.scene-match-copy strong{white-space:normal;overflow:visible;line-height:1.4}.scene-match-copy small{line-height:1.5}
  .live-scene{height:auto;max-height:none;min-height:163px}.scene-top{flex-wrap:wrap}.scene-match button{min-width:44px;min-height:44px;height:auto}
  .is-large-type .flow-steps,.is-large-type .platform-picker,.is-large-type .wire-controls,.is-large-type .liquid-facet-grid,.is-large-type .market-filters,.is-large-type .free-tags,.is-large-type .gain-trade{grid-template-columns:minmax(0,1fr)}
- .is-large-type .market-card{grid-template-columns:90px minmax(0,1fr);gap:12px}.is-large-type .market-card.has-market-photo{grid-template-columns:minmax(0,1fr)}
+ .is-large-type .market-card{grid-template-columns:minmax(0,1fr);gap:14px}
  .is-large-type .air-demo{grid-template-columns:minmax(0,1fr)}.is-large-type .air-visual{grid-column:1;grid-row:auto}.is-large-type .air-toggle{flex-wrap:wrap}
  .market-record small{white-space:normal;max-width:100%;line-height:1.5;overflow-wrap:anywhere}
- .is-large-type .market-record{margin-bottom:90px}
+ .is-large-type .market-record{margin-bottom:0;justify-self:start}
+ .is-large-type .market-record small{left:84px;top:0;display:flex;align-items:center;width:180px;max-width:calc(100vw - 160px);height:70px;text-align:left;text-transform:none;overflow-wrap:normal}
  .atom-portrait,.portrait-photo,.platform-photo,.duel-photo{height:auto;min-height:0;overflow:visible}
  .atlas-product-photo{height:auto;min-height:0;overflow:visible;border-radius:9px}
  .atlas-product-photo img{height:170px;min-height:0;max-height:none;flex:none}
