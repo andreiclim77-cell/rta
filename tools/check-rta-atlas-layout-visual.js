@@ -47,7 +47,7 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
    await align(page,'#duelDifferences');await shot(page,'fit-'+label+'-10-duel-results.png');
    await page.locator('#atlasBack').click();await stable(page);assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'market');await fit(page,label+' Back');assert.equal(errors.length,0,errors.join(' | '));
    console.log('LAYOUT CASE PASS: '+label+' '+height+'px; six modules, unclipped text, header/tabs, exact selections and charts.');count++;
-  }finally{await context.close();}
+  }finally{await context.close();if(profile){const resolved=path.resolve(profile),owned=path.resolve('artifacts')+path.sep;assert.ok(resolved.startsWith(owned)&&path.basename(resolved).startsWith('layout-profile-'),'Only this test-created profile may be removed');fs.rmSync(resolved,{recursive:true,force:true});}}
  }
  console.log('ATLAS LAYOUT VISUAL PASS: '+count+' viewport/font cases, real browser minimum fonts 18/24px, six modules, text bounds, dynamic chrome and selected-value captions.');
  }finally{await browser.close();await new Promise(r=>server.close(r));}}

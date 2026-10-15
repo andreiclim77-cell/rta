@@ -60,7 +60,7 @@ Pregătire de interfață în branch: numărătoare dinamică în texte, denumir
 
 ## Acoperire și limite ale candidatului integrat
 
-37 mărci; 496 profiluri pe descrieri oficiale, 184 pe descrieri de comerciant atribuite și 20 pe ediții documentate în recenzii. 553 produse au suficiente informații pentru topurile automate; celelalte pot fi alese manual cu limita afișată. Numărul de produse nu probează cererea globală sau disponibilitatea curentă.
+37 mărci; 496 profiluri pe descrieri oficiale, 184 pe descrieri de comerciant atribuite și 20 pe ediții documentate în recenzii. 535 produse au suficiente informații pentru topurile automate; celelalte pot fi alese manual cu limita afișată. Numărul de produse nu probează cererea globală sau disponibilitatea curentă.
 
 Sunt păstrate prin aliasuri 281 fișe vechi identificate în sursele revizuite; acestea includ repetări ale aceleiași identități. Fișele istorice fără asociere verificată nu sunt declarate automat false: rămân recuperabile în datele originale V10.
 

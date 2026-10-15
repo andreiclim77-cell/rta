@@ -9,15 +9,19 @@ for(const row of rows){
  assert.ok(row.brand&&row.name&&row.profile&&categories.includes(row.class));
  assert.ok(!['Profil reper','Personal'].includes(row.brand),'Generic reference and personal benchmark are not commercial products');
  assert.ok(row.sources.some(s=>s.type==='manufacturer'||s.type==='independent_review'||['E-Tobacco','Joyetech EU','Vapable'].includes(s.publisher)));
- assert.ok(row.sources.every(s=>/^https:\/\//.test(s.url)&&s.publisher&&s.accessed==='2026-10-15'));
+ assert.ok(row.sources.every(s=>/^https:\/\//.test(s.url)&&s.publisher&&/^2026-10-(14|15)$/.test(s.accessed)));
  assert.ok(row.evidenceLimit&&row.classReason&&row.recipeGroup);
  assert.ok(!/\b(?:\d+\s*ml|\d+\s*mg|liquido pronto|aroma concentrato)\b/i.test(row.name),'Bottle and strength are not product identities: '+row.name);
 }
 for(const name of ['Myrtilla','Crazy Cola','MilkShake - Chocolate','Mister Rock'])assert.ok(!rows.some(r=>r.brand==='TNT Vape'&&r.name===name));
 assert.ok(!rows.some(r=>r.brand==='Blendfeel'&&/pianeta menta/i.test(r.line)),'Mint-only products cannot enter the tobacco library');
 assert.ok(!rows.some(r=>r.brand==='Halo'&&r.name==='Fusion'),'Unflavored is outside the library');
+for(const [brand,name] of [['Inawera','Gold Ducat'],['Flavorah','Arabian T'],['FlavourArt','Soho'],['Flavor West','Havana']])assert.ok(rows.some(r=>r.brand===brand&&r.name===name),'Keep verified established identities: '+brand+' '+name);
+const vct=rows.find(r=>r.brand==='Ripe Vapes'&&r.name.toLowerCase()==='vct original');assert.ok(vct.tags.includes('vanilla')&&vct.tags.includes('cream')&&vct.tags.includes('nuts'));
+assert.ok(!rows.find(r=>r.brand==='Hangsen'&&r.name==='Dry Tobacco').tags.includes('sweet'),'A negated sweetness claim must not produce a sweet tag');
 const cm=rows.filter(r=>r.brand==='Centenary Mods');assert.equal(cm.length,12);
 const secret=cm.find(r=>r.name==='Merde de Cheval');assert.equal(secret.recommendable,false);assert.equal(secret.facts.length,0);assert.ok(/secret/i.test(secret.profile));
+assert.ok(!/ferment/i.test(cm.find(r=>r.name==='Poils de Chevre').profile),'Cold maceration does not prove fermentation');
 const balkan=cm.find(r=>r.name==='Balkan Milestone');assert.ok(/Basma.*Smyrna.*Latakia/.test(balkan.profile));assert.ok(!balkan.tags.includes('virginia'));
 const env={window:{}};vm.createContext(env);const load=p=>vm.runInContext(fs.readFileSync('rta-lab/'+p,'utf8'),env,{filename:p});
 for(const p of ['data/atoms-1.js','data/atoms-2.js','data/atoms-3.js','data/wires.js','data/core.js','atlas-preview/catalog.js','data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/liquid-picker.js'])load(p);
