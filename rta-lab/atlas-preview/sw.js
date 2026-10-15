@@ -1,16 +1,16 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-preview-450c38e10df3a1c3",PREFIX="rta-atlas-preview-";
+const CACHE="rta-atlas-preview-d5d44e4f2820784a",PREFIX="rta-atlas-preview-";
 const ASSETS=[
   "../../assets/fonts/manrope-latin-ext.woff2",
   "../../assets/fonts/manrope-latin.woff2",
   "../../assets/instagram/atomizer-asylum-rta-v3-yg-creations-c41adc2e42.jpg",
-  "../data/atoms-1.js?v=atlas-catalog-700-20261015-1",
+  "../data/atoms-1.js?v=atlas-415cool-20261015-1",
   "../data/atoms-2.js?v=atlas-catalog-700-20261015-1",
   "../data/atoms-3.js?v=atlas-catalog-700-20261015-1",
   "../data/bell-liquid-fit.js?v=atlas-catalog-700-20261015-1",
   "../data/core.js?v=atlas-catalog-700-20261015-1",
-  "../data/sensory-core.js?v=atlas-gtr-nife-20261015-1",
-  "../data/wires.js?v=atlas-gtr-nife-20261015-1",
+  "../data/sensory-core.js?v=atlas-415cool-20261015-1",
+  "../data/wires.js?v=atlas-415cool-20261015-1",
   "../icon-192.png",
   "../mood-match.js?v=atlas-catalog-700-20261015-1",
   "./",
@@ -63,7 +63,7 @@ const ASSETS=[
   "./media/pmstd-product.jpg",
   "./media/taifun-gt-one.jpg",
   "./modules.css?v=atlas-catalog-700-20261015-1",
-  "./modules.js?v=atlas-gtr-nife-20261015-1",
+  "./modules.js?v=atlas-415cool-20261015-1",
   "./photo-sources.js?v=atlas-catalog-700-20261015-1",
   "./styles.css?v=atlas-catalog-700-20261015-1",
   "./v02.css?v=atlas-catalog-700-20261015-1",

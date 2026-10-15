@@ -8,7 +8,7 @@ window.RTA_LAB_CONTINUITY = {
   principle: "Fără clasament global absolut: pairingul se face după ADN lichid -> ADN platformă -> sârmă -> geometrie/contact -> watt/TC.",
   lab: "V10 · 620 repere · 5 sârme active",
   validated: {
-    "415": "28/5 contact = echilibru și layering; 29/5 contact ≈12 W = concentrat/dulce; 29/6 contact = mai dry/tobacco-first și mai puțin concentrat; K1 Clapton/5 = preferință Clapton de platformă pentru corp/densitate/integrare.",
+    "415": "Actualizare 15.10.2026: 415 Cool preferă Dicodes NiFe30/7 și Zivipf NiFe52/6 la egalitate, apoi K1 28 GA/6. Anterior 28/5 a fost echilibrat, 29/5 compact și 29/6 mai dry; K1 Clapton/5 rămâne perechea specialistă preferată în familia Clapton.",
     "kprime": "29/5 contact = round-wire principal; 28/5 = echilibru. NiFe52/6 rămâne direcția TC curentă; NiFe30/6 benchmark istoric pe 80/20.",
     "gtone": "A/B direct 12.10.2026: K1 29 GA / Ø2,5 / 6 contact > K1 28 GA / Ø2,5 / 5. 29/6 devine preferința round-wire curentă.",
     "gtr": "NiFe30 TC = potrivire naturală/validată, finețe și layering.",
@@ -65,10 +65,10 @@ window.RTA_LAB_CONTINUITY = {
     if (!atom || atom.id !== "415") return output;
 
     if (wire.id === "k128") {
-      output.wraps = "5";
-      output.status = "Validat practic · 415";
+      output.wraps = "6";
+      output.status = "Preferință personală nouă · 415 Cool · K1 28/6";
       output.noteClass = "valid";
-      output.note = "K1 28 GA / Ø2,5 / 5 spire contact este reperul de echilibru și layering dintre round-wire-urile testate pe 415: corp, mouthfeel, tutun și straturi bine legate.";
+      output.note = "415 Cool: K1 28 GA / 6 spire este alegerea personală următoare după Dicodes NiFe30/7 și Zivipf NiFe52/6. K1 28/5 este reperul istoric round-wire și rămâne funcțional; nu deducem un A/B controlat ori un wattaj din raportul nou.";
       return output;
     }
 
@@ -95,7 +95,7 @@ window.RTA_LAB_CONTINUITY = {
   comparisonText = function(atom, wire, output) {
     if (!atom || atom.id !== "415") return baseComparisonText(atom, wire, output);
     if (wire.id === "k128") {
-      return "Validat: 28/5 contact este cel mai layered și echilibrat dintre round-wire-urile testate; are mai mult corp decât 29 GA și nu împinge nici dulceața, nici uscăciunea la extrem.";
+      return "415 Cool: K1 28 GA/6 este a doua preferință personală după cele două configurații NiFe; 28/5 rămâne alternativa istorică echilibrată, nu una interzisă.";
     }
     if (wire.id === "k129") {
       const mode = mode415((typeof state !== "undefined" && state && state.liquid) || {}, objectiveNow());
@@ -121,18 +121,20 @@ window.RTA_LAB_CONTINUITY = {
       <h5>415 · high-sensitivity platform · Tasty MTL 3×0,9 mm</h5>
       <div class="geometry-grid geometry-grid-five">
         <span><b>K1 Clapton</b>5 spire · preferință Clapton · corp/densitate</span>
-        <span><b>K1 28 GA</b>5 contact · echilibru + layering · VALIDAT</span>
+        <span><b>NiFe30 Dicodes</b>7 spire · TCR320 · PRIMA ALEGERE</span>
+        <span><b>NiFe52 Zivipf</b>6 spire · TCR310 · PRIMA ALEGERE EGALĂ</span>
+        <span><b>K1 28 GA</b>6 spire · A DOUA ALEGERE; 5 contact = reper istoric</span>
         <span><b>K1 29 GA</b>5 contact · ≈12 W · concentration/sweet</span>
         <span><b>K1 29 GA</b>6 contact · dry/tobacco · mai puțin concentrat</span>
-        <span><b>NiFe TC</b>opțiune contextuală după lichid</span>
+        <span><b>NiFe TC</b>ambele aliaje sunt preferate; nu se confundă TCR320 cu TCR310</span>
       </div>
-      <p><b>Regulă 04.09.2026:</b> varianta K1 29 GA / 5 spire distanțată a fost scoasă din Lab. Pe 415 folosim numai 29/5 contact sau 29/6 contact, iar K1 Clapton/5 este preferința Clapton de platformă.</p>
+      <p><b>Actualizare 15.10.2026:</b> 415 Cool: NiFe30 Dicodes/7 = NiFe52 Zivipf/6, apoi K1 28 GA/6. K1 28/5 și K1 Clapton/5 rămân istorice și selectabile; 29/5 distanțat rămâne interzis, numai contact este permis.</p>
     </div>`;
   };
 
   explorerVapeText = function(atom, wire, output) {
     if (!atom || atom.id !== "415") return baseExplorerVapeText(atom, wire, output);
-    if (wire.id === "k128") return "VALIDAT: 28/5 contact = echilibrul și layering-ul de referință al 415.";
+    if (wire.id === "k128") return "415 Cool · VALIDAT PERSONAL: K1 28 GA/6 urmează după NiFe30/7 și NiFe52/6; 28/5 istoric rămâne reușit." ;
     if (wire.id === "k129") return "VALIDAT: 29/5 contact = dulce/concentrat; 29/6 contact = mai dry/tobacco-first și mai puțin concentrat.";
     return baseExplorerVapeText(atom, wire, output);
   };
@@ -169,6 +171,7 @@ window.RTA_LAB_CONTINUITY = {
       if (["k1clap", "ssclap"].includes(wire.id)) bonus -= 0.35;
     }
     if (atom.id === "gtr" && wire.id === "nife30") bonus += 2.0;
+    if (atom.id === "415" && wire.id === "nife30") bonus += 1.4; // Personal TC-first preference, 15.10.2026.
     if (atom.id === "kx") {
       if (wire.id === "k128") bonus += 1.25;
       if (wire.id === "nife30") bonus += 1.5;
@@ -382,7 +385,7 @@ window.RTA_LAB_CONTINUITY = {
 
   function explorerWireOrder(atom) {
     const preferred = {
-      "415": ["k1clap", "k128", "k129", "nife30", "ssclap"]
+      "415": ["nife30", "k128", "k1clap", "k129", "ssclap"]
     };
     const order = preferred[atom && atom.id];
     if (!order) return [...WIRES];
@@ -411,7 +414,7 @@ window.RTA_LAB_CONTINUITY = {
     const orderedWires = explorerWireOrder(atom);
     const cards = orderedWires.map((wire, index) => {
       const output = buildOutput(atom, wire, neutralLiquid);
-      const preferredClass = atom.id === "415" && wire.id === "k1clap";
+      const preferredClass = atom.id === "415" && wire.id === "nife30";
       return `<article class="build explorer-build ${preferredClass ? "best" : wire.id === "k128" ? "baseline-build" : ""}">
         <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span>${preferredClass ? '<span class="besttxt">PREFERINȚĂ PLATFORMĂ</span>' : ""}</div>
         <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
@@ -428,12 +431,12 @@ window.RTA_LAB_CONTINUITY = {
       <p class="explorer-air"><b>Airflow:</b> ${escapeHtml(atom.airflow.details)}</p>
       ${geometrySummary(atom)}
       <div class="explorer-builds explorer-builds-five">${cards}</div>
-      <div class="explorer-tip"><b>Cum folosești rezultatul:</b> pe 415, K1 Clapton este afișat primul. Dvarw CL 3×0,6 și Asylum V3 Flat păstrează validările 28/6; ordinea finală rămâne triangulată prin lichid + obiectiv + ADN platformă.</div>`;
+      <div class="explorer-tip"><b>Cum folosești rezultatul:</b> pe 415, NiFe30/7 și NiFe52/6 sunt primele preferințe (în slotul legacy NiFe TC), apoi K1 28/6. K1 Clapton/5 rămâne preferință specifică Clapton. Dvarw CL 3×0,6 și Asylum V3 Flat păstrează validările 28/6; ordinea finală rămâne triangulată prin lichid + obiectiv + ADN platformă.</div>`;
   };
 
   document.addEventListener("DOMContentLoaded", () => {
     const explorerText = document.querySelector(".explorer-panel .ptitle p");
-    if (explorerText) explorerText.textContent = "Alege platforma și vezi ADN-ul ei. Pe 415, K1 Clapton este afișat primul; Dvarw CL 3×0,6 și Asylum V3 Flat păstrează validările 28/6.";
+    if (explorerText) explorerText.textContent = "Alege platforma și vezi ADN-ul ei. Pe 415, NiFe30/7 și NiFe52/6 sunt primele preferințe, apoi K1 28/6; Dvarw CL 3×0,6 și Asylum V3 Flat păstrează validările 28/6.";
     const atomPanelText = document.querySelectorAll(".panel .ptitle p");
     if (atomPanelText[2]) atomPanelText[2].textContent = "Lista se reordonează numai după potrivirea lichid + obiectiv; scorul global al platformei nu intră în calcul.";
     const footer = document.querySelector(".footer");

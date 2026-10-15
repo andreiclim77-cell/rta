@@ -60,7 +60,18 @@ async function main(){
    check(await page.locator('#wireAtom option[value=asylum]').count()===0,'Wire-first compatibility must exclude Asylum for SS Clapton');
    await page.locator('#wireMaterial').selectOption('nife52');
    await page.locator('#wireAtom').selectOption('415');await page.locator('#wireMaterial').selectOption('k128');
-   check(await page.locator('#wireWraps option[value="6"]').count()===0,'Deprecated 415 28/6 must be unavailable');
+   check(await page.locator('#wireWraps option[value="6"]').count()===1,'415 K1 28/6 must be available');
+   check(await page.locator('#wireWraps').inputValue()==='6','415 K1 28 GA/6 must be second preference');
+   check(await page.evaluate(()=>window.RTA_SENSORY_CORE.personalPreference(window.RTA_ATLAS_MODULES.state.config)?.tier)===2,
+    '415 K1 28/6 ranks below both personal TC setups');
+   await page.locator('#wireMaterial').selectOption('nife30');
+   check(await page.locator('#wireWraps').inputValue()==='7','415 Dicodes NiFe30 must use seven wraps');
+   check(await page.evaluate(()=>window.RTA_SENSORY_CORE.personalPreference(window.RTA_ATLAS_MODULES.state.config)?.tier)===1,
+    '415 Dicodes NiFe30/7 must be first-tier');
+   await page.locator('#wireMaterial').selectOption('nife52');
+   check(await page.locator('#wireWraps').inputValue()==='6','415 Zivipf NiFe52 must use six wraps');
+   check(await page.evaluate(()=>window.RTA_SENSORY_CORE.personalPreference(window.RTA_ATLAS_MODULES.state.config)?.tier)===1,
+    '415 Zivipf NiFe52/6 must be equal first-tier');
    await page.locator('#wireAtom').selectOption('dvarwcl');await page.locator('#wireAir').selectOption('triple06');
    check(await page.locator('.coil-stage .air-beams').count()===3,'CL triple insert must show three channels');
    await page.locator('#wireAir').selectOption('single12');

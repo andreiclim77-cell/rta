@@ -51,7 +51,7 @@ for(const atom of atoms){
  assert.ok(api.permitted(atom.id,base.wire,base.wraps),atom.id);
  assert.ok(tech.air.some(a=>a.id===base.air),atom.id);
  const models=api.variants(atom.id);
- assert.ok(models.length>=5 && models.length<=(atom.id==="gtr"?9:8),atom.id);
+ assert.ok(models.length>=5 && models.length<=(["gtr","415"].includes(atom.id)?9:8),atom.id);
  totalVariants+=models.length;
  assert.equal(new Set(models.map(x=>x.wire+"-"+x.wraps)).size,models.length);
  for(const v of models){
@@ -163,7 +163,8 @@ assert.equal(api.permitted("gtr","nife52",7),false);
 assert.ok(api.variants("gtr").some(v=>v.wire==="nife30"&&v.wraps===7));
 assert.ok(api.variants("gtr").some(v=>v.wire==="nife30"&&v.wraps===6));
 for(const other of atoms.filter(a=>a.id!=="gtr")){
- assert.equal(api.permitted(other.id,"nife30",7),false,"Seven wraps only on GTR NiFe30");
+ if(other.id==="415")continue; // 415 Cool is the other explicit NiFe30/7 exception.
+ assert.equal(api.permitted(other.id,"nife30",7),false,"Seven wraps only on GTR and 415 Cool NiFe30");
  assert.equal(api.permitted(other.id,"nife52",7),false);
 }
 for(const id of ["klp","kx","kprime"]){
@@ -200,8 +201,34 @@ assert.ok(Math.abs(api.physical(api.config("dvarwcl")).areaMm2-.848)<.01);
 assert.ok(Math.abs(api.physical(api.config("dvarwcl",{air:"single12"})).areaMm2-1.131)<.01);
 assert.equal(api.permitted("asylum","ssclap",5),false);
 assert.equal(api.permitted("klp","nife30",6),true);
-assert.equal(api.permitted("415","k128",6),false);
-assert.ok(!api.variants("415").some(x=>x.wire==="k128"&&x.wraps===6));
+assert.equal(api.permitted("415","k128",6),true,"415 K1 28/6 was newly validated");
+assert.ok(api.variants("415").some(x=>x.wire==="k128"&&x.wraps===6));
+assert.ok(api.variants("415").some(x=>x.wire==="k128"&&x.wraps===5),"Keep historical 415 28/5");
+assert.equal(api.permitted("415","nife30",7),true);
+assert.equal(api.permitted("415","nife30",6),true,"Old 415 TC six remains allowed");
+assert.equal(api.permitted("415","nife52",6),true);
+assert.equal(api.permitted("415","nife52",7),false);
+assert.ok(api.variants("415").some(x=>x.wire==="nife30"&&x.wraps===7));
+const cool=api.defaultConfig("415");
+assert.equal(cool.wire,"nife30");
+assert.equal(cool.wraps,7);
+assert.equal(api.personalPreference(cool).tier,1);
+const cool30=api.analyze(cool,sample);
+const cool52=api.analyze({atom:"415",wire:"nife52",wraps:6},sample);
+const coolK1=api.analyze({atom:"415",wire:"k128",wraps:6},sample);
+assert.equal(cool52.personalPreference.tier,1);
+assert.equal(coolK1.personalPreference.tier,2);
+assert.equal(cool30.personalPreference.label,cool52.personalPreference.label);
+for(const v of [cool30,cool52,coolK1]){
+ assert.equal(v.anchors.length,0,"The new 415 preference has no fully controlled named-liquid A/B");
+ assert.equal(v.partialEvidence.length,1,"Personal evidence on 415 must remain partial");
+ assert.equal(v.dimensions.pleasure,null,"Do not fabricate a measured pleasure score");
+}
+const oldClap=api.analyze({atom:"415",wire:"k1clap",wraps:5},sample);
+assert.ok(oldClap.anchors.length>0,"Keep dedicated Clapton pairing historical evidence");
+for(const other of atoms.filter(x=>x.id!=="415"&&x.id!=="gtr")){
+ assert.equal(api.permitted(other.id,"nife30",7),false,"Do not leak seven wraps to "+other.id);
+}
 assert.ok(api.variants("klp").some(x=>x.wire==="nife52"),"NiFe52 compatible, but unvalidated on KLP");
 const fl=api.analyze({atom:"pmfree",bell:"freehand"},sample);
 const rh=api.analyze({atom:"pmfree",bell:"rhodesian"},sample);

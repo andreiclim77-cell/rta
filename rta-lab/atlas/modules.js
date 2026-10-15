@@ -111,7 +111,7 @@ function topLiquids(prefix){
 }
 
 function compatibleWireAtoms(wire){return atoms.filter(a=>core.variants(a.id).some(v=>v.wire===wire));}
-function wireConfig(id,wire){if(id===state.atom&&wire===state.config.wire)return {...state.config};const base=id===state.atom?state.config:core.defaultConfig(id),variants=core.variants(id).filter(v=>v.wire===wire),v=(id==='gtr'&&wire==='nife30'?variants.find(v=>v.wraps===7):variants.find(v=>v.wraps===base.wraps))||variants[0];return v?core.config(id,{...base,...v,...core.wireSetup(id,wire)}):null;}
+function wireConfig(id,wire){if(id===state.atom&&wire===state.config.wire)return {...state.config};const base=id===state.atom?state.config:core.defaultConfig(id),variants=core.variants(id).filter(v=>v.wire===wire),v=((id==='gtr'||id==='415')&&wire==='nife30'?variants.find(v=>v.wraps===7):id==='415'&&wire==='k128'?variants.find(v=>v.wraps===6):variants.find(v=>v.wraps===base.wraps))||variants[0];return v?core.config(id,{...base,...v,...core.wireSetup(id,wire)}):null;}
 function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?'Control de temperatură · '+(wire==='nife30'?'NiFe30 / TCR320':'NiFe52 / TCR310')+' · preseturi proprii fiecărei platforme.':w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
 function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objective).map((r,i)=>'<button type="button" data-journey-liquid="'+r.index+'" data-journey-wire="'+cfg.wire+'" data-journey-atom="'+cfg.atom+'"><span>0'+(i+1)+'</span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('');}
 function materialPaths(){

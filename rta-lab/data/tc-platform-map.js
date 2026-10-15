@@ -3,13 +3,13 @@
  * KLP NiFe30 DNA TC este acum raportat practic, cu airflow/lichid neprecizate.
  * Canonical 30.08.2026: Dicodes RESISTHERM NiFe30 = TCR 320, rola personală 5,5 Ω/m, Ø2,5 mm, 6 spire.
  * Zivipf NiFe52 = TCR 310, Ø2,5 mm, 6 spire.
- * Actualizare 15.10.2026: doar pe GTR Dicodes NiFe30/7 este preferat; NiFe52/6 rămâne egal ca preferință.
+ * Actualizare 15.10.2026: GTR și 415 Cool preferă Dicodes NiFe30/7, iar NiFe52/6 rămâne egal ca preferință pe fiecare.
  */
 (() => {
   window.RTA_LAB_TC_PLATFORM_MAP = {
-    date: "2026-10-14",
-    principle: "Pe KLP, GTR, KX și K Prime, utilizatorul pune la egalitate ca PREFERINȚĂ SENZORIALĂ Dicodes NiFe30 TCR320 și Zivipf NiFe52 TCR310. Nu sunt aliaje identice, iar setările TC se aleg separat. Baseline general: 6 spire/Ø2,5 mm; excepție GTR Dicodes NiFe30/7, Zivipf NiFe52/6.",
-    personalEqualPreference: {atoms:["klp","gtr","kx","kprime"],first:["Dicodes RESISTHERM NiFe30","Zivipf NiFe52"],second:"Kanthal A1 (K1)",evidence:"declarație directă 14.10.2026; nu confirmă A/B cross-alloy pe fiecare atomizor"},
+    date: "2026-10-15",
+    principle: "Pe KLP, GTR, KX și K Prime, utilizatorul pune la egalitate ca PREFERINȚĂ SENZORIALĂ Dicodes NiFe30 TCR320 și Zivipf NiFe52 TCR310. Nu sunt aliaje identice, iar setările TC se aleg separat. Baseline general: 6 spire/Ø2,5 mm; excepții GTR și 415 Cool: Dicodes NiFe30/7, Zivipf NiFe52/6. Pe 415 urmează K1 28 GA / 6 spire.",
+    personalEqualPreference: {atoms:["klp","gtr","kx","kprime","415"],first:["Dicodes RESISTHERM NiFe30","Zivipf NiFe52"],second:"Kanthal A1 (K1)",evidence:"declarație directă 14.10.2026; nu confirmă A/B cross-alloy pe fiecare atomizor"},
     materials: {
       dicodesResisthermNiFe30: {
         wire: "Dicodes RESISTHERM NiFe30",
@@ -28,6 +28,14 @@
       }
     },
     map: {
+      "415":{
+        wire:"Dicodes RESISTHERM NiFe30",tcr:320,resistanceOhmPerM:5.5,
+        diam:"Ø2,5 mm (preset Lab)",wraps:7,
+        zivipfAlternative:{wire:"Zivipf NiFe52",tcr:310,wraps:6},
+        k128Alternative:{wire:"K1 28 GA",wraps:6},
+        historicalAlternatives:[{wire:"K1 28 GA",wraps:5},{wire:"K1 Clapton",wraps:5},{wire:"Dicodes RESISTHERM NiFe30",wraps:6}],
+        status:"declarație personală 15.10.2026: NiFe30/7 = NiFe52/6, apoi K1 28/6; fără test controlat ori TC măsurat"
+      },
       gtr: {
         wire: "Dicodes RESISTHERM NiFe30",
         tcr: 320,
@@ -79,6 +87,13 @@
     const output = baseBuildOutput(atom, wire, liquid);
     if (!atom || !wire || wire.id !== "nife30" || !output) return output;
 
+    if (atom.id === "415") {
+      output.wraps="7";
+      output.status="415 Cool · prima preferință · NiFe30/7 = NiFe52/6";
+      output.noteClass="valid";
+      output.note="415 Cool: Dicodes RESISTHERM NiFe30 TCR320/7 și Zivipf NiFe52 TCR310/6 sunt la egalitate în preferința personală, apoi K1 28 GA/6. Diametrul Ø2,5 este preset, nu măsurătoare; wattajul/temperatura testului nu sunt precizate. Vechile 28/5 și K1 Clapton/5 rămân istorice valide.";
+      return output;
+    }
     if (atom.id === "klp") {
       output.wraps = "6";
       output.power = "TC DNA 220°C · plafon 16 W (test personal)";
@@ -120,6 +135,7 @@
       const base = baseWhyForLiquid(wire, ax, objective, liquid);
       const atom = (typeof state !== "undefined" && state && state.atom) || null;
       if (!atom || !wire || wire.id !== "nife30") return base;
+      if (atom.id === "415") return "415 Cool + Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt primele preferințe personale; K1 28 GA/6 urmează, fără A/B controlat pe lichid";
       if (atom.id === "klp") return "KLP + NiFe30 Dicodes TCR320/6 la DNA 220°C/16 W a fost raportat cu mai mult palat, spectru și puțin mai mult TH/ofensivă decât K1 28/5; airflow/lichid încă neprecizate";
       if (atom.id === "gtr") return "GTR: Dicodes NiFe30 TCR320 cu 7 spire este alegerea personală TC actuală, la egalitate ca preferință cu Zivipf NiFe52 TCR310 / 6; 6 spire NiFe30 rămân funcționale, dar mai puțin coerente în testul recent";
       if (atom.id === "kx") return "KX păstrează Dicodes RESISTHERM NiFe30 TCR320 / 6 spire ca TC natural și foarte consistent";
@@ -132,6 +148,7 @@
     comparisonText = function(atom, wire, output) {
       const base = baseComparisonText(atom, wire, output);
       if (!atom || !wire || wire.id !== "nife30") return base;
+      if (atom.id === "415") return "415 Cool: NiFe30/7 = NiFe52/6 ca preferință TC; apoi K1 28 GA/6; nu deducem procente senzoriale ori echivalența temperaturii fizice.";
       if (atom.id === "klp") return "+ KLP NiFe30 TC pe DNA 220°C / plafon 16 W: spectru, palat și magie raportate mai bune față de K1 28/5, cu TH/ofensivă puțin crescute; comparație personală cu detalii parțiale.";
       if (atom.id === "gtr") return "+ GTR: Dicodes NiFe30/7 = reglare TC coerentă raportată personal; Zivipf NiFe52/6 = preferat la egalitate; NiFe30/6 rămâne funcțional. Nicio cauzalitate izolată atribuită spirei.";
       if (atom.id === "kx") return "+ NiFe30 Dicodes 320/6 = smoothness și consistență; rola personală 5,5 Ω/m.";
@@ -143,6 +160,7 @@
   if (baseExplorerVapeText) {
     explorerVapeText = function(atom, wire, output) {
       if (!atom || !wire || wire.id !== "nife30") return baseExplorerVapeText(atom, wire, output);
+      if (atom.id === "415") return "TEST PERSONAL: 415 RTA MTL Cool cu Dicodes NiFe30 TCR320 / 7 spire sau Zivipf NiFe52 TCR310 / 6 spire, ambele apreciate; K1 28 GA / 6 spire este următoarea preferință. Fără wattaj/TC/lichid în test.";
       if (atom.id === "klp") return "TEST PERSONAL: KLP + Dicodes RESISTHERM NiFe30 TCR320 / 6 spire / Ø2,5 pe DNA 220°C, plafon 16 W; apropie senzorial K Prime pe NiFe30. Airflow și lichid de completat.";
       if (atom.id === "gtr") return "TEST PERSONAL NOU: Dicodes RESISTHERM NiFe30 TCR320 / 7 spire merge coerent pe GTR, la 230°C cu plafon 16 W; Zivipf NiFe52 TCR310 / 6 spire este egal preferat. NiFe30/6 funcționează, dar testul nou favorizează 7; lichidul și montajul exact nu au fost controlate.";
       if (atom.id === "kx") return "VALIDAT: Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · 6 spire este baseline-ul TC canonic actual al KX.";
