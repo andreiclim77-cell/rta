@@ -8,6 +8,7 @@ const w=env.window,s=w.RTA_ATLAS_SEARCH,c=w.RTA_SENSORY_CORE,all=w.RTA_LIQUIDS,o
 assert.equal(s.find().total,620);assert.equal(s.find('x').total,0);assert.equal(s.find('no-such-liquid-827379').total,0);
 for(let i=0;i<all.length;i++)assert.ok(s.find(all[i].brand+' '+all[i].name).rows.some(r=>r.index===i),'Every catalog identity remains reachable: '+i);
 const b=s.find('Balkan Tabaccheria');assert.ok(b.total>0);assert.equal(b.rows[0].liquid.name,'Balkan Mixture');assert.ok(b.rows.every(r=>r.liquid.brand==='La Tabaccheria'&&/Balkan/i.test(r.liquid.name+' '+r.liquid.profile)));
+assert.equal(s.find('Virginia Hangsen').rows[0].liquid.name,'Virginia','An exact brand/name identity wins over longer names even when query words are reversed');
 assert.ok(s.find('Virgnia').approximate,'A one-character omission must be identified as approximate');
 assert.ok(s.find('Vigrinia').approximate,'A transposition must be identified as approximate');
 for(const family of [...new Set(all.map(l=>l.class))]){const rows=s.find('',{family});assert.equal(rows.total,all.filter(l=>l.class===family).length);assert.ok(rows.rows.every(r=>r.liquid.class===family));}
