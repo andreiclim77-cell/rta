@@ -112,10 +112,17 @@ jobs:
           if (/K1 27 GA|SS316L 30 GA round|SS316L 32 GA twisted/.test(index)) {
             throw new Error('An obsolete wire card remains in RTA Lab UI');
           }
-          const k128SixAllowed = new Set(['kv3', 'dvarwcl', 'asylum']);
+          const k128SixAllowed = new Set(['kv3', 'dvarwcl', 'asylum', '415']);
           const atomsWithoutK128SixExceptions = atoms.split('\n').filter(line => ![...k128SixAllowed].some(id => line.includes(`\"id\":\"${id}\"`))).join('\n');
           if (/K1 28 GA = (?:Ø2,5 \/ )?6 spire/.test(atomsWithoutK128SixExceptions)) throw new Error('A non-authorized atomizer still recommends K1 28 GA / 6 wraps');
           const atomLine = id => atoms.split('\n').find(line => line.includes(`\"id\":\"${id}\"`)) || '';
+          const coolAtomLine = atomLine('415');
+          if (!coolAtomLine.includes('415 RTA MTL Cool') ||
+              !coolAtomLine.includes('NiFe30 TCR320/7') ||
+              !coolAtomLine.includes('NiFe52 TCR310/6') ||
+              !coolAtomLine.includes('K1 28 GA/6')) {
+            throw new Error('415 Cool personal NiFe30/7 = NiFe52/6 then K1 28/6 validation missing');
+          }
           const kv3AtomLine = atomLine('kv3');
           if (!/K1 28 GA = Ø2,5 \/ 6 spire/.test(kv3AtomLine) || !/K1 29 GA = Ø2,5 \/ 6 spire/.test(kv3AtomLine)) {
             throw new Error('KV3 atom DNA must contain 28/6 and 29/6 on Ø2,5');
