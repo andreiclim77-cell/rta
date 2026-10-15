@@ -1,5 +1,17 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+## 415 RTA MTL Cool — prioritate personală actuală (15.10.2026)
+
+**Noua observație directă:** pe **415 RTA MTL Cool**, prima alegere personală este la egalitate între **Dicodes RESISTHERM NiFe30 TCR320 / 7 spire** și **Zivipf NiFe52 TCR310 / 6 spire**. **Următoarea preferință: Kanthal K1 28 GA / 6 spire.** Utilizatorul confirmă că toate funcționează bine; nu pretinde un câștig senzorial măsurat sau o egalitate chimică între aliaje.
+
+**Corecție față de arhiva istorică:** interdicția „415 K1 28/6 este depășit” și ordinea „415 K1 Clapton primul în Explorer” au fost depășite de această observație nouă. **K1 28/5 contact**, **K1 Clapton/5** (în continuare pereche Clapton specialistă), K1 29/5 contact, K1 29/6 contact și vechiul NiFe30/6 **nu se șterg**. Nu se reactivează K1 29/5 distanțat. Cele cinci familii de sârme V10 nu se extind.
+
+**Limite de probă:** lichidul, poziția, bumbacul, deschiderea airflow, wattajul și temperatura TC exacte ale acestor trei montări pe 415 nu au fost comunicate în noul test. Ø2,5 mm rămâne doar *presetul Lab*. Configurația GTR NiFe30/7 la 230°C/limită 16 W **NU** se transferă drept observație pe 415. Preferința se înregistrează separat de scorurile tehnico-senzoriale și nu reprezintă A/B controlat. Pentru TC se păstrează calibrarea la rece și TCR distinct.
+
+**Integrare izolată:** pe platforma `415` Sensory DNA permite NiFe30/7 și /6, NiFe52/6, K1 28/6 și /5; preferințe prima categorie NiFe30/7 și NiFe52/6, a doua K1 28/6. Legacy V10 arată slotul NiFe TC cu detalierea celor două aliaje; `clapton-platform-map.js`, încărcat ultimul, nu mai trebuie să readucă în față Clapton/5. Celelalte platforme (GTR NiFe30/7, KLP/KX/Prime NiFe30/6 etc.), inventarul de 16 platforme/42 exemplare, cele trei fișe CL și cataloagele **V10 620 / Atlas 700** rămân păstrate.
+
+**Stadiu:** implementare pe branch `feature/415-cool-personal-tc-7-6-k128-6-20261015`; teste RTA/Atlas/Market și regenerare cache/deploy de verificat la SHA exact. Nu confunda branchul cu producția.
+
 ## Actualizare GTR / TC — 15.10.2026 (INTEGRATĂ / PUBLICATĂ)
 
 **Preferință nouă, limitată STRICT la Taifun GTR:** **Dicodes RESISTHERM NiFe30 TCR320 / 7 spire** și **Zivipf NiFe52 TCR310 / 6 spire** sunt cele două opțiuni TC preferate personal, fără ierarhie de plăcere între aliaje. **NiFe30/6 funcționează** și rămâne selectabil ca alternativă; nu îl marca defect sau interzis. Ø2,5 mm este presetul geometric al Lab-ului, nu o nouă măsurătoare a coilului utilizat.
@@ -860,3 +872,7 @@ Asocierea bibliotecii cere cheie exactă brand/nume/linie/clasă și alias edito
 Această observație actualizează **numai GTR**, având prioritate față de tabelul istoric §6.2, interdicțiile generale din §10 și baseline-ul NiFe/6 din §20.2. Dicodes RESISTHERM NiFe30 TCR320: **7 spire = preferință GTR actuală**, 6 spire = opțiune validă istorică, dar mai puțin coerentă în ultima experiență TC; Zivipf NiFe52 TCR310: **6 spire = preferință GTR actuală**. Cele două aliaje au prioritate personală egală numai cu geometria proprie; nu sunt fizic identice. Setarea observată pentru noul NiFe30/7: GTR TC pe Dicodes 230°C, 16 W plafon, ~12 W la sfârșitul inhalării, senzație de reglaj normal/coerent; vechiul montaj NiFe30/6 la 230°C pe Dani 21700 afișa circa 6 W la final și părea mai rece. Compararea nu izolează o singură variabilă (coil refăcut/contact/bumbac/calibrare/lichid neprecizate), astfel nu dovedim cauzalitatea spirei suplimentare și nu extrapolăm la toate lichidele.
 
 **Reguli implementate în staging:** `data/sensory-core.js` permite exclusiv pe GTR NiFe30/7 **și** NiFe30/6, NiFe52/6, cu prioritate personală #1 egală pentru NiFe30/7 și NiFe52/6; restul NiFe TC au 6 spire. `data/tc-platform-map.js` și `data/tc-sixwrap-global.js` păstrează excepția GTR în overlay-ul V10 fără crearea unui al șaselea slot. UI Wire Lab explică separat cele două aliaje; presetul GTR NiFe30/7 are 230°C și plafon 16 W ca observație personală, **nu temperatură fizică garantată**. KLP DNA 220°C/16 W rămâne numai cazul KLP NiFe30; KX/K Prime/KLP și Zivipf nu moștenesc 7 spire. Respectă V10 620 repere, Atlas 700 produse, 16 platforme, 42 RTA, 3 CL saved/draft locale. Verificarea CI și a publicării se atașează după execuția efectivă.
+
+## 35. 415 Cool — NiFe30/7 = NiFe52/6 apoi K1 28/6 (15.10.2026)
+
+Această secțiune înlocuiește strict pentru 415 restricțiile istorice din §10 (K1 28/6 „depășit”) și preferința Explorer „K1 Clapton primul” din §11. Se păstrează toate variantele vechi ca istoric reușit; se actualizează prima alegere la **NiFe30 Dicodes/7 = NiFe52 Zivipf/6**, apoi **K1 28 GA/6**. Este o preferință practică personală nouă, fără A/B izolat și fără temperaturi sau wattaje atribuite. GTR NiFe30/7 nu se confundă cu setările noi ale 415; KLP, K Prime și KX au în continuare 6 spire în baseline. **Detalii, limite și consecințe în checkpointul prioritar din capul fișierului.**
