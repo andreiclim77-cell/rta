@@ -149,7 +149,8 @@ assert.ok(v02css.includes('::-webkit-search-cancel-button'),"Avoid native and cu
 assert.ok(v02.includes('results.insertAdjacentElement("afterend",box)'),"Results must precede the airflow explainer");
 
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(refs.length,36,"Expected canonical scripts, photography, Atlas adapters and Duel");
+assert.equal(refs.length,37,"Expected canonical scripts, photography, Atlas adapters, Duel and responsive fitting");
+assert.ok(html.includes('./layout.css?')&&refs.some(ref=>ref.startsWith('./layout.js?')),'Responsive text fitting must ship with the application');
 for(const ref of refs){
  assert.ok(ref.startsWith("../")||ref.startsWith("./"),"No unknown remote JS");
  const local=path.resolve(preview,ref.split("?")[0]);

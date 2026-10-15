@@ -1,5 +1,15 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+## Corecție în verificare — text, taburi și cadrane pe mobil, 15.10.2026
+
+Utilizatorul a trimis o captură reală cu etichetele graficului rupte și tăiate. Cauza este reprodusă în Chromium cu dimensiune minimă de font 18 px: textul depășește înălțimea fixă de 16 px, marca/Înapoi și cele șase taburi se aglomerează. Preferința de font este reală în profilul QA izolat; setarea experimentală OSTextScale nu a schimbat textul și nu este folosită ca probă de mărire.
+
+Corecția din feature/atlas-responsive-fit-20261015 (baza 94a611a974becd39002b61af07a7927fb67165e2) separă etichetele de bare, permite înălțimi naturale, adaptează antetul/navigarea la text mărit și rezervă în pagină înălțimea reală a barelor fixe. Selecțiile lungi primesc denumirea integrală sub câmp; panourile, fotografiile cu credite, pașii, DNA și comparația Duel se rearanjează. Fluxurile și datele nu sunt schimbate.
+
+Local: probele pure 620/16/42, cele 140 contexte × nouă builduri, căutările/topurile, mobile/motion, module și filtre/Back — PASS. Matricea de încadrare verifică zece combinații ecran/font (320/360/390/768/1440, font minim 18/24 px și landscape 844×390), cu limite geometrice ale textului/taburilor și valoarea completă a selecțiilor. O etichetă prea lată în landscape cu font mărit a fost detectată, corectată și retestată. CI exact și publicarea rămân de confirmat; această corecție nu este încă declarată publicată. Checkpointul #48 de mai jos descrie versiunea publică anterioară.
+
+Motorul, rta-lab/data/**, mood-match.js și index.html V10 rămân identice; preferințele KLP, catalogul 620/16/42 și saved/draft CL sunt protejate. Nu sunt cerute alte aprobări pentru această corecție de încadrare în direcția deja aprobată.
+
 ## Stare prioritară — fluxuri ghidate publicate și verificate, 15.10.2026
 
 **Acest checkpoint prevalează asupra tuturor etapelor istorice de mai jos.** PR #48 este MERGED. Candidat exact: 45842b6133aaa204f3d7ae6489a2d32a4d41283f; integrare publicată: 9abb360f1fd23827606a76643901f81d9046c8c6. Actualizările independente main, inclusiv f5cf821f8190971abd8bcfcbc2c286059be5f482, sunt păstrate. Aprobarea expresă de publicare primită anterior a fost aplicată.
