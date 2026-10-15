@@ -1,5 +1,5 @@
 /* RTA Sensory Atlas · standalone Home + Liquid Cinema prototype.
-   Real 620 catalog / 16 platforms / established Mood Match + Sensory DNA.
+   Verified commercial 700 catalog / 16 platforms / established Mood Match + Sensory DNA.
    Concept preview: no edits to V10 engine, no invented reviews, percentages or product photos. */
 (function(){
 "use strict";
@@ -7,7 +7,7 @@ const catalog=window.RTA_LIQUIDS||[];
 const atoms=window.RTA_CORE?.atoms||[];
 const core=window.RTA_SENSORY_CORE;
 const moodEngine=window.RTA_MOOD_MATCH;
-if(!core||!moodEngine||catalog.length!==620||atoms.length!==16)return;
+if(!core||!moodEngine||catalog.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1'||atoms.length!==16)return;
 const moodList=moodEngine.moods, momentList=moodEngine.moments;
 const defaultLiquid=(()=>{
  const exact=catalog.findIndex(x=>x.brand==="La Tabaccheria"&&x.name==="Balkan Mixture");

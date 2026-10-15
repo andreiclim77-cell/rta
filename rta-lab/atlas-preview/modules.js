@@ -107,7 +107,7 @@ function catalogCards(){
 function renderCatalog(){const host=el('atlasCatalog');if(host)host.innerHTML=catalogCards();}
 function topLiquids(prefix){
  const rows=window.RTA_ATLAS_SEARCH.top(state.config,state.objective);
- return '<section class="module-section top-liquid-section" id="'+prefix+'TopLiquids"><span class="eyebrow">DIN CELE '+catalog.length+' REPERE</span><h2>Primele 5 lichide pentru acest build.</h2><p class="module-note">'+esc(name(state.atom)+' · '+core.wires[state.config.wire].name+' · '+objectiveLabel(state.objective))+'. Recalculate pentru configurația afișată; potrivire estimată din motor, nu cinci teste personale.</p><ol class="top-liquid-list">'+rows.map((r,i)=>'<li><button type="button" data-context-liquid="'+r.index+'"><span class="top-liquid-rank">0'+(i+1)+'</span><span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class+' · '+r.liquid.profile)+'</small></span></button></li>').join('')+'</ol></section>';
+ return '<section class="module-section top-liquid-section" id="'+prefix+'TopLiquids"><span class="eyebrow">DIN CELE '+catalog.length+' REPERE</span><h2>Primele 5 lichide pentru acest build.</h2><p class="module-note">'+esc(name(state.atom)+' · '+core.wires[state.config.wire].name+' · '+objectiveLabel(state.objective))+'. Recalculate pentru configurația afișată. În top intră doar produsele cu profil suficient documentat; potrivirea rămâne estimată din model.</p><ol class="top-liquid-list">'+rows.map((r,i)=>'<li><button type="button" data-context-liquid="'+r.index+'"><span class="top-liquid-rank">0'+(i+1)+'</span><span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class+' · '+r.liquid.profile)+'</small></span></button></li>').join('')+'</ol></section>';
 }
 
 function compatibleWireAtoms(wire){return atoms.filter(a=>core.variants(a.id).some(v=>v.wire===wire));}
@@ -180,7 +180,7 @@ function init(){
   if(d.platform){selectAtom(d.platform);renderAtomizer();el('pageAtomizer').scrollIntoView({block:'start',behavior:'instant'});}
   if(d.editWire!=null){state.wireChosen=true;state.wirePlatformChosen=true;api.route('wire');}
   if(d.showLiquids!=null){
-   const rows=core.matchLiquids(state.config,catalog,state.objective,0);
+   const rows=window.RTA_ATLAS_SEARCH.top(state.config,state.objective,12);
    el('platformLiquids').innerHTML='<p class="module-note">Toate cele '+rows.length+' lichide analizate. Primele 12 potriviri contextuale.</p><div class="liquid-links">'+rows.slice(0,12).map(r=>'<button type="button" data-atlas-liquid="'+r.index+'"><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('')+'</div>';
   }
   if(d.atlasLiquid!=null||d.contextLiquid!=null){api.selectLiquid(Number(d.atlasLiquid??d.contextLiquid));show(api.state.route);}

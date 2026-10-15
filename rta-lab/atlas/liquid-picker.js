@@ -20,7 +20,7 @@ function near(a,b){
 function textScore(row,q,fuzzy=false){
  const terms=tokens(q);if(!terms.length)return 0;
  let score=0;for(const term of terms){if(row.name.includes(term))score+=8;else if(row.brand.includes(term))score+=6;else if(row.words.some(w=>w.includes(term)))score+=3;else if(fuzzy&&row.words.some(w=>near(term,w)))score+=1;else return -1;}
- if(row.liquid){const identity=tokens(label(row.liquid));if(identity.every(t=>terms.includes(t))&&terms.every(t=>identity.includes(t)))score+=40;else if(norm(row.liquid.name)===norm(q))score+=30;else if(norm(label(row.liquid)).includes(norm(q)))score+=12;}return score;
+ if(row.liquid){const identity=tokens([row.liquid.brand,row.liquid.name].join(' '));const aliasExact=(row.liquid.aliases||[]).some(alias=>{const parts=tokens(row.liquid.brand+' '+alias);return parts.every(t=>terms.includes(t))&&terms.every(t=>parts.includes(t));});if(aliasExact)score+=40;if(identity.every(t=>terms.includes(t))&&terms.every(t=>identity.includes(t)))score+=40;else if(norm(row.liquid.name)===norm(q))score+=30;else if(norm(label(row.liquid)).includes(norm(q)))score+=12;}return score;
 }
 const cache=new Map();
 function ranked(config,goal='complete'){

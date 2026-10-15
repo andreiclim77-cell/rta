@@ -17,7 +17,7 @@ async function main(){
    const page=await context.newPage(),errors=[];
    page.on("pageerror",e=>errors.push(e.message));
    await page.goto(entry,{waitUntil:"domcontentloaded"});
-   await page.waitForFunction(()=>window.RTA_ATLAS_PREVIEW?.getSourceModel().liquids===620);
+   await page.waitForFunction(()=>window.RTA_ATLAS_PREVIEW?.getSourceModel().liquids===700);
    await page.waitForSelector("#cinemaReel .cinema-frame img");
    // A tag existing in the DOM is not evidence that a photograph loaded.
    await page.waitForFunction(()=>{

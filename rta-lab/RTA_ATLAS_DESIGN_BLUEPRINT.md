@@ -2,16 +2,13 @@
 
 ## Stare de lucru — biblioteca 700 și topurile, 15.10.2026
 
-Utilizatorul cere acum explicit 700 de produse tutunoase comerciale distincte, de marcă, fără profiluri generice sau repetări; păstrează fișele bune, completează lipsurile corect și reface topurile. Aceasta prevalează exclusiv asupra vechii limite de catalog 620. Motorul, 16 platforme / 42 exemplare, configurațiile validate, datele personale și cele trei CL saved/draft rămân protejate. Aprobarea anterioară de publicare după verificări este în vigoare.
+PR #51 DRAFT, branch `feature/atlas-library-700-20261015`. Catalogul comercial separat este integrat în Atlas: 700 de identități / 35 de mărci, cu surse, aliasuri, gamă și limite; sursa editabilă este `catalog/liquids-20261015.json`. V10 și cele 620 de fișe originale rămân arhivă recuperabilă, fără modificarea motorului, a 16 platforme / 42 exemplare ori a datelor personale și CL saved/draft.
 
-PR de lucru #51, DRAFT, branch feature/atlas-library-700-20261015; checkpoint inițial f9ecdee5350d2a96f6ee04566fd9af1382d162af. Candidatul automat de 700 este neacceptat și neintegrat: au fost detectate și descrieri de magazin care contrazic producătorul (mentă pură prezentată ca tutun). Verificarea primară continuă, iar producția rămâne la checkpointul anterior.
+100 Profil reper, benchmarkul personal și sinonimele de ambalaj nu ocupă poziții comerciale. Centenary Mods are 12 fișe oficiale, inclusiv Balkan Milestone (Basma/Smyrna + Latakia turcesc) și Merde de Cheval (rețetă secretă). Căutarea admite Balcan și Mer de cheval. Topurile contextuale folosesc aceeași bibliotecă și exclud profilurile insuficiente sau a doua apariție a aceleiași rețete. Hall of Fame păstrează 40 de recenzii atribuite și controlul versiunilor; descrierile producătorilor nu devin recenzii ori consens.
 
-Auditul confirmă: Centenary Mods / Balkan Milestone / Merde de Cheval lipsesc; cele 620 includ 100 Profil reper, un benchmark personal și 19 grupuri repetate de marcă+nume+gamă. Biblioteca nouă nu este încă integrată sau publicată. Au fost citite cataloage publice cu 6.528 de produse de toate tipurile și fișe suplimentare ale producătorilor; acest inventar nu este numărul de lichide acceptate. Se normalizează identitățile, formulările, proveniența și clasele, fără a număra ambalajele ca produse noi. Nu afirmați că există deja 700 verificate și nici un top global de cerere fără dovezi.
+Teste locale: 700 identități accesibile, 96 topuri platformă/obiectiv, 140 contexte și 210 profiluri libere; motorul original trece separat pe 620. Browser 360×800, 390×844 și 1440×1000: fluxuri, topuri pe fiecare sârmă, Back, saved/draft CL și recuperarea catalogului lipsă — PASS pe primul candidat integrat. Acoperirea mărcilor și profilurile sunt încă revizuite; după ultima modificare se repetă verificările pe candidatul exact, inclusiv matricea de fonturi, offline și upgrade din cache. CI final și publicarea celor 700 sunt încă PENDING.
 
-Planul și regulile de acceptare sunt în CATALOG_REVIEW_700_20261015.md. Urmează selecția finală, integrarea în toate cele patru selectoare, recalcularea topurilor contextuale și revizia Hall of Fame pe surse, testele/CI/capturile candidatului exact, apoi publicarea și verificarea live. Versiunea publică verificată anterior este checkpointul de încadrare #49/#50 de mai jos.
-
-
-
+Nu numiți selecția «cele mai căutate 700 global»: nu există date globale de cerere verificate. Este o selecție editorială de produse reale documentate. Produsele cu rețetă secretă ori profil insuficient nu primesc detalii fabricate și nu intră automat în top. Raportul și receiptele sunt în `CATALOG_REVIEW_700_20261015.md` și `catalog/REVIEW_RECEIPT_20261015.json`. Aprobarea anterioară permite publicarea după încheierea verificărilor, fără o nouă cerere pentru această revizie de date.
 
 ## Producție verificată înaintea reviziei bibliotecii — încadrare, 15.10.2026
 

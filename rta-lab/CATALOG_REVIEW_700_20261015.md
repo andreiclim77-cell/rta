@@ -1,6 +1,6 @@
 # RTA — revizia bibliotecii de 700 de produse
 
-Stare: în curs, 15.10.2026. Bază: `7ad3813c42d22841496e14884ac295b8bcd75ed3`. Nu este încă biblioteca publicată.
+Stare: catalog integrat în candidatul #51; verificări finale și publicare încă în curs, 15.10.2026. Bază: `7ad3813c42d22841496e14884ac295b8bcd75ed3`. Nu este încă biblioteca publicată.
 
 ## Cerința care prevalează
 
@@ -31,13 +31,17 @@ Surse principale:
 
 Copiile de lucru și chitanțele SHA256 sunt în `qa-atlas/catalog-sources` din workspace. Nu se publică dumpurile HTML, texte comerciale integrale sau datele clienților. Datasetul final trebuie să conțină fapte normalizate, identități, surse și limite.
 
-## Control suplimentar al surselor — candidat automat neacceptat
+## Istoric al controlului surselor — primul candidat automat neacceptat
 
 Prima selecție automată de 700 este numai un candidat local, marcat PROVISIONAL_NOT_ACCEPTED. Nu este integrată în aplicație. Au rămas sinonime de format și clasificări care cer confirmare. Nu prezentați acest fișier ca bibliotecă verificată.
 
 A fost reprodus un conflict concret: TiSvapo descrie Blendfeel Ghiaccio și Piperita ca tutunoase; [producătorul arată că gama Pianeta Menta este mentă](https://blendfeel.com/pianeta-menta/). Aceste produse sunt excluse din biblioteca tutunoasă; descrierile magazinului nu sunt acceptate singure ca dovadă a compoziției. Ordinea publicată de popularitate poate rămâne doar un semnal comercial local, distinct de profil. Se verifică direct fișele oficiale pentru a rezolva aceste diferențe.
 
 Pregătire de interfață în branch: numărătoare dinamică în texte, denumirea gamei la fișele curate, aliasul Balcan/Balkan, câmpuri pentru surse și limite și selecție de topuri care poate exclude profilurile insuficient cunoscute și repetițiile aceleiași rețete. Acești conectori sunt testați încă pe biblioteca publică inițială; nu sunt probă a acceptării celor 700.
+
+## Catalogul integrat ulterior
+
+700 de identități comerciale cu surse, grupuri de rețetă și clasificări explicite; receiptul JSON conține numărătoarea exactă. Profilurile atribuite comerciantului sunt etichetate distinct. Fișele cu informații insuficiente pot fi căutate și selectate, dar sunt excluse din topurile automate; rețetele secrete nu sunt completate prin presupuneri. Topurile se recalculează din motorul existent. Nicio descriere de fabricant nu devine automat dovadă de reputație sau validare personală.
 
 ## Reguli de acceptare
 

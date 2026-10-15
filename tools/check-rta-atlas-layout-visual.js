@@ -35,7 +35,7 @@ async function main(){await new Promise(r=>server.listen(0,'127.0.0.1',r));const
    await page.goto(origin+'/rta-lab/atlas/');await page.waitForFunction(()=>!!window.RTA_ATLAS_SEARCH_UI&&!document.body.classList.contains('atlas-loading'));await stable(page);
    if(font)assert.ok(await page.evaluate(()=>parseFloat(getComputedStyle(document.querySelector('.comparison-track small')||document.body).fontSize))>=font,'The browser preference must really enlarge text');
    await fit(page,label+' Home');await shot(page,'fit-'+label+'-01-home.png');
-   await page.locator('.primary-action').click();await page.locator('#liquidSearch').fill('Balkan Mixture');await page.locator('#liquidSearch').press('Enter');await stable(page);await fit(page,label+' Liquid');
+   await page.locator('.primary-action').click();await page.locator('#liquidSearch').fill('Balkan Milestone');await page.locator('#liquidSearch').press('Enter');await stable(page);await fit(page,label+' Liquid');
    await align(page,'#liquidComparison');assert.equal(await page.locator('#liquidComparison .comparison-track').count(),21);await shot(page,'fit-'+label+'-02-chart.png');await align(page,'#liquidComparison .comparison-axis');await shot(page,'fit-'+label+'-02-values.png');
    await align(page,'.result-card');await shot(page,'fit-'+label+'-03-result.png');
    await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');await page.locator('#atlasWire').selectOption('nife30');await stable(page);await fit(page,label+' Atlas');await page.evaluate(()=>scrollTo({top:0,behavior:'instant'}));await shot(page,'fit-'+label+'-04-atlas.png');

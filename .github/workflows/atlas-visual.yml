@@ -36,6 +36,7 @@ jobs:
           which google-chrome || which google-chrome-stable
       - name: Verify real mobile layout, photography, and interaction motion
         run: |
+          RTA_CATALOG_RECEIPT=1 node tools/check-rta-atlas-catalog.js
           node tools/check-rta-atlas-visual.js
           node tools/check-rta-atlas-modules-visual.js
           node tools/check-rta-atlas-filters-visual.js
