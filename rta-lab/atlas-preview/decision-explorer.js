@@ -54,8 +54,8 @@ function metric(s,key){
  if(key==='smooth')return Math.min(5,Math.max(1,s.harmony*.78+(6-s.offense)*.12+(6-s.th)*.10));
  return s[key]||1;
 }
-function aggregate(wire,wraps,profile=neutral){
- const configs=candidates(wire,wraps);
+function aggregate(wire,wraps,profile=neutral,platformIds=null){
+ const configs=candidates(wire,wraps).filter(c=>!platformIds||platformIds.includes(c.atom));
  return configs.length?signalAvg(configs.map(c=>core.analyze(c,profile,'complete'))):null;
 }
 function analyzed(atom,wire,wraps,profile=neutral){
@@ -144,7 +144,10 @@ function wireWizard(){
  const cfgFinal=W.final&&W.finalWraps?candidates(W.final,W.finalWraps):[];
  const familyRows=W.family&&W.liquidIndex!=null?topAtoms(W.final,W.finalWraps,catalog[W.liquidIndex]):[];
  const lead=W.first&&W.wraps?aggregate(W.first,W.wraps,profile):null;
- const rival=W.other&&W.otherWraps?aggregate(W.other,W.otherWraps,profile):null;
+ // Side-by-side comparisons MUST use the exact same compatible atomizer set.
+ const commonIds=configs1.map(c=>c.atom).filter(id=>configs2.some(c=>c.atom===id));
+ const alignedLead=commonIds.length?aggregate(W.first,W.wraps,profile,commonIds):null;
+ const rival=commonIds.length?aggregate(W.other,W.otherWraps,profile,commonIds):null;
  const final=cfgFinal.length?signalAvg(cfgFinal.map(c=>core.analyze(c,profile,'complete'))):null;
  return '<section class="exp-flow" id="expWireWizard"><span class="eyebrow">WIRE LAB / DECIZIE PAS CU PAS</span><h2>Din sârmă, până la atomizor.</h2>'+
  '<p class="exp-hint">În această etapă, înaintea alegerii atomizorului, scorurile sunt mediile estimative ale platformelor compatibile. După lichid, TOP 3 este calculat pentru configurații exacte.</p>'+
@@ -160,8 +163,8 @@ function wireWizard(){
  Object.entries(core.wires).map(([id,w])=>'<option value="'+id+'"'+(id===W.other?' selected':'')+'>'+esc(w.name)+'</option>').join('')+'</select></label>'+
  (W.other?'<label>Spire comparator<select id="expWireOtherWraps"><option value="">Alege spirele...</option>'+
  available(W.other).map(n=>'<option value="'+n+'"'+(n===W.otherWraps?' selected':'')+'>'+n+' spire</option>').join('')+'</select></label>':'')+'</div>'+
- (rival?matrix([{label:core.wires[W.first].name+' · '+W.wraps,result:lead},{label:core.wires[W.other].name+' · '+W.otherWraps,result:rival}],
-   'Comparație directă 1–10','Ambele medii folosesc aceleași axe. Poți schimba de câte ori dorești comparatorul.'):'')+'</div>':'')+'</div>'+
+ (rival?matrix([{label:core.wires[W.first].name+' · '+W.wraps,result:alignedLead},{label:core.wires[W.other].name+' · '+W.otherWraps,result:rival}],
+   'Comparație directă 1–10','Aceleași '+commonIds.length+' platforme compatibile pentru ambele configurații, aceleași axe și același lichid/profil. Poți schimba comparatorul de câte ori dorești.'):(W.other&&W.otherWraps?'<p class="exp-warning">Nu există atomizoare comune pentru o comparație echitabilă a acestor două variante.</p>':''))+'</div>':'')+'</div>'+
  '<div class="exp-stage"><h3>2. Te-ai decis?</h3><p class="exp-hint">Selectează sârma cu care vrei să continui. Această alegere nu îți suprascrie montajele salvate.</p>'+
  '<div class="exp-selects"><label>Sârmă finală<select id="expWireFinal"><option value="">Alege sârma finală...</option>'+
  Object.entries(core.wires).map(([id,w])=>'<option value="'+id+'"'+(id===W.final?' selected':'')+'>'+esc(w.name)+'</option>').join('')+'</select></label>'+
