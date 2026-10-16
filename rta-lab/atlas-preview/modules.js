@@ -126,8 +126,11 @@ const PERSONAL_LEADS=Object.freeze({
  kx:[["nife30",6],["nife52",6],["k128",5]],
  gtone:[["k129",6],["k128",5]],muted:[["k128",6]],
  dvarwcl:[["k128",6,"triple06"]],
- dvarwfl:[["k128",6,"triple06"],["ssclap",5,"single12"]],
+ dvarwfl:[["k128",6,"triple06"]],
  asylum:[["k128",6]],kv3:[["k128",6],["k129",6]]
+});
+const PLATFORM_TECHNICAL_LEADS=Object.freeze({
+ dvarwfl:[["ssclap",5,"single12"]] // dedicated specialist pairing, not a controlled personal A/B.
 });
 function buildLeads(id=state.atom){
  const base=id===state.atom?state.config:core.defaultConfig(id),out=[],used=new Set();
@@ -139,6 +142,7 @@ function buildLeads(id=state.atom){
   used.add(wire);out.push({config:cfg,source});
  }
  for(const [wire,wraps,air] of PERSONAL_LEADS[id]||[])add(wire,wraps,air,"personal");
+ for(const [wire,wraps,air] of PLATFORM_TECHNICAL_LEADS[id]||[])add(wire,wraps,air,"model");
  const profile=hasLiquid()?liquid():{name:"Profil tehnic neutru",class:"Tutun simplu",tags:[]};
  for(const item of core.rankBuilds(id,profile,hasLiquid()?state.objective:"complete",{
   bell:base.bell,air:base.air,coilMm:base.coilMm,position:base.position
