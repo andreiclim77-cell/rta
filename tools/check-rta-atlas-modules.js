@@ -23,6 +23,59 @@ for(const id of Object.keys(m.inventory)){
   }
  }
 }
+// Every platform must expose three complete, distinct, compatible material setups
+// BEFORE an explicit liquid selection. User-confirmed preference order cannot be randomized.
+for(const id of Object.keys(m.inventory)){
+ m.selectAtom(id);const top=m.buildLeads(id);
+ assert.equal(top.length,3,id+' must have exactly three top builds');
+ assert.equal(new Set(top.map(x=>x.config.wire)).size,3,id+' top builds must use distinct owned wire materials');
+ for(const lead of top){
+  assert.equal(lead.config.atom,id);
+  assert.ok(c.permitted(id,lead.config.wire,lead.config.wraps),id+' invalid wire/wraps');
+  assert.ok(c.platforms[id].air.some(x=>x.id===lead.config.air),'No fabricated AFC option on '+id);
+  assert.ok(['personal','model'].includes(lead.source));
+  const facts=m.buildFacts(lead.config);
+  for(const word of ['Coil','spire','Insert / aer','Clopot','Regim','Poziție'])
+   assert.ok(facts.includes(word),id+' must show '+word+' without liquid');
+  assert.ok(facts.includes(c.wires[lead.config.wire].type==='tc'?'TC':'WATT'));
+ }
+ assert.equal(JSON.stringify(top),JSON.stringify(m.buildLeads(id)),id+' should be deterministic');
+}
+const expectedPersonal={
+ "415":[['nife30',7],['nife52',6],['k128',6]],
+ gtr:[['nife30',7],['nife52',6],['k128',5]],
+ klp:[['nife30',6],['nife52',6],['k128',5]],
+ kprime:[['nife30',6],['nife52',6],['k129',5]],
+ kx:[['nife30',6],['nife52',6],['k128',5]],
+ gtone:[['k129',6],['k128',5]],muted:[['k128',6]],
+ dvarwcl:[['k128',6]],dvarwfl:[['k128',6],['ssclap',5]],
+ asylum:[['k128',6]],kv3:[['k128',6],['k129',6]]
+};
+for(const [id,expected] of Object.entries(expectedPersonal)){
+ const leads=m.buildLeads(id);
+ for(let i=0;i<expected.length;i++){
+  assert.equal(leads[i].config.wire,expected[i][0],id+' personal material precedence '+i);
+  assert.equal(leads[i].config.wraps,expected[i][1],id+' personal coil wraps '+i);
+  assert.equal(leads[i].source,'personal',id+' personal evidence tier');
+ }
+}
+m.selectAtom('asylum');
+const asylumConfig=m.state.config,asylumAir=c.platforms.asylum.air;
+assert.equal(asylumConfig.air,'dual10','User-confirmed 2x1.0 included air-pin is default');
+assert.equal(asylumAir.find(x=>x.id==='dual10').holes.length,2);
+assert.equal(asylumAir.find(x=>x.id==='dual10').holes[0],1);
+assert.ok(!asylumAir.some(x=>/2.0[×x]0.8|2×0,8/.test(x.label)),'AFC 0.8 cannot become an invented 2x0.8 pin');
+assert.ok(m.buildFacts(asylumConfig).includes('2×1,0 mm'));
+assert.ok(a.renderCoil(asylumConfig).includes('2 canale'));
+assert.equal(m.setConfig({air:'stock'}),true,'Keep prior unknown-pin model without assigning a false dimension');
+assert.equal(m.setConfig({air:'dual10'}),true);
+assert.equal(c.permitted('asylum','ssclap',5),false);
+for(const id of ['asylum','gtr','415','klp','gtone']){
+ m.selectAtom(id);const markup=m.materialPaths();
+ assert.equal((markup.match(/class="material-path"/g)||[]).length,3,'Three visible build cards on '+id);
+ assert.equal((markup.match(/class="material-build-facts"/g)||[]).length,3,'Facts in all three cards on '+id);
+ assert.equal((markup.match(/data-atlas-build=/g)||[]).length,3,'Each card transfers exact config on '+id);
+}
 m.selectAtom('klp');m.setConfig({wire:'nife30'});assert.equal(m.state.config.temp,220);assert.equal(m.state.config.power,16);
 m.setConfig({wire:'nife52'});assert.equal(m.state.config.temp,230);assert.equal(m.state.config.power,13);
 assert.equal(c.personalPreference(m.state.config).tier,1,'KLP NiFe52 is first-level preference');
