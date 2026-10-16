@@ -1,0 +1,38 @@
+name: TEMP Mobile Fit Final Release
+on:
+  push:
+    branches:
+      - feature/atlas-mobile-fit-visible-comparisons-20261016
+    paths:
+      - "rta-lab/atlas-preview/**"
+      - ".github/workflows/atlas-mobile-snapshot-temp.yml"
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regenerate and verify isolated Atlas assets
+        run: |
+          node --check rta-lab/atlas-preview/decision-explorer.js
+          node tools/build-rta-atlas-cache.js
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-cache.js --check
+          node tools/build-rta-atlas-release.js --check
+          node tools/check-rta-decision-flows.js
+          node tools/check-rta-atlas-preview.js
+      - name: Commit generated release and retire temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas/
+          git rm --quiet .github/workflows/atlas-mobile-snapshot-temp.yml
+          git commit -m "build(atlas): synchronize responsive mobile release and retire temp generator"
+          git push origin HEAD:feature/atlas-mobile-fit-visible-comparisons-20261016
