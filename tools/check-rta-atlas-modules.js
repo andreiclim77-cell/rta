@@ -65,7 +65,7 @@ for(const [id,expected] of Object.entries(expectedPersonal)){
 }
 m.selectAtom('asylum');
 const asylumConfig=m.state.config,asylumAir=c.platforms.asylum.air;
-assert.equal(asylumConfig.air,'dual10','User-confirmed 2x1.0 included air-pin is default');
+assert.equal(asylumConfig.air,'dual10','Asylum included 2x1.0 pin is technical default, not claimed as mounted');
 assert.equal(asylumAir.find(x=>x.id==='dual10').holes.length,2);
 assert.equal(asylumAir.find(x=>x.id==='dual10').holes[0],1);
 assert.ok(!asylumAir.some(x=>/2.0[×x]0.8|2×0,8/.test(x.label)),'AFC 0.8 cannot become an invented 2x0.8 pin');
