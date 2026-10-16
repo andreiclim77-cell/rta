@@ -1,6 +1,6 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
-## CARD DE CONTINUITATE RTA LAB — HOME, 16.10.2026 (candidat pentru verificare)
+## CARD DE CONTINUITATE RTA LAB — HOME, 16.10.2026 (PUBLICAT ȘI VERIFICAT)
 
 La cererea utilizatorului, HOME din `/rta-lab/atlas/` include secțiunea editorială **„Trei comenzi. Nimic pierdut.”** cu trei acțiuni vizibile și exacte:
 - **„Du-te în Lab și fă-ți update”** — citește handoff → MASTER → blueprint → protocol, verifică main, CI și ce mai este deschis; nu reface ce e terminat corect.
@@ -11,7 +11,7 @@ Cardul este în `rta-lab/atlas-preview/index.html` + `lab-commands.css` și `lab
 
 Regresie nouă `tools/check-rta-lab-commands.js` verifică frazele, sursa canonică și funcția de copiere fără efecte ascunse; `tools/check-rta-atlas-layout-visual.js` verifică la toate rezoluțiile, copierea reală și capturi. Workflow-ul permanent `.github/workflows/rta-lab-continuity-snapshot.yml` creează automat un ZIP portabil cu documentele integrale, extrasele esențiale de cod și checksumuri când se schimbă documentele canonice pe `main`; arhiva GitHub Actions nu înlocuiește copia persistentă din **Biblioteca ChatGPT `/RTA_Lab/`**. Confirmă uploadul în Bibliotecă înainte de a promite că există.
 
-**Stare la crearea secțiunii:** branch `feature/atlas-home-lab-command-card-20261016`. Nu declara actualizarea de producție înainte de trei gates CI SUCCESS, PR integrat, RTA post-merge și Pages SUCCESS, apoi arhiva din Bibliotecă verificată. Toate preferințele GTR / 415, Asylum, 16 platforme, 42 unități, 700 lichide Atlas și 620 V10 rămân intacte.
+**PUBLICARE ȘI VERIFICĂRI CONFIRMATE:** PR [#56](https://github.com/andreiclim77-cell/rta/pull/56) integrat în `main` cu commitul funcțional `bb64e587bdf9887c1de481cde8c74f79747262cd`. Candidat exact `5d0cfec8a852654b6538955f9f09e73d7e2c8f6e`: [RTA Quality Gate #38919382320](https://github.com/andreiclim77-cell/rta/actions/runs/38919382320) SUCCESS, [Market #38919382085](https://github.com/andreiclim77-cell/rta/actions/runs/38919382085) SUCCESS și [Visual Mobile #38919382083](https://github.com/andreiclim77-cell/rta/actions/runs/38919382083) SUCCESS; capturile cardului 390×844 și 1440×1000 au fost descărcate și inspectate efectiv, ZIP-ul QA cu 250 fișiere a trecut CRC. Post-merge pe exact `bb64e587`: [RTA #38920829808](https://github.com/andreiclim77-cell/rta/actions/runs/38920829808) SUCCESS, [GitHub Pages #38920829850](https://github.com/andreiclim77-cell/rta/actions/runs/38920829850) SUCCESS și [RTA Lab Continuity Archive #38920829616](https://github.com/andreiclim77-cell/rta/actions/runs/38920829616) SUCCESS. Arhiva ZIP cu MANIFEST SHA256 a fost verificată (26 fișiere, CRC PASS) și încărcată efectiv în **Biblioteca ChatGPT → `/RTA_Lab/RTA_CONTINUITATE_CURENTA.zip`**, iar existența fișierului a fost confirmată în lista Bibliotecii. Fiecare nou commit pe documentele canonice regenerează snapshotul Actions; **după o astfel de regenerare, înlocuiește copia Bibliotecii cu arhiva nouă**, verificând SHA-ul din manifest. Cardul public: [RTA Atlas HOME](https://ghid-rta.ro/rta-lab/atlas/). Fără schimbarea motorului, inventarului, catalogului sau preferințelor atomizoarelor.
 
 ## PROTOCOL PERMANENT — comenzile „du-te în Lab și fă-ți update” / „salvează” (16.10.2026)
 
