@@ -171,7 +171,7 @@ function materialPaths(){
  '<div class="material-path-grid">'+leads.map(({config,source},i)=>{
   const r=core.analyze(config,profile,state.objective),w=core.wires[config.wire];
   return '<article class="material-path" data-build-wire="'+esc(config.wire)+'" data-build-wraps="'+config.wraps+'" data-build-air="'+esc(config.air)+'">'+
-  '<span class="eyebrow">0'+(i+1)+' · '+(source==="personal"?"PREFERINȚĂ PERSONALĂ":"PROPUNERE TEHNICĂ")+' · '+esc(w.mode)+'</span>'+
+  '<span class="eyebrow">0'+(i+1)+' · '+(source==="personal"&&state.atom==='asylum'?"PREFERINȚĂ PERSONALĂ DE COIL/CLOPOT · PIN NECONFIRMAT":source==="personal"?"PREFERINȚĂ PERSONALĂ":"PROPUNERE TEHNICĂ")+' · '+esc(w.mode)+'</span>'+
   '<h3>'+esc(w.name)+'</h3><div class="material-schematic">'+api.renderCoil(config)+'</div>'+
   buildFacts(config)+
   '<p class="module-note">'+esc(source==="personal"?"Montaj sau prioritate declarată de tine; detaliile A/B și limitele probelor rămân în fișa tehnică.":"Alegere estimată din modelul platformei și obiectiv; nu un A/B efectuat de tine.")+'</p>'+
