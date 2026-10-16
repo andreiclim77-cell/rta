@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-release-8e82336023cb0012",PREFIX="rta-atlas-release-";
+const CACHE="rta-atlas-release-eb37f25b3eb2ec5c",PREFIX="rta-atlas-release-";
 const ASSETS=[
   "../../assets/fonts/manrope-latin-ext.woff2",
   "../../assets/fonts/manrope-latin.woff2",
@@ -66,6 +66,7 @@ const ASSETS=[
   "./media/pmfree-product.jpg",
   "./media/pmstd-product.jpg",
   "./media/taifun-gt-one.jpg",
+  "./mobile-fit.css?v=atlas-mobile-fit-20261016-1",
   "./modules.css?v=atlas-builds-asylum-20261016-1",
   "./modules.js?v=atlas-builds-asylum-20261016-4",
   "./photo-sources.js?v=atlas-catalog-700-20261015-1",

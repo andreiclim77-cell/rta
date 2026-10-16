@@ -15,6 +15,7 @@ on:
       - "tools/check-rta-atlas-filters-visual.js"
       - "tools/check-rta-atlas-layout-visual.js"
       - "tools/check-rta-decision-flows-visual.js"
+      - "tools/check-rta-atlas-mobile-fit-visual.js"
       - "tools/check-rta-atlas-catalog-visual.js"
       - "tools/check-rta-atlas-upgrade.js"
       - "rta-lab/home-ui.js"
@@ -45,6 +46,7 @@ jobs:
           node tools/check-rta-atlas-visual.js
           node tools/check-rta-atlas-modules-visual.js
           node tools/check-rta-decision-flows-visual.js
+          node tools/check-rta-atlas-mobile-fit-visual.js
           node tools/check-rta-atlas-filters-visual.js
           node tools/check-rta-atlas-catalog-visual.js
           node tools/check-rta-atlas-layout-visual.js
@@ -60,5 +62,6 @@ jobs:
           path: |
             artifacts/atlas-v02-mobile/
             artifacts/rta-decision-flows/
+            artifacts/atlas-mobile-fit/
           if-no-files-found: warn
           retention-days: 14
