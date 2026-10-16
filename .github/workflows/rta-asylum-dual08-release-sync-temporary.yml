@@ -1,0 +1,47 @@
+name: RTA Asylum dual08 release sync (temporary)
+on:
+  pull_request:
+    paths:
+      - "rta-lab/data/**"
+      - "rta-lab/atlas-preview/**"
+      - "rta-lab/atlas/**"
+      - ".github/workflows/rta-asylum-dual08-release-sync-temporary.yml"
+permissions:
+  contents: write
+jobs:
+  sync-release:
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Generate isolated preview cache and Atlas release
+        run: |
+          node tools/build-rta-atlas-cache.js
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-release.js --check
+      - name: Commit deterministic generated files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas/index.html rta-lab/atlas/modules.js rta-lab/atlas/sw.js rta-lab/atlas/ATLAS_RELEASE_RECEIPT.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(atlas): synchronize optional Asylum airflow release and cache'
+            git push origin HEAD:refs/heads/feature/atlas-asylum-air-and-complete-build-cards-20261016
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rta-asylum-dual08-release
+          path: |
+            rta-lab/atlas-preview/sw.js
+            rta-lab/atlas/sw.js
+            rta-lab/atlas/index.html
+            rta-lab/atlas/modules.js
+            rta-lab/atlas/ATLAS_RELEASE_RECEIPT.json
+          retention-days: 1
