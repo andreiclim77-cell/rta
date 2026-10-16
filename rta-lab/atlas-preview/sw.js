@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-preview-c2f7a6c658812bd5",PREFIX="rta-atlas-preview-";
+const CACHE="rta-atlas-preview-6bbd9587f2cf1aaf",PREFIX="rta-atlas-preview-";
 const ASSETS=[
   "../../assets/fonts/manrope-latin-ext.woff2",
   "../../assets/fonts/manrope-latin.woff2",
