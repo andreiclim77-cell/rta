@@ -71,7 +71,7 @@ function matrix(entries,title,note){
   const v=score10(metric(e.result.signals,key)),width=v*10;
   return '<td><span class="exp-score" aria-label="'+esc(label+': '+v+' din 10')+'"><i style="width:'+width+'%"></i><b>'+String(v).replace('.',',')+'</b></span></td>';
  }).join('')+'</tr>').join('')+'</tbody></table></div>'+
- '<p class="exp-disclosure">Conversie transparentă a semnalelor interne 1–5 în 1–10; stratificarea, corpul, claritatea și finețea sunt indicatori derivați. Lipsa datelor privind dulceața ori uscăciunea nu este suplinită cu scoruri inventate.</p></div>';
+ '<p class="exp-disclosure">Conversie transparentă a semnalelor interne 1–5 în 1–10; stratificarea, corpul, claritatea și finețea sunt indicatori derivați. Nu sunt măsurători ale gustului sau ale performanței fizice. Lipsa datelor privind dulceața ori uscăciunea nu este suplinită cu scoruri inventate.</p></div>';
 }
 function classSamples(family){
  const eligible=catalog.filter(l=>l.class===family&&l.recommendable!==false);
