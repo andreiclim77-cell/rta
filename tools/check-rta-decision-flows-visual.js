@@ -1,0 +1,74 @@
+'use strict';
+const {chromium}=require('playwright-core'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+async function main(){
+ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']});
+ const shots=path.resolve('artifacts/rta-decision-flows');fs.mkdirSync(shots,{recursive:true});
+ try{
+  for(const [width,height] of [[320,740],[390,844],[1440,1000]]){
+   const context=await browser.newContext({viewport:{width,height},isMobile:width<760,hasTouch:width<760});
+   const page=await context.newPage(),errors=[];
+   page.on('pageerror',error=>errors.push(error.message));
+   await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#wire',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#expWireFirst',{state:'visible'});
+   const noOverflow=async label=>assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' horizontal overflow at '+width);
+   await noOverflow('Wire start');
+   await page.locator('#expWireFirst').selectOption('k128');
+   await page.locator('#expWireWraps').selectOption('5');
+   assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),1);
+   await page.locator('[data-exp-toggle-compare]').click();
+   await page.locator('#expWireOther').selectOption('nife30');
+   await page.locator('#expWireOtherWraps').selectOption('7');
+   assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),2,'Comparator appears beside original in same scale');
+   await page.locator('#expWireFinal').selectOption('k128');
+   await page.locator('#expWireFinalWraps').selectOption('6');
+   assert.equal(await page.locator('#expWireWizard .exp-family').count(),4,'Four calculated family compatibility indices');
+   await page.locator('[data-exp-family="wire"][data-exp-value="NET complex"]').click();
+   assert.equal(await page.locator('#expWireLiquid option').count(),254,'All 253 NET complex products plus placeholder');
+   const id=await page.locator('#expWireLiquid option').nth(1).getAttribute('value');
+   await page.locator('#expWireLiquid').selectOption(id);
+   assert.equal(await page.locator('.exp-top-atoms article').count(),3,'Three exact compatible atomizers');
+   const rows=await page.locator('#expWireWizard .exp-matrix').last().locator('tbody tr').count();
+   assert.equal(rows,14,'All 14 objective axes visible');
+   await noOverflow('Wire matching');
+   await page.locator('#expWireWizard').scrollIntoViewIfNeeded();
+   await page.screenshot({path:path.join(shots,'wire-'+width+'.png'),fullPage:true});
+   await page.locator('.exp-top-atoms button').first().click();
+   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen),true,'Exact atomizer can be opened');
+   await page.locator('[data-route="atomizer"]:visible').first().click();
+   await page.locator('#atlasPlatform').selectOption('gtr');
+   await page.locator('[data-exp-wire="atlas"][data-exp-value="nife30"]').click();
+   assert.equal(await page.locator('[data-exp-wraps="atlas"]').count(),2,'GTR NiFe30 exposes both 6 and 7');
+   await page.locator('[data-exp-wraps="atlas"][data-exp-value="7"]').click();
+   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wraps),7);
+   await page.locator('[data-exp-family="atlas"][data-exp-value="Tutun simplu"]').click();
+   assert.equal(await page.locator('#expAtlasLiquid option').count(),108,'All 107 simple tobaccos');
+   const id2=await page.locator('#expAtlasLiquid option').nth(1).getAttribute('value');
+   await page.locator('#expAtlasLiquid').selectOption(id2);
+   assert.equal(await page.locator('#atlasBuilds .material-path').count(),3,'Existing 3 complete builds remain');
+   assert.equal(await page.locator('#atlasBuilds .material-build-facts').count(),3);
+   await noOverflow('Atomizer flow');
+   await page.locator('#expAtlasWizard').scrollIntoViewIfNeeded();
+   await page.screenshot({path:path.join(shots,'atomizer-'+width+'.png'),fullPage:true});
+   await page.locator('[data-route="liquid"]:visible').first().click();
+   await page.locator('#expLiquidCategories [data-exp-liquid-cat="NET simplu"]').click();
+   assert.equal(await page.locator('#expLiquidCategories [data-exp-liquid-cat="NET simplu"]').getAttribute('aria-pressed'),'true');
+   const family=await page.evaluate(()=>window.RTA_ATLAS_SEARCH_UI.states.get('liquid').family);
+   assert.equal(family,'NET simplu');
+   assert.ok(await page.locator('#liquidSuggestions [data-lp-index]').count()>0,'Category opens existing complete and paginated catalog picker');
+   const chosen=await page.locator('#liquidSuggestions [data-lp-index]').first().getAttribute('data-lp-index');
+   await page.locator('#liquidSuggestions [data-lp-index]').first().click();
+   assert.equal(await page.evaluate(i=>window.RTA_LIQUIDS[i].class,Number(chosen)),'NET simplu');
+   assert.equal(await page.locator('#resultCards .result-card').count(),3,'Liquid Match unchanged 3 atomizers');
+   assert.equal(await page.locator('#resultCards .exp-best-overview').count(),3,'Individual atomizer objectives');
+   assert.equal(await page.locator('#resultCards .exp-build-compare').count(),3,'Three per-atomizer wire comparisons');
+   assert.equal(await page.locator('#liquidComparison .exp-liquid-all-objectives tbody tr').count(),14,'Shared full 14 objective comparison');
+   await noOverflow('Liquid comparison');
+   await page.locator('#liquidComparison').scrollIntoViewIfNeeded();
+   await page.screenshot({path:path.join(shots,'liquid-'+width+'.png'),fullPage:true});
+   assert.deepEqual(errors,[],'No uncaught errors at '+width+'px');
+   await context.close();
+  }
+ }finally{await browser.close();}
+ console.log('DECISION FLOWS BROWSER PASS: 320/390/1440 widths; Wire compare/category/top3; Atlas wire/wraps/family/liquid; Liquid family selection/all axes.');
+}
+main().catch(e=>{console.error(e);process.exitCode=1;});

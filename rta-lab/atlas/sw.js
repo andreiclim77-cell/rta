@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-release-742eac246ef53ff3",PREFIX="rta-atlas-release-";
+const CACHE="rta-atlas-release-8e82336023cb0012",PREFIX="rta-atlas-release-";
 const ASSETS=[
   "../../assets/fonts/manrope-latin-ext.woff2",
   "../../assets/fonts/manrope-latin.woff2",
@@ -19,6 +19,8 @@ const ASSETS=[
   "./catalog.js?v=atlas-catalog-700-20261015-1",
   "./context-ui.js?v=atlas-catalog-700-20261015-1",
   "./context.js?v=atlas-catalog-700-20261015-1",
+  "./decision-explorer.css?v=lab-decisions-20261016-1",
+  "./decision-explorer.js?v=lab-decisions-20261016-1",
   "./duel.js?v=atlas-catalog-700-20261015-1",
   "./icon.svg",
   "./index.html",

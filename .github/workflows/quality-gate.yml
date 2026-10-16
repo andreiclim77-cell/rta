@@ -60,6 +60,8 @@ jobs:
           node tools/check-rta-atlas-preview.js
           node tools/check-rta-lab-commands.js
           node tools/check-rta-atlas-modules.js
+          node --check rta-lab/atlas-preview/decision-explorer.js
+          node tools/check-rta-decision-flows.js
           node tools/check-rta-atlas-context.js
           node tools/check-rta-atlas-search.js
           node tools/build-rta-atlas-cache.js --check
