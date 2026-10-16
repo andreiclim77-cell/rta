@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014-cl-pair-20261014-3cl-units-atlas-entry-20261015-gtr-nife30-7-415cool-20261015-prepaint-asylum2x1-20261016";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014-cl-pair-20261014-3cl-units-atlas-entry-20261015-gtr-nife30-7-415cool-20261015-prepaint-asylum-air-20261016-2";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
@@ -16,7 +16,7 @@ const ASSETS = [
   "./data/clapton-platform-map.js?v=10-415cool-20261015",
   "./data/bell-liquid-fit.js?v=10",
   "./bell-liquid-ui.js?v=10",
-  "./data/sensory-core.js?v=10-asylum2x1-20261016",
+  "./data/sensory-core.js?v=10-asylum-air-20261016-2",
   "./sensory-ui.js?v=10-cl-units-20261014",
   "./mood-match.js?v=11-mood-20261013",
   "./RTA_CONTINUITY_MASTER.md?v=10-cl-units-20261014",
@@ -26,7 +26,7 @@ const ASSETS = [
   "./icon-192.png?v=10",
   "./data/core.js?v=10",
   "./data/atoms-1.js?v=10-415cool-20261015",
-  "./data/atoms-2.js?v=10-asylum2x1-20261016",
+  "./data/atoms-2.js?v=10-asylum-air-20261016-2",
   "./data/atoms-3.js?v=10",
   "./data/wires.js?v=10-415cool-20261015-gtr-nife-20261015",
   "./data/liquids-1a.js?v=10",
