@@ -189,9 +189,9 @@ function renderAtomizer(){
  const model=contextual();if(!model)return;
  const categories=fit.analyze(model.atom,state.config.bell,catalog).classes;
  el('pageAtomizer').innerHTML=heading('03 / COLLECTION DNA','Atomizer Atlas.','16 identități. 42 de exemplare. Un rezultat potrivit contextului tău.')+workflow(['Atomizor · sârmă · obiectiv','Top 5 · alege lichidul','Builduri · continuă în Wire'])+contextBar()+
- '<div class="module-filters platform-picker">'+select('Alege platforma','atlasPlatform',atoms.map(a=>[a.id,a.short]),state.atom)+select('Material / aliaj','atlasWire',Object.entries(core.wires).filter(([id])=>core.variants(state.atom).some(v=>v.wire===id)).map(([id,w])=>[id,w.name]),state.config.wire)+select('Obiectiv','atlasObjective',objectives,state.objective)+'</div>'+ 
+ '<div class="module-filters platform-picker">'+select('Alege platforma','atlasPlatform',atoms.map(a=>[a.id,a.short]),state.atom)+select('Material / aliaj','atlasWire',Object.entries(core.wires).filter(([id])=>core.variants(state.atom).some(v=>v.wire===id)).map(([id,w])=>[id,w.name]),state.config.wire)+select('Obiectiv','atlasObjective',objectives,state.objective)+select('Insert / aer','atlasAir',core.platforms[state.atom].air.map(a=>[a.id,a.label]),state.config.air)+'</div>'+materialPaths()+ 
  '<div class="atlas-detail"><div class="atlas-portrait"><div class="portrait-photo">'+api.renderProductPhoto(model.atom)+'</div><span class="eyebrow">'+inventory[state.atom]+' EXEMPLARE / '+esc(patternLabel(state.atom))+'</span><h2>'+esc(model.atom.short)+'</h2><p>'+esc(core.platforms[state.atom].note)+'</p><button type="button" class="match-button" data-edit-wire>Reglează configurația în Wire Lab ↗</button></div><div><span class="eyebrow">SENSORY DNA / CONTEXTUAL</span>'+metricPanel(model.result)+method(model.result)+'</div></div>'+
- materialPaths()+window.RTA_ATLAS_SEARCH_UI.render('atlas')+topLiquids('atlas')+'<section class="module-section" data-requires-liquid><div class="section-heading"><span class="eyebrow">BEST + ALTERNATIVE / '+esc(liquid().name)+'</span><h2>Trei builduri pentru acest context.</h2></div><div class="detail-grid">'+model.builds.map((b,i)=>api.renderBuild(b,i+1,liquid())).join('')+'</div>'+watchPanel(model.builds)+'</section>'+
+ window.RTA_ATLAS_SEARCH_UI.render('atlas')+topLiquids('atlas')+'<section class="module-section" data-requires-liquid><div class="section-heading"><span class="eyebrow">BEST + ALTERNATIVE / '+esc(liquid().name)+'</span><h2>Trei builduri pentru acest context.</h2></div><div class="detail-grid">'+model.builds.map((b,i)=>api.renderBuild(b,i+1,liquid())).join('')+'</div>'+watchPanel(model.builds)+'</section>'+
  '<section class="module-section"><h2>Lichide și cameră.</h2><p class="module-note">Afinitate orientativă pentru clopotul ales; nu reprezintă testarea fiecărui lichid.</p><div class="family-tags">'+categories.map(c=>'<span>'+esc(c.name)+'</span>').join('')+'</div><button type="button" class="module-link" data-show-liquids>Explorează toate cele '+catalog.length+' de lichide</button><div id="platformLiquids"></div></section>'+physicalUnits(state.atom)+
  '<section class="module-section"><h2>Colecția.</h2><div class="module-filters"><label>Caută o platformă<input id="atlasSearch" type="search" value="'+esc(state.query)+'" placeholder="Nume, airflow, caracter"></label>'+select('Familie de lichide','atlasCategory',[['all','Toate familiile'],...fit.classes.map(c=>[c,c])],state.category)+'</div><div id="atlasCatalog">'+catalogCards()+'</div></section>';
 }
@@ -231,12 +231,12 @@ function init(){
   card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();api.route(card.dataset.route);}});
  });
  document.addEventListener('click',e=>{
-  const target=e.target.closest?.('[data-platform],[data-edit-wire],[data-show-liquids],[data-atlas-liquid],[data-context-liquid],[data-pick-build],[data-wire-open],[data-journey-wire],[data-wire-platform],[data-wire-family]');if(!target)return;
+  const target=e.target.closest?.('[data-platform],[data-edit-wire],[data-show-liquids],[data-atlas-liquid],[data-context-liquid],[data-pick-build],[data-wire-open],[data-atlas-build],[data-journey-wire],[data-wire-platform],[data-wire-family]');if(!target)return;
   const d=target.dataset;
   if(d.wireFamily){const rows=compatibleWireAtoms(d.wireFamily),keepPlatform=state.wirePlatformChosen&&rows.some(a=>a.id===state.atom),cfg=wireConfig(rows.some(a=>a.id===state.atom)?state.atom:rows[0].id,d.wireFamily);state.wireChosen=true;state.wirePlatformChosen=keepPlatform;state.atom=cfg.atom;state.config=cfg;renderWire();el("pageWire").scrollIntoView({block:"start",behavior:"instant"});return;}
   if(d.wirePlatform){const cfg=wireConfig(d.wirePlatform,state.config.wire);if(cfg){state.atom=cfg.atom;state.config=cfg;state.wireChosen=true;state.wirePlatformChosen=true;renderWire();el("pageWire").scrollIntoView({block:"start",behavior:"instant"});}return;}
   if(d.journeyWire){const id=d.journeyAtom||state.atom,cfg=wireConfig(id,d.journeyWire);if(cfg){state.atom=id;state.config=cfg;state.wireChosen=true;state.wirePlatformChosen=true;if(d.journeyLiquid!=null)api.selectLiquid(Number(d.journeyLiquid));if(d.journeyLiquid==null)api.route('wire');else if(api.state.route==='atomizer')renderAtomizer();else renderWire();}return;}
-  if(d.wireOpen!=null){try{const cfg=window.RTA_ATLAS_DUEL.valid(JSON.parse(decodeURIComponent(d.wireOpen)));if(cfg){state.wireChosen=true;state.wirePlatformChosen=true;state.atom=cfg.atom;state.config={...cfg};api.state.selectedFullBuild={...cfg};window.RTA_ATLAS_DUEL.state.editing=null;api.route('wire');}}catch(error){}return;}
+  if(d.wireOpen!=null||d.atlasBuild!=null){try{const raw=JSON.parse(decodeURIComponent(d.atlasBuild??d.wireOpen)),cfg=window.RTA_ATLAS_DUEL.valid(raw);if(cfg){state.wireChosen=true;state.wirePlatformChosen=true;state.atom=cfg.atom;state.config={...cfg};api.state.selectedFullBuild={...cfg};window.RTA_ATLAS_DUEL.state.editing=null;api.route('wire');}}catch(error){}return;}
 
   if(d.platform){selectAtom(d.platform);renderAtomizer();el('pageAtomizer').scrollIntoView({block:'start',behavior:'instant'});}
   if(d.editWire!=null){state.wireChosen=true;state.wirePlatformChosen=true;api.route('wire');}
@@ -255,6 +255,7 @@ function init(){
   if(id==='atlasCategory'){state.category=value;renderCatalog();return;}
   if(id==='atlasPlatform'){selectAtom(value);state.wirePlatformChosen=true;renderAtomizer();el(id).focus({preventScroll:true});return;}
   if(id==='atlasWire'){setConfig({wire:value});state.wireChosen=true;state.wirePlatformChosen=true;renderAtomizer();el(id).focus({preventScroll:true});return;}
+  if(id==='atlasAir'){setConfig({air:value});renderAtomizer();el(id).focus({preventScroll:true});return;}
   if(id==='wireAtom'){const cfg=wireConfig(value,state.config.wire);if(cfg){state.atom=cfg.atom;state.config=cfg;state.wireChosen=true;state.wirePlatformChosen=true;renderWire();}return;}
   if(id==='wireMaterial'){if(!core.wires[value])return;state.wireChosen=true;const rows=compatibleWireAtoms(value),cfg=wireConfig(rows.some(a=>a.id===state.atom)?state.atom:rows[0]?.id,value);if(cfg){if(cfg.atom!==state.atom)state.wirePlatformChosen=false;state.atom=cfg.atom;state.config=cfg;renderWire();}return;}
   if(id==='wireObjective'||id==='atlasObjective'){
@@ -270,6 +271,6 @@ function init(){
  document.addEventListener('toggle',e=>{const id=e.target.dataset?.wireLiquids;if(id&&e.target.open){const cfg=wireConfig(id,state.config.wire);e.target.querySelector('.journey-liquid-list').innerHTML=liquidButtons(cfg);}},true);
  const route=window.location.hash.slice(1);if(['atomizer','wire'].includes(route))api.route(route,false);
 }
-window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig};
+window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,buildFacts,materialPaths};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();
