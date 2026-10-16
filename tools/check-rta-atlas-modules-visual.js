@@ -34,7 +34,7 @@ async function main(){
      check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id+' cards overflow phone width');
     }
     await page.locator('#atlasPlatform').selectOption('asylum');
-    check(await page.locator('#atlasAir').inputValue()==='dual10','Asylum 2x1.0 included air-pin must be the remembered default');
+    check(await page.locator('#atlasAir').inputValue()==='dual10','Asylum included 2x1.0 pin must be technical default only, not a physical saved record');
     check(await page.locator('#atlasAir option[value="dual10"]').textContent().then(t=>t.includes('2×1,0')),'Asylum dual 1mm pin label missing');
     check(await page.locator('#atlasAir option').allTextContents().then(texts=>texts.every(t=>!t.includes('2×0,8'))),'Do not invent an Asylum dual 0.8mm pin');
     await page.locator('#atlasAir').selectOption('stock');
