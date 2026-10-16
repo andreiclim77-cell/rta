@@ -76,3 +76,12 @@
  .page .platform-picker>label,.page .wire-picker>label{grid-column:1/-1;min-width:0}
  .page .platform-picker select,.page .wire-picker select{width:100%;min-width:0;min-height:48px;font-size:13px}
 }
+
+/* Keep the Liquid Cinema near the top of the phone viewport. Its three step
+   captions must wrap within equal-width chips rather than stack the intro. */
+@media(max-width:760px){
+ #pageLiquid .flow-steps{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:5px}
+ #pageLiquid .flow-steps li{align-items:flex-start;gap:4px;font-size:10px;min-height:50px;padding:7px 6px}
+ #pageLiquid .flow-steps li span{font-size:10px;line-height:1.4;overflow-wrap:anywhere}
+ .is-large-type #pageLiquid .flow-steps{grid-template-columns:minmax(0,1fr)!important}
+}
