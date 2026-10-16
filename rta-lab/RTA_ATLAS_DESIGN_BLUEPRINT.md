@@ -1,5 +1,18 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
+## CARD DE CONTINUITATE RTA LAB — HOME, 16.10.2026 (candidat pentru verificare)
+
+La cererea utilizatorului, HOME din `/rta-lab/atlas/` include secțiunea editorială **„Trei comenzi. Nimic pierdut.”** cu trei acțiuni vizibile și exacte:
+- **„Du-te în Lab și fă-ți update”** — citește handoff → MASTER → blueprint → protocol, verifică main, CI și ce mai este deschis; nu reface ce e terminat corect.
+- **„Salvează”** — persistă atât codul / datele / regulile / QA, cât și documentele canonice și pachetul ZIP portabil din Biblioteca ChatGPT; eșecurile sunt raportate explicit.
+- **„Dă-mi arhiva de continuitate la zi”** — pregătește pachetul ZIP complet de reluare într-un chat nou.
+
+Cardul este în `rta-lab/atlas-preview/index.html` + `lab-commands.css` și `lab-commands.js`; release-ul din `rta-lab/atlas/` este generat deterministic din preview. **Butoanele doar copiază comenzile în clipboard** (cu fallback/mesaj vizibil), *nu* execută modificări direct în site. Linkul de sub card deschide `rta-lab/RTA_OPERATING_PROTOCOL.md`, sursa autoritativă. Stil dark editorial, trei coloane pe desktop, un panou per rând pe mobil, stare ARIA live, focus vizibil, mărire font și reduced-motion.
+
+Regresie nouă `tools/check-rta-lab-commands.js` verifică frazele, sursa canonică și funcția de copiere fără efecte ascunse; `tools/check-rta-atlas-layout-visual.js` verifică la toate rezoluțiile, copierea reală și capturi. Workflow-ul permanent `.github/workflows/rta-lab-continuity-snapshot.yml` creează automat un ZIP portabil cu documentele integrale, extrasele esențiale de cod și checksumuri când se schimbă documentele canonice pe `main`; arhiva GitHub Actions nu înlocuiește copia persistentă din **Biblioteca ChatGPT `/RTA_Lab/`**. Confirmă uploadul în Bibliotecă înainte de a promite că există.
+
+**Stare la crearea secțiunii:** branch `feature/atlas-home-lab-command-card-20261016`. Nu declara actualizarea de producție înainte de trei gates CI SUCCESS, PR integrat, RTA post-merge și Pages SUCCESS, apoi arhiva din Bibliotecă verificată. Toate preferințele GTR / 415, Asylum, 16 platforme, 42 unități, 700 lichide Atlas și 620 V10 rămân intacte.
+
 ## PROTOCOL PERMANENT — comenzile „du-te în Lab și fă-ți update” / „salvează” (16.10.2026)
 
 **Instrucțiune explicită a utilizatorului, valabilă între conversații.** La **„du-te în Lab și fă-ți update”**, accesează repo-ul `andreiclim77-cell/rta` / `main` actual și citește `RTA_CURRENT_HANDOFF.md` → `RTA_CONTINUITY_MASTER.md` → `RTA_ATLAS_DESIGN_BLUEPRINT.md` → `RTA_OPERATING_PROTOCOL.md`; verifică gates, publicarea și modificările de cod înainte de a continua, fără refacerea lucrurilor corecte. La **„salvează”**, actualizează **ambele**: (A) aplicația / regulile și testele relevante din GitHub cu validare și (B) arhiva canonică HANDOFF/MASTER/BLUEPRINT + pachetul portabil `RTA_CONTINUITATE_CURENTA.zip` din Biblioteca ChatGPT `/RTA_Lab/`. Dacă un test eșuează sau Biblioteca nu e accesibilă, păstrează exact starea și spune explicit ce NU s-a salvat; nu declara finalizare fictivă. La **„dă-mi arhiva de continuitate la zi”**, oferă snapshot suficient și complet pentru un chat nou, fără duplicări inutile. **Detaliile și regulile integrale sunt în `rta-lab/RTA_OPERATING_PROTOCOL.md`.** Acest protocol are prioritate față de triggerul istoric „salvează” din §9 și față de versiunile mai vechi.
