@@ -85,6 +85,13 @@ assert.equal(m.setConfig({air:'dual10'}),true);
 assert.equal(c.permitted('asylum','ssclap',5),false);
 assert.equal(c.analyze(c.defaultConfig('asylum'),{name:'Audit demo',class:'Tutun simplu'}).partialEvidence.length,1,'Retain historical Flat/28/6 as a partial personal report');
 assert.equal(c.analyze(c.config('asylum',{bell:'dome'}),{name:'Audit demo',class:'Tutun simplu'}).partialEvidence.length,0,'Do not leak Flat-specific report onto Dome');
+assert.equal(m.setConfig({bell:'dome'}),true);
+assert.equal(m.state.config.bell,'dome','Keep the user's current editable Dome setup');
+assert.equal(m.buildLeads('asylum')[0].config.bell,'flat',
+ 'The personal Asylum Flat/K1 28/6 card must not silently turn into a claimed personal Dome setup');
+assert.ok(m.materialPaths().includes('Configurația ta selectată, în afara primelor trei'),
+ 'A separately selected Dome coil must remain available, not overwritten by the personal Flat card');
+m.selectAtom('asylum');
 
 for(const id of ['asylum','gtr','415','klp','gtone']){
  m.selectAtom(id);const markup=m.materialPaths();
