@@ -21,12 +21,15 @@ on:
       - "rta-lab/manifest.webmanifest"
       - ".github/workflows/atlas-visual.yml"
   workflow_dispatch:
+concurrency:
+  group: rta-atlas-visual-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
   mobile-chrome:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
