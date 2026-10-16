@@ -77,7 +77,7 @@ jobs:
           demonstra un deploy viitor sau o preferință încă neconfirmată.
           Dacă GitHub nu este conectat, poți folosi documentele din acest ZIP
           ca plan de reluare, apoi reconectezi repo-ul pentru editare.
-"""
+          """
           dest=pathlib.Path("artifacts/continuity/RTA_CONTINUITATE_CURENTA.zip")
           dest.parent.mkdir(parents=True,exist_ok=True)
           with zipfile.ZipFile(dest,"w",zipfile.ZIP_DEFLATED,compresslevel=9) as z:
