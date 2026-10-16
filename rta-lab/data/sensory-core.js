@@ -399,6 +399,7 @@ function partialReportsFor(config){
  return OBS.filter(o=>o.partial && o.atom===config.atom && o.wire===config.wire &&
    (o.wraps==null||o.wraps===config.wraps) &&
    (o.air==null||o.air===config.air) &&
+   (o.bell==null||o.bell===config.bell) &&
    (o.coilMm==null||o.coilMm===config.coilMm) &&
    (o.power==null||Math.abs(o.power-config.power)<0.1) &&
    (o.temp==null||Math.abs(o.temp-config.temp)<1));
