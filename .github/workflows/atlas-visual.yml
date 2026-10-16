@@ -14,6 +14,7 @@ on:
       - "tools/check-rta-atlas-offline.js"
       - "tools/check-rta-atlas-filters-visual.js"
       - "tools/check-rta-atlas-layout-visual.js"
+      - "tools/check-rta-decision-flows-visual.js"
       - "tools/check-rta-atlas-catalog-visual.js"
       - "tools/check-rta-atlas-upgrade.js"
       - "rta-lab/home-ui.js"
@@ -40,6 +41,7 @@ jobs:
           RTA_CATALOG_RECEIPT=1 node tools/check-rta-atlas-catalog.js
           node tools/check-rta-atlas-visual.js
           node tools/check-rta-atlas-modules-visual.js
+          node tools/check-rta-decision-flows-visual.js
           node tools/check-rta-atlas-filters-visual.js
           node tools/check-rta-atlas-catalog-visual.js
           node tools/check-rta-atlas-layout-visual.js
@@ -52,6 +54,8 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: atlas-v02-mobile-screenshots
-          path: artifacts/atlas-v02-mobile/
+          path: |
+            artifacts/atlas-v02-mobile/
+            artifacts/rta-decision-flows/
           if-no-files-found: warn
           retention-days: 14
