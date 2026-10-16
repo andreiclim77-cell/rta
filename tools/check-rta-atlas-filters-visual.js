@@ -33,9 +33,19 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');
   assert.equal(await page.locator('.material-path').count(),3);
   for(const card of await page.locator('.material-path').all()){
-   const wire=await card.locator('[data-journey-wire]').first().getAttribute('data-journey-wire');
+   // Personal-first build cards can intentionally differ from generic wireConfig().
+   // Verify the exact encoded build used by this card and its one-click Wire handoff.
+   const raw=await card.locator('[data-atlas-build]').getAttribute('data-atlas-build');
+   const cfg=JSON.parse(decodeURIComponent(raw));
+   assert.equal(cfg.wire,await card.getAttribute('data-build-wire'),'Card wire must equal transfer payload');
+   assert.equal(String(cfg.wraps),await card.getAttribute('data-build-wraps'),'Card wraps must equal transfer payload');
+   assert.equal(cfg.air,await card.getAttribute('data-build-air'),'Card insert must equal transfer payload');
    const actual=await card.locator('[data-journey-liquid]').evaluateAll(buttons=>buttons.map(b=>Number(b.dataset.journeyLiquid)));
-   const expected=await page.evaluate(wire=>{const m=window.RTA_ATLAS_MODULES;return window.RTA_ATLAS_SEARCH.top(m.wireConfig(m.state.atom,wire),m.state.objective,5).map(r=>r.index);},wire);assert.deepEqual(actual,expected,'Each material has its own exact top-five liquids');
+   const expected=await page.evaluate(cfg=>{
+    const m=window.RTA_ATLAS_MODULES;
+    return window.RTA_ATLAS_SEARCH.top(cfg,m.state.objective,5).map(r=>r.index);
+   },cfg);
+   assert.deepEqual(actual,expected,'Each card must show exact top-five for its own coil/air/material');
   }
   await page.locator('.material-paths').scrollIntoViewIfNeeded();await shot(page,'flow-atlas-three-wires-'+width+'.png');
   await page.goto(origin+'/rta-lab/atlas/');await page.waitForSelector('#matchButton',{state:'attached'});
