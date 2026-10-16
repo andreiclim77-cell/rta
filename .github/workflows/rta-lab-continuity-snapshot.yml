@@ -1,0 +1,101 @@
+name: RTA Lab Continuity Archive
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "rta-lab/RTA_CURRENT_HANDOFF.md"
+      - "rta-lab/RTA_CONTINUITY_MASTER.md"
+      - "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md"
+      - "rta-lab/RTA_OPERATING_PROTOCOL.md"
+permissions:
+  contents: read
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build portable continuity snapshot with checksum inventory
+        run: |
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, zipfile
+          files=[
+           "rta-lab/RTA_CURRENT_HANDOFF.md",
+           "rta-lab/RTA_CONTINUITY_MASTER.md",
+           "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md",
+           "rta-lab/RTA_OPERATING_PROTOCOL.md",
+           "rta-lab/ATLAS_PUBLICATION_VERIFICATION_20261015.md",
+           "rta-lab/ATLAS_GUIDED_FLOWS_VERIFICATION_20261015.md",
+           "rta-lab/ATLAS_FILTERS_VERIFICATION_20261015.md",
+           "rta-lab/data/sensory-core.js",
+           "rta-lab/data/atoms-1.js",
+           "rta-lab/data/atoms-2.js",
+           "rta-lab/data/atoms-3.js",
+           "rta-lab/data/tuning-415.js",
+           "rta-lab/data/tc-platform-map.js",
+           "rta-lab/data/tc-sixwrap-global.js",
+           "rta-lab/data/personal-5wrap.js",
+           "rta-lab/data/clapton-platform-map.js",
+           "rta-lab/data/wires.js",
+           "rta-lab/atlas-preview/index.html",
+           "rta-lab/atlas-preview/modules.js",
+           "rta-lab/atlas-preview/lab-commands.js",
+           "rta-lab/atlas-preview/lab-commands.css",
+           "tools/check-rta-sensory-core.js",
+           "tools/check-rta-atlas-modules.js",
+           "tools/check-rta-lab-commands.js"
+          ]
+          required=files[:4]
+          for f in required:
+           if not pathlib.Path(f).is_file(): raise SystemExit("Missing critical continuity document: "+f)
+          sha=os.environ.get("GITHUB_SHA","unresolved")
+          manifest={"schema":1,"repository":"andreiclim77-cell/rta","snapshot_commit":sha,
+            "authoritative_branch":"main","purpose":"Self-contained RTA Lab continuation across conversations, not a runnable build",
+            "files":{}}
+          readme=f"""RTA SENSORY ATLAS — ARHIVĂ PORTABILĂ DE CONTINUITATE
+
+Snapshot GitHub SHA: {sha}
+Sursă canonică: https://github.com/andreiclim77-cell/rta
+Versiunea publicată: https://ghid-rta.ro/rta-lab/atlas/
+
+Într-un chat nou scrie: „Du-te în Lab și fă-ți update”.
+Citește ÎN ORDINE:
+1. rta-lab/RTA_CURRENT_HANDOFF.md
+2. rta-lab/RTA_CONTINUITY_MASTER.md
+3. rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md
+4. rta-lab/RTA_OPERATING_PROTOCOL.md
+
+La „Salvează” actualizează aplicația plus arhiva (inclusiv Biblioteca ChatGPT).
+La „Dă-mi arhiva de continuitate la zi” generează snapshotul actual și oferă linkul.
+
+Acest pachet conține documentele integrale și extrasele esențiale de cod
+și QA pentru context fără istoric de conversație. Catalogul mare, media,
+build-ul executabil și istoricul git complet RĂMÂN în repository.
+Verifică SHA-ul curent pe main, workflow-urile și Pages; snapshotul nu poate
+demonstra un deploy viitor sau o preferință încă neconfirmată.
+Dacă GitHub nu este conectat, poți folosi documentele din acest ZIP
+ca plan de reluare, apoi reconectezi repo-ul pentru editare.
+"""
+          dest=pathlib.Path("artifacts/continuity/RTA_CONTINUITATE_CURENTA.zip")
+          dest.parent.mkdir(parents=True,exist_ok=True)
+          with zipfile.ZipFile(dest,"w",zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+           z.writestr("README_REIA_PROIECTUL.txt",readme)
+           for file in files:
+            p=pathlib.Path(file)
+            if not p.is_file(): continue
+            raw=p.read_bytes()
+            z.writestr(file,raw)
+            manifest["files"][file]={"sha256":hashlib.sha256(raw).hexdigest(),"size":len(raw)}
+           z.writestr("MANIFEST_SHA256.json",json.dumps(manifest,ensure_ascii=False,indent=2)+"\n")
+          with zipfile.ZipFile(dest) as z:
+           if z.testzip(): raise SystemExit("Corrupted archive")
+          print("RTA CONTINUITY ZIP OK:",dest,"SHA",sha,"files",len(manifest["files"]))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: RTA_CONTINUITATE_CURENTA
+          path: artifacts/continuity/RTA_CONTINUITATE_CURENTA.zip
+          retention-days: 30
+          if-no-files-found: error
