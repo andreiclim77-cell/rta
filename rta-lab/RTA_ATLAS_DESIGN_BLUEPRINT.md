@@ -1,5 +1,24 @@
 # RTA SENSORY ATLAS — PRECISION MOTION LAB
 
+
+## FLUX NOU RTA LAB — SÂRME, ATLAS ȘI LICHIDE (16.10.2026 · PR #57, CANDIDAT)
+
+**Comanda utilizatorului: „salvează” (16.10.2026).** Acest bloc păstrează cerințele active; nu este o dovadă de publicare. Implementarea rămâne pe branch `feature/lab-three-guided-comparison-flows-20261016` până la verificările de acceptare, merge și Pages. Înlocuiește acest status cu SHA-urile exacte numai după verificare. Nu reface ceea ce este deja corect.
+
+**Wire Lab — noul traseu, în plus față de instrumentul existent:** sârmă → număr de spire compatibil → obiective 1–10 pe 14 axe și grafic cu bare → **Compară** cu o a doua sârmă și spire, pe aceeași scară (medii pe exact aceleași platforme compatibile; altfel avertisment) → **„Te-ai decis?”** și selector final de sârmă + spire → toate obiectivele → 4 indici orientativi (%) pentru Tutun simplu / Tutun complex / NET simplu / NET complex → selecție categorie → toate lichidele comercial verificate din categorie în selector → până la trei atomizoare compatibile, ordonate contextual pentru **același material, aceleași spire și același lichid**, cu comparație de obiective. Dacă mai puțin de trei atomizoare acceptă combinația, se afișează doar cele reale (ex. NiFe30/7: GTR și 415), nu se inventează al treilea.
+
+**Atomizer Atlas — păstrează intactă secțiunea existentă „Trei builduri pentru acest context” și tot ce urmează după ea.** Înainte de aceasta: selectare atomizor → toate sârmele permise, comparate pe 14 obiective 1–10 (cu numărul de spire explicit) → alegere sârmă → comparație 5/6 ori excepțiile canonice 7 (numai când sunt permise) → alegere spire → indici orientativi (%) pentru cele patru familii → alegere familie → selector cu toate produsele acelei categorii → alegere lichid, fără pierderea celor 3 builduri complete, a datelor fizice, configurației selectate sau a trimiterii Atlas → Wire.
+
+**Liquid Match — completări izolate, nu înlocuirea traseului 3×3:** înaintea căutării, utilizatorul selectează una dintre cele 4 categorii; filtrul existent caută / paginează toate lichidele din categoria aleasă. În rezultatul 3 atomizoare × 3 builduri apare pe fiecare atomizor rezumatul obiectivelor plus comparația completă a tuturor celor 14 axe 1–10 între atomizoare și, în detaliile fiecăruia, între cele trei sârme/configurații. Celelalte acțiuni, trasee și ordonări rămân existente.
+
+**Limite numerice explicite:** 14 axe folosesc semnalele tehnice deja calculate (`spectrum`, `separation`, `simultaneity`, `focus`, `palate`, `offense`, `th`, `harmony`, `texture`, `tobaccoCore`) și patru indici derivați (stratificare, corp, claritate, finețe) **etichetate proxy**. Conversie afișare 1–5 la 1–10: `1 + (indicator - 1) × 2,25`, cap la 10. **Nu sunt valori măsurate**, iar dulceața/uscăciunea fără semnal dedicat nu primesc note fictive. Procentele sunt **indici calculați orientativ**, pe 16 produse distribuite din fiecare familie, prin agregarea dimensiunilor motorului și a până la 3 platforme compatibile; nu reprezintă probabilitate, test senzorial, A/B controlat ori procent de plăcere. Ordinea din top este contextuală și nu contrazice observațiile personale înregistrate.
+
+**Date protejate:** 700 lichide Atlas (107 Tutun simplu, 130 Tutun complex, 210 NET simplu, 253 NET complex), 620 repere V10, 16 platforme, 42 exemplare fizice, trei CL independente, opțiunile Asylum 2×1,0 vs 2×0,8 NECONFIRMAT, preferințele GTR/415 NiFe30/7 = NiFe52/6, toate regulile din Sensory DNA și Market/Duel. Nu se rescrie motorul, inventarul sau localStorage.
+
+**Fișiere noi/modificate:** `rta-lab/atlas-preview/decision-explorer.js` și `.css`; includerea în `atlas-preview/index.html`, release deterministic `rta-lab/atlas/` și cache-urile proprii; regresii `tools/check-rta-decision-flows.js` și `tools/check-rta-decision-flows-visual.js`, incluse în Quality/Visual, împreună cu actualizarea contractului de număr de scripturi și poziționarea căutării sub filtrul nou. Workflow-ul TEMP de generare se elimină înainte de merge; screenshoturile și ultimele rezultate CI sunt criterii de acceptare, nu simple promisiuni.
+
+**Următorul pas:** închide eventualele eșecuri din Quality/Market/Visual pe SHA final; șterge workflow-ul TEMP; verifică release/cache, indexul pe mobil și pe desktop, clickurile de căutare, navigarea, 3×3 și 3 CL; integrează PR, verifică Pages; apoi actualizează statutul canonic și **suprascrie arhiva ZIP persistentă din Biblioteca ChatGPT /RTA_Lab/** cu snapshotul verificat, incluzând fișierele noi. Nu spune „publicat” dacă lipsește vreuna dintre probe.
+
 ## ACTUALIZARE CERUTĂ — comparații SÂRME / ATLAS / LICHIDE (16.10.2026, ÎN VALIDARE)
 
 Utilizatorul a spus «salvează» pentru trei modificări coerente, fără refacerea secțiunilor deja corecte. [PR #57](https://github.com/andreiclim77-cell/rta/pull/57), branch `feature/lab-three-guided-comparison-flows-20261016` (draft):
