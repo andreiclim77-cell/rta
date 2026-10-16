@@ -34,7 +34,7 @@ async function main(){
    await page.screenshot({path:path.join(shots,'wire-'+width+'.png'),fullPage:true});
    await page.locator('.exp-top-atoms button').first().click();
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen),true,'Exact atomizer can be opened');
-   await page.locator('.bottom-tabs [data-route="atomizer"]').click();
+   await page.locator('[data-route="atomizer"]:visible').first().click();
    await page.locator('#atlasPlatform').selectOption('gtr');
    await page.locator('[data-exp-wire="atlas"][data-exp-value="nife30"]').click();
    assert.equal(await page.locator('[data-exp-wraps="atlas"]').count(),2,'GTR NiFe30 exposes both 6 and 7');
@@ -49,7 +49,7 @@ async function main(){
    await noOverflow('Atomizer flow');
    await page.locator('#expAtlasWizard').scrollIntoViewIfNeeded();
    await page.screenshot({path:path.join(shots,'atomizer-'+width+'.png'),fullPage:true});
-   await page.locator('.bottom-tabs [data-route="liquid"]').click();
+   await page.locator('[data-route="liquid"]:visible').first().click();
    await page.locator('#expLiquidCategories [data-exp-liquid-cat="NET simplu"]').click();
    assert.equal(await page.locator('#expLiquidCategories [data-exp-liquid-cat="NET simplu"]').getAttribute('aria-pressed'),'true');
    const family=await page.evaluate(()=>window.RTA_ATLAS_SEARCH_UI.states.get('liquid').family);
