@@ -114,11 +114,72 @@ function compatibleWireAtoms(wire){return atoms.filter(a=>core.variants(a.id).so
 function wireConfig(id,wire){if(id===state.atom&&wire===state.config.wire)return {...state.config};const base=id===state.atom?state.config:core.defaultConfig(id),variants=core.variants(id).filter(v=>v.wire===wire),v=((id==='gtr'||id==='415')&&wire==='nife30'?variants.find(v=>v.wraps===7):id==='415'&&wire==='k128'?variants.find(v=>v.wraps===6):variants.find(v=>v.wraps===base.wraps))||variants[0];return v?core.config(id,{...base,...v,...core.wireSetup(id,wire)}):null;}
 function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?'Control de temperatură · '+(wire==='nife30'?'NiFe30 / TCR320':'NiFe52 / TCR310')+' · preseturi proprii fiecărei platforme.':w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
 function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objective).map((r,i)=>'<button type="button" data-journey-liquid="'+r.index+'" data-journey-wire="'+cfg.wire+'" data-journey-atom="'+cfg.atom+'"><span>0'+(i+1)+'</span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('');}
-function materialPaths(){
- const variants=core.variants(state.atom),seen=new Set(),ranked=hasLiquid()?core.rankBuilds(state.atom,liquid(),state.objective,{bell:state.config.bell,air:state.config.air,coilMm:state.config.coilMm,position:state.config.position}):[],ids=[state.config.wire,...ranked.map(r=>r.config.wire),...variants.map(v=>v.wire)].filter(id=>{if(seen.has(id))return false;seen.add(id);return true;}).slice(0,3);
- const builds=ids.map(id=>core.analyze(wireConfig(state.atom,id),liquid(),state.objective));
- return '<section class="module-section material-paths"><span class="eyebrow">TREI DIRECȚII COMPATIBILE</span><h2>Trei sârme. Trei feluri de a-l explora.</h2><p class="module-note">'+(hasLiquid()?'Descrieri și comparație pentru '+esc(liquid().name)+'.':'Piste de pornire compatibile, fără un clasament pe un lichid presupus. Alege un lichid pentru descrierea senzorială.')+'</p><div class="material-path-grid">'+builds.map((b,i)=>'<article class="material-path"><span class="eyebrow">0'+(i+1)+' / '+esc(core.wires[b.config.wire].mode)+'</span><h3>'+esc(core.wires[b.config.wire].name)+'</h3><div class="material-schematic">'+api.renderCoil(b.config)+'</div><p>'+esc(wireIdentity(b.config.wire))+'</p>'+(hasLiquid()?'<p>'+esc(api.vapeDescription(b,liquid()))+'</p><p class="module-note"><b>Accent:</b> '+esc(b.advantages.slice(0,2).join(' · '))+'<br><b>Compromis:</b> '+esc(b.tradeoffs[0]||'Echilibrul trebuie verificat practic.')+'</p>':'')+'<button type="button" class="module-link" data-journey-wire="'+b.config.wire+'">Reglează în Wire Lab ↗</button><details class="wire-liquid-links"><summary>5 lichide potrivite cu acest build</summary><div class="journey-liquid-list">'+liquidButtons(b.config)+'</div><p class="module-note">Din cele '+catalog.length+', potrivire calculată pentru build și obiectiv; nu cinci teste personale.</p></details></article>').join('')+'</div>'+(hasLiquid()?api.comparisonGraphic(builds.map(b=>({label:core.wires[b.config.wire].name,result:b})),'Cum se deosebesc cele trei sârme'):'')+'</section>';
+
+/* The platform's own confirmed personal choices come first; remaining materials
+ * are computed from the existing engine for the current atomizer/goal/context.
+ * Distinct wires mean distinct physical materials, including both NiFe alloys. */
+const PERSONAL_LEADS=Object.freeze({
+ "415":[["nife30",7],["nife52",6],["k128",6]],
+ gtr:[["nife30",7],["nife52",6],["k128",5]],
+ klp:[["nife30",6],["nife52",6],["k128",5]],
+ kprime:[["nife30",6],["nife52",6],["k129",5]],
+ kx:[["nife30",6],["nife52",6],["k128",5]],
+ gtone:[["k129",6],["k128",5]],muted:[["k128",6]],
+ dvarwcl:[["k128",6,"triple06"]],
+ dvarwfl:[["k128",6,"triple06"],["ssclap",5,"single12"]],
+ asylum:[["k128",6]],kv3:[["k128",6],["k129",6]]
+});
+function buildLeads(id=state.atom){
+ const base=id===state.atom?state.config:core.defaultConfig(id),out=[],used=new Set();
+ if(!base)return [];
+ function add(wire,wraps,air,source){
+  if(!core.wires[wire]||used.has(wire)||!core.permitted(id,wire,wraps))return;
+  const cfg=core.config(id,{...base,wire,wraps,air:air||base.air,...core.wireSetup(id,wire)});
+  if(cfg.wire!==wire||cfg.wraps!==wraps)return;
+  used.add(wire);out.push({config:cfg,source});
+ }
+ for(const [wire,wraps,air] of PERSONAL_LEADS[id]||[])add(wire,wraps,air,"personal");
+ const profile=hasLiquid()?liquid():{name:"Profil tehnic neutru",class:"Tutun simplu",tags:[]};
+ for(const item of core.rankBuilds(id,profile,hasLiquid()?state.objective:"complete",{
+  bell:base.bell,air:base.air,coilMm:base.coilMm,position:base.position
+ })){
+  if(out.length===3)break;
+  add(item.config.wire,item.config.wraps,null,"model");
+ }
+ return out.slice(0,3);
 }
+function buildFacts(config){
+ const w=core.wires[config.wire],a=core.platforms[config.atom].air.find(x=>x.id===config.air);
+ const bell=fit.config(config.atom)?.bells?.find(x=>x.id===config.bell);
+ const energy=w.type==="tc"?"TC "+config.temp+"°C (setare) · plafon "+config.power+" W":"WATT "+config.power+" W (preset)";
+ const facts=[["Coil",config.wraps+" spire · Ø"+String(config.coilMm).replace(".",",")+" mm"],
+  ["Insert / aer",a?.label||"Necunoscut"],["Clopot",bell?.name||"Original"],
+  ["Regim",energy],["Poziție",{low:"Jos",standard:"Standard",high:"Sus"}[config.position]||"Standard"]];
+ return '<dl class="material-build-facts">'+facts.map(([key,val])=>
+  '<div><dt>'+esc(key)+'</dt><dd>'+esc(val)+'</dd></div>').join("")+"</dl>";
+}
+function materialPaths(){
+ const leads=buildLeads(),chosen=state.config,profile=liquid();
+ const isCurrent=leads.some(({config})=>["wire","wraps","air","bell","coilMm","position","power","temp"].every(k=>config[k]===chosen[k]));
+ return '<section class="module-section material-paths" id="atlasBuilds">'+
+ '<span class="eyebrow">MATERIALELE TALE / CONSTRUCȚII COMPLETE</span><h2>Primele trei builduri pentru acest atomizor.</h2>'+
+ '<p class="module-note">Prioritate pentru configurațiile tale confirmate. Unde nu sunt trei preferințe stabilite, motorul completează cu propuneri tehnice potrivite platformei. Nicio propunere netestată nu este prezentată drept test personal. Setările W/TC sunt preseturi când nu avem măsurători.</p>'+
+ '<div class="material-path-grid">'+leads.map(({config,source},i)=>{
+  const r=core.analyze(config,profile,state.objective),w=core.wires[config.wire];
+  return '<article class="material-path" data-build-wire="'+esc(config.wire)+'" data-build-wraps="'+config.wraps+'" data-build-air="'+esc(config.air)+'">'+
+  '<span class="eyebrow">0'+(i+1)+' · '+(source==="personal"?"PREFERINȚĂ PERSONALĂ":"PROPUNERE TEHNICĂ")+' · '+esc(w.mode)+'</span>'+
+  '<h3>'+esc(w.name)+'</h3><div class="material-schematic">'+api.renderCoil(config)+'</div>'+
+  buildFacts(config)+
+  '<p class="module-note">'+esc(source==="personal"?"Montaj sau prioritate declarată de tine; detaliile A/B și limitele probelor rămân în fișa tehnică.":"Alegere estimată din modelul platformei și obiectiv; nu un A/B efectuat de tine.")+'</p>'+
+  (hasLiquid()?'<p>'+esc(api.vapeDescription(r,profile))+'</p><p class="module-note"><b>Accent:</b> '+esc(r.advantages.slice(0,2).join(" · "))+' · <b>Compromis:</b> '+esc(r.tradeoffs[0]||"Verifică practic")+'</p>':'<p class="module-note">Alege un lichid doar pentru evaluarea senzorială; configurația completă este deja afișată.</p>')+
+  '<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(config)))+'">Deschide buildul exact în Wire Lab ↗</button>'+
+  '<details class="wire-liquid-links"><summary>5 lichide potrivite cu acest build</summary><div class="journey-liquid-list">'+liquidButtons(config)+'</div><p class="module-note">Potriviri calculate dintre cele '+catalog.length+' de lichide; nu teste personale.</p></details></article>';
+ }).join("")+'</div>'+
+ (!isCurrent?'<div class="material-current"><strong>Configurația ta selectată, în afara primelor trei</strong>'+buildFacts(chosen)+'<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(chosen)))+'">Deschide configurația selectată ↗</button></div>':'')+
+ (hasLiquid()?api.comparisonGraphic(leads.map(({config})=>({label:core.wires[config.wire].name+" / "+config.wraps+" spire",result:core.analyze(config,profile,state.objective)})),"Comparație pe același lichid"):"")+
+ '<p class="module-note">Alte materiale, spire, inserturi și alternative validate sunt disponibile în Wire Lab, fără rescrierea fișelor unităților fizice.</p></section>';
+}
+
 function wirePalette(){return '<div class="wire-family-grid">'+Object.entries(core.wires).map(([id,w])=>'<button type="button" class="wire-family-card" data-wire-family="'+id+'"><span class="eyebrow">'+esc(w.mode)+'</span><b>'+esc(w.name)+'</b><span class="material-schematic">'+(id==='nife30'?'<img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30 — fotografie de produs, ambalaj de referință" loading="lazy" width="500" height="333">':api.renderCoil(wireConfig('gtr',id)))+'</span><small>'+esc(wireIdentity(id))+'</small><span>Alege această sârmă ↗</span></button>').join('')+'</div>';}
 function platformReaction(id){if(!hasLiquid())return '<p class="module-note">Alege lichidul comun pentru descrierea reacției senzoriale. Poți vedea și cele cinci potriviri ale acestui build.</p>';const r=core.analyze(wireConfig(id,state.config.wire),liquid(),state.objective);return '<p>'+esc(api.vapeDescription(r,liquid()))+'</p><div class="platform-mini-dna">'+[['spectrum','Spectru'],['palate','Palat'],['harmony','Armonie']].map(([key,label])=>'<span><b>'+label+'</b><i style="--signal:'+r.signals[key]*20+'%" role="img" aria-label="'+esc(label+' · '+r.signals[key]+' indicator intern, nu măsurătoare')+'"></i></span>').join('')+'</div>';}
 function wirePlatforms(){const rows=compatibleWireAtoms(state.config.wire);return '<details class="wire-compatible"'+(state.wirePlatformChosen?'':' open')+'><summary>'+rows.length+' atomizoare compatibile · '+(state.wirePlatformChosen?'schimbă atomizorul':'alege unul pentru experiența detaliată')+'</summary><p class="module-note">Compatibilitate din configurațiile permise ale Lab, nu recomandare universală de montaj. Nu sunt omise platformele compatibile.</p><div class="wire-platform-grid">'+rows.map(a=>'<article class="wire-platform-card"><div class="wire-platform-photo">'+api.renderProductPhoto(a)+'</div><h3>'+esc(a.short)+'</h3><p>'+esc(core.platforms[a.id].note)+'</p>'+platformReaction(a.id)+'<button type="button" class="module-link" data-wire-platform="'+a.id+'">Alege '+esc(a.short)+'</button><details data-wire-liquids="'+a.id+'"><summary>Vezi lichidele potrivite</summary><div class="journey-liquid-list"></div></details></article>').join('')+'</div></details>';}
