@@ -55,28 +55,28 @@ jobs:
             "authoritative_branch":"main","purpose":"Self-contained RTA Lab continuation across conversations, not a runnable build",
             "files":{}}
           readme=f"""RTA SENSORY ATLAS — ARHIVĂ PORTABILĂ DE CONTINUITATE
-
-Snapshot GitHub SHA: {sha}
-Sursă canonică: https://github.com/andreiclim77-cell/rta
-Versiunea publicată: https://ghid-rta.ro/rta-lab/atlas/
-
-Într-un chat nou scrie: „Du-te în Lab și fă-ți update”.
-Citește ÎN ORDINE:
-1. rta-lab/RTA_CURRENT_HANDOFF.md
-2. rta-lab/RTA_CONTINUITY_MASTER.md
-3. rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md
-4. rta-lab/RTA_OPERATING_PROTOCOL.md
-
-La „Salvează” actualizează aplicația plus arhiva (inclusiv Biblioteca ChatGPT).
-La „Dă-mi arhiva de continuitate la zi” generează snapshotul actual și oferă linkul.
-
-Acest pachet conține documentele integrale și extrasele esențiale de cod
-și QA pentru context fără istoric de conversație. Catalogul mare, media,
-build-ul executabil și istoricul git complet RĂMÂN în repository.
-Verifică SHA-ul curent pe main, workflow-urile și Pages; snapshotul nu poate
-demonstra un deploy viitor sau o preferință încă neconfirmată.
-Dacă GitHub nu este conectat, poți folosi documentele din acest ZIP
-ca plan de reluare, apoi reconectezi repo-ul pentru editare.
+          
+          Snapshot GitHub SHA: {sha}
+          Sursă canonică: https://github.com/andreiclim77-cell/rta
+          Versiunea publicată: https://ghid-rta.ro/rta-lab/atlas/
+          
+          Într-un chat nou scrie: „Du-te în Lab și fă-ți update”.
+          Citește ÎN ORDINE:
+          1. rta-lab/RTA_CURRENT_HANDOFF.md
+          2. rta-lab/RTA_CONTINUITY_MASTER.md
+          3. rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md
+          4. rta-lab/RTA_OPERATING_PROTOCOL.md
+          
+          La „Salvează” actualizează aplicația plus arhiva (inclusiv Biblioteca ChatGPT).
+          La „Dă-mi arhiva de continuitate la zi” generează snapshotul actual și oferă linkul.
+          
+          Acest pachet conține documentele integrale și extrasele esențiale de cod
+          și QA pentru context fără istoric de conversație. Catalogul mare, media,
+          build-ul executabil și istoricul git complet RĂMÂN în repository.
+          Verifică SHA-ul curent pe main, workflow-urile și Pages; snapshotul nu poate
+          demonstra un deploy viitor sau o preferință încă neconfirmată.
+          Dacă GitHub nu este conectat, poți folosi documentele din acest ZIP
+          ca plan de reluare, apoi reconectezi repo-ul pentru editare.
 """
           dest=pathlib.Path("artifacts/continuity/RTA_CONTINUITATE_CURENTA.zip")
           dest.parent.mkdir(parents=True,exist_ok=True)
