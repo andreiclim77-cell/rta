@@ -70,6 +70,9 @@ assert.ok(a.renderCoil(asylumConfig).includes('2 canale'));
 assert.equal(m.setConfig({air:'stock'}),true,'Keep prior unknown-pin model without assigning a false dimension');
 assert.equal(m.setConfig({air:'dual10'}),true);
 assert.equal(c.permitted('asylum','ssclap',5),false);
+assert.equal(c.analyze(c.defaultConfig('asylum'),{name:'Audit demo',class:'Tutun simplu'}).partialEvidence.length,1,'Retain historical Flat/28/6 as a partial personal report');
+assert.equal(c.analyze(c.config('asylum',{bell:'dome'}),{name:'Audit demo',class:'Tutun simplu'}).partialEvidence.length,0,'Do not leak Flat-specific report onto Dome');
+
 for(const id of ['asylum','gtr','415','klp','gtone']){
  m.selectAtom(id);const markup=m.materialPaths();
  assert.equal((markup.match(/class="material-path"/g)||[]).length,3,'Three visible build cards on '+id);
