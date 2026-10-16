@@ -28,7 +28,7 @@ async function main(){
     for(const id of ids){
      await page.locator('#atlasPlatform').selectOption(id);
      check(await page.locator('#atlasBuilds .material-path').count()===3,id+' must have 3 complete builds');
-     check(await page.locator('#atlasBuilds .material-build-facts>div').count()===15,id+' must display all 5 technical facts for each of 3 builds');
+     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===15,id+' must display all 5 technical facts for each of 3 builds');
      const materials=await page.locator('#atlasBuilds .material-path').evaluateAll(els=>els.map(x=>x.dataset.buildWire));
      check(new Set(materials).size===3,id+' must show 3 distinct owned wire materials');
      check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id+' cards overflow phone width');
