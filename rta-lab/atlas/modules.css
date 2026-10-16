@@ -126,3 +126,25 @@
 @media(max-width:760px){.comparison-track>small{font-size:10px}}
 
 .atlas-loading-notice{display:none}body.atlas-loading .mast,body.atlas-loading main,body.atlas-loading .bottom-tabs,body.atlas-loading .footer{visibility:hidden;pointer-events:none}body.atlas-loading .atlas-loading-notice{position:fixed;inset:0;z-index:100;display:grid;align-content:center;justify-items:center;gap:18px;background:#070d12;color:#c6d7ca}.atlas-loading-notice strong{font-size:23px;letter-spacing:2px;color:#dabe89}.atlas-loading-notice span{font-size:14px}.atlas-loading-notice a{font-size:12px;color:#dabe89;padding:12px}
+
+/* ATLAS: all three physical setups visible before liquid selection on 16 platforms. */
+.material-path .material-build-facts,.material-current .material-build-facts{
+ display:grid;gap:7px;margin:16px 0 13px;padding:13px;border-radius:12px;
+ border:1px solid #476159;background:#0a1a1e
+}
+.material-build-facts>div{display:grid;grid-template-columns:minmax(0,76px) minmax(0,1fr);gap:8px;border-bottom:1px solid #29433e;padding:6px 0}
+.material-build-facts>div:last-child{border-bottom:0}
+.material-build-facts dt{margin:0;color:#9fb9ac;font-size:11px;line-height:1.55}
+.material-build-facts dd{margin:0;color:#edf0e4;font-size:12px;font-weight:600;line-height:1.55;overflow-wrap:anywhere}
+.material-path .eyebrow{line-height:1.5;white-space:normal}
+.material-current{border:1px solid #6c705d;background:#182629;padding:17px;border-radius:13px;margin-top:16px}
+.material-current>strong{display:block;margin-bottom:8px;color:#e1c698;line-height:1.5}
+.material-path .module-link,.material-current .module-link{min-height:44px;line-height:1.5;white-space:normal}
+@media(max-width:760px){
+ .material-path-grid{grid-template-columns:minmax(0,1fr)}
+ .material-path .material-build-facts{padding:11px}
+ .material-build-facts>div{grid-template-columns:minmax(0,72px) minmax(0,1fr)}
+ .platform-picker{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .platform-picker>label:last-child{grid-column:auto}
+}
+@media(max-width:350px){.platform-picker{grid-template-columns:minmax(0,1fr)}}

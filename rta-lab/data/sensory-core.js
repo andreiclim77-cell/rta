@@ -74,9 +74,12 @@ const PLATFORMS={
  AIR("tight","AEROKON reglaj strâns","aerokon",null,1.15),
  AIR("open","AEROKON reglaj deschis","aerokon",null,1.70)],
  traits:{spectrum:4.65,simultaneity:4.8,focus:4.3,palate:4.75,offense:4.45,th:4.55,harmony:4.7},note:"Spectru bogat și simultan pe 28/5, confirmat personal."},
- asylum:{pattern:"single",volume:"compact-mediu",air:[
- AIR("stock","Air-pin existent (dimensiune neverificată)","single",null,1.5)],
- traits:{spectrum:4.55,simultaneity:4.3,focus:4.2,palate:4.4,offense:4.25,th:4.15,harmony:4.35},note:"Nu inventăm diametrul pinului Asylum V3."},
+ asylum:{pattern:"multipoint",volume:"compact-mediu",air:[
+ AIR("dual10","Air-pin 2×1,0 mm (inclus în kit; montaj personal de confirmat)","multipoint",[1,1],1.75),
+ AIR("dual08","POSIBIL pin 2×0,8 mm · menționat de utilizator, NECONFIRMAT","multipoint",[.8,.8],1.65,{optional:true,estimated:true,unverifiedPersonal:true}),
+ AIR("stock","Alt air-pin / montaj anterior (diametru neconfirmat)","single",null,1.5,{estimated:true})],
+ traits:{spectrum:4.55,simultaneity:4.3,focus:4.2,palate:4.4,offense:4.25,th:4.15,harmony:4.35},
+ note:"Asylum V3: air-pinul 2×1,0 mm este documentat în kit; 0,8 mm este și o poziție distinctă a inelului AFC. Pinul 2×0,8 mm a fost menționat cu incertitudine de utilizator: îl poți simula, dar nu îl declarăm standard, inclus sau montat. Nu atribui niciun pin ambelor exemplare fizice fără confirmare."},
  pmfree:{pattern:"diverter",volume:"mediu",air:[
  AIR("pin12","Diverter 32×0,9 + pin 1,2 mm","diverter",[1.2],2.1),
  AIR("pin08","Diverter 32×0,9 + pin 0,8 mm","diverter",[.8],1.85)],
@@ -203,7 +206,7 @@ const DEFAULTS={
  diplomat:{wire:"k129",wraps:5,air:"pin18"},
  kx:{wire:"nife30",wraps:6,air:"mid"},
  klp:{wire:"nife30",wraps:6,air:"mid"},
- asylum:{wire:"k128",wraps:6,air:"stock"},
+ asylum:{wire:"k128",wraps:6,air:"dual10"},
  pmfree:{wire:"k128",wraps:5,air:"pin12"},
  pmstd:{wire:"k129",wraps:5,air:"pin12"},
  byka:{wire:"k129",wraps:5,air:"pin12"},
@@ -283,9 +286,9 @@ const OBS=[
  {atom:"dvarwfl",wire:"ssclap",wraps:5,air:"single12",title:"FL SS316L Clapton dedicat",
   text:"Pereche pentru claritate, top-notes, layering, fără A/B pe toate lichidele.",
   patch:{separation:4.85},affinity:"dedicat · contextual",evidence:"hartă platformă Lab"},
- {atom:"asylum",wire:"k128",wraps:6,bell:"flat",title:"Asylum Flat 28/6 validat",
-  text:"Claritate/separare cu corp și completitudine, pe Flat.",
-  patch:{palate:4.72,separation:4.7},affinity:"Flat preferat",evidence:"validare personală Lab"},
+ {atom:"asylum",wire:"k128",wraps:6,bell:"flat",partial:true,title:"Asylum Flat 28/6 validat",
+  text:"K1 28 GA / 6 spire cu clopot Flat este preferință personală confirmată. Pinul 2×1,0 mm este documentat pentru model, dar utilizatorul nu a confirmat încă ce pin este montat; dimensiunea exactă din testul anterior Flat/28/6 nu a fost înregistrată; nu pretinde un A/B controlat între air-pinuri.",
+  affinity:"Flat + K1 28/6 apreciat personal",evidence:"observație personală; pinul exact al testului istoric neprecizat"},
  {atom:"kv3",wire:"k128",wraps:6,title:"Mini V3 K1 28/6",
   text:"Excepție de 6 spire validată practic.",
   patch:{focus:4.55},affinity:"validat",evidence:"A/B personal Lab"},
@@ -397,6 +400,7 @@ function partialReportsFor(config){
  return OBS.filter(o=>o.partial && o.atom===config.atom && o.wire===config.wire &&
    (o.wraps==null||o.wraps===config.wraps) &&
    (o.air==null||o.air===config.air) &&
+   (o.bell==null||o.bell===config.bell) &&
    (o.coilMm==null||o.coilMm===config.coilMm) &&
    (o.power==null||Math.abs(o.power-config.power)<0.1) &&
    (o.temp==null||Math.abs(o.temp-config.temp)<1));

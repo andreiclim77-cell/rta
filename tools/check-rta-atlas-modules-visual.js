@@ -15,11 +15,44 @@ async function main(){
    const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
+   check(await page.locator('#atlasBuilds .material-path').count()===3,'Atlas must show three full builds without selecting any liquid');
+   check(await page.locator('#atlasBuilds .material-build-facts').count()===3,'Three coil/air/chamber/power fact cards are required before liquid selection');
    await page.locator('#atlasLiquidSearch').fill('Milestone Balcan Centenary Mods');
    await page.locator('#atlasLiquidSearch').press('Enter');
    await page.waitForTimeout(650);
    check(await page.locator('#pageAtomizer').isVisible(),'Hash deep link must open Atomizer Atlas');
    check(await page.locator('.platform-tile').count()===16,'All 16 platforms must be available');
+   if(width===390){
+    const ids=await page.locator('#atlasPlatform option').evaluateAll(els=>els.map(x=>x.value));
+    check(ids.length===16,'All 16 atomizers must be listed');
+    for(const id of ids){
+     await page.locator('#atlasPlatform').selectOption(id);
+     check(await page.locator('#atlasBuilds .material-path').count()===3,id+' must have 3 complete builds');
+     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===15,id+' must display all 5 technical facts for each of 3 builds');
+     const materials=await page.locator('#atlasBuilds .material-path').evaluateAll(els=>els.map(x=>x.dataset.buildWire));
+     check(new Set(materials).size===3,id+' must show 3 distinct owned wire materials');
+     check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id+' cards overflow phone width');
+    }
+    await page.locator('#atlasPlatform').selectOption('asylum');
+    check(await page.locator('#atlasAir').inputValue()==='dual10','Asylum included 2x1.0 pin must be technical default only, not a physical saved record');
+    check(await page.locator('#atlasAir option[value="dual10"]').textContent().then(t=>t.includes('2×1,0')),'Asylum dual 1mm pin label missing');
+    check(await page.locator('#atlasAir option[value="dual08"]').textContent().then(t=>t.includes('2×0,8')&&t.includes('NECONFIRMAT')),
+      'Asylum possible 2x0.8 must be available only with explicit uncertainty label');
+     await page.locator('#atlasAir').selectOption('dual08');
+     check(await page.locator('#atlasBuilds .material-path[data-build-air="dual08"]').count()===3,
+      'All three complete Asylum builds must reflect the explicitly chosen optional pin');
+     check(await page.locator('#atlasBuilds .material-build-facts').first().textContent().then(t=>t.includes('NECONFIRMAT')),
+      'Optional pin may not masquerade as a measured or stock unit');
+    await page.locator('#atlasAir').selectOption('stock');
+    check(await page.locator('#atlasAir').inputValue()==='stock','Keep past unknown-size pin as an explicit alternative');
+    await page.locator('#atlasAir').selectOption('dual10');
+    const payload=await page.locator('#atlasBuilds [data-atlas-build]').first().getAttribute('data-atlas-build');
+    await page.locator('#atlasBuilds [data-atlas-build]').first().click();
+    check(await page.locator('#pageWire').isVisible(),'Atlas build must open Wire Lab');
+    check(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config))===JSON.stringify(JSON.parse(decodeURIComponent(payload))),'Atlas to Wire Lab must preserve exact build');
+    await page.locator('.bottom-tabs [data-route="atomizer"]').click();
+    check(await page.locator('#pageAtomizer').isVisible(),'Return to Atlas after handoff must work');
+   }
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Atlas horizontal overflow');
    await page.waitForFunction(()=>{const img=document.querySelector('.portrait-photo img');return img?.complete&&img.naturalWidth>0;});
    await shot(page,'atomizer-'+width+'.png');

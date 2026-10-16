@@ -5,7 +5,7 @@ const load=p=>vm.runInContext(fs.readFileSync(path.join('rta-lab',p),'utf8'),env
 for(const n of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+n);
 fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forEach(n=>load('data/'+n));
 load('atlas-preview/catalog.js');
-for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
+for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/liquid-picker.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
 const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
 assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),42);
 const original=JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]);
@@ -22,6 +22,82 @@ for(const id of Object.keys(m.inventory)){
    assert.ok(!/\d+\s*%/.test(a.compactBuild(result.result)),'Do not turn heuristics into percentages');
   }
  }
+}
+// Every platform must expose three complete, distinct, compatible material setups
+// BEFORE an explicit liquid selection. User-confirmed preference order cannot be randomized.
+for(const id of Object.keys(m.inventory)){
+ m.selectAtom(id);const top=m.buildLeads(id);
+ assert.equal(top.length,3,id+' must have exactly three top builds');
+ assert.equal(new Set(top.map(x=>x.config.wire)).size,3,id+' top builds must use distinct owned wire materials');
+ for(const lead of top){
+  assert.equal(lead.config.atom,id);
+  assert.ok(c.permitted(id,lead.config.wire,lead.config.wraps),id+' invalid wire/wraps');
+  assert.ok(c.platforms[id].air.some(x=>x.id===lead.config.air),'No fabricated AFC option on '+id);
+  assert.ok(['personal','model'].includes(lead.source));
+  const facts=m.buildFacts(lead.config);
+  for(const word of ['Coil','spire','Insert / aer','Clopot','Regim','Poziție'])
+   assert.ok(facts.includes(word),id+' must show '+word+' without liquid');
+  assert.ok(facts.includes(c.wires[lead.config.wire].type==='tc'?'TC':'WATT'));
+ }
+ assert.equal(JSON.stringify(top),JSON.stringify(m.buildLeads(id)),id+' should be deterministic');
+}
+const dvarwFlLead=(()=>{m.selectAtom('dvarwfl');return m.buildLeads('dvarwfl')[1]})();
+assert.equal(dvarwFlLead.config.wire,'ssclap','Keep SS Clapton/5 as dedicated FL specialist pairing');
+assert.equal(dvarwFlLead.config.wraps,5);
+assert.equal(dvarwFlLead.source,'model','Do not mislabel dedicated FL Clapton specialist as user-controlled A/B');
+const expectedPersonal={
+ "415":[['nife30',7],['nife52',6],['k128',6]],
+ gtr:[['nife30',7],['nife52',6],['k128',5]],
+ klp:[['nife30',6],['nife52',6],['k128',5]],
+ kprime:[['nife30',6],['nife52',6],['k129',5]],
+ kx:[['nife30',6],['nife52',6],['k128',5]],
+ gtone:[['k129',6],['k128',5]],muted:[['k128',6]],
+ dvarwcl:[['k128',6]],dvarwfl:[['k128',6]],
+ asylum:[['k128',6]],kv3:[['k128',6],['k129',6]]
+};
+for(const [id,expected] of Object.entries(expectedPersonal)){
+ const leads=m.buildLeads(id);
+ for(let i=0;i<expected.length;i++){
+  assert.equal(leads[i].config.wire,expected[i][0],id+' personal material precedence '+i);
+  assert.equal(leads[i].config.wraps,expected[i][1],id+' personal coil wraps '+i);
+  assert.equal(leads[i].source,'personal',id+' personal evidence tier');
+ }
+}
+m.selectAtom('asylum');
+const asylumConfig=m.state.config,asylumAir=c.platforms.asylum.air;
+assert.equal(asylumConfig.air,'dual10','Asylum included 2x1.0 pin is technical default, not claimed as mounted');
+assert.equal(asylumAir.find(x=>x.id==='dual10').holes.length,2);
+assert.equal(asylumAir.find(x=>x.id==='dual10').holes[0],1);
+const maybe08=asylumAir.find(x=>x.id==='dual08');
+assert.ok(maybe08&&maybe08.optional&&maybe08.estimated&&maybe08.unverifiedPersonal,
+ 'User-suspected Asylum 2x0.8 can be explored but NEVER claimed as a confirmed or included pin');
+assert.equal(maybe08.holes.length,2);
+assert.equal(maybe08.holes[0],0.8);
+assert.match(maybe08.label,/NECONFIRMAT/);
+assert.notEqual(asylumConfig.air,'dual08','Do not silently assign unverified personal airflow to a physical unit');
+assert.ok(m.buildFacts(asylumConfig).includes('2×1,0 mm'));
+assert.ok(a.renderCoil(asylumConfig).includes('2 canale'));
+assert.equal(m.setConfig({air:'dual08'}),true,'Asylum possible pin must be selectable in Atlas');
+assert.ok(m.buildFacts(m.state.config).includes('NECONFIRMAT'),'Unverified pin remains visibly marked as such');
+assert.equal(c.physical(m.state.config).air.holes[1],0.8);
+assert.equal(m.setConfig({air:'stock'}),true,'Keep prior unknown-pin model without assigning a false dimension');
+assert.equal(m.setConfig({air:'dual10'}),true);
+assert.equal(c.permitted('asylum','ssclap',5),false);
+assert.equal(c.analyze(c.defaultConfig('asylum'),{name:'Audit demo',class:'Tutun simplu'}).partialEvidence.length,1,'Retain historical Flat/28/6 as a partial personal report');
+assert.equal(c.analyze(c.config('asylum',{bell:'dome'}),{name:'Audit demo',class:'Tutun simplu'}).partialEvidence.length,0,'Do not leak Flat-specific report onto Dome');
+assert.equal(m.setConfig({bell:'dome'}),true);
+assert.equal(m.state.config.bell,'dome','Keep the currently selected editable Dome setup');
+assert.equal(m.buildLeads('asylum')[0].config.bell,'flat',
+ 'The personal Asylum Flat/K1 28/6 card must not silently turn into a claimed personal Dome setup');
+assert.ok(m.materialPaths().includes('Configurația ta selectată, în afara primelor trei'),
+ 'A separately selected Dome coil must remain available, not overwritten by the personal Flat card');
+m.selectAtom('asylum');
+
+for(const id of ['asylum','gtr','415','klp','gtone']){
+ m.selectAtom(id);const markup=m.materialPaths();
+ assert.equal((markup.match(/class="material-path"/g)||[]).length,3,'Three visible build cards on '+id);
+ assert.equal((markup.match(/class="material-build-facts"/g)||[]).length,3,'Facts in all three cards on '+id);
+ assert.equal((markup.match(/data-atlas-build=/g)||[]).length,3,'Each card transfers exact config on '+id);
 }
 m.selectAtom('klp');m.setConfig({wire:'nife30'});assert.equal(m.state.config.temp,220);assert.equal(m.state.config.power,16);
 m.setConfig({wire:'nife52'});assert.equal(m.state.config.temp,230);assert.equal(m.state.config.power,13);

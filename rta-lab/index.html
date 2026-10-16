@@ -9,7 +9,38 @@
 <meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0">
 <title>RTA MTL Build Lab</title><link rel="manifest" href="./manifest.webmanifest?v=10">
 <link rel="icon" href="./icon-192.png?v=10" type="image/png" sizes="192x192"><link rel="shortcut icon" href="./icon-192.png?v=10" type="image/png"><link rel="apple-touch-icon" href="./icon-192.png?v=10">
-<link rel="stylesheet" href="./styles.css?v=10"><link rel="stylesheet" href="./lab-update.css?v=10"><link rel="stylesheet" href="./bell-liquid.css?v=10"><link rel="stylesheet" href="./sensory-ui.css?v=10-cl-units-20261014"><link rel="stylesheet" href="./mood-match.css?v=11-mood-20261013"><link rel="stylesheet" href="./home-ui.css?v=10-home-20261013"></head><body>
+<link rel="stylesheet" href="./styles.css?v=10"><link rel="stylesheet" href="./lab-update.css?v=10"><link rel="stylesheet" href="./bell-liquid.css?v=10"><link rel="stylesheet" href="./sensory-ui.css?v=10-cl-units-20261014"><link rel="stylesheet" href="./mood-match.css?v=11-mood-20261013"><link rel="stylesheet" href="./home-ui.css?v=10-home-20261013">
+<style>
+html.rta-prelaunch body{visibility:hidden!important}
+html.rta-prelaunch{background:#070d12}
+html.rta-prelaunch::before{
+ content:"RTA · ATLAS";position:fixed;inset:0;z-index:9999;
+ display:grid;place-items:center;background:#070d12;
+ color:#d9bc86;font:600 18px system-ui,sans-serif;letter-spacing:.16em
+}
+</style>
+<script>
+/* Run before any V10 body is painted: legacy deep links still load V10. */
+(function(){
+ if(!/^https?:$/.test(location.protocol))return;
+ var params=new URLSearchParams(location.search),hash=location.hash.slice(1);
+ var atlasHash=['home','rtaHome','liquid','atomizer','wire','market','duel'];
+ if(params.get('view')==='v10'||(hash&&!atlasHash.includes(hash)))return;
+ document.documentElement.classList.add('rta-prelaunch');
+ var target=new URL('./atlas/',location.href);
+ target.search='?v=guided-20261015';
+ if(hash&&hash!=='rtaHome')target.hash=hash;
+ if(navigator.onLine!==false){location.replace(target.href);return;}
+ // Offline: show the classic app only when a working Atlas cache is absent.
+ function showLegacy(){document.documentElement.classList.remove('rta-prelaunch');}
+ if('caches' in window)caches.keys().then(function(keys){
+  if(keys.some(function(key){return key.startsWith('rta-atlas-release-');}))location.replace(target.href);
+  else showLegacy();
+ }).catch(showLegacy);
+ else showLegacy();
+})();
+</script>
+</head><body>
 <div class="top"><div class="topin"><div class="logo"></div><div class="brand"><h1>RTA MTL Build Lab</h1><div>620 TOBACCO / NET · PERSONAL</div></div><nav class="rt-top-shortcuts" aria-label="Navigare rapidă"><a href="#labTools">Instrumente ↓</a></nav></div></div>
 <main class="wrap">
 <section id="rtaHome" class="hero rt-home-hero" aria-labelledby="rtaHomeTitle">
@@ -138,5 +169,5 @@
 </details>
 </section>
 <div class="footer">RTA MTL Build Lab · V10 · 620 repere · 5 sârme active · personal · noindex</div></main>
-<script src="./data/atoms-1.js?v=10-415cool-20261015"></script><script src="./data/atoms-2.js?v=10-personal-20261014"></script><script src="./data/atoms-3.js?v=10"></script><script src="./data/wires.js?v=10-415cool-20261015-gtr-nife-20261015"></script><script src="./data/core.js?v=10"></script><script src="./data/liquids-1a.js?v=10"></script><script src="./data/liquids-1b.js?v=10"></script><script src="./data/liquids-2a.js?v=10"></script><script src="./data/liquids-2b.js?v=10"></script><script src="./data/liquids-3a.js?v=10"></script><script src="./data/liquids-3b.js?v=10"></script><script src="./data/liquids-4a.js?v=10"></script><script src="./data/liquids-4b.js?v=10"></script><script src="./data/liquids-5-tutun-simplu.js?v=10"></script><script src="./data/liquids-5-tutun-complex.js?v=10"></script><script src="./data/liquids-5-net-simplu.js?v=10"></script><script src="./data/liquids-5-net-complex.js?v=10"></script><script src="./data/liquids-6-hof-tutun-simplu.js?v=10"></script><script src="./data/liquids-6-hof-tutun-complex.js?v=10"></script><script src="./data/liquids-6-hof-net-simplu.js?v=10"></script><script src="./data/liquids-6-hof-net-complex.js?v=10"></script><script src="./engine.js?v=10-personal-20261014"></script><script src="./data/tuning-415.js?v=10-415cool-20261015"></script><script src="./data/personal-5wrap.js?v=10-415cool-20261015"></script><script src="./data/tc-platform-map.js?v=10-415cool-20261015"></script><script src="./data/tc-sixwrap-global.js?v=10-415cool-20261015"></script><script src="./data/clapton-platform-map.js?v=10-415cool-20261015"></script><script src="./data/bell-liquid-fit.js?v=10"></script><script src="./data/sensory-core.js?v=10-415cool-20261015"></script><script src="./bell-liquid-ui.js?v=10"></script><script src="./sensory-ui.js?v=10-cl-units-20261014"></script><script src="./mood-match.js?v=11-mood-20261013"></script><script src="./bootstrap.js?v=10-cl-units-20261014"></script><script src="./home-ui.js?v=10-home-20261013"></script>
+<script src="./data/atoms-1.js?v=10-415cool-20261015"></script><script src="./data/atoms-2.js?v=10-asylum-air-20261016-2"></script><script src="./data/atoms-3.js?v=10"></script><script src="./data/wires.js?v=10-415cool-20261015-gtr-nife-20261015"></script><script src="./data/core.js?v=10"></script><script src="./data/liquids-1a.js?v=10"></script><script src="./data/liquids-1b.js?v=10"></script><script src="./data/liquids-2a.js?v=10"></script><script src="./data/liquids-2b.js?v=10"></script><script src="./data/liquids-3a.js?v=10"></script><script src="./data/liquids-3b.js?v=10"></script><script src="./data/liquids-4a.js?v=10"></script><script src="./data/liquids-4b.js?v=10"></script><script src="./data/liquids-5-tutun-simplu.js?v=10"></script><script src="./data/liquids-5-tutun-complex.js?v=10"></script><script src="./data/liquids-5-net-simplu.js?v=10"></script><script src="./data/liquids-5-net-complex.js?v=10"></script><script src="./data/liquids-6-hof-tutun-simplu.js?v=10"></script><script src="./data/liquids-6-hof-tutun-complex.js?v=10"></script><script src="./data/liquids-6-hof-net-simplu.js?v=10"></script><script src="./data/liquids-6-hof-net-complex.js?v=10"></script><script src="./engine.js?v=10-personal-20261014"></script><script src="./data/tuning-415.js?v=10-415cool-20261015"></script><script src="./data/personal-5wrap.js?v=10-415cool-20261015"></script><script src="./data/tc-platform-map.js?v=10-415cool-20261015"></script><script src="./data/tc-sixwrap-global.js?v=10-415cool-20261015"></script><script src="./data/clapton-platform-map.js?v=10-415cool-20261015"></script><script src="./data/bell-liquid-fit.js?v=10"></script><script src="./data/sensory-core.js?v=10-asylum-air-20261016-2"></script><script src="./bell-liquid-ui.js?v=10"></script><script src="./sensory-ui.js?v=10-cl-units-20261014"></script><script src="./mood-match.js?v=11-mood-20261013"></script><script src="./bootstrap.js?v=10-cl-units-20261014"></script><script src="./home-ui.js?v=10-home-20261013"></script>
 </body></html>

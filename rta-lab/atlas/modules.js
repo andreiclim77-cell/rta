@@ -114,11 +114,76 @@ function compatibleWireAtoms(wire){return atoms.filter(a=>core.variants(a.id).so
 function wireConfig(id,wire){if(id===state.atom&&wire===state.config.wire)return {...state.config};const base=id===state.atom?state.config:core.defaultConfig(id),variants=core.variants(id).filter(v=>v.wire===wire),v=((id==='gtr'||id==='415')&&wire==='nife30'?variants.find(v=>v.wraps===7):id==='415'&&wire==='k128'?variants.find(v=>v.wraps===6):variants.find(v=>v.wraps===base.wraps))||variants[0];return v?core.config(id,{...base,...v,...core.wireSetup(id,wire)}):null;}
 function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?'Control de temperatură · '+(wire==='nife30'?'NiFe30 / TCR320':'NiFe52 / TCR310')+' · preseturi proprii fiecărei platforme.':w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
 function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objective).map((r,i)=>'<button type="button" data-journey-liquid="'+r.index+'" data-journey-wire="'+cfg.wire+'" data-journey-atom="'+cfg.atom+'"><span>0'+(i+1)+'</span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('');}
-function materialPaths(){
- const variants=core.variants(state.atom),seen=new Set(),ranked=hasLiquid()?core.rankBuilds(state.atom,liquid(),state.objective,{bell:state.config.bell,air:state.config.air,coilMm:state.config.coilMm,position:state.config.position}):[],ids=[state.config.wire,...ranked.map(r=>r.config.wire),...variants.map(v=>v.wire)].filter(id=>{if(seen.has(id))return false;seen.add(id);return true;}).slice(0,3);
- const builds=ids.map(id=>core.analyze(wireConfig(state.atom,id),liquid(),state.objective));
- return '<section class="module-section material-paths"><span class="eyebrow">TREI DIRECȚII COMPATIBILE</span><h2>Trei sârme. Trei feluri de a-l explora.</h2><p class="module-note">'+(hasLiquid()?'Descrieri și comparație pentru '+esc(liquid().name)+'.':'Piste de pornire compatibile, fără un clasament pe un lichid presupus. Alege un lichid pentru descrierea senzorială.')+'</p><div class="material-path-grid">'+builds.map((b,i)=>'<article class="material-path"><span class="eyebrow">0'+(i+1)+' / '+esc(core.wires[b.config.wire].mode)+'</span><h3>'+esc(core.wires[b.config.wire].name)+'</h3><div class="material-schematic">'+api.renderCoil(b.config)+'</div><p>'+esc(wireIdentity(b.config.wire))+'</p>'+(hasLiquid()?'<p>'+esc(api.vapeDescription(b,liquid()))+'</p><p class="module-note"><b>Accent:</b> '+esc(b.advantages.slice(0,2).join(' · '))+'<br><b>Compromis:</b> '+esc(b.tradeoffs[0]||'Echilibrul trebuie verificat practic.')+'</p>':'')+'<button type="button" class="module-link" data-journey-wire="'+b.config.wire+'">Reglează în Wire Lab ↗</button><details class="wire-liquid-links"><summary>5 lichide potrivite cu acest build</summary><div class="journey-liquid-list">'+liquidButtons(b.config)+'</div><p class="module-note">Din cele '+catalog.length+', potrivire calculată pentru build și obiectiv; nu cinci teste personale.</p></details></article>').join('')+'</div>'+(hasLiquid()?api.comparisonGraphic(builds.map(b=>({label:core.wires[b.config.wire].name,result:b})),'Cum se deosebesc cele trei sârme'):'')+'</section>';
+
+/* The platform's own confirmed personal choices come first; remaining materials
+ * are computed from the existing engine for the current atomizer/goal/context.
+ * Distinct wires mean distinct physical materials, including both NiFe alloys. */
+const PERSONAL_LEADS=Object.freeze({
+ "415":[["nife30",7],["nife52",6],["k128",6]],
+ gtr:[["nife30",7],["nife52",6],["k128",5]],
+ klp:[["nife30",6],["nife52",6],["k128",5]],
+ kprime:[["nife30",6],["nife52",6],["k129",5]],
+ kx:[["nife30",6],["nife52",6],["k128",5]],
+ gtone:[["k129",6],["k128",5]],muted:[["k128",6]],
+ dvarwcl:[["k128",6,"triple06"]],
+ dvarwfl:[["k128",6,"triple06"]],
+ asylum:[["k128",6,undefined,"flat"]],kv3:[["k128",6],["k129",6]]
+});
+const PLATFORM_TECHNICAL_LEADS=Object.freeze({
+ dvarwfl:[["ssclap",5,"single12"]] // dedicated specialist pairing, not a controlled personal A/B.
+});
+function buildLeads(id=state.atom){
+ const base=id===state.atom?state.config:core.defaultConfig(id),out=[],used=new Set();
+ if(!base)return [];
+ function add(wire,wraps,air,source,bell){
+  if(!core.wires[wire]||used.has(wire)||!core.permitted(id,wire,wraps))return;
+  const cfg=core.config(id,{...base,wire,wraps,air:air||base.air,bell:bell||base.bell,...core.wireSetup(id,wire)});
+  if(cfg.wire!==wire||cfg.wraps!==wraps)return;
+  used.add(wire);out.push({config:cfg,source});
+ }
+ for(const [wire,wraps,air,bell] of PERSONAL_LEADS[id]||[])add(wire,wraps,air,"personal",bell);
+ for(const [wire,wraps,air] of PLATFORM_TECHNICAL_LEADS[id]||[])add(wire,wraps,air,"model");
+ const profile=hasLiquid()?liquid():{name:"Profil tehnic neutru",class:"Tutun simplu",tags:[]};
+ for(const item of core.rankBuilds(id,profile,hasLiquid()?state.objective:"complete",{
+  bell:base.bell,air:base.air,coilMm:base.coilMm,position:base.position
+ })){
+  if(out.length===3)break;
+  add(item.config.wire,item.config.wraps,null,"model");
+ }
+ return out.slice(0,3);
 }
+function buildFacts(config){
+ const w=core.wires[config.wire],a=core.platforms[config.atom].air.find(x=>x.id===config.air);
+ const bell=fit.config(config.atom)?.bells?.find(x=>x.id===config.bell);
+ const energy=w.type==="tc"?"TC "+config.temp+"°C (setare) · plafon "+config.power+" W":"WATT "+config.power+" W (preset)";
+ const facts=[["Coil",config.wraps+" spire · Ø"+String(config.coilMm).replace(".",",")+" mm"],
+  ["Insert / aer",a?.label||"Necunoscut"],["Clopot",bell?.name||"Original"],
+  ["Regim",energy],["Poziție",{low:"Jos",standard:"Standard",high:"Sus"}[config.position]||"Standard"]];
+ return '<dl class="material-build-facts">'+facts.map(([key,val])=>
+  '<div><dt>'+esc(key)+'</dt><dd>'+esc(val)+'</dd></div>').join("")+"</dl>";
+}
+function materialPaths(){
+ const leads=buildLeads(),chosen=state.config,profile=liquid();
+ const isCurrent=leads.some(({config})=>["wire","wraps","air","bell","coilMm","position","power","temp"].every(k=>config[k]===chosen[k]));
+ return '<section class="module-section material-paths" id="atlasBuilds">'+
+ '<span class="eyebrow">MATERIALELE TALE / CONSTRUCȚII COMPLETE</span><h2>Primele trei builduri pentru acest atomizor.</h2>'+
+ '<p class="module-note">Prioritate pentru configurațiile tale confirmate. Unde nu sunt trei preferințe stabilite, motorul completează cu propuneri tehnice potrivite platformei. Nicio propunere netestată nu este prezentată drept test personal. Setările W/TC sunt preseturi când nu avem măsurători.</p>'+
+ '<div class="material-path-grid">'+leads.map(({config,source},i)=>{
+  const r=core.analyze(config,profile,state.objective),w=core.wires[config.wire];
+  return '<article class="material-path" data-build-wire="'+esc(config.wire)+'" data-build-wraps="'+config.wraps+'" data-build-air="'+esc(config.air)+'">'+
+  '<span class="eyebrow">0'+(i+1)+' · '+(source==="personal"&&state.atom==='asylum'?"PREFERINȚĂ PERSONALĂ DE COIL/CLOPOT · PIN NECONFIRMAT":source==="personal"?"PREFERINȚĂ PERSONALĂ":"PROPUNERE TEHNICĂ")+' · '+esc(w.mode)+'</span>'+
+  '<h3>'+esc(w.name)+'</h3><div class="material-schematic">'+api.renderCoil(config)+'</div>'+
+  buildFacts(config)+
+  '<p class="module-note">'+esc(source==="personal"?"Montaj sau prioritate declarată de tine; detaliile A/B și limitele probelor rămân în fișa tehnică.":"Alegere estimată din modelul platformei și obiectiv; nu un A/B efectuat de tine.")+'</p>'+
+  (hasLiquid()?'<p>'+esc(api.vapeDescription(r,profile))+'</p><p class="module-note"><b>Accent:</b> '+esc(r.advantages.slice(0,2).join(" · "))+' · <b>Compromis:</b> '+esc(r.tradeoffs[0]||"Verifică practic")+'</p>':'<p class="module-note">Alege un lichid doar pentru evaluarea senzorială; configurația completă este deja afișată.</p>')+
+  '<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(config)))+'">Deschide buildul exact în Wire Lab ↗</button>'+
+  '<details class="wire-liquid-links"><summary>5 lichide potrivite cu acest build</summary><div class="journey-liquid-list">'+liquidButtons(config)+'</div><p class="module-note">Potriviri calculate dintre cele '+catalog.length+' de lichide; nu teste personale.</p></details></article>';
+ }).join("")+'</div>'+
+ (!isCurrent?'<div class="material-current"><strong>Configurația ta selectată, în afara primelor trei</strong>'+buildFacts(chosen)+'<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(chosen)))+'">Deschide configurația selectată ↗</button></div>':'')+
+ (hasLiquid()?api.comparisonGraphic(leads.map(({config})=>({label:core.wires[config.wire].name+" / "+config.wraps+" spire",result:core.analyze(config,profile,state.objective)})),"Comparație pe același lichid"):"")+
+ '<p class="module-note">Alte materiale, spire, inserturi și alternative validate sunt disponibile în Wire Lab, fără rescrierea fișelor unităților fizice.</p></section>';
+}
+
 function wirePalette(){return '<div class="wire-family-grid">'+Object.entries(core.wires).map(([id,w])=>'<button type="button" class="wire-family-card" data-wire-family="'+id+'"><span class="eyebrow">'+esc(w.mode)+'</span><b>'+esc(w.name)+'</b><span class="material-schematic">'+(id==='nife30'?'<img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30 — fotografie de produs, ambalaj de referință" loading="lazy" width="500" height="333">':api.renderCoil(wireConfig('gtr',id)))+'</span><small>'+esc(wireIdentity(id))+'</small><span>Alege această sârmă ↗</span></button>').join('')+'</div>';}
 function platformReaction(id){if(!hasLiquid())return '<p class="module-note">Alege lichidul comun pentru descrierea reacției senzoriale. Poți vedea și cele cinci potriviri ale acestui build.</p>';const r=core.analyze(wireConfig(id,state.config.wire),liquid(),state.objective);return '<p>'+esc(api.vapeDescription(r,liquid()))+'</p><div class="platform-mini-dna">'+[['spectrum','Spectru'],['palate','Palat'],['harmony','Armonie']].map(([key,label])=>'<span><b>'+label+'</b><i style="--signal:'+r.signals[key]*20+'%" role="img" aria-label="'+esc(label+' · '+r.signals[key]+' indicator intern, nu măsurătoare')+'"></i></span>').join('')+'</div>';}
 function wirePlatforms(){const rows=compatibleWireAtoms(state.config.wire);return '<details class="wire-compatible"'+(state.wirePlatformChosen?'':' open')+'><summary>'+rows.length+' atomizoare compatibile · '+(state.wirePlatformChosen?'schimbă atomizorul':'alege unul pentru experiența detaliată')+'</summary><p class="module-note">Compatibilitate din configurațiile permise ale Lab, nu recomandare universală de montaj. Nu sunt omise platformele compatibile.</p><div class="wire-platform-grid">'+rows.map(a=>'<article class="wire-platform-card"><div class="wire-platform-photo">'+api.renderProductPhoto(a)+'</div><h3>'+esc(a.short)+'</h3><p>'+esc(core.platforms[a.id].note)+'</p>'+platformReaction(a.id)+'<button type="button" class="module-link" data-wire-platform="'+a.id+'">Alege '+esc(a.short)+'</button><details data-wire-liquids="'+a.id+'"><summary>Vezi lichidele potrivite</summary><div class="journey-liquid-list"></div></details></article>').join('')+'</div></details>';}
@@ -128,9 +193,9 @@ function renderAtomizer(){
  const model=contextual();if(!model)return;
  const categories=fit.analyze(model.atom,state.config.bell,catalog).classes;
  el('pageAtomizer').innerHTML=heading('03 / COLLECTION DNA','Atomizer Atlas.','16 identități. 42 de exemplare. Un rezultat potrivit contextului tău.')+workflow(['Atomizor · sârmă · obiectiv','Top 5 · alege lichidul','Builduri · continuă în Wire'])+contextBar()+
- '<div class="module-filters platform-picker">'+select('Alege platforma','atlasPlatform',atoms.map(a=>[a.id,a.short]),state.atom)+select('Material / aliaj','atlasWire',Object.entries(core.wires).filter(([id])=>core.variants(state.atom).some(v=>v.wire===id)).map(([id,w])=>[id,w.name]),state.config.wire)+select('Obiectiv','atlasObjective',objectives,state.objective)+'</div>'+ 
+ '<div class="module-filters platform-picker">'+select('Alege platforma','atlasPlatform',atoms.map(a=>[a.id,a.short]),state.atom)+select('Material / aliaj','atlasWire',Object.entries(core.wires).filter(([id])=>core.variants(state.atom).some(v=>v.wire===id)).map(([id,w])=>[id,w.name]),state.config.wire)+select('Obiectiv','atlasObjective',objectives,state.objective)+select('Insert / aer','atlasAir',core.platforms[state.atom].air.map(a=>[a.id,a.label]),state.config.air)+'</div>'+materialPaths()+ 
  '<div class="atlas-detail"><div class="atlas-portrait"><div class="portrait-photo">'+api.renderProductPhoto(model.atom)+'</div><span class="eyebrow">'+inventory[state.atom]+' EXEMPLARE / '+esc(patternLabel(state.atom))+'</span><h2>'+esc(model.atom.short)+'</h2><p>'+esc(core.platforms[state.atom].note)+'</p><button type="button" class="match-button" data-edit-wire>Reglează configurația în Wire Lab ↗</button></div><div><span class="eyebrow">SENSORY DNA / CONTEXTUAL</span>'+metricPanel(model.result)+method(model.result)+'</div></div>'+
- materialPaths()+window.RTA_ATLAS_SEARCH_UI.render('atlas')+topLiquids('atlas')+'<section class="module-section" data-requires-liquid><div class="section-heading"><span class="eyebrow">BEST + ALTERNATIVE / '+esc(liquid().name)+'</span><h2>Trei builduri pentru acest context.</h2></div><div class="detail-grid">'+model.builds.map((b,i)=>api.renderBuild(b,i+1,liquid())).join('')+'</div>'+watchPanel(model.builds)+'</section>'+
+ window.RTA_ATLAS_SEARCH_UI.render('atlas')+topLiquids('atlas')+'<section class="module-section" data-requires-liquid><div class="section-heading"><span class="eyebrow">BEST + ALTERNATIVE / '+esc(liquid().name)+'</span><h2>Trei builduri pentru acest context.</h2></div><div class="detail-grid">'+model.builds.map((b,i)=>api.renderBuild(b,i+1,liquid())).join('')+'</div>'+watchPanel(model.builds)+'</section>'+
  '<section class="module-section"><h2>Lichide și cameră.</h2><p class="module-note">Afinitate orientativă pentru clopotul ales; nu reprezintă testarea fiecărui lichid.</p><div class="family-tags">'+categories.map(c=>'<span>'+esc(c.name)+'</span>').join('')+'</div><button type="button" class="module-link" data-show-liquids>Explorează toate cele '+catalog.length+' de lichide</button><div id="platformLiquids"></div></section>'+physicalUnits(state.atom)+
  '<section class="module-section"><h2>Colecția.</h2><div class="module-filters"><label>Caută o platformă<input id="atlasSearch" type="search" value="'+esc(state.query)+'" placeholder="Nume, airflow, caracter"></label>'+select('Familie de lichide','atlasCategory',[['all','Toate familiile'],...fit.classes.map(c=>[c,c])],state.category)+'</div><div id="atlasCatalog">'+catalogCards()+'</div></section>';
 }
@@ -148,7 +213,7 @@ function renderWire(){
  el('pageWire').innerHTML=heading('04 / WIRE ANATOMY','Wire Lab.','Cinci familii, două aliaje NiFe distincte. Geometrie explicată, caracter contextual.')+workflow(['Alege sârma','Toate atomizoarele compatibile','Experiență · lichide · comparații'])+contextBar()+
  '<div class="wire-controls wire-picker">'+select('1 · Alege sârma','wireMaterial',[['','Alege sârma...'],...Object.entries(core.wires).map(([id,w])=>[id,w.name])],state.wireChosen?state.config.wire:'')+select('2 · Alege atomizorul','wireAtom',[['','Alege dintre cele compatibile'],...(state.wireChosen?compatibleWireAtoms(state.config.wire).map(a=>[a.id,a.short]):[])],state.wirePlatformChosen?state.atom:'')+select('Obiectiv','wireObjective',objectives,state.objective)+'</div>'+(state.wireChosen?window.RTA_ATLAS_SEARCH_UI.render('wire')+wirePlatforms():wirePalette())+
  '<div class="wire-selected-experience"'+(state.wirePlatformChosen?'':' hidden')+'>'+(hasLiquid()?'<div class="module-next-actions"><button type="button" class="module-link" data-route="liquid">Vezi și celelalte atomizoare pentru acest lichid ↗</button><button type="button" class="module-link" data-route="atomizer">Explorează acest atomizor în Atlas ↗</button></div>':'')+
- '<div class="wire-workspace"><div class="wire-stage"><span class="eyebrow">'+esc(w.mode)+' / '+esc(name(state.atom))+'</span><h2>'+esc(w.name)+'</h2><div class="coil-stage">'+api.renderCoil(state.config)+'</div><div class="geometry-readout"><span><b>'+phys.widthMm+' mm</b>lățime estimată coil</span><span><b>'+esc(phys.areaMm2==null?'nefixată':phys.areaMm2+' mm²')+'</b>arie nominală aer</span></div><p class="module-note">Schemă explicativă. Aria orificiilor nu este debit; lățimea coilului este o aproximație geometrică.</p><p class="wire-identity">'+esc(state.atom==='gtr'&&w.type==='tc'?'GTR: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt la egalitate ca preferință. NiFe30/6 funcționează și rămâne selectabil; noul 7 este mai coerent în testul personal, fără dovadă de cauzalitate izolată.':state.atom==='klp'&&w.type==='tc'?'KLP: Dicodes NiFe30 și Zivipf NiFe52 sunt ambele preferințe personale de prim nivel. Reglajul DNA 220°C/16 W este raportat numai pentru Dicodes.':w.type==='tc'?'TC: Dicodes NiFe30 TCR320 și Zivipf NiFe52 TCR310 sunt materiale distincte, cu 6 spire în baseline general (excepție GTR NiFe30/7).':'Buildurile urmează permisiunile și observațiile canonice ale platformei.')+'</p>'+(!window.RTA_ATLAS_DUEL?.state.editing?'<button type="button" class="match-button" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(state.config)))+'">Compară această configurație în Duel ↗</button>':'')+'</div><section class="wire-panel">'+controls()+'</section></div>'+
+ '<div class="wire-workspace"><div class="wire-stage"><span class="eyebrow">'+esc(w.mode)+' / '+esc(name(state.atom))+'</span><h2>'+esc(w.name)+'</h2><div class="coil-stage">'+api.renderCoil(state.config)+'</div><div class="geometry-readout"><span><b>'+phys.widthMm+' mm</b>lățime estimată coil</span><span><b>'+esc(phys.areaMm2==null?'nefixată':phys.areaMm2+' mm²')+'</b>arie nominală aer</span></div><p class="module-note">Schemă explicativă. Aria orificiilor nu este debit; lățimea coilului este o aproximație geometrică.</p><p class="wire-identity">'+esc(state.atom==='gtr'&&w.type==='tc'?'GTR: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt la egalitate ca preferință. NiFe30/6 funcționează și rămâne selectabil; noul 7 este mai coerent în testul personal, fără dovadă de cauzalitate izolată.':state.atom==='415'&&w.type==='tc'?'415 Cool: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt primele alegeri personale, apoi K1 28 GA / 6 spire. Reglajele TC observate pe GTR nu se transferă pe 415.':state.atom==='klp'&&w.type==='tc'?'KLP: Dicodes NiFe30 și Zivipf NiFe52 sunt ambele preferințe personale de prim nivel. Reglajul DNA 220°C/16 W este raportat numai pentru Dicodes.':w.type==='tc'?'TC: Dicodes NiFe30 TCR320 și Zivipf NiFe52 TCR310 sunt aliaje distincte, cu 6 spire în baseline general; excepțiile personale NiFe30/7 sunt GTR și 415 Cool.':'Buildurile urmează permisiunile și observațiile canonice ale platformei.')+'</p>'+(!window.RTA_ATLAS_DUEL?.state.editing?'<button type="button" class="match-button" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(state.config)))+'">Compară această configurație în Duel ↗</button>':'')+'</div><section class="wire-panel">'+controls()+'</section></div>'+
  (state.config.wire==='nife30'?'<figure class="wire-product-photo"><img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30: rolă cu eticheta 320 și 5,5 Ω/m, lângă ambalajul metalic de referință" loading="lazy" decoding="async" width="500" height="333"><figcaption><span class="eyebrow">MATERIAL ÎN PRIM-PLAN / FOTO REALĂ</span><h2>Dicodes RESISTHERM NiFe30.</h2><p>Fotografie de produs, nu a rolei personale. Ambalaj de referință; sursa menționează că lotul actual este livrat fără cutia metalică.</p><a href="https://www.vapesbyenushi.com/dicodes-resistherm-nife30-temperature-control-resistance-wire/" target="_blank" rel="noopener noreferrer">Foto: Vapes by Enushi / Dicodes ↗</a></figcaption></figure>':'')+
  '<section class="module-section" data-requires-liquid><h2>Ce oferă această configurație.</h2>'+metricPanel(m.result)+'<div class="gain-trade"><div><h3>Avantaje orientative</h3><ul>'+m.result.advantages.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><h3>Compromisuri</h3><ul>'+m.result.tradeoffs.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+method(m.result)+'</section>'+
  topLiquids('wire')+compareWirePlatforms()+'<section class="module-section" data-requires-liquid><h2>Alte trei configurații pentru comparație.</h2><div class="detail-grid">'+m.builds.map((b,i)=>'<div>'+api.renderBuild(b,i+1,liquid())+'<button type="button" class="module-link" data-pick-build="'+i+'">Explorează acest build</button></div>').join('')+'</div>'+watchPanel(m.builds)+api.comparisonGraphic(m.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+b.config.wraps+' spire',result:b})),'Trei experiențe pe același atomizor')+'</section></div>';
@@ -170,12 +235,12 @@ function init(){
   card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();api.route(card.dataset.route);}});
  });
  document.addEventListener('click',e=>{
-  const target=e.target.closest?.('[data-platform],[data-edit-wire],[data-show-liquids],[data-atlas-liquid],[data-context-liquid],[data-pick-build],[data-wire-open],[data-journey-wire],[data-wire-platform],[data-wire-family]');if(!target)return;
+  const target=e.target.closest?.('[data-platform],[data-edit-wire],[data-show-liquids],[data-atlas-liquid],[data-context-liquid],[data-pick-build],[data-wire-open],[data-atlas-build],[data-journey-wire],[data-wire-platform],[data-wire-family]');if(!target)return;
   const d=target.dataset;
   if(d.wireFamily){const rows=compatibleWireAtoms(d.wireFamily),keepPlatform=state.wirePlatformChosen&&rows.some(a=>a.id===state.atom),cfg=wireConfig(rows.some(a=>a.id===state.atom)?state.atom:rows[0].id,d.wireFamily);state.wireChosen=true;state.wirePlatformChosen=keepPlatform;state.atom=cfg.atom;state.config=cfg;renderWire();el("pageWire").scrollIntoView({block:"start",behavior:"instant"});return;}
   if(d.wirePlatform){const cfg=wireConfig(d.wirePlatform,state.config.wire);if(cfg){state.atom=cfg.atom;state.config=cfg;state.wireChosen=true;state.wirePlatformChosen=true;renderWire();el("pageWire").scrollIntoView({block:"start",behavior:"instant"});}return;}
   if(d.journeyWire){const id=d.journeyAtom||state.atom,cfg=wireConfig(id,d.journeyWire);if(cfg){state.atom=id;state.config=cfg;state.wireChosen=true;state.wirePlatformChosen=true;if(d.journeyLiquid!=null)api.selectLiquid(Number(d.journeyLiquid));if(d.journeyLiquid==null)api.route('wire');else if(api.state.route==='atomizer')renderAtomizer();else renderWire();}return;}
-  if(d.wireOpen!=null){try{const cfg=window.RTA_ATLAS_DUEL.valid(JSON.parse(decodeURIComponent(d.wireOpen)));if(cfg){state.wireChosen=true;state.wirePlatformChosen=true;state.atom=cfg.atom;state.config={...cfg};api.state.selectedFullBuild={...cfg};window.RTA_ATLAS_DUEL.state.editing=null;api.route('wire');}}catch(error){}return;}
+  if(d.wireOpen!=null||d.atlasBuild!=null){try{const raw=JSON.parse(decodeURIComponent(d.atlasBuild??d.wireOpen)),cfg=window.RTA_ATLAS_DUEL.valid(raw);if(cfg){state.wireChosen=true;state.wirePlatformChosen=true;state.atom=cfg.atom;state.config={...cfg};api.state.selectedFullBuild={...cfg};window.RTA_ATLAS_DUEL.state.editing=null;api.route('wire');}}catch(error){}return;}
 
   if(d.platform){selectAtom(d.platform);renderAtomizer();el('pageAtomizer').scrollIntoView({block:'start',behavior:'instant'});}
   if(d.editWire!=null){state.wireChosen=true;state.wirePlatformChosen=true;api.route('wire');}
@@ -194,6 +259,7 @@ function init(){
   if(id==='atlasCategory'){state.category=value;renderCatalog();return;}
   if(id==='atlasPlatform'){selectAtom(value);state.wirePlatformChosen=true;renderAtomizer();el(id).focus({preventScroll:true});return;}
   if(id==='atlasWire'){setConfig({wire:value});state.wireChosen=true;state.wirePlatformChosen=true;renderAtomizer();el(id).focus({preventScroll:true});return;}
+  if(id==='atlasAir'){setConfig({air:value});renderAtomizer();el(id).focus({preventScroll:true});return;}
   if(id==='wireAtom'){const cfg=wireConfig(value,state.config.wire);if(cfg){state.atom=cfg.atom;state.config=cfg;state.wireChosen=true;state.wirePlatformChosen=true;renderWire();}return;}
   if(id==='wireMaterial'){if(!core.wires[value])return;state.wireChosen=true;const rows=compatibleWireAtoms(value),cfg=wireConfig(rows.some(a=>a.id===state.atom)?state.atom:rows[0]?.id,value);if(cfg){if(cfg.atom!==state.atom)state.wirePlatformChosen=false;state.atom=cfg.atom;state.config=cfg;renderWire();}return;}
   if(id==='wireObjective'||id==='atlasObjective'){
@@ -209,6 +275,6 @@ function init(){
  document.addEventListener('toggle',e=>{const id=e.target.dataset?.wireLiquids;if(id&&e.target.open){const cfg=wireConfig(id,state.config.wire);e.target.querySelector('.journey-liquid-list').innerHTML=liquidButtons(cfg);}},true);
  const route=window.location.hash.slice(1);if(['atomizer','wire'].includes(route))api.route(route,false);
 }
-window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig};
+window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,buildFacts,materialPaths};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();
