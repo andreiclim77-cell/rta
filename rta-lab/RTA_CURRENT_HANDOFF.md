@@ -1,5 +1,18 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+## RTA ATLAS — MOBILE FIT PR #58 (16.10.2026 · ÎN VERIFICARE)
+
+Utilizatorul a raportat că pe telefon multe elemente din noul Lab nu se încadrează și nu se pot vedea integral. Corecția este pregătită în [PR #58](https://github.com/andreiclim77-cell/rta/pull/58); nu afirma publicare înainte de trei gate-uri verzi pe ultimul SHA și confirmarea Pages.
+
+- Desktop păstrează tabelele cu toate axele 1–10; mobilul arată 14 carduri de obiective, fiecare conținând toate sârmele/atomizoarele și scorurile integral, fără derulare orizontală ascunsă.
+- Liquid Match: starea și momentul în grilă care arată toate opțiunile; trei pași de introducere pe un rând, fără a împinge Liquid Cinema în afara primei porțiuni a ecranului; pe font mare pașii se extind vertical.
+- Navigare jos: trei coloane vizibile (două rânduri), butoane mai mari; selectoare ATLAS într-o coloană la lățimi sub 430px; carduri de rezultat pe întreaga lățime. Etichetele pot ocupa mai multe rânduri.
+- Analiză locală efectivă în Chromium: 320/360/390/412/430/768/1440 px și text minim mărit 24px, toate cele trei fluxuri, fără text tăiat sau lipsă din grafice, pagină fără overflow; fotografiile remote/Android Samsung real rămân de confirmat pe dispozitiv.
+- Regression test nou: `tools/check-rta-atlas-mobile-fit-visual.js`, plus test model, integrate în Quality/Visual. Fișiere sursă noi/modificate: `rta-lab/atlas-preview/mobile-fit.css`, `decision-explorer.js`, `index.html`; release/cache Atlas regenerate determinist. Workflow-ul temporar de generare a fost eliminat înainte de merge.
+- Protecții: motorul Sensory DNA, Atlas 700, V10 620, 16 platforme/42 unități, Asylum V3, trei CL saved/draft, Liquid Match 3×3, Market/Duel și toate configurațiile validate rămân neschimbate.
+- Următorul pas: verifică run-urile pe SHA final, inspectează capturile CI, integrează numai după SUCCESS, apoi confirmă Pages și actualizează MASTER/HANDOFF/BLUEPRINT + ZIP Biblioteca `/RTA_Lab/RTA_CONTINUITATE_CURENTA.zip` cu verificare reală.
+
+
 
 ## FLUX NOU RTA LAB — SÂRME, ATLAS ȘI LICHIDE (16.10.2026 · PUBLICAT ȘI VERIFICAT)
 
