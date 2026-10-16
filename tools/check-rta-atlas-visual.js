@@ -112,6 +112,8 @@ async function main(){
    await screenshot(page,"scene-best-in-view-"+width+".png");
    await page.locator("#chooseTitle").scrollIntoViewIfNeeded();
    await page.locator("#liquidSearch").fill("Balkan");
+   // The new required four-category chooser precedes search; capture the focused search, not the old title position.
+   await page.locator("#liquidSearch").evaluate(el=>window.scrollBy({top:el.getBoundingClientRect().top-110,behavior:"instant"}));
    await page.waitForTimeout(350);
    const suggestions=await page.locator("#liquidSuggestions [role=option]").count();
    check(suggestions>=2,"Keyboard search fixture needs at least two Balkan catalog entries");
