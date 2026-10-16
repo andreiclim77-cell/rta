@@ -75,10 +75,10 @@ const PLATFORMS={
  AIR("open","AEROKON reglaj deschis","aerokon",null,1.70)],
  traits:{spectrum:4.65,simultaneity:4.8,focus:4.3,palate:4.75,offense:4.45,th:4.55,harmony:4.7},note:"Spectru bogat și simultan pe 28/5, confirmat personal."},
  asylum:{pattern:"multipoint",volume:"compact-mediu",air:[
- AIR("dual10","Air-pin 2×1,0 mm (inclus, folosit personal)","multipoint",[1,1],1.75),
+ AIR("dual10","Air-pin 2×1,0 mm (inclus în kit; montaj personal de confirmat)","multipoint",[1,1],1.75),
  AIR("stock","Alt air-pin / montaj anterior (diametru neconfirmat)","single",null,1.5,{estimated:true})],
  traits:{spectrum:4.55,simultaneity:4.3,focus:4.2,palate:4.4,offense:4.25,th:4.15,harmony:4.35},
- note:"Asylum V3: utilizatorul confirmă air-pinul 2×1,0 mm inclus. Reglajul AFC de 0,8 mm este separat de geometria pinului; nu inventa 2×0,8 mm. Nu atribui automat aceeași montare ambelor exemplare."},
+ note:"Asylum V3: pinul 2×1,0 mm este documentat printre piesele incluse; utilizatorul a menționat cu incertitudine 2×0,8 mm, dar dimensiunea pinului fizic montat nu este confirmată. Valoarea 0,8 mm poate desemna AFC-ul extern, separat. Nu atribui automat acest pin ambelor exemplare."},
  pmfree:{pattern:"diverter",volume:"mediu",air:[
  AIR("pin12","Diverter 32×0,9 + pin 1,2 mm","diverter",[1.2],2.1),
  AIR("pin08","Diverter 32×0,9 + pin 0,8 mm","diverter",[.8],1.85)],
@@ -286,7 +286,7 @@ const OBS=[
   text:"Pereche pentru claritate, top-notes, layering, fără A/B pe toate lichidele.",
   patch:{separation:4.85},affinity:"dedicat · contextual",evidence:"hartă platformă Lab"},
  {atom:"asylum",wire:"k128",wraps:6,bell:"flat",partial:true,title:"Asylum Flat 28/6 validat",
-  text:"K1 28 GA / 6 spire cu clopot Flat este preferință personală confirmată. Utilizatorul folosește air-pin 2×1,0 mm, dar dimensiunea exactă din testul anterior Flat/28/6 nu a fost înregistrată; nu pretinde un A/B controlat între air-pinuri.",
+  text:"K1 28 GA / 6 spire cu clopot Flat este preferință personală confirmată. Pinul 2×1,0 mm este documentat pentru model, dar utilizatorul nu a confirmat încă ce pin este montat; dimensiunea exactă din testul anterior Flat/28/6 nu a fost înregistrată; nu pretinde un A/B controlat între air-pinuri.",
   affinity:"Flat + K1 28/6 apreciat personal",evidence:"observație personală; pinul exact al testului istoric neprecizat"},
  {atom:"kv3",wire:"k128",wraps:6,title:"Mini V3 K1 28/6",
   text:"Excepție de 6 spire validată practic.",
