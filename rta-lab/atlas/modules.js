@@ -127,7 +127,7 @@ const PERSONAL_LEADS=Object.freeze({
  gtone:[["k129",6],["k128",5]],muted:[["k128",6]],
  dvarwcl:[["k128",6,"triple06"]],
  dvarwfl:[["k128",6,"triple06"]],
- asylum:[["k128",6]],kv3:[["k128",6],["k129",6]]
+ asylum:[["k128",6,undefined,"flat"]],kv3:[["k128",6],["k129",6]]
 });
 const PLATFORM_TECHNICAL_LEADS=Object.freeze({
  dvarwfl:[["ssclap",5,"single12"]] // dedicated specialist pairing, not a controlled personal A/B.
@@ -135,13 +135,13 @@ const PLATFORM_TECHNICAL_LEADS=Object.freeze({
 function buildLeads(id=state.atom){
  const base=id===state.atom?state.config:core.defaultConfig(id),out=[],used=new Set();
  if(!base)return [];
- function add(wire,wraps,air,source){
+ function add(wire,wraps,air,source,bell){
   if(!core.wires[wire]||used.has(wire)||!core.permitted(id,wire,wraps))return;
-  const cfg=core.config(id,{...base,wire,wraps,air:air||base.air,...core.wireSetup(id,wire)});
+  const cfg=core.config(id,{...base,wire,wraps,air:air||base.air,bell:bell||base.bell,...core.wireSetup(id,wire)});
   if(cfg.wire!==wire||cfg.wraps!==wraps)return;
   used.add(wire);out.push({config:cfg,source});
  }
- for(const [wire,wraps,air] of PERSONAL_LEADS[id]||[])add(wire,wraps,air,"personal");
+ for(const [wire,wraps,air,bell] of PERSONAL_LEADS[id]||[])add(wire,wraps,air,"personal",bell);
  for(const [wire,wraps,air] of PLATFORM_TECHNICAL_LEADS[id]||[])add(wire,wraps,air,"model");
  const profile=hasLiquid()?liquid():{name:"Profil tehnic neutru",class:"Tutun simplu",tags:[]};
  for(const item of core.rankBuilds(id,profile,hasLiquid()?state.objective:"complete",{
