@@ -51,6 +51,8 @@ for(const kind of x.categories){
 const grid=x.matrix([{label:'GTR · NiFe30/7',result:c.analyze(c.config('gtr',{wire:'nife30',wraps:7}),sample)}],'Audit graph','Methodology');
 assert.equal((grid.match(/<tr>/g)||[]).length,15,'All 14 axes plus header');
 assert.match(grid,/nu sunt măsurători/i);
+assert.equal((grid.match(/class="exp-mobile-metric"/g)||[]).length,14,'All 14 objectives must also be visible without sideways scrolling on mobile');
+assert.ok(grid.includes('exp-mobile-series')&&grid.includes('exp-mobile-track'),'Every objective must have labeled, accessible mobile score bars');
 assert.match(x.atlasWizard(),/Toate sârmele/);
 assert.match(x.wireWizard(),/Te-ai decis/);
 x.states.wire.first='k128';x.states.wire.wraps=5;
