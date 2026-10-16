@@ -1,0 +1,26 @@
+name: TEMP RTA Mobile Source Snapshot
+on:
+  push:
+    branches:
+      - feature/atlas-mobile-fit-visible-comparisons-20261016
+    paths:
+      - '.github/workflows/atlas-mobile-snapshot-temp.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Bundle source for local mobile QA
+        run: |
+          mkdir -p artifacts/mobile-src
+          tar -czf artifacts/mobile-src/atlas-mobile-source.tar.gz rta-lab assets tools .github/workflows package.json index.html || exit 1
+          sha256sum artifacts/mobile-src/atlas-mobile-source.tar.gz | tee artifacts/mobile-src/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rta-mobile-development-source
+          path: artifacts/mobile-src/
+          retention-days: 2
