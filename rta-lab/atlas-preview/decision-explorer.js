@@ -172,7 +172,7 @@ function wireWizard(){
  (cfgFinal.length?'<div class="exp-stage"><h3>3. Compatibilitate cu cele patru tipuri de lichid</h3>'+
  catsGrid(cfgFinal,'wire',W.family)+'</div>':'')+
  (W.family?'<div class="exp-stage"><h3>4. Alege lichidul concret</h3>'+liquidSelect(W.family,'expWireLiquid',W.liquidIndex)+'</div>':'')+
- (W.liquidIndex!=null&&familyRows.length?'<div class="exp-stage"><h3>5. Primele trei atomizoare pentru această sârmă și acest lichid</h3>'+
+ (W.liquidIndex!=null&&familyRows.length?'<div class="exp-stage"><h3>5. '+familyRows.length+' atomizoare compatibile (maximum 3 recomandări)</h3>'+
  '<p class="exp-hint">Ordinea utilizează evaluarea configurației exacte (atomizor + sârmă + '+W.finalWraps+' spire + lichid + obiectivul curent). Preferințele personale sunt distincte de estimările tehnice.</p>'+
  '<div class="exp-top-atoms">'+familyRows.map((r,i)=>'<article><span>0'+(i+1)+'</span><h4>'+esc(r.atom.short)+'</h4><p>'+esc(core.platforms[r.atom.id].air.find(a=>a.id===r.result.config.air)?.label||'Airflow implicit')+'</p><button type="button" data-exp-open-atom="'+esc(r.atom.id)+'">Explorează în Wire Lab ↗</button></article>').join('')+'</div>'+
  matrix(familyRows.map(r=>({label:r.atom.short,result:r.result})),
