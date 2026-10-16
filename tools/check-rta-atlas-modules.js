@@ -41,6 +41,10 @@ for(const id of Object.keys(m.inventory)){
  }
  assert.equal(JSON.stringify(top),JSON.stringify(m.buildLeads(id)),id+' should be deterministic');
 }
+const dvarwFlLead=(()=>{m.selectAtom('dvarwfl');return m.buildLeads('dvarwfl')[1]})();
+assert.equal(dvarwFlLead.config.wire,'ssclap','Keep SS Clapton/5 as dedicated FL specialist pairing');
+assert.equal(dvarwFlLead.config.wraps,5);
+assert.equal(dvarwFlLead.source,'model','Do not mislabel dedicated FL Clapton specialist as user-controlled A/B');
 const expectedPersonal={
  "415":[['nife30',7],['nife52',6],['k128',6]],
  gtr:[['nife30',7],['nife52',6],['k128',5]],
@@ -48,7 +52,7 @@ const expectedPersonal={
  kprime:[['nife30',6],['nife52',6],['k129',5]],
  kx:[['nife30',6],['nife52',6],['k128',5]],
  gtone:[['k129',6],['k128',5]],muted:[['k128',6]],
- dvarwcl:[['k128',6]],dvarwfl:[['k128',6],['ssclap',5]],
+ dvarwcl:[['k128',6]],dvarwfl:[['k128',6]],
  asylum:[['k128',6]],kv3:[['k128',6],['k129',6]]
 };
 for(const [id,expected] of Object.entries(expectedPersonal)){
