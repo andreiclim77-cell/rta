@@ -11,6 +11,15 @@ const js=fs.readFileSync("rta-lab/home-ui.js","utf8");
 const worker=fs.readFileSync("rta-lab/sw.js","utf8");
 const master=fs.readFileSync("rta-lab/RTA_CONTINUITY_MASTER.md","utf8");
 
+// The former V10 home may still be opened by a saved shortcut.
+// Its online routing must run in <head> before any legacy body paint.
+const preBody=html.slice(0,html.indexOf("</head><body>"));
+assert.ok(preBody.includes("rta-prelaunch"),"Atlas prepaint guard missing from V10 entry head");
+assert.ok(preBody.includes("document.documentElement.classList.add('rta-prelaunch')"),"Prepaint guard must activate synchronously");
+assert.ok(preBody.includes("location.replace(target.href)"),"Head must redirect before V10 paints");
+assert.ok(preBody.includes("params.get('view')==='v10'"),"Explicit V10 links must bypass redirect");
+assert.ok(preBody.includes("showLegacy()"),"Offline without Atlas cache must fall back to V10");
+assert.ok(!html.slice(html.indexOf("</head><body>")).includes("rta-prelaunch"),"Prepaint guard must not be deferred to a footer script");
 const markers=['id="rtaHome"','id="labTools"','id="moodMatch"',
  'id="labExplorerView"','id="labLiquidView"','id="wireReference"'];
 const positions=markers.map(m=>html.indexOf(m));
