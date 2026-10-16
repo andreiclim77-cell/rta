@@ -1,5 +1,18 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+## ACTUALIZARE CERUTĂ — comparații SÂRME / ATLAS / LICHIDE (16.10.2026, ÎN VALIDARE)
+
+Utilizatorul a spus «salvează» pentru trei modificări coerente, fără refacerea secțiunilor deja corecte. [PR #57](https://github.com/andreiclim77-cell/rta/pull/57), branch `feature/lab-three-guided-comparison-flows-20261016` (draft):
+
+1. **Wire Lab**: alege sârmă și spire → vezi toate cele 14 axe tehnico-senzoriale pe scală 1–10 → «Compară» cu a doua sârmă + număr de spire, pe aceleași platforme comune → «Te-ai decis?» alegere finală → indici de compatibilitate pentru Tutun simplu/complex și NET simplu/complex → toate lichidele categoriei (selector integral) → top maximum 3 atomizoare reale cu configurația exactă; dacă sunt sub 3 configurații permise, nu inventează atomizoare.
+2. **Atomizer Atlas**: selectează platforma → compară toate sârmele permise cu 14 axe → alege materialul → compară spirele permise (5/6, respectiv excepțiile NiFe30/7 pe GTR și 415) → alege spirele → cei patru indici de tip lichid → derulatorul tuturor lichidelor clasei; **secțiunea «Primele trei builduri» și tot ce urmează rămân funcțional neschimbate**, configurația selectată este transmisă modelului.
+3. **Liquid Match**: patru categorii vizibile înaintea selectorului lichid; după selectare afișează pentru fiecare dintre cele trei atomizoare și pentru fiecare dintre cele trei builduri o comparație cu cele 14 axe, fără alterarea recomandărilor 3×3.
+
+**Certitudine:** graficele derivă din cele 10 semnale existente, plus 4 indicatori compoziți marcați proxy; 1–10 reprezintă transformarea semnalelor de model, nu măsurători senzoriale. Compatibilitatea % = indice estimativ pe mostre reproductibile din catalog, nu probabilitate, test fizic sau procent de satisfacție. Comparațiile Wire între sârme folosesc numai atomizoarele comune ambelor variante. Se păstrează identitățile Atlas 700/V10 620, 16/42, trei CL saved/draft, regulile Asylum și toate observațiile GTR/415. Fișiere noi: `rta-lab/atlas-preview/decision-explorer.js`, `decision-explorer.css`; test model `tools/check-rta-decision-flows.js`, test browser `tools/check-rta-decision-flows-visual.js`. Release/cache se generează deterministic și gate-urile RTA, Market, Visual rulează pe commituri exacte.
+
+**STARE:** această funcționalitate NU este încă declarată publicată: înaintea merge-ului sunt necesare trei gate-uri de succes pe ultimul HEAD, capturi inspectate, ștergerea workflow-ului temporar de generare; după merge, GitHub Pages SUCCESS. La «salvează» se înlocuiește și `/RTA_Lab/RTA_CONTINUITATE_CURENTA.zip` în Biblioteca ChatGPT numai după verificarea pachetului. Fiecare «Run failed» este analizat și remediat autonom, fără notificări inutile către utilizator.
+
+
 ## CARD DE CONTINUITATE RTA LAB — HOME, 16.10.2026 (PUBLICAT ȘI VERIFICAT)
 
 La cererea utilizatorului, HOME din `/rta-lab/atlas/` include secțiunea editorială **„Trei comenzi. Nimic pierdut.”** cu trei acțiuni vizibile și exacte:
