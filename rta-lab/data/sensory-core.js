@@ -76,9 +76,10 @@ const PLATFORMS={
  traits:{spectrum:4.65,simultaneity:4.8,focus:4.3,palate:4.75,offense:4.45,th:4.55,harmony:4.7},note:"Spectru bogat și simultan pe 28/5, confirmat personal."},
  asylum:{pattern:"multipoint",volume:"compact-mediu",air:[
  AIR("dual10","Air-pin 2×1,0 mm (inclus în kit; montaj personal de confirmat)","multipoint",[1,1],1.75),
+ AIR("dual08","POSIBIL pin 2×0,8 mm · menționat de utilizator, NECONFIRMAT","multipoint",[.8,.8],1.65,{optional:true,estimated:true,unverifiedPersonal:true}),
  AIR("stock","Alt air-pin / montaj anterior (diametru neconfirmat)","single",null,1.5,{estimated:true})],
  traits:{spectrum:4.55,simultaneity:4.3,focus:4.2,palate:4.4,offense:4.25,th:4.15,harmony:4.35},
- note:"Asylum V3: pinul 2×1,0 mm este documentat printre piesele incluse; utilizatorul a menționat cu incertitudine 2×0,8 mm, dar dimensiunea pinului fizic montat nu este confirmată. Valoarea 0,8 mm poate desemna AFC-ul extern, separat. Nu atribui automat acest pin ambelor exemplare."},
+ note:"Asylum V3: air-pinul 2×1,0 mm este documentat în kit; 0,8 mm este și o poziție distinctă a inelului AFC. Pinul 2×0,8 mm a fost menționat cu incertitudine de utilizator: îl poți simula, dar nu îl declarăm standard, inclus sau montat. Nu atribui niciun pin ambelor exemplare fizice fără confirmare."},
  pmfree:{pattern:"diverter",volume:"mediu",air:[
  AIR("pin12","Diverter 32×0,9 + pin 1,2 mm","diverter",[1.2],2.1),
  AIR("pin08","Diverter 32×0,9 + pin 0,8 mm","diverter",[.8],1.85)],
