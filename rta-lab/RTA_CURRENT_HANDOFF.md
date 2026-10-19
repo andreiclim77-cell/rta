@@ -1,5 +1,7 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+> **PRIORITATE 19.10.2026 — Asylum V3 scos din lista activă:** utilizatorul îl va dona, dar predarea nu e încă confirmată. Colecția activă Atlas = **15 platforme / 40 exemplare**; 16/42 rămâne doar arhivă istorică (două Asylum). La nivel personal, Asylum are aromă bună, comparabilă cu Revorie, dar acesta e singurul atu; TH și ofensiva nu justifică păstrarea. **Nu-l reactiva în recomandări.** Vezi `rta-lab/RTA_COLLECTION_STATUS_20261019.md`. Datele V10/Atlas 700 și CL rămân protejate.
+
 ## RTA ATLAS — MOBILE FIT PR #58 (16.10.2026 · ÎN VERIFICARE)
 
 Utilizatorul a raportat că pe telefon multe elemente din noul Lab nu se încadrează și nu se pot vedea integral. Corecția este pregătită în [PR #58](https://github.com/andreiclim77-cell/rta/pull/58); nu afirma publicare înainte de trei gate-uri verzi pe ultimul SHA și confirmarea Pages.

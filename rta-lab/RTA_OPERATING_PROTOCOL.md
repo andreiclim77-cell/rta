@@ -1,4 +1,6 @@
 # RTA LAB — PROTOCOL CANONIC DE RELUARE ȘI SALVARE
+
+> **PRIORITATE 19.10.2026 — Asylum V3 scos din lista activă:** utilizatorul îl va dona, dar predarea nu e încă confirmată. Colecția activă Atlas = **15 platforme / 40 exemplare**; 16/42 rămâne doar arhivă istorică (două Asylum). La nivel personal, Asylum are aromă bună, comparabilă cu Revorie, dar acesta e singurul atu; TH și ofensiva nu justifică păstrarea. **Nu-l reactiva în recomandări.** Vezi `rta-lab/RTA_COLLECTION_STATUS_20261019.md`. Datele V10/Atlas 700 și CL rămân protejate.
 **Acord explicit al utilizatorului, 16.10.2026. Regula are prioritate asupra triggerelor vechi din istoric.**
 
 ## 1. „Du-te în Lab și fă-ți update”
