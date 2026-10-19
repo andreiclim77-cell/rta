@@ -1,13 +1,23 @@
 /* RTA Sensory Atlas · standalone Home + Liquid Cinema prototype.
-   Verified commercial 700 catalog / 16 platforms / established Mood Match + Sensory DNA.
+   Verified commercial 700 catalog / 15 active platforms / 16 historical / Mood Match + Sensory DNA.
    Concept preview: no edits to V10 engine, no invented reviews, percentages or product photos. */
 (function(){
 "use strict";
 const catalog=window.RTA_LIQUIDS||[];
-const atoms=window.RTA_CORE?.atoms||[];
+const sourceAtoms=window.RTA_CORE?.atoms||[];
+const atoms=sourceAtoms.filter(a=>a.id!=='asylum');
+// Personal roster is separated from the 16-platform technical archive.
+window.RTA_ATLAS_COLLECTION=Object.freeze({
+ activeAtoms:atoms,activePlatforms:atoms.length,activeUnits:40,
+ retired:Object.freeze([{id:'asylum',label:'Asylum V3',unitsRecorded:2,
+  disposition:'de donat — predarea nu este confirmată',
+  evaluation:'Aromă bună, la nivel Revorie; doar aromă, fără TH și ofensivă satisfăcătoare.',
+  decided:'2026-10-19'}]),
+ isActive:id=>atoms.some(a=>a.id===id)
+});
 const core=window.RTA_SENSORY_CORE;
 const moodEngine=window.RTA_MOOD_MATCH;
-if(!core||!moodEngine||catalog.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1'||atoms.length!==16)return;
+if(!core||!moodEngine||catalog.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1'||(sourceAtoms.length!==16||atoms.length!==15))return;
 const moodList=moodEngine.moods, momentList=moodEngine.moments;
 const defaultLiquid=(()=>{
  const exact=catalog.findIndex(x=>x.brand==="La Tabaccheria"&&x.name==="Balkan Mixture");
@@ -105,7 +115,7 @@ function rankFor(liquidIndex,moodId,momentId,override={}){
  if(!base||!Array.isArray(base.ranked))return null;
  // Use actual sorted contextual ranking, NOT Mood Match's exploratory third slot.
 
- const selected=base.ranked.slice(0,3).map((a,i)=>{
+ const selected=base.ranked.filter(a=>window.RTA_ATLAS_COLLECTION.isActive(a.id)).slice(0,3).map((a,i)=>{
   const picks=core.rankBuilds(a.id,liquid,goal).slice(0,3);
   return {id:a.id,atom:atomById(a.id),score:a.score,position:i+1,builds:picks};
  });
@@ -247,7 +257,7 @@ function renderResults(){
  if(state.expandedId&&!result.items.some(x=>x.id===state.expandedId))
   state.expandedId=result.items[0]?.id||null;
  element("resultsSummary").textContent=liquidName(result.liquid)+" · "+result.mood.name+" · "+result.moment.name+" · "+(window.RTA_ATLAS_CONTEXT.goals.find(g=>g[0]===result.objective)?.[1]||result.objective)+
- " · ordonare contextuală din 16 platforme.";
+ " · ordonare contextuală din "+atoms.length+" platforme active.";
  element("resultCounter").textContent="TOP 3 · 3 × 3";
  box.innerHTML=result.items.map(x=>renderResult(x,result.liquid)).join("");
  if(element('liquidComparison'))element('liquidComparison').innerHTML=comparisonGraphic(result.items.map(x=>({label:x.atom.short,result:x.builds[0]})),'Cum diferă cele trei atomizoare');

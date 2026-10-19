@@ -3,8 +3,8 @@
  */
 (function(){
 'use strict';
-const core=window.RTA_SENSORY_CORE, catalog=window.RTA_LIQUIDS||[], atoms=window.RTA_CORE?.atoms||[];
-if(!core||catalog.length!==700||atoms.length!==16)return;
+const core=window.RTA_SENSORY_CORE, catalog=window.RTA_LIQUIDS||[], atoms=window.RTA_ATLAS_COLLECTION?.activeAtoms||[];
+if(!core||catalog.length!==700||atoms.length!==15)return;
 const CATS=['Tutun simplu','Tutun complex','NET simplu','NET complex'];
 const SIGNALS=['spectrum','separation','simultaneity','focus','palate','offense','th','harmony','texture','tobaccoCore'];
 const AXES=[
@@ -25,7 +25,7 @@ const clamp=v=>Math.min(5,Math.max(1,Number(v)||1));
 const score10=v=>Math.round((1+(clamp(v)-1)*2.25)*10)/10;
 const pct=v=>Math.min(100,Math.max(0,Math.round((clamp(v)-1)*25)));
 function available(wire,id){
- const ids=id?[id]:Object.keys(core.platforms);
+ const ids=id?[id]:atoms.map(a=>a.id);
  return [...new Set(ids.flatMap(atom=>core.variants(atom).filter(v=>v.wire===wire).map(v=>v.wraps)))].sort((a,b)=>a-b);
 }
 function cfg(atom,wire,wraps){
