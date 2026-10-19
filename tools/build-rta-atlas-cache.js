@@ -11,7 +11,11 @@ for(const file of fs.readdirSync(path.join(root,'media/fonts')))if(/\.(ttf|woff2
 files.add('../../assets/instagram/atomizer-asylum-rta-v3-yg-creations-c41adc2e42.jpg');
 files.add('../../assets/facebook-profile-ghid-rta-smokee.jpg');
 const hash=crypto.createHash('sha256');
-for(const file of [...files].sort()){const clean=file.split('?')[0];if(clean==='./')continue;hash.update(file);const bytes=fs.readFileSync(path.resolve(root,clean));hash.update(/\.(js|css|html|svg|webmanifest)$/.test(clean)?bytes.toString('utf8').replaceAll('\r\n','\n'):bytes);}
+for(const file of [...files].sort()){const clean=file.split('?')[0];if(clean==='./')continue;hash.update(file);const bytes=fs.readFileSync(path.resolve(root,clean));
+ const normalized=/\.(js|css|html|svg|webmanifest)$/.test(clean)?Buffer.from(bytes.toString('utf8').replaceAll('\r\n','\n')):bytes;
+ // The Git blob identity changes for every byte change; it avoids hashing large binary files twice.
+ const gitBlobSha=crypto.createHash('sha1').update(Buffer.from('blob '+normalized.length+'\0')).update(normalized).digest('hex');
+ hash.update(gitBlobSha);}
 const revision=hash.digest('hex').slice(0,16),prefix='rta-atlas-'+(path.basename(root)==='atlas'?'release':'preview')+'-',template=`/* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
 const CACHE=${JSON.stringify(prefix+revision)},PREFIX=${JSON.stringify(prefix)};
 const ASSETS=${JSON.stringify([...files].sort(),null,2)};

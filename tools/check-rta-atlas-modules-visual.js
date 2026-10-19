@@ -21,10 +21,10 @@ async function main(){
    await page.locator('#atlasLiquidSearch').press('Enter');
    await page.waitForTimeout(650);
    check(await page.locator('#pageAtomizer').isVisible(),'Hash deep link must open Atomizer Atlas');
-   check(await page.locator('.platform-tile').count()===16,'All 16 platforms must be available');
+   check(await page.locator('.platform-tile').count()===15,'All 15 active platforms must be available');
    if(width===390){
     const ids=await page.locator('#atlasPlatform option').evaluateAll(els=>els.map(x=>x.value));
-    check(ids.length===16,'All 16 atomizers must be listed');
+    check(ids.length===15&&!ids.includes('asylum'),'All 15 active atomizers, no retired Asylum');
     for(const id of ids){
      await page.locator('#atlasPlatform').selectOption(id);
      check(await page.locator('#atlasBuilds .material-path').count()===3,id+' must have 3 complete builds');
@@ -33,19 +33,10 @@ async function main(){
      check(new Set(materials).size===3,id+' must show 3 distinct owned wire materials');
      check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id+' cards overflow phone width');
     }
-    await page.locator('#atlasPlatform').selectOption('asylum');
-    check(await page.locator('#atlasAir').inputValue()==='dual10','Asylum included 2x1.0 pin must be technical default only, not a physical saved record');
-    check(await page.locator('#atlasAir option[value="dual10"]').textContent().then(t=>t.includes('2×1,0')),'Asylum dual 1mm pin label missing');
-    check(await page.locator('#atlasAir option[value="dual08"]').textContent().then(t=>t.includes('2×0,8')&&t.includes('NECONFIRMAT')),
-      'Asylum possible 2x0.8 must be available only with explicit uncertainty label');
-     await page.locator('#atlasAir').selectOption('dual08');
-     check(await page.locator('#atlasBuilds .material-path[data-build-air="dual08"]').count()===3,
-      'All three complete Asylum builds must reflect the explicitly chosen optional pin');
-     check(await page.locator('#atlasBuilds .material-build-facts').first().textContent().then(t=>t.includes('NECONFIRMAT')),
-      'Optional pin may not masquerade as a measured or stock unit');
-    await page.locator('#atlasAir').selectOption('stock');
-    check(await page.locator('#atlasAir').inputValue()==='stock','Keep past unknown-size pin as an explicit alternative');
-    await page.locator('#atlasAir').selectOption('dual10');
+    // The retired model remains as a technical historical record only.
+    check(await page.locator('#atlasPlatform option[value="asylum"]').count()===0,'Asylum excluded from active selector');
+    await page.locator('#atlasPlatform').selectOption('gtr');
+    check(await page.locator('#atlasAir').inputValue()==='both','GTR airflow preserved');
     const payload=await page.locator('#atlasBuilds [data-atlas-build]').first().getAttribute('data-atlas-build');
     await page.locator('#atlasBuilds [data-atlas-build]').first().click();
     check(await page.locator('#pageWire').isVisible(),'Atlas build must open Wire Lab');
@@ -88,7 +79,7 @@ async function main(){
    check(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config))===prior,'Invalid energy must not modify active configuration');
    await page.locator('#wirePower').fill('14');await page.locator('#wirePower').press('Tab');
    check(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.power)===14,'Valid energy must recompute model');
-   await page.locator('#wireAtom').selectOption('asylum');
+   check(await page.locator('#wireAtom option[value=asylum]').count()===0,'Asylum excluded from Wire Lab');
    await page.locator('#wireMaterial').selectOption('ssclap');
    check(await page.locator('#wireAtom option[value=asylum]').count()===0,'Wire-first compatibility must exclude Asylum for SS Clapton');
    await page.locator('#wireMaterial').selectOption('nife52');

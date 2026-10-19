@@ -9,7 +9,9 @@ for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js'
 const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
 assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),42);
 const original=JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]);
-assert.equal(m.filteredAtoms('').length,16);assert.equal(m.filteredAtoms('Dvarw').length,2);assert.equal(m.filteredAtoms('nonexistent platform').length,0);
+assert.equal(m.filteredAtoms('').length,15);
+assert.ok(!m.filteredAtoms('').some(a=>a.id==='asylum'),'Asylum must not appear in active inventory');
+assert.equal(w.RTA_ATLAS_COLLECTION.activeUnits,40);assert.equal(m.filteredAtoms('Dvarw').length,2);assert.equal(m.filteredAtoms('nonexistent platform').length,0);
 assert.equal(m.selectAtom('invalid'),false);assert.equal(m.contextual('invalid'),null);
 for(const id of Object.keys(m.inventory)){
  assert.equal(m.selectAtom(id),true);
@@ -167,7 +169,7 @@ const multi=duel.compare(duel.state.left,c.defaultConfig('gtone'));
 assert.ok(multi.changed.length>=3,'Changing platform and material cannot be advertised as a one-variable A/B');
 assert.ok(multi.left.result.dimensions.pleasure===null&&multi.right.result.dimensions.pleasure===null);
 assert.equal(duel.compare({atom:'invalid'},duel.state.left),null);
-console.log('ATLAS MODULES PASS: 16 platforms / 42 units, all permitted materials and objectives, 700-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
+console.log('ATLAS MODULES PASS: 15 active platforms / 40 active units, all permitted materials and objectives, 700-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
 
 const market=w.RTA_ATLAS_MARKET;
 assert.equal(market.data.rows.length,40);assert.equal(new Set(market.data.rows.map(e=>e.id)).size,40);

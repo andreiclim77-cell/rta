@@ -1,5 +1,7 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+> **PRIORITATE 19.10.2026 — Asylum V3 scos din lista activă:** utilizatorul îl va dona, dar predarea nu e încă confirmată. Colecția activă Atlas = **15 platforme / 40 exemplare**; 16/42 rămâne doar arhivă istorică (două Asylum). La nivel personal, Asylum are aromă bună, comparabilă cu Revorie, dar acesta e singurul atu; TH și ofensiva nu justifică păstrarea. **Nu-l reactiva în recomandări.** Vezi `rta-lab/RTA_COLLECTION_STATUS_20261019.md`. Datele V10/Atlas 700 și CL rămân protejate.
+
 
 ## FLUX NOU RTA LAB — SÂRME, ATLAS ȘI LICHIDE (16.10.2026 · PUBLICAT ȘI VERIFICAT)
 

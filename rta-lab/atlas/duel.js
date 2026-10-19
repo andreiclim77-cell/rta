@@ -3,7 +3,7 @@
 'use strict';
 const core=window.RTA_SENSORY_CORE,api=window.RTA_ATLAS_PREVIEW,modules=window.RTA_ATLAS_MODULES;
 if(!core||!api||!modules)return;
-const atoms=window.RTA_CORE.atoms,catalog=window.RTA_LIQUIDS;
+const atoms=window.RTA_ATLAS_COLLECTION.activeAtoms,catalog=window.RTA_LIQUIDS;
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const fields=['atom','bell','air','wire','wraps','coilMm','position','power','temp'];
 const labels={atom:'Platformă',bell:'Cameră',air:'Airflow',wire:'Material',wraps:'Spire',coilMm:'Ø coil',position:'Poziție',power:'Putere / plafon',temp:'Setare TC'};
@@ -12,7 +12,7 @@ const state={left:core.defaultConfig('gtr'),right:core.defaultConfig('klp'),next
 const atom=id=>atoms.find(a=>a.id===id);
 const liquid=()=>api.currentLiquid();
 function valid(raw){
- if(!raw||!core.platforms[raw.atom]||!core.permitted(raw.atom,raw.wire,Number(raw.wraps)))return null;
+ if(!raw||!atoms.some(a=>a.id===raw.atom)||!core.platforms[raw.atom]||!core.permitted(raw.atom,raw.wire,Number(raw.wraps)))return null;
  return core.config(raw.atom,raw);
 }
 function pick(raw,side=state.next){

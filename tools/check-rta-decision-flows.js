@@ -19,9 +19,10 @@ assert.deepEqual([...x.available('nife30','415')],[6,7]);
 assert.deepEqual([...x.available('nife52','415')],[6]);
 assert.deepEqual([...x.available('k1clap','gtr')],[5]);
 assert.deepEqual([...x.available('ssclap','asylum')],[]);
+assert.ok(!x.candidates('k128',6).some(c=>c.atom==='asylum'),'Retired Asylum excluded from wire candidates');
 const catCounts=Object.fromEntries(x.categories.map(cat=>[cat,w.RTA_LIQUIDS.filter(l=>l.class===cat).length]));
 assert.equal(Object.values(catCounts).reduce((a,b)=>a+b,0),700);
-for(const id of Object.keys(c.platforms)){
+for(const id of w.RTA_ATLAS_COLLECTION.activeAtoms.map(a=>a.id)){
  for(const wire of Object.keys(c.wires)){
   const wraps=x.available(wire,id);
   for(const n of wraps){
@@ -60,4 +61,4 @@ assert.match(x.wireWizard(),/Compară/);;
 assert.equal(JSON.stringify({atoms:w.RTA_CORE.atoms,liquids:w.RTA_LIQUIDS,observations:c.observations,prefs:c.personalPreferences}),original,'Canonical data preserved');
 const html=fs.readFileSync('rta-lab/atlas-preview/index.html','utf8');
 assert.match(html,/decision-explorer\.js/);assert.match(html,/decision-explorer\.css/);
-console.log('DECISION FLOW MODEL PASS: 14 objectives, 4 classes / 700 catalog, 16 platforms, allowed wraps, model fit and top-three exceptions.');
+console.log('DECISION FLOW MODEL PASS: 14 objectives, 4 classes / 700 catalog, 15 active platforms, allowed wraps, model fit and top-three exceptions.');

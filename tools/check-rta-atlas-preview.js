@@ -20,7 +20,10 @@ load("atlas-preview/context.js");
 load("atlas-preview/app.js");
 const lib=env.window,api=lib.RTA_ATLAS_PREVIEW,moods=lib.RTA_MOOD_MATCH.moods,moments=lib.RTA_MOOD_MATCH.moments;
 assert.ok(api&&typeof api.compose==="function","Standalone prototype API missing");
-assert.equal(api.getSourceModel().atoms,16);
+assert.equal(api.getSourceModel().atoms,15);
+assert.equal(lib.RTA_ATLAS_COLLECTION.activeUnits,40);
+assert.equal(lib.RTA_ATLAS_COLLECTION.retired[0].id,'asylum');
+assert.equal(lib.RTA_CORE.atoms.length,16,'Historical reference preserved');
 assert.equal(api.getSourceModel().liquids,700);
 assert.equal(moods.length,7);
 assert.equal(moments.length,5);
@@ -42,6 +45,7 @@ for(const i of samples){
    assert.equal(result.liquid.brand,catalog[i].brand);
    assert.equal(result.items.length,3,"Must display exactly three context-ranked platforms");
    assert.equal(result.distinctAtoms,3);
+   assert.ok(result.items.every(x=>x.id!=='asylum'),'Asylum retired and must never be recommended');
    assert.equal(result.distinctBuilds,9,"Each of three platforms needs three build variants");
    assert.equal(new Set(result.items.map(x=>x.id)).size,3);
    assert.ok(result.items.every(x=>x.atom&&x.builds.length===3));
@@ -164,5 +168,5 @@ assert.ok(refs.findIndex(x=>x.includes("sensory-core.js"))<refs.findIndex(x=>x.i
 assert.ok(refs.findIndex(x=>x.includes("mood-match.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("photo-sources.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("./app.js"))<refs.findIndex(x=>x.includes("./v02.js")));
-console.log("RTA ATLAS PREVIEW PASS: 16 platforms, 700 actual liquids, 4×7×5="+scenarios+
+console.log("RTA ATLAS PREVIEW PASS: 15 active platforms, 700 actual liquids, 4×7×5="+scenarios+
  " contexts, nine compatible builds each; visual motion, source honesty and no production modifications.");

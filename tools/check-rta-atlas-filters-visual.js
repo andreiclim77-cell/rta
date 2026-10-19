@@ -24,7 +24,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   assert.equal(await page.locator('#wireAtom').inputValue(),'','Wire-first entry must await a platform choice');
   for(const wire of ['k128','k129','k1clap','ssclap','nife30','nife52']){
    await page.locator('#wireMaterial').selectOption(wire);
-   const compatible=await page.evaluate(wire=>window.RTA_CORE.atoms.filter(a=>window.RTA_SENSORY_CORE.variants(a.id).some(v=>v.wire===wire)).map(a=>a.id).sort(),wire);
+   const compatible=await page.evaluate(wire=>window.RTA_ATLAS_COLLECTION.activeAtoms.filter(a=>window.RTA_SENSORY_CORE.variants(a.id).some(v=>v.wire===wire)).map(a=>a.id).sort(),wire);
    assert.deepEqual(await page.locator('[data-wire-platform]').evaluateAll(buttons=>buttons.map(b=>b.dataset.wirePlatform).sort()),compatible,'Show every and only compatible platform');
   }
   await shot(page,'flow-wire-first-'+width+'.png');
