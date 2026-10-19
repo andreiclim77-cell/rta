@@ -206,3 +206,25 @@ assert.equal(w.RTA_ATLAS_CONTEXT.profile({reviewId:'fabricated'}),null);
 for(const entry of market.data.rows){const sourceProfile=w.RTA_ATLAS_CONTEXT.profile({reviewId:entry.id});assert.equal(sourceProfile.sourceReview,entry.id);assert.equal(sourceProfile.class,entry.category);const result=a.compose(a.state.liquidIndex,'magic','evening',{liquid:sourceProfile});assert.equal(result.distinctBuilds,9);assert.equal(a.evidenceFor(result.items[0].builds[0],sourceProfile).kind,'model');assert.ok(market.watch(sourceProfile).includes('nu este probă A/B'));}
 assert.equal(w.RTA_LIQUIDS.length,700);
 console.log('REVIEW PROFILE PASS: all 40 source profiles can use 3×3 estimates without catalog insertion or exact-build review claims.');
+
+// Regression: the two late-added HOME gateways must have actual, packaged photographs
+// (not blank cards, schematic-only SVGs, or remote-host-dependent media).
+for(const [route,visual,photos] of [
+ ['market','marketVisual',['market-ltKentucky.webp','market-pulpTennessee.jpg']],
+ ['duel','duelVisual',['klp-product.png','taifun-gt-one.jpg']]
+]){
+ const preview=fs.readFileSync('rta-lab/atlas-preview/'+route+'.js','utf8');
+ const release=fs.readFileSync('rta-lab/atlas/'+route+'.js','utf8');
+ assert.equal(preview,release,route+' HOME photo markup must ship in release, not just preview');
+ assert.ok(preview.includes('card.innerHTML='+visual),route+' gateway must render imagery as first child');
+ assert.match(preview,new RegExp('gateway-photographic-'+route));
+ for(const file of photos){
+  assert.ok(preview.includes('./media/'+file),route+' gateway missing '+file);
+  assert.ok(fs.statSync('rta-lab/atlas/media/'+file).size>10_000,route+' packaged image missing '+file);
+ }
+}
+const mediaCss=fs.readFileSync('rta-lab/atlas/gateway-photos.css','utf8');
+assert.match(mediaCss,/gateway-visual\.gateway-photographic/);
+assert.match(mediaCss,/@media\(max-width:760px\)/);
+assert.equal(mediaCss,fs.readFileSync('rta-lab/atlas-preview/gateway-photos.css','utf8'));
+console.log('GATEWAY MEDIA PASS: Market and Duel HOME gateways each provide two real local photographs, synced preview/release and mobile styles.');

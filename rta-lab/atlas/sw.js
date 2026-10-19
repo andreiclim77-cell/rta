@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-release-a04f88e3882345f1",PREFIX="rta-atlas-release-";
+const CACHE="rta-atlas-release-918557139421dbbf",PREFIX="rta-atlas-release-";
 const ASSETS=[
   "../../assets/facebook-profile-ghid-rta-smokee.jpg",
   "../../assets/fonts/manrope-latin-ext.woff2",
@@ -22,7 +22,8 @@ const ASSETS=[
   "./context.js?v=atlas-catalog-700-20261015-1",
   "./decision-explorer.css?v=lab-decisions-20261016-1",
   "./decision-explorer.js?v=lab-decisions-20261016-1",
-  "./duel.js?v=atlas-catalog-700-20261015-1",
+  "./duel.js?v=atlas-gallery-photos-20261019-1",
+  "./gateway-photos.css?v=atlas-gallery-photos-20261019-1",
   "./ghid-rta-link.css?v=ghid-rta-link-20261019-1",
   "./icon.svg",
   "./index.html",
@@ -34,7 +35,7 @@ const ASSETS=[
   "./local-photos.js?v=atlas-catalog-700-20261015-1",
   "./manifest.webmanifest",
   "./market-evidence.js?v=atlas-catalog-700-20261015-1",
-  "./market.js?v=atlas-catalog-700-20261015-1",
+  "./market.js?v=atlas-gallery-photos-20261019-1",
   "./media/415-mtl.jpg",
   "./media/black-note-virginia-current.webp",
   "./media/byka-product.jpg",

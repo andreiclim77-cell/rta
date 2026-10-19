@@ -59,7 +59,12 @@ function updateSelection(){
 function init(){
  const page=document.createElement('section');page.id='pageDuel';page.className='page atlas-module frame';page.hidden=true;page.setAttribute('aria-label','Duel Mode');document.getElementById('main').appendChild(page);
  const nav=document.querySelector('.top-nav');const button=document.createElement('button');button.type='button';button.dataset.route='duel';button.textContent='Duel';nav.appendChild(button);
- const card=document.createElement('button');card.type='button';card.className='gateway-card gateway-active';card.dataset.route='duel';card.innerHTML='<span class="gateway-overline">05 / SAME CONTEXT</span><strong>Duel Mode.</strong><small>Două configurații. Diferențe explicate, fără procente inventate.</small><span class="gateway-bottom">COMPARĂ ↗</span>';document.querySelector('.gateway-grid').appendChild(card);
+ // Preview two existing product photos, without implying the actual duel selection.
+ const duelVisual='<div class="gateway-visual gateway-photographic gateway-photographic-duel" aria-hidden="true">'+
+  '<span class="gateway-photo-frame"><img src="./media/klp-product.png" alt="" width="1000" height="1000" loading="lazy" decoding="async"></span>'+
+  '<span class="gateway-photo-frame"><img src="./media/taifun-gt-one.jpg" alt="" width="1080" height="1080" loading="lazy" decoding="async"></span>'+
+  '<span class="gateway-photo-vs">VS</span></div>';
+ const card=document.createElement('button');card.type='button';card.className='gateway-card gateway-active';card.dataset.route='duel';card.innerHTML=duelVisual+'<span class="gateway-overline">05 / SAME CONTEXT</span>'+'<strong>Duel Mode.</strong><small>Două configurații. Diferențe explicate, fără procente inventate.</small><span class="gateway-bottom">COMPARĂ ↗</span>';document.querySelector('.gateway-grid').appendChild(card);
  document.addEventListener('click',e=>{
   if(e.target.closest?.('[data-duel-results]')){document.getElementById('duelDifferences')?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'});return;}
   const pickButton=e.target.closest?.('[data-duel-pick]');
