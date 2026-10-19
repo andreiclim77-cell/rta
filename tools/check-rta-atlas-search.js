@@ -29,7 +29,7 @@ assert.equal(w.RTA_ATLAS_MARKET.select('all').length,40);assert.ok(w.RTA_ATLAS_M
 const m=w.RTA_ATLAS_MODULES;m.selectAtom('klp');m.setConfig({wire:'nife52'});const before=JSON.stringify(m.state.config),duelBefore=JSON.stringify(w.RTA_ATLAS_DUEL.state);
 m.setConfig({power:14.2,temp:242});assert.equal(JSON.stringify(m.wireConfig('klp','nife52')),JSON.stringify(m.state.config),'Comparisons must preserve custom power and TC settings on the current build');m.state.config=JSON.parse(before);
 for(const wire of Object.keys(c.wires)){
- const expected=w.RTA_CORE.atoms.filter(a=>c.variants(a.id).some(v=>v.wire===wire)).map(a=>a.id).sort();
+ const expected=w.RTA_ATLAS_COLLECTION.activeAtoms.filter(a=>c.variants(a.id).some(v=>v.wire===wire)).map(a=>a.id).sort();
  assert.deepEqual(Array.from(m.compatibleWireAtoms(wire),a=>a.id).sort(),Array.from(expected));
  for(const id of expected){const config=m.wireConfig(id,wire);assert.equal(config.wire,wire);assert.ok(c.permitted(id,wire,config.wraps));}
 }
