@@ -9,6 +9,7 @@ for(const match of html.matchAll(/(?:src|href)="([^"#]+\.(?:js|css)(?:\?[^"#]*)?
 for(const file of fs.readdirSync(path.join(root,'media')))if(/\.(jpg|png|webp)$/.test(file))files.add('./media/'+file);
 for(const file of fs.readdirSync(path.join(root,'media/fonts')))if(/\.(ttf|woff2)$/.test(file))files.add('./media/fonts/'+file);
 files.add('../../assets/instagram/atomizer-asylum-rta-v3-yg-creations-c41adc2e42.jpg');
+files.add('../../assets/facebook-profile-ghid-rta-smokee.jpg');
 const hash=crypto.createHash('sha256');
 for(const file of [...files].sort()){const clean=file.split('?')[0];if(clean==='./')continue;hash.update(file);const bytes=fs.readFileSync(path.resolve(root,clean));hash.update(/\.(js|css|html|svg|webmanifest)$/.test(clean)?bytes.toString('utf8').replaceAll('\r\n','\n'):bytes);}
 const revision=hash.digest('hex').slice(0,16),prefix='rta-atlas-'+(path.basename(root)==='atlas'?'release':'preview')+'-',template=`/* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
