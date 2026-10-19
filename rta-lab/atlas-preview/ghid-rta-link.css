@@ -1,0 +1,53 @@
+/* Quiet, editorial link to the public Ghid RTA site. Does not alter Atlas routing. */
+.atlas-ghid-promo{margin:10px 0 32px;min-width:0}
+.atlas-ghid-promo-link{
+  position:relative;isolation:isolate;display:grid;
+  grid-template-columns:140px minmax(0,1fr) auto;align-items:center;
+  gap:clamp(18px,3vw,36px);min-height:190px;padding:clamp(17px,2.65vw,27px);
+  overflow:hidden;border:1px solid rgba(216,181,135,.31);border-radius:22px;
+  background:radial-gradient(ellipse at 8% 48%,rgba(51,119,155,.20),transparent 38%),
+    radial-gradient(ellipse at 100% 20%,rgba(193,137,70,.12),transparent 50%),
+    linear-gradient(116deg,#0b1923 2%,#13242b 51%,#101b22);
+  box-shadow:0 23px 70px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.025);
+  color:#eef3ee;text-decoration:none;
+  transition:border-color .23s,box-shadow .23s,transform .23s;
+}
+.atlas-ghid-promo-link::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(118deg,transparent 50%,rgba(237,199,148,.045) 64%,transparent 78%)}
+.atlas-ghid-promo-link:hover{border-color:rgba(231,198,152,.65);box-shadow:0 25px 75px rgba(0,0,0,.23);transform:translateY(-2px)}
+.atlas-ghid-promo-art{position:relative;display:block;width:140px;aspect-ratio:1;border-radius:17px;overflow:hidden;
+  border:1px solid rgba(230,201,164,.22);background:#07121b;box-shadow:0 13px 29px rgba(0,0,0,.26)}
+.atlas-ghid-promo-art img{display:block;width:100%;height:100%;object-fit:cover}
+.atlas-ghid-promo-copy{display:flex;flex-direction:column;align-items:flex-start;gap:9px;min-width:0}
+.atlas-ghid-promo-kicker{display:flex;align-items:center;gap:9px;font-size:10px;font-weight:800;
+  letter-spacing:.15em;color:#dfbd90;line-height:1.5}
+.atlas-ghid-promo-kicker::before{content:"";width:6px;height:6px;flex:none;border-radius:50%;background:#8bd0c4;box-shadow:0 0 12px rgba(139,208,196,.5)}
+.atlas-ghid-promo-title{display:block;margin:0;max-width:590px;font-size:clamp(21px,2.15vw,29px);
+  font-weight:680;letter-spacing:-.7px;line-height:1.25}
+.atlas-ghid-promo-title em{font-family:'Playfair Display',Georgia,serif;font-weight:400;color:#edd2a7}
+.atlas-ghid-promo-desc{display:block;max-width:550px;font-size:12px;line-height:1.6;color:#acc3c4}
+.atlas-ghid-promo-domain{display:block;font-size:13px;font-weight:800;letter-spacing:.025em;color:#f5d5a3}
+.atlas-ghid-promo-action{display:flex;gap:16px;align-items:center;justify-content:space-between;
+  min-width:167px;padding:14px 16px;border-radius:12px;
+  border:1px solid rgba(226,196,155,.45);background:rgba(229,193,141,.085);
+  color:#f4e0bd;font-size:10px;font-weight:800;letter-spacing:.07em;white-space:nowrap;
+  transition:background .23s,border-color .23s}
+.atlas-ghid-promo-action span{font-size:21px;font-weight:450;line-height:1}
+.atlas-ghid-promo-link:hover .atlas-ghid-promo-action{background:rgba(231,197,146,.16);border-color:rgba(246,216,170,.72)}
+@media(max-width:880px){
+  .atlas-ghid-promo-link{grid-template-columns:110px minmax(0,1fr);gap:16px;min-height:0}
+  .atlas-ghid-promo-art{width:110px}
+  .atlas-ghid-promo-action{grid-column:2;justify-self:start;min-width:160px;padding:12px 15px}
+}
+@media(max-width:520px){
+  .atlas-ghid-promo{margin:8px 0 26px}
+  .atlas-ghid-promo-link{grid-template-columns:78px minmax(0,1fr);gap:12px;padding:15px;border-radius:18px;align-items:start}
+  .atlas-ghid-promo-art{width:78px;border-radius:12px}
+  .atlas-ghid-promo-copy{gap:8px}
+  .atlas-ghid-promo-kicker{font-size:9px;letter-spacing:.07em}
+  .atlas-ghid-promo-title{font-size:19px;letter-spacing:-.4px;line-height:1.28}
+  .atlas-ghid-promo-desc{font-size:11px;line-height:1.55}
+  .atlas-ghid-promo-domain{font-size:12px}
+  .atlas-ghid-promo-action{grid-column:1/-1;justify-self:stretch;justify-content:space-between;min-height:44px;margin-top:2px}
+}
+@media(prefers-reduced-motion:reduce){.atlas-ghid-promo-link,.atlas-ghid-promo-action{transition:none}.atlas-ghid-promo-link:hover{transform:none}}
