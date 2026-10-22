@@ -1,5 +1,7 @@
 # RTA LAB — PROTOCOL CANONIC DE RELUARE ȘI SALVARE
 
+> **UPDATE PRIORITAR 22.10.2026 — Dicodes RESISTHERM NiFe30 disponibil și în WATT:** selector TC/WATT în Lab, **12 W** preset personal, chipset selectabil **Dicodes, YiHi, ARC1, DNA**. NiFe30/7 WATT la 12 W a oferit vapori mai echilibrați termic decât la 13 W; **Zivipf NiFe52/6 în TC** merge foarte bine, separat. Nu inventa superioritatea vreunui aliaj sau test pe toate modurile. **TC anterior nu se șterge**, iar observațiile lui nu se aplică automat în WATT. Citește `rta-lab/RTA_NIFE30_WATT12_20261022.md`, testează `tools/check-rta-nife30-watt.js` și verifică SHA/Pages.
+
 > **PRIORITATE 19.10.2026 — Asylum V3 scos din lista activă:** utilizatorul îl va dona, dar predarea nu e încă confirmată. Colecția activă Atlas = **15 platforme / 40 exemplare**; 16/42 rămâne doar arhivă istorică (două Asylum). La nivel personal, Asylum are aromă bună, comparabilă cu Revorie, dar acesta e singurul atu; TH și ofensiva nu justifică păstrarea. **Nu-l reactiva în recomandări.** Vezi `rta-lab/RTA_COLLECTION_STATUS_20261019.md`. Datele V10/Atlas 700 și CL rămân protejate.
 **Acord explicit al utilizatorului, 16.10.2026. Regula are prioritate asupra triggerelor vechi din istoric.**
 
