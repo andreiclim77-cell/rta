@@ -92,6 +92,22 @@ async function main(){
    check(await page.locator('#wireWraps').inputValue()==='7','415 Dicodes NiFe30 must use seven wraps');
    check(await page.evaluate(()=>window.RTA_SENSORY_CORE.personalPreference(window.RTA_ATLAS_MODULES.state.config)?.tier)===1,
     '415 Dicodes NiFe30/7 must be first-tier');
+   // Regression: changing K1 -> NiFe30 starts from the existing TC preset,
+   // while WATT 12 W is an explicit user action, never an inherited wire mode.
+   check(await page.locator('#wireRegime').inputValue()==='tc','Switching K1 to NiFe30 must restore TC, not inherit K1 WATT');
+   await page.locator('#wireRegime').selectOption('watt');
+   check(await page.evaluate(()=>{
+     const c=window.RTA_ATLAS_MODULES.state.config;
+     return c.wire==='nife30'&&c.regime==='watt'&&c.wraps===7&&c.power===12&&window.RTA_SENSORY_CORE.personalPreference(c)===null;
+   }),'Explicit NiFe30 WATT must use 7 wraps, 12 W, and not inherit TC sensory evidence');
+   check(await page.locator('#wireChipset option').count()===5,'The optional chipset menu must include four real chipset families plus unspecified');
+   await page.locator('#wireChipset').selectOption('dna');
+   check(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.chipset)==='dna','DNA must persist as selected chipset');
+   await page.locator('#wireRegime').selectOption('tc');
+   check(await page.evaluate(()=>{
+     const c=window.RTA_ATLAS_MODULES.state.config,core=window.RTA_SENSORY_CORE;
+     return c.regime==='tc'&&c.chipset===''&&c.power===core.wireSetup('415','nife30').power&&core.personalPreference(c)?.tier===1;
+   }),'Switching back to TC must restore the original 415 preset and personal preference');
    await page.locator('#wireMaterial').selectOption('nife52');
    check(await page.locator('#wireWraps').inputValue()==='6','415 Zivipf NiFe52 must use six wraps');
    check(await page.evaluate(()=>window.RTA_SENSORY_CORE.personalPreference(window.RTA_ATLAS_MODULES.state.config)?.tier)===1,
