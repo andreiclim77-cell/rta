@@ -5,8 +5,8 @@ const core=window.RTA_SENSORY_CORE,api=window.RTA_ATLAS_PREVIEW,modules=window.R
 if(!core||!api||!modules)return;
 const atoms=window.RTA_ATLAS_COLLECTION.activeAtoms,catalog=window.RTA_LIQUIDS;
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-const fields=['atom','bell','air','wire','wraps','coilMm','position','power','temp'];
-const labels={atom:'Platformă',bell:'Cameră',air:'Airflow',wire:'Material',wraps:'Spire',coilMm:'Ø coil',position:'Poziție',power:'Putere / plafon',temp:'Setare TC'};
+const fields=['atom','bell','air','wire','wraps','coilMm','position','power','temp','regime','chipset'];
+const labels={atom:'Platformă',bell:'Cameră',air:'Airflow',wire:'Material',wraps:'Spire',coilMm:'Ø coil',position:'Poziție',power:'Putere / plafon',temp:'Setare TC',regime:'Regim TC/WATT',chipset:'Chipset electronic'};
 const signals={spectrum:'Spectru',simultaneity:'Simultaneitate',separation:'Separare',palate:'Palat',offense:'Ofensivă',th:'Throat hit',harmony:'Armonie'};
 const state={left:core.defaultConfig('gtr'),right:core.defaultConfig('klp'),next:'left',picked:{left:false,right:false},onlyDifferences:false,isolation:null};
 const atom=id=>atoms.find(a=>a.id===id);
@@ -22,7 +22,7 @@ function pick(raw,side=state.next){
 function compare(left=state.left,right=state.right,chosenLiquid=liquid(),objective=modules.state.objective){
  const a=valid(left),b=valid(right);if(!a||!b||!chosenLiquid)return null;
  const ra=core.analyze(a,chosenLiquid,objective),rb=core.analyze(b,chosenLiquid,objective);
- const bothTC=core.wires[a.wire].type==='tc'&&core.wires[b.wire].type==='tc';
+ const bothTC=core.modeFor(a)==='tc'&&core.modeFor(b)==='tc';
  const changed=fields.filter(k=>k!=='temp'||bothTC).filter(k=>a[k]!==b[k]);
  const dimensions=Object.entries(signals).map(([key,label])=>({key,label,left:ra.signals[key],right:rb.signals[key],different:Math.abs(ra.signals[key]-rb.signals[key])>=.25}));
  return {left:{config:a,result:ra},right:{config:b,result:rb},changed,dimensions,same:changed.length===0,objective,liquid:chosenLiquid};

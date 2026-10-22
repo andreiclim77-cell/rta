@@ -147,6 +147,8 @@ const PERSONAL_SETUPS=Object.freeze({
 });
 function personalSetups(atomId){return (PERSONAL_SETUPS[atomId]||[]).map(x=>({...x}));}
 function personalPreference(config){
+ // Do not extrapolate earlier NiFe TC preferences to the optional NiFe30 WATT mode.
+ if(config.wire==="nife30"&&config.regime==="watt")return null;
  // 415 Cool, personal priority 15.10.2026; not universal chemical equivalence.
  if(config.atom==="415"){
   if((config.wire==="nife30"&&config.wraps===7)||(config.wire==="nife52"&&config.wraps===6))
@@ -195,6 +197,13 @@ const WIRES={
  nife30:{name:"Dicodes RESISTHERM NiFe30 TCR320",type:"tc",mode:"TC",temp:230,power:13},
  nife52:{name:"Zivipf NiFe52 TCR310",type:"tc",mode:"TC",temp:230,power:13}
 };
+const NIFE30_WATT=Object.freeze({
+ power:12,wrapsObserved:7,
+ chipsets:Object.freeze({dicodes:"Dicodes",yihi:"YiHi",arc1:"ARC1",dna:"DNA"}),
+ evidence:"Personal: NiFe30/7 la 12 W a oferit vapori mai echilibrați termic decât la 13 W. Cele patru chipseturi sunt opțiuni, nu patru teste confirmate."
+});
+function allowedRegimes(wire){return wire==="nife30"?["tc","watt"]:WIRES[wire]?.type==="tc"?["tc"]:["watt"];}
+function modeFor(config){return config?.wire==="nife30"&&config?.regime==="watt"?"watt":WIRES[config?.wire]?.type==="tc"?"tc":"watt";}
 const DEFAULTS={
  "415":{wire:"nife30",wraps:7,air:"tasty"},
  kprime:{wire:"nife52",wraps:6,air:"1.2"},
@@ -329,7 +338,8 @@ function defaults(id) {
  const bellCfg=window.RTA_BELL_LIQUID_FIT&&window.RTA_BELL_LIQUID_FIT.config(id);
  return {atom:id,bell:bellCfg?bellCfg.defaultId:"standard",air:def.air,wire:def.wire,
   wraps:def.wraps,coilMm:2.5,position:"standard",
-  power:wireSetup(id,def.wire).power,temp:wireSetup(id,def.wire).temp};
+  power:wireSetup(id,def.wire).power,temp:wireSetup(id,def.wire).temp,
+  regime:WIRES[def.wire].type==="tc"?"tc":"watt",chipset:""};
 }
 function configuration(id,changes={}) {
  const base=defaults(id);
@@ -350,6 +360,13 @@ function configuration(id,changes={}) {
  value.coilMm=[2,2.5,3].includes(Number(value.coilMm))?Number(value.coilMm):2.5;
  if(!["low","standard","high"].includes(value.position))value.position="standard";
  const w=WIRES[value.wire];
+ const defaultRegime=w.type==="tc"?"tc":"watt";
+ const requestedRegime=(changes.wire&&changes.wire!==base.wire&&!Object.prototype.hasOwnProperty.call(changes,"regime"))?defaultRegime:value.regime;
+ value.regime=allowedRegimes(value.wire).includes(requestedRegime)?requestedRegime:defaultRegime;
+ if(value.wire==="nife30"&&value.regime==="watt"){
+  if(!Object.prototype.hasOwnProperty.call(changes,"power"))value.power=NIFE30_WATT.power;
+  value.chipset=Object.prototype.hasOwnProperty.call(NIFE30_WATT.chipsets,value.chipset)?value.chipset:"";
+ }else value.chipset="";
  value.power=clamp(Number(value.power)||w.power,7,20);
  value.temp=clamp(Number(value.temp)||230,180,270);
  return value;
@@ -385,6 +402,7 @@ function anchorsFor(config) {
  // User A/B evidence applies only near the actual canonical setup.
  // Changing the air, bell, coil diameter, height or power turns the result into an extrapolation.
  const defaults=DEFAULTS[config.atom];
+ if(config.wire==="nife30"&&modeFor(config)==="watt")return [];
  const expectedBell=bellFor(config.atom,defaults&&defaults.bell).id;
  const preset=wireSetup(config.atom,config.wire);
  if(!defaults || config.position!=="standard" ||
@@ -396,6 +414,7 @@ function anchorsFor(config) {
    (!o.bell||o.bell===config.bell));
 }
 function partialReportsFor(config){
+ if(config.wire==="nife30"&&modeFor(config)==="watt")return [];
  // Do not transfer this report to untested TC settings; airflow/liquid were not recorded.
  return OBS.filter(o=>o.partial && o.atom===config.atom && o.wire===config.wire &&
    (o.wraps==null||o.wraps===config.wraps) &&
@@ -408,7 +427,7 @@ function partialReportsFor(config){
 function technicalBaseline(config,liquid) {
  const tech=PLATFORMS[config.atom], phys=physical(config), bell=bellFor(config.atom,config.bell);
  const tags=liquidTags(liquid),w=phys.wire,a=phys.air;
- const isTC=w.type==="tc",isClap=w.type==="clapton";
+ const isTC=modeFor(config)==="tc",isClap=w.type==="clapton";
  const multi=["multipoint","dual","diverter"].includes(a.pattern);
  const focus=a.pattern==="single"||a.pattern==="aerokon";
  const wrapDelta=config.wraps-5;
@@ -436,7 +455,7 @@ function technicalBaseline(config,liquid) {
  if(config.wire==="nife30"&&config.atom==="gtr"){result.palate+=.2;result.harmony+=.1;}
  // KLP-specific hypothesis calibrated directionally from the reported 220°C/16 W
  // comparison. This is NOT a measured effect or universal benefit of NiFe30.
- if(config.atom==="klp"&&config.wire==="nife30"&&config.wraps===6 &&
+ if(config.atom==="klp"&&config.wire==="nife30"&&modeFor(config)==="tc"&&config.wraps===6 &&
     Math.abs(config.power-16)<=.5 && Math.abs(config.temp-220)<=5){
    result.spectrum+=.20;result.simultaneity+=.10;result.palate+=.20;
    result.offense+=.50;result.th+=.45;result.harmony+=.10;
@@ -508,7 +527,7 @@ function analyze(input,liquid={},objective="complete"){
   "Airflow: "+air.label+(res.physical.areaMm2!=null?", arie nominală "+res.physical.areaMm2+" mm²":"")+
    "; aria geometrică nu prezice singură debitul.",
   "Build: "+w.name+", Ø"+config.coilMm+", "+config.wraps+" spire, poziție "+config.position+
-   ", "+(w.type==="tc"?"TC "+config.temp+"°C / limită "+config.power+" W":"WATT "+config.power+" W")+".",
+   ", "+(modeFor(config)==="tc"?"TC "+config.temp+"°C / limită "+config.power+" W":"WATT "+config.power+" W")+".",
   "Clopot: "+bellFor(config.atom,config.bell).name+"."
  ];
  if(air.optional||air.estimated)notes.push("Configurație airflow opțională/orientativă; verifică piesele deținute.");
@@ -520,22 +539,27 @@ function analyze(input,liquid={},objective="complete"){
  if(config.atom==="dvarwcl"&&config.air==="single12"&&config.wire==="k128"&&config.wraps===5)
   notes.push("Dvarw CL: 1×1,2 cu K1 28 GA/5 merge bine conform testului personal; nu îl considera inferior în mod absolut lui 3×0,6/6. Lichidul și puterea nu au fost precizate.");
  if(config.wire==="nife52")notes.push("NiFe52 rămâne fără verdict universal cross-alloy față de Dicodes NiFe30.");
- if(config.atom==="gtr"&&config.wire==="nife30")
+ if(config.wire==="nife30"&&modeFor(config)==="watt"){
+  notes.push("NiFe30 în WATT la "+config.power+" W; chipset "+(NIFE30_WATT.chipsets[config.chipset]||"nespecificat")+". Dicodes, YiHi, ARC1 și DNA sunt opțiuni pentru moduri electronice compatibile, nu patru teste personale confirmate.");
+  if(config.wraps===7&&Math.abs(config.power-12)<.1)
+   notes.push("Personal: la 7 spire, NiFe30 în WATT 12 W a avut o căldură mai echilibrată decât la 13 W. Separat, Zivipf NiFe52/6 a mers bine în TC; s-au schimbat aliajul, spirele și regimul, deci nu avem o comparație izolată.");
+ }
+ if(config.atom==="gtr"&&config.wire==="nife30"&&modeFor(config)==="tc")
   notes.push(config.wraps===7?
    "GTR + Dicodes NiFe30/7: utilizatorul raportează TC coerent la 230°C, limită 16 W; NiFe30/6 rămâne funcțional. Efectul izolat al unei spire în plus NU a fost demonstrat.":
    "GTR + Dicodes NiFe30/6: variantă funcțională istorică; noul NiFe30/7 este preferat personal pentru reglare TC mai coerentă, fără concluzie universală.");
  if(config.atom==="gtr"&&config.wire==="nife52"&&config.wraps===6)
   notes.push("GTR + Zivipf NiFe52/6 TCR310: alegere personală la egalitate cu Dicodes NiFe30/7, nu cu setări TC identice.");
  if(config.atom==="415"){
-  if(config.wire==="nife30"&&config.wraps===7)notes.push("415 Cool + Dicodes NiFe30/7 TCR320: egal preferat cu Zivipf NiFe52/6 TCR310; nu se transferă setări TC de pe GTR.");
+  if(config.wire==="nife30"&&modeFor(config)==="tc"&&config.wraps===7)notes.push("415 Cool + Dicodes NiFe30/7 TCR320: egal preferat cu Zivipf NiFe52/6 TCR310; nu se transferă setări TC de pe GTR.");
   if(config.wire==="nife52"&&config.wraps===6)notes.push("415 Cool + Zivipf NiFe52/6 TCR310: egal preferat cu Dicodes NiFe30/7.");
   if(config.wire==="k128"&&config.wraps===6)notes.push("415 Cool + Kanthal K1 28 GA / 6 spire: a doua alegere; 28/5 rămâne disponibil istoric.");
  }
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
- if(config.atom==="klp"&&config.wire==="nife30")notes.push(
+ if(config.atom==="klp"&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(
    "KLP NiFe30: 220°C / 16 W sunt setările raportate pe DNA, nu recomandări universale. Airflow-ul, lichidul și reglajele comparatorului nu au fost încă documentate.");
- if(NIFE30_FAMILY.candidates.includes(config.atom)&&config.wire==="nife30")notes.push(NIFE30_FAMILY.explanation);
+ if(NIFE30_FAMILY.candidates.includes(config.atom)&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(NIFE30_FAMILY.explanation);
  if(config.atom==="asylum"&&config.bell==="dome")
    notes.push("Asylum Dome nu preia automat validarea Flat/28/6.");
  const ext=anchors.map(o=>({title:o.title,text:o.text,evidence:o.evidence}));
@@ -599,6 +623,7 @@ function bestForLiquid(liquid,objective="complete",top=16){
  }).sort((a,b)=>b.score-a.score).slice(0,top);
 }
 window.RTA_SENSORY_CORE={version:V,axioms:AXIOMS,dimensions:DIMENSIONS,platforms:PLATFORMS,
+ nife30Watt:NIFE30_WATT,allowedRegimes,modeFor,
  wires:WIRES,observations:OBS,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalSetups,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,
  physical,analyze,priority,rankBuilds,matchLiquids,bestForLiquid,liquidTags,permitted};
 })();
