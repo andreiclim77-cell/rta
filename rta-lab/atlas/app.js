@@ -57,7 +57,7 @@ function buildString(result){
 }
 function buildEnergy(result){
  const c=result.config,w=core.wires[c.wire];
- return w.type==="tc"?"TC "+c.temp+"°C · limită "+c.power+" W":"WATT "+c.power+" W";
+ return core.modeFor(c)==="tc"?"TC "+c.temp+"°C · limită "+c.power+" W":"WATT "+c.power+" W"+(c.wire==="nife30"&&c.chipset?" · "+core.nife30Watt.chipsets[c.chipset]:"");
 }
 function setupSummary(result){
  const c=result.config;
@@ -143,7 +143,7 @@ function renderCoil(config){
   return '<circle cx="'+cx+'" cy="79" r="4" fill="#80c9bc"/>'+
    '<path d="M'+cx+' 75 L'+cx+' 54" fill="none" stroke="#90d7cb" stroke-width="2" stroke-linecap="round" class="air-beams"/>';
  }).join("");
- const ct=core.wires[config.wire].type==="tc";
+ const ct=core.modeFor(config)==="tc";
  return '<svg viewBox="0 0 240 100" role="img" aria-label="Schemă animată: '+number+' spire și '+holes+(holes===1?' canal':' canale')+' de aer, nu simulare fizică">'+
  '<path d="M15 43H48 M192 43H224" stroke="#819c9d" stroke-width="3"/>'+
  rings+holeDots+'<path d="M45 85H195" stroke="#5d8f84" opacity=".4"/>'+
