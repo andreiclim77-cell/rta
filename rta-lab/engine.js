@@ -363,6 +363,7 @@ function buildOutput(atom, wire, liquid) {
       output.noteClass = "valid";
     }
   }
+  if(wire.id==="nife30")output.note += " NiFe30 se poate selecta și în WATT la 12 W pe Dicodes, YiHi, ARC1 și DNA (configuratorul Sensory DNA). Zivipf NiFe52/6 în TC rămâne separat.";
   if(wire.id==="nife30"&&["klp","gtr","kx","kprime"].includes(atom.id)){
     output.note += " PREFERINȚĂ PERSONALĂ: Dicodes NiFe30 (TCR320) = Zivipf NiFe52 (TCR310) la alegere, apoi K1; aceste două aliaje NU sunt identice.";
   }
