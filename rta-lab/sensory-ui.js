@@ -8,7 +8,7 @@ const storeKey="rta-sensory-dna-choice-20261013";
 const viewKey="rta-sensory-dna-active-view";
 const physicalClKey="rta-cl-physical-units-v1-20261014";
 const physicalClCount=3;
-const configFields=["atom","bell","air","wire","wraps","coilMm","position","power","temp"];
+const configFields=["atom","bell","air","wire","wraps","coilMm","position","power","temp","regime","chipset"];
 const blankClUnit=()=>({saved:null,draft:null,source:null});
 const states={explorer:{atom:"",category:"NET complex"},main:{atom:"",category:"NET complex"}};
 let configs={},active="explorer";
@@ -136,6 +136,14 @@ function setConfig(atomId,changes,view){
   const preset=core.wireSetup(atomId,next.wire);
   next.power=preset.power;
   next.temp=preset.temp;
+  next.regime=core.wires[next.wire].type==="tc"?"tc":"watt";
+  next.chipset="";
+ }
+ if(changes.regime&&next.wire==="nife30"&&next.regime!==before.regime){
+  const preset=core.wireSetup(atomId,"nife30");
+  next.power=next.regime==="watt"?core.nife30Watt.power:preset.power;
+  next.temp=preset.temp;
+  next.chipset="";
  }
  if(atomId==="dvarwcl"){
   physicalClUnits[activePhysicalCl].draft=next;
@@ -240,7 +248,7 @@ function topBuilds(config,liquid,objective){
  return arr.slice(0,3).map((x,i)=>{
   const b=x.config,wire=core.wires[b.wire];
   const sel=config.wire===b.wire&&config.wraps===b.wraps;
-  const t=wire.type==="tc"?"TC "+b.temp+"°C":"WATT "+b.power+" W";
+  const t=core.modeFor(b)==="tc"?"TC "+b.temp+"°C":"WATT "+b.power+" W";
   return '<button type="button" class="sd-build'+(sel?' selected':'')+'" data-sd-pick-wire="'+
    esc(b.wire)+'" data-sd-pick-wraps="'+b.wraps+'"><span class="sd-build-rank">'+
    (i+1)+'</span><span class="sd-build-title"><strong>'+esc(wire.name)+
@@ -291,10 +299,10 @@ function content(view){
  const technical=[
   "Structură "+tech.pattern,
   airCfg.holes?airCfg.holes.map(n=>n.toString().replace(".",",")).join(" + ")+" mm":"AFC fără cote inventate",
-  wire.type==="tc"?"TC":"WATT",
+  core.modeFor(config)==="tc"?"TC":"WATT",
   analysis.physical.areaMm2==null?"Arie nedefinită":"Arie nominală "+analysis.physical.areaMm2+" mm²"
  ];
- const isTC=wire.type==="tc";
+ const isTC=core.modeFor(config)==="tc";
  const stage=stageIds(view);
  let profileControls=view==="explorer"?
   '<label class="sd-field sd-profile-field"><span>Profil de lichid pentru evaluare</span><select data-sd-profile="explorer">'+
@@ -325,7 +333,17 @@ function content(view){
    choice("Clopot / cameră","bell",bellOptions,view,bellOptions.length===1)+
    choice("Airflow / insert","air",airOptions)+
    choice("Sârmă / material","wire",wireOptions)+
-   buildSelect(config)+'</div>'+personalSetupsMarkup(config)+
+   buildSelect(config)+
+   (config.wire==="nife30"?
+    choice("Regim NiFe30","regime",[
+     {value:"tc",label:"TC · setările existente",selected:config.regime},
+     {value:"watt",label:"WATT · referință personală 12 W",selected:config.regime}
+    ]):"")+
+   (config.wire==="nife30"&&!isTC?
+    choice("Chipset electronic","chipset",[
+     {value:"",label:"Nespecificat · selectează modul",selected:config.chipset},
+     ...Object.entries(core.nife30Watt.chipsets).map(([id,label])=>({value:id,label,selected:config.chipset}))
+    ]):"")+'</div>'+personalSetupsMarkup(config)+
   '<details class="sd-advanced"><summary>Calibrare fină · poziție coil, diametru, WATT / TC</summary>'+
   '<div class="sd-controls">'+
    choice("Diametru coil","coilMm",[2,2.5,3].map(x=>({value:x,label:"Ø"+String(x).replace(".",",")+" mm",selected:config.coilMm})))+
@@ -333,7 +351,7 @@ function content(view){
      {value:"low",label:"Mai jos",selected:config.position},
      {value:"standard",label:"Standard",selected:config.position},
      {value:"high",label:"Mai sus",selected:config.position}])+
-   '<label class="sd-field"><span>Putere / limită TC (W)</span><input type="number" min="7" max="20" step="0.5" data-sd-field="power" value="'+config.power+'"></label>'+
+   '<label class="sd-field"><span>'+(isTC?"Plafon putere TC (W)":"Putere WATT (W)")+'</span><input type="number" min="7" max="20" step="0.5" data-sd-field="power" value="'+config.power+'"></label>'+
    (isTC?'<label class="sd-field"><span>Temperatură TC (°C)</span>'+
     '<input type="number" min="180" max="270" step="5" data-sd-field="temp" value="'+config.temp+'"></label>':'')+
   '</div><p class="sd-fine-note">Modelul folosește indicatori termici relativi, nu calculează temperatura efectivă a spirelor. Montajul și alimentarea rămân de verificat practic.</p></details></section>'+ 
