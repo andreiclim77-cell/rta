@@ -38,7 +38,7 @@ assert.equal(c.personalPreference(tc).tier,1,'Original TC preference must remain
 assert.equal(c.analyze(tc,sample,'complete').partialEvidence.length,1,'TC evidence must remain');
 const invalid=c.config('gtr',{...gt,regime:'watt',power:12,chipset:'made-up'});
 assert.equal(invalid.chipset,'','Invalid chipset is not claimed as supported');
-const nife52=c.config('gtr',{wire:'nife52',regime:'watt',chipset:'dna'});
+const nife52=c.config('gtr',{wire:'nife52',wraps:6,regime:'watt',chipset:'dna'});
 assert.equal(c.modeFor(nife52),'tc','NiFe52 has no new power-mode preset');
 assert.equal(nife52.chipset,'');
 assert.equal(c.config('klp',{wire:'nife30',regime:'tc'}).temp,220);
