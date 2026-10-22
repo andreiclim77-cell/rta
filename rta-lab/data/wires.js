@@ -44,9 +44,10 @@ window.RTA_WIRES=[
     "name":"NiFe TC · NiFe30 / NiFe52",
     "wraps":"NiFe30 6 (GTR/415 Cool 7) · NiFe52 6",
     "diam":"Ø2,5 mm",
-    "power":"TC 225–235°C · limită 12–15 W",
+    "power":"TC 225–235°C · limită 12–15 W; RESISTHERM NiFe30 și WATT 12 W",
     "kind":"TC",
-    "role":"finețe, consistență termică, layering și completitudine; Dicodes RESISTHERM NiFe30 TCR 320 = 6 spire în general, dar GTR și 415 Cool = 7 spire preferate personal (6 încă funcționale), rolă 5,5 Ω/m; Zivipf NiFe52 TCR 310 = 6 spire pe toate platformele; pe 415 Cool, apoi K1 28 GA / 6 spire",
+    "wattNiFe30":{"powerW":12,"chipsets":["Dicodes","YiHi","ARC1","DNA"],"observedWraps":7,"status":"opțiune personală WATT, căldură mai echilibrată decât la 13 W; nu reprezintă test pe toate modurile"},
+    "role":"NiFe30 alternativ WATT la 12 W (Dicodes, YiHi, ARC1, DNA), fără modificarea NiFe52/6 în TC; finețe, consistență termică, layering și completitudine; Dicodes RESISTHERM NiFe30 TCR 320 = 6 spire în general, dar GTR și 415 Cool = 7 spire preferate personal (6 încă funcționale), rolă 5,5 Ω/m; Zivipf NiFe52 TCR 310 = 6 spire pe toate platformele; pe 415 Cool, apoi K1 28 GA / 6 spire",
     "materialSpecs":{
       "dicodesResisthermNiFe30":{
         "name":"Dicodes RESISTHERM NiFe30",
