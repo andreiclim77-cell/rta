@@ -101,6 +101,28 @@ for(const id of ['asylum','gtr','415','klp','gtone']){
  assert.equal((markup.match(/class="material-build-facts"/g)||[]).length,3,'Facts in all three cards on '+id);
  assert.equal((markup.match(/data-atlas-build=/g)||[]).length,3,'Each card transfers exact config on '+id);
 }
+// NiFe30 WATT must never leak through material selection into another TC preset.
+m.selectAtom('415');
+assert.equal(m.setConfig({wire:'k128'}),true);
+assert.equal(m.wireConfig('415','nife30').regime,'tc','Returning from Kanthal must restore the NiFe30 TC preset');
+assert.equal(m.wireConfig('415','nife30').wraps,7);
+assert.equal(m.setConfig({wire:'nife30'}),true);
+assert.equal(m.state.config.regime,'tc');
+assert.equal(c.personalPreference(m.state.config).tier,1,'415 NiFe30 TC should remain first-tier');
+assert.equal(m.setConfig({regime:'watt'}),true);
+assert.equal(m.state.config.regime,'watt');
+assert.equal(m.state.config.power,12);
+assert.equal(m.setConfig({chipset:'dna'}),true);
+assert.equal(m.state.config.chipset,'dna');
+const nifeWattAcrossPlatform=m.wireConfig('gtr','nife30');
+assert.equal(nifeWattAcrossPlatform.regime,'watt','Keep chosen WATT regime when switching platform, not material');
+assert.equal(nifeWattAcrossPlatform.power,12);
+assert.equal(m.setConfig({wire:'nife52'}),true);
+assert.equal(m.state.config.regime,'tc','NiFe52 must remain TC');
+assert.equal(m.setConfig({wire:'nife30'}),true);
+assert.equal(m.state.config.regime,'tc','Switching back to NiFe30 from NiFe52 must restore TC');
+assert.equal(m.state.config.chipset,'');
+assert.equal(c.personalPreference(m.state.config).tier,1);
 m.selectAtom('klp');m.setConfig({wire:'nife30'});assert.equal(m.state.config.temp,220);assert.equal(m.state.config.power,16);
 m.setConfig({wire:'nife52'});assert.equal(m.state.config.temp,230);assert.equal(m.state.config.power,13);
 assert.equal(c.personalPreference(m.state.config).tier,1,'KLP NiFe52 is first-level preference');

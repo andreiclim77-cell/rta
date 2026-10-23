@@ -117,7 +117,26 @@ function topLiquids(prefix){
 }
 
 function compatibleWireAtoms(wire){return atoms.filter(a=>core.variants(a.id).some(v=>v.wire===wire));}
-function wireConfig(id,wire){if(id===state.atom&&wire===state.config.wire)return {...state.config};const base=id===state.atom?state.config:core.defaultConfig(id),variants=core.variants(id).filter(v=>v.wire===wire),v=((id==='gtr'||id==='415')&&wire==='nife30'?variants.find(v=>v.wraps===7):id==='415'&&wire==='k128'?variants.find(v=>v.wraps===6):variants.find(v=>v.wraps===base.wraps))||variants[0];return v?core.config(id,{...base,...v,...core.wireSetup(id,wire)}):null;}
+function wireConfig(id,wire){
+ if(id===state.atom&&wire===state.config.wire)return {...state.config};
+ const base=id===state.atom?state.config:core.defaultConfig(id);
+ if(!base||!core.wires[wire])return null;
+ const variants=core.variants(id).filter(v=>v.wire===wire);
+ const v=((id==='gtr'||id==='415')&&wire==='nife30'?variants.find(v=>v.wraps===7):
+   id==='415'&&wire==='k128'?variants.find(v=>v.wraps===6):
+   variants.find(v=>v.wraps===base.wraps))||variants[0];
+ if(!v)return null;
+ // A material change chooses that material's own regime. WATT must not leak
+ // from Kanthal to NiFe30. A move to another atomizer with the same material
+ // may preserve the explicitly chosen NiFe30 WATT regime and chipset.
+ const preserve=wire===state.config.wire;
+ const preferred=core.wires[wire].type==='tc'?'tc':'watt';
+ const regime=preserve&&core.allowedRegimes(wire).includes(state.config.regime)?state.config.regime:preferred;
+ const chipset=preserve&&wire==='nife30'&&regime==='watt'?state.config.chipset:'';
+ const settings=core.wireSetup(id,wire);
+ const power=wire==='nife30'&&regime==='watt'?core.nife30Watt.power:settings.power;
+ return core.config(id,{...base,...v,...settings,regime,chipset,power});
+}
 function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?(wire==='nife30'?'NiFe30 TCR320 · TC sau alternativ WATT 12 W pe Dicodes, YiHi, ARC1, DNA.':'NiFe52 TCR310 · TC, preseturi proprii platformei.'):w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
 function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objective).map((r,i)=>'<button type="button" data-journey-liquid="'+r.index+'" data-journey-wire="'+cfg.wire+'" data-journey-atom="'+cfg.atom+'"><span>0'+(i+1)+'</span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('');}
 
