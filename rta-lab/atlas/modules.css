@@ -221,3 +221,12 @@
 .wire-selected-outside{margin:16px 0;padding:12px;border:1px dashed #637a71;border-radius:12px}
 .wire-selected-outside>p{font-size:12px;color:#dfc69a;line-height:1.6}
 .wire-selected-outside>.wire-platform-grid{margin-bottom:0}
+
+
+/* One-entry wire overview; duplicate selection controls are deferred until
+   the user explicitly opens a physical platform at the end of the journey. */
+.wire-all-materials{border:1px solid #365955;border-radius:12px;padding:10px 13px;margin:14px 0}
+.wire-all-materials>summary{color:#e7c797;line-height:1.55;font-size:14px;font-weight:600;cursor:pointer;min-height:44px;padding:10px 4px}
+.wire-all-materials[open]>.wire-library-grid{margin-top:12px}
+.wire-detail-controls{margin:25px 0 14px;padding:12px;border:1px solid #385656;border-radius:13px}
+@media(max-width:760px){.wire-all-materials{padding:9px}.wire-detail-controls{display:grid;grid-template-columns:minmax(0,1fr)}}

@@ -211,28 +211,69 @@ function materialPaths(){
 
 /* Canonical personal wire references are descriptive preferences, NOT a claim
  * that the same coil is installed in all physical atomizer units. */
-const WIRE_REFERENCE=Object.freeze({
- nife30:[["gtr",7,"GTR · prima alegere TC"],["415",7,"415 Cool · prima alegere"],["klp",7,"KLP · coerență TC"],["kx",7,"Kayfun X"],["kprime",7,"Kayfun Prime"]],
- nife52:[["gtr",6,"GTR · prima alegere TC"],["415",6,"415 Cool · prima alegere"],["klp",6,"KLP"],["kprime",6,"Kayfun Prime"],["kx",6,"Kayfun X"]],
- k128:[["415",6,"415 Cool · a doua alegere"],["dvarwcl",6,"Dvarw CL · 3×0,6"],["dvarwfl",6,"Dvarw FL · 3×0,6"],["muted",6,"Muted+"],["kv3",6,"Kayfun Mini V3"],["klp",5,"KLP · 28/5"]],
- k129:[["gtone",6,"GT One · prima alegere"],["kv3",6,"Kayfun Mini V3"],["klp",5,"KLP · TH direct"]],
- k1clap:[["415",5,"415 Cool · Clapton specialist"]],
- ssclap:[["dvarwfl",5,"Dvarw FL · specialist tehnic"]]
-});
+/* Last user preferences are taken from the canonical RTA Sensory Core and
+ * the current device's physical CL saves, NOT a hand-maintained list.
+ * Historical tests and unmeasured setups are labelled accurately. */
 function wireSavedBuilds(wire){
- const rows=(WIRE_REFERENCE[wire]||[]).map(([id,wraps,label])=>{
-  if(!core.permitted(id,wire,wraps))return null;
-  const settings=core.wireSetup(id,wire,wraps);
-  const config=core.config(id,{wire,wraps,...settings,regime:core.wires[wire].type==="tc"?"tc":"watt",
-   ...(wire==="ssclap"&&id==="dvarwfl"?{air:"single12"}:{})});
-  return {config,label,origin:wire==="ssclap"?"model":"reference"};
- }).filter(Boolean);
+ const active=new Set(atoms.map(a=>a.id)),rows=[],seen=new Set();
+ const append=(config,label,origin,tier=3)=>{
+  if(!config||!active.has(config.atom)||!core.permitted(config.atom,config.wire,Number(config.wraps)))return;
+  const key=[config.atom,config.wire,config.wraps,config.air,config.regime].join("/");
+  if(seen.has(key))return;
+  seen.add(key);rows.push({config,label,origin,tier});
+ };
+ const build=(atom,wraps,air)=>{
+  const settings=core.wireSetup(atom,wire,wraps);
+  return core.config(atom,{wire,wraps,...settings,
+   ...(air?{air}:{}),regime:core.wires[wire].type==="tc"?"tc":"watt"});
+ };
  const snap=clSnapshot();
  if(snap.available)snap.units.forEach((unit,i)=>{
-  const saved=unit.saved;
-  if(!saved||saved.wire!==wire||!core.permitted("dvarwcl",wire,saved.wraps))return;
-  rows.unshift({config:{...saved,atom:"dvarwcl"},label:"Dvarw CL "+(i+1)+" · setup local salvat",origin:"local"});
+  if(unit.saved?.wire===wire&&core.permitted("dvarwcl",wire,unit.saved.wraps))
+   append({...unit.saved,atom:"dvarwcl"},"Dvarw CL #"+(i+1)+" · montaj salvat pe acest dispozitiv","local",0);
  });
+ for(const recorded of core.personalSetups("dvarwcl")){
+  if(recorded.wire!==wire)continue;
+  const config=build("dvarwcl",recorded.wraps,recorded.air);
+  append(config,"Dvarw CL · "+recorded.title+" · "+recorded.status,"personal",recorded.status==="Preferința principală"?1:2);
+ }
+ const isHistoric=entry=>wire==="nife30"&&entry.wraps===6||
+   /istoric|mai analitic|mai blând|inferior|alternative? (?:istoric|mai)/i.test(entry.title||"");
+ // Every exact, document-backed personal observation is considered, not
+ // only the five handpicked examples of the previous version.
+ for(const observation of core.observations){
+  if(observation.wire!==wire||!observation.wraps||!active.has(observation.atom))continue;
+  if(!core.permitted(observation.atom,wire,observation.wraps))continue;
+  const config=build(observation.atom,observation.wraps,observation.air);
+  const historical=isHistoric(observation);
+  append(config,observation.title+(historical?" · comparație istorică":" · observație personală"),
+    historical?"historical":"personal",historical?4:1);
+ }
+ // Additional latest declarations have no exact controlled A/B, but are
+ // still genuinely user-declared preferences and must appear as such.
+ const declared=[["nife30",7,["gtr","415","klp","kx","kprime"]],
+                 ["nife52",6,["gtr","415","klp","kx","kprime"]],
+                 ["k128",6,["muted","dvarwfl","dvarwcl","415"]],
+                 ["k129",6,["gtone"]]];
+ for(const [material,wraps,ids] of declared){
+  if(material!==wire)continue;
+  for(const id of ids){
+   if(!active.has(id)||!core.permitted(id,wire,wraps))continue;
+   const air=wire==="k128"&&["dvarwfl","dvarwcl"].includes(id)?"triple06":undefined;
+   const config=build(id,wraps,air),preference=core.personalPreference(config);
+   if(preference&&preference.tier<=2)
+    append(config,(atoms.find(a=>a.id===id)?.short||id)+" · "+preference.label+" · alegere declarată",
+      "personal",preference.tier);
+  }
+ }
+ // The current global NiFe geometry is always preferred over its historical
+ // six-wrap comparison even when both tests exist in the archive.
+ rows.sort((a,b)=>a.tier-b.tier||a.label.localeCompare(b.label,"ro"));
+ if(!rows.length){
+  const id=active.has("gtr")?"gtr":atoms[0].id;
+  const wraps=wire==="nife30"?7:wire==="nife52"?6:core.wires[wire].type==="clapton"?5:6;
+  append(build(id,wraps),"Punct de plecare tehnic · fără preferință personală confirmată","model",5);
+ }
  return rows;
 }
 function wirePalette(){
@@ -245,8 +286,8 @@ function wirePalette(){
   '<span class="wire-card-coil"><span class="wire-card-coil-visual">'+api.renderCoil(config)+'</span>'+
   '<strong>'+config.wraps+' spire</strong><small>Ø'+String(config.coilMm).replace(".",",")+' mm · preset</small></span>'+
   '<span class="wire-card-note">'+esc(wireIdentity(id))+'</span>'+
-  '<span class="wire-card-preferences"><strong>'+(id==="ssclap"?"Pereche tehnică din Lab":"Ultimele builduri preferate")+'</strong>'+
-  examples.map(x=>'<span class="wire-saved-build'+(x.origin==="model"?' is-model':'')+'">'+
+  '<span class="wire-card-preferences"><strong>'+(examples.some(x=>x.origin==="personal"||x.origin==="local")?"Ultimele preferințe și teste documentate":"Reper tehnic · fără test personal confirmat")+'</strong>'+
+  examples.map(x=>'<span class="wire-saved-build'+(["model","historical"].includes(x.origin)?' is-model':'')+'">'+
    esc(x.label)+' · '+x.config.wraps+' spire'+(x.origin==="local"?" · LOCAL":"")+'</span>').join('')+
   '</span><span class="wire-card-action">'+(selected===id?"SELECTAT · modifică mai jos":"Alege această sârmă ↗")+'</span></button>';
  }).join("");
@@ -254,7 +295,9 @@ function wirePalette(){
   '<span class="eyebrow">RTA LAB / ULTIMELE PREFERINȚE</span>'+
   '<h2>Toate sârmele, coilurile și buildurile tale.</h2>'+
   '<p>Toate cele șase materiale sunt vizibile înainte de alegere. NiFe30 Dicodes folosește 7 spire; NiFe52 Zivipf, 6. Celelalte construcții păstrează alegerile specifice atomizoarelor. Schemele nu sunt fotografii ale montajelor reale.</p>'+
-  '</div><div class="wire-family-grid wire-library-grid">'+cards+'</div>'+
+  '</div>'+(state.wireChosen?
+   '<details class="wire-all-materials"><summary>Schimbă sârma · vezi toate cele șase carduri cu ultimele preferințe</summary><div class="wire-family-grid wire-library-grid">'+cards+'</div></details>':
+   '<div class="wire-family-grid wire-library-grid">'+cards+'</div>')+
   '<p class="module-note">„Preferat în Lab” nu înseamnă „montat pe fiecare exemplar”. Fișele CL salvate în acest browser apar separat, fără a fi sincronizate automat cu alte dispozitive.</p></section>';
 }
 function platformReaction(id){if(!hasLiquid())return '<p class="module-note">Alege lichidul comun pentru descrierea reacției senzoriale. Poți vedea și cele cinci potriviri ale acestui build.</p>';const r=core.analyze(wireConfig(id,state.config.wire),liquid(),state.objective);return '<p>'+esc(api.vapeDescription(r,liquid()))+'</p><div class="platform-mini-dna">'+[['spectrum','Spectru'],['palate','Palat'],['harmony','Armonie']].map(([key,label])=>'<span><b>'+label+'</b><i style="--signal:'+r.signals[key]*20+'%" role="img" aria-label="'+esc(label+' · '+r.signals[key]+' indicator intern, nu măsurătoare')+'"></i></span>').join('')+'</div>';}
@@ -449,10 +492,11 @@ function setWireJourney(changes={}){
 function renderWire(){
  const m=contextual();if(!m)return;
  const phys=m.result.physical,w=core.wires[state.config.wire];
- el('pageWire').innerHTML=heading('04 / WIRE ANATOMY','Wire Lab.','Cinci familii, două aliaje NiFe distincte. Geometrie explicată, caracter contextual.')+workflow(['Alege sârma','Toate atomizoarele compatibile','Experiență · lichide · comparații'])+contextBar()+
+ el('pageWire').innerHTML=heading('04 / WIRE ANATOMY','Wire Lab.','Sârme → comparații → alegere → obiective → lichid → atomizor. Un singur flux, fără selecții duplicate.')+workflow(['Alege sârma','Compară materialele','Confirmă alegerea','Alege obiectivul','Alege lichidul','Alege atomizorul'])+
+ (state.wirePlatformChosen?contextBar():'')+
  wirePalette()+
- '<div class="wire-controls wire-picker">'+select('Alegere rapidă · sârmă','wireMaterial',[['','Alege sârma...'],...Object.entries(core.wires).map(([id,w])=>[id,w.name])],state.wireChosen?state.config.wire:'')+select('Atomizor opțional','wireAtom',[['','Toate atomizoarele active'],...(state.wireChosen?atoms.filter(a=>core.permitted(a.id,state.config.wire,state.config.wraps)):atoms).map(a=>[a.id,a.short])],state.wirePlatformChosen?state.atom:'')+select('Obiectiv','wireObjective',[['','Alege obiectivul...'],...objectives],state.wireJourney.objective||'')+'</div>'+wireJourneyControls()+wirePlatforms()+
- (state.wireChosen?window.RTA_ATLAS_SEARCH_UI.render('wire'):'')+
+ (state.wirePlatformChosen?'<div class="wire-controls wire-picker wire-detail-controls">'+select('Sârmă · reglaj de detaliu','wireMaterial',[['','Alege sârma...'],...Object.entries(core.wires).map(([id,w])=>[id,w.name])],state.config.wire)+select('Atomizor · detaliu','wireAtom',[['','Alege atomizorul...'],...atoms.filter(a=>core.permitted(a.id,state.config.wire,state.config.wraps)).map(a=>[a.id,a.short])],state.atom)+select('Obiectiv activ','wireObjective',[['','Alege obiectivul...'],...objectives],state.objective)+'</div>':'')+
+ (state.wirePlatformChosen?window.RTA_ATLAS_SEARCH_UI.render('wire'):'')+
  '<div class="wire-selected-experience"'+(state.wirePlatformChosen?'':' hidden')+'>'+(hasLiquid()?'<div class="module-next-actions"><button type="button" class="module-link" data-route="liquid">Vezi și celelalte atomizoare pentru acest lichid ↗</button><button type="button" class="module-link" data-route="atomizer">Explorează acest atomizor în Atlas ↗</button></div>':'')+
  '<div class="wire-workspace"><div class="wire-stage"><span class="eyebrow">'+esc(core.modeFor(state.config).toUpperCase())+' / '+esc(name(state.atom))+'</span><h2>'+esc(w.name)+'</h2><div class="coil-stage">'+api.renderCoil(state.config)+'</div><div class="geometry-readout"><span><b>'+phys.widthMm+' mm</b>lățime estimată coil</span><span><b>'+esc(phys.areaMm2==null?'nefixată':phys.areaMm2+' mm²')+'</b>arie nominală aer</span></div><p class="module-note">Schemă explicativă. Aria orificiilor nu este debit; lățimea coilului este o aproximație geometrică.</p><p class="wire-identity">'+esc(state.config.wire==='nife30'&&core.modeFor(state.config)==='watt'?'NiFe30 în WATT '+state.config.power+' W · '+(core.nife30Watt.chipsets[state.config.chipset]||'chipset nespecificat')+'. La 7 spire / 12 W ai raportat temperatură mai echilibrată a vaporilor decât la 13 W. NiFe52/6 în TC este o observație distinctă.':state.atom==='gtr'&&w.type==='tc'?'GTR: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt la egalitate ca preferință. NiFe30/6 funcționează și rămâne selectabil; noul 7 este mai coerent în testul personal, fără dovadă de cauzalitate izolată.':state.atom==='415'&&w.type==='tc'?'415 Cool: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt primele alegeri personale, apoi K1 28 GA / 6 spire. Reglajele TC observate pe GTR nu se transferă pe 415.':state.atom==='klp'&&w.type==='tc'?'KLP: Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt preferințe de prim nivel. Testul DNA 220°C/16 W este EXCLUSIV vechiul montaj NiFe30/6, nu un reglaj confirmat pe /7.':w.type==='tc'?'TC: Dicodes NiFe30 TCR320/7 este geometria personală nouă pe orice atomizor compatibil; Zivipf NiFe52 TCR310/6 rămâne separat. Vechiul NiFe30/6 este disponibil pentru comparație.':'Buildurile urmează permisiunile și observațiile canonice ale platformei.')+'</p>'+(!window.RTA_ATLAS_DUEL?.state.editing?'<button type="button" class="match-button" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(state.config)))+'">Compară această configurație în Duel ↗</button>':'')+'</div><section class="wire-panel">'+controls()+'</section></div>'+
  (state.config.wire==='nife30'?'<figure class="wire-product-photo"><img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30: rolă cu eticheta 320 și 5,5 Ω/m, lângă ambalajul metalic de referință" loading="lazy" decoding="async" width="500" height="333"><figcaption><span class="eyebrow">MATERIAL ÎN PRIM-PLAN / FOTO REALĂ</span><h2>Dicodes RESISTHERM NiFe30.</h2><p>Fotografie de produs, nu a rolei personale. Ambalaj de referință; sursa menționează că lotul actual este livrat fără cutia metalică.</p><a href="https://www.vapesbyenushi.com/dicodes-resistherm-nife30-temperature-control-resistance-wire/" target="_blank" rel="noopener noreferrer">Foto: Vapes by Enushi / Dicodes ↗</a></figcaption></figure>':'')+
@@ -479,7 +523,12 @@ function init(){
   const target=e.target.closest?.('[data-wire-reset],[data-platform],[data-edit-wire],[data-show-liquids],[data-atlas-liquid],[data-context-liquid],[data-pick-build],[data-wire-open],[data-atlas-build],[data-journey-wire],[data-wire-platform],[data-wire-family]');if(!target)return;
   const d=target.dataset;
   if(d.wireReset){setWireJourney({reset:true});return;}
-  if(d.wireFamily){setWireJourney({wire:d.wireFamily});el("wireProgress")?.scrollIntoView({block:"start",behavior:"instant"});return;}
+  if(d.wireFamily){
+   const explorer=window.RTA_LAB_EXPLORER;
+   if(explorer?.pickWire)explorer.pickWire(d.wireFamily);
+   else setWireJourney({wire:d.wireFamily});
+   el("expWireWizard")?.scrollIntoView({block:"start",behavior:"instant"});return;
+  }
   if(d.wirePlatform){const wire=state.config.wire,wraps=state.config.wraps;
    const cfg=state.wireChosen?wireConfig(d.wirePlatform,wire):core.defaultConfig(d.wirePlatform);
    if(cfg&&(!state.wireChosen||core.permitted(d.wirePlatform,wire,wraps))){
