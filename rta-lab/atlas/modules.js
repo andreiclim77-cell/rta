@@ -223,7 +223,8 @@ function wireSavedBuilds(wire){
  const rows=(WIRE_REFERENCE[wire]||[]).map(([id,wraps,label])=>{
   if(!core.permitted(id,wire,wraps))return null;
   const settings=core.wireSetup(id,wire,wraps);
-  const config=core.config(id,{wire,wraps,...settings,regime:core.wires[wire].type==="tc"?"tc":"watt"});
+  const config=core.config(id,{wire,wraps,...settings,regime:core.wires[wire].type==="tc"?"tc":"watt",
+   ...(wire==="ssclap"&&id==="dvarwfl"?{air:"single12"}:{})});
   return {config,label,origin:wire==="ssclap"?"model":"reference"};
  }).filter(Boolean);
  const snap=clSnapshot();
@@ -245,7 +246,7 @@ function wirePalette(){
   '<strong>'+config.wraps+' spire</strong><small>Ø'+String(config.coilMm).replace(".",",")+' mm · preset</small></span>'+
   '<span class="wire-card-note">'+esc(wireIdentity(id))+'</span>'+
   '<span class="wire-card-preferences"><strong>'+(id==="ssclap"?"Pereche tehnică din Lab":"Ultimele builduri preferate")+'</strong>'+
-  examples.slice(0,5).map(x=>'<span class="wire-saved-build'+(x.origin==="model"?' is-model':'')+'">'+
+  examples.map(x=>'<span class="wire-saved-build'+(x.origin==="model"?' is-model':'')+'">'+
    esc(x.label)+' · '+x.config.wraps+' spire'+(x.origin==="local"?" · LOCAL":"")+'</span>').join('')+
   '</span><span class="wire-card-action">'+(selected===id?"SELECTAT · modifică mai jos":"Alege această sârmă ↗")+'</span></button>';
  }).join("");
@@ -385,6 +386,7 @@ function compareWirePlatforms(){if(!hasLiquid()||!state.wirePlatformChosen)retur
 function setWireJourney(changes={}){
  const step=state.wireJourney;
  if(changes.reset){
+  if(step.objective&&typeof api.setObjective==="function")api.setObjective("");
   step.wrapsConfirmed=false;step.objective=null;step.family=null;step.liquidIndex=null;
   state.wireChosen=false;state.wirePlatformChosen=false;state.wireShowAll=false;
   state.atom="gtr";state.config=core.defaultConfig("gtr");
@@ -417,6 +419,9 @@ function setWireJourney(changes={}){
   if(changes.objective!==null&&!objectives.some(x=>x[0]===changes.objective))return false;
   step.objective=changes.objective;state.goalLocked=!!step.objective;
   if(step.objective)state.objective=step.objective;
+  // Wire, Liquid Match and Duel share the explicit sensory objective.
+  // The progressive stages still distinguish unselected versus selected.
+  if(typeof api.setObjective==="function")api.setObjective(step.objective||"");
  }
  if(changes.family!==undefined){
   if(changes.family!==null&&!WIRE_FAMILIES.includes(changes.family))return false;
