@@ -42,21 +42,21 @@ window.RTA_WIRES=[
   {
     "id":"nife30",
     "name":"NiFe TC · NiFe30 / NiFe52",
-    "wraps":"NiFe30 6 (GTR/415 Cool 7) · NiFe52 6",
+    "wraps":"NiFe30 7 pe toate platformele compatibile · NiFe52 6",
     "diam":"Ø2,5 mm",
     "power":"TC 225–235°C · limită 12–15 W; RESISTHERM NiFe30 și WATT 12 W",
     "kind":"TC",
     "wattNiFe30":{"powerW":12,"chipsets":["Dicodes","YiHi","ARC1","DNA"],"observedWraps":7,"status":"opțiune personală WATT, căldură mai echilibrată decât la 13 W; nu reprezintă test pe toate modurile"},
-    "role":"NiFe30 alternativ WATT la 12 W (Dicodes, YiHi, ARC1, DNA), fără modificarea NiFe52/6 în TC; finețe, consistență termică, layering și completitudine; Dicodes RESISTHERM NiFe30 TCR 320 = 6 spire în general, dar GTR și 415 Cool = 7 spire preferate personal (6 încă funcționale), rolă 5,5 Ω/m; Zivipf NiFe52 TCR 310 = 6 spire pe toate platformele; pe 415 Cool, apoi K1 28 GA / 6 spire",
+    "role":"NiFe30 alternativ WATT la 12 W (Dicodes, YiHi, ARC1, DNA), fără modificarea NiFe52/6 în TC; finețe, consistență termică, layering și completitudine; Dicodes RESISTHERM NiFe30 TCR 320 = 7 spire ca alegere personală globală, cu 6 istorice încă funcționale, rolă 5,5 Ω/m; Zivipf NiFe52 TCR 310 = 6 spire pe toate platformele; pe 415 Cool, apoi K1 28 GA / 6 spire",
     "materialSpecs":{
       "dicodesResisthermNiFe30":{
         "name":"Dicodes RESISTHERM NiFe30",
         "tcr":320,
         "resistanceOhmPerM":5.5,
-        "baselineWraps":6,
+        "baselineWraps":7,
         "coilDiameterMm":2.5,
-        "evidence":"etichetă rolă fizică fotografiată de utilizator la 30.08.2026; baseline 6 spire stabilit de utilizator la 30.08.2026 după recalcularea R0",
-        "status":"specificație material confirmată direct; geometrie baseline stabilită canonic"
+        "evidence":"identitate fir și 5,5 Ω/m confirmate pe etichetă 30.08.2026; alegerea de 7 spire pe toate atomizoarele declarată 29.10.2026; 6 spire rămân referință istorică",
+        "status":"specificație material confirmată direct; geometrie actualizată prin preferință declarată (nu A/B pentru toate RTA)"
       },
       "zivipfNiFe52":{
         "name":"Zivipf NiFe52",
