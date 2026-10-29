@@ -50,9 +50,9 @@ assert.equal(dvarwFlLead.source,'model','Do not mislabel dedicated FL Clapton sp
 const expectedPersonal={
  "415":[['nife30',7],['nife52',6],['k128',6]],
  gtr:[['nife30',7],['nife52',6],['k128',5]],
- klp:[['nife30',6],['nife52',6],['k128',5]],
- kprime:[['nife30',6],['nife52',6],['k129',5]],
- kx:[['nife30',6],['nife52',6],['k128',5]],
+ klp:[['nife30',7],['nife52',6],['k128',5]],
+ kprime:[['nife30',7],['nife52',6],['k129',5]],
+ kx:[['nife30',7],['nife52',6],['k128',5]],
  gtone:[['k129',6],['k128',5]],muted:[['k128',6]],
  dvarwcl:[['k128',6]],dvarwfl:[['k128',6]],
  asylum:[['k128',6]],kv3:[['k128',6],['k129',6]]
@@ -123,10 +123,10 @@ assert.equal(m.setConfig({wire:'nife30'}),true);
 assert.equal(m.state.config.regime,'tc','Switching back to NiFe30 from NiFe52 must restore TC');
 assert.equal(m.state.config.chipset,'');
 assert.equal(c.personalPreference(m.state.config).tier,1);
-m.selectAtom('klp');m.setConfig({wire:'nife30'});assert.equal(m.state.config.temp,220);assert.equal(m.state.config.power,16);
+m.selectAtom('klp');m.setConfig({wire:'nife30'});assert.equal(m.state.config.wraps,7);assert.equal(m.state.config.temp,230);assert.equal(m.state.config.power,13);
 m.setConfig({wire:'nife52'});assert.equal(m.state.config.temp,230);assert.equal(m.state.config.power,13);
 assert.equal(c.personalPreference(m.state.config).tier,1,'KLP NiFe52 is first-level preference');
-m.setConfig({wire:'nife30'});assert.equal(c.personalPreference(m.state.config).tier,1);
+m.setConfig({wire:'nife30'});assert.equal(m.state.config.wraps,7);assert.equal(c.personalPreference(m.state.config).tier,1);
 const before=JSON.stringify(m.state.config);assert.equal(m.setConfig({wraps:5}),false);assert.equal(JSON.stringify(m.state.config),before);
 
 m.selectAtom('gtr');
