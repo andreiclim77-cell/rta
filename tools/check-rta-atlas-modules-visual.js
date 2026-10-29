@@ -13,6 +13,38 @@ async function main(){
   for(const [width,height] of [[360,800],[390,844],[1440,1000]]){
    const context=await browser.newContext({viewport:{width,height},isMobile:width<760,hasTouch:width<760});
    const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+   // User mobile report: see six actual coil diagrams + personal build references
+   // before any selection, and all 15 RTA platforms before narrowing.
+   await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#wire',{waitUntil:'domcontentloaded'});
+   await page.waitForSelector('#wireLibrary .wire-build-entry');
+   check(await page.locator('#wireLibrary .wire-build-entry').count()===6,'Wire Lab needs six visible material cards before selection');
+   check(await page.locator('#wireLibrary .wire-card-coil svg').count()===6,'All six wire cards need explicit coil schematics');
+   check(await page.locator('#wireLibrary .wire-card-preferences').count()===6,'Each material must list current Lab builds');
+   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===15,'Unselected Wire Lab must show all 15 active atomizers');
+   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Initial wire library must fit viewport');
+   await page.locator('#wireLibrary').scrollIntoViewIfNeeded();
+   await shot(page,'wire-all-preferences-'+width+'.png');
+   await page.locator('[data-wire-family="nife30"]').click();
+   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===8,'Wire choice must narrow to eight preliminary matches');
+   check(await page.locator('#wireJourneyWraps').inputValue()==='7','Dicodes NiFe30 current personal default is 7');
+   await page.locator('#wireJourneyWraps').selectOption('6');
+   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===6,'Wrap selection narrows matching to six');
+   await page.locator('#wireJourneyGoal').selectOption('th');
+   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===5,'TH goal narrows matching to five');
+   await page.locator('#wireJourneyFamily').selectOption('NET complex');
+   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===4,'NET category narrows matching to four');
+   const netIndex=await page.evaluate(()=>window.RTA_LIQUIDS.findIndex(x=>x.class==='NET complex'));
+   await page.locator('#wireJourneyLiquid').selectOption(String(netIndex));
+   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===3,'Actual liquid yields TOP 3');
+   check(await page.locator('#wirePlatformCatalog .wire-compatible-more').count()===1,'Remaining compatible atoms must stay accessible');
+   check(await page.evaluate(()=>window.RTA_ATLAS_MODULES.wirePlatformMatches().primary.every(x=>x.config.wire==='nife30'&&x.config.wraps===6)),
+    'All final recommendations must preserve explicitly selected NiFe30/6, not silently revert to 7');
+   await page.locator('#wirePlatformCatalog').scrollIntoViewIfNeeded();
+   await shot(page,'wire-progressive-final-'+width+'.png');
+   await page.locator('#wirePlatformCatalog [data-wire-reset]').click();
+   check(await page.locator('#wireLibrary .wire-build-entry').count()===6,'Reset must restore six wire cards');
+   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===15,'Reset must restore all 15 active atomizers');
+   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Progressive wire experience must never overflow viewport');
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
    check(await page.locator('#atlasBuilds .material-path').count()===3,'Atlas must show three full builds without selecting any liquid');
