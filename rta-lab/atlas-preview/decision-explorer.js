@@ -30,7 +30,7 @@ function available(wire,id){
 }
 function cfg(atom,wire,wraps){
  if(!core.permitted(atom,wire,wraps))return null;
- const base=core.defaultConfig(atom),settings=core.wireSetup(atom,wire);
+ const base=core.defaultConfig(atom),settings=core.wireSetup(atom,wire,wraps);
  const result=core.config(atom,{...base,wire,wraps,...settings});
  return result.wire===wire&&result.wraps===wraps?result:null;
 }
@@ -39,7 +39,8 @@ function candidates(wire,wraps){
 }
 function favoriteWrap(atom,wire){
  const existing=mod()?.buildLeads(atom)?.find(b=>b.config.wire===wire);
- return existing?.config.wraps||available(wire,atom)[0]||null;
+ const wraps=available(wire,atom);
+ return existing?.config.wraps||(wire==="nife30"&&wraps.includes(7)?7:wraps[0])||null;
 }
 function mean(xs){return xs.reduce((a,b)=>a+b,0)/Math.max(1,xs.length);}
 function signalAvg(results){
