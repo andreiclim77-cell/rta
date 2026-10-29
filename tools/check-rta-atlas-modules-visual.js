@@ -36,6 +36,9 @@ async function main(){
    const netIndex=await page.evaluate(()=>window.RTA_LIQUIDS.findIndex(x=>x.class==='NET complex'));
    await page.locator('#wireJourneyLiquid').selectOption(String(netIndex));
    check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===3,'Actual liquid yields TOP 3');
+   check(await page.locator('#wirePlatformCatalog .wire-specific-note').count()>0,'Selected wire cards must show build-specific estimated evidence');
+   check(!await page.locator('#wirePlatformCatalog').textContent().then(t=>t.includes('Spectru bogat și simultan pe 28/5')),
+    'An old K1 28/5 personal test must not be claimed for a selected NiFe30/6 build');
    check(await page.locator('#wirePlatformCatalog .wire-compatible-more').count()===1,'Remaining compatible atoms must stay accessible');
    check(await page.evaluate(()=>window.RTA_ATLAS_MODULES.wirePlatformMatches().primary.every(x=>x.config.wire==='nife30'&&x.config.wraps===6)),
     'All final recommendations must preserve explicitly selected NiFe30/6, not silently revert to 7');
