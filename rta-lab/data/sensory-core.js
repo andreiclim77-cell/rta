@@ -231,7 +231,7 @@ function wireSetup(atom,wire,wraps){
  // Historic KLP DNA 220°C/16 W report belongs ONLY to the six-wrap coil.
  // NiFe30/7 on KLP has no observed temperature/wattage; use generic orientation.
  if(atom==="klp"&&wire==="nife30"&&wraps===6)return {power:16,temp:220};
- if(atom==="gtr"&&wire==="nife30"&&wraps===7)return {power:16,temp:230}; // Reported for this GTR setup alone.
+ if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // GTR TC preset retained for both historical /6 and current /7, not a universal recommendation.
  return {power:w.power,temp:w.temp||230};
 }
 const OBS=[
