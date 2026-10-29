@@ -1,0 +1,42 @@
+name: RTA Wire progressive final deterministic release
+on:
+  push:
+    branches:
+      - feature/rta-wire-catalog-adaptive-match-20261029
+    paths:
+      - .github/workflows/rta-wire-progressive-final-gen-20261029.yml
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/rta-wire-catalog-adaptive-match-20261029
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Regenerate Atlas assets and verify receipt/cache
+        run: |
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-release.js --check
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview --check
+      - name: Focused regression
+        run: |
+          node tools/check-rta-atlas-modules.js
+          node tools/check-rta-decision-flows.js
+          node tools/check-rta-sensory-core.js
+          node tools/check-rta-atlas-preview.js
+      - name: Save deterministically generated release and caches
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas
+          if ! git diff --cached --quiet; then
+            git commit -m 'Regenerate final Wire Lab Atlas release and cache with build-scoped evidence'
+            git push origin HEAD:feature/rta-wire-catalog-adaptive-match-20261029
+          fi
