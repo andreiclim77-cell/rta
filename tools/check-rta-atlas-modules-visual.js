@@ -13,41 +13,55 @@ async function main(){
   for(const [width,height] of [[360,800],[390,844],[1440,1000]]){
    const context=await browser.newContext({viewport:{width,height},isMobile:width<760,hasTouch:width<760});
    const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
-   // User mobile report: see six actual coil diagrams + personal build references
-   // before any selection, and all 15 RTA platforms before narrowing.
+   // Latest user request: one ordered journey, with all six canonical wire
+   // cards and their saved build preferences visible before any choice.
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#wire',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#wireLibrary .wire-build-entry');
-   check(await page.locator('#wireLibrary .wire-build-entry').count()===6,'Wire Lab needs six visible material cards before selection');
-   check(await page.locator('#wireLibrary .wire-card-coil svg').count()===6,'All six wire cards need explicit coil schematics');
-   check(await page.locator('#wireLibrary .wire-card-preferences').count()===6,'Each material must list current Lab builds');
-   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===15,'Unselected Wire Lab must show all 15 active atomizers');
-   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Initial wire library must fit viewport');
+   check(await page.locator('#wireLibrary .wire-build-entry').count()===6,'Six material cards before selection');
+   check(await page.locator('#wireLibrary .wire-card-coil svg').count()===6,'All six materials show their real coil diagrams');
+   check(await page.locator('#wireLibrary .wire-card-preferences').count()===6,'All cards include documented personal builds');
+   const prefText=await page.locator('#wireLibrary').textContent();
+   check(prefText.includes('7 spire')&&prefText.includes('6 spire')&&prefText.includes('Mini V3')&&prefText.includes('K Prime'),
+    'Canonical preference list must include latest NiFe, Mini V3 and K Prime builds');
+   check(await page.locator('#expWireWizard').count()===1,'Only one comparator journey');
+   check(await page.locator('#wirePlatformCatalog').count()===0,'No obsolete early atomizer catalog');
+   check(await page.locator('#wireJourneyGoal').count()===0,'No duplicated goal selector');
+   check(await page.locator('#expWireWizard [data-wire-step="1"]').count()===1,'First step is wire');
+   check(await page.locator('#expWireWizard [data-wire-step="6"]').count()===0,'No atomizers before selecting liquid');
+   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Six wire cards overflow');
    await page.locator('#wireLibrary').scrollIntoViewIfNeeded();
    await shot(page,'wire-all-preferences-'+width+'.png');
    await page.locator('[data-wire-family="nife30"]').click();
-   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===8,'Wire choice must narrow to eight preliminary matches');
-   check(await page.locator('#wireJourneyWraps').inputValue()==='7','Dicodes NiFe30 current personal default is 7');
-   await page.locator('#wireJourneyWraps').selectOption('6');
-   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===6,'Wrap selection narrows matching to six');
-   await page.locator('#wireJourneyGoal').selectOption('th');
-   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===5,'TH goal narrows matching to five');
-   await page.locator('#wireJourneyFamily').selectOption('NET complex');
-   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===4,'NET category narrows matching to four');
+   check(await page.locator('#expWireWraps').inputValue()==='7','NiFe30 personal default 7');
+   check(await page.locator('#expWireWizard [data-wire-step="2"]').count()===1,'Comparison follows wire');
+   check(await page.locator('#expWireWizard [data-wire-step="3"]').count()===1,'Explicit final choice follows comparison');
+   check(await page.locator('#expWireGoal').count()===0,'Goal cannot appear before final confirmation');
+   await page.locator('#expWireWraps').selectOption('6');
+   await page.locator('[data-exp-toggle-compare]').click();
+   await page.locator('#expWireOther').selectOption('nife52');
+   await page.locator('#expWireOtherWraps').selectOption('6');
+   check(await page.locator('#expWireWizard .exp-matrix').count()===2,'Wire comparison uses same compatible platform set');
+   await page.locator('[data-exp-use-first]').click();
+   check(await page.locator('#expWireGoal').count()===1,'Final choice unlocks sensory objective');
+   await page.locator('#expWireGoal').selectOption('th');
+   check(await page.locator('[data-exp-family="wire"]').count()===4,'Four families after sensory goal');
+   await page.locator('[data-exp-family="wire"][data-exp-value="NET complex"]').click();
+   check(await page.locator('#expWireLiquid option').count()===254,'All 253 NET complex products and placeholder');
    const netIndex=await page.evaluate(()=>window.RTA_LIQUIDS.findIndex(x=>x.class==='NET complex'));
-   await page.locator('#wireJourneyLiquid').selectOption(String(netIndex));
-   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===3,'Actual liquid yields TOP 3');
-   check(await page.locator('#wirePlatformCatalog .wire-specific-note').count()>0,'Selected wire cards must show build-specific estimated evidence');
-   check(!await page.locator('#wirePlatformCatalog').textContent().then(t=>t.includes('Spectru bogat și simultan pe 28/5')),
-    'An old K1 28/5 personal test must not be claimed for a selected NiFe30/6 build');
-   check(await page.locator('#wirePlatformCatalog .wire-compatible-more').count()===1,'Remaining compatible atoms must stay accessible');
-   check(await page.evaluate(()=>window.RTA_ATLAS_MODULES.wirePlatformMatches().primary.every(x=>x.config.wire==='nife30'&&x.config.wraps===6)),
-    'All final recommendations must preserve explicitly selected NiFe30/6, not silently revert to 7');
-   await page.locator('#wirePlatformCatalog').scrollIntoViewIfNeeded();
+   await page.locator('#expWireLiquid').selectOption(String(netIndex));
+   check(await page.locator('#expWireWizard [data-wire-step="6"]').count()===1,'Only the liquid unlocks atomizers');
+   check(await page.locator('.exp-top-atoms article').count()===3,'Three matched atomizers');
+   check(await page.locator('#expWireWizard .exp-compatible-remainder').count()===1,'Remaining compatible atoms accessible');
+   check(await page.evaluate(()=>window.RTA_LAB_EXPLORER.rankedWireAtoms('nife30',6,window.RTA_LIQUIDS[window.RTA_LAB_EXPLORER.states.wire.liquidIndex],'th').slice(0,3).every(r=>r.result.config.wraps===6)),
+    'Explicit six-wrap comparison cannot silently revert to seven');
+   await page.locator('#expWireWizard [data-wire-step="6"]').scrollIntoViewIfNeeded();
    await shot(page,'wire-progressive-final-'+width+'.png');
-   await page.locator('#wirePlatformCatalog [data-wire-reset]').click();
-   check(await page.locator('#wireLibrary .wire-build-entry').count()===6,'Reset must restore six wire cards');
-   check(await page.locator('#wirePlatformCatalog > .wire-platform-grid > .wire-platform-card').count()===15,'Reset must restore all 15 active atomizers');
-   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Progressive wire experience must never overflow viewport');
+   await page.locator('.exp-top-atoms button').first().click();
+   check(await page.locator('#wireMaterial').count()===1,'Detailed controls only after chosen atom');
+   await page.locator('#expWireWizard [data-exp-reset-wire]').click();
+   check(await page.locator('#wireLibrary .wire-build-entry').count()===6,'Reset restores full library');
+   check(await page.locator('#expWireWizard [data-wire-step="6"]').count()===0,'Reset removes prior atomizer ranking');
+   check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Single flow horizontal overflow');
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
    check(await page.locator('#atlasBuilds .material-path').count()===3,'Atlas must show three full builds without selecting any liquid');
