@@ -64,8 +64,9 @@ async function main(){
    await page.locator('#wireAtom').selectOption('klp');
    check(await page.locator('#wireMaterial').inputValue()==='nife30','Wire-first flow must keep the explicitly selected Dicodes material');
    await page.locator('.wire-advanced summary').click();
-   check(await page.locator('#wirePower').inputValue()==='16','KLP Dicodes personal power ceiling');
-   check(await page.locator('#wireTemp').inputValue()==='220','KLP Dicodes personal TC setting');
+   check(await page.locator('#wireWraps').inputValue()==='7','KLP NiFe30 current personal build must use 7 spire');
+   check(await page.locator('#wirePower').inputValue()==='13','KLP/7 uses generic TC power cap; historical /6 used 16 W');
+   check(await page.locator('#wireTemp').inputValue()==='230','KLP/7 uses generic TC preset; historical /6 used 220°C');
    await page.locator('.wire-product-photo').evaluate(el=>el.scrollIntoView({block:'start',behavior:'instant'}));
    await shot(page,'wire-material-photo-'+width+'.png');
    check(await page.locator('.wire-product-photo img').evaluate(img=>img.naturalWidth)===500,'Original Dicodes photograph must load');
