@@ -191,6 +191,43 @@ const multi=duel.compare(duel.state.left,c.defaultConfig('gtone'));
 assert.ok(multi.changed.length>=3,'Changing platform and material cannot be advertised as a one-variable A/B');
 assert.ok(multi.left.result.dimensions.pleasure===null&&multi.right.result.dimensions.pleasure===null);
 assert.equal(duel.compare({atom:'invalid'},duel.state.left),null);
+// Latest user UX requirement: show six complete coil/preference cards and all
+// 15 active atomizers before selection. Then refine progressively until liquid.
+const wireStateBefore={...m.state,wireJourney:{...m.state.wireJourney},config:{...m.state.config}};
+m.state.wireChosen=false;m.state.wirePlatformChosen=false;
+m.state.wireJourney={wrapsConfirmed:false,objective:null,family:null,liquidIndex:null};
+const start=m.wirePlatformMatches();
+assert.equal(start.phase,0);assert.equal(start.primary.length,15);assert.equal(start.other.length,0);
+assert.equal((m.wirePalette().match(/data-wire-family="/g)||[]).length,6,'Show six material cards before selection');
+assert.equal((m.wirePalette().match(/<svg/g)||[]).length,6,'Show all six coils, including Dicodes');
+for(const wire of Object.keys(c.wires)){
+ const saved=m.wireSavedBuilds(wire);
+ assert.ok(saved.length>0,'Every material needs its latest Lab reference or explicitly technical specialist: '+wire);
+ assert.ok(saved.every(x=>c.permitted(x.config.atom,x.config.wire,x.config.wraps)),
+   'No card should show a forbidden build for '+wire);
+}
+assert.equal(m.wireSavedBuilds('nife30')[0].config.wraps,7);
+assert.equal(m.wireSavedBuilds('nife52')[0].config.wraps,6);
+m.state.wireChosen=true;m.state.atom='gtr';m.state.config=c.defaultConfig('gtr');
+const countStages=[
+ [{wrapsConfirmed:false,objective:null,family:null,liquidIndex:null},1,8],
+ [{wrapsConfirmed:true,objective:null,family:null,liquidIndex:null},2,6],
+ [{wrapsConfirmed:true,objective:'th',family:null,liquidIndex:null},3,5],
+ [{wrapsConfirmed:true,objective:'th',family:'NET complex',liquidIndex:null},4,4],
+ [{wrapsConfirmed:true,objective:'th',family:'NET complex',
+   liquidIndex:w.RTA_LIQUIDS.findIndex(l=>l.class==='NET complex')},5,3]
+];
+for(const [stage,phase,count] of countStages){
+ m.state.wireJourney=stage;
+ const x=m.wirePlatformMatches();
+ assert.equal(x.phase,phase,'Stage must follow explicit choices only');
+ assert.equal(x.primary.length,count,'Progressive shortlist size at phase '+phase);
+ assert.equal(x.primary.length+x.other.length,x.total,'Keep all remaining compatible atomizers accessible');
+ assert.ok(x.primary.every(row=>row.config.wire==='nife30'&&row.config.wraps===7),'Match exact chosen build');
+}
+m.state.wireChosen=wireStateBefore.wireChosen;m.state.wirePlatformChosen=wireStateBefore.wirePlatformChosen;
+m.state.wireJourney=wireStateBefore.wireJourney;m.state.config=wireStateBefore.config;m.state.atom=wireStateBefore.atom;
+console.log('WIRE PROGRESSIVE MODEL PASS: all six preferred-coil cards, 15 unfiltered atomizers, 8/6/5/4/3 shortlist with accessible remainder.');
 console.log('ATLAS MODULES PASS: 15 active platforms / 40 active units, all permitted materials and objectives, 700-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
 
 const market=w.RTA_ATLAS_MARKET;

@@ -208,7 +208,9 @@ function mountWizards(){
  }
  const w=byId('pageWire');
  if(w&&!w.querySelector('#expWireWizard')){
-  const anchor=w.querySelector('.module-intro');
+  // Personal coil gallery and staged matching must be seen FIRST.
+  // Keep the existing detailed comparator intact, below the matched RTA list.
+  const anchor=w.querySelector('#wirePlatformCatalog');
   if(anchor)anchor.insertAdjacentHTML('afterend',wireWizard());
  }
 }
@@ -291,7 +293,9 @@ function init(){
    mod().show('atomizer');return;
   }
   if(d.expFamily==='atlas'){A.family=d.expValue;A.liquidIndex=null;refreshWizard('atlas');return;}
-  if(d.expFamily==='wire'){W.family=d.expValue;W.liquidIndex=null;refreshWizard('wire');return;}
+  if(d.expFamily==='wire'){W.family=d.expValue;W.liquidIndex=null;
+   const m=mod();if(m?.state.wireChosen)m.setWireJourney({family:W.family});else refreshWizard('wire');
+   return;}
   if(d.expOpenAtom){
    const c=cfg(d.expOpenAtom,W.final,W.finalWraps);
    if(!c)return;
@@ -312,7 +316,14 @@ function init(){
    W[field]=field.toLowerCase().includes('wraps')?(value?Number(value):null):value||null;
    if(dependent)W[dependent]=null;
    if(['final','finalWraps'].includes(field)){W.family=null;W.liquidIndex=null;}
-   refreshWizard('wire');
+   // Retain the detailed comparator but synchronize the selection with
+   // the visible per-stage Atomizer matching, never silently default to 15.
+   const selected=(W.final&&['final','finalWraps'].includes(field))?W.final:W.first;
+   const selectedWraps=W.final&&['final','finalWraps'].includes(field)?W.finalWraps:W.wraps;
+   if(selected&&['first','wraps','final','finalWraps'].includes(field)){
+    const m=mod();
+    if(m)m.setWireJourney(selectedWraps?{wire:selected,wraps:selectedWraps}:{wire:selected});
+   }else refreshWizard('wire');
    byId(id)?.focus({preventScroll:true});
    return;
   }
@@ -323,7 +334,9 @@ function init(){
   }
   if(id==='expWireLiquid'){
    if(value&&catalog[Number(value)]?.class===W.family){
-    W.liquidIndex=Number(value);api().selectLiquid(W.liquidIndex);mod().show('wire');
+    W.liquidIndex=Number(value);api().selectLiquid(W.liquidIndex);
+    const m=mod();if(m?.state.wireChosen)m.setWireJourney({family:W.family,liquidIndex:W.liquidIndex});
+    else m?.show('wire');
    }else{W.liquidIndex=null;refreshWizard('wire');}
   }
  });
