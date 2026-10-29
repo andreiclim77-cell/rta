@@ -1,0 +1,42 @@
+name: RTA Wire final single journey regeneration
+on:
+  push:
+    branches:
+      - fix/rta-wire-single-journey-20261029
+    paths:
+      - .github/workflows/rta-wire-single-rebuild-v2-20261029.yml
+permissions:
+  contents: write
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/rta-wire-single-journey-20261029
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Deterministically regenerate preview and published Atlas release
+        run: |
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-release.js --check
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview --check
+      - name: Canonical model and compatibility gates
+        run: |
+          node tools/check-rta-decision-flows.js
+          node tools/check-rta-atlas-modules.js
+          node tools/check-rta-sensory-core.js
+          node tools/check-rta-nife30-watt.js
+      - name: Save generated files to branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas
+          if ! git diff --cached --quiet; then
+            git commit -m 'Regenerate Atlas single-comparison release and isolated offline cache'
+            git push origin HEAD:fix/rta-wire-single-journey-20261029
+          fi
