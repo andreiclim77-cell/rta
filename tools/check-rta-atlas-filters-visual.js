@@ -20,7 +20,8 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   await page.locator(nav+' [data-route="atomizer"]').click();
   await page.locator('#atlasPlatform').selectOption('klp');
   await page.locator(nav+' [data-route="wire"]').click();
-  assert.equal(await page.locator('#wireMaterial').count(),0,'Detailed Wire controls require explicit final atomizer choice');
+  assert.equal(await page.locator('#wireMaterial').count(),1,'An atomizer explicitly selected in Atlas must retain its detailed Wire controls on direct navigation');
+  assert.equal(await page.locator('#wireAtom').inputValue(),'klp','Direct Atlas-to-Wire handoff must preserve explicitly chosen KLP without altering the new material-first journey');
   assert.equal(await page.locator('#wireLibrary .wire-build-entry').count(),6,'Initial overview has six materials');
   assert.equal(await page.locator('#expWireWizard').count(),1,'Only one ordered Wire wizard');
   await page.goto(origin+'/rta-lab/atlas/');await page.waitForSelector('#matchButton',{state:'attached'});
