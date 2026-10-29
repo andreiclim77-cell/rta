@@ -1,0 +1,41 @@
+name: RTA Wire progressive deterministic rebuild v2
+on:
+  push:
+    branches:
+      - feature/rta-wire-catalog-adaptive-match-20261029
+    paths:
+      - .github/workflows/rta-wire-progressive-regenerate-v2-20261029.yml
+permissions:
+  contents: write
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feature/rta-wire-catalog-adaptive-match-20261029
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and verify release/cache determinism
+        run: |
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-release.js --check
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview --check
+      - name: Regression baseline and progressive Wire steps
+        run: |
+          node tools/check-rta-atlas-modules.js
+          node tools/check-rta-decision-flows.js
+          node tools/check-rta-sensory-core.js
+      - name: Commit regenerated release assets to feature branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas
+          if ! git diff --cached --quiet; then
+            git commit -m 'Rebuild Atlas Wire UI, preview and offline caches after objective sync'
+            git push origin HEAD:feature/rta-wire-catalog-adaptive-match-20261029
+          fi
