@@ -17,7 +17,7 @@ assert.deepEqual(Object.keys(c.nife30Watt.chipsets),['dicodes','yihi','arc1','dn
 assert.equal(all.find(w=>w.id==='nife30').wattNiFe30.powerW,12);
 const gt=c.defaultConfig('gtr'),klp=c.defaultConfig('klp'),other=c.defaultConfig('415');
 assert.equal(gt.regime,'tc');assert.equal(gt.power,16);assert.equal(gt.temp,230);
-assert.equal(klp.regime,'tc');assert.equal(klp.power,16);assert.equal(klp.temp,220);
+assert.equal(klp.regime,'tc');assert.equal(klp.wraps,7);assert.equal(klp.power,13);assert.equal(klp.temp,230);
 assert.equal(other.regime,'tc');
 assert.equal(c.defaultConfig('klp').wire,'nife30');
 const sample={class:'NET complex',name:'Sample',tags:['latakia']};
@@ -41,8 +41,11 @@ assert.equal(invalid.chipset,'','Invalid chipset is not claimed as supported');
 const nife52=c.config('gtr',{wire:'nife52',wraps:6,regime:'watt',chipset:'dna'});
 assert.equal(c.modeFor(nife52),'tc','NiFe52 has no new power-mode preset');
 assert.equal(nife52.chipset,'');
-assert.equal(c.config('klp',{wire:'nife30',regime:'tc'}).temp,220);
-assert.equal(c.config('klp',{wire:'nife30',regime:'tc'}).power,16);
+assert.equal(c.config('klp',{wire:'nife30',regime:'tc'}).temp,230);
+assert.equal(c.config('klp',{wire:'nife30',regime:'tc'}).power,13);
+const klpHistoric=c.analyze({atom:'klp',wire:'nife30',wraps:6,temp:220,power:16},sample);
+assert.equal(klpHistoric.partialEvidence.length,1,"Preserve the prior KLP/6 DNA 220°C/16W report separately");
+assert.equal(c.analyze({atom:'klp',wire:'nife30',wraps:7},sample).partialEvidence.length,1,"New KLP/7 observation must remain a separate report");
 assert.equal(c.config('gtr',{wire:'nife30',regime:'watt',power:13}).power,13,'User may compare 12 and 13 W');
 for(const directory of ['atlas-preview','atlas']){
  const app=fs.readFileSync(root+'/'+directory+'/app.js','utf8');
