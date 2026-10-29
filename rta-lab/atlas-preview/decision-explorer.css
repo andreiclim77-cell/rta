@@ -85,3 +85,29 @@
  .exp-best-overview span{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.exp-flow *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+
+/* RTA Wire Lab / one ordered six-step journey, 29.10.2026 */
+.exp-wire-single{position:relative;clear:both;margin:24px 0 30px;min-width:0}
+.exp-wire-single>.exp-stage{min-width:0;max-width:100%;padding:18px;margin:15px 0;border:1px solid #385652;border-radius:16px;background:linear-gradient(135deg,rgba(14,35,36,.95),rgba(8,24,28,.96))}
+.exp-wire-single>.exp-stage h3{font-size:clamp(18px,2.1vw,23px);line-height:1.34;margin:0 0 12px;overflow-wrap:anywhere}
+.exp-wire-single>.exp-stage label{min-width:0;overflow-wrap:anywhere}
+.exp-wire-single>.exp-stage select{max-width:100%;min-width:0}
+.exp-wire-single .exp-choice-actions{display:flex;align-items:stretch;flex-wrap:wrap;gap:9px;margin-top:12px}
+.exp-wire-single .exp-choice-actions button{flex:1 1 160px;min-width:0;white-space:normal;text-align:center;line-height:1.4;min-height:48px}
+.exp-wire-single .exp-compatible-remainder{padding:12px 14px;margin:17px 0;border:1px solid #4a615a;border-radius:13px}
+.exp-wire-single .exp-compatible-remainder summary{cursor:pointer;color:#dfc493;line-height:1.5;padding:9px 0;font-size:13px}
+.exp-wire-single .exp-other-atoms{display:grid;gap:9px;margin:8px 0}
+.exp-wire-single .exp-other-atoms>div{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;padding:11px;background:#0a1d21;border:1px solid #2f4d49;border-radius:9px;min-width:0}
+.exp-wire-single .exp-other-atoms b{font-size:12px;color:#e0e8df;flex:1 1 120px;overflow-wrap:anywhere}
+.exp-wire-single .exp-other-atoms span{font-size:11px;color:#b5ccc1;flex:1 1 170px;overflow-wrap:anywhere}
+.exp-wire-single .exp-other-atoms button{border:1px solid #8ca99c;border-radius:8px;background:transparent;color:#e7c997;padding:10px 12px;cursor:pointer;min-height:43px}
+.exp-wire-single .exp-top-atoms article{min-width:0}
+.exp-wire-single .exp-top-atoms p{line-height:1.55}
+.exp-wire-single .exp-reset{margin:8px 0 17px}
+@media(max-width:760px){
+ .exp-wire-single>.exp-stage{padding:13px}
+ .exp-wire-single .exp-choice-actions{flex-direction:column}
+ .exp-wire-single .exp-other-atoms>div{display:grid;grid-template-columns:minmax(0,1fr)}
+ .exp-wire-single .exp-other-atoms button{width:100%;text-align:center}
+}
