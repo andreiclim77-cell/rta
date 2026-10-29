@@ -329,6 +329,8 @@ function wirePlatforms(){
   m.mode==="objective"?'Primele 5 sunt potrivirile orientative pentru obiectiv; familia și lichidul vor rafina rezultatele.':
   m.mode==="wraps"?'Primele 6 reflectă configurația de spire confirmată, pe un profil neutru.':
   'Primele 8 sunt sugestii preliminare pentru materialul ales. Nu reprezintă un TOP definitiv.';
+ const selectedOutside=active&&state.wirePlatformChosen?m.other.find(r=>r.atom.id===state.atom):null;
+ const others=selectedOutside?m.other.filter(r=>r!==selectedOutside):m.other;
  const rowCard=row=>{
   const atom=row.atom;
   const selected=active&&state.wirePlatformChosen&&atom.id===state.atom;
@@ -357,13 +359,13 @@ function wirePlatforms(){
     (m.excluded?' · '+m.excluded+' incompatibile fizic':''):
    'Toate cele 15 platforme active · fără filtre')+'</div>'+
   '<div class="wire-platform-grid">'+m.primary.map(rowCard).join("")+'</div>'+
-  (active&&state.wirePlatformChosen&&m.other.some(r=>r.atom.id===state.atom)?
+  (selectedOutside?
     '<div class="wire-selected-outside"><p>Atomizorul ales manual rămâne vizibil, dar nu este inclus artificial în TOP-ul calculat.</p>'+
-     '<div class="wire-platform-grid">'+m.other.filter(r=>r.atom.id===state.atom).map(rowCard).join("")+'</div></div>':'')+
-  (m.other.length?'<details class="wire-compatible-more"'+(state.wireShowAll?' open':'')+'>'+
-    '<summary>Mai vezi '+m.other.length+' atomizoare compatibile</summary>'+
+     '<div class="wire-platform-grid">'+rowCard(selectedOutside)+'</div></div>':'')+
+  (others.length?'<details class="wire-compatible-more"'+(state.wireShowAll?' open':'')+'>'+
+    '<summary>Mai vezi '+others.length+' atomizoare compatibile</summary>'+
     '<p class="module-note">Nu sunt eliminate din colecție. Sunt compatibile, dar momentan sub pragul de recomandare al etapei selectate.</p>'+
-    '<div class="wire-platform-grid">'+m.other.filter(r=>!(active&&state.wirePlatformChosen&&r.atom.id===state.atom)).map(rowCard).join("")+'</div></details>':'')+
+    '<div class="wire-platform-grid">'+others.map(rowCard).join("")+'</div></details>':'')+
   (active?'<button type="button" class="wire-catalog-reset" data-wire-reset="1">Arată din nou toate sârmele și atomizoarele</button>':'')+
   '</section>';
 }
