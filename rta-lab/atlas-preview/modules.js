@@ -257,8 +257,108 @@ function wirePalette(){
   '<p class="module-note">„Preferat în Lab” nu înseamnă „montat pe fiecare exemplar”. Fișele CL salvate în acest browser apar separat, fără a fi sincronizate automat cu alte dispozitive.</p></section>';
 }
 function platformReaction(id){if(!hasLiquid())return '<p class="module-note">Alege lichidul comun pentru descrierea reacției senzoriale. Poți vedea și cele cinci potriviri ale acestui build.</p>';const r=core.analyze(wireConfig(id,state.config.wire),liquid(),state.objective);return '<p>'+esc(api.vapeDescription(r,liquid()))+'</p><div class="platform-mini-dna">'+[['spectrum','Spectru'],['palate','Palat'],['harmony','Armonie']].map(([key,label])=>'<span><b>'+label+'</b><i style="--signal:'+r.signals[key]*20+'%" role="img" aria-label="'+esc(label+' · '+r.signals[key]+' indicator intern, nu măsurătoare')+'"></i></span>').join('')+'</div>';}
-function wirePlatforms(){const rows=compatibleWireAtoms(state.config.wire);return '<details class="wire-compatible"'+(state.wirePlatformChosen?'':' open')+'><summary>'+rows.length+' atomizoare compatibile · '+(state.wirePlatformChosen?'schimbă atomizorul':'alege unul pentru experiența detaliată')+'</summary><p class="module-note">Compatibilitate din configurațiile permise ale Lab, nu recomandare universală de montaj. Nu sunt omise platformele compatibile.</p><div class="wire-platform-grid">'+rows.map(a=>'<article class="wire-platform-card"><div class="wire-platform-photo">'+api.renderProductPhoto(a)+'</div><h3>'+esc(a.short)+'</h3><p>'+esc(core.platforms[a.id].note)+'</p>'+platformReaction(a.id)+'<button type="button" class="module-link" data-wire-platform="'+a.id+'">Alege '+esc(a.short)+'</button><details data-wire-liquids="'+a.id+'"><summary>Vezi lichidele potrivite</summary><div class="journey-liquid-list"></div></details></article>').join('')+'</div></details>';}
-
+const WIRE_FAMILIES=["Tutun simplu","Tutun complex","NET simplu","NET complex"];
+function wireJourneyControls(){
+ const active=state.wireChosen,current=state.config,step=state.wireJourney;
+ if(!active)return '<div class="wire-progress" id="wireProgress">'+
+  '<h3>Construiește potrivirea, pas cu pas.</h3><p>Începi prin a vedea toate sârmele și toate cele 15 atomizoare active. Alege una dintre sârmele de mai sus, apoi construim recomandarea treptat până la lichidul concret.</p>'+
+  '<span class="wire-progress-steps">01 Sârmă → 02 Spire → 03 Obiectiv → 04 Familie → 05 Lichid</span></div>';
+ const variants=core.variants(state.atom).filter(x=>x.wire===current.wire);
+ const wraps=[...new Set(variants.map(x=>x.wraps))].sort((a,b)=>a-b);
+ const options=(rows,val)=>rows.map(([key,label])=>'<option value="'+esc(key)+'"'+(String(val)===String(key)?' selected':'')+'>'+esc(label)+'</option>').join("");
+ const liquids=step.family?catalog.map((l,i)=>({l,i})).filter(x=>x.l.class===step.family):[];
+ const stage=step.liquidIndex!=null?5:step.family?4:step.objective?3:step.wrapsConfirmed?2:1;
+ return '<div class="wire-progress" id="wireProgress"><div class="wire-progress-head">'+
+  '<span class="eyebrow">FILTRARE PROGRESIVĂ / ETAPA '+stage+' DIN 5</span>'+
+  '<h3>De la sârmă la lichidul exact.</h3>'+
+  '<button type="button" class="wire-catalog-reset" data-wire-reset="1">Resetează selecțiile</button></div>'+
+  '<div class="wire-progress-filters">'+
+  '<label>02 · Număr de spire<select id="wireJourneyWraps">'+
+    options(wraps.map(n=>[n,n+' spire'+(!step.wrapsConfirmed&&n===current.wraps?' · preset actual':'')]),current.wraps)+'</select></label>'+
+  '<label>03 · Ce vrei de la vapori?<select id="wireJourneyGoal"><option value="">Alege obiectivul...</option>'+
+    options(objectives,step.objective)+'</select></label>'+
+  '<label>04 · Familie de lichide<select id="wireJourneyFamily"><option value="">Alege familia...</option>'+
+    options(WIRE_FAMILIES.map(n=>[n,n]),step.family)+'</select></label>'+
+  '<label>05 · Lichid concret<select id="wireJourneyLiquid"'+(step.family?'':' disabled')+'><option value="">'+(step.family?'Alege un lichid...':'Mai întâi alege familia')+'</option>'+
+    options(liquids.map(x=>[x.i,[x.l.brand,x.l.name].filter(Boolean).join(" · ")]),step.liquidIndex)+'</select></label></div>'+
+  '<p class="module-note">Geometrie curentă: <b>'+esc(core.wires[current.wire].name)+' · '+current.wraps+' spire</b>. '+
+  (step.liquidIndex!=null?'Lichidul ales determină TOP 3 contextual; celelalte rezultate compatibile rămân accesibile.':
+    step.family?'Categoria restrânge potrivirile pe profil generic; mai alege lichidul pentru clasamentul final.':
+    step.objective?'Obiectivul schimbă clasamentul; categoria și lichidul îl vor rafina în continuare.':
+    step.wrapsConfirmed?'Spirele au fost confirmate; alege obiectivul pentru selecție mai precisă.':
+    'Numărul de spire provine din presetul personal. Confirmă-l sau schimbă-l pentru o selecție mai precisă.')+
+  '</p></div>';
+}
+function wirePlatformMatches(){
+ // No wire selected: ALL active platforms, never filtered by an implicit demo liquid.
+ if(!state.wireChosen)return {phase:0,mode:"all",total:atoms.length,primary:atoms.map(atom=>({atom})),other:[],excluded:0};
+ const step=state.wireJourney,{wire,wraps}=state.config;
+ const phase=step.liquidIndex!=null?5:step.family?4:step.objective?3:step.wrapsConfirmed?2:1;
+ const goal=step.objective||"complete";
+ const profile=step.liquidIndex!=null?catalog[step.liquidIndex]:
+   step.family?{name:"Reper generic "+step.family,class:step.family,tags:[]}:
+   {name:"Profil neutru de comparație",class:"Tutun simplu",tags:[]};
+ const rows=atoms.map(atom=>{
+  if(!core.permitted(atom.id,wire,wraps))return null;
+  const base=wireConfig(atom.id,wire);
+  if(!base)return null;
+  const thermal=core.wireSetup(atom.id,wire,wraps);
+  const reuse=atom.id===state.atom?state.config:{};
+  const config=core.config(atom.id,{...base,...reuse,wire,wraps,
+   power:atom.id===state.atom?state.config.power:thermal.power,
+   temp:atom.id===state.atom?state.config.temp:thermal.temp});
+  if(config.wire!==wire||config.wraps!==wraps)return null;
+  const result=core.analyze(config,profile,goal);
+  return {atom,config,result,rank:core.priority(result,goal)};
+ }).filter(Boolean).sort((a,b)=>b.rank-a.rank||a.atom.short.localeCompare(b.atom.short,"ro"));
+ const max={1:8,2:6,3:5,4:4,5:3}[phase];
+ const primary=rows.slice(0,max),other=rows.slice(max);
+ // A specifically selected physical platform remains accessible without
+ // falsifying its calculated rank or pushing it into TOP 3.
+ return {phase,mode:phase===5?"liquid":phase===4?"family":phase===3?"objective":phase===2?"wraps":"wire",
+  total:rows.length,primary,other,excluded:atoms.length-rows.length};
+}
+function wirePlatforms(){
+ const m=wirePlatformMatches(),active=state.wireChosen,st=state.wireJourney;
+ const title=!active?'Toate cele '+atoms.length+' atomizoare active':
+  m.total+' atomizoare compatibile · '+core.wires[state.config.wire].name+' / '+state.config.wraps+' spire';
+ const why=!active?'Încă nu ai ales o sârmă: afișăm întreaga colecție, fără clasament artificial.':
+  m.mode==="liquid"?'TOP 3 este calculat pentru sârma, spirele, obiectivul, familia și lichidul ales.':
+  m.mode==="family"?'Primele 4 sunt potrivirile estimative pentru familia aleasă; lichidul concret poate schimba ordinea.':
+  m.mode==="objective"?'Primele 5 sunt potrivirile orientative pentru obiectiv; familia și lichidul vor rafina rezultatele.':
+  m.mode==="wraps"?'Primele 6 reflectă configurația de spire confirmată, pe un profil neutru.':
+  'Primele 8 sunt sugestii preliminare pentru materialul ales. Nu reprezintă un TOP definitiv.';
+ const rowCard=row=>{
+  const atom=row.atom;
+  const selected=active&&state.wirePlatformChosen&&atom.id===state.atom;
+  const rank=active?m.primary.indexOf(row):-1;
+  return '<article class="wire-platform-card'+(selected?' is-current':'')+'" data-wire-platform-id="'+esc(atom.id)+'">'+
+   '<div class="wire-platform-photo">'+api.renderProductPhoto(atom)+'</div>'+
+   '<div class="wire-platform-copy">'+
+   (selected?'<span class="wire-current-label">ATOMIZOR SELECTAT</span>':'')+
+   '<h3>'+esc(atom.short)+'</h3>'+
+   '<p>'+esc(core.platforms[atom.id].note)+'</p>'+
+   (active?'<p class="wire-matched-build"><strong>'+esc(core.wires[state.config.wire].name)+' · '+state.config.wraps+' spire</strong>'+
+     '<small>Potrivire estimată · fără scor de plăcere inventat</small></p>':
+     '<p class="module-note">Alege sârma pentru a calcula potrivirea.</p>')+
+   '<button type="button" class="module-link" data-wire-platform="'+esc(atom.id)+'">'+
+     (active?'Explorează acest build ↗':'Alege atomizorul ↗')+'</button>'+
+   '</div></article>';
+ };
+ return '<section class="wire-library-platforms" id="wirePlatformCatalog">'+
+  '<div class="wire-library-head"><span class="eyebrow">ATOMIZOARE / SELECȚIE TREPTATĂ</span>'+
+  '<h2>'+esc(title)+'</h2><p>'+esc(why)+'</p></div>'+
+  '<div class="wire-match-heading">'+(active?m.primary.length+' în prim-plan · etapa '+m.phase+' din 5'+
+    (m.excluded?' · '+m.excluded+' incompatibile fizic':''):
+   'Toate cele 15 platforme active · fără filtre')+'</div>'+
+  '<div class="wire-platform-grid">'+m.primary.map(rowCard).join("")+'</div>'+
+  (m.other.length?'<details class="wire-compatible-more"'+(state.wireShowAll?' open':'')+'>'+
+    '<summary>Mai vezi '+m.other.length+' atomizoare compatibile</summary>'+
+    '<p class="module-note">Nu sunt eliminate din colecție. Sunt compatibile, dar momentan sub pragul de recomandare al etapei selectate.</p>'+
+    '<div class="wire-platform-grid">'+m.other.map(rowCard).join("")+'</div></details>':'')+
+  (active?'<button type="button" class="wire-catalog-reset" data-wire-reset="1">Arată din nou toate sârmele și atomizoarele</button>':'')+
+  '</section>';
+}
 function renderAtomizer(){
  el('pageAtomizer').classList.toggle('needs-liquid',!hasLiquid());
  const model=contextual();if(!model)return;
