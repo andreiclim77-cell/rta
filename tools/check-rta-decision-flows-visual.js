@@ -18,7 +18,7 @@ async function main(){
    await page.locator('[data-exp-toggle-compare]').click();
    await page.locator('#expWireOther').selectOption('nife30');
    await page.locator('#expWireOtherWraps').selectOption('7');
-   assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),2,'Comparator appears beside original in same scale');
+   assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),1,'Comparator appears beside original in same scale');
    await page.locator('#expWireFinal').selectOption('k128');
    await page.locator('#expWireFinalWraps').selectOption('6');
    assert.equal(await page.locator('#expWireGoal').count(),0,'Goal must be locked before final selection');

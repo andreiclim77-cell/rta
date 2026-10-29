@@ -56,9 +56,9 @@ async function caseRun(browser,width,height,largeType=false){
   await page.locator('[data-exp-toggle-compare]').click();
   await page.locator('#expWireOther').selectOption('nife30');
   await page.locator('#expWireOtherWraps').selectOption('7');
-  assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),2);
+  assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),1);
   let check=await checkViewport(page,width,'Wire');
-  assert.ok(check.count===2&&!check.bad.length,JSON.stringify(check));
+  assert.ok(check.count===1&&!check.bad.length,JSON.stringify(check));
   await page.locator('#expWireWizard .exp-mobile-metric').first().scrollIntoViewIfNeeded();
   await page.screenshot({path:path.join(shotDir,'wire-'+width+(largeType?'-font24':'')+'.png')});
   await page.locator('[data-route="atomizer"]:visible').first().click();

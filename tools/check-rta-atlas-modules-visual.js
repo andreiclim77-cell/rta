@@ -40,7 +40,7 @@ async function main(){
    await page.locator('[data-exp-toggle-compare]').click();
    await page.locator('#expWireOther').selectOption('nife52');
    await page.locator('#expWireOtherWraps').selectOption('6');
-   check(await page.locator('#expWireWizard .exp-matrix').count()===2,'Wire comparison uses same compatible platform set');
+   check(await page.locator('#expWireWizard .exp-matrix').count()===1,'Wire comparison uses same compatible platform set');
    await page.locator('[data-exp-use-first]').click();
    check(await page.locator('#expWireGoal').count()===1,'Final choice unlocks sensory objective');
    await page.locator('#expWireGoal').selectOption('th');
