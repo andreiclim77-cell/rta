@@ -7,7 +7,7 @@ const atoms=window.RTA_ATLAS_COLLECTION.activeAtoms,catalog=window.RTA_LIQUIDS;
 const inventory={"415":1,kprime:2,gtone:4,dvarwcl:3,muted:4,gtr:5,dvarwfl:2,diplomat:3,kx:4,klp:5,asylum:2,pmfree:2,pmstd:2,byka:1,kv3:1,minister:1}; // full historical evidence
 const activeUnits=atoms.reduce((total,a)=>total+(inventory[a.id]||0),0);
 const objectives=[['complete','Armonie + palat'],['layers','Stratificare'],['th','Ofensivă + TH'],['tobacco','Tutun în prim-plan'],['body','Corp + densitate'],['smooth','Finețe']];
-const state={atom:'gtr',query:'',category:'all',config:core.defaultConfig('gtr'),objective:'layers',goalLocked:false,liquidsOpen:false,advanced:false,wirePlatformChosen:false,wireChosen:false};
+const state={atom:'gtr',query:'',category:'all',config:core.defaultConfig('gtr'),objective:'layers',goalLocked:false,liquidsOpen:false,advanced:false,wirePlatformChosen:false,wireChosen:false,wireShowAll:false,wireJourney:{wrapsConfirmed:false,objective:null,family:null,liquidIndex:null}};
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const el=id=>document.getElementById(id);
 const liquid=()=>api.currentLiquid();
@@ -209,7 +209,53 @@ function materialPaths(){
  '<p class="module-note">Alte materiale, spire, inserturi și alternative validate sunt disponibile în Wire Lab, fără rescrierea fișelor unităților fizice.</p></section>';
 }
 
-function wirePalette(){return '<div class="wire-family-grid">'+Object.entries(core.wires).map(([id,w])=>'<button type="button" class="wire-family-card" data-wire-family="'+id+'"><span class="eyebrow">'+esc(w.mode)+'</span><b>'+esc(w.name)+'</b><span class="material-schematic">'+(id==='nife30'?'<img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30 — fotografie de produs, ambalaj de referință" loading="lazy" width="500" height="333">':api.renderCoil(wireConfig('gtr',id)))+'</span><small>'+esc(wireIdentity(id))+'</small><span>Alege această sârmă ↗</span></button>').join('')+'</div>';}
+/* Canonical personal wire references are descriptive preferences, NOT a claim
+ * that the same coil is installed in all physical atomizer units. */
+const WIRE_REFERENCE=Object.freeze({
+ nife30:[["gtr",7,"GTR · prima alegere TC"],["415",7,"415 Cool · prima alegere"],["klp",7,"KLP · coerență TC"],["kx",7,"Kayfun X"],["kprime",7,"Kayfun Prime"]],
+ nife52:[["gtr",6,"GTR · prima alegere TC"],["415",6,"415 Cool · prima alegere"],["klp",6,"KLP"],["kprime",6,"Kayfun Prime"],["kx",6,"Kayfun X"]],
+ k128:[["415",6,"415 Cool · a doua alegere"],["dvarwcl",6,"Dvarw CL · 3×0,6"],["dvarwfl",6,"Dvarw FL · 3×0,6"],["muted",6,"Muted+"],["kv3",6,"Kayfun Mini V3"],["klp",5,"KLP · 28/5"]],
+ k129:[["gtone",6,"GT One · prima alegere"],["kv3",6,"Kayfun Mini V3"],["klp",5,"KLP · TH direct"]],
+ k1clap:[["415",5,"415 Cool · Clapton specialist"]],
+ ssclap:[["dvarwfl",5,"Dvarw FL · specialist tehnic"]]
+});
+function wireSavedBuilds(wire){
+ const rows=(WIRE_REFERENCE[wire]||[]).map(([id,wraps,label])=>{
+  if(!core.permitted(id,wire,wraps))return null;
+  const settings=core.wireSetup(id,wire,wraps);
+  const config=core.config(id,{wire,wraps,...settings,regime:core.wires[wire].type==="tc"?"tc":"watt"});
+  return {config,label,origin:wire==="ssclap"?"model":"reference"};
+ }).filter(Boolean);
+ const snap=clSnapshot();
+ if(snap.available)snap.units.forEach((unit,i)=>{
+  const saved=unit.saved;
+  if(!saved||saved.wire!==wire||!core.permitted("dvarwcl",wire,saved.wraps))return;
+  rows.unshift({config:{...saved,atom:"dvarwcl"},label:"Dvarw CL "+(i+1)+" · setup local salvat",origin:"local"});
+ });
+ return rows;
+}
+function wirePalette(){
+ const selected=state.wireChosen?state.config.wire:null;
+ const cards=Object.entries(core.wires).map(([id,w])=>{
+  const examples=wireSavedBuilds(id),config=examples[0]?.config||core.config("gtr",{wire:id});
+  return '<button type="button" class="wire-family-card wire-build-entry'+(selected===id?' is-selected':'')+'" data-wire-family="'+id+'" aria-pressed="'+(selected===id)+'">'+
+  '<span class="eyebrow">'+esc(w.mode)+' · '+(id==="nife30"?"TCR 320":id==="nife52"?"TCR 310":"GEOMETRIE")+'</span>'+
+  '<b>'+esc(w.name)+'</b>'+
+  '<span class="wire-card-coil"><span class="wire-card-coil-visual">'+api.renderCoil(config)+'</span>'+
+  '<strong>'+config.wraps+' spire</strong><small>Ø'+String(config.coilMm).replace(".",",")+' mm · preset</small></span>'+
+  '<span class="wire-card-note">'+esc(wireIdentity(id))+'</span>'+
+  '<span class="wire-card-preferences"><strong>'+(id==="ssclap"?"Pereche tehnică din Lab":"Ultimele builduri preferate")+'</strong>'+
+  examples.slice(0,5).map(x=>'<span class="wire-saved-build'+(x.origin==="model"?' is-model':'')+'">'+
+   esc(x.label)+' · '+x.config.wraps+' spire'+(x.origin==="local"?" · LOCAL":"")+'</span>').join('')+
+  '</span><span class="wire-card-action">'+(selected===id?"SELECTAT · modifică mai jos":"Alege această sârmă ↗")+'</span></button>';
+ }).join("");
+ return '<section class="wire-library" id="wireLibrary"><div class="wire-library-head">'+
+  '<span class="eyebrow">RTA LAB / ULTIMELE PREFERINȚE</span>'+
+  '<h2>Toate sârmele, coilurile și buildurile tale.</h2>'+
+  '<p>Toate cele șase materiale sunt vizibile înainte de alegere. NiFe30 Dicodes folosește 7 spire; NiFe52 Zivipf, 6. Celelalte construcții păstrează alegerile specifice atomizoarelor. Schemele nu sunt fotografii ale montajelor reale.</p>'+
+  '</div><div class="wire-family-grid wire-library-grid">'+cards+'</div>'+
+  '<p class="module-note">„Preferat în Lab” nu înseamnă „montat pe fiecare exemplar”. Fișele CL salvate în acest browser apar separat, fără a fi sincronizate automat cu alte dispozitive.</p></section>';
+}
 function platformReaction(id){if(!hasLiquid())return '<p class="module-note">Alege lichidul comun pentru descrierea reacției senzoriale. Poți vedea și cele cinci potriviri ale acestui build.</p>';const r=core.analyze(wireConfig(id,state.config.wire),liquid(),state.objective);return '<p>'+esc(api.vapeDescription(r,liquid()))+'</p><div class="platform-mini-dna">'+[['spectrum','Spectru'],['palate','Palat'],['harmony','Armonie']].map(([key,label])=>'<span><b>'+label+'</b><i style="--signal:'+r.signals[key]*20+'%" role="img" aria-label="'+esc(label+' · '+r.signals[key]+' indicator intern, nu măsurătoare')+'"></i></span>').join('')+'</div>';}
 function wirePlatforms(){const rows=compatibleWireAtoms(state.config.wire);return '<details class="wire-compatible"'+(state.wirePlatformChosen?'':' open')+'><summary>'+rows.length+' atomizoare compatibile · '+(state.wirePlatformChosen?'schimbă atomizorul':'alege unul pentru experiența detaliată')+'</summary><p class="module-note">Compatibilitate din configurațiile permise ale Lab, nu recomandare universală de montaj. Nu sunt omise platformele compatibile.</p><div class="wire-platform-grid">'+rows.map(a=>'<article class="wire-platform-card"><div class="wire-platform-photo">'+api.renderProductPhoto(a)+'</div><h3>'+esc(a.short)+'</h3><p>'+esc(core.platforms[a.id].note)+'</p>'+platformReaction(a.id)+'<button type="button" class="module-link" data-wire-platform="'+a.id+'">Alege '+esc(a.short)+'</button><details data-wire-liquids="'+a.id+'"><summary>Vezi lichidele potrivite</summary><div class="journey-liquid-list"></div></details></article>').join('')+'</div></details>';}
 
