@@ -16,7 +16,7 @@ const AXES=[
 ];
 const neutral={name:'Profil neutru de comparație',class:'Tutun simplu',tags:[]};
 const A={atom:null,wire:null,wraps:null,family:null,liquidIndex:null};
-const W={first:null,wraps:null,compare:false,other:null,otherWraps:null,final:null,finalWraps:null,family:null,liquidIndex:null};
+const W={first:null,wraps:null,compare:false,other:null,otherWraps:null,final:null,finalWraps:null,confirmed:false,objective:null,family:null,liquidIndex:null};
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const label=l=>[l.brand,l.name].filter(Boolean).join(' · ');
 const byId=id=>document.getElementById(id);
@@ -145,56 +145,119 @@ function atlasWizard(){
  liquidSelect(A.family,'expAtlasLiquid',A.liquidIndex)+(A.liquidIndex!=null?'<p class="exp-success">Lichid ales. Mai jos se păstrează secțiunea existentă „Primele trei builduri” și toate instrumentele ei.</p>':'')+'</div>':'')+
  '</section>';
 }
+// A single user-owned journey: material -> comparison -> final choice ->
+// sensory goal -> liquid -> atomizer. Never create an early atomizer picker.
+const wireDefaultWrap=wire=>wire==="nife30"?7:wire==="nife52"?6:(wire==="k128"||wire==="k129")?6:5;
+function wireOptions(selected){
+ return Object.entries(core.wires).map(([id,w])=>'<option value="'+id+'"'+(id===selected?' selected':'')+'>'+esc(w.name)+'</option>').join('');
+}
+function wrapOptions(wire,selected){
+ return available(wire).map(n=>'<option value="'+n+'"'+(n===selected?' selected':'')+'>'+n+' spire</option>').join('');
+}
+function rankedWireAtoms(wire,wraps,profile,objective){
+ if(!wire||!wraps||!profile)return [];
+ return atoms.map(atom=>{
+  const c=cfg(atom.id,wire,wraps);
+  const result=c?core.analyze(c,profile,objective||"complete"):null;
+  return result?{atom,result,rank:core.priority(result,objective||"complete")}:null;
+ }).filter(Boolean).sort((a,b)=>b.rank-a.rank||a.atom.short.localeCompare(b.atom.short,"ro"));
+}
 function wireWizard(){
- const profile=api()?.state.fromDemo?neutral:api().currentLiquid();
- const configs1=W.first&&W.wraps?candidates(W.first,W.wraps):[];
- const configs2=W.other&&W.otherWraps?candidates(W.other,W.otherWraps):[];
- const cfgFinal=W.final&&W.finalWraps?candidates(W.final,W.finalWraps):[];
- const familyRows=W.family&&W.liquidIndex!=null?topAtoms(W.final,W.finalWraps,catalog[W.liquidIndex]):[];
- const lead=W.first&&W.wraps?aggregate(W.first,W.wraps,profile):null;
- // Side-by-side comparisons MUST use the exact same compatible atomizer set.
- const commonIds=configs1.map(c=>c.atom).filter(id=>configs2.some(c=>c.atom===id));
- const alignedLead=commonIds.length?aggregate(W.first,W.wraps,profile,commonIds):null;
- const rival=commonIds.length?aggregate(W.other,W.otherWraps,profile,commonIds):null;
- const final=cfgFinal.length?signalAvg(cfgFinal.map(c=>core.analyze(c,profile,'complete'))):null;
- return '<section class="exp-flow" id="expWireWizard"><span class="eyebrow">WIRE LAB / DECIZIE PAS CU PAS</span><h2>Din sârmă, până la atomizor.</h2>'+
- '<p class="exp-hint">În această etapă, înaintea alegerii atomizorului, scorurile sunt mediile estimative ale platformelor compatibile. După lichid, TOP 3 este calculat pentru configurații exacte.</p>'+
- '<div class="exp-stage"><h3>1. Alege o sârmă și numărul de spire</h3>'+
- '<div class="exp-selects"><label>Sârmă<select id="expWireFirst"><option value="">Alege sârma...</option>'+
- Object.entries(core.wires).map(([id,w])=>'<option value="'+id+'"'+(id===W.first?' selected':'')+'>'+esc(w.name)+'</option>').join('')+'</select></label>'+
- (W.first?'<label>Număr de spire<select id="expWireWraps"><option value="">Alege spirele...</option>'+
- available(W.first).map(n=>'<option value="'+n+'"'+(n===W.wraps?' selected':'')+'>'+n+' spire</option>').join('')+'</select></label>':'')+'</div>'+
- (lead?matrix([{label:core.wires[W.first].name+' / '+W.wraps+' spire',result:lead}],
-  'Ce oferă această sârmă','Medie tehnică a '+configs1.length+' platforme compatibile; nu o valoare universală independentă de atomizor.'):'')+
- (lead?'<button type="button" class="exp-action" data-exp-toggle-compare aria-expanded="'+W.compare+'">'+(W.compare?'Închide comparația':'Compară cu altă sârmă')+'</button>':'')+
- (W.compare&&lead?'<div class="exp-stage"><div class="exp-selects"><label>Sârmă de comparat<select id="expWireOther"><option value="">Alege sârma de comparat...</option>'+
- Object.entries(core.wires).map(([id,w])=>'<option value="'+id+'"'+(id===W.other?' selected':'')+'>'+esc(w.name)+'</option>').join('')+'</select></label>'+
- (W.other?'<label>Spire comparator<select id="expWireOtherWraps"><option value="">Alege spirele...</option>'+
- available(W.other).map(n=>'<option value="'+n+'"'+(n===W.otherWraps?' selected':'')+'>'+n+' spire</option>').join('')+'</select></label>':'')+'</div>'+
- (rival?matrix([{label:core.wires[W.first].name+' · '+W.wraps,result:alignedLead},{label:core.wires[W.other].name+' · '+W.otherWraps,result:rival}],
-   'Comparație directă 1–10','Aceleași '+commonIds.length+' platforme compatibile pentru ambele configurații, aceleași axe și același lichid/profil. Poți schimba comparatorul de câte ori dorești.'):(W.other&&W.otherWraps?'<p class="exp-warning">Nu există atomizoare comune pentru o comparație echitabilă a acestor două variante.</p>':''))+'</div>':'')+'</div>'+
- '<div class="exp-stage"><h3>2. Te-ai decis?</h3><p class="exp-hint">Selectează sârma cu care vrei să continui. Această alegere nu îți suprascrie montajele salvate.</p>'+
- '<div class="exp-selects"><label>Sârmă finală<select id="expWireFinal"><option value="">Alege sârma finală...</option>'+
- Object.entries(core.wires).map(([id,w])=>'<option value="'+id+'"'+(id===W.final?' selected':'')+'>'+esc(w.name)+'</option>').join('')+'</select></label>'+
- (W.final?'<label>Spire finale<select id="expWireFinalWraps"><option value="">Alege spirele...</option>'+
- available(W.final).map(n=>'<option value="'+n+'"'+(n===W.finalWraps?' selected':'')+'>'+n+' spire</option>').join('')+'</select></label>':'')+'</div>'+
- (final?matrix([{label:core.wires[W.final].name+' / '+W.finalWraps+' spire',result:final}],
-  'Obiectivele sârmei alese','Medie orientativă a '+cfgFinal.length+' platforme compatibile.'):'')+'</div>'+
- (cfgFinal.length?'<div class="exp-stage"><h3>3. Compatibilitate cu cele patru tipuri de lichid</h3>'+
- catsGrid(cfgFinal,'wire',W.family)+'</div>':'')+
- (W.family?'<div class="exp-stage"><h3>4. Alege lichidul concret</h3>'+liquidSelect(W.family,'expWireLiquid',W.liquidIndex)+'</div>':'')+
- (W.liquidIndex!=null&&familyRows.length?'<div class="exp-stage"><h3>5. '+familyRows.length+' atomizoare compatibile (maximum 3 recomandări)</h3>'+
- '<p class="exp-hint">Ordinea utilizează evaluarea configurației exacte (atomizor + sârmă + '+W.finalWraps+' spire + lichid + obiectivul curent). Preferințele personale sunt distincte de estimările tehnice.</p>'+
- '<div class="exp-top-atoms">'+familyRows.map((r,i)=>'<article><span>0'+(i+1)+'</span><h4>'+esc(r.atom.short)+'</h4><p>'+esc(core.platforms[r.atom.id].air.find(a=>a.id===r.result.config.air)?.label||'Airflow implicit')+'</p><button type="button" data-exp-open-atom="'+esc(r.atom.id)+'">Explorează în Wire Lab ↗</button></article>').join('')+'</div>'+
- matrix(familyRows.map(r=>({label:r.atom.short,result:r.result})),
-  'Toate obiectivele celor trei atomizoare','Același lichid și aceeași sârmă/număr de spire; fiecare platformă este analizată separat.')+'</div>':'')+'</section>';
+ const profile=W.liquidIndex!=null?catalog[W.liquidIndex]:(W.family?{name:"Profil generic "+W.family,class:W.family,tags:[]}:neutral);
+ const firstCfg=W.first&&W.wraps?candidates(W.first,W.wraps):[];
+ const otherCfg=W.other&&W.otherWraps?candidates(W.other,W.otherWraps):[];
+ const commonIds=firstCfg.map(c=>c.atom).filter(id=>otherCfg.some(c=>c.atom===id));
+ const firstCompare=commonIds.length?aggregate(W.first,W.wraps,neutral,commonIds):null;
+ const secondCompare=commonIds.length?aggregate(W.other,W.otherWraps,neutral,commonIds):null;
+ const finalCfg=W.confirmed?candidates(W.final,W.finalWraps):[];
+ const overview=W.first&&W.wraps?aggregate(W.first,W.wraps,neutral):null;
+ const overviewFinal=finalCfg.length?signalAvg(finalCfg.map(c=>core.analyze(c,profile,W.objective||"complete"))):null;
+ const ranked=W.confirmed&&W.objective&&W.liquidIndex!=null?
+  rankedWireAtoms(W.final,W.finalWraps,catalog[W.liquidIndex],W.objective):[];
+ const top=ranked.slice(0,3),other=ranked.slice(3);
+ const choices='<option value="">Alege un material...</option>'+wireOptions(W.first);
+ const section=(number,title,inside)=>'<section class="exp-stage" data-wire-step="'+number+'"><h3>'+number+'. '+title+'</h3>'+inside+'</section>';
+ const first=section(1,"Sârma și coilul de pornire",
+  '<p class="exp-hint">Cele șase carduri de mai sus arată ultimele tale preferințe, înaintea oricărei selecții. Alege un material și numărul de spire pentru comparație.</p>'+
+  '<div class="exp-selects"><label>Sârma de pornire<select id="expWireFirst">'+choices+'</select></label>'+
+  (W.first?'<label>Număr de spire<select id="expWireWraps">'+wrapOptions(W.first,W.wraps)+'</select></label>':'')+
+  '</div>'+(overview?matrix([{label:core.wires[W.first].name+' · '+W.wraps+' spire',result:overview}],
+   'Profil comparativ inițial · 14 obiective','Model orientativ mediat pe '+firstCfg.length+' platforme compatibile, nu un test fizic unic.'):''));
+ const compare=W.first&&W.wraps?section(2,"Comparații între sârme și spire",
+  '<p class="exp-hint">Compară pe aceeași scară 1–10, folosind exact platformele compatibile în comun. Comparația este opțională: poți continua și cu prima sârmă.</p>'+
+  '<button type="button" class="exp-action" data-exp-toggle-compare aria-expanded="'+W.compare+'">'+(W.compare?'Ascunde comparatorul':'Deschide comparația')+'</button>'+
+  (W.compare?'<div class="exp-selects"><label>Sârmă de comparat<select id="expWireOther"><option value="">Alege comparatorul...</option>'+
+    wireOptions(W.other)+'</select></label>'+
+    (W.other?'<label>Spire comparator<select id="expWireOtherWraps">'+wrapOptions(W.other,W.otherWraps)+'</select></label>':'')+'</div>'+
+    (firstCompare&&secondCompare?matrix([
+      {label:core.wires[W.first].name+' · '+W.wraps+' spire',result:firstCompare},
+      {label:core.wires[W.other].name+' · '+W.otherWraps+' spire',result:secondCompare}
+     ],'Comparație directă / aceleași atomizoare','Comparație modelată în profil neutru, pe '+commonIds.length+' platforme comune. Nu sunt măsurători senzoriale.'):
+      (W.other&&W.otherWraps?'<p class="exp-warning">Nu există platforme comune pentru această comparație.</p>':'')):'')
+ ):''; 
+ const choose=W.first&&W.wraps?section(3,"Te-ai decis? Confirmă sârma finală",
+  '<p class="exp-hint">Comparațiile nu aleg automat pentru tine. Confirmă explicit materialul și spirele; abia apoi apar obiectivele senzoriale.</p>'+
+  '<div class="exp-selects"><label>Sârmă finală<select id="expWireFinal"><option value="">Alege sârma finală...</option>'+
+    wireOptions(W.final)+'</select></label>'+
+    (W.final?'<label>Spire finale<select id="expWireFinalWraps">'+wrapOptions(W.final,W.finalWraps)+'</select></label>':'')+
+  '</div><div class="exp-choice-actions"><button class="exp-action" type="button" data-exp-use-first="1">Aleg '+esc(core.wires[W.first].name)+' / '+W.wraps+' spire</button>'+
+    (W.compare&&W.other&&W.otherWraps?'<button class="exp-action" type="button" data-exp-use-other="1">Aleg '+esc(core.wires[W.other].name)+' / '+W.otherWraps+' spire</button>':'')+
+    (W.final&&W.finalWraps?'<button class="exp-action" type="button" data-exp-confirm-final="1">Confirmă selecția finală</button>':'')+
+    '</div>'+(W.confirmed?'<p class="exp-success" role="status">Alegere confirmată: '+esc(core.wires[W.final].name)+' · '+W.finalWraps+' spire. Poți reveni și o poți schimba.</p>':'')
+ ):''; 
+ const goal=W.confirmed?section(4,"Ce vrei să obții? TH, stratificare, corp...",
+  '<p class="exp-hint">Alege obiectivul senzorial. Scorurile rămân estimări, nu se atribuie un gust garantat fiecărui atomizor.</p>'+
+  '<label class="exp-liquid-select">Obiectiv<select id="expWireGoal"><option value="">Alege ce contează cel mai mult...</option>'+
+    (window.RTA_ATLAS_CONTEXT?.goals||[]).map(([id,name])=>'<option value="'+id+'"'+(id===W.objective?' selected':'')+'>'+esc(name)+'</option>').join('')+'</select></label>'+
+  (W.objective&&overviewFinal?matrix([{label:core.wires[W.final].name+' · '+W.finalWraps+' spire',result:overviewFinal}],
+   'Profil orientativ pentru obiectivul ales','Media modelelor pe '+finalCfg.length+' platforme compatibile, înaintea alegerii lichidului și atomizorului.'):'')
+ ):''; 
+ const liquid=W.confirmed&&W.objective?section(5,"Lichidul: familia, apoi produsul exact",
+  '<p class="exp-hint">Întâi alegi familia, apoi un lichid din cele 700. Abia după lichid apar recomandările finale de atomizoare.</p>'+
+  catsGrid(finalCfg,'wire',W.family)+(W.family?liquidSelect(W.family,'expWireLiquid',W.liquidIndex):'')
+ ):''; 
+ const atomsStep=ranked.length?section(6,"Atomizorul potrivit pentru toate selecțiile tale",
+  '<p class="exp-hint">TOP 3 este calculat pentru sârma finală, '+W.finalWraps+' spire, obiectivul '+esc(W.objective)+
+   ' și lichidul '+esc(label(catalog[W.liquidIndex]))+'. Restul atomizoarelor compatibile rămân disponibile, dar nu sunt declarate echivalente senzorial.</p>'+
+  '<div class="exp-top-atoms">'+top.map((r,i)=>'<article><span>0'+(i+1)+'</span><h4>'+esc(r.atom.short)+'</h4>'+
+   '<p>'+esc(core.platforms[r.atom.id].air.find(a=>a.id===r.result.config.air)?.label||'Airflow implicit')+'</p>'+
+   '<p class="exp-hint">'+esc((r.result.advantages||[]).slice(0,2).join(' · ')||'Potrivire orientativă')+'</p>'+
+   '<button type="button" data-exp-open-atom="'+esc(r.atom.id)+'">Alege acest atomizor ↗</button></article>').join('')+'</div>'+
+  matrix(top.map(r=>({label:r.atom.short,result:r.result})),
+   'Comparația celor trei atomizoare','Același lichid, același material și aceeași geometrie; evaluare relativă, nu probă A/B.')+
+  (other.length?'<details class="exp-compatible-remainder"><summary>Alte '+other.length+' atomizoare compatibile — arată toate</summary>'+
+   '<div class="exp-other-atoms">'+other.map(r=>'<div><b>'+esc(r.atom.short)+'</b><span>'+esc(core.platforms[r.atom.id].air.find(a=>a.id===r.result.config.air)?.label||'Airflow implicit')+
+   '</span><button type="button" data-exp-open-atom="'+esc(r.atom.id)+'">Explorează ↗</button></div>').join('')+'</div>'+
+   '</details>':'')
+ ):''; 
+ return '<section class="exp-flow exp-wire-single" id="expWireWizard"><span class="eyebrow">WIRE LAB / FLUX UNIC</span>'+
+  '<h2>De la sârmă, până la atomizor.</h2>'+
+  '<p class="exp-hint">Un singur traseu, în ordine: sârmă → comparații → alegere → obiective → lichid → atomizor. Poți modifica orice etapă.</p>'+
+  first+compare+choose+goal+liquid+atomsStep+'</section>';
+}
+function pickWire(wire){
+ if(!core.wires[wire])return false;
+ W.first=wire;W.wraps=available(wire).includes(wireDefaultWrap(wire))?wireDefaultWrap(wire):available(wire)[0];
+ W.other=null;W.otherWraps=null;W.compare=false;
+ W.final=null;W.finalWraps=null;W.confirmed=false;W.objective=null;W.family=null;W.liquidIndex=null;
+ const m=mod();
+ if(m){
+  const candidate=core.config("gtr",{wire,wraps:W.wraps,...core.wireSetup("gtr",wire,W.wraps)});
+  m.state.atom="gtr";m.state.config=candidate;m.state.wireChosen=true;m.state.wirePlatformChosen=false;
+  m.show('wire'); // The sole wizard remounts from its own state.
+ }else refreshWizard('wire');
+ return true;
+}
+function confirmWire(wire,wraps){
+ if(!core.wires[wire]||!available(wire).includes(Number(wraps)))return false;
+ const changed=W.final!==wire||W.finalWraps!==Number(wraps);
+ W.final=wire;W.finalWraps=Number(wraps);W.confirmed=true;
+ if(changed){W.objective=null;W.family=null;W.liquidIndex=null;if(typeof api()?.setObjective==="function")api().setObjective("");}
+ refreshWizard('wire');
+ return true;
 }
 function topAtoms(wire,wraps,profile){
- if(!profile)return [];
- return atoms.map(atom=>{
-  const c=cfg(atom.id,wire,wraps),result=c?core.analyze(c,profile,api().effectiveGoal()):null;
-  return result?{atom,result,rank:core.priority(result,api().effectiveGoal())}:null;
- }).filter(Boolean).sort((a,b)=>b.rank-a.rank||a.atom.short.localeCompare(b.atom.short,'ro')).slice(0,3);
+ return rankedWireAtoms(wire,wraps,profile,W.objective||api()?.effectiveGoal()||"complete").slice(0,3);
 }
 function refreshWizard(kind){
  const node=byId(kind==='atlas'?'expAtlasWizard':'expWireWizard');
@@ -208,9 +271,8 @@ function mountWizards(){
  }
  const w=byId('pageWire');
  if(w&&!w.querySelector('#expWireWizard')){
-  // Personal coil gallery and staged matching must be seen FIRST.
-  // Keep the existing detailed comparator intact, below the matched RTA list.
-  const anchor=w.querySelector('#wirePlatformCatalog');
+  // Exactly one canonical wire journey, immediately after the six preference cards.
+  const anchor=w.querySelector('#wireLibrary');
   if(anchor)anchor.insertAdjacentHTML('afterend',wireWizard());
  }
 }
@@ -273,7 +335,7 @@ function init(){
  observer.observe(cards,{childList:true});
  observer.observe(cmp,{childList:true});
  document.addEventListener('click',e=>{
-  const t=e.target.closest?.('[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-toggle-compare],[data-exp-open-atom],[data-exp-liquid-cat]');
+  const t=e.target.closest?.('[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-toggle-compare],[data-exp-open-atom],[data-exp-liquid-cat],[data-exp-use-first],[data-exp-use-other],[data-exp-confirm-final]');
   if(!t)return;
   const d=t.dataset;
   if(d.expLiquidCat!==undefined){
@@ -283,6 +345,9 @@ function init(){
    refreshLiquidCategory();return;
   }
   if(d.expToggleCompare!==undefined){W.compare=!W.compare;refreshWizard('wire');return;}
+  if(d.expUseFirst!==undefined){confirmWire(W.first,W.wraps);return;}
+  if(d.expUseOther!==undefined){confirmWire(W.other,W.otherWraps);return;}
+  if(d.expConfirmFinal!==undefined){confirmWire(W.final,W.finalWraps);return;}
   if(d.expWire==='atlas'){
    A.wire=d.expValue;A.wraps=null;A.family=null;A.liquidIndex=null;
    mod().setConfig({wire:A.wire});mod().show('atomizer');return;
@@ -293,9 +358,7 @@ function init(){
    mod().show('atomizer');return;
   }
   if(d.expFamily==='atlas'){A.family=d.expValue;A.liquidIndex=null;refreshWizard('atlas');return;}
-  if(d.expFamily==='wire'){W.family=d.expValue;W.liquidIndex=null;
-   const m=mod();if(m?.state.wireChosen)m.setWireJourney({family:W.family});else refreshWizard('wire');
-   return;}
+  if(d.expFamily==='wire'){W.family=d.expValue;W.liquidIndex=null;refreshWizard('wire');return;}
   if(d.expOpenAtom){
    const c=cfg(d.expOpenAtom,W.final,W.finalWraps);
    if(!c)return;
@@ -308,24 +371,24 @@ function init(){
   const id=e.target.id,value=e.target.value;
   if(e.target.dataset.lpFilter==='family'){refreshLiquidCategory();return;}
   if(id==='atlasWire'){A.wire=value;A.wraps=null;A.family=null;A.liquidIndex=null;refreshWizard('atlas');return;}
-  const keys={expWireFirst:['first','wraps'],expWireWraps:['wraps'],
-   expWireOther:['other','otherWraps'],expWireOtherWraps:['otherWraps'],
-   expWireFinal:['final','finalWraps'],expWireFinalWraps:['finalWraps']};
-  if(keys[id]){
-   const [field,dependent]=keys[id];
-   W[field]=field.toLowerCase().includes('wraps')?(value?Number(value):null):value||null;
-   if(dependent)W[dependent]=null;
-   if(['final','finalWraps'].includes(field)){W.family=null;W.liquidIndex=null;}
-   // Retain the detailed comparator but synchronize the selection with
-   // the visible per-stage Atomizer matching, never silently default to 15.
-   const selected=(W.final&&['final','finalWraps'].includes(field))?W.final:W.first;
-   const selectedWraps=W.final&&['final','finalWraps'].includes(field)?W.finalWraps:W.wraps;
-   if(selected&&['first','wraps','final','finalWraps'].includes(field)){
-    const m=mod();
-    if(m)m.setWireJourney(selectedWraps?{wire:selected,wraps:selectedWraps}:{wire:selected});
-   }else refreshWizard('wire');
-   byId(id)?.focus({preventScroll:true});
+  if(id==='expWireFirst'){if(value)pickWire(value);return;}
+  if(id==='expWireWraps'){const n=Number(value);if(available(W.first).includes(n)){
+   W.wraps=n;W.final=null;W.finalWraps=null;W.confirmed=false;W.objective=null;W.family=null;W.liquidIndex=null;
+   const m=mod();if(m&&m.state.wireChosen){
+    m.state.config=core.config(m.state.atom,{...m.state.config,wire:W.first,wraps:n,...core.wireSetup(m.state.atom,W.first,n)});
+   }
+   refreshWizard('wire');}
    return;
+  }
+  if(id==='expWireOther'){W.other=value||null;W.otherWraps=W.other?(available(W.other).includes(wireDefaultWrap(W.other))?wireDefaultWrap(W.other):available(W.other)[0]):null;refreshWizard('wire');return;}
+  if(id==='expWireOtherWraps'){W.otherWraps=value?Number(value):null;refreshWizard('wire');return;}
+  if(id==='expWireFinal'){W.final=value||null;W.finalWraps=W.final?(available(W.final).includes(wireDefaultWrap(W.final))?wireDefaultWrap(W.final):available(W.final)[0]):null;W.confirmed=false;W.objective=null;W.family=null;W.liquidIndex=null;refreshWizard('wire');return;}
+  if(id==='expWireFinalWraps'){W.finalWraps=value?Number(value):null;W.confirmed=false;W.objective=null;W.family=null;W.liquidIndex=null;refreshWizard('wire');return;}
+  if(id==='expWireGoal'){
+   if(!W.confirmed)return;
+   W.objective=value||null;W.family=null;W.liquidIndex=null;
+   if(api()?.setObjective)api().setObjective(W.objective||"");
+   refreshWizard('wire');return;
   }
   if(id==='expAtlasLiquid'){
    if(value&&catalog[Number(value)]?.class===A.family){
@@ -334,13 +397,11 @@ function init(){
   }
   if(id==='expWireLiquid'){
    if(value&&catalog[Number(value)]?.class===W.family){
-    W.liquidIndex=Number(value);api().selectLiquid(W.liquidIndex);
-    const m=mod();if(m?.state.wireChosen)m.setWireJourney({family:W.family,liquidIndex:W.liquidIndex});
-    else m?.show('wire');
+    W.liquidIndex=Number(value);api().selectLiquid(W.liquidIndex);refreshWizard('wire');
    }else{W.liquidIndex=null;refreshWizard('wire');}
   }
  });
 }
-window.RTA_LAB_EXPLORER={version:'2026-10-16',categories:CATS,axes:AXES,available,candidates,score10,metric,aggregate,familyFit,topAtoms,matrix,atlasWizard,wireWizard,states:{atlas:A,wire:W},init};
+window.RTA_LAB_EXPLORER={version:'2026-10-29-single-journey',categories:CATS,axes:AXES,available,candidates,score10,metric,aggregate,familyFit,topAtoms,rankedWireAtoms,matrix,atlasWizard,wireWizard,pickWire,confirmWire,states:{atlas:A,wire:W},init};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();
