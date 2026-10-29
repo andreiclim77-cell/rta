@@ -361,7 +361,7 @@ assert.equal(chosen.wire,"k128");
 assert.equal(chosen.wraps,6);
 assert.equal(chosen.power,13);
 assert.ok(/data-sd-preset="cl-triple-28-6"[^>]*aria-pressed="true"/.test(clRoot.innerHTML));
-assert.equal(ui.configFor("klp","explorer").temp,220,"KLP DNA profile must remain intact");
+assert.equal(ui.configFor("klp","explorer").temp,230,"KLP NiFe30/7 preset must remain independent of Dvarw CL");
 // Three separate physical units, none silently marked as already mounted.
 const physicalAtStart=ui.physicalClState();
 assert.equal(physicalAtStart.active,1);
@@ -423,7 +423,7 @@ clickUnit(2);
 assert.equal(ui.configFor("dvarwcl","explorer").air,"single12");
 assert.equal(ui.configFor("dvarwcl","explorer").wraps,5);
 assert.equal(ui.configFor("dvarwcl","main").air,"single12","Main and explorer must share CL2 active state");
-assert.equal(ui.configFor("klp","explorer").temp,220,"KLP must not change when switching CLs");
+assert.equal(ui.configFor("klp","explorer").temp,230,"KLP NiFe30/7 preset must not change when switching CLs");
 assert.equal(ui.configFor("dvarwfl","explorer").air,"triple06","Dvarw FL must remain separate");
 // Ensure all three committed records survive in storage; never leak into generic CL slot.
 const persisted=JSON.parse(browserStore.get("rta-cl-physical-units-v1-20261014"));
