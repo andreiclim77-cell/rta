@@ -211,54 +211,69 @@ function materialPaths(){
 
 /* Canonical personal wire references are descriptive preferences, NOT a claim
  * that the same coil is installed in all physical atomizer units. */
-const WIRE_REFERENCE=Object.freeze({
- nife30:[["gtr",7,"GTR · prima alegere TC"],["415",7,"415 Cool · prima alegere"],["klp",7,"KLP · coerență TC"],["kx",7,"Kayfun X"],["kprime",7,"Kayfun Prime"]],
- nife52:[["gtr",6,"GTR · prima alegere TC"],["415",6,"415 Cool · prima alegere"],["klp",6,"KLP"],["kprime",6,"Kayfun Prime"],["kx",6,"Kayfun X"]],
- k128:[["415",6,"415 Cool · a doua alegere"],["dvarwcl",6,"Dvarw CL · 3×0,6"],["dvarwfl",6,"Dvarw FL · 3×0,6"],["muted",6,"Muted+"],["klp",5,"KLP · 28/5"]],
- k129:[["gtone",6,"GT One · prima alegere"],["klp",5,"KLP · posibilă alternativă K1"]],
- k1clap:[["415",5,"415 Cool · Clapton specialist"]],
- ssclap:[["dvarwfl",5,"Dvarw FL · specialist tehnic"]]
-});
+/* Last user preferences are taken from the canonical RTA Sensory Core and
+ * the current device's physical CL saves, NOT a hand-maintained list.
+ * Historical tests and unmeasured setups are labelled accurately. */
 function wireSavedBuilds(wire){
- const byId=new Map(atoms.map(a=>[a.id,a]));
- const rows=[],seen=new Set();
- const add=(config,label,origin,tier=3)=>{
-  if(!config||!core.permitted(config.atom,config.wire,Number(config.wraps)))return;
-  const key=[config.atom,config.wire,config.wraps,config.air].join('/');
+ const active=new Set(atoms.map(a=>a.id)),rows=[],seen=new Set();
+ const append=(config,label,origin,tier=3)=>{
+  if(!config||!active.has(config.atom)||!core.permitted(config.atom,config.wire,Number(config.wraps)))return;
+  const key=[config.atom,config.wire,config.wraps,config.air,config.regime].join("/");
   if(seen.has(key))return;
   seen.add(key);rows.push({config,label,origin,tier});
  };
- const snapshot=clSnapshot();
- if(snapshot.available)snapshot.units.forEach((unit,i)=>{
-  const saved=unit.saved;
-  if(!saved||saved.wire!==wire)return;
-  add({...saved,atom:"dvarwcl"},"Dvarw CL "+(i+1)+" · build fizic salvat", "local",0);
+ const build=(atom,wraps,air)=>{
+  const settings=core.wireSetup(atom,wire,wraps);
+  return core.config(atom,{wire,wraps,...settings,
+   ...(air?{air}:{}),regime:core.wires[wire].type==="tc"?"tc":"watt"});
+ };
+ const snap=clSnapshot();
+ if(snap.available)snap.units.forEach((unit,i)=>{
+  if(unit.saved?.wire===wire&&core.permitted("dvarwcl",wire,unit.saved.wraps))
+   append({...unit.saved,atom:"dvarwcl"},"Dvarw CL #"+(i+1)+" · montaj salvat pe acest dispozitiv","local",0);
  });
- // Personal CL setup choices come from the canonical saved preferences.
- for(const saved of core.personalSetups("dvarwcl")){
-  if(saved.wire!==wire)continue;
-  const config=core.config("dvarwcl",{wire,wraps:saved.wraps,air:saved.air,...core.wireSetup("dvarwcl",wire,saved.wraps)});
-  add(config,"Dvarw CL · "+saved.title+" · "+saved.status,"personal",saved.status==="Preferința principală"?1:2);
+ for(const recorded of core.personalSetups("dvarwcl")){
+  if(recorded.wire!==wire)continue;
+  const config=build("dvarwcl",recorded.wraps,recorded.air);
+  append(config,"Dvarw CL · "+recorded.title+" · "+recorded.status,"personal",recorded.status==="Preferința principală"?1:2);
  }
- // Other active personal choices are resolved against the current canonical
- // preference model, not a stale handwritten list of supposedly installed coils.
- for(const [atomId,wraps,label] of WIRE_REFERENCE[wire]||[]){
-  if(!byId.has(atomId)||!core.permitted(atomId,wire,wraps))continue;
-  const settings=core.wireSetup(atomId,wire,wraps);
-  const defaultAir=wire==="k128"&&["dvarwcl","dvarwfl"].includes(atomId)?"triple06":
-                   wire==="ssclap"&&atomId==="dvarwfl"?"single12":undefined;
-  const config=core.config(atomId,{wire,wraps,...settings,
-   ...(defaultAir?{air:defaultAir}:{}),
-   regime:core.wires[wire].type==="tc"?"tc":"watt"});
-  const preference=core.personalPreference(config);
-  const report=core.observations.find(o=>o.atom===atomId&&o.wire===wire&&o.wraps===wraps&&
-    (!o.air||o.air===config.air));
-  const evidence=!!(preference&&preference.tier<=2)||!!report;
-  const origin=evidence?"personal":wire==="k1clap"?"historical":"model";
-  add(config,label+(evidence?" · preferință/test":" · "+(origin==="historical"?"specialist istoric":"reper tehnic neconfirmat")),
-      origin,evidence?(preference?.tier||1):4);
+ const isHistoric=entry=>wire==="nife30"&&entry.wraps===6||
+   /istoric|mai analitic|mai blând|inferior|alternative? (?:istoric|mai)/i.test(entry.title||"");
+ // Every exact, document-backed personal observation is considered, not
+ // only the five handpicked examples of the previous version.
+ for(const observation of core.observations){
+  if(observation.wire!==wire||!observation.wraps||!active.has(observation.atom))continue;
+  if(!core.permitted(observation.atom,wire,observation.wraps))continue;
+  const config=build(observation.atom,observation.wraps,observation.air);
+  const historical=isHistoric(observation);
+  append(config,observation.title+(historical?" · comparație istorică":" · observație personală"),
+    historical?"historical":"personal",historical?4:1);
  }
+ // Additional latest declarations have no exact controlled A/B, but are
+ // still genuinely user-declared preferences and must appear as such.
+ const declared=[["nife30",7,["gtr","415","klp","kx","kprime"]],
+                 ["nife52",6,["gtr","415","klp","kx","kprime"]],
+                 ["k128",6,["muted","dvarwfl","dvarwcl","415"]],
+                 ["k129",6,["gtone"]]];
+ for(const [material,wraps,ids] of declared){
+  if(material!==wire)continue;
+  for(const id of ids){
+   if(!active.has(id)||!core.permitted(id,wire,wraps))continue;
+   const air=wire==="k128"&&["dvarwfl","dvarwcl"].includes(id)?"triple06":undefined;
+   const config=build(id,wraps,air),preference=core.personalPreference(config);
+   if(preference&&preference.tier<=2)
+    append(config,(atoms.find(a=>a.id===id)?.short||id)+" · "+preference.label+" · alegere declarată",
+      "personal",preference.tier);
+  }
+ }
+ // The current global NiFe geometry is always preferred over its historical
+ // six-wrap comparison even when both tests exist in the archive.
  rows.sort((a,b)=>a.tier-b.tier||a.label.localeCompare(b.label,"ro"));
+ if(!rows.length){
+  const id=active.has("gtr")?"gtr":atoms[0].id;
+  const wraps=wire==="nife30"?7:wire==="nife52"?6:core.wires[wire].type==="clapton"?5:6;
+  append(build(id,wraps),"Punct de plecare tehnic · fără preferință personală confirmată","model",5);
+ }
  return rows;
 }
 function wirePalette(){
@@ -271,8 +286,8 @@ function wirePalette(){
   '<span class="wire-card-coil"><span class="wire-card-coil-visual">'+api.renderCoil(config)+'</span>'+
   '<strong>'+config.wraps+' spire</strong><small>Ø'+String(config.coilMm).replace(".",",")+' mm · preset</small></span>'+
   '<span class="wire-card-note">'+esc(wireIdentity(id))+'</span>'+
-  '<span class="wire-card-preferences"><strong>'+(examples.some(x=>x.origin==="personal"||x.origin==="local")?"Ultimele preferințe și builduri salvate":"Reper tehnic · fără test personal confirmat")+'</strong>'+
-  examples.map(x=>'<span class="wire-saved-build'+(x.origin==="model"?' is-model':'')+'">'+
+  '<span class="wire-card-preferences"><strong>'+(examples.some(x=>x.origin==="personal"||x.origin==="local")?"Ultimele preferințe și teste documentate":"Reper tehnic · fără test personal confirmat")+'</strong>'+
+  examples.map(x=>'<span class="wire-saved-build'+(["model","historical"].includes(x.origin)?' is-model':'')+'">'+
    esc(x.label)+' · '+x.config.wraps+' spire'+(x.origin==="local"?" · LOCAL":"")+'</span>').join('')+
   '</span><span class="wire-card-action">'+(selected===id?"SELECTAT · modifică mai jos":"Alege această sârmă ↗")+'</span></button>';
  }).join("");
