@@ -357,8 +357,13 @@ function configuration(id,changes={}) {
  const base=defaults(id);
  if(!base)return null;
  const value={...base,...changes,atom:id};
- if(changes.wire==="nife30"&&changes.wire!==base.wire&&!Object.prototype.hasOwnProperty.call(changes,"wraps"))
-  value.wraps=7; // A new material selection uses the current NiFe30 geometry, never inherits NiFe52/6.
+ if(changes.wire&&changes.wire!==base.wire&&!Object.prototype.hasOwnProperty.call(changes,"wraps")){
+  // A material change must not inherit another alloy's number of wraps.
+  if(changes.wire==="nife30")value.wraps=7;
+  else if(changes.wire==="nife52")value.wraps=6;
+  else if(WIRES[changes.wire]?.type==="clapton")value.wraps=5;
+  else if(WIRES[changes.wire]?.type==="round")value.wraps=5;
+ }
  // Selecting a different wire without explicit thermal settings loads the
  // appropriate platform/wire preset. In particular KLP NiFe30 = DNA 220°C / 16 W.
  if(changes.wire && WIRES[changes.wire] && changes.wire!==base.wire){
