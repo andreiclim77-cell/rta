@@ -116,7 +116,7 @@ const NIFE30_FAMILY=Object.freeze({
    FIRST choices on four platforms; K1 remains the second-family choice.
    No cross-alloy controlled A/B is inferred on every platform. */
 const PERSONAL_PREFS=Object.freeze({
- date:"2026-10-15",
+ date:"2026-10-29",
  gtrTC:{dicodes:{wire:"nife30",wraps:7},zivipf:{wire:"nife52",wraps:6},legacyNiFe30:{wire:"nife30",wraps:6}},
  cool415:{first:[{wire:"nife30",wraps:7},{wire:"nife52",wraps:6}],second:{wire:"k128",wraps:6},historical:[{wire:"k128",wraps:5},{wire:"k1clap",wraps:5}]},
  tcEqualAtoms:["klp","gtr","kx","kprime"],
@@ -170,11 +170,15 @@ function personalPreference(config){
      note:"6 spire funcționează, însă noul montaj cu 7 a fost perceput mai coerent în TC. Refacerea coilului a schimbat și alte condiții."};
  }
  if(PERSONAL_PREFS.tcEqualAtoms.includes(config.atom)){
-  if(["nife30","nife52"].includes(config.wire)&&config.wraps===6)
-   return {tier:1,label:"Prima preferință personală · NiFe30 = NiFe52",note:"Egalitate în preferință, NU aliaje identice: Dicodes TCR320 / Zivipf TCR310; fiecare cu profilul TC propriu."};
+  if((config.wire==="nife30"&&config.wraps===7)||(config.wire==="nife52"&&config.wraps===6))
+   return {tier:1,label:"Prima preferință personală · NiFe30/7 = NiFe52/6",note:"Preferință actualizată 29.10.2026: Dicodes TCR320 cu 7 spire, Zivipf TCR310 cu 6; egalitate a preferinței, nu aliaj identic și nu A/B izolat pe toate platformele."};
+  if(config.wire==="nife30"&&config.wraps===6)
+   return {tier:2,label:"NiFe30/6 · alternativă istorică",note:"Funcțională și disponibilă pentru comparație, dar presetul personal NiFe30 este acum 7 spire."};
   if(["k128","k129"].includes(config.wire))
    return {tier:2,label:"A doua preferință personală · K1",note:"Preferința K1 este sub familia NiFe TC, dar rămâne validă ca alternativă."};
  }
+ if(config.wire==="nife30"&&config.wraps===7)
+  return {tier:3,label:"Preferință generală de geometrie · NiFe30/7",note:"Alegere globală nouă pentru NiFe30, fără a susține că toate atomizoarele au fost testate ori că NiFe30 depășește materialul preferat al fiecărei platforme."};
  if(config.atom==="gtone"){
   if(config.wire==="k129"&&config.wraps===6)return {tier:1,label:"Prima preferință · K1 29 GA / 6"};
   if(config.wire==="k128"&&config.wraps===5)return {tier:2,label:"A doua preferință · K1 28 GA / 5"};
@@ -213,8 +217,8 @@ const DEFAULTS={
  gtr:{wire:"nife30",wraps:7,air:"both"},
  dvarwfl:{wire:"k128",wraps:6,air:"triple06"},
  diplomat:{wire:"k129",wraps:5,air:"pin18"},
- kx:{wire:"nife30",wraps:6,air:"mid"},
- klp:{wire:"nife30",wraps:6,air:"mid"},
+ kx:{wire:"nife30",wraps:7,air:"mid"},
+ klp:{wire:"nife30",wraps:7,air:"mid"},
  asylum:{wire:"k128",wraps:6,air:"dual10"},
  pmfree:{wire:"k128",wraps:5,air:"pin12"},
  pmstd:{wire:"k129",wraps:5,air:"pin12"},
@@ -222,17 +226,23 @@ const DEFAULTS={
  kv3:{wire:"k128",wraps:6,air:"screw_mid"},
  minister:{wire:"k129",wraps:5,air:"d20"}
 };
-function wireSetup(atom,wire){
+function wireSetup(atom,wire,wraps){
  const w=WIRES[wire];if(!w)return null;
- // KLP DNA personal test: 220°C / 16 W. Other devices retain their own presets.
- if(atom==="klp"&&wire==="nife30")return {power:16,temp:220};
- if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // Reported limit, not constant draw.
+ // Historic KLP DNA 220°C/16 W report belongs ONLY to the six-wrap coil.
+ // NiFe30/7 on KLP has no observed temperature/wattage; use generic orientation.
+ if(atom==="klp"&&wire==="nife30"&&wraps===6)return {power:16,temp:220};
+ if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // GTR TC preset retained for both historical /6 and current /7, not a universal recommendation.
  return {power:w.power,temp:w.temp||230};
 }
 const OBS=[
  {atom:"klp",wire:"k128",wraps:5,title:"KLP 28/5: bogăție + ofensivă",
   text:"Palat îmbrățișat de un spectru simultan, TH și ofensivă; preferat personal față de 28/6 și 29/6.",
   patch:{simultaneity:4.92,palate:4.9,offense:4.67,th:4.7,harmony:4.8},affinity:"configurație preferată",evidence:"A/B personal 13.10.2026"},
+ {atom:"klp",wire:"nife30",wraps:7,partial:true,
+  title:"KLP + Dicodes NiFe30/7 · coerență TC actuală",
+  text:"Utilizatorul confirmă că NiFe30 cu 7 spire se comportă mai stabil și mai coerent inclusiv pe KLP, față de montajele anterioare cu 6. TH direct poate fi mai redus, dar impresia este de bogăție și rotunjime pe palat. Nu se atribuie exclusiv celei de-a șaptea spire efectul.",
+  affinity:"NiFe30/7 · coerență percepută · TH bogat",
+  evidence:"actualizare personală 29.10.2026; temperatura, puterea, airflow-ul și lichidul noului montaj neprecizate"},
  {atom:"klp",wire:"nife30",wraps:6,coilMm:2.5,power:16,temp:220,partial:true,
   title:"KLP + Dicodes NiFe30 TC · DNA 220°C / 16 W",
   text:"Față de KLP cu K1 28/5: palat mai bogat, spectru mai bun, TH și ofensivă ușor crescute; apare magia, cu o apropiere senzorială de K Prime cu aceeași sârmă. Nu devine GTR și nu își pierde identitatea.",
@@ -319,14 +329,16 @@ function permitted(id,wire,wraps){
  if(!PLATFORMS[id]||!WIRES[wire])return false;
  if(wire==="ssclap"&&id==="asylum")return false;
  if(wire==="k128"||wire==="k129")return wraps===5||wraps===6;
- if((id==="gtr"||id==="415")&&wire==="nife30")return wraps===6||wraps===7;
+ // Global personal NiFe30/7 is available wherever NiFe30/6 was permitted.
+ // Six wraps remain available for historical comparisons. NiFe52 stays at six.
+ if(wire==="nife30")return wraps===6||wraps===7;
  return wraps===(WIRES[wire].type==="tc"?6:5);
 }
 function variants(id){
  if(!PLATFORMS[id])return [];
  const opts=[];
  for(const w of Object.keys(WIRES)){
-  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):((id==="gtr"||id==="415")&&w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
+  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):(w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
    if(permitted(id,w,wraps))opts.push({wire:w,wraps});
   }
  }
@@ -338,17 +350,24 @@ function defaults(id) {
  const bellCfg=window.RTA_BELL_LIQUID_FIT&&window.RTA_BELL_LIQUID_FIT.config(id);
  return {atom:id,bell:bellCfg?bellCfg.defaultId:"standard",air:def.air,wire:def.wire,
   wraps:def.wraps,coilMm:2.5,position:"standard",
-  power:wireSetup(id,def.wire).power,temp:wireSetup(id,def.wire).temp,
+  power:wireSetup(id,def.wire,def.wraps).power,temp:wireSetup(id,def.wire,def.wraps).temp,
   regime:WIRES[def.wire].type==="tc"?"tc":"watt",chipset:""};
 }
 function configuration(id,changes={}) {
  const base=defaults(id);
  if(!base)return null;
  const value={...base,...changes,atom:id};
+ if(changes.wire&&changes.wire!==base.wire&&!Object.prototype.hasOwnProperty.call(changes,"wraps")){
+  // A material change must not inherit another alloy's number of wraps.
+  if(changes.wire==="nife30")value.wraps=7;
+  else if(changes.wire==="nife52")value.wraps=6;
+  else if(WIRES[changes.wire]?.type==="clapton")value.wraps=5;
+  else if(WIRES[changes.wire]?.type==="round")value.wraps=5;
+ }
  // Selecting a different wire without explicit thermal settings loads the
  // appropriate platform/wire preset. In particular KLP NiFe30 = DNA 220°C / 16 W.
  if(changes.wire && WIRES[changes.wire] && changes.wire!==base.wire){
-  const wirePreset=wireSetup(id,changes.wire);
+  const wirePreset=wireSetup(id,changes.wire,Number(value.wraps));
   if(!Object.prototype.hasOwnProperty.call(changes,"power"))value.power=wirePreset.power;
   if(!Object.prototype.hasOwnProperty.call(changes,"temp"))value.temp=wirePreset.temp;
  }
@@ -404,7 +423,7 @@ function anchorsFor(config) {
  const defaults=DEFAULTS[config.atom];
  if(config.wire==="nife30"&&modeFor(config)==="watt")return [];
  const expectedBell=bellFor(config.atom,defaults&&defaults.bell).id;
- const preset=wireSetup(config.atom,config.wire);
+ const preset=wireSetup(config.atom,config.wire,config.wraps);
  if(!defaults || config.position!=="standard" ||
     config.coilMm!==2.5 || Math.abs(config.power-preset.power)>1.25 ||
     config.bell!==expectedBell)return [];
@@ -544,6 +563,8 @@ function analyze(input,liquid={},objective="complete"){
   if(config.wraps===7&&Math.abs(config.power-12)<.1)
    notes.push("Personal: la 7 spire, NiFe30 în WATT 12 W a avut o căldură mai echilibrată decât la 13 W. Separat, Zivipf NiFe52/6 a mers bine în TC; s-au schimbat aliajul, spirele și regimul, deci nu avem o comparație izolată.");
  }
+ if(config.wire==="nife30"&&config.wraps===7&&modeFor(config)==="tc")
+  notes.push("Regulă personală 29.10.2026: 7 spire NiFe30 este geometria implicită pe orice atomizor compatibil. Observație: TH direct poate fi mai mic decât la 6, dar senzația pe palat este mai bogată/rotundă («TH de bogăție»). Nu sunt procente măsurate și nu toate platformele au fost testate.");
  if(config.atom==="gtr"&&config.wire==="nife30"&&modeFor(config)==="tc")
   notes.push(config.wraps===7?
    "GTR + Dicodes NiFe30/7: utilizatorul raportează TC coerent la 230°C, limită 16 W; NiFe30/6 rămâne funcțional. Efectul izolat al unei spire în plus NU a fost demonstrat.":
@@ -557,8 +578,9 @@ function analyze(input,liquid={},objective="complete"){
  }
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
- if(config.atom==="klp"&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(
-   "KLP NiFe30: 220°C / 16 W sunt setările raportate pe DNA, nu recomandări universale. Airflow-ul, lichidul și reglajele comparatorului nu au fost încă documentate.");
+ if(config.atom==="klp"&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(config.wraps===6?
+   "KLP NiFe30/6 ISTORIC: 220°C / 16 W sunt setările raportate pe DNA doar pentru acel montaj, nu pentru noul NiFe30/7.":
+   "KLP NiFe30/7 ACTUAL: preferat pentru coerență, dar 220°C/16 W din vechiul test NiFe30/6 NU sunt setări observate pe acest montaj. Valorile afișate sunt un preset tehnic orientativ.");
  if(NIFE30_FAMILY.candidates.includes(config.atom)&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(NIFE30_FAMILY.explanation);
  if(config.atom==="asylum"&&config.bell==="dome")
    notes.push("Asylum Dome nu preia automat validarea Flat/28/6.");
@@ -596,7 +618,7 @@ function priority(result,objective="complete"){
 function rankBuilds(atomId,liquid={},objective="complete",context={}){
  const base=configuration(atomId,context);if(!base)return [];
  return variants(atomId).map(v=>{
-  const c=configuration(atomId,{...base,...v,...wireSetup(atomId,v.wire)});
+  const c=configuration(atomId,{...base,...v,...wireSetup(atomId,v.wire,v.wraps)});
   const result=analyze(c,liquid,objective);
   return {...result,rankScore:priority(result,objective)};
  }).sort((a,b)=>b.rankScore-a.rankScore);

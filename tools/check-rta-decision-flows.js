@@ -16,6 +16,7 @@ assert.equal(x.score10(4),7.8); // rounded relative conversion of 1–5 to 1–1
 assert.deepEqual([...x.available('k128','gtr')],[5,6]);
 assert.deepEqual([...x.available('nife30','gtr')],[6,7]);
 assert.deepEqual([...x.available('nife30','415')],[6,7]);
+assert.deepEqual([...x.available('nife30','klp')],[6,7]);
 assert.deepEqual([...x.available('nife52','415')],[6]);
 assert.deepEqual([...x.available('k1clap','gtr')],[5]);
 assert.deepEqual([...x.available('ssclap','asylum')],[]);
@@ -43,8 +44,9 @@ assert.equal(top.length,3,'Show three compatible atomizers when available');
 assert.equal(new Set(top.map(t=>t.atom.id)).size,3);
 top.forEach(t=>{assert.equal(t.result.config.wire,'k128');assert.equal(t.result.config.wraps,6);});
 const narrow=x.topAtoms('nife30',7,sample);
-assert.equal(narrow.length,2,'Never fabricate third NiFe30/7-compatible atomizer');
-assert.deepEqual([...new Set(narrow.map(t=>t.atom.id))].sort(),['415','gtr']);
+assert.equal(x.candidates('nife30',7).length,15,'All active atomizers must accept NiFe30/7 as a personal build option');
+assert.equal(narrow.length,3,'Show three contextual results now that NiFe30/7 is global');
+assert.equal(new Set(narrow.map(t=>t.atom.id)).size,3);
 for(const kind of x.categories){
  const score=x.familyFit(x.candidates('k128',6),kind);
  assert.ok(score>=0&&score<=100,'Fit must be bounded index');

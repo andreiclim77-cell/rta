@@ -23,7 +23,7 @@ const escapeHtml = value => String(value ?? "")
  * - K1 28 GA folosește 5 spire ca baseline general; excepții validate la 6 spire: KV3 Mini, Dvarw CL cu insert 3×0,6 și Asylum V3 cu clopot Flat.
  * - K1 29 GA primește 5 spire pe jeturile concentrate și 6 pe geometriile late.
  * - Ambele Claptonuri sunt fixe la 5 spire, Ø2,5 mm.
- * - Familia NiFe TC folosește baseline-ul canonic de 6 spire pe Ø2,5 mm.
+ * - NiFe30 Dicodes TCR320 = 7 spire global; NiFe52 Zivipf TCR310 = 6 spire pe Ø2,5 mm preset.
  */
 const BUILD_RULES = {
   "415":      { k128: 5, k129: 6, reason: "Cele trei jeturi 3×0,9 mm cer mai multă acoperire pentru 29 GA; 28/5 rămâne alternativa round-wire mai plină." },
@@ -298,7 +298,7 @@ function wireBonus(atom, wire, ax, objective, liquid) {
 
 function buildRule(atom, wire) {
   if (wire.id === "nife30") {
-    return { wraps: 6, reason: "Familia NiFe TC folosește baseline-ul canonic de 6 spire, Ø2,5 mm, cu calibrare complet rece și TCR corect." };
+    return { wraps: 7, reason: "Dicodes NiFe30 TCR320 folosește 7 spire ca preferință personală globală; Zivipf NiFe52 TCR310 folosește 6. Ø2,5 mm este preset, cu calibrare complet rece." };
   }
   if (["k1clap", "ssclap"].includes(wire.id)) {
     return { wraps: 5, reason: claptonPlatformText(atom, wire.id) };
@@ -356,8 +356,8 @@ function buildOutput(atom, wire, liquid) {
   }
   if (wire.id === "nife30") {
     output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
-      ? "Benchmark validat pe 80% trabuc / 20% cireșe. Familia NiFe folosește 6 spire pe Ø2,5 mm; Dicodes RESISTHERM TCR 320 sau Zivipf NiFe52 TCR 310, calibrare complet rece."
-      : "6 spire pe Ø2,5 mm. Dicodes RESISTHERM TCR 320 sau Zivipf NiFe52 TCR 310; calibrare complet rece.";
+      ? "Benchmark validat pe 80% trabuc / 20% cireșe. Dicodes NiFe30 TCR320 are în prezent 7 spire pe Ø2,5 mm preset; Zivipf NiFe52 TCR310 are 6 spire. Benchmarkul 80/20 cu NiFe30/6 este istoric, nu un test pe /7."
+      : "Dicodes NiFe30 TCR320/7 pe orice platformă compatibilă; Zivipf NiFe52 TCR310/6; Ø2,5 mm preset, calibrare complet rece. TH direct poate fi mai puțin accentuat la 7 spire, cu palat mai bogat conform percepției personale.";
     if (atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")) {
       output.status = "Validat";
       output.noteClass = "valid";
@@ -372,7 +372,7 @@ function buildOutput(atom, wire, liquid) {
 
 function footprintText(atom, wire, output) {
   if (wire.id === "nife30") {
-    return "6 spire pe Ø2,5 mm rămân reperul fix pentru TC; aliajul și TCR-ul se aleg corect, iar calibrarea se face complet la rece.";
+    return "Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt reperele actuale pe Ø2,5 mm preset; calibrare la rece și TCR distinct.";
   }
   if (["k1clap", "ssclap"].includes(wire.id)) {
     return `5 spire pe Ø2,5 mm. Claptonul are suprafață și masă mai mari decât round-wire, deci nu se compară axial 1:1 cu 28/5 sau 29/5. ${buildRule(atom, wire).reason}`;
@@ -460,7 +460,7 @@ function geometrySummary(atom) {
       <span><b>K1 29 GA</b>${rule.k129} spire · ≈ ${CONTACT_WIDTH_MM.k129[rule.k129]} mm</span>
       <span><b>K1 Clapton</b>2×30+38 · 5 spire</span>
       <span><b>SS Clapton</b>2×30+38 · 5 spire</span>
-      <span><b>NiFe TC</b>6 spire · Ø2,5 · TCR 320/310</span>
+      <span><b>NiFe TC</b>Dicodes NiFe30/7 · Zivipf NiFe52/6 · Ø2,5</span>
     </div>
     <p>${escapeHtml(rule.reason)} Claptonurile intră în TOP 3 numai când profilul lichidului și platforma justifică suprafața și masa suplimentare.</p>
   </div>`;

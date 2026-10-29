@@ -1,123 +1,71 @@
-/* RTA Lab — TC baseline with GTR and 415 Cool NiFe30 seven-wrap exceptions, 15.10.2026.
- * Active rule requested by user:
- * - Dicodes RESISTHERM NiFe30 · TCR320 · 5,5 Ω/m · Ø2,5 mm · 6 wraps
- * - Zivipf NiFe52 · TCR310 · Ø2,5 mm · 6 wraps
- * Loaded after tc-platform-map.js. General baseline remains 6;
- * GTR and 415 Cool prefer Dicodes NiFe30/7, while Zivipf NiFe52 remains /6.
- * Legacy engine has one NiFe slot: distinguish both material choices in text.
+/* RTA Lab — separare NiFe30/7 global, NiFe52/6, 29.10.2026.
+ * Numele istoric al modulului rămâne din motive de compatibilitate V10.
+ * 7 spire NiFe30 reprezintă o regulă personală generală, nu teste A/B pe toate RTA.
+ * NiFe30/6 rămâne selectabil în Sensory DNA drept alternativă istorică.
+ * Rola Dicodes NiFe30 TCR320 5,5 Ω/m; Zivipf NiFe52 TCR310.
  */
 (() => {
   window.RTA_LAB_TC_SIX_WRAP = {
-    date: "2026-10-15",
-    status: "canonical",
-    coilDiameterMm: 2.5,
-    wraps: 6,
-    overrides: { gtr: { dicodesNiFe30Wraps:7, zivipfNiFe52Wraps:6, dicodesNiFe30LegacyWraps:6 }, "415": { dicodesNiFe30Wraps:7, zivipfNiFe52Wraps:6, k128Wraps:6, dicodesNiFe30LegacyWraps:6 } },
-    dicodes: {
-      wire: "Dicodes RESISTHERM NiFe30",
-      tcr: 320,
-      resistanceOhmPerM: 5.5
+    date: "2026-10-29", status: "canonical-personal-preference",
+    coilDiameterMm: 2.5, wraps: 7,
+    dicodesNiFe30Wraps: 7, zivipfNiFe52Wraps: 6, historicalDicodesWraps: 6,
+    overrides: {
+      gtr: {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6,dicodesNiFe30LegacyWraps:6},
+      "415": {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6,k128Wraps:6,dicodesNiFe30LegacyWraps:6}
     },
-    zivipf: {
-      wire: "Zivipf NiFe52",
-      tcr: 310
-    },
-    principle: "Baseline global 6 spire; GTR și 415 Cool: Dicodes NiFe30 TCR320/7 și Zivipf NiFe52 TCR310/6 preferate. Pe 415 urmează K1 28 GA/6; pe alte platforme nu transfera această excepție."
+    dicodes: {wire:"Dicodes RESISTHERM NiFe30",tcr:320,resistanceOhmPerM:5.5},
+    zivipf: {wire:"Zivipf NiFe52",tcr:310},
+    principle: "Global: Dicodes NiFe30/7 pe orice RTA compatibil; Zivipf NiFe52/6. NiFe30/6 este reper istoric selectabil; setările TC/WATT se validează separat."
   };
 
   if (typeof buildRule === "function") {
-    const baseBuildRule = buildRule;
-    buildRule = function(atom, wire) {
-      if (wire && wire.id === "nife30") {
-        if (atom && atom.id === "415") return {
-          wraps:7,reason:"415 Cool: Dicodes NiFe30/7 = Zivipf NiFe52/6 ca preferințe; apoi K1 28 GA/6. Nu A/B izolat."
-        };
-        if (atom && atom.id === "gtr") return {
-          wraps:7,
-          reason:"GTR: Dicodes NiFe30 TCR320 preferat personal la 7 spire în TC; Zivipf NiFe52 TCR310 la 6 spire rămâne egal preferat. NiFe30/6 funcționează. Diferența poate include efectul refacerii coilului, nu A/B izolat."
-        };
-        return {
-          wraps: 6,
-          reason: "NiFe TC folosește baseline-ul canonic actual de 6 spire pe Ø2,5 mm, cu calibrare complet rece și TCR corect."
-        };
-      }
-      return baseBuildRule(atom, wire);
+    const original=buildRule;
+    buildRule=function(atom,wire){
+      if(wire?.id==="nife30")return {
+        wraps:7,reason:"Dicodes RESISTHERM NiFe30 TCR320: 7 spire = preferința personală actuală pe toate atomizoarele compatibile; Zivipf NiFe52 TCR310 folosește 6 spire. Montajul NiFe30/6 este istoric funcțional, nu interzis."
+      };
+      return original(atom,wire);
     };
   }
-
-  const replaceLegacySeven = value => String(value || "")
-    .replace(/NiFe30\/7/g, "NiFe30/6")
-    .replace(/320\/7/g, "320/6")
-    .replace(/NiFe30\s*320\/7/g, "NiFe30 320/6")
-    .replace(/NiFe30\s*=\s*7 spire/g, "NiFe30 = 6 spire")
-    .replace(/NiFe30<\/b>7 spire/g, "NiFe30</b>6 spire")
-    .replace(/NiFe30[^<\n]{0,80}7 spire/g, match => match.replace("7 spire", "6 spire"));
-
   if (typeof buildOutput === "function") {
-    const baseBuildOutput = buildOutput;
-    buildOutput = function(atom, wire, liquid) {
-      const output = baseBuildOutput(atom, wire, liquid);
-      if (!wire || wire.id !== "nife30" || !output) return output;
-      if (atom && ["gtr","415"].includes(atom.id)) {
-        output.wraps = "7"; // Legacy slot displays Dicodes variant; NiFe52/6 is stated in the note.
-      } else {
-        output.wraps = "6";
-        output.note = replaceLegacySeven(output.note);
-        output.status = replaceLegacySeven(output.status);
+    const original=buildOutput;
+    buildOutput=function(atom,wire,liquid){
+      const out=original(atom,wire,liquid);
+      if(wire?.id==="nife30"&&out){
+        out.wraps="7";
+        if(!["gtr","415","klp","kx","kprime"].includes(atom?.id)){
+          out.status="Regulă personală nouă · Dicodes NiFe30/7";
+          out.noteClass="context";
+          out.note="NiFe30 TCR320/7 este geometria preferată global; Zivipf NiFe52 TCR310 rămâne cu 6 spire. Nu există un A/B pentru fiecare atomizor, iar vechiul NiFe30/6 rămâne o opțiune istorică funcțională.";
+        }
       }
-      return output;
+      return out;
     };
   }
-
   if (typeof footprintText === "function") {
-    const baseFootprintText = footprintText;
-    footprintText = function(atom, wire, output) {
-      if (wire && wire.id === "nife30") {
-        if (atom && atom.id === "415")
-          return "415 Cool: Dicodes NiFe30 TCR320/7 și Zivipf NiFe52 TCR310/6 preferate egal, apoi K1 28 GA/6.";
-        if (atom && atom.id === "gtr")
-          return "GTR: Dicodes NiFe30/7 este preferat personal TC; Zivipf NiFe52/6 este egal preferat. NiFe30/6 rămâne funcțional. Calibrare complet rece, TCR distinct.";
-        return "6 spire pe Ø2,5 mm = baseline TC canonic actual; aliajul se alege per platformă, cu calibrare complet rece și TCR corect.";
-      }
-      return replaceLegacySeven(baseFootprintText(atom, wire, output));
+    const original=footprintText;
+    footprintText=function(atom,wire,output){
+      if(wire?.id==="nife30")return "Dicodes NiFe30/7 (TCR320) pe orice platformă compatibilă, Zivipf NiFe52/6 (TCR310) separat. Ø2,5 = preset. Geometria cu 7 spire poate reduce TH-ul direct, dar utilizatorul descrie un TH mai bogat pe palat; fără procent măsurat.";
+      return original(atom,wire,output);
     };
   }
-
-  if (typeof comparisonText === "function") {
-    const baseComparisonText = comparisonText;
-    comparisonText = function(atom, wire, output) {
-      const text = baseComparisonText(atom, wire, output);
-      return atom && ["gtr","415"].includes(atom.id) && wire && wire.id === "nife30" ? text : replaceLegacySeven(text);
-    };
-  }
-
-  if (typeof explorerVapeText === "function") {
-    const baseExplorerVapeText = explorerVapeText;
-    explorerVapeText = function(atom, wire, output) {
-      const text = baseExplorerVapeText(atom, wire, output);
-      return atom && ["gtr","415"].includes(atom.id) && wire && wire.id === "nife30" ? text : replaceLegacySeven(text);
-    };
-  }
-
   if (typeof geometrySummary === "function") {
-    const baseGeometrySummary = geometrySummary;
-    geometrySummary = function(atom) {
-      const text = baseGeometrySummary(atom);
-      if (atom && atom.id === "415")return text; // 415 geometry describes the new 7/6/6 exception, never sanitize it back.
-      if (atom && atom.id === "gtr")
-        return text.replace("<b>NiFe TC</b>6 spire · Ø2,5 · TCR 320/310",
-          "<b>NiFe TC</b>Dicodes NiFe30/7 · Zivipf NiFe52/6 · Ø2,5");
-      return replaceLegacySeven(text)
-        .replace(/<b>NiFe30<\/b>7 spire/g, "<b>NiFe30</b>6 spire");
+    const original=geometrySummary;
+    geometrySummary=function(atom){
+      const html=original(atom);
+      return html
+        .replace(/<b>NiFe TC<\/b>6 spire · Ø2,5 · TCR 320\/310/g,"<b>NiFe TC</b>Dicodes NiFe30/7 · Zivipf NiFe52/6 · Ø2,5")
+        .replace(/<b>NiFe30<\/b>6 spire/g,"<b>NiFe30</b>7 spire")
+        .replace(/<b>NiFe30\/6<\/b>/g,"<b>NiFe30/7</b>");
     };
   }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".wire-guide-foot, .legend, .wire-card.tc .wire-specs").forEach(node => {
-      if (node.textContent && (node.textContent.includes("GTR") || node.textContent.includes("415")) && /NiFe30[^<\n]{0,20}(?:\/7|7 spire)/.test(node.innerHTML)) return;
-      node.innerHTML = replaceLegacySeven(node.innerHTML)
-        .replace(/Dicodes\/Resistherm NiFe30\s*=\s*7/g, "Dicodes/Resistherm NiFe30 = 6")
-        .replace(/Ø2,5 mm · <b>7 spire<\/b>/g, "Ø2,5 mm · <b>6 spire</b>");
-    });
+  document.addEventListener("DOMContentLoaded",()=>{
+    for(const node of document.querySelectorAll(".wire-guide-foot, .legend, .wire-card.tc .wire-specs")){
+      if(!node.innerHTML)continue;
+      node.innerHTML=node.innerHTML
+        .replace(/Dicodes RESISTHERM NiFe30 = <b>6 spire<\/b> în general, <b>GTR și 415 Cool = 7 spire<\/b> preferat personal/g,
+         "Dicodes RESISTHERM NiFe30 = <b>7 spire pe toate atomizoarele compatibile</b> (6 spire rămân istoric funcționale)")
+        .replace(/6 spire general \/ 7 spire pe GTR și 415 Cool/g,"7 spire global (6 spire istorice)");
+    }
   });
 })();

@@ -59,12 +59,12 @@ function setConfig(changes){
  if(changes.wire){
   const variant=core.variants(state.atom).find(v=>v.wire===changes.wire);
   if(!variant)return false;
-  const preset=core.wireSetup(state.atom,changes.wire);
+  const preset=core.wireSetup(state.atom,changes.wire,variant.wraps);
   changes={...changes,wraps:variant.wraps,power:preset.power,temp:preset.temp,
    regime:core.wires[changes.wire].type==="tc"?"tc":"watt",chipset:""};
  }
  if(changes.regime&&state.config.wire==="nife30"&&changes.regime!==state.config.regime){
-  const preset=core.wireSetup(state.atom,"nife30");
+  const preset=core.wireSetup(state.atom,"nife30",state.config.wraps);
   changes={...changes,power:changes.regime==="watt"?core.nife30Watt.power:preset.power,temp:preset.temp,chipset:""};
  }
  if(changes.wraps&&!core.permitted(state.atom,changes.wire||state.config.wire,Number(changes.wraps)))return false;
@@ -122,7 +122,7 @@ function wireConfig(id,wire){
  const base=id===state.atom?state.config:core.defaultConfig(id);
  if(!base||!core.wires[wire])return null;
  const variants=core.variants(id).filter(v=>v.wire===wire);
- const v=((id==='gtr'||id==='415')&&wire==='nife30'?variants.find(v=>v.wraps===7):
+ const v=(wire==='nife30'?variants.find(v=>v.wraps===7):
    id==='415'&&wire==='k128'?variants.find(v=>v.wraps===6):
    variants.find(v=>v.wraps===base.wraps))||variants[0];
  if(!v)return null;
@@ -133,11 +133,11 @@ function wireConfig(id,wire){
  const preferred=core.wires[wire].type==='tc'?'tc':'watt';
  const regime=preserve&&core.allowedRegimes(wire).includes(state.config.regime)?state.config.regime:preferred;
  const chipset=preserve&&wire==='nife30'&&regime==='watt'?state.config.chipset:'';
- const settings=core.wireSetup(id,wire);
+ const settings=core.wireSetup(id,wire,v.wraps);
  const power=wire==='nife30'&&regime==='watt'?core.nife30Watt.power:settings.power;
  return core.config(id,{...base,...v,...settings,regime,chipset,power});
 }
-function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?(wire==='nife30'?'NiFe30 TCR320 · TC sau alternativ WATT 12 W pe Dicodes, YiHi, ARC1, DNA.':'NiFe52 TCR310 · TC, preseturi proprii platformei.'):w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
+function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?(wire==='nife30'?'NiFe30 TCR320/7 · preferință globală, cu /6 istoric; TC sau alternativ WATT 12 W pe Dicodes, YiHi, ARC1, DNA.':'NiFe52 TCR310 · TC, preseturi proprii platformei.'):w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
 function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objective).map((r,i)=>'<button type="button" data-journey-liquid="'+r.index+'" data-journey-wire="'+cfg.wire+'" data-journey-atom="'+cfg.atom+'"><span>0'+(i+1)+'</span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('');}
 
 /* The platform's own confirmed personal choices come first; remaining materials
@@ -146,9 +146,9 @@ function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objecti
 const PERSONAL_LEADS=Object.freeze({
  "415":[["nife30",7],["nife52",6],["k128",6]],
  gtr:[["nife30",7],["nife52",6],["k128",5]],
- klp:[["nife30",6],["nife52",6],["k128",5]],
- kprime:[["nife30",6],["nife52",6],["k129",5]],
- kx:[["nife30",6],["nife52",6],["k128",5]],
+ klp:[["nife30",7],["nife52",6],["k128",5]],
+ kprime:[["nife30",7],["nife52",6],["k129",5]],
+ kx:[["nife30",7],["nife52",6],["k128",5]],
  gtone:[["k129",6],["k128",5]],muted:[["k128",6]],
  dvarwcl:[["k128",6,"triple06"]],
  dvarwfl:[["k128",6,"triple06"]],
@@ -162,7 +162,7 @@ function buildLeads(id=state.atom){
  if(!base)return [];
  function add(wire,wraps,air,source,bell){
   if(!core.wires[wire]||used.has(wire)||!core.permitted(id,wire,wraps))return;
-  const cfg=core.config(id,{...base,wire,wraps,air:air||base.air,bell:bell||base.bell,...core.wireSetup(id,wire)});
+  const cfg=core.config(id,{...base,wire,wraps,air:air||base.air,bell:bell||base.bell,...core.wireSetup(id,wire,wraps)});
   if(cfg.wire!==wire||cfg.wraps!==wraps)return;
   used.add(wire);out.push({config:cfg,source});
  }
@@ -241,7 +241,7 @@ function renderWire(){
  el('pageWire').innerHTML=heading('04 / WIRE ANATOMY','Wire Lab.','Cinci familii, două aliaje NiFe distincte. Geometrie explicată, caracter contextual.')+workflow(['Alege sârma','Toate atomizoarele compatibile','Experiență · lichide · comparații'])+contextBar()+
  '<div class="wire-controls wire-picker">'+select('1 · Alege sârma','wireMaterial',[['','Alege sârma...'],...Object.entries(core.wires).map(([id,w])=>[id,w.name])],state.wireChosen?state.config.wire:'')+select('2 · Alege atomizorul','wireAtom',[['','Alege dintre cele compatibile'],...(state.wireChosen?compatibleWireAtoms(state.config.wire).map(a=>[a.id,a.short]):[])],state.wirePlatformChosen?state.atom:'')+select('Obiectiv','wireObjective',objectives,state.objective)+'</div>'+(state.wireChosen?window.RTA_ATLAS_SEARCH_UI.render('wire')+wirePlatforms():wirePalette())+
  '<div class="wire-selected-experience"'+(state.wirePlatformChosen?'':' hidden')+'>'+(hasLiquid()?'<div class="module-next-actions"><button type="button" class="module-link" data-route="liquid">Vezi și celelalte atomizoare pentru acest lichid ↗</button><button type="button" class="module-link" data-route="atomizer">Explorează acest atomizor în Atlas ↗</button></div>':'')+
- '<div class="wire-workspace"><div class="wire-stage"><span class="eyebrow">'+esc(core.modeFor(state.config).toUpperCase())+' / '+esc(name(state.atom))+'</span><h2>'+esc(w.name)+'</h2><div class="coil-stage">'+api.renderCoil(state.config)+'</div><div class="geometry-readout"><span><b>'+phys.widthMm+' mm</b>lățime estimată coil</span><span><b>'+esc(phys.areaMm2==null?'nefixată':phys.areaMm2+' mm²')+'</b>arie nominală aer</span></div><p class="module-note">Schemă explicativă. Aria orificiilor nu este debit; lățimea coilului este o aproximație geometrică.</p><p class="wire-identity">'+esc(state.config.wire==='nife30'&&core.modeFor(state.config)==='watt'?'NiFe30 în WATT '+state.config.power+' W · '+(core.nife30Watt.chipsets[state.config.chipset]||'chipset nespecificat')+'. La 7 spire / 12 W ai raportat temperatură mai echilibrată a vaporilor decât la 13 W. NiFe52/6 în TC este o observație distinctă.':state.atom==='gtr'&&w.type==='tc'?'GTR: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt la egalitate ca preferință. NiFe30/6 funcționează și rămâne selectabil; noul 7 este mai coerent în testul personal, fără dovadă de cauzalitate izolată.':state.atom==='415'&&w.type==='tc'?'415 Cool: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt primele alegeri personale, apoi K1 28 GA / 6 spire. Reglajele TC observate pe GTR nu se transferă pe 415.':state.atom==='klp'&&w.type==='tc'?'KLP: Dicodes NiFe30 și Zivipf NiFe52 sunt ambele preferințe personale de prim nivel. Reglajul DNA 220°C/16 W este raportat numai pentru Dicodes.':w.type==='tc'?'TC: Dicodes NiFe30 TCR320 și Zivipf NiFe52 TCR310 sunt aliaje distincte, cu 6 spire în baseline general; excepțiile personale NiFe30/7 sunt GTR și 415 Cool.':'Buildurile urmează permisiunile și observațiile canonice ale platformei.')+'</p>'+(!window.RTA_ATLAS_DUEL?.state.editing?'<button type="button" class="match-button" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(state.config)))+'">Compară această configurație în Duel ↗</button>':'')+'</div><section class="wire-panel">'+controls()+'</section></div>'+
+ '<div class="wire-workspace"><div class="wire-stage"><span class="eyebrow">'+esc(core.modeFor(state.config).toUpperCase())+' / '+esc(name(state.atom))+'</span><h2>'+esc(w.name)+'</h2><div class="coil-stage">'+api.renderCoil(state.config)+'</div><div class="geometry-readout"><span><b>'+phys.widthMm+' mm</b>lățime estimată coil</span><span><b>'+esc(phys.areaMm2==null?'nefixată':phys.areaMm2+' mm²')+'</b>arie nominală aer</span></div><p class="module-note">Schemă explicativă. Aria orificiilor nu este debit; lățimea coilului este o aproximație geometrică.</p><p class="wire-identity">'+esc(state.config.wire==='nife30'&&core.modeFor(state.config)==='watt'?'NiFe30 în WATT '+state.config.power+' W · '+(core.nife30Watt.chipsets[state.config.chipset]||'chipset nespecificat')+'. La 7 spire / 12 W ai raportat temperatură mai echilibrată a vaporilor decât la 13 W. NiFe52/6 în TC este o observație distinctă.':state.atom==='gtr'&&w.type==='tc'?'GTR: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt la egalitate ca preferință. NiFe30/6 funcționează și rămâne selectabil; noul 7 este mai coerent în testul personal, fără dovadă de cauzalitate izolată.':state.atom==='415'&&w.type==='tc'?'415 Cool: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt primele alegeri personale, apoi K1 28 GA / 6 spire. Reglajele TC observate pe GTR nu se transferă pe 415.':state.atom==='klp'&&w.type==='tc'?'KLP: Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt preferințe de prim nivel. Testul DNA 220°C/16 W este EXCLUSIV vechiul montaj NiFe30/6, nu un reglaj confirmat pe /7.':w.type==='tc'?'TC: Dicodes NiFe30 TCR320/7 este geometria personală nouă pe orice atomizor compatibil; Zivipf NiFe52 TCR310/6 rămâne separat. Vechiul NiFe30/6 este disponibil pentru comparație.':'Buildurile urmează permisiunile și observațiile canonice ale platformei.')+'</p>'+(!window.RTA_ATLAS_DUEL?.state.editing?'<button type="button" class="match-button" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(state.config)))+'">Compară această configurație în Duel ↗</button>':'')+'</div><section class="wire-panel">'+controls()+'</section></div>'+
  (state.config.wire==='nife30'?'<figure class="wire-product-photo"><img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30: rolă cu eticheta 320 și 5,5 Ω/m, lângă ambalajul metalic de referință" loading="lazy" decoding="async" width="500" height="333"><figcaption><span class="eyebrow">MATERIAL ÎN PRIM-PLAN / FOTO REALĂ</span><h2>Dicodes RESISTHERM NiFe30.</h2><p>Fotografie de produs, nu a rolei personale. Ambalaj de referință; sursa menționează că lotul actual este livrat fără cutia metalică.</p><a href="https://www.vapesbyenushi.com/dicodes-resistherm-nife30-temperature-control-resistance-wire/" target="_blank" rel="noopener noreferrer">Foto: Vapes by Enushi / Dicodes ↗</a></figcaption></figure>':'')+
  '<section class="module-section" data-requires-liquid><h2>Ce oferă această configurație.</h2>'+metricPanel(m.result)+'<div class="gain-trade"><div><h3>Avantaje orientative</h3><ul>'+m.result.advantages.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><h3>Compromisuri</h3><ul>'+m.result.tradeoffs.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+method(m.result)+'</section>'+
  topLiquids('wire')+compareWirePlatforms()+'<section class="module-section" data-requires-liquid><h2>Alte trei configurații pentru comparație.</h2><div class="detail-grid">'+m.builds.map((b,i)=>'<div>'+api.renderBuild(b,i+1,liquid())+'<button type="button" class="module-link" data-pick-build="'+i+'">Explorează acest build</button></div>').join('')+'</div>'+watchPanel(m.builds)+api.comparisonGraphic(m.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+b.config.wraps+' spire',result:b})),'Trei experiențe pe același atomizor')+'</section></div>';
