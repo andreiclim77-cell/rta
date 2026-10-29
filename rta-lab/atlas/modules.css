@@ -212,3 +212,12 @@
  .wire-library-platforms .wire-platform-card{padding:15px}
 }
 @media(prefers-reduced-motion:reduce){.wire-build-entry{transition:none}}
+
+/* Evidence-safe ranked card copy: build-specific model, not another coil's test. */
+.wire-match-rank{display:inline-flex;align-self:flex-start;color:#e6cb99;border:1px solid #6d796b;padding:5px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.08em}
+.wire-specific-note{font-size:12px!important;line-height:1.6!important;color:#ccdfd0!important}
+.wire-specific-note b{color:#e0c797}
+.wire-personal-ref{font-size:11px!important;line-height:1.6!important;color:#b1dbca!important}
+.wire-selected-outside{margin:16px 0;padding:12px;border:1px dashed #637a71;border-radius:12px}
+.wire-selected-outside>p{font-size:12px;color:#dfc69a;line-height:1.6}
+.wire-selected-outside>.wire-platform-grid{margin-bottom:0}
