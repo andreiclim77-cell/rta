@@ -178,39 +178,40 @@ function wireWizard(){
  const choices='<option value="">Alege un material...</option>'+wireOptions(W.first);
  const section=(number,title,inside)=>'<section class="exp-stage" data-wire-step="'+number+'"><h3>'+number+'. '+title+'</h3>'+inside+'</section>';
  const first=section(1,"Sârma și coilul de pornire",
-  '<p class="exp-hint">Cele șase carduri de mai sus arată ultimele tale preferințe, înaintea oricărei selecții. Alege un material și numărul de spire pentru comparație.</p>'+
+  '<p class="exp-hint">Cele șase carduri de mai sus arată ultimele tale preferințe, înaintea oricărei selecții. Alege materialul și numărul de spire pentru comparație.</p>'+
   '<div class="exp-selects"><label>Sârma de pornire<select id="expWireFirst">'+choices+'</select></label>'+
-  (W.first?'<label>Număr de spire<select id="expWireWraps">'+wrapOptions(W.first,W.wraps)+'</select></label>':'')+
-  '</div>'+(overview?matrix([{label:core.wires[W.first].name+' · '+W.wraps+' spire',result:overview}],
-   'Profil comparativ inițial · 14 obiective','Model orientativ mediat pe '+firstCfg.length+' platforme compatibile, nu un test fizic unic.'):''));
- const compare=W.first&&W.wraps?section(2,"Comparații între sârme și spire",
-  '<p class="exp-hint">Compară pe aceeași scară 1–10, folosind exact platformele compatibile în comun. Comparația este opțională: poți continua și cu prima sârmă.</p>'+
-  '<button type="button" class="exp-action" data-exp-toggle-compare aria-expanded="'+W.compare+'">'+(W.compare?'Ascunde comparatorul':'Deschide comparația')+'</button>'+
+  (W.first?'<label>Număr de spire<select id="expWireWraps">'+wrapOptions(W.first,W.wraps)+'</select></label>':'')+'</div>');
+ const compare=W.first&&W.wraps?section(2,"Compară sârmele și numărul de spire",
+  '<p class="exp-hint">O singură matrice comparativă pe 14 axe. Comparatorul folosește aceleași atomizoare compatibile pentru ambele builduri. Dacă nu vrei a doua sârmă, poți continua cu prima.</p>'+
+  '<button type="button" class="exp-action" data-exp-toggle-compare aria-expanded="'+W.compare+'">'+(W.compare?'Închide alegerea comparatorului':'Adaugă sârma de comparat')+'</button>'+
   (W.compare?'<div class="exp-selects"><label>Sârmă de comparat<select id="expWireOther"><option value="">Alege comparatorul...</option>'+
     wireOptions(W.other)+'</select></label>'+
-    (W.other?'<label>Spire comparator<select id="expWireOtherWraps">'+wrapOptions(W.other,W.otherWraps)+'</select></label>':'')+'</div>'+
-    (firstCompare&&secondCompare?matrix([
-      {label:core.wires[W.first].name+' · '+W.wraps+' spire',result:firstCompare},
-      {label:core.wires[W.other].name+' · '+W.otherWraps+' spire',result:secondCompare}
-     ],'Comparație directă / aceleași atomizoare','Comparație modelată în profil neutru, pe '+commonIds.length+' platforme comune. Nu sunt măsurători senzoriale.'):
-      (W.other&&W.otherWraps?'<p class="exp-warning">Nu există platforme comune pentru această comparație.</p>':'')):'')
+    (W.other?'<label>Spire comparator<select id="expWireOtherWraps">'+wrapOptions(W.other,W.otherWraps)+'</select></label>':'')+'</div>':'')+
+  (firstCompare&&secondCompare?matrix([
+    {label:core.wires[W.first].name+' · '+W.wraps+' spire',result:firstCompare},
+    {label:core.wires[W.other].name+' · '+W.otherWraps+' spire',result:secondCompare}],
+    'Comparație directă / aceleași platforme','Scoruri modelate pe '+commonIds.length+' platforme comune, fără A/B fizic.'):
+   W.compare&&W.other&&W.otherWraps?'<p class="exp-warning">Nu există atomizoare comune pentru acest A/B.</p>':
+   overview?matrix([{label:core.wires[W.first].name+' · '+W.wraps+' spire',result:overview}],
+    'Profilul sârmei de pornire','Reper orientativ pe '+firstCfg.length+' platforme compatibile; după comparator apare în locul acestuia o singură matrice cu ambele builduri.'):'')
  ):''; 
- const choose=W.first&&W.wraps?section(3,"Te-ai decis? Confirmă sârma finală",
-  '<p class="exp-hint">Comparațiile nu aleg automat pentru tine. Confirmă explicit materialul și spirele; abia apoi apar obiectivele senzoriale.</p>'+
+ const choose=W.first&&W.wraps?section(3,"Te-ai decis? Confirmă alegerea",
+  '<p class="exp-hint">Confirmi explicit sârma și spirele. Nu există confirmări duplicate sau selecție automată făcută în locul tău.</p>'+
   '<div class="exp-selects"><label>Sârmă finală<select id="expWireFinal"><option value="">Alege sârma finală...</option>'+
     wireOptions(W.final)+'</select></label>'+
-    (W.final?'<label>Spire finale<select id="expWireFinalWraps">'+wrapOptions(W.final,W.finalWraps)+'</select></label>':'')+
-  '</div><div class="exp-choice-actions"><button class="exp-action" type="button" data-exp-use-first="1">Aleg '+esc(core.wires[W.first].name)+' / '+W.wraps+' spire</button>'+
-    (W.compare&&W.other&&W.otherWraps?'<button class="exp-action" type="button" data-exp-use-other="1">Aleg '+esc(core.wires[W.other].name)+' / '+W.otherWraps+' spire</button>':'')+
-    (W.final&&W.finalWraps?'<button class="exp-action" type="button" data-exp-confirm-final="1">Confirmă selecția finală</button>':'')+
-    '</div>'+(W.confirmed?'<p class="exp-success" role="status">Alegere confirmată: '+esc(core.wires[W.final].name)+' · '+W.finalWraps+' spire. Poți reveni și o poți schimba.</p>':'')
+    (W.final?'<label>Spire finale<select id="expWireFinalWraps">'+wrapOptions(W.final,W.finalWraps)+'</select></label>':'')+'</div>'+
+  (W.confirmed?'<p class="exp-success" role="status">Alegere confirmată: '+esc(core.wires[W.final].name)+' · '+W.finalWraps+' spire. Pentru modificare schimbă sârma sau spirele din selector.</p>':
+   '<div class="exp-choice-actions">'+
+    (W.final&&W.finalWraps?'<button class="exp-action" type="button" data-exp-confirm-final="1">Confirmă această alegere</button>':
+     '<button class="exp-action" type="button" data-exp-use-first="1">Confirm prima sârmă · '+W.wraps+' spire</button>'+
+     (W.compare&&W.other&&W.otherWraps?'<button class="exp-action" type="button" data-exp-use-other="1">Confirm comparatorul · '+W.otherWraps+' spire</button>':''))+
+    '</div>')
  ):''; 
  const goal=W.confirmed?section(4,"Ce vrei să obții? TH, stratificare, corp...",
   '<p class="exp-hint">Alege obiectivul senzorial. Scorurile rămân estimări, nu se atribuie un gust garantat fiecărui atomizor.</p>'+
   '<label class="exp-liquid-select">Obiectiv<select id="expWireGoal"><option value="">Alege ce contează cel mai mult...</option>'+
     (window.RTA_ATLAS_CONTEXT?.goals||[]).map(([id,name])=>'<option value="'+id+'"'+(id===W.objective?' selected':'')+'>'+esc(name)+'</option>').join('')+'</select></label>'+
-  (W.objective&&overviewFinal?matrix([{label:core.wires[W.final].name+' · '+W.finalWraps+' spire',result:overviewFinal}],
-   'Profil orientativ pentru obiectivul ales','Media modelelor pe '+finalCfg.length+' platforme compatibile, înaintea alegerii lichidului și atomizorului.'):'')
+  (W.objective?'<p class="exp-success">Obiectiv selectat: '+esc((window.RTA_ATLAS_CONTEXT?.goals||[]).find(g=>g[0]===W.objective)?.[1]||W.objective)+'. Urmează lichidul.</p>':'')
  ):''; 
  const liquid=W.confirmed&&W.objective?section(5,"Lichidul: familia, apoi produsul exact",
   '<p class="exp-hint">Întâi alegi familia, apoi un lichid din cele 700. Abia după lichid apar recomandările finale de atomizoare.</p>'+
