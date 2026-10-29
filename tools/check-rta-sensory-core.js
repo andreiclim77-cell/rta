@@ -51,7 +51,7 @@ for(const atom of atoms){
  assert.ok(api.permitted(atom.id,base.wire,base.wraps),atom.id);
  assert.ok(tech.air.some(a=>a.id===base.air),atom.id);
  const models=api.variants(atom.id);
- assert.ok(models.length>=5 && models.length<=(["gtr","415"].includes(atom.id)?9:8),atom.id);
+ assert.ok(models.length>=5 && models.length<=9,atom.id);
  totalVariants+=models.length;
  assert.equal(new Set(models.map(x=>x.wire+"-"+x.wraps)).size,models.length);
  for(const v of models){
@@ -82,8 +82,10 @@ assert.ok(k6.pleasure && k6.anchors.length>0);
 const klpRanked=api.rankBuilds("klp",sample);
 assert.ok(klpRanked.some(r=>r.config.wire==="k128"&&r.config.wraps===5));
 assert.ok(klpRanked.some(r=>r.config.wire==="nife30"&&r.config.wraps===6));
-assert.equal(klpRanked.find(r=>r.config.wire==="nife30").config.temp,220);
-assert.equal(klpRanked.find(r=>r.config.wire==="nife30").config.power,16);
+assert.equal(klpRanked.find(r=>r.config.wire==="nife30"&&r.config.wraps===6).config.temp,220);
+assert.equal(klpRanked.find(r=>r.config.wire==="nife30"&&r.config.wraps===6).config.power,16);
+assert.equal(klpRanked.find(r=>r.config.wire==="nife30"&&r.config.wraps===7).config.temp,230);
+assert.equal(klpRanked.find(r=>r.config.wire==="nife30"&&r.config.wraps===7).config.power,13);
 const klpDNA=api.analyze({atom:"klp",wire:"nife30",wraps:6,coilMm:2.5,temp:220,power:16},sample);
 assert.ok(klpDNA.signals.palate>k5.signals.palate);
 assert.ok(klpDNA.signals.spectrum>k5.signals.spectrum);
@@ -129,7 +131,7 @@ assert.ok(flThree.signals.palate>flSingle.signals.palate);
 assert.ok(flThree.signals.simultaneity>flSingle.signals.simultaneity);
 assert.ok(flThree.signals.th<flSingle.signals.th);
 for(const atom of ["klp","gtr","kx","kprime"]){
- const dicodesWraps=atom==="gtr"?7:6;
+ const dicodesWraps=7;
  const a=api.personalPreference({atom,wire:"nife30",wraps:dicodesWraps});
  const b=api.personalPreference({atom,wire:"nife52",wraps:6});
  assert.equal(a.tier,1,atom);
@@ -142,7 +144,9 @@ for(const atom of ["klp","gtr","kx","kprime"]){
   "Equal personal boost for NiFe30 and NiFe52, independent of actual technical differences");
 }
 assert.equal(api.defaultConfig("klp").wire,"nife30");
+assert.equal(api.defaultConfig("klp").wraps,7);
 assert.equal(api.defaultConfig("kx").wire,"nife30");
+assert.equal(api.defaultConfig("kx").wraps,7);
 assert.equal(api.defaultConfig("kprime").wire,"nife52");
 // GTR new preference is NiFe30/7 and NiFe52/6; legacy NiFe30/6 still works.
 const gtrTC=api.analyze("gtr",sample);
@@ -162,10 +166,10 @@ assert.equal(api.config("gtr",{wire:"nife52",wraps:6}).wraps,6);
 assert.equal(api.permitted("gtr","nife52",7),false);
 assert.ok(api.variants("gtr").some(v=>v.wire==="nife30"&&v.wraps===7));
 assert.ok(api.variants("gtr").some(v=>v.wire==="nife30"&&v.wraps===6));
-for(const other of atoms.filter(a=>a.id!=="gtr")){
- if(other.id==="415")continue; // 415 Cool is the other explicit NiFe30/7 exception.
- assert.equal(api.permitted(other.id,"nife30",7),false,"Seven wraps only on GTR and 415 Cool NiFe30");
- assert.equal(api.permitted(other.id,"nife52",7),false);
+for(const other of atoms){
+ assert.equal(api.permitted(other.id,"nife30",7),true,"NiFe30/7 should be permitted globally: "+other.id);
+ assert.equal(api.permitted(other.id,"nife30",6),true,"NiFe30/6 historical must remain selectable: "+other.id);
+ assert.equal(api.permitted(other.id,"nife52",7),false,"NiFe52 cannot inherit NiFe30/7: "+other.id);
 }
 for(const id of ["klp","kx","kprime"]){
  assert.equal(api.permitted(id,"nife30",6),true);
@@ -227,7 +231,7 @@ for(const v of [cool30,cool52,coolK1]){
 const oldClap=api.analyze({atom:"415",wire:"k1clap",wraps:5},sample);
 assert.ok(oldClap.anchors.length>0,"Keep dedicated Clapton pairing historical evidence");
 for(const other of atoms.filter(x=>x.id!=="415"&&x.id!=="gtr")){
- assert.equal(api.permitted(other.id,"nife30",7),false,"Do not leak seven wraps to "+other.id);
+ assert.equal(api.permitted(other.id,"nife30",7),true,"NiFe30/7 must be global: "+other.id);
 }
 assert.ok(api.variants("klp").some(x=>x.wire==="nife52"),"NiFe52 compatible, but unvalidated on KLP");
 const fl=api.analyze({atom:"pmfree",bell:"freehand"},sample);
@@ -316,11 +320,11 @@ sandbox.window.RTA_SENSORY_UI.render("explorer");
 find("sensoryExplorer").trigger("change",{target:{dataset:{sdField:"wire"},value:"nife30"}});
 const uiKlp=sandbox.window.RTA_SENSORY_UI.configFor("klp","explorer");
 assert.equal(uiKlp.wire,"nife30");
-assert.equal(uiKlp.wraps,6);
-assert.equal(uiKlp.temp,220);
-assert.equal(uiKlp.power,16);
+assert.equal(uiKlp.wraps,7);
+assert.equal(uiKlp.temp,230);
+assert.equal(uiKlp.power,13);
 assert.ok(find("sensoryExplorer").innerHTML.includes("OBSERVAȚIE PARȚIALĂ"));
-assert.ok(find("sensoryExplorer").innerHTML.includes("Kayfun Prime")||find("sensoryExplorer").innerHTML.includes("K Prime"));
+assert.ok(find("sensoryExplorer").innerHTML.includes("NiFe30/7"),"KLP global seven-wrap choice must be visible");
 const flExplorer=find("atomExplorer");flExplorer.value="dvarwfl";
 sandbox.window.RTA_SENSORY_UI.render("explorer");
 assert.ok(find("sensoryExplorer").innerHTML.includes("Balkan Milestone"),
