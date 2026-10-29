@@ -233,6 +233,7 @@ function wireWizard(){
  return '<section class="exp-flow exp-wire-single" id="expWireWizard"><span class="eyebrow">WIRE LAB / FLUX UNIC</span>'+
   '<h2>De la sârmă, până la atomizor.</h2>'+
   '<p class="exp-hint">Un singur traseu, în ordine: sârmă → comparații → alegere → obiective → lichid → atomizor. Poți modifica orice etapă.</p>'+
+  (W.first?'<button type="button" class="exp-reset" data-exp-reset-wire="1">Reia selecția de la toate sârmele</button>':'')+
   first+compare+choose+goal+liquid+atomsStep+'</section>';
 }
 function pickWire(wire){
@@ -242,9 +243,12 @@ function pickWire(wire){
  W.final=null;W.finalWraps=null;W.confirmed=false;W.objective=null;W.family=null;W.liquidIndex=null;
  const m=mod();
  if(m){
-  const candidate=core.config("gtr",{wire,wraps:W.wraps,...core.wireSetup("gtr",wire,W.wraps)});
-  m.state.atom="gtr";m.state.config=candidate;m.state.wireChosen=true;m.state.wirePlatformChosen=false;
-  m.show('wire'); // The sole wizard remounts from its own state.
+  const specific=m.state.wirePlatformChosen&&core.platforms[m.state.atom]?m.state.atom:"gtr";
+  const candidate=core.config(specific,{wire,wraps:W.wraps,...core.wireSetup(specific,wire,W.wraps)});
+  m.state.atom=specific;m.state.config=candidate;m.state.wireChosen=true;
+  m.state.wirePlatformChosen=specific!=="gtr"&&m.state.wirePlatformChosen;
+  m.show('wire');
+  mountWizards(); // synchronous insert, so mobile can scroll straight to the flow
  }else refreshWizard('wire');
  return true;
 }
@@ -254,6 +258,17 @@ function confirmWire(wire,wraps){
  W.final=wire;W.finalWraps=Number(wraps);W.confirmed=true;
  if(changed){W.objective=null;W.family=null;W.liquidIndex=null;if(typeof api()?.setObjective==="function")api().setObjective("");}
  refreshWizard('wire');
+ return true;
+}
+function resetWire(){
+ W.first=null;W.wraps=null;W.compare=false;W.other=null;W.otherWraps=null;
+ W.final=null;W.finalWraps=null;W.confirmed=false;W.objective=null;W.family=null;W.liquidIndex=null;
+ if(api()?.setObjective)api().setObjective("");
+ const m=mod();if(m){
+  m.state.wireChosen=false;m.state.wirePlatformChosen=false;
+  m.state.atom="gtr";m.state.config=core.defaultConfig("gtr");
+  m.show("wire");mountWizards();
+ }else refreshWizard("wire");
  return true;
 }
 function topAtoms(wire,wraps,profile){
@@ -335,7 +350,7 @@ function init(){
  observer.observe(cards,{childList:true});
  observer.observe(cmp,{childList:true});
  document.addEventListener('click',e=>{
-  const t=e.target.closest?.('[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-toggle-compare],[data-exp-open-atom],[data-exp-liquid-cat],[data-exp-use-first],[data-exp-use-other],[data-exp-confirm-final]');
+  const t=e.target.closest?.('[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-toggle-compare],[data-exp-open-atom],[data-exp-liquid-cat],[data-exp-use-first],[data-exp-use-other],[data-exp-confirm-final],[data-exp-reset-wire]');
   if(!t)return;
   const d=t.dataset;
   if(d.expLiquidCat!==undefined){
@@ -344,6 +359,7 @@ function init(){
    const input=byId('liquidSearch');if(input){input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));input.focus({preventScroll:true});}
    refreshLiquidCategory();return;
   }
+  if(d.expResetWire!==undefined){resetWire();return;}
   if(d.expToggleCompare!==undefined){W.compare=!W.compare;refreshWizard('wire');return;}
   if(d.expUseFirst!==undefined){confirmWire(W.first,W.wraps);return;}
   if(d.expUseOther!==undefined){confirmWire(W.other,W.otherWraps);return;}
@@ -402,6 +418,6 @@ function init(){
   }
  });
 }
-window.RTA_LAB_EXPLORER={version:'2026-10-29-single-journey',categories:CATS,axes:AXES,available,candidates,score10,metric,aggregate,familyFit,topAtoms,rankedWireAtoms,matrix,atlasWizard,wireWizard,pickWire,confirmWire,states:{atlas:A,wire:W},init};
+window.RTA_LAB_EXPLORER={version:'2026-10-29-single-journey',categories:CATS,axes:AXES,available,candidates,score10,metric,aggregate,familyFit,topAtoms,rankedWireAtoms,matrix,atlasWizard,wireWizard,pickWire,confirmWire,resetWire,states:{atlas:A,wire:W},init};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();
