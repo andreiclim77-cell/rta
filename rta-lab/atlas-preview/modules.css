@@ -148,3 +148,67 @@
  .platform-picker>label:last-child{grid-column:auto}
 }
 @media(max-width:350px){.platform-picker{grid-template-columns:minmax(0,1fr)}}
+
+
+/* Wire Lab · complete personal coil overview and progressive matching (29.10.2026)
+ * Source of truth: current core + saved local CL; estimates are labeled as such.
+ * Mobile cards reserve their height naturally, never truncate technical content. */
+.wire-library,.wire-progress,.wire-library-platforms{min-width:0;max-width:100%;margin:18px 0 26px}
+.wire-library-head{max-width:840px;margin:0 0 14px}
+.wire-library-head .eyebrow{display:block;color:#d9bf90;letter-spacing:.12em;font-size:11px}
+.wire-library-head h2{margin:9px 0 11px;font-size:clamp(21px,3vw,30px);line-height:1.28;overflow-wrap:anywhere}
+.wire-library-head p{color:#b2cac1;font-size:14px;line-height:1.7;margin:0 0 16px;max-width:760px}
+.wire-library-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:14px 0}
+.wire-build-entry{min-width:0;width:100%;max-width:100%;text-align:left;display:flex;flex-direction:column;align-items:stretch;gap:9px;overflow:hidden;padding:16px 17px;border-radius:17px}
+.wire-build-entry>b{font-size:clamp(17px,1.6vw,21px);line-height:1.35;overflow-wrap:anywhere;margin:4px 0}
+.wire-build-entry.is-selected{border-color:#e1c18b;box-shadow:0 0 0 1px rgba(225,193,139,.4)}
+.wire-card-coil{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:4px 9px;min-width:0;padding:9px 7px;border-radius:11px;background:#08191c;border:1px solid #29454a}
+.wire-card-coil-visual{display:block;min-width:0;grid-row:span 2}
+.wire-card-coil-visual svg{width:100%;height:84px;max-width:100%;display:block}
+.wire-card-coil strong{font-size:14px;line-height:1.25;color:#e6c996;white-space:nowrap}
+.wire-card-coil small{font-size:10px;line-height:1.35;color:#a7c2b5}
+.wire-card-note{font-size:11px!important;line-height:1.55!important;color:#b2c9bb!important;overflow-wrap:anywhere}
+.wire-card-preferences{display:grid;gap:6px;padding:10px 0 2px;min-width:0}
+.wire-card-preferences>strong{font-size:12px;line-height:1.5;color:#e7d4b0}
+.wire-saved-build{display:block;min-width:0;border-left:2px solid #85ae9f;background:rgba(30,69,64,.35);padding:6px 8px;font-size:11px;line-height:1.45;color:#cce2d4;overflow-wrap:anywhere}
+.wire-saved-build.is-model{border-color:#7a8990;color:#b5c3c5}
+.wire-build-entry .wire-card-action{font-size:12px!important;line-height:1.4!important;color:#eed2a1!important;font-weight:600;margin-top:auto;padding-top:10px}
+.wire-progress{border:1px solid #335958;background:linear-gradient(135deg,#0e2527,#0b1b22);border-radius:17px;padding:18px}
+.wire-progress h3{font-size:clamp(19px,2.5vw,27px);line-height:1.3;margin:6px 0 10px}
+.wire-progress p,.wire-progress .module-note{font-size:12px;line-height:1.75;color:#b9d0c3}
+.wire-progress-steps{display:block;font-size:12px;color:#e2c394;line-height:1.65}
+.wire-progress-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}
+.wire-progress-filters{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0 12px}
+.wire-progress-filters label{display:flex;flex-direction:column;gap:7px;color:#d2dfd4;font-size:12px;min-width:0;line-height:1.5}
+.wire-progress-filters select{display:block;min-width:0;max-width:100%;width:100%;min-height:49px;border:1px solid #446c69;border-radius:10px;background:#0b1a20;color:#edf2e9;padding:10px 9px;font-size:16px;text-overflow:ellipsis}
+.wire-progress-filters select:disabled{opacity:.52;cursor:not-allowed}
+.wire-library-platforms{border-top:1px solid #3a5555;padding-top:21px}
+.wire-match-heading{padding:10px 0 14px;font-weight:650;font-size:13px;color:#ebd3a8}
+.wire-library-platforms .wire-platform-grid{margin-bottom:16px}
+.wire-library-platforms .wire-platform-card{min-width:0;overflow:hidden;display:flex;flex-direction:column;gap:8px}
+.wire-library-platforms .wire-platform-card.is-current{border-color:#cbb383}
+.wire-library-platforms .wire-platform-card h3{font-size:clamp(18px,2vw,23px);margin:8px 0}
+.wire-library-platforms .wire-platform-card p{overflow-wrap:anywhere}
+.wire-library-platforms .wire-platform-card .module-link{min-height:46px;white-space:normal;text-align:left}
+.wire-platform-copy{min-width:0;display:flex;flex-direction:column;gap:6px;flex:1}
+.wire-platform-copy .module-link{margin-top:auto}
+.wire-current-label{color:#ddc092;font-size:10px;letter-spacing:.1em}
+.wire-matched-build{padding:9px 10px;border-radius:9px;background:#102d2a;color:#d2e2d2!important}
+.wire-matched-build strong{display:block;font-size:12px;overflow-wrap:anywhere}
+.wire-matched-build small{display:block;color:#aac1b6;font-size:10px;line-height:1.45;margin-top:5px}
+.wire-compatible-more{border:1px solid #365655;border-radius:12px;margin:10px 0 20px;padding:12px 15px}
+.wire-compatible-more>summary{cursor:pointer;min-height:38px;color:#e8ca95;font-size:14px;line-height:1.5}
+.wire-compatible-more>.module-note{margin:10px 0}
+.wire-catalog-reset{font-size:12px;line-height:1.5;border:1px solid #6b867b;border-radius:10px;background:transparent;color:#efdaac;padding:12px 15px;min-height:45px;cursor:pointer}
+@media(max-width:980px){.wire-library-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){
+ .wire-library-grid,.wire-progress-filters{grid-template-columns:minmax(0,1fr)}
+ .wire-build-entry{padding:15px;border-radius:16px}
+ .wire-card-coil-visual svg{height:94px}
+ .wire-library-head h2{font-size:22px}
+ .wire-library-platforms .wire-platform-grid{grid-template-columns:minmax(0,1fr)}
+ .wire-progress{padding:15px}
+ .wire-progress-filters select{font-size:16px;min-height:51px}
+ .wire-library-platforms .wire-platform-card{padding:15px}
+}
+@media(prefers-reduced-motion:reduce){.wire-build-entry{transition:none}}
