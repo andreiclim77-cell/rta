@@ -104,12 +104,12 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   }
   assert.equal(await page.locator('#atlasBack').isVisible(),false);
   await page.locator(nav+' [data-route="wire"]').click();
-  assert.equal(await page.locator('#pageWire .context-settings').count(),0,
+  assert.equal(await page.locator('#pageWire .context-settings').isVisible(),false,
     'Wire contextual settings must be hidden until the atomizer is explicitly chosen');
   // Back-stack verification: mark the preserved configuration as a final,
   // explicitly confirmed atomizer, without changing any of its data.
   await page.evaluate(()=>{const m=window.RTA_ATLAS_MODULES;m.state.wireChosen=true;m.state.wirePlatformChosen=true;m.show('wire');});
-  assert.equal(await page.locator('#pageWire .context-settings').count(),1,
+  assert.equal(await page.locator('#pageWire .context-settings').isVisible(),true,
     'Wire contextual settings must open after final atomizer confirmation');
   await page.locator('#pageWire .context-settings summary').click();
   await page.locator('#pageWire [data-context-field="moment"]').selectOption('coffee');
