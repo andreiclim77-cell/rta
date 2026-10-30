@@ -29,7 +29,10 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
    await page.locator('#wireLibrary [data-wire-family="'+wire+'"]').click();
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wire),wire);
    assert.ok(await page.locator('#expWireWraps option').count()>=1);
-   if(wire==='nife30')assert.deepEqual(await page.locator('#expWireWraps option').evaluateAll(els=>els.map(x=>x.value)),['7']);
+   if(wire==='nife30'){
+     assert.deepEqual(await page.locator('#expWireWraps option').evaluateAll(els=>els.map(x=>x.value)),['6','7'],'Only the preferred /7 and historical /6 options should be selectable');
+     assert.equal(await page.locator('#expWireWraps').inputValue(),'7','NiFe30/7 stays the active default');
+    }
   }
   await shot(page,'flow-wire-first-'+width+'.png');
   await page.locator('[data-exp-final-choice="first"]').click();

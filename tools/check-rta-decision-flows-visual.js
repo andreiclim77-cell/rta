@@ -47,7 +47,8 @@ async function main(){
       await page.locator('[data-route="atomizer"]:visible').first().click();
    await page.locator('#atlasPlatform').selectOption('gtr');
    await page.locator('[data-exp-wire="atlas"][data-exp-value="nife30"]').click();
-   assert.equal(await page.locator('[data-exp-wraps="atlas"]').count(),1,'Only seven-wrap Dicodes available on GTR');
+   assert.equal(await page.locator('[data-exp-wraps="atlas"]').count(),2,'Dicodes NiFe30/7 preferred, historical six-wrap remains explicitly selectable on GTR');
+    assert.equal(await page.locator('[data-exp-wraps="atlas"][data-exp-value="7"]').count(),1,'Preferred seven-wrap choice remains visible');
    await page.locator('[data-exp-wraps="atlas"][data-exp-value="7"]').click();
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wraps),7);
    await page.locator('[data-exp-family="atlas"][data-exp-value="Tutun simplu"]').click();
