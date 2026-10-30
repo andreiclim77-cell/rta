@@ -52,7 +52,7 @@ async function main(){
   await page.locator('#atlasPlatform').selectOption('klp');await page.waitForFunction(()=>{const img=document.querySelector('.portrait-photo img');return img?.complete&&img.naturalWidth>0;});await page.locator('.portrait-photo img').evaluate(img=>img.decode());
   await page.waitForFunction(()=>Number(getComputedStyle(document.querySelector('#pageAtomizer')).opacity)>=.999);
   await page.screenshot({path:path.join(folder,prefix+'offline-atomizer-390.png')});
-  await page.locator('[data-edit-wire]').click();await page.locator('#wireMaterial').selectOption('nife52');
+  await page.locator('[data-edit-wire]').click();await page.evaluate(()=>{const m=window.RTA_ATLAS_MODULES;m.setConfig({wire:'nife52'});m.state.wirePlatformChosen=true;m.show('wire');});
   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.power),13);
   await page.locator('#pageWire [data-duel-pick]').first().click();await page.locator('#pageWire [data-duel-pick]').nth(1).click();await page.locator('[data-duel-results]').click();await page.waitForTimeout(500);
   await page.screenshot({path:path.join(folder,prefix+'offline-duel-390.png')});
