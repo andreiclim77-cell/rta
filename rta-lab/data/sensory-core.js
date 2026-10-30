@@ -350,6 +350,9 @@ function configuration(id,changes={}) {
   if(!Object.prototype.hasOwnProperty.call(changes,"power"))value.power=wirePreset.power;
   if(!Object.prototype.hasOwnProperty.call(changes,"temp"))value.temp=wirePreset.temp;
  }
+ // Explicitly reject retired Dicodes geometry. Never silently relabel a
+ // saved six-wrap NiFe30 setup as the current seven-wrap build.
+ if(value.wire==="nife30"&&Number(value.wraps)!==7)return null;
  const model=PLATFORMS[id];
  if(!model.air.some(a=>a.id===value.air))value.air=base.air;
  value.bell=bellFor(id,value.bell).id;
