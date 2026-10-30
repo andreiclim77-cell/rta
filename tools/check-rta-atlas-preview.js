@@ -93,8 +93,10 @@ if(source.partialEvidence.length){
 }
 // A personal KLP TC report with an unspecified liquid must not be dressed
 // up as a controlled A/B on any arbitrary selected catalog product.
+assert.equal(lib.RTA_SENSORY_CORE.analyze({atom:"klp",wire:"nife30",wraps:6},catalog[samples[3]]),null,
+ "Retired Dicodes build must be excluded from Liquid Match");
 const unknownLiquidReport=lib.RTA_SENSORY_CORE.analyze({
- atom:"klp",wire:"nife30",wraps:6,coilMm:2.5,temp:220,power:16
+ atom:"klp",wire:"nife30",wraps:7,coilMm:2.5,temp:230,power:13
 },catalog[samples[3]]);
 assert.ok(unknownLiquidReport.partialEvidence.length>0,"KLP has a real partial personal report");
 const neutralEvidence=api.evidenceFor(unknownLiquidReport,catalog[samples[3]]);
