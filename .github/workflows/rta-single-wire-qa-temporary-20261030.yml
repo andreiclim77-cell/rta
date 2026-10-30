@@ -1,0 +1,54 @@
+name: RTA Single Wire QA Temporary
+on:
+  push:
+    branches:
+      - fix/wire-single-guided-flow-remove-nife30-six-20261030
+    paths:
+      - .github/workflows/rta-single-wire-qa-temporary-20261030.yml
+permissions:
+  contents: write
+jobs:
+  build-regress:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/wire-single-guided-flow-remove-nife30-six-20261030
+          fetch-depth: 1
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Syntax check changed sources and scripts
+        run: |
+          node --check rta-lab/data/sensory-core.js
+          node --check rta-lab/data/tc-platform-map.js
+          node --check rta-lab/data/tc-sixwrap-global.js
+          node --check rta-lab/atlas-preview/app.js
+          node --check rta-lab/atlas-preview/modules.js
+          node --check rta-lab/atlas-preview/decision-explorer.js
+      - name: Regenerate Atlas release and isolated offline caches
+        run: |
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview --check
+          node tools/build-rta-atlas-release.js --check
+      - name: Functional regression including retired Dicodes and single journey
+        run: |
+          node tools/check-rta-sensory-core.js
+          node tools/check-rta-nife30-watt.js
+          node tools/check-rta-atlas-preview.js
+          node tools/check-rta-atlas-modules.js
+          node tools/check-rta-decision-flows.js
+          node tools/check-rta-415cool.js
+          node tools/check-rta-lab-mobile-clarity.js
+      - name: Record regenerated preview/release hashes on feature branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas
+          if ! git diff --cached --quiet; then
+            git commit -m "Regenerate RTA Atlas single Wire journey release and offline cache"
+            git push origin HEAD:fix/wire-single-guided-flow-remove-nife30-six-20261030
+          fi
