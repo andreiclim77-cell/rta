@@ -356,7 +356,7 @@ function buildOutput(atom, wire, liquid) {
   }
   if (wire.id === "nife30") {
     output.note = atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")
-      ? "Benchmark validat pe 80% trabuc / 20% cireșe. Dicodes NiFe30 TCR320 are în prezent 7 spire pe Ø2,5 mm preset; Zivipf NiFe52 TCR310 are 6 spire. Benchmarkul 80/20 cu NiFe30/6 este istoric, nu un test pe /7."
+      ? "Benchmark validat pe 80% trabuc / 20% cireșe. Dicodes NiFe30 TCR320 are în prezent 7 spire pe Ø2,5 mm preset; Zivipf NiFe52 TCR310 are 6 spire. Benchmarkul 80/20 aparține unui montaj anterior și nu se transferă la configurația curentă."
       : "Dicodes NiFe30 TCR320/7 pe orice platformă compatibilă; Zivipf NiFe52 TCR310/6; Ø2,5 mm preset, calibrare complet rece. TH direct poate fi mai puțin accentuat la 7 spire, cu palat mai bogat conform percepției personale.";
     if (atom.id === "kprime" && liquid && liquid.brand === "Personal" && String(liquid.name || "").includes("80% trabuc")) {
       output.status = "Validat";
