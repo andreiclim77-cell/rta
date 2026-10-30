@@ -27,7 +27,8 @@ async function main(){
    await page.locator('#wireLibrary').scrollIntoViewIfNeeded();
    await shot(page,'wire-all-preferences-'+width+'.png');
    await page.locator('[data-wire-family="nife30"]').click();
-   check(await page.locator('#expWireWraps option').count()===1,'Only Dicodes NiFe30 seven wraps');
+   check(await page.locator('#expWireWraps option').count()===2,'NiFe30/7 preferred and /6 explicitly available for historical comparisons');
+    check(await page.locator('#expWireWraps').inputValue()==='7','Default remains NiFe30/7');
    check(await page.locator('#expWireFinalAtoms').count()===0,'No premature atomizer results');
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Wire first selection fits viewport');
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
