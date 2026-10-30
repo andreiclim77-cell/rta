@@ -117,7 +117,7 @@ const NIFE30_FAMILY=Object.freeze({
    No cross-alloy controlled A/B is inferred on every platform. */
 const PERSONAL_PREFS=Object.freeze({
  date:"2026-10-29",
- gtrTC:{dicodes:{wire:"nife30",wraps:7},zivipf:{wire:"nife52",wraps:6},legacyNiFe30:{wire:"nife30",wraps:6}},
+ gtrTC:{dicodes:{wire:"nife30",wraps:7},zivipf:{wire:"nife52",wraps:6}},
  cool415:{first:[{wire:"nife30",wraps:7},{wire:"nife52",wraps:6}],second:{wire:"k128",wraps:6},historical:[{wire:"k128",wraps:5},{wire:"k1clap",wraps:5}]},
  tcEqualAtoms:["klp","gtr","kx","kprime"],
  tcEqualWires:["nife30","nife52"],
@@ -159,21 +159,16 @@ function personalPreference(config){
     note:"Preferință personală nouă; 28/5 istoric și K1 Clapton/5 specialist rămân disponibile."};
  }
  // New GTR-specific personal finding, 15.10.2026: alloy-specific wraps.
- // NiFe30/6 remains usable; NiFe30/7 and NiFe52/6 share tier #1.
+ // Only NiFe30/7 and NiFe52/6 are currently selectable.
  if(config.atom==="gtr"){
   if((config.wire==="nife30"&&config.wraps===7)||
      (config.wire==="nife52"&&config.wraps===6))
    return {tier:1,label:"Prima preferință personală · NiFe30/7 = NiFe52/6",
      note:"Dicodes RESISTHERM NiFe30 TCR320 cu 7 spire pe GTR sau Zivipf NiFe52 TCR310 cu 6; egale ca preferință, nu aliaje/temperaturi identice."};
-  if(config.wire==="nife30"&&config.wraps===6)
-   return {tier:2,label:"NiFe30/6 funcțional · alternativă GTR",
-     note:"6 spire funcționează, însă noul montaj cu 7 a fost perceput mai coerent în TC. Refacerea coilului a schimbat și alte condiții."};
  }
  if(PERSONAL_PREFS.tcEqualAtoms.includes(config.atom)){
   if((config.wire==="nife30"&&config.wraps===7)||(config.wire==="nife52"&&config.wraps===6))
    return {tier:1,label:"Prima preferință personală · NiFe30/7 = NiFe52/6",note:"Preferință actualizată 29.10.2026: Dicodes TCR320 cu 7 spire, Zivipf TCR310 cu 6; egalitate a preferinței, nu aliaj identic și nu A/B izolat pe toate platformele."};
-  if(config.wire==="nife30"&&config.wraps===6)
-   return {tier:2,label:"NiFe30/6 · alternativă istorică",note:"Funcțională și disponibilă pentru comparație, dar presetul personal NiFe30 este acum 7 spire."};
   if(["k128","k129"].includes(config.wire))
    return {tier:2,label:"A doua preferință personală · K1",note:"Preferința K1 este sub familia NiFe TC, dar rămâne validă ca alternativă."};
  }
@@ -228,10 +223,8 @@ const DEFAULTS={
 };
 function wireSetup(atom,wire,wraps){
  const w=WIRES[wire];if(!w)return null;
- // Historic KLP DNA 220°C/16 W report belongs ONLY to the six-wrap coil.
- // NiFe30/7 on KLP has no observed temperature/wattage; use generic orientation.
- if(atom==="klp"&&wire==="nife30"&&wraps===6)return {power:16,temp:220};
- if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // GTR TC preset retained for both historical /6 and current /7, not a universal recommendation.
+ // NiFe30/7 on KLP has no measured temperature/wattage; generic orientation.
+ if(atom==="gtr"&&wire==="nife30"&&wraps===7)return {power:16,temp:230}; // GTR/7 reported limit.
  return {power:w.power,temp:w.temp||230};
 }
 const OBS=[
@@ -243,11 +236,6 @@ const OBS=[
   text:"Utilizatorul confirmă că NiFe30 cu 7 spire se comportă mai stabil și mai coerent inclusiv pe KLP, față de montajele anterioare cu 6. TH direct poate fi mai redus, dar impresia este de bogăție și rotunjime pe palat. Nu se atribuie exclusiv celei de-a șaptea spire efectul.",
   affinity:"NiFe30/7 · coerență percepută · TH bogat",
   evidence:"actualizare personală 29.10.2026; temperatura, puterea, airflow-ul și lichidul noului montaj neprecizate"},
- {atom:"klp",wire:"nife30",wraps:6,coilMm:2.5,power:16,temp:220,partial:true,
-  title:"KLP + Dicodes NiFe30 TC · DNA 220°C / 16 W",
-  text:"Față de KLP cu K1 28/5: palat mai bogat, spectru mai bun, TH și ofensivă ușor crescute; apare magia, cu o apropiere senzorială de K Prime cu aceeași sârmă. Nu devine GTR și nu își pierde identitatea.",
-  affinity:"magie senzorială · apropiere de K Prime",
-  evidence:"observație personală 13.10.2026 · airflow, lichid și puterea comparatorului neprecizate"},
  {atom:"klp",wire:"k128",wraps:6,title:"KLP 28/6: mai analitic, mai blând",
   text:"Scade ofensiva și TH; profil mai moale și analitic, considerat inferior lui 28/5.",
   patch:{separation:4.72,offense:3.35,th:3.55,palate:4.2},affinity:"mai puțin preferat",evidence:"A/B personal 13.10.2026"},
@@ -266,13 +254,9 @@ const OBS=[
   patch:{offense:4.95,focus:4.9,simultaneity:3.65,palate:4.2},affinity:"caracter ofensiv",evidence:"observație practică 13.10.2026"},
  {atom:"gtr",wire:"nife30",wraps:7,temp:230,power:16,partial:true,
   title:"GTR · Dicodes NiFe30/7 · TC coerent la 230°C",
-  text:"Utilizatorul confirmă că montajul nou NiFe30 cu 7 spire pe GTR funcționează normal/coerent la 230°C în TC pe dispozitive Dicodes; limita setată 16 W, aproximativ 12 W indicat în test. NiFe30/6 funcționează și el, însă într-o comparație anterioară pe Dani Box 21700 era perceput mai rece la 230°C. Refacerea coilului/bumbacului și contactele împiedică atribuirea certă a schimbării numai celei de-a șaptea spire.",
+  text:"Utilizatorul confirmă că montajul nou NiFe30 cu 7 spire pe GTR funcționează normal/coerent la 230°C în TC pe dispozitive Dicodes; limita setată 16 W, aproximativ 12 W indicat în test. Un montaj anterior era perceput mai rece pe Dani Box 21700, fără demonstrarea unei cauze unice. Refacerea coilului/bumbacului și contactele împiedică atribuirea certă a schimbării numai celei de-a șaptea spire.",
   affinity:"coerență TC raportată personal · GTR NiFe30/7",
   evidence:"raport personal 15.10.2026, fără lichid/airflow/poziție și A/B cu o singură variabilă documentate"},
- {atom:"gtr",wire:"nife30",wraps:6,title:"GTR + Dicodes TC: magia pe palat",
-  text:"Feeling și stratificare extraordinare; plăcere senzorială maximă, TH mai scăzut.",
-  patch:{spectrum:5,separation:5,simultaneity:4.9,palate:5,harmony:4.98,offense:3.25,th:3.1},
-  affinity:"magie pe palat · plăcere maximă",evidence:"observație personală 13.10.2026"},
  {atom:"gtr",wire:"k128",title:"GTR K1 28: excelent, dar fără magia TC",
   text:"Foarte bun aromatic, dar nu oferă aceeași senzație specială pe palat precum NiFe30 TC.",
   patch:{spectrum:4.73,separation:4.72,palate:4.38},
@@ -284,9 +268,6 @@ const OBS=[
  {atom:"kx",wire:"k128",wraps:5,title:"KX 28/5 excelent",
   text:"Build personal descris ca extraordinar și natural.",
   patch:{harmony:4.75,palate:4.65},affinity:"extraordinar",evidence:"test personal în Lab"},
- {atom:"kx",wire:"nife30",wraps:6,title:"KX Dicodes TC natural",
-  text:"Control termic cu feeling foarte plăcut, consistent.",
-  patch:{harmony:4.8,separation:4.75},affinity:"natural · consistent",evidence:"test personal în Lab"},
  {atom:"kprime",wire:"k129",wraps:5,title:"K Prime 29/5 special",
   text:"Round-wire principal curent; atomizor cu atașament personal aparte.",
   patch:{harmony:4.6},affinity:"caracter special",evidence:"preferință personală în Lab"},
@@ -329,16 +310,15 @@ function permitted(id,wire,wraps){
  if(!PLATFORMS[id]||!WIRES[wire])return false;
  if(wire==="ssclap"&&id==="asylum")return false;
  if(wire==="k128"||wire==="k129")return wraps===5||wraps===6;
- // Global personal NiFe30/7 is available wherever NiFe30/6 was permitted.
- // Six wraps remain available for historical comparisons. NiFe52 stays at six.
- if(wire==="nife30")return wraps===6||wraps===7;
+ // Only Dicodes NiFe30/7 remains selectable (explicit decision 30.10.2026).
+ if(wire==="nife30")return wraps===7;
  return wraps===(WIRES[wire].type==="tc"?6:5);
 }
 function variants(id){
  if(!PLATFORMS[id])return [];
  const opts=[];
  for(const w of Object.keys(WIRES)){
-  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):(w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
+  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):(w==="nife30")?[7]:[WIRES[w].type==="tc"?6:5])){
    if(permitted(id,w,wraps))opts.push({wire:w,wraps});
   }
  }
@@ -364,8 +344,7 @@ function configuration(id,changes={}) {
   else if(WIRES[changes.wire]?.type==="clapton")value.wraps=5;
   else if(WIRES[changes.wire]?.type==="round")value.wraps=5;
  }
- // Selecting a different wire without explicit thermal settings loads the
- // appropriate platform/wire preset. In particular KLP NiFe30 = DNA 220°C / 16 W.
+ // Switching wire loads the platform/geometry-specific thermal preset.
  if(changes.wire && WIRES[changes.wire] && changes.wire!==base.wire){
   const wirePreset=wireSetup(id,changes.wire,Number(value.wraps));
   if(!Object.prototype.hasOwnProperty.call(changes,"power"))value.power=wirePreset.power;
@@ -472,13 +451,6 @@ function technicalBaseline(config,liquid) {
  if(config.wire==="ssclap"){result.separation+=.16;result.offense-=.08;}
  if(config.wire==="k1clap"){result.palate+=.12;result.harmony+=.10;result.separation-=.12;}
  if(config.wire==="nife30"&&config.atom==="gtr"){result.palate+=.2;result.harmony+=.1;}
- // KLP-specific hypothesis calibrated directionally from the reported 220°C/16 W
- // comparison. This is NOT a measured effect or universal benefit of NiFe30.
- if(config.atom==="klp"&&config.wire==="nife30"&&modeFor(config)==="tc"&&config.wraps===6 &&
-    Math.abs(config.power-16)<=.5 && Math.abs(config.temp-220)<=5){
-   result.spectrum+=.20;result.simultaneity+=.10;result.palate+=.20;
-   result.offense+=.50;result.th+=.45;result.harmony+=.10;
- }
  if(config.atom==="dvarwcl"){
   if(config.air==="single12"){result.offense+=.26;result.focus+=.25;result.simultaneity-=.12;}
   if(config.air==="triple06"){result.offense+=.08;result.simultaneity+=.1;result.focus-=.08;}
@@ -578,9 +550,8 @@ function analyze(input,liquid={},objective="complete"){
  }
  if(config.atom==="klp"&&config.wire==="k128"&&config.wraps===6)
    notes.push("A/B: utilizatorul preferă KLP K1 28/5; 28/6 a fost mai moale și cu TH mai mic.");
- if(config.atom==="klp"&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(config.wraps===6?
-   "KLP NiFe30/6 ISTORIC: 220°C / 16 W sunt setările raportate pe DNA doar pentru acel montaj, nu pentru noul NiFe30/7.":
-   "KLP NiFe30/7 ACTUAL: preferat pentru coerență, dar 220°C/16 W din vechiul test NiFe30/6 NU sunt setări observate pe acest montaj. Valorile afișate sunt un preset tehnic orientativ.");
+ if(config.atom==="klp"&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(
+   "KLP NiFe30/7: configurația actuală; puterea și temperatura afișate sunt un preset orientativ, fără măsurătoare directă pentru această geometrie.");
  if(NIFE30_FAMILY.candidates.includes(config.atom)&&config.wire==="nife30"&&modeFor(config)==="tc")notes.push(NIFE30_FAMILY.explanation);
  if(config.atom==="asylum"&&config.bell==="dome")
    notes.push("Asylum Dome nu preia automat validarea Flat/28/6.");
