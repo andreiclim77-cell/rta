@@ -88,7 +88,11 @@ function init(){
 }
 function onWireRendered(){
  if(!state.editing)return;
- const panel=document.getElementById('pageWire')?.querySelector('.wire-picker');
+ // The single guided Wire flow removed .wire-picker; after a Duel edit,
+ // the actual configuration editor lives in .wire-panel. Do not recreate
+ // a competing material selector just to host the return action.
+ const host=document.getElementById('pageWire');
+ const panel=host?.querySelector('.wire-panel');
  if(!panel||panel.querySelector('[data-duel-update]'))return;
  const button=document.createElement('button');button.type='button';button.className='module-link duel-return';button.dataset.duelUpdate='';if(state.isolation&&state.editing==='right'){const target={air:'wireAir',wraps:'wireWraps',bell:'wireBell',coilMm:'wireDiameter',position:'wirePosition',power:'wirePower',temp:'wireTemp'}[state.isolation];for(const id of ['wireAtom','wireMaterial','wireWraps','wireAir','wireBell','wireDiameter','wirePosition','wirePower','wireTemp']){const control=document.getElementById(id);if(control)control.disabled=id!==target;}const hint=document.createElement('p');hint.className='module-note';hint.textContent='A/B cu A: modifici numai '+labels[state.isolation]+'. Celelalte setări sunt blocate.';panel.appendChild(hint);}
  button.textContent='Actualizează configurația '+(state.editing==='left'?'A':'B')+' în Duel ↗';panel.appendChild(button);
