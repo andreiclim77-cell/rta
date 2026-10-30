@@ -11,7 +11,7 @@
     dicodesNiFe30Wraps: 7, zivipfNiFe52Wraps: 6,
     overrides: {
       gtr: {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6},
-      "415": {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6,k128Wraps:6,dicodesNiFe30LegacyWraps:6}
+      "415": {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6,k128Wraps:6,}
     },
     dicodes: {wire:"Dicodes RESISTHERM NiFe30",tcr:320,resistanceOhmPerM:5.5},
     zivipf: {wire:"Zivipf NiFe52",tcr:310},
