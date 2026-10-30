@@ -116,7 +116,20 @@ function rankFor(liquidIndex,moodId,momentId,override={}){
  // Use actual sorted contextual ranking, NOT Mood Match's exploratory third slot.
 
  const selected=base.ranked.filter(a=>window.RTA_ATLAS_COLLECTION.isActive(a.id)).slice(0,3).map((a,i)=>{
-  const picks=core.rankBuilds(a.id,liquid,goal).slice(0,3);
+  // One distinct wire material per proposal; the retired Dicodes six-wrap
+  // entry is never substituted with a second NiFe duplicate. Fill remaining
+  // slots with the best contextual non-NiFe material.
+  const candidates=core.rankBuilds(a.id,liquid,goal);
+  const picks=[],used=new Set();
+  for(const item of candidates){
+   if(used.has(item.config.wire))continue;
+   picks.push(item);used.add(item.config.wire);
+   if(picks.length===3)break;
+  }
+  if(!picks.some(x=>!x.config.wire.startsWith("nife"))){
+   const alternative=candidates.find(x=>!x.config.wire.startsWith("nife")&&!used.has(x.config.wire));
+   if(alternative)picks.splice(Math.max(0,picks.length-1),1,alternative);
+  }
   return {id:a.id,atom:atomById(a.id),score:a.score,position:i+1,builds:picks};
  });
  return {liquid,mood,moment:momentById(momentId),objective:goal,items:selected};
