@@ -11,6 +11,7 @@ assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.in
 const original=JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]);
 assert.equal(m.filteredAtoms('').length,15);
 assert.ok(!m.filteredAtoms('').some(a=>a.id==='asylum'),'Asylum must not appear in active inventory');
+assert.ok(!fs.readFileSync('rta-lab/atlas-preview/modules.js','utf8').includes('wireJourneyControls()+wirePlatforms()'),'Wire Lab must have one initial guided flow, without duplicate selectors');
 assert.equal(w.RTA_ATLAS_COLLECTION.activeUnits,40);assert.equal(m.filteredAtoms('Dvarw').length,2);assert.equal(m.filteredAtoms('nonexistent platform').length,0);
 assert.equal(m.selectAtom('invalid'),false);assert.equal(m.contextual('invalid'),null);
 for(const id of Object.keys(m.inventory)){
@@ -135,8 +136,9 @@ assert.equal(m.state.config.wraps,7,'New GTR Dicodes default must have seven wra
 assert.equal(m.state.config.temp,230);
 assert.equal(m.state.config.power,16);
 assert.equal(c.personalPreference(m.state.config).tier,1);
-assert.equal(m.setConfig({wraps:6}),true,'Historical GTR NiFe30/6 remains selectable');
-assert.equal(c.personalPreference(m.state.config).tier,2);
+assert.equal(m.setConfig({wraps:6}),false,'Retired GTR NiFe30/6 may no longer be selected');
+assert.equal(m.state.config.wraps,7);
+assert.equal(c.personalPreference(m.state.config).tier,1);
 assert.equal(m.setConfig({wire:'nife52'}),true);
 assert.equal(m.state.config.wraps,6);
 assert.equal(c.personalPreference(m.state.config).tier,1);
@@ -179,7 +181,7 @@ m.selectAtom('gtr');let stress=0;
 for(let i=0;i<w.RTA_LIQUIDS.length;i++){a.state.liquidIndex=i;const result=m.contextual();assert.equal(result.builds.length,3);assert.equal(result.config.atom,'gtr');stress++;}
 assert.equal(stress,700);assert.equal(JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]),original,'Adapters must preserve all canonical data');
 const duel=w.RTA_ATLAS_DUEL;
-const base=c.config('klp',{wire:'nife30',wraps:6,power:16,temp:220});
+const base=c.config('klp',{wire:'nife30',wraps:7,power:16,temp:230});
 assert.equal(duel.pick(base,'left'),true);
 const transferred=JSON.stringify(duel.state.left);
 base.power=20;assert.equal(duel.state.left.power,16,'Transfer must keep a snapshot, not a shared mutable object');
