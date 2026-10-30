@@ -538,9 +538,7 @@ function analyze(input,liquid={},objective="complete"){
  if(config.wire==="nife30"&&config.wraps===7&&modeFor(config)==="tc")
   notes.push("Regulă personală 29.10.2026: 7 spire NiFe30 este geometria implicită pe orice atomizor compatibil. Observație: TH direct poate fi mai mic decât la 6, dar senzația pe palat este mai bogată/rotundă («TH de bogăție»). Nu sunt procente măsurate și nu toate platformele au fost testate.");
  if(config.atom==="gtr"&&config.wire==="nife30"&&modeFor(config)==="tc")
-  notes.push(config.wraps===7?
-   "GTR + Dicodes NiFe30/7: utilizatorul raportează TC coerent la 230°C, limită 16 W; NiFe30/6 rămâne funcțional. Efectul izolat al unei spire în plus NU a fost demonstrat.":
-   "GTR + Dicodes NiFe30/6: variantă funcțională istorică; noul NiFe30/7 este preferat personal pentru reglare TC mai coerentă, fără concluzie universală.");
+  notes.push("GTR Dicodes NiFe30/7: control TC descris ca mai coerent la 230°C și plafon 16 W; nu este dovedit efectul izolat al unei spire.");
  if(config.atom==="gtr"&&config.wire==="nife52"&&config.wraps===6)
   notes.push("GTR + Zivipf NiFe52/6 TCR310: alegere personală la egalitate cu Dicodes NiFe30/7, nu cu setări TC identice.");
  if(config.atom==="415"){
