@@ -43,9 +43,8 @@ assert.equal(c.modeFor(nife52),'tc','NiFe52 has no new power-mode preset');
 assert.equal(nife52.chipset,'');
 assert.equal(c.config('klp',{wire:'nife30',regime:'tc'}).temp,230);
 assert.equal(c.config('klp',{wire:'nife30',regime:'tc'}).power,13);
-const klpHistoric=c.analyze({atom:'klp',wire:'nife30',wraps:6,temp:220,power:16},sample);
-assert.equal(klpHistoric.partialEvidence.length,1,"Preserve the prior KLP/6 DNA 220°C/16W report separately");
-assert.equal(c.analyze({atom:'klp',wire:'nife30',wraps:7},sample).partialEvidence.length,1,"New KLP/7 observation must remain a separate report");
+assert.equal(c.analyze({atom:'klp',wire:'nife30',wraps:6},sample),null,'Retired six-wrap Dicodes excluded');
+assert.equal(c.analyze({atom:'klp',wire:'nife30',wraps:7},sample).partialEvidence.length,1,'Current KLP/7 evidence retained');
 assert.equal(c.config('gtr',{wire:'nife30',regime:'watt',power:13}).power,13,'User may compare 12 and 13 W');
 for(const directory of ['atlas-preview','atlas']){
  const app=fs.readFileSync(root+'/'+directory+'/app.js','utf8');
