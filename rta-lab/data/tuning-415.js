@@ -9,7 +9,7 @@ window.RTA_LAB_CONTINUITY = {
   lab: "V10 · 620 repere · 5 sârme active",
   validated: {
     "415": "Actualizare 15.10.2026: 415 Cool preferă Dicodes NiFe30/7 și Zivipf NiFe52/6 la egalitate, apoi K1 28 GA/6. Anterior 28/5 a fost echilibrat, 29/5 compact și 29/6 mai dry; K1 Clapton/5 rămâne perechea specialistă preferată în familia Clapton.",
-    "kprime": "29/5 contact = round-wire principal; 28/5 = echilibru. NiFe52/6 și NiFe30/7 sunt preferințele TC actuale; NiFe30/6 este benchmark istoric 80/20.",
+    "kprime": "29/5 contact = round-wire principal; 28/5 = echilibru. NiFe52/6 și NiFe30/7 sunt preferințele TC actuale; Benchmarkul 80/20 privește un montaj anterior, nu configurația curentă.",
     "gtone": "A/B direct 12.10.2026: K1 29 GA / Ø2,5 / 6 contact > K1 28 GA / Ø2,5 / 5. 29/6 devine preferința round-wire curentă.",
     "gtr": "NiFe30 TC = potrivire naturală/validată, finețe și layering.",
     "kx": "28/5 = extraordinar; NiFe30 TC = extraordinar; platformă foarte purtabilă.",
@@ -333,10 +333,10 @@ window.RTA_LAB_CONTINUITY = {
   geometrySummary = function(atom) {
     const base = baseGeometrySummary(atom);
     if (!atom || atom.id === "415") return base;
-    if (atom.id === "kprime") return base + dnaBox("K Prime · ADN validat", ["<b>29/5 contact</b>round-wire principal", "<b>28/5</b>echilibru", "<b>NiFe52/6</b>direcție TC curentă", "<b>NiFe30/7</b>actual · /6 istoric 80/20", "<b>Geometrie</b>compactă"]);
+    if (atom.id === "kprime") return base + dnaBox("K Prime · ADN validat", ["<b>29/5 contact</b>round-wire principal", "<b>28/5</b>echilibru", "<b>NiFe52/6</b>direcție TC curentă", "<b>NiFe30/7</b>actual", "<b>Geometrie</b>compactă"]);
     if (atom.id === "gtone") return base + dnaBox("GT One · A/B round-wire validat", ["<b>29/6 contact</b>preferat practic", "<b>28/5</b>alternativă mai plină", "<b>A/B 12.10.2026</b>29/6 > 28/5", "<b>Rol</b>finețe + separare", "<b>Țintă</b>tobacco precision"]);
     if (atom.id === "gtr") return base + dnaBox("GTR · TC specialist", ["<b>NiFe30</b>potrivire naturală", "<b>TC</b>finețe", "<b>TC</b>layering", "<b>TC</b>smoothness", "<b>Calibrare</b>rece + TCR corect"]);
-    if (atom.id === "kx") return base + dnaBox("KX · daily premium", ["<b>28/5</b>extraordinar", "<b>NiFe30/7 TC</b>geometrie actuală · /6 test istoric", "<b>Caracter</b>echilibrat", "<b>TC</b>smooth/constant", "<b>Ergonomie</b>foarte purtabil"]);
+    if (atom.id === "kx") return base + dnaBox("KX · daily premium", ["<b>28/5</b>extraordinar", "<b>NiFe30/7 TC</b>geometrie actuală", "<b>Caracter</b>echilibrat", "<b>TC</b>smooth/constant", "<b>Ergonomie</b>foarte purtabil"]);
     if (atom.id === "dvarwcl") return base + dnaBox("Dvarw CL · 3×0,6 · ADN validat", ["<b>K1 28 GA</b>Ø2,5 · 6 spire", "<b>Insert</b>3×0,6 mm", "<b>Footprint</b>multipunct / mediu-lat", "<b>Rol</b>layering + completitudine", "<b>Status</b>validat practic"]);
     if (atom.id === "dvarwfl") return base + dnaBox("Dvarw FL · confirmare curentă", ["<b>28/5</b>validat round-wire", "<b>FL/CL</b>calibrate separat", "<b>Nu se copiază</b>automat airflow-ul", "<b>Clapton SS</b>pereche dedicată", "<b>Rol</b>claritate / separare"]);
     if (atom.id === "klp") return base + dnaBox("KLP · A/B round-wire validat", ["<b>28/5 contact</b>preferat vs 29/6", "<b>29/5 contact</b>hit / TH / focus", "<b>29/6 contact</b>contextual", "<b>A/B 12.10.2026</b>28/5 > 29/6", "<b>Geometrie</b>Aerokon compact"]);
