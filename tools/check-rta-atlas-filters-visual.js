@@ -15,20 +15,34 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   assert.equal(await page.locator('body').evaluate(el=>el.classList.contains('atlas-loading')),false,'Ready app must finish its loading state');
   const nav=width<760?'.bottom-tabs':'.top-nav';
   assert.equal(await page.locator('a[href*="view=v10"],a[href*="#atomExplorer"]').count(),0,'Atlas must not expose the old interface');
-  await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');await page.locator(nav+' [data-route="wire"]').click();await page.locator('[data-wire-family="nife52"]').click();
-  assert.equal(await page.locator('#wireAtom').inputValue(),'klp','An explicitly selected Atlas platform must survive a later wire choice');
-  assert.equal(await page.locator('#wireMaterial').inputValue(),'nife52');
+  await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');
+  await page.locator(nav+' [data-route="wire"]').click();await page.locator('[data-wire-family="nife52"]').click();
+  assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wire),'nife52','Selected material follows user choice');
+  assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.atom),'klp','Atlas atom context persists until final guided choice');
+  assert.equal(await page.locator('#expWireFinalAtoms').count(),0,'No atomizers before choosing goal and liquid');
   await page.goto(origin+'/rta-lab/atlas/');await page.waitForSelector('#matchButton',{state:'attached'});
   await page.locator(nav+' [data-route="wire"]').click();
-  assert.equal(await page.locator('#wireMaterial').inputValue(),'','A wire must also be chosen explicitly');
-  assert.equal(await page.locator('#wireAtom').inputValue(),'','Wire-first entry must await a platform choice');
+  assert.equal(await page.locator('#wireLibrary [data-wire-family]').count(),6,'All materials shown at entrance');
+  assert.equal(await page.locator('#expWireWizard').count(),1,'Single wizard');
+  assert.equal(await page.locator('#wirePlatformCatalog').count(),0,'No duplicate early platform grid');
   for(const wire of ['k128','k129','k1clap','ssclap','nife30','nife52']){
-   await page.locator('#wireMaterial').selectOption(wire);
-   const compatible=await page.evaluate(wire=>window.RTA_ATLAS_COLLECTION.activeAtoms.filter(a=>window.RTA_SENSORY_CORE.variants(a.id).some(v=>v.wire===wire)).map(a=>a.id).sort(),wire);
-   assert.deepEqual(await page.locator('[data-wire-platform]').evaluateAll(buttons=>buttons.map(b=>b.dataset.wirePlatform).sort()),compatible,'Show every and only compatible platform');
+   await page.locator('#wireLibrary [data-wire-family="'+wire+'"]').click();
+   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wire),wire);
+   assert.ok(await page.locator('#expWireWraps option').count()>=1);
+   if(wire==='nife30'){
+     assert.deepEqual(await page.locator('#expWireWraps option').evaluateAll(els=>els.map(x=>x.value)),['6','7'],'Only the preferred /7 and historical /6 options should be selectable');
+     assert.equal(await page.locator('#expWireWraps').inputValue(),'7','NiFe30/7 stays the active default');
+    }
   }
   await shot(page,'flow-wire-first-'+width+'.png');
-  await page.locator('[data-wire-platform="klp"]').click();assert.equal(await page.locator('#wireLiquidSearch').isVisible(),true);
+  await page.locator('[data-exp-final-choice="first"]').click();
+  await page.locator('[data-exp-goal="complete"]').click();
+  const example=await page.evaluate(()=>({index:0,family:window.RTA_LIQUIDS[0].class}));
+  await page.locator('[data-exp-family="wire"][data-exp-value="'+example.family+'"]').click();
+  await page.locator('#expWireLiquid').selectOption(String(example.index));
+  assert.equal(await page.locator('#expWireFinalAtoms > .exp-top-atoms > article').count(),3);
+  await page.locator('#expWireFinalAtoms > .exp-top-atoms button').first().click();
+  assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen),true);
   await page.locator('#atlasBack').click();await page.waitForFunction(()=>window.RTA_ATLAS_PREVIEW.state.route==='home');
   await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');
   assert.equal(await page.locator('.material-path').count(),3);
@@ -75,7 +89,11 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   let config=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config));
   const choose=async(prefix,index)=>{const l=await page.evaluate(i=>window.RTA_LIQUIDS[i],index);await page.locator('#'+prefix+'LiquidSearch').fill(l.brand+' '+l.name);const opt=page.locator('#'+prefix+'LiquidOptions [data-lp-index="'+index+'"]');if(await opt.count()===0){await page.locator('#'+prefix+'LiquidOptions [data-lp-page="1"]').click();}await opt.click();assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.liquidIndex),index);};
   await choose('atlas',619);assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'atomizer');assert.equal(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config)),config);await assertTop();await chartShot(page,page.locator('.material-paths .sensory-comparison'),'flow-atlas-comparison-'+width+'.png');await page.evaluate(()=>scrollTo(0,0));await shot(page,'smart-atlas-picker-'+width+'.png');
-  await page.locator(nav+' [data-route="wire"]').click();await page.locator('#wireAtom').selectOption('dvarwcl');await page.locator('#wireMaterial').selectOption('k128');await page.locator('#wireAir').selectOption('triple06');config=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config));await choose('wire',0);assert.equal(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config)),config);assert.equal(decodeURIComponent(await page.locator('#pageWire [data-duel-pick]').first().getAttribute('data-duel-pick')),config,'Current Wire configuration must be the actual Duel payload');assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'wire');await chartShot(page,page.locator('#pageWire .sensory-comparison').first(),'flow-wire-comparison-'+width+'.png');await shot(page,'smart-wire-picker-'+width+'.png');
+  await page.locator(nav+' [data-route="wire"]').click();
+  await page.evaluate(()=>{const m=window.RTA_ATLAS_MODULES;m.selectAtom('dvarwcl');m.setConfig({wire:'k128',air:'triple06'});m.state.wirePlatformChosen=true;m.show('wire');});
+  config=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config));
+  await page.evaluate(()=>{window.RTA_ATLAS_PREVIEW.selectLiquid(0);window.RTA_ATLAS_MODULES.show('wire');});
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config)),config);assert.equal(decodeURIComponent(await page.locator('#pageWire [data-duel-pick]').first().getAttribute('data-duel-pick')),config,'Current Wire configuration must be the actual Duel payload');assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'wire');await chartShot(page,page.locator('#pageWire .sensory-comparison').first(),'flow-wire-comparison-'+width+'.png');await shot(page,'smart-wire-picker-'+width+'.png');
   await page.locator(nav+' [data-route="duel"]').click();await page.locator('[data-duel-confirm="left"]').click();await page.locator('[data-duel-confirm="right"]').click();
   const duel=await page.evaluate(()=>JSON.stringify([window.RTA_ATLAS_DUEL.state.left,window.RTA_ATLAS_DUEL.state.right,window.RTA_ATLAS_DUEL.state.picked]));await choose('duel',619);await page.locator('#duelObjective').selectOption('smooth');assert.equal(await page.evaluate(()=>JSON.stringify([window.RTA_ATLAS_DUEL.state.left,window.RTA_ATLAS_DUEL.state.right,window.RTA_ATLAS_DUEL.state.picked])),duel);assert.equal(await page.evaluate(()=>window.RTA_ATLAS_DUEL.compare().liquid===window.RTA_LIQUIDS[619]),true);await page.evaluate(()=>scrollTo(0,0));await shot(page,'smart-duel-picker-'+width+'.png');await chartShot(page,page.locator('#pageDuel .sensory-comparison'),'flow-duel-comparison-'+width+'.png');
   await page.locator(nav+' [data-route="market"]').click();await page.locator('[data-market-category="all"]').click();await page.locator('#marketSearch').fill('Tribeca Halo');assert.equal(await page.locator('.market-card').count(),1);
@@ -85,7 +103,22 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
    assert.equal(await page.evaluate(()=>JSON.stringify([window.RTA_ATLAS_PREVIEW.state.liquidIndex,window.RTA_ATLAS_MODULES.state.config,window.RTA_ATLAS_DUEL.state.left,window.RTA_ATLAS_DUEL.state.right])),kept,'Back must retain liquid and all configurations');
   }
   assert.equal(await page.locator('#atlasBack').isVisible(),false);
-  await page.locator(nav+' [data-route="wire"]').click();await page.locator('#pageWire .context-settings summary').click();await page.locator('#pageWire [data-context-field="moment"]').selectOption('coffee');
+  await page.locator(nav+' [data-route="wire"]').click();
+  // Navigation back intentionally preserves a previously chosen atomizer.
+  // Without such a choice the advanced context stays hidden, but if the
+  // atomizer is already confirmed the controls must remain available.
+  const atomWasChosen=await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen);
+  assert.equal(await page.locator('#pageWire .context-settings').isVisible(),atomWasChosen,
+    'Wire contextual controls must exactly follow whether an atomizer has been confirmed');
+  if(!atomWasChosen){
+   // Exercise a final explicit atomizer confirmation without altering any
+   // selected build, liquid or Duel configuration in the Back-stack test.
+   await page.evaluate(()=>{const m=window.RTA_ATLAS_MODULES;m.state.wireChosen=true;m.state.wirePlatformChosen=true;m.show('wire');});
+  }
+  assert.equal(await page.locator('#pageWire .context-settings').isVisible(),true,
+    'Wire contextual settings must be available after atomizer confirmation');
+  await page.locator('#pageWire .context-settings summary').click();
+  await page.locator('#pageWire [data-context-field="moment"]').selectOption('coffee');
   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'wire');assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.moment),'coffee');
   assert.equal(await page.evaluate(()=>JSON.stringify([window.RTA_ATLAS_PREVIEW.state.liquidIndex,window.RTA_ATLAS_MODULES.state.config,window.RTA_ATLAS_DUEL.state.left,window.RTA_ATLAS_DUEL.state.right])),kept,'Context edits must preserve configurations');
   await page.evaluate(()=>scrollTo(0,0));await shot(page,'flow-wire-context-'+width+'.png');

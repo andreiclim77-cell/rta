@@ -85,3 +85,22 @@
  .exp-best-overview span{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.exp-flow *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+
+/* One canonical Wire journey: compare, explicit decision, objective, actual
+ * liquid, THEN atomizer. No duplicate controls/early results. */
+.wire-one-flow{scroll-margin-top:18px}
+.wire-one-flow>.exp-stage{scroll-margin-top:20px}
+.wire-one-flow .exp-wrap-choices button.is-selected{background:#29443f;border-color:#d7bd8a;color:#fff0ca}
+.wire-one-flow .exp-goal-choices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:15px 0 20px}
+.wire-one-flow .exp-goal-choices button{display:flex;align-items:center;text-align:left;min-height:55px;border:1px solid #4e6c62;border-radius:10px;background:#122629;color:#e0e7d8;cursor:pointer;font:inherit;font-size:12px;line-height:1.45;padding:12px;overflow-wrap:anywhere}
+.wire-one-flow .exp-goal-choices button:hover{border-color:#cfbc92}
+.wire-one-flow .exp-goal-choices button[aria-pressed="true"]{border-color:#d7bd8a;background:#29443f;color:#fff0ca}
+.wire-one-flow .exp-goal-choices button:focus-visible,.exp-compatible-remainder>summary:focus-visible{outline:2px solid #e5cc9c;outline-offset:2px}
+.exp-compatible-remainder{border:1px solid #405e55;border-radius:13px;padding:11px 14px;margin:15px 0}
+.exp-compatible-remainder>summary{min-height:45px;display:flex;align-items:center;cursor:pointer;color:#e0c590;font-size:13px;line-height:1.45}
+.exp-compatible-remainder .exp-top-atoms{margin:12px 0}
+.exp-compatible-remainder .exp-top-atoms article{background:#0f2227}
+.wire-guided-slot{min-width:0;max-width:100%;width:100%}
+@media(max-width:760px){.wire-one-flow .exp-goal-choices{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.wire-one-flow .exp-goal-choices button{min-height:53px;padding:10px;font-size:12px}}
+@media(max-width:350px){.wire-one-flow .exp-goal-choices{grid-template-columns:minmax(0,1fr)}}

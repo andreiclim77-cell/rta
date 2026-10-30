@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-preview-ce332bc12c480524",PREFIX="rta-atlas-preview-";
+const CACHE="rta-atlas-preview-6fcc9e11ea6d418c",PREFIX="rta-atlas-preview-";
 const ASSETS=[
   "../../assets/facebook-profile-ghid-rta-smokee.jpg",
   "../../assets/fonts/manrope-latin-ext.woff2",
@@ -15,13 +15,13 @@ const ASSETS=[
   "../icon-192.png",
   "../mood-match.js?v=atlas-catalog-700-20261015-1",
   "./",
-  "./app.js?v=nife30-watt12-20261022-v1",
+  "./app.js?v=wire-guided-historical-20261030-v1",
   "./bootstrap.js?v=atlas-catalog-700-20261015-1",
   "./catalog.js?v=atlas-catalog-700-20261015-1",
   "./context-ui.js?v=atlas-catalog-700-20261015-1",
   "./context.js?v=atlas-catalog-700-20261015-1",
-  "./decision-explorer.css?v=lab-decisions-20261016-1",
-  "./decision-explorer.js?v=wire-progressive-20261029-1",
+  "./decision-explorer.css?v=wire-guided-historical-20261030-v1",
+  "./decision-explorer.js?v=wire-guided-historical-20261030-v1",
   "./duel.js?v=nife30-watt12-20261022-v1",
   "./gateway-photos.css?v=atlas-gallery-photos-20261019-1",
   "./ghid-rta-link.css?v=ghid-rta-link-20261019-1",
@@ -71,7 +71,7 @@ const ASSETS=[
   "./media/taifun-gt-one.jpg",
   "./mobile-fit.css?v=atlas-mobile-fit-20261016-1",
   "./modules.css?v=wire-progressive-20261029-1",
-  "./modules.js?v=wire-progressive-20261029-1",
+  "./modules.js?v=wire-guided-historical-20261030-v1",
   "./photo-sources.js?v=atlas-catalog-700-20261015-1",
   "./styles.css?v=atlas-catalog-700-20261015-1",
   "./v02.css?v=atlas-catalog-700-20261015-1",
