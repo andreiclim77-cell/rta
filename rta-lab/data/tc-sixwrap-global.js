@@ -1,28 +1,28 @@
 /* RTA Lab — separare NiFe30/7 global, NiFe52/6, 29.10.2026.
  * Numele istoric al modulului rămâne din motive de compatibilitate V10.
  * 7 spire NiFe30 reprezintă o regulă personală generală, nu teste A/B pe toate RTA.
- * NiFe30/6 rămâne selectabil în Sensory DNA drept alternativă istorică.
+ * Varianta mai veche Dicodes este retrasă din listele active de builduri.
  * Rola Dicodes NiFe30 TCR320 5,5 Ω/m; Zivipf NiFe52 TCR310.
  */
 (() => {
   window.RTA_LAB_TC_SIX_WRAP = {
     date: "2026-10-29", status: "canonical-personal-preference",
     coilDiameterMm: 2.5, wraps: 7,
-    dicodesNiFe30Wraps: 7, zivipfNiFe52Wraps: 6, historicalDicodesWraps: 6,
+    dicodesNiFe30Wraps: 7, zivipfNiFe52Wraps: 6,
     overrides: {
-      gtr: {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6,dicodesNiFe30LegacyWraps:6},
+      gtr: {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6},
       "415": {dicodesNiFe30Wraps:7,zivipfNiFe52Wraps:6,k128Wraps:6,dicodesNiFe30LegacyWraps:6}
     },
     dicodes: {wire:"Dicodes RESISTHERM NiFe30",tcr:320,resistanceOhmPerM:5.5},
     zivipf: {wire:"Zivipf NiFe52",tcr:310},
-    principle: "Global: Dicodes NiFe30/7 pe orice RTA compatibil; Zivipf NiFe52/6. NiFe30/6 este reper istoric selectabil; setările TC/WATT se validează separat."
+    principle: "Global: Dicodes NiFe30/7 pe orice RTA compatibil; Zivipf NiFe52/6. configurația Dicodes retrasă este reper istoric selectabil; setările TC/WATT se validează separat."
   };
 
   if (typeof buildRule === "function") {
     const original=buildRule;
     buildRule=function(atom,wire){
       if(wire?.id==="nife30")return {
-        wraps:7,reason:"Dicodes RESISTHERM NiFe30 TCR320: 7 spire = preferința personală actuală pe toate atomizoarele compatibile; Zivipf NiFe52 TCR310 folosește 6 spire. Montajul NiFe30/6 este istoric funcțional, nu interzis."
+        wraps:7,reason:"Dicodes RESISTHERM NiFe30 TCR320: 7 spire = preferința personală actuală pe toate atomizoarele compatibile; Zivipf NiFe52 TCR310 folosește 6 spire. Montajul configurația Dicodes retrasă este istoric funcțional, nu interzis."
       };
       return original(atom,wire);
     };
@@ -36,7 +36,7 @@
         if(!["gtr","415","klp","kx","kprime"].includes(atom?.id)){
           out.status="Regulă personală nouă · Dicodes NiFe30/7";
           out.noteClass="context";
-          out.note="NiFe30 TCR320/7 este geometria preferată global; Zivipf NiFe52 TCR310 rămâne cu 6 spire. Nu există un A/B pentru fiecare atomizor, iar vechiul NiFe30/6 rămâne o opțiune istorică funcțională.";
+          out.note="NiFe30 TCR320/7 este geometria preferată global; Zivipf NiFe52 TCR310 rămâne cu 6 spire. Nu există un A/B pentru fiecare atomizor, iar vechiul configurația Dicodes retrasă rămâne o opțiune istorică funcțională.";
         }
       }
       return out;
@@ -64,7 +64,7 @@
       if(!node.innerHTML)continue;
       node.innerHTML=node.innerHTML
         .replace(/Dicodes RESISTHERM NiFe30 = <b>6 spire<\/b> în general, <b>GTR și 415 Cool = 7 spire<\/b> preferat personal/g,
-         "Dicodes RESISTHERM NiFe30 = <b>7 spire pe toate atomizoarele compatibile</b> (6 spire rămân istoric funcționale)")
+         "Dicodes RESISTHERM NiFe30 = <b>7 spire pe toate atomizoarele compatibile</b>")
         .replace(/6 spire general \/ 7 spire pe GTR și 415 Cool/g,"7 spire global (6 spire istorice)");
     }
   });
