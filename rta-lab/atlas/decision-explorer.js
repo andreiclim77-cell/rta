@@ -20,6 +20,16 @@ const W={first:null,wraps:null,compare:true,other:null,otherWraps:null,final:nul
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const label=l=>[l.brand,l.name].filter(Boolean).join(' · ');
 const byId=id=>document.getElementById(id);
+function nextWireStage(id){
+ // A card can be selected high above the single long comparison flow. Guide
+ // the viewport to the newly unlocked stage without reintroducing a second
+ // wizard. Instant navigation is deterministic for touch and screenshot QA.
+ requestAnimationFrame(()=>{
+  const node=byId(id);if(!node)return;
+  node.style.scrollMarginTop='110px';
+  node.scrollIntoView({block:'start',behavior:'auto'});
+ });
+}
 const api=()=>window.RTA_ATLAS_PREVIEW,mod=()=>window.RTA_ATLAS_MODULES;
 const clamp=v=>Math.min(5,Math.max(1,Number(v)||1));
 const score10=v=>Math.round((1+(clamp(v)-1)*2.25)*10)/10;
@@ -208,13 +218,13 @@ function wireWizard(){
    'Aleg '+esc(selectedLabel(W.other))+' / '+W.otherWraps+' spire</button>':'')+
   '</div></div>';
  if(!picked)return html+'</section>';
- html+='<div class="exp-stage"><h3>4. Ce urmărești în experiență?</h3>'+
+ html+='<div class="exp-stage" id="expWireGoalStage"><h3>4. Ce urmărești în experiență?</h3>'+
   '<p><b>'+esc(selectedLabel(W.final))+' / '+W.finalWraps+' spire</b> este configurația ta finală. Alege TH, stratificare, corp, finețe sau un alt obiectiv; apoi mergem la lichid.</p>'+
   '<div class="exp-goal-choices" role="group" aria-label="Obiectiv senzorial">'+
    goalChoices.map(([id,title])=>'<button type="button" data-exp-goal="'+esc(id)+'" aria-pressed="'+(W.goal===id)+'" class="'+(W.goal===id?'is-selected':'')+'">'+esc(title)+'</button>').join('')+
   '</div></div>';
  if(!W.goal)return html+'</section>';
- html+='<div class="exp-stage"><h3>5. Alege lichidul</h3>'+
+ html+='<div class="exp-stage" id="expWireLiquidStage"><h3>5. Alege lichidul</h3>'+
   '<p class="exp-hint">Mai întâi categoria, apoi lichidul concret. Sunt 700 de repere în catalog; alegerea ta, nu un exemplu implicit, decide ordinea atomizoarelor.</p>'+
   catsGrid(chosenConfigs,'wire',W.family)+
   (W.family?liquidSelect(W.family,'expWireLiquid',W.liquidIndex):'')+'</div>';
@@ -315,9 +325,10 @@ function init(){
  observer.observe(cards,{childList:true});
  observer.observe(cmp,{childList:true});
  document.addEventListener('click',e=>{
-  const t=e.target.closest?.('[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-final-choice],[data-exp-goal],[data-exp-open-atom],[data-exp-liquid-cat]');
+  const t=e.target.closest?.('[data-wire-family],[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-final-choice],[data-exp-goal],[data-exp-open-atom],[data-exp-liquid-cat]');
   if(!t)return;
   const d=t.dataset;
+  if(d.wireFamily!==undefined){nextWireStage('expWireWizard');return;}
   if(d.expLiquidCat!==undefined){
    const s=window.RTA_ATLAS_SEARCH_UI?.states.get('liquid');if(!s)return;
    s.family=d.expLiquidCat;s.brand='';s.tag='';s.offset=0;s.query='';s.active=0;
@@ -334,14 +345,14 @@ function init(){
     m.state.wirePlatformChosen=false;
     m.setWireJourney({wire,wraps});
    }else refreshWizard('wire');
-   byId('expWireWizard')?.scrollIntoView({block:'start',behavior:'auto'});
+   nextWireStage('expWireGoalStage');
    return;
   }
   if(d.expGoal){
    if(!W.final||!window.RTA_ATLAS_CONTEXT.goals.some(([id])=>id===d.expGoal))return;
    W.goal=d.expGoal;W.family=null;W.liquidIndex=null;
    api().setObjective(W.goal);
-   refreshWizard('wire');return;
+   refreshWizard('wire');nextWireStage('expWireLiquidStage');return;
   }
   if(d.expWire==='atlas'){
    A.wire=d.expValue;A.wraps=null;A.family=null;A.liquidIndex=null;
@@ -355,7 +366,7 @@ function init(){
   if(d.expFamily==='atlas'){A.family=d.expValue;A.liquidIndex=null;refreshWizard('atlas');return;}
   if(d.expFamily==='wire'){
    if(!W.goal)return;
-   W.family=d.expValue;W.liquidIndex=null;refreshWizard('wire');return;
+   W.family=d.expValue;W.liquidIndex=null;refreshWizard('wire');nextWireStage('expWireLiquid');return;
   }
   if(d.expOpenAtom){
    const c=cfg(d.expOpenAtom,W.final,W.finalWraps);
@@ -393,7 +404,7 @@ function init(){
    if(value&&catalog[Number(value)]?.class===W.family){
     W.liquidIndex=Number(value);
     api().selectLiquid(W.liquidIndex);
-    refreshWizard('wire');
+    refreshWizard('wire');nextWireStage('expWireFinalAtoms');
    }else{W.liquidIndex=null;refreshWizard('wire');}
    return;
   }
