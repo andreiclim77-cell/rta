@@ -315,7 +315,7 @@ function init(){
  observer.observe(cards,{childList:true});
  observer.observe(cmp,{childList:true});
  document.addEventListener('click',e=>{
-  const t=e.target.closest?.('[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-toggle-compare],[data-exp-open-atom],[data-exp-liquid-cat]');
+  const t=e.target.closest?.('[data-exp-wire],[data-exp-wraps],[data-exp-family],[data-exp-final-choice],[data-exp-goal],[data-exp-open-atom],[data-exp-liquid-cat]');
   if(!t)return;
   const d=t.dataset;
   if(d.expLiquidCat!==undefined){
@@ -324,7 +324,25 @@ function init(){
    const input=byId('liquidSearch');if(input){input.value='';input.dispatchEvent(new Event('input',{bubbles:true}));input.focus({preventScroll:true});}
    refreshLiquidCategory();return;
   }
-  if(d.expToggleCompare!==undefined){W.compare=!W.compare;refreshWizard('wire');return;}
+  if(d.expFinalChoice){
+   const other=d.expFinalChoice==="other";
+   if(other&&(!W.other||!W.otherWraps))return;
+   const wire=other?W.other:W.first,wraps=other?W.otherWraps:W.wraps;
+   if(!wire||!wraps||!candidates(wire,wraps).length)return;
+   W.final=wire;W.finalWraps=wraps;W.goal=null;W.family=null;W.liquidIndex=null;
+   const m=mod();if(m){
+    m.state.wirePlatformChosen=false;
+    m.setWireJourney({wire,wraps});
+   }else refreshWizard('wire');
+   byId('expWireWizard')?.scrollIntoView({block:'start',behavior:'auto'});
+   return;
+  }
+  if(d.expGoal){
+   if(!W.final||!window.RTA_ATLAS_CONTEXT.goals.some(([id])=>id===d.expGoal))return;
+   W.goal=d.expGoal;W.family=null;W.liquidIndex=null;
+   api().setObjective(W.goal);
+   refreshWizard('wire');return;
+  }
   if(d.expWire==='atlas'){
    A.wire=d.expValue;A.wraps=null;A.family=null;A.liquidIndex=null;
    mod().setConfig({wire:A.wire});mod().show('atomizer');return;
@@ -335,9 +353,10 @@ function init(){
    mod().show('atomizer');return;
   }
   if(d.expFamily==='atlas'){A.family=d.expValue;A.liquidIndex=null;refreshWizard('atlas');return;}
-  if(d.expFamily==='wire'){W.family=d.expValue;W.liquidIndex=null;
-   const m=mod();if(m?.state.wireChosen)m.setWireJourney({family:W.family});else refreshWizard('wire');
-   return;}
+  if(d.expFamily==='wire'){
+   if(!W.goal)return;
+   W.family=d.expValue;W.liquidIndex=null;refreshWizard('wire');return;
+  }
   if(d.expOpenAtom){
    const c=cfg(d.expOpenAtom,W.final,W.finalWraps);
    if(!c)return;
@@ -350,24 +369,20 @@ function init(){
   const id=e.target.id,value=e.target.value;
   if(e.target.dataset.lpFilter==='family'){refreshLiquidCategory();return;}
   if(id==='atlasWire'){A.wire=value;A.wraps=null;A.family=null;A.liquidIndex=null;refreshWizard('atlas');return;}
-  const keys={expWireFirst:['first','wraps'],expWireWraps:['wraps'],
-   expWireOther:['other','otherWraps'],expWireOtherWraps:['otherWraps'],
-   expWireFinal:['final','finalWraps'],expWireFinalWraps:['finalWraps']};
-  if(keys[id]){
-   const [field,dependent]=keys[id];
-   W[field]=field.toLowerCase().includes('wraps')?(value?Number(value):null):value||null;
-   if(dependent)W[dependent]=null;
-   if(['final','finalWraps'].includes(field)){W.family=null;W.liquidIndex=null;}
-   // Retain the detailed comparator but synchronize the selection with
-   // the visible per-stage Atomizer matching, never silently default to 15.
-   const selected=(W.final&&['final','finalWraps'].includes(field))?W.final:W.first;
-   const selectedWraps=W.final&&['final','finalWraps'].includes(field)?W.finalWraps:W.wraps;
-   if(selected&&['first','wraps','final','finalWraps'].includes(field)){
-    const m=mod();
-    if(m)m.setWireJourney(selectedWraps?{wire:selected,wraps:selectedWraps}:{wire:selected});
-   }else refreshWizard('wire');
-   byId(id)?.focus({preventScroll:true});
-   return;
+  if(id==='expWireWraps'||id==='expWireOther'||id==='expWireOtherWraps'){
+   if(id==='expWireWraps'){const n=Number(value);if(!available(W.first).includes(n))return;W.wraps=n;}
+   if(id==='expWireOther'){
+    W.other=value||null;
+    const prefs={k128:6,k129:6,k1clap:5,ssclap:5,nife30:7,nife52:6};
+    const vals=W.other?available(W.other):[];
+    W.otherWraps=vals.includes(prefs[W.other])?prefs[W.other]:(vals[0]||null);
+   }
+   if(id==='expWireOtherWraps'){
+    const n=Number(value);if(!available(W.other).includes(n))return;W.otherWraps=n;
+   }
+   // Comparison edits invalidate the final choice, avoiding stale downstream matches.
+   W.final=null;W.finalWraps=null;W.goal=null;W.family=null;W.liquidIndex=null;
+   refreshWizard('wire');return;
   }
   if(id==='expAtlasLiquid'){
    if(value&&catalog[Number(value)]?.class===A.family){
@@ -376,10 +391,11 @@ function init(){
   }
   if(id==='expWireLiquid'){
    if(value&&catalog[Number(value)]?.class===W.family){
-    W.liquidIndex=Number(value);api().selectLiquid(W.liquidIndex);
-    const m=mod();if(m?.state.wireChosen)m.setWireJourney({family:W.family,liquidIndex:W.liquidIndex});
-    else m?.show('wire');
+    W.liquidIndex=Number(value);
+    api().selectLiquid(W.liquidIndex);
+    refreshWizard('wire');
    }else{W.liquidIndex=null;refreshWizard('wire');}
+   return;
   }
  });
 }
