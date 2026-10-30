@@ -150,7 +150,7 @@ async function main(){
    check(await page.locator('.duel-change').textContent().then(t=>t.includes('Aceeași configurație')),'Isolated comparison must start with equal whole configurations');
    await page.locator('[data-duel-edit="right"]').click();
    if(await page.locator('.wire-advanced').getAttribute('open')===null)await page.locator('.wire-advanced summary').click();
-   check(await page.locator('#wireAtom').isDisabled()&&await page.locator('#wireMaterial').isDisabled()&&await page.locator('#wireAir').isDisabled(),'All unrelated variables must be locked');
+   check(await page.locator('#wireWraps').isDisabled()&&await page.locator('#wireAir').isDisabled()&&await page.locator('#wireBell').isDisabled(),'All unrelated expert build variables must be locked');
    check(await page.locator('#wirePower').isEnabled(),'The isolated variable remains editable');
    await page.locator('#wirePower').fill('14');await page.locator('#wirePower').press('Tab');
    await page.locator('[data-duel-update]').click();
@@ -219,9 +219,12 @@ async function main(){
    await page.locator(width<760?'.bottom-tabs [data-route="atomizer"]':'.top-nav [data-route="atomizer"]').click();
    check(await page.locator('#atlasObjective').inputValue()==='th','Atlas must inherit the explicit objective');
    check(await page.locator('#pageAtomizer .atlas-context').textContent().then(t=>t.includes('Profil propriu de test')),'Atlas must retain the free profile');
-   await page.locator('[data-edit-wire]').click();await page.locator('#wireObjective').selectOption('smooth');
+   await page.locator('[data-edit-wire]').click();
+   await page.locator('[data-wire-family="k128"]').click();
+   await page.locator('[data-exp-final-choice="first"]').click();
+   await page.locator('[data-exp-goal="smooth"]').click();
    check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.effectiveGoal())==='smooth','Wire objective must update common context');
-   await page.locator('#pageWire [data-duel-pick]').first().click();
+   await page.locator(width<760?'.bottom-tabs [data-route="duel"]':'.top-nav [data-route="duel"]').click();
    check(await page.locator('#pageDuel .atlas-context').textContent().then(t=>t.includes('Profil propriu de test')&&t.includes('Finețe')),'Duel must retain free profile and shared objective');
    await page.locator('#pageDuel [data-route="liquid"]').first().click();
    check(await page.locator('#liquidObjective').inputValue()==='smooth','Liquid controls must reflect the objective chosen in Wire');
