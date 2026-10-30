@@ -12,6 +12,8 @@ async function main(){
    await page.waitForSelector('#wireLibrary .wire-build-entry');
    const noOverflow=async label=>assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),label+' horizontal overflow at '+width);
    assert.equal(await page.locator('#wireLibrary .wire-build-entry').count(),6,'All six materials before selection');
+   assert.equal(await page.locator('#pageWire .context-settings').isVisible(),false,
+     'On a fresh wire journey mood/moment advanced controls are hidden until the final atomizer');
    assert.equal(await page.locator('#wireLibrary .wire-card-coil svg').count(),6,'All six coil diagrams displayed');
    assert.equal(await page.locator('#expWireWizard').count(),1,'Exactly one guided flow');
    assert.equal(await page.locator('#wirePlatformCatalog').count(),0,'No premature atomizer list');
@@ -44,6 +46,8 @@ async function main(){
    await page.screenshot({path:path.join(shots,'wire-'+width+'.png'),fullPage:true});
    await page.locator('#expWireFinalAtoms > .exp-top-atoms button').first().click();
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen),true,'Final atomizer opens exact configuration');
+   assert.equal(await page.locator('#pageWire .context-settings').isVisible(),true,
+     'After selecting the final atomizer, the saved mood/moment context becomes available');
       await page.locator('[data-route="atomizer"]:visible').first().click();
    await page.locator('#atlasPlatform').selectOption('gtr');
    await page.locator('[data-exp-wire="atlas"][data-exp-value="nife30"]').click();
