@@ -25,13 +25,6 @@ jobs:
           node tools/build-rta-atlas-release.js
           node tools/build-rta-atlas-release.js --check
           node tools/build-rta-atlas-cache.js rta-lab/atlas-preview --check
-      - name: Wire flow and protected legacy regression
-        run: |
-          node tools/check-rta-decision-flows.js
-          node tools/check-rta-atlas-modules.js
-          node tools/check-rta-atlas-preview.js
-          node tools/check-rta-sensory-core.js
-          node tools/check-rta-nife30-watt.js
       - name: Commit generated release files
         run: |
           git config user.name 'github-actions[bot]'
@@ -41,3 +34,13 @@ jobs:
             git commit -m 'Regenerate Atlas UI release and caches for single Wire flow'
             git push origin HEAD:fix/wire-single-flow-preserve-history-20261030
           fi
+
+      - name: Wire flow and protected legacy regression
+        run: |
+          node tools/check-rta-decision-flows.js
+          node tools/check-rta-atlas-modules.js
+          node tools/check-rta-atlas-preview.js
+          node tools/check-rta-sensory-core.js
+          node tools/check-rta-nife30-watt.js
+
+# QA revision 2: commit deterministic output before validating, test historical GTR/6 separately
