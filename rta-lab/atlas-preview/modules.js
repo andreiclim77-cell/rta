@@ -259,11 +259,14 @@ function wirePalette(){
  // Before any choice show ALL six real build cards. After picking a material,
  // collapse this reference catalog so the user can follow the one decision
  // flow without scrolling through the same lengthy catalog repeatedly.
- if(state.wireChosen&&!state.wirePlatformChosen){
-  return '<details class="wire-gallery-disclosure"><summary><span class="eyebrow">01 · SÂRMA ALEASĂ</span>'+
-   '<strong>'+esc(core.wires[state.config.wire]?.name||"Material selectat")+'</strong>'+
+ if(state.wireChosen){
+  const guided=window.RTA_LAB_EXPLORER?.states?.wire;
+  const isFinal=!!guided?.final&&!!guided?.finalWraps;
+  const stepLabel=isFinal?"03 · CONFIGURAȚIA FINALĂ":"01 · SÂRMA DE PORNIRE";
+  return '<details class="wire-gallery-disclosure"><summary><span class="eyebrow">'+stepLabel+'</span>'+
+   '<strong>'+esc(core.wires[state.config.wire]?.name||"Material selectat")+' · '+state.config.wraps+' spire</strong>'+
    '<span class="wire-gallery-mini">'+api.renderCoil(state.config)+'</span>'+
-   '<small>Schimbă sârma · deschide toate cele 6 materiale și buildurile preferate</small></summary>'+
+   '<small>Schimbă sârma · vezi toate cele 6 materiale și buildurile preferate</small></summary>'+
    html+'</details>';
  }
  return html;
