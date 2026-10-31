@@ -206,6 +206,8 @@ assert.equal(start.phase,0);assert.equal(start.primary.length,15);assert.equal(s
 assert.equal((m.wirePalette().match(/data-wire-family="/g)||[]).length,6,'Show six material cards before selection');
 assert.ok(m.wirePalette().includes('KLP · A/B practic 31.10: 29 GA / 6 preferat'),
  'Expose the user\'s contextual KLP A/B without changing six-wire selection');
+assert.ok(!m.wirePalette().includes('<details class="wire-ab-case"'),
+ 'Keep the contextual note outside nested disclosures to preserve mobile gallery interaction');
 assert.ok(m.wirePalette().includes('prim vapor ≈+10%')&&m.wirePalette().includes('28/5 era preferat'),
  'Keep faster 28/5 response and the different historical winner visible');
 assert.equal((m.wirePalette().match(/<svg/g)||[]).length,6,'Show all six coils, including Dicodes');

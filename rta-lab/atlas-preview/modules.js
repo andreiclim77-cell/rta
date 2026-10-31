@@ -238,13 +238,13 @@ function wireSavedBuilds(wire){
 function wirePalette(){
  const selected=state.wireChosen?state.config.wire:null;
  const klpAB=core.personalABCases?.find(x=>x.id==="klp-k1-20261031-80-20");
- const klpABNote=klpAB?'<details class="wire-ab-case"><summary><strong>KLP · A/B practic 31.10: 29 GA / 6 preferat la 13 W, Aerokon 1 mm, trabuc 80% / cireșe 20%</strong></summary>'+
+ const klpABNote=klpAB?'<aside class="wire-ab-case" aria-label="KLP · A/B practic 31.10"><h3>KLP · A/B practic 31.10: 29 GA / 6 preferat la 13 W, Aerokon 1 mm, trabuc 80% / cireșe 20%</h3>'+
   '<p class="module-note"><b>29/6:</b> TH direct ≈+10%, trabuc ≈+10%, separare și bogăție superioare, preferat per ansamblu. '+
   '<b>28/5:</b> ofensivă ≈+10%, prim vapor ≈+10% mai prompt perceput, densitate ≈+10%. '+
   'Fără procente pentru separare, bogăție și preferință; diferențele sunt subiective, nu instrumentale.</p>'+
   '<p class="module-note">Istoric, în alt test (12–13.10), 28/5 era preferat; rezultatele nu se înlocuiesc universal. '+
   'Ø2,5 mm este preset neconfirmat; poziția, bumbacul, repetările și varianta KLP nu sunt reconfirmate. '+
-  'Lichidul 80/20 este un reper personal în V10, nu produs comercial în catalogul Atlas 700. Configurațiile generale și clasamentele rămân neschimbate.</p></details>':'';
+  'Lichidul 80/20 este un reper personal în V10, nu produs comercial în catalogul Atlas 700. Configurațiile generale și clasamentele rămân neschimbate.</p></aside>':'';
  const cards=Object.entries(core.wires).map(([id,w])=>{
   const examples=wireSavedBuilds(id),config=examples[0]?.config||core.config("gtr",{wire:id});
   return '<button type="button" class="wire-family-card wire-build-entry'+(selected===id?' is-selected':'')+'" data-wire-family="'+id+'" aria-pressed="'+(selected===id)+'">'+
