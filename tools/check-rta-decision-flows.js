@@ -75,6 +75,21 @@ x.states.wire.liquidIndex=w.RTA_LIQUIDS.findIndex(l=>l.class==='NET complex');
 assert.match(x.wireWizard(),/Atomizoarele potrivite/);
 assert.match(x.wireWizard(),/Vezi și celelalte/);
 assert.equal(x.topAtoms('nife30',6,sample).length,3,'NiFe30/6 retained as a deliberately selected historical comparison; NiFe30/7 remains the default');
+assert.equal((x.wireWizard().match(/class="wire-quick-axis"/g)||[]).length,6,
+ 'Use six compact comparison criteria on first screen');
+assert.equal((x.wireWizard().match(/class="wire-full-axis-details"/g)||[]).length,2,
+ 'Both the material and final-atomizer 14-axis matrices are optional, not duplicated outside details');
+const W=x.states.wire;
+Object.assign(W,{first:'nife30',wraps:7,other:'nife30',otherWraps:6,final:null,finalWraps:null,goal:null,family:null,liquidIndex:null});
+const sameAlloy=x.wireWizard();
+assert.match(sameAlloy,/alte spire/,'Allow different coil wraps of the same material');
+assert.match(sameAlloy,/Comparație pe 15 atomizoare comune/,'Compare NiFe30/7 and NiFe30/6 on same 15 platforms');
+assert.equal((sameAlloy.match(/class="wire-quick-row"/g)||[]).length,12,'Two geometries × six axes');
+assert.equal((sameAlloy.match(/data-exp-final-choice=/g)||[]).length,2,'Either coil geometry is a valid explicit final choice');
+W.otherWraps=7;
+assert.match(x.wireWizard(),/Ai ales de două ori același build/,'No false A/B with identical coil material/wraps');
+W.otherWraps=6;
+
 assert.equal(JSON.stringify({atoms:w.RTA_CORE.atoms,liquids:w.RTA_LIQUIDS,observations:c.observations,prefs:c.personalPreferences}),original,'Canonical data preserved');
 const html=fs.readFileSync('rta-lab/atlas-preview/index.html','utf8');
 assert.match(html,/decision-explorer\.js/);assert.match(html,/decision-explorer\.css/);

@@ -221,3 +221,25 @@
 .wire-selected-outside{margin:16px 0;padding:12px;border:1px dashed #637a71;border-radius:12px}
 .wire-selected-outside>p{font-size:12px;color:#dfc69a;line-height:1.6}
 .wire-selected-outside>.wire-platform-grid{margin-bottom:0}
+
+
+/* Wire Lab UX 31.10.2026 — one guided path, full library only on demand. */
+.wire-gallery-disclosure{border:1px solid #395d57;border-radius:16px;background:#0d2225;margin:14px 0 19px;min-width:0}
+.wire-gallery-disclosure>summary{cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) minmax(82px,120px);align-items:center;gap:7px 12px;padding:14px 15px;list-style:none}
+.wire-gallery-disclosure>summary::-webkit-details-marker{display:none}
+.wire-gallery-disclosure>summary .eyebrow{grid-column:1;color:#e0c69b;font-size:11px;letter-spacing:.09em}
+.wire-gallery-disclosure>summary strong{grid-column:1;overflow-wrap:anywhere;line-height:1.4;font-size:15px;color:#e6efe7}
+.wire-gallery-disclosure>summary small{grid-column:1;line-height:1.5;font-size:12px;color:#dbbf92}
+.wire-gallery-mini{grid-column:2;grid-row:1/span 3;min-width:0}
+.wire-gallery-mini svg{display:block;width:100%;height:auto;max-height:75px}
+.wire-gallery-disclosure[open]>summary{border-bottom:1px solid #395d57}
+.wire-gallery-disclosure[open]>.wire-library{padding:0 15px 12px}
+.wire-extras-optional{border:1px solid #385453;border-radius:13px;margin:25px 0 12px;padding:12px 14px;background:#0a1a20}
+.wire-extras-optional>summary{cursor:pointer;color:#e0c99b;line-height:1.6;font-size:14px;font-weight:600;padding:7px 4px;min-height:44px}
+.wire-extras-optional>.module-note{padding:5px 0;color:#aec4b7}
+.wire-extras-optional .module-section{margin-top:18px}
+@media(max-width:760px){
+ .wire-gallery-disclosure>summary{grid-template-columns:minmax(0,1fr) 95px;padding:13px}
+ .wire-gallery-disclosure[open]>.wire-library{padding:0 10px 10px}
+ .wire-gallery-mini svg{max-height:66px}
+}

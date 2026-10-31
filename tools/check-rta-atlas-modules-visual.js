@@ -222,7 +222,14 @@ async function main(){
    check(await page.locator('#atlasObjective').inputValue()==='th','Atlas must inherit the explicit objective');
    check(await page.locator('#pageAtomizer .atlas-context').textContent().then(t=>t.includes('Profil propriu de test')),'Atlas must retain the free profile');
    await page.locator('[data-edit-wire]').click();
-   await page.locator('[data-wire-family="k128"]').click();
+   // Entering from Atlas keeps the material gallery compact; test the actual
+   // user route to change wire instead of clicking a hidden card.
+   const wireDisclosure=page.locator('#pageWire .wire-gallery-disclosure');
+   check(await wireDisclosure.count()===1,'A preselected Wire Lab shows one material-change disclosure');
+   check(await wireDisclosure.getAttribute('open')===null,'Preselected gallery starts collapsed, not duplicated');
+   await wireDisclosure.locator('summary').click();
+   check(await wireDisclosure.locator('[data-wire-family]').count()===6,'All six materials remain accessible on demand');
+   await wireDisclosure.locator('[data-wire-family="k128"]').click();
    await page.locator('[data-exp-final-choice="first"]').click();
    await page.locator('[data-exp-goal="smooth"]').click();
    check(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.effectiveGoal())==='smooth','Wire objective must update common context');

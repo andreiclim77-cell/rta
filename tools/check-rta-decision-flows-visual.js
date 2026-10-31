@@ -18,18 +18,32 @@ async function main(){
    assert.equal(await page.locator('#expWireWizard').count(),1,'Exactly one guided flow');
    assert.equal(await page.locator('#wirePlatformCatalog').count(),0,'No premature atomizer list');
    assert.equal(await page.locator('#wireJourneyWraps').count(),0,'No duplicate wizard');
+   assert.equal(await page.locator('#pageWire .wire-selected-experience').count(),0,
+     'Do not build hidden 700-liquid analytics before an atomizer is chosen');
    await noOverflow('Wire start');
    await page.locator('[data-wire-family="k128"]').click();
    await page.locator('#expWireWraps').selectOption('5');
    await page.locator('#expWireOther').selectOption('nife30');
    assert.deepEqual(await page.locator('#expWireOtherWraps option').evaluateAll(els=>els.map(x=>x.value)),['','6','7'],'NiFe30/7 preferred, 6 remains an explicit historical comparator');
    await page.locator('#expWireOtherWraps').selectOption('7');
-   assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),1,'One nonduplicated comparison chart');
+   assert.equal(await page.locator('#expWireWizard .wire-quick-axis').count(),6,'Only six compact criteria shown immediately');
+   assert.equal(await page.locator('#expWireWizard .wire-full-axis-details').count(),1,'Full 14-axis comparison available on demand');
+   assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),1,'One full comparison matrix, not duplicated');
    assert.equal(await page.locator('#expWireWizard .exp-matrix thead th').count(),3,'Two candidates on shared comparison matrix');
    assert.equal(await page.locator('#expWireFinalAtoms').count(),0,'No atomizer ranking before liquid');
    await page.locator('[data-exp-final-choice="first"]').click();
    assert.equal(await page.locator('[data-exp-goal]').count(),6,'Objectives appear after final material choice');
    assert.equal(await page.locator('#expWireLiquid').count(),0,'No liquid selector before objective');
+   // Backtracking must cancel the old choice in BOTH the wizard and summary.
+   await page.locator('#expWireOtherWraps').selectOption('6');
+   assert.equal(await page.evaluate(()=>window.RTA_LAB_EXPLORER.states.wire.final),null,'Edited comparison invalidates former final choice');
+   assert.equal(await page.locator('#expWireGoalStage').count(),0,'Downstream goal disappears until a fresh choice');
+   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wire),'k128','Visible Wire setup returns to first candidate');
+   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wraps),5,'Returning to comparison preserves starting geometry');
+   assert.ok(await page.locator('.wire-gallery-disclosure > summary').textContent().then(t=>t.includes('SÂRMA DE PORNIRE')),
+    'Collapsed summary must not advertise a final configuration that was cancelled');
+   await page.locator('#expWireOtherWraps').selectOption('7');
+   await page.locator('[data-exp-final-choice="first"]').click();
    await page.locator('[data-exp-goal="layers"]').click();
    assert.equal(await page.locator('#expWireWizard .exp-family').count(),4,'Four family choices after objective');
    await page.locator('[data-exp-family="wire"][data-exp-value="NET complex"]').click();
@@ -37,6 +51,7 @@ async function main(){
    const id=await page.locator('#expWireLiquid option').nth(1).getAttribute('value');
    await page.locator('#expWireLiquid').selectOption(id);
    assert.equal(await page.locator('#expWireFinalAtoms > .exp-top-atoms > article').count(),3,'Exactly three final atomizers');
+   assert.equal(await page.locator('#expWireFinalAtoms .wire-full-axis-details').count(),1,'Final 14-axis chart optional, no duplicated mandatory matrix');
    assert.equal(await page.locator('#expWireFinalAtoms details.exp-compatible-remainder').count(),1,'Compatible remainder is accessible');
    const rows=await page.locator('#expWireWizard .exp-matrix').last().locator('tbody tr').count();
    assert.equal(rows,14,'All 14 objective axes present');
@@ -46,9 +61,45 @@ async function main(){
    await page.screenshot({path:path.join(shots,'wire-'+width+'.png'),fullPage:true});
    await page.locator('#expWireFinalAtoms > .exp-top-atoms button').first().click();
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen),true,'Final atomizer opens exact configuration');
+   assert.equal(await page.locator('#pageWire .wire-selected-experience').count(),1,
+     'Build detailed analytics only after the explicit final atomizer choice');
+   assert.equal(await page.locator('.wire-extras-optional').count(),1,'Optional side analyses are grouped once, not repeated as mandatory steps');
+   assert.equal(await page.locator('.wire-extras-optional').getAttribute('open'),null,'Optional side analyses remain closed by default');
+   assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),0,
+     'Do not calculate 700-liquid extra matches before opening optional analyses');
+   await page.locator('.wire-extras-optional > summary').click();
+   // Native <details> dispatches the toggle event asynchronously after click.
+   // Wait for the actual lazy-render completion instead of racing the browser.
+   await page.waitForFunction(()=>document.querySelector('.wire-extras-optional [data-wire-extras-body]')?.dataset.loaded==='1');
+   assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),1,
+     'On explicit open, calculate and show the original top-liquids analysis');
+   assert.equal(await page.locator('.wire-extras-optional [data-wire-extras-body]').getAttribute('data-loaded'),'1',
+     'Build expensive extras only once per actual detail view');
+   await page.locator('.wire-extras-optional > summary').click();
+   await page.locator('.wire-extras-optional > summary').click();
+   assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),1,
+     'Closing and reopening optional analyses must reuse content without duplicates');
    assert.equal(await page.locator('#pageWire .context-settings').isVisible(),true,
      'After selecting the final atomizer, the saved mood/moment context becomes available');
-      await page.locator('[data-route="atomizer"]:visible').first().click();
+      // A second fresh flow must compare the same NiFe30 material at two
+   // different wrap counts, without claiming two different alloys.
+   const same=await context.newPage();
+   same.on('pageerror',e=>errors.push(e.message));
+   await same.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#wire',{waitUntil:'domcontentloaded'});
+   await same.waitForSelector('[data-wire-family="nife30"]');
+   await same.locator('[data-wire-family="nife30"]').click();
+   assert.equal(await same.locator('#expWireWraps').inputValue(),'7','NiFe30/7 remains default');
+   assert.equal(await same.locator('.wire-gallery-disclosure').count(),1,'Selected wire gallery collapses instead of repeating all six large cards');
+   assert.equal(await same.locator('.wire-gallery-disclosure').getAttribute('open'),null,'Gallery closed after material selected');
+   await same.locator('#expWireOther').selectOption('nife30');
+   assert.equal(await same.locator('#expWireOtherWraps').inputValue(),'6','Same wire must default comparator to different wraps');
+   assert.equal(await same.locator('.wire-quick-axis').count(),6);
+   assert.equal(await same.locator('.wire-quick-row').count(),12,'Two coil geometries compared on exactly six axes');
+   assert.equal(await same.locator('[data-exp-final-choice]').count(),2,'Both NiFe30/7 and NiFe30/6 explicitly selectable');
+   await same.locator('[data-exp-final-choice="other"]').click();
+   assert.equal(await same.evaluate(()=>window.RTA_LAB_EXPLORER.states.wire.finalWraps),6,'Explicit alternate six-wrap choice retained');
+   await same.close();
+   await page.locator('[data-route="atomizer"]:visible').first().click();
    await page.locator('#atlasPlatform').selectOption('gtr');
    await page.locator('[data-exp-wire="atlas"][data-exp-value="nife30"]').click();
    assert.equal(await page.locator('[data-exp-wraps="atlas"]').count(),2,'Dicodes NiFe30/7 preferred, historical six-wrap remains explicitly selectable on GTR');

@@ -55,8 +55,12 @@ async function caseRun(browser,width,height,largeType=false){
   await page.locator('#expWireWraps').selectOption('5');
   await page.locator('#expWireOther').selectOption('nife30');
   await page.locator('#expWireOtherWraps').selectOption('7');
-  assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),1,'One shared comparison matrix');
-  let check=await checkViewport(page,width,'Wire');
+  assert.equal(await page.locator('#expWireWizard .wire-quick-axis').count(),6,'Compact wire comparison must show six criteria');
+  assert.equal(await page.locator('#expWireWizard .exp-matrix').count(),1,'Full 14-axis matrix exists only once');
+  // The large 14-axis matrix is intentionally CLOSED by default to reduce
+  // redundant scrolling. Open explicitly for accessible visual QA.
+  await page.locator('#expWireWizard .wire-full-axis-details').first().locator('summary').click();
+  let check=await checkViewport(page,width,'Wire detailed');
   assert.ok(check.count===1&&!check.bad.length,JSON.stringify(check));
   await page.locator('#expWireWizard .exp-mobile-metric').first().scrollIntoViewIfNeeded();
   await page.screenshot({path:path.join(shotDir,'wire-'+width+(largeType?'-font24':'')+'.png')});
