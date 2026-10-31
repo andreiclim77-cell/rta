@@ -65,6 +65,13 @@ async function main(){
      'Build detailed analytics only after the explicit final atomizer choice');
    assert.equal(await page.locator('.wire-extras-optional').count(),1,'Optional side analyses are grouped once, not repeated as mandatory steps');
    assert.equal(await page.locator('.wire-extras-optional').getAttribute('open'),null,'Optional side analyses remain closed by default');
+   assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),0,
+     'Do not calculate 700-liquid extra matches before opening optional analyses');
+   await page.locator('.wire-extras-optional > summary').click();
+   assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),1,
+     'On explicit open, calculate and show the original top-liquids analysis');
+   assert.equal(await page.locator('.wire-extras-optional [data-wire-extras-body]').getAttribute('data-loaded'),'1',
+     'Build expensive extras only once per actual detail view');
    assert.equal(await page.locator('#pageWire .context-settings').isVisible(),true,
      'After selecting the final atomizer, the saved mood/moment context becomes available');
       // A second fresh flow must compare the same NiFe30 material at two
