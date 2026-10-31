@@ -407,13 +407,12 @@ function init(){
   if(e.target.dataset.lpFilter==='family'){refreshLiquidCategory();return;}
   if(id==='atlasWire'){A.wire=value;A.wraps=null;A.family=null;A.liquidIndex=null;refreshWizard('atlas');return;}
   if(id==='expWireWraps'||id==='expWireOther'||id==='expWireOtherWraps'){
+   const hadFinal=!!W.final&&!!W.finalWraps;
    if(id==='expWireWraps'){const n=Number(value);if(!available(W.first).includes(n))return;W.wraps=n;}
    if(id==='expWireOther'){
     W.other=value||null;
     const prefs={k128:6,k129:6,k1clap:5,ssclap:5,nife30:7,nife52:6};
     const vals=W.other?available(W.other):[];
-    // Comparing the same material must start with a DIFFERENT wrap count,
-    // especially the useful NiFe30/7 versus historical NiFe30/6 case.
     W.otherWraps=W.other===W.first
       ?(vals.find(n=>n!==W.wraps)||null)
       :(vals.includes(prefs[W.other])?prefs[W.other]:(vals[0]||null));
@@ -421,9 +420,21 @@ function init(){
    if(id==='expWireOtherWraps'){
     const n=Number(value);if(!available(W.other).includes(n))return;W.otherWraps=n;
    }
-   // Comparison edits invalidate the final choice, avoiding stale downstream matches.
+   // If both candidates use the same material, keep their geometries distinct
+   // when the first candidate's wraps change.
+   if(W.other===W.first&&W.otherWraps===W.wraps)
+    W.otherWraps=available(W.other).find(n=>n!==W.wraps)||null;
+   // A comparison edit cancels the former final decision AND the previously
+   // applied final material in the Wire module. Otherwise the collapsed gallery
+   // incorrectly continues showing an obsolete "final" build.
    W.final=null;W.finalWraps=null;W.goal=null;W.family=null;W.liquidIndex=null;
-   refreshWizard('wire');return;
+   const m=mod();
+   if(hadFinal&&m){
+    m.state.wirePlatformChosen=false;
+    if(!m.setWireJourney({wire:W.first,wraps:W.wraps,objective:null,family:null,liquidIndex:null}))
+     refreshWizard('wire');
+   }else refreshWizard('wire');
+   return;
   }
   if(id==='expAtlasLiquid'){
    if(value&&catalog[Number(value)]?.class===A.family){
