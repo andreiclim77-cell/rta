@@ -32,6 +32,16 @@ async function main(){
    await page.locator('[data-exp-final-choice="first"]').click();
    assert.equal(await page.locator('[data-exp-goal]').count(),6,'Objectives appear after final material choice');
    assert.equal(await page.locator('#expWireLiquid').count(),0,'No liquid selector before objective');
+   // Backtracking must cancel the old choice in BOTH the wizard and summary.
+   await page.locator('#expWireOtherWraps').selectOption('6');
+   assert.equal(await page.evaluate(()=>window.RTA_LAB_EXPLORER.states.wire.final),null,'Edited comparison invalidates former final choice');
+   assert.equal(await page.locator('#expWireGoalStage').count(),0,'Downstream goal disappears until a fresh choice');
+   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wire),'k128','Visible Wire setup returns to first candidate');
+   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wraps),5,'Returning to comparison preserves starting geometry');
+   assert.ok(await page.locator('.wire-gallery-disclosure > summary').textContent().then(t=>t.includes('SÂRMA DE PORNIRE')),
+    'Collapsed summary must not advertise a final configuration that was cancelled');
+   await page.locator('#expWireOtherWraps').selectOption('7');
+   await page.locator('[data-exp-final-choice="first"]').click();
    await page.locator('[data-exp-goal="layers"]').click();
    assert.equal(await page.locator('#expWireWizard .exp-family').count(),4,'Four family choices after objective');
    await page.locator('[data-exp-family="wire"][data-exp-value="NET complex"]').click();
