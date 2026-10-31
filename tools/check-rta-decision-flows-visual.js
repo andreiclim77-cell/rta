@@ -68,6 +68,9 @@ async function main(){
    assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),0,
      'Do not calculate 700-liquid extra matches before opening optional analyses');
    await page.locator('.wire-extras-optional > summary').click();
+   // Native <details> dispatches the toggle event asynchronously after click.
+   // Wait for the actual lazy-render completion instead of racing the browser.
+   await page.waitForFunction(()=>document.querySelector('.wire-extras-optional [data-wire-extras-body]')?.dataset.loaded==='1');
    assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),1,
      'On explicit open, calculate and show the original top-liquids analysis');
    assert.equal(await page.locator('.wire-extras-optional [data-wire-extras-body]').getAttribute('data-loaded'),'1',
