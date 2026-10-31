@@ -1,0 +1,46 @@
+name: RTA Wire clarity one-time release and model QA
+on:
+  push:
+    branches:
+      - fix/rta-wire-journey-clarity-20261031
+    paths:
+      - .github/workflows/rta-wire-clarity-build-once-20261031.yml
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/rta-wire-journey-clarity-20261031
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax and focused model tests
+        run: |
+          node --check rta-lab/atlas-preview/modules.js
+          node --check rta-lab/atlas-preview/decision-explorer.js
+          node --check tools/check-rta-decision-flows-visual.js
+          node --check tools/check-rta-atlas-mobile-fit-visual.js
+          node tools/check-rta-decision-flows.js
+          node tools/check-rta-sensory-core.js
+          node tools/check-rta-nife30-watt.js
+          node tools/check-rta-atlas-modules.js
+      - name: Rebuild isolated Atlas cache and release
+        run: |
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview
+          node tools/build-rta-atlas-release.js
+          node tools/build-rta-atlas-release.js --check
+          node tools/build-rta-atlas-cache.js rta-lab/atlas-preview --check
+      - name: Persist deterministic generated assets on feature branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas
+          if ! git diff --cached --quiet; then
+            git commit -m 'Generate Atlas clarity preview/release and cache after model QA'
+            git push origin HEAD:fix/rta-wire-journey-clarity-20261031
+          fi
