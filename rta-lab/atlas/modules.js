@@ -460,6 +460,12 @@ function setWireJourney(changes={}){
  renderWire();return true;
 }
 
+function renderWireExtrasContent(){
+ const m=contextual();
+ if(!m)return '';
+ return topLiquids('wire')+compareWirePlatforms()+'<section class="module-section" data-requires-liquid><h2>Alte trei configurații pentru comparație.</h2><div class="detail-grid">'+m.builds.map((b,i)=>'<div>'+api.renderBuild(b,i+1,liquid())+'<button type="button" class="module-link" data-pick-build="'+i+'">Explorează acest build</button></div>').join('')+'</div>'+watchPanel(m.builds)+api.comparisonGraphic(m.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+b.config.wraps+' spire',result:b})),'Trei experiențe pe același atomizor')+'</section>';
+}
+
 function renderWire(){
  // Do not calculate the 700-liquid match, extra build comparisons and diagrams
  // until the user actually selects an atomizer. A CSS 'hidden' attribute alone
@@ -477,8 +483,8 @@ function renderWire(){
  (state.config.wire==='nife30'?'<figure class="wire-product-photo"><img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30: rolă cu eticheta 320 și 5,5 Ω/m, lângă ambalajul metalic de referință" loading="lazy" decoding="async" width="500" height="333"><figcaption><span class="eyebrow">MATERIAL ÎN PRIM-PLAN / FOTO REALĂ</span><h2>Dicodes RESISTHERM NiFe30.</h2><p>Fotografie de produs, nu a rolei personale. Ambalaj de referință; sursa menționează că lotul actual este livrat fără cutia metalică.</p><a href="https://www.vapesbyenushi.com/dicodes-resistherm-nife30-temperature-control-resistance-wire/" target="_blank" rel="noopener noreferrer">Foto: Vapes by Enushi / Dicodes ↗</a></figcaption></figure>':'')+
  '<section class="module-section" data-requires-liquid><h2>Ce oferă această configurație.</h2>'+metricPanel(m.result)+'<div class="gain-trade"><div><h3>Avantaje orientative</h3><ul>'+m.result.advantages.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><h3>Compromisuri</h3><ul>'+m.result.tradeoffs.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+method(m.result)+'</section>'+
  '<details class="wire-extras-optional"><summary>Analize opționale · alte lichide, atomizoare și builduri</summary>'+
- '<p class="module-note">Aceste analize sunt separate de decizia pe care ai construit-o mai sus. Nu trebuie să repeți comparațiile pentru a folosi buildul ales.</p>'+
- topLiquids('wire')+compareWirePlatforms()+'<section class="module-section" data-requires-liquid><h2>Alte trei configurații pentru comparație.</h2><div class="detail-grid">'+m.builds.map((b,i)=>'<div>'+api.renderBuild(b,i+1,liquid())+'<button type="button" class="module-link" data-pick-build="'+i+'">Explorează acest build</button></div>').join('')+'</div>'+watchPanel(m.builds)+api.comparisonGraphic(m.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+b.config.wraps+' spire',result:b})),'Trei experiențe pe același atomizor')+'</section></details></div>':'');
+ '<p class="module-note">Analize separate de alegerea principală; sunt calculate numai când deschizi acest panou.</p>'+
+ '<div class="wire-extras-body" data-wire-extras-body></div></details></div>':'');
  el('pageWire').classList.toggle('needs-liquid',!hasLiquid());window.RTA_ATLAS_DUEL?.onWireRendered();
 }
 function show(to){
@@ -586,6 +592,10 @@ function init(){
   }
  });
  document.addEventListener('toggle',e=>{
+   if(e.target.classList?.contains('wire-extras-optional')&&e.target.open){
+     const host=e.target.querySelector('[data-wire-extras-body]');
+     if(host&&!host.dataset.loaded){host.innerHTML=renderWireExtrasContent();host.dataset.loaded='1';}
+   }
    if(e.target.classList?.contains('wire-compatible-more'))state.wireShowAll=e.target.open;
    const id=e.target.dataset?.wireLiquids;
    if(id&&e.target.open){
