@@ -26,6 +26,11 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   assert.equal(await page.locator('#expWireWizard').count(),1,'Single wizard');
   assert.equal(await page.locator('#wirePlatformCatalog').count(),0,'No duplicate early platform grid');
   for(const wire of ['k128','k129','k1clap','ssclap','nife30','nife52']){
+   // The six-wire gallery is intentionally collapsed after any selection.
+   // Reopen it using the visible summary to change material again.
+   const disclosure=page.locator('#pageWire .wire-gallery-disclosure');
+   if(await disclosure.count()&&await disclosure.getAttribute('open')===null)
+    await disclosure.locator('summary').click();
    await page.locator('#wireLibrary [data-wire-family="'+wire+'"]').click();
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.wire),wire);
    assert.ok(await page.locator('#expWireWraps option').count()>=1);
@@ -93,7 +98,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   await page.evaluate(()=>{const m=window.RTA_ATLAS_MODULES;m.selectAtom('dvarwcl');m.setConfig({wire:'k128',air:'triple06'});m.state.wirePlatformChosen=true;m.show('wire');});
   config=await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config));
   await page.evaluate(()=>{window.RTA_ATLAS_PREVIEW.selectLiquid(0);window.RTA_ATLAS_MODULES.show('wire');});
-  assert.equal(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config)),config);assert.equal(decodeURIComponent(await page.locator('#pageWire [data-duel-pick]').first().getAttribute('data-duel-pick')),config,'Current Wire configuration must be the actual Duel payload');assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'wire');await chartShot(page,page.locator('#pageWire .sensory-comparison').first(),'flow-wire-comparison-'+width+'.png');await shot(page,'smart-wire-picker-'+width+'.png');
+  assert.equal(await page.evaluate(()=>JSON.stringify(window.RTA_ATLAS_MODULES.state.config)),config);assert.equal(decodeURIComponent(await page.locator('#pageWire [data-duel-pick]').first().getAttribute('data-duel-pick')),config,'Current Wire configuration must be the actual Duel payload');assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'wire');const extras=page.locator('#pageWire .wire-extras-optional');if(await extras.count())await extras.locator('summary').click();await chartShot(page,page.locator('#pageWire .wire-extras-optional .sensory-comparison').first(),'flow-wire-comparison-'+width+'.png');await shot(page,'smart-wire-picker-'+width+'.png');
   await page.locator(nav+' [data-route="duel"]').click();await page.locator('[data-duel-confirm="left"]').click();await page.locator('[data-duel-confirm="right"]').click();
   const duel=await page.evaluate(()=>JSON.stringify([window.RTA_ATLAS_DUEL.state.left,window.RTA_ATLAS_DUEL.state.right,window.RTA_ATLAS_DUEL.state.picked]));await choose('duel',619);await page.locator('#duelObjective').selectOption('smooth');assert.equal(await page.evaluate(()=>JSON.stringify([window.RTA_ATLAS_DUEL.state.left,window.RTA_ATLAS_DUEL.state.right,window.RTA_ATLAS_DUEL.state.picked])),duel);assert.equal(await page.evaluate(()=>window.RTA_ATLAS_DUEL.compare().liquid===window.RTA_LIQUIDS[619]),true);await page.evaluate(()=>scrollTo(0,0));await shot(page,'smart-duel-picker-'+width+'.png');await chartShot(page,page.locator('#pageDuel .sensory-comparison'),'flow-duel-comparison-'+width+'.png');
   await page.locator(nav+' [data-route="market"]').click();await page.locator('[data-market-category="all"]').click();await page.locator('#marketSearch').fill('Tribeca Halo');assert.equal(await page.locator('.market-card').count(),1);
