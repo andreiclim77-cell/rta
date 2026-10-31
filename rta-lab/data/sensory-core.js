@@ -234,6 +234,31 @@ function wireSetup(atom,wire,wraps){
  if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // GTR TC preset retained for both historical /6 and current /7, not a universal recommendation.
  return {power:w.power,temp:w.temp||230};
 }
+// Chronological, contextual first-person evidence. These A/B reports are NOT
+// generic numerical patches: the tested liquid and Aerokon 1 mm are not
+// encoded by the coarse Atlas air/liquid selectors. Keep historic OBS intact.
+const PERSONAL_AB_CASES=Object.freeze([
+ Object.freeze({
+  id:"klp-k1-20261031-80-20",date:"2026-10-31",atom:"klp",regime:"watt",powerW:13,
+  airflow:"Aerokon 1 mm",liquid:"80% trabuc / 20% cireșe",liquidKind:"reper personal V10, nu produs comercial Atlas 700",
+  a:{wire:"k129",wraps:6},b:{wire:"k128",wraps:5},overallWinner:"a",
+  differences:Object.freeze([
+   {axis:"th_direct",winner:"a",approxPercent:10},
+   {axis:"offense_mouth",winner:"b",approxPercent:10},
+   {axis:"first_vapor_response",winner:"b",approxPercent:10},
+   {axis:"vapor_density",winner:"b",approxPercent:10},
+   {axis:"cigar_intensity",winner:"a",approxPercent:10},
+   {axis:"cigar_cherry_separation",winner:"a",approxPercent:null},
+   {axis:"palate_layering",winner:"a",approxPercent:null},
+   {axis:"overall_preference",winner:"a",approxPercent:null}
+  ]),
+  status:"A/B practic personal; diferențe perceptuale aproximative, nu măsurători",
+  unconfirmed:["diametrul real al coilului (Ø2,5 mm doar preset)","varianta KLP SS/DLC",
+   "înălțimea și poziția coilului","bumbac","durata pufului","ordinea, repetările și orbirea"],
+  historicalCounterpoint:"12–13.10.2026: KLP K1 28/5 preferat în alt context insuficient documentat",
+  source:"rta-lab/RTA_KLP_AB_20261031.md"
+ })
+]);
 const OBS=[
  {atom:"klp",wire:"k128",wraps:5,title:"KLP 28/5: bogăție + ofensivă",
   text:"Palat îmbrățișat de un spectru simultan, TH și ofensivă; preferat personal față de 28/6 și 29/6.",
@@ -646,6 +671,6 @@ function bestForLiquid(liquid,objective="complete",top=16){
 }
 window.RTA_SENSORY_CORE={version:V,axioms:AXIOMS,dimensions:DIMENSIONS,platforms:PLATFORMS,
  nife30Watt:NIFE30_WATT,allowedRegimes,modeFor,
- wires:WIRES,observations:OBS,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalSetups,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,
+ wires:WIRES,observations:OBS,personalABCases:PERSONAL_AB_CASES,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalSetups,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,
  physical,analyze,priority,rankBuilds,matchLiquids,bestForLiquid,liquidTags,permitted};
 })();

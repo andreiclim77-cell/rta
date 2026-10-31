@@ -75,6 +75,34 @@ for(const atom of atoms){
 }
 const k5=api.analyze({atom:"klp",wire:"k128",wraps:5},sample);
 const k6=api.analyze({atom:"klp",wire:"k128",wraps:6},sample);
+// A new context-labeled observation must coexist with the historical 28/5
+// sensory patch; no invented global score changes or commercial catalog row.
+const klpAB=api.personalABCases.find(x=>x.id==="klp-k1-20261031-80-20");
+assert.ok(klpAB,"Keep the user's 31.10 KLP A/B available to the Lab");
+assert.equal(klpAB.liquid,"80% trabuc / 20% cireșe");
+assert.equal(klpAB.liquidKind,"reper personal V10, nu produs comercial Atlas 700");
+assert.equal(klpAB.airflow,"Aerokon 1 mm");
+assert.equal(klpAB.regime,"watt");
+assert.equal(klpAB.powerW,13);
+assert.equal(klpAB.a.wire,"k129");
+assert.equal(klpAB.a.wraps,6);
+assert.equal(klpAB.b.wire,"k128");
+assert.equal(klpAB.b.wraps,5);
+assert.equal(klpAB.overallWinner,"a");
+const abExpected=[
+ ["th_direct","a",10],["offense_mouth","b",10],
+ ["first_vapor_response","b",10],["vapor_density","b",10],
+ ["cigar_intensity","a",10],["cigar_cherry_separation","a",null],
+ ["palate_layering","a",null],["overall_preference","a",null]
+];
+assert.deepEqual(JSON.parse(JSON.stringify(klpAB.differences.map(x=>[x.axis,x.winner,x.approxPercent]))),abExpected);
+assert.ok(klpAB.unconfirmed.some(x=>x.includes("Ø2,5")));
+assert.ok(api.observations.some(x=>x.atom==="klp"&&x.wire==="k128"&&x.wraps===5&&x.patch),
+ "Preserve the distinct historical 12–13.10 KLP 28/5 result");
+assert.equal(api.observations.some(x=>x.evidence?.includes("31.10.2026")&&x.atom==="klp"&&x.wire==="k129"&&x.wraps===6),false,
+ "Do not inject context-dependent 1 mm A/B into coarse-airflow scoring");
+assert.equal(catalog.filter(x=>x.name==="80% trabuc / 20% cireșe"&&x.brand==="Personal"&&x.line==="Benchmark personal").length,1,
+ "The pre-existing personal V10 benchmark remains, without adding a new commercial product");
 assert.ok(k5.signals.th>k6.signals.th && k5.signals.offense>k6.signals.offense);
 assert.ok(k5.signals.palate>k6.signals.palate);
 assert.ok(k5.pleasure && k5.anchors.length>0);
