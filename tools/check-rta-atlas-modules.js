@@ -204,6 +204,10 @@ m.state.wireJourney={wrapsConfirmed:false,objective:null,family:null,liquidIndex
 const start=m.wirePlatformMatches();
 assert.equal(start.phase,0);assert.equal(start.primary.length,15);assert.equal(start.other.length,0);
 assert.equal((m.wirePalette().match(/data-wire-family="/g)||[]).length,6,'Show six material cards before selection');
+assert.ok(m.wirePalette().includes('KLP · A/B practic 31.10: 29 GA / 6 preferat'),
+ 'Expose the user\'s contextual KLP A/B without changing six-wire selection');
+assert.ok(m.wirePalette().includes('prim vapor ≈+10%')&&m.wirePalette().includes('28/5 era preferat'),
+ 'Keep faster 28/5 response and the different historical winner visible');
 assert.equal((m.wirePalette().match(/<svg/g)||[]).length,6,'Show all six coils, including Dicodes');
 for(const wire of Object.keys(c.wires)){
  const saved=m.wireSavedBuilds(wire);
