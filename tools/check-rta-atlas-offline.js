@@ -54,7 +54,15 @@ async function main(){
   await page.screenshot({path:path.join(folder,prefix+'offline-atomizer-390.png')});
   await page.locator('[data-edit-wire]').click();await page.evaluate(()=>{const m=window.RTA_ATLAS_MODULES;m.setConfig({wire:'nife52'});m.state.wirePlatformChosen=true;m.show('wire');});
   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.config.power),13);
-  await page.locator('#pageWire [data-duel-pick]').first().click();await page.locator('#pageWire [data-duel-pick]').nth(1).click();await page.locator('[data-duel-results]').click();await page.waitForTimeout(500);
+  // The unified Wire journey intentionally keeps optional alternate-build
+  // comparisons collapsed until requested; open them to pick a second build.
+  assert.equal(await page.locator('.wire-extras-optional').getAttribute('open'),null,'Extra Wire analyses remain opt-in offline');
+  await page.locator('#pageWire .wire-extras-optional > summary').click();
+  assert.equal(await page.locator('#pageWire .wire-extras-optional').getAttribute('open'),'','Optional build comparisons must expand offline');
+  await page.locator('#pageWire [data-duel-pick]').first().click();
+  await page.locator('#pageWire [data-duel-pick]').nth(1).click();
+  assert.equal(await page.evaluate(()=>window.RTA_ATLAS_PREVIEW.state.route),'duel','Two explicitly selected builds must still open Duel offline');
+  await page.locator('[data-duel-results]').click();await page.waitForTimeout(500);
   await page.screenshot({path:path.join(folder,prefix+'offline-duel-390.png')});
   if(targetRoute==='atlas'){
    await context.setOffline(false);await page.goto(origin+'/rta-lab/atlas-preview/');
