@@ -18,6 +18,8 @@ async function main(){
    assert.equal(await page.locator('#expWireWizard').count(),1,'Exactly one guided flow');
    assert.equal(await page.locator('#wirePlatformCatalog').count(),0,'No premature atomizer list');
    assert.equal(await page.locator('#wireJourneyWraps').count(),0,'No duplicate wizard');
+   assert.equal(await page.locator('#pageWire .wire-selected-experience').count(),0,
+     'Do not build hidden 700-liquid analytics before an atomizer is chosen');
    await noOverflow('Wire start');
    await page.locator('[data-wire-family="k128"]').click();
    await page.locator('#expWireWraps').selectOption('5');
@@ -59,6 +61,8 @@ async function main(){
    await page.screenshot({path:path.join(shots,'wire-'+width+'.png'),fullPage:true});
    await page.locator('#expWireFinalAtoms > .exp-top-atoms button').first().click();
    assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen),true,'Final atomizer opens exact configuration');
+   assert.equal(await page.locator('#pageWire .wire-selected-experience').count(),1,
+     'Build detailed analytics only after the explicit final atomizer choice');
    assert.equal(await page.locator('.wire-extras-optional').count(),1,'Optional side analyses are grouped once, not repeated as mandatory steps');
    assert.equal(await page.locator('.wire-extras-optional').getAttribute('open'),null,'Optional side analyses remain closed by default');
    assert.equal(await page.locator('#pageWire .context-settings').isVisible(),true,
