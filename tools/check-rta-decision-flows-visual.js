@@ -72,6 +72,10 @@ async function main(){
      'On explicit open, calculate and show the original top-liquids analysis');
    assert.equal(await page.locator('.wire-extras-optional [data-wire-extras-body]').getAttribute('data-loaded'),'1',
      'Build expensive extras only once per actual detail view');
+   await page.locator('.wire-extras-optional > summary').click();
+   await page.locator('.wire-extras-optional > summary').click();
+   assert.equal(await page.locator('.wire-extras-optional #wireTopLiquids').count(),1,
+     'Closing and reopening optional analyses must reuse content without duplicates');
    assert.equal(await page.locator('#pageWire .context-settings').isVisible(),true,
      'After selecting the final atomizer, the saved mood/moment context becomes available');
       // A second fresh flow must compare the same NiFe30 material at two
