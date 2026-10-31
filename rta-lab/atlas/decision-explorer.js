@@ -335,17 +335,22 @@ function detailComparisons(){
   }
  }
 }
-function react(){
+function react(withLiquidDetails=true){
  mountWizards();
  liquidCategories();
  refreshLiquidCategory();
- detailComparisons();
+ // The LIQUID MATCH 14-axis comparison is expensive. Never recalculate it
+ // just because a Wire Lab selector or the Atomizer Atlas rerendered.
+ if(withLiquidDetails)detailComparisons();
 }
 function init(){
  const hostA=byId('pageAtomizer'),hostW=byId('pageWire'),cards=byId('resultCards'),cmp=byId('liquidComparison');
  if(!hostA||!hostW||!cards||!cmp)return;
  react();
- const observer=new MutationObserver(()=>react());
+ const observer=new MutationObserver(records=>{
+  const liquidChanged=records.some(record=>record.target===cards||record.target===cmp);
+  react(liquidChanged);
+ });
  observer.observe(hostA,{childList:true});
  observer.observe(hostW,{childList:true});
  observer.observe(cards,{childList:true});
