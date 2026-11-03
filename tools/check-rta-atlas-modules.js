@@ -50,11 +50,11 @@ assert.equal(dvarwFlLead.config.wraps,5);
 assert.equal(dvarwFlLead.source,'model','Do not mislabel dedicated FL Clapton specialist as user-controlled A/B');
 const expectedPersonal={
  "415":[['nife30',7],['nife52',6],['k128',6]],
- gtr:[['nife30',7],['nife52',6],['k128',5]],
- klp:[['nife30',7],['nife52',6],['k128',5]],
+ gtr:[['nife30',7],['nife52',6],['k129',6]],
+ klp:[['nife30',7],['nife52',6],['k129',6]],
  kprime:[['nife30',7],['nife52',6],['k129',5]],
- kx:[['nife30',7],['nife52',6],['k128',5]],
- gtone:[['k129',6],['k128',5]],muted:[['k128',6]],
+ kx:[['nife30',7],['nife52',6],['k129',6]],
+ gtone:[['k129',5]],muted:[['k128',6]],
  dvarwcl:[['k128',6]],dvarwfl:[['k128',6]],
  asylum:[['k128',6]],kv3:[['k128',6],['k129',6]]
 };
