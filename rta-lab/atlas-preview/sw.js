@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-preview-7524a8a35b6ba015",PREFIX="rta-atlas-preview-";
+const CACHE="rta-atlas-preview-cfc336a2dea5486a",PREFIX="rta-atlas-preview-";
 const ASSETS=[
   "../../assets/facebook-profile-ghid-rta-smokee.jpg",
   "../../assets/fonts/manrope-latin-ext.woff2",

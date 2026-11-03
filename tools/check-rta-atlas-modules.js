@@ -218,6 +218,7 @@ for(const wire of Object.keys(c.wires)){
    'No card should show a forbidden build for '+wire);
 }
 assert.equal(m.wireSavedBuilds('nife30')[0].config.wraps,7);
+assert.ok(m.wireSavedBuilds('nife30').some(x=>x.config.atom==='muted'&&x.config.wraps===6),'Muted+ six-spaced exception must remain listed');
 assert.equal(m.wireSavedBuilds('nife52')[0].config.wraps,6);
 m.state.wireChosen=true;m.state.atom='gtr';m.state.config=c.defaultConfig('gtr');
 const countStages=[
