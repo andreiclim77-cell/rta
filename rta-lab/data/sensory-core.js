@@ -39,7 +39,7 @@ const PLATFORMS={
  AIR("single12","Pin 1×1,2 mm (standard)","single",[1.2],1.25),
  AIR("single10","Pin 1×1,0 mm (opțional)","single",[1.0],1.20,{optional:true}),
  AIR("single15","Pin 1×1,5 mm (opțional)","single",[1.5],1.5,{optional:true})],
- traits:{spectrum:4.15,simultaneity:3.9,focus:4.9,palate:4.0,offense:4.65,th:4.6,harmony:4.1},note:"Jet vertical unic; K1 29/6 preferat în A/B direct."},
+ traits:{spectrum:4.15,simultaneity:3.9,focus:4.9,palate:4.0,offense:4.65,th:4.6,harmony:4.1},note:"Jet vertical unic; K1 29/5 spaced «perfect» la 03.11.2026; 29/6 rămâne A/B istoric."},
  dvarwcl:{pattern:"single",volume:"mediu",air:[
  AIR("triple06","Insert 3×0,6 mm (validat)","multipoint",[.6,.6,.6],1.95),
  AIR("single12","Insert 1×1,2 mm (alternativă reușită cu K1 28/5)","single",[1.2],1.25),
@@ -116,12 +116,13 @@ const NIFE30_FAMILY=Object.freeze({
    FIRST choices on four platforms; K1 remains the second-family choice.
    No cross-alloy controlled A/B is inferred on every platform. */
 const PERSONAL_PREFS=Object.freeze({
- date:"2026-10-29",
+ date:"2026-11-03",
  gtrTC:{dicodes:{wire:"nife30",wraps:7},zivipf:{wire:"nife52",wraps:6},legacyNiFe30:{wire:"nife30",wraps:6}},
  cool415:{first:[{wire:"nife30",wraps:7},{wire:"nife52",wraps:6}],second:{wire:"k128",wraps:6},historical:[{wire:"k128",wraps:5},{wire:"k1clap",wraps:5}]},
  tcEqualAtoms:["klp","gtr","kx","kprime"],
  tcEqualWires:["nife30","nife52"],
- gtone:{first:{wire:"k129",wraps:6},second:{wire:"k128",wraps:5}},
+ gtone:{first:{wire:"k129",wraps:5,spacing:"spaced"},historical:[{wire:"k129",wraps:6},{wire:"k128",wraps:5}]},
+ currentK1:{gtone:[5],gtr:[5,6],klp:[6],kx:[6],kprime:[5,6]},
  muted:{first:{wire:"k128",wraps:6},note:"diametrul, airflow-ul și puterea exacte nu au fost precizate de utilizator"},
  dvarwClSingle12:{wire:"k128",wraps:5,air:"single12",status:"alternativă personală reușită, nu A/B controlat față de 3×0,6/6"},
  dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
@@ -158,6 +159,17 @@ function personalPreference(config){
    return {tier:2,label:"415 Cool · K1 28 GA / 6 spire · a doua alegere",
     note:"Preferință personală nouă; 28/5 istoric și K1 Clapton/5 specialist rămân disponibile."};
  }
+ // 03.11.2026 — preferred K1 alternative by atom, no structured spaced/contact selector yet.
+ if(config.wire==="k129"&&PERSONAL_PREFS.currentK1[config.atom]?.includes(config.wraps)){
+  const first=config.atom==="gtone";
+  const geometry=first||config.atom==="gtr"?"spaced":"contact sau spaced";
+  return {tier:first?1:2,label:(first?"GT One · prima alegere":"Alternativă K1 · după NiFe")+" · 29 GA / "+config.wraps+" spire · "+geometry,
+   note:first?"Montaj K1 29/5 spaced declarat perfect la 03.11.2026; 29/6 rămâne istoric.":"Preferință declarată la 03.11.2026; fără presupunerea că toate variantele au fost testate A/B."};
+ }
+ if(config.atom==="gtone"&&config.wire==="k129"&&config.wraps===6)
+  return {tier:2,label:"GT One · 29/6 · istoric",note:"A/B anterior; alegerea curentă 29/5 spaced."};
+ if(config.atom==="gtone"&&config.wire==="k128"&&config.wraps===5)
+  return {tier:3,label:"GT One · 28/5 · istoric",note:"A/B anterior; nu anulează 29/5 spaced."};
  // New GTR-specific personal finding, 15.10.2026: alloy-specific wraps.
  // NiFe30/6 remains usable; NiFe30/7 and NiFe52/6 share tier #1.
  if(config.atom==="gtr"){
@@ -174,15 +186,11 @@ function personalPreference(config){
    return {tier:1,label:"Prima preferință personală · NiFe30/7 = NiFe52/6",note:"Preferință actualizată 29.10.2026: Dicodes TCR320 cu 7 spire, Zivipf TCR310 cu 6; egalitate a preferinței, nu aliaj identic și nu A/B izolat pe toate platformele."};
   if(config.wire==="nife30"&&config.wraps===6)
    return {tier:2,label:"NiFe30/6 · alternativă istorică",note:"Funcțională și disponibilă pentru comparație, dar presetul personal NiFe30 este acum 7 spire."};
-  if(["k128","k129"].includes(config.wire))
-   return {tier:2,label:"A doua preferință personală · K1",note:"Preferința K1 este sub familia NiFe TC, dar rămâne validă ca alternativă."};
+  // K1 29 GA în configurațiile declarate de utilizator este tratat explicit mai sus; nu acorda tier 2 pentru orice K1.
  }
  if(config.wire==="nife30"&&config.wraps===7)
   return {tier:3,label:"Preferință generală de geometrie · NiFe30/7",note:"Alegere globală nouă pentru NiFe30, fără a susține că toate atomizoarele au fost testate ori că NiFe30 depășește materialul preferat al fiecărei platforme."};
- if(config.atom==="gtone"){
-  if(config.wire==="k129"&&config.wraps===6)return {tier:1,label:"Prima preferință · K1 29 GA / 6"};
-  if(config.wire==="k128"&&config.wraps===5)return {tier:2,label:"A doua preferință · K1 28 GA / 5"};
- }
+ // GT One current and historical preferences are handled above.
  if(config.atom==="muted"&&config.wire==="k128"&&config.wraps===6)
   return {tier:1,label:"Prima preferință · Muted+ K1 28 GA / 6",note:"Airflow, diametru și putere încă neprecizate; Ø2,5 este doar presetul modelului."};
  if(config.atom==="dvarwcl"&&config.air==="single12"&&config.wire==="k128"&&config.wraps===5)
@@ -211,7 +219,7 @@ function modeFor(config){return config?.wire==="nife30"&&config?.regime==="watt"
 const DEFAULTS={
  "415":{wire:"nife30",wraps:7,air:"tasty"},
  kprime:{wire:"nife52",wraps:6,air:"1.2"},
- gtone:{wire:"k129",wraps:6,air:"single12"},
+ gtone:{wire:"k129",wraps:5,air:"single12"},
  dvarwcl:{wire:"k128",wraps:6,air:"triple06"},
  muted:{wire:"k128",wraps:6,air:"triple"},
  gtr:{wire:"nife30",wraps:7,air:"both"},
@@ -302,7 +310,10 @@ const OBS=[
   text:"Foarte bun aromatic, dar nu oferă aceeași senzație specială pe palat precum NiFe30 TC.",
   patch:{spectrum:4.73,separation:4.72,palate:4.38},
   affinity:"foarte bun · magie TC absentă",evidence:"comparație personală 13.10.2026"},
- {atom:"gtone",wire:"k129",wraps:6,title:"GT One K1 29/6 preferat",
+ {atom:"gtone",wire:"k129",wraps:5,partial:true,title:"GT One · K1 29/5 spaced perfect (03.11)",
+  text:"K1 29 GA / 5 spire spaced montat pe GT One și descris drept perfect; fără procent ori efect cauzal izolat.",
+  affinity:"prima alegere · 29/5 spaced",evidence:"declarație 03.11.2026"},
+ {atom:"gtone",wire:"k129",wraps:6,title:"GT One K1 29/6 · istoric",
   text:"29/6 preferat personal prin A/B direct față de 28/5.",
   patch:{focus:4.9,offense:4.7},
   affinity:"special · preferat pe GT One",evidence:"A/B direct 12.10.2026"},
