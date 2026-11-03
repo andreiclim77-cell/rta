@@ -135,9 +135,10 @@ assert.equal(api.defaultConfig("muted").wire,"k128");
 assert.equal(api.defaultConfig("muted").wraps,6);
 assert.equal(api.personalPreference({atom:"muted",wire:"k128",wraps:6}).tier,1);
 assert.equal(api.defaultConfig("gtone").wire,"k129");
-assert.equal(api.defaultConfig("gtone").wraps,6);
-assert.equal(api.personalPreference({atom:"gtone",wire:"k129",wraps:6}).tier,1);
-assert.equal(api.personalPreference({atom:"gtone",wire:"k128",wraps:5}).tier,2);
+assert.equal(api.defaultConfig("gtone").wraps,5);
+assert.equal(api.personalPreference({atom:"gtone",wire:"k129",wraps:5}).tier,1);
+assert.equal(api.personalPreference({atom:"gtone",wire:"k129",wraps:6}).tier,2);
+assert.equal(api.personalPreference({atom:"gtone",wire:"k128",wraps:5}).tier,3);
 assert.equal(api.defaultConfig("dvarwcl").air,"triple06");
 const fDefault=api.defaultConfig("dvarwfl");
 assert.equal(fDefault.air,"triple06");
@@ -165,7 +166,7 @@ for(const atom of ["klp","gtr","kx","kprime"]){
  assert.equal(a.tier,1,atom);
  assert.equal(b.tier,1,atom);
  assert.equal(a.label,b.label,"Personal first-choice tie across different NiFe alloys");
- assert.equal(api.personalPreference({atom,wire:"k128",wraps:5}).tier,2);
+ assert.equal(api.personalPreference({atom,wire:"k129",wraps:atom==="kprime"?5:6}).tier,2);
  const d={config:{atom,wire:"nife30",wraps:dicodesWraps},dimensions:{architecture:4,palate:4,harmony:4,energy:4},anchors:[],personalPreference:a};
  const e={...d,config:{atom,wire:"nife52",wraps:6},personalPreference:b};
  assert.equal(api.priority(d,"complete"),api.priority(e,"complete"),
