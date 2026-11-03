@@ -1,5 +1,7 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+> **03.11.2026 — CACHE V10 / DEPENDENȚE SINCRONIZATE.** Scripturile încărcate în V10 (engine, personal-5wrap, sensory-core, atoms-1/2) folosesc aceleași versiuni query ca precache-ul SW. Testul mobile-clarity verifică versiunea nouă a motorului. Nu interpreta erorile din commituri intermediare ca eșecuri finale; gating pe SHA actual exact.
+
 > **03.11.2026 — QA/RELEASE CONSECVENT CU BUILDURILE CURENTE.** În V10, GT One K1 29 GA implicit **5 spaced**, KLP și KX K1 29 GA **6 spire**; GTR 29/6 default cu 29/5 spaced alternativ, Prime 29/5 default cu 29/6 alternativ. NiFe TC rămâne primul pe GTR/KLP/KX/Prime. A/B-urile istorice (GT One 29/6 vs 28/5, KLP 28/5 vs 29/6) sunt păstrate separat de noile priorități. Cache V10 invalidat explicit. Arhiva ZIP include RTA_PERSONAL_BUILDS_20261103.md. Teste CI și Pages încă de verificat.
 
 > **03.11.2026 — PREFERINTE PERSONALE PRIORITARE pentru 5 atomizoare.** GT One: **K1 29 GA / 5 spaced, montat, «perfect»** (29/6 doar istoric). GTR: **NiFe30 Dicodes /7 sau NiFe52 Zivipf /6** prima familie, apoi **K1 29 GA / 5 sau 6 spaced**. KLP 2021: aceleasi NiFe TC, apoi **K1 29 GA / 6 spaced sau contact**. KX 24: ca KLP. K Prime: aceleasi NiFe TC, apoi **K1 29 GA / 5 sau 6 contact ori spaced**. Nu transforma aceste preferinte in A/B universal si nu modifica alte platforme. Vezi `rta-lab/RTA_PERSONAL_BUILDS_20261103.md`.
