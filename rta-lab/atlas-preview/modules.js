@@ -149,7 +149,7 @@ const PERSONAL_LEADS=Object.freeze({
  klp:[["nife30",7],["nife52",6],["k129",6]],
  kprime:[["nife30",7],["nife52",6],["k129",5]],
  kx:[["nife30",7],["nife52",6],["k129",6]],
- gtone:[["k129",5]],muted:[["k128",6]],
+ gtone:[["k129",5]],muted:[["nife30",6],["nife52",6],["k128",6]],
  dvarwcl:[["k128",6,"triple06"]],
  dvarwfl:[["k128",6,"triple06"]],
  asylum:[["k128",6,undefined,"flat"]],kv3:[["k128",6],["k129",6]]
@@ -212,9 +212,9 @@ function materialPaths(){
 /* Canonical personal wire references are descriptive preferences, NOT a claim
  * that the same coil is installed in all physical atomizer units. */
 const WIRE_REFERENCE=Object.freeze({
- nife30:[["gtr",7,"GTR · prima alegere TC"],["415",7,"415 Cool · prima alegere"],["klp",7,"KLP · coerență TC"],["kx",7,"Kayfun X"],["kprime",7,"Kayfun Prime"]],
- nife52:[["gtr",6,"GTR · prima alegere TC"],["415",6,"415 Cool · prima alegere"],["klp",6,"KLP"],["kprime",6,"Kayfun Prime"],["kx",6,"Kayfun X"]],
- k128:[["415",6,"415 Cool · a doua alegere"],["dvarwcl",6,"Dvarw CL · 3×0,6"],["dvarwfl",6,"Dvarw FL · 3×0,6"],["muted",6,"Muted+"],["kv3",6,"Kayfun Mini V3"],["klp",5,"KLP · 28/5"]],
+ nife30:[["muted",6,"Muted+ · 6 spaced · Arcana DNA60C"],["gtr",7,"GTR · prima alegere TC"],["415",7,"415 Cool · prima alegere"],["klp",7,"KLP · coerență TC"],["kx",7,"Kayfun X"],["kprime",7,"Kayfun Prime"]],
+ nife52:[["muted",6,"Muted+ · 6 spaced · TC prioritar"],["gtr",6,"GTR · prima alegere TC"],["415",6,"415 Cool · prima alegere"],["klp",6,"KLP"],["kprime",6,"Kayfun Prime"],["kx",6,"Kayfun X"]],
+ k128:[["415",6,"415 Cool · a doua alegere"],["dvarwcl",6,"Dvarw CL · 3×0,6"],["dvarwfl",6,"Dvarw FL · 3×0,6"],["muted",6,"Muted+ · K1 28/6 CONTACT după NiFe"],["kv3",6,"Kayfun Mini V3"],["klp",5,"KLP · 28/5"]],
  k129:[["gtone",5,"GT One · 29/5 spaced · perfect"],["gtr",5,"GTR · 29/5 spaced"],["gtr",6,"GTR · 29/6 spaced"],["klp",6,"KLP · 29/6 contact/spaced"],["kx",6,"KX · 29/6 contact/spaced"],["kprime",5,"K Prime · 29/5 contact/spaced"],["kprime",6,"K Prime · 29/6 contact/spaced"],["kv3",6,"Kayfun Mini V3"],["gtone",6,"GT One · 29/6 istoric"]],
  k1clap:[["415",5,"415 Cool · Clapton specialist"]],
  ssclap:[["dvarwfl",5,"Dvarw FL · specialist tehnic"]]

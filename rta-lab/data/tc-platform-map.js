@@ -9,7 +9,7 @@
   window.RTA_LAB_TC_PLATFORM_MAP = {
     date: "2026-10-29",
     principle: "Pe KLP, GTR, KX și K Prime, utilizatorul pune la egalitate ca PREFERINȚĂ SENZORIALĂ Dicodes NiFe30 TCR320 și Zivipf NiFe52 TCR310. Nu sunt aliaje identice, iar setările TC se aleg separat. Baseline personal actual: Dicodes NiFe30/7 pe orice atomizor compatibil, Zivipf NiFe52/6; NiFe30/6 rămâne istoric selectabil. Pe 415 urmează K1 28 GA / 6 spire.",
-    personalEqualPreference: {atoms:["klp","gtr","kx","kprime","415"],first:["Dicodes RESISTHERM NiFe30","Zivipf NiFe52"],second:"Kanthal A1 (K1)",evidence:"declarație directă 14.10.2026; nu confirmă A/B cross-alloy pe fiecare atomizor"},
+    personalEqualPreference: {atoms:["klp","gtr","kx","kprime","415","muted"],first:["Dicodes RESISTHERM NiFe30","Zivipf NiFe52"],second:"Kanthal A1 (K1)",evidence:"declarație directă 14.10.2026; nu confirmă A/B cross-alloy pe fiecare atomizor"},
     materials: {
       dicodesResisthermNiFe30: {
         wire: "Dicodes RESISTHERM NiFe30",
@@ -61,6 +61,7 @@
         wraps: 6,
         status: "egalitate personală TC: Zivipf NiFe52/6 = Dicodes NiFe30/7 ca preferință actuală; benchmarkul vechi NiFe30/6 rămâne istoric"
       },
+      muted: {wire:"Dicodes RESISTHERM NiFe30",tcr:320,resistanceOhmPerM:5.5,diam:"Ø2,5 mm (preset)",wraps:6,spacing:"spaced",zivipfAlternative:{wire:"Zivipf NiFe52",tcr:310,wraps:6,spacing:"spaced"},k128Alternative:{wire:"K1 28 GA",wraps:6,spacing:"contact"},airflow:"Triple Air 1,2 mm inferior, laterale la minim",note:"NiFe30/6 spaced efectiv reușit pe Arcana DNA60C la 210°C; NiFe52/6 spaced declarat."},
       klp: {
         wire: "Dicodes RESISTHERM NiFe30",
         tcr: 320,
@@ -85,6 +86,7 @@
     const output = baseBuildOutput(atom, wire, liquid);
     if (!atom || !wire || wire.id !== "nife30" || !output) return output;
 
+    if (atom.id === "muted") {output.wraps="6";output.status="Muted+ · NiFe30/6 SPACED sau NiFe52/6 SPACED prima alegere";output.noteClass="valid";output.note="După NiFe TC urmează K1 28 GA / 6 CONTACT; Triple Air 1,2 mm jos, laterale minime. NiFe30/6 testat în TC Arcana DNA60C; 210°C observat, W neprecizat.";return output;}
     if (atom.id === "415") {
       output.wraps="7";
       output.status="415 Cool · prima preferință · NiFe30/7 = NiFe52/6";

@@ -123,7 +123,7 @@ const PERSONAL_PREFS=Object.freeze({
  tcEqualWires:["nife30","nife52"],
  gtone:{first:{wire:"k129",wraps:5,spacing:"spaced"},historical:[{wire:"k129",wraps:6},{wire:"k128",wraps:5}]},
  currentK1:{gtone:[5],gtr:[5,6],klp:[6],kx:[6],kprime:[5,6]},
- muted:{first:{wire:"k128",wraps:6},note:"diametrul, airflow-ul și puterea exacte nu au fost precizate de utilizator"},
+ muted:{first:[{wire:"nife30",wraps:6,spacing:"spaced"},{wire:"nife52",wraps:6,spacing:"spaced"}],second:{wire:"k128",wraps:6,spacing:"contact"},air:"triple",bottomMm:1.2,side:"minimum",mod:"Arcana DNA60C",temperatureReportedC:210,note:"NiFe30/6 spaced testat; NiFe52/6 spaced alegere declarată; K1 28/6 contact următor. Excepție de la NiFe30/7 global. W neprecizat."},
  dvarwClSingle12:{wire:"k128",wraps:5,air:"single12",status:"alternativă personală reușită, nu A/B controlat față de 3×0,6/6"},
  dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
  evidence:"preferințe personale declarate direct 14.10.2026; fără identitate materială sau A/B universal"
@@ -170,6 +170,13 @@ function personalPreference(config){
   return {tier:2,label:"GT One · 29/6 · istoric",note:"A/B anterior; alegerea curentă 29/5 spaced."};
  if(config.atom==="gtone"&&config.wire==="k128"&&config.wraps===5)
   return {tier:3,label:"GT One · 28/5 · istoric",note:"A/B anterior; nu anulează 29/5 spaced."};
+ // Muted+ 03.11.2026: NiFe30/6 spaced is an explicit exception to global NiFe30/7.
+ if(config.atom==="muted"){
+  if((config.wire==="nife30"||config.wire==="nife52")&&config.wraps===6)
+   return {tier:1,label:"Muted+ · NiFe30/6 sau NiFe52/6 spaced · prima alegere TC",note:"NiFe30/6 testat pe Arcana DNA60C Triple Air; NiFe52/6 este preferință declarată. TC distinct."};
+  if(config.wire==="k128"&&config.wraps===6)
+   return {tier:2,label:"Muted+ · K1 28 GA / 6 contact · după NiFe TC",note:"Alternativa secundară declarată; fără A/B nou."};
+ }
  // New GTR-specific personal finding, 15.10.2026: alloy-specific wraps.
  // NiFe30/6 remains usable; NiFe30/7 and NiFe52/6 share tier #1.
  if(config.atom==="gtr"){
@@ -191,8 +198,7 @@ function personalPreference(config){
  if(config.wire==="nife30"&&config.wraps===7)
   return {tier:3,label:"Preferință generală de geometrie · NiFe30/7",note:"Alegere globală nouă pentru NiFe30, fără a susține că toate atomizoarele au fost testate ori că NiFe30 depășește materialul preferat al fiecărei platforme."};
  // GT One current and historical preferences are handled above.
- if(config.atom==="muted"&&config.wire==="k128"&&config.wraps===6)
-  return {tier:1,label:"Prima preferință · Muted+ K1 28 GA / 6",note:"Airflow, diametru și putere încă neprecizate; Ø2,5 este doar presetul modelului."};
+ // Muted+ new preference is applied before generic alloy fallback.
  if(config.atom==="dvarwcl"&&config.air==="single12"&&config.wire==="k128"&&config.wraps===5)
   return {tier:2,label:"Alternativă reușită · CL 1×1,2 + K1 28 GA / 5",note:"Utilizatorul confirmă că merge bine; preferința generală 3×0,6 nu invalidează acest build. Se modifică simultan insertul și numărul de spire."};
  if(PERSONAL_PREFS.dvarw.atoms.includes(config.atom)){
@@ -221,7 +227,7 @@ const DEFAULTS={
  kprime:{wire:"nife52",wraps:6,air:"1.2"},
  gtone:{wire:"k129",wraps:5,air:"single12"},
  dvarwcl:{wire:"k128",wraps:6,air:"triple06"},
- muted:{wire:"k128",wraps:6,air:"triple"},
+ muted:{wire:"nife30",wraps:6,air:"triple"},
  gtr:{wire:"nife30",wraps:7,air:"both"},
  dvarwfl:{wire:"k128",wraps:6,air:"triple06"},
  diplomat:{wire:"k129",wraps:5,air:"pin18"},
@@ -239,7 +245,8 @@ function wireSetup(atom,wire,wraps){
  // Historic KLP DNA 220°C/16 W report belongs ONLY to the six-wrap coil.
  // NiFe30/7 on KLP has no observed temperature/wattage; use generic orientation.
  if(atom==="klp"&&wire==="nife30"&&wraps===6)return {power:16,temp:220};
- if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // GTR TC preset retained for both historical /6 and current /7, not a universal recommendation.
+ if(atom==="muted"&&wire==="nife30"&&wraps===6)return {power:13,temp:210}; // 13W generic UI preset only; 210°C personally reported.
+  if(atom==="gtr"&&wire==="nife30")return {power:16,temp:230}; // GTR TC preset retained for both historical /6 and current /7, not a universal recommendation.
  return {power:w.power,temp:w.temp||230};
 }
 // Chronological, contextual first-person evidence. These A/B reports are NOT
@@ -374,7 +381,7 @@ function variants(id){
  if(!PLATFORMS[id])return [];
  const opts=[];
  for(const w of Object.keys(WIRES)){
-  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):(w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
+  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):(w==="nife30")?(id==="muted"?[6,7]:[7,6]):[WIRES[w].type==="tc"?6:5])){
    if(permitted(id,w,wraps))opts.push({wire:w,wraps});
   }
  }
@@ -395,7 +402,7 @@ function configuration(id,changes={}) {
  const value={...base,...changes,atom:id};
  if(changes.wire&&changes.wire!==base.wire&&!Object.prototype.hasOwnProperty.call(changes,"wraps")){
   // A material change must not inherit another alloy's number of wraps.
-  if(changes.wire==="nife30")value.wraps=7;
+  if(changes.wire==="nife30")value.wraps=id==="muted"?6:7;
   else if(changes.wire==="nife52")value.wraps=6;
   else if(WIRES[changes.wire]?.type==="clapton")value.wraps=5;
   else if(WIRES[changes.wire]?.type==="round")value.wraps=5;

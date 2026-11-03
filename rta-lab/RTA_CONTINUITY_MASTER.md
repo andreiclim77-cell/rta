@@ -1,5 +1,7 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+> **03.11.2026 — PRIORITATE PERSONALĂ PENTRU ȘASE PLATFORME, INCLUSIV MUTED+:** GT One K1 29 GA/5 spaced perfect; GTR NiFe30/7 ori NiFe52/6 apoi K1 29 GA/5–6 spaced; KLP și KX NiFe30/7 ori NiFe52/6 apoi K1 29 GA/6 spaced/contact; Prime NiFe30/7 ori NiFe52/6 apoi K1 29 GA/5–6 contact/spaced. **MUTED+ EXCEPȚIE:** NiFe30 Dicodes TCR320/6 spaced SAU NiFe52 Zivipf TCR310/6 spaced pe primul loc, apoi K1 28 GA/6 contact. Muted+ NiFe30/6 spaced montat și apreciat pe Arcana DNA60C, Triple Air 1,2 mm jos/laterale minimum; 180 vs 210°C diferă perceptibil, compatibil cu TC activ, fără calibrare instrumentală. NiFe52/6 spaced este preferință declarată, fără A/B nou. Restul platformelor și testele istorice rămân nemodificate.
+
 > **03.11.2026 — PREFERINTE PERSONALE PRIORITARE pentru 5 atomizoare.** GT One: **K1 29 GA / 5 spaced, montat, «perfect»** (29/6 doar istoric). GTR: **NiFe30 Dicodes /7 sau NiFe52 Zivipf /6** prima familie, apoi **K1 29 GA / 5 sau 6 spaced**. KLP 2021: aceleasi NiFe TC, apoi **K1 29 GA / 6 spaced sau contact**. KX 24: ca KLP. K Prime: aceleasi NiFe TC, apoi **K1 29 GA / 5 sau 6 contact ori spaced**. Nu transforma aceste preferinte in A/B universal si nu modifica alte platforme. Vezi `rta-lab/RTA_PERSONAL_BUILDS_20261103.md`.
 
 

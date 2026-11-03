@@ -54,7 +54,7 @@ const expectedPersonal={
  klp:[['nife30',7],['nife52',6],['k129',6]],
  kprime:[['nife30',7],['nife52',6],['k129',5]],
  kx:[['nife30',7],['nife52',6],['k129',6]],
- gtone:[['k129',5]],muted:[['k128',6]],
+ gtone:[['k129',5]],muted:[['nife30',6],['nife52',6],['k128',6]],
  dvarwcl:[['k128',6]],dvarwfl:[['k128',6]],
  asylum:[['k128',6]],kv3:[['k128',6],['k129',6]]
 };

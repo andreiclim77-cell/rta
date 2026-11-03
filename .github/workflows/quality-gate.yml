@@ -150,8 +150,8 @@ jobs:
             throw new Error('Dvarw CL atom DNA must contain insert 3×0,6 + K1 28/6 on Ø2,5');
           }
           const mutedAtomLine = atomLine('muted');
-          if (!/K1 28 GA \/ 6 spire/.test(mutedAtomLine)) {
-            throw new Error('Muted+ platform DNA must include direct preference for K1 28/6');
+          if (!/NiFe30/.test(mutedAtomLine) || !/NiFe52/.test(mutedAtomLine) || !/K1 28 GA \/ 6 spire CONTACT/.test(mutedAtomLine)) {
+            throw new Error('Muted+ DNA must have NiFe30/6 or NiFe52/6 spaced first, followed by K1 28/6 contact');
           }
           const dvarwFlAtomLine = atomLine('dvarwfl');
           if (!/insert 3×0,6/.test(dvarwFlAtomLine) || !/K1 28 GA\/6/.test(dvarwFlAtomLine) ||

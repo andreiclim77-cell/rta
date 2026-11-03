@@ -131,9 +131,13 @@ assert.ok(api.nife30Family.candidates.includes("kv3"));
 assert.ok(api.nife30Family.untested.includes("kv3"));
 assert.equal(api.nife30Family.reported.includes("klp"),true);
 // Directly declared platform preferences must supersede generic compact-coil priors.
-assert.equal(api.defaultConfig("muted").wire,"k128");
+assert.equal(api.defaultConfig("muted").wire,"nife30");
 assert.equal(api.defaultConfig("muted").wraps,6);
-assert.equal(api.personalPreference({atom:"muted",wire:"k128",wraps:6}).tier,1);
+assert.equal(api.personalPreference({atom:"muted",wire:"k128",wraps:6}).tier,2);
+assert.equal(api.personalPreference({atom:"muted",wire:"nife30",wraps:6}).tier,1);
+assert.equal(api.personalPreference({atom:"muted",wire:"nife52",wraps:6}).tier,1);
+assert.equal(api.config("muted",{wire:"nife30"}).wraps,6);
+assert.equal(api.config("muted",{wire:"nife30"}).temp,210);
 assert.equal(api.defaultConfig("gtone").wire,"k129");
 assert.equal(api.defaultConfig("gtone").wraps,5);
 assert.equal(api.personalPreference({atom:"gtone",wire:"k129",wraps:5}).tier,1);
