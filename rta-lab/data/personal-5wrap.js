@@ -1,6 +1,6 @@
 /* RTA Lab — preferință personală recurentă, actualizat 14.10.2026.
  * PERSONAL 5-WRAP PREFERENCE / COMPACT-COIL BIAS
- * K1 29 GA / Ø2,5 / 5 spire este păstrat numai CONTACT. Varianta de 5 spire distanțată este eliminată.
+ * Priorul global 29/5 contact nu prevalează asupra preferințelor explicite 03.11.2026; GT One folosește 29/5 spaced.
  */
 (() => {
   window.RTA_LAB_PERSONAL_BUILD_DNA = {
@@ -43,7 +43,7 @@
     if (wire.id === "k129") bonus += 0.55;
     if (wire.id === "k128") bonus += 0.30;
     if (atom && atom.id === "gtone" && wire.id === "k129") bonus += 0.35;
-    if (atom && atom.id === "klp" && wire.id === "k128") bonus += 0.45; // Secondary K1 preference after either NiFe TC alloy
+    if (atom && ["klp","gtr","kx","kprime"].includes(atom.id) && wire.id === "k129") bonus += 0.45; // K1 29 GA = secondary choice after NiFe TC, Nov 3
     if (atom && atom.id === "muted" && wire.id === "k128") bonus += 1.45;
     if (atom && atom.id === "dvarwfl" && wire.id === "k128") bonus += 0.6;
     if (atom && ["klp","gtr","kx","kprime"].includes(atom.id) && wire.id === "nife30") bonus += 1.0; // Single legacy NiFe slot represents both separate TC alloys
@@ -54,6 +54,18 @@
     const output = baseBuildOutput(atom, wire, liquid);
     if (!atom || !wire || !output) return output;
 
+    // Priorități noi ale utilizatorului, înaintea logicii generice 29/5 contact.
+    if (wire.id === "k129" && ["gtone","gtr","klp","kx","kprime"].includes(atom.id)) {
+      const main=atom.id==="gtone"||atom.id==="kprime"?5:6;
+      const shape=atom.id==="gtone"||atom.id==="gtr"?"spaced":"contact sau spaced";
+      output.wraps=String(main);
+      output.status="Preferință curentă 03.11.2026 · 29/"+main+" · "+shape;
+      output.noteClass="valid";
+      output.note=atom.id==="gtone"
+        ?"GT One cu K1 29 GA / 5 spire spaced a fost montat și declarat perfect; 29/6 rămâne istoric."
+        :"După NiFe30 Dicodes/7 ori NiFe52 Zivipf/6, K1 29 GA "+(atom.id==="gtr"?"5 sau 6 spire spaced":atom.id==="kprime"?"5 ori 6 spire contact sau spaced":"6 spire contact ori spaced")+". Variante declarate, nu toate testate A/B.";
+      return output;
+    }
     if (wire.id === "k128") {
       if (atom.id === "415") {
         output.wraps="6";
@@ -99,9 +111,9 @@
       }
       output.wraps = "5";
       if (atom.id === "klp") {
-        output.status = "Validat practic · KLP · 28/5 preferat vs 29/6";
+        output.status = "KLP · A/B istoric 12.10 · 28/5 vs 29/6";
         output.noteClass = "valid";
-        output.note = "A/B direct 12.10.2026: K1 28 GA / Ø2,5 / 5 contact redă mai bine decât K1 29 GA / Ø2,5 / 6 pentru utilizator; păstrează corpul și volumul fără să piardă precizia Aerokon.";
+        output.note = "În A/B-ul istoric din 12.10.2026 a fost preferat K1 28/5. Prioritatea actuală la 03.11.2026 este NiFe TC, apoi K1 29/6 contact sau spaced.";
         return output;
       }
       output.note = `${output.note || ""} ${personalFiveWrapNote("k128")}`.trim();
@@ -150,7 +162,7 @@
         if (atom.id === "pmfree" && isNet(liquid)) return base;
         if (atom.id === "415" && Number(buildOutput(atom, wire, liquid).wraps) === 6) return base;
         if (atom.id === "kv3") return `${base}; pe KV3 Mini 29/6 este excepția activă validată`;
-        if (atom.id === "gtone") return `${base}; pe GT One 29/6 este preferința round-wire validată direct față de 28/5`;
+        if (atom.id === "gtone") return `${base}; GT One are K1 29/5 spaced montat și declarat perfect; 29/6 este istoric`;
         return `${base}; 29/5 contact are prior personal transversal pentru gustul utilizatorului`;
       }
       if (wire.id === "k128" && atom.id === "415") return `${base}; 415 Cool: K1 28/6 este a doua preferință, după NiFe30/7 și NiFe52/6; 28/5 rămâne reper istoric`;
@@ -159,7 +171,7 @@
       if (wire.id === "k128" && atom.id === "asylum") return `${base}; pe Asylum V3 Flat, 28/6 este regula activă validată`;
       if (wire.id === "k128" && atom.id === "dvarwfl") return `${base}; pe Dvarw FL 3×0,6 cu Balkan Milestone, 28/6 și-a demonstrat preferința față de FL 1×1,2/6`;
       if (wire.id === "k128" && atom.id === "muted") return `${base}; pe Muted+ K1 28/6 este prima preferință declarată, fără airflow specificat`;
-      if (wire.id === "k128" && atom.id === "klp") return `${base}; pe KLP, A/B-ul direct 12.10.2026 preferă 28/5 față de 29/6 pentru redare generală`;
+      if (wire.id === "k128" && atom.id === "klp") return `${base}; KLP 28/5 a fost preferat într-un A/B istoric; acum este preferat NiFe TC, apoi K1 29/6`;
       if (wire.id === "k128") return `${base}; 28/5 contact are prior personal secundar pentru corp + compact-coil response`;
       return base;
     };
@@ -178,8 +190,8 @@
       if (wire.id === "k128" && atom.id === "dvarwfl") return `${base} · Dvarw FL 3×0,6 / K1 28/6 testat pe Balkan Milestone, mai mult palat și spectru decât 1×1,2 la 6 spire.`;
       if (wire.id === "k128" && atom.id === "muted") return `${base} · Muted+ preferință direct declarată: K1 28/6, parametri suplimentari de confirmat.`;
       if (wire.id === "k128" && atom.id === "asylum") return `${base} · Asylum V3 Flat validat: 28/6 pe Ø2,5.`;
-      if (wire.id === "k128" && atom.id === "klp") return `${base} · KLP A/B direct: 28/5 > 29/6 pentru redare generală/completă.`;
-      if (wire.id === "k129" && atom.id === "gtone" && Number(output && output.wraps) === 6) return `${base} · GT One A/B direct: 29/6 > 28/5.`;
+      if (wire.id === "k128" && atom.id === "klp") return `${base} · KLP 28/5 > 29/6 numai într-un A/B istoric; prioritatea actuală NiFe TC, apoi K1 29/6.`;
+      if (wire.id === "k129" && atom.id === "gtone") return `${base} · GT One K1 29/5 spaced actual, «perfect»; 29/6 > 28/5 = A/B istoric.`;
       if (wire.id === "k128") return `${base} · Prior personal secundar: 28/5 contact.`;
       return base;
     };
