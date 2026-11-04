@@ -46,10 +46,12 @@ const PLATFORMS={
  AIR("dual08","Insert 2×0,8 mm (familie AFC)","multipoint",[.8,.8],1.65,{optional:true})],
  traits:{spectrum:4.5,simultaneity:3.7,focus:4.8,palate:4.15,offense:4.85,th:4.6,harmony:4.0},note:"Impact muscular, distribuție modificată de insert; 3×0,6/K1 28/6 este preferința generală, dar 1×1,2/K1 28/5 a fost raportat ca reușit. Se schimbă și numărul de spire, nu doar insertul."},
  muted:{pattern:"hybrid",volume:"mediu",air:[
+ AIR("triple_simple","Triple Air · jos 0,8 mm + laterale 2×0,8 mm · 3 Muted+ / tutun și NET simplu","hybrid",[.8,.8,.8],2.05,{personalConfirmed:true}),
+ AIR("triple_complex","Triple Air · jos 1,2 mm + laterale 2×0,6 mm · 1 Muted+ / complexe","hybrid",[1.2,.6,.6],2.05,{personalConfirmed:true}),
  AIR("triple","Triple-air: 2 laterale + 1 inferior","hybrid",null,2.05),
  AIR("bottom","Bottom-only","single",null,1.3),
  AIR("side","Side-only","side",null,1.8)],
- traits:{spectrum:4.1,simultaneity:4.25,focus:4.0,palate:4.75,offense:4.45,th:4.45,harmony:4.3},note:"Canale lateral/inferior; diametrele nu sunt presupuse."},
+ traits:{spectrum:4.1,simultaneity:4.25,focus:4.0,palate:4.75,offense:4.45,th:4.45,harmony:4.3},note:"Patru exemplare: trei cu 0,8 mm inferior + 2×0,8 mm lateral pentru tutun/NET simplu; unul cu 1,2 mm inferior + 2×0,6 mm lateral pentru complexe. A/B doar pentru contextul testat; Triple Air generic rămâne pentru setări istorice."},
  gtr:{pattern:"dual",volume:"mediu",air:[
  AIR("both","Canale 1,0 + 1,2 mm, ambele","dual",[1.0,1.2],1.95),
  AIR("hole10","Canal 1×1,0 mm","single",[1.0],1.24),
@@ -123,7 +125,7 @@ const PERSONAL_PREFS=Object.freeze({
  tcEqualWires:["nife30","nife52"],
  gtone:{first:{wire:"k129",wraps:5,spacing:"spaced"},historical:[{wire:"k129",wraps:6},{wire:"k128",wraps:5}]},
  currentK1:{gtone:[5],gtr:[5,6],klp:[6],kx:[6],kprime:[5,6]},
- muted:{first:[{wire:"nife30",wraps:6,spacing:"spaced"},{wire:"nife52",wraps:6,spacing:"spaced"}],second:{wire:"k128",wraps:6,spacing:"contact"},air:"triple",bottomMm:1.2,side:"minimum",mod:"Arcana DNA60C",temperatureReportedC:210,note:"NiFe30/6 spaced testat; NiFe52/6 spaced alegere declarată; K1 28/6 contact următor. Excepție de la NiFe30/7 global. W neprecizat."},
+ muted:{first:[{wire:"nife30",wraps:6,spacing:"spaced"},{wire:"nife52",wraps:6,spacing:"spaced"}],second:{wire:"k128",wraps:6,spacing:"contact"},air:"triple_simple",bottomMm:.8,sideMm:.8,physicalUnits:4,allocation:[{units:3,air:"triple_simple",liquids:"tutun simplu și NET simplu"},{units:1,air:"triple_complex",liquids:"complexe"}],mod:"Arcana DNA60C",temperatureReportedC:210,note:"NiFe30/6 spaced testat A/B pentru airflow; NiFe52/6 spaced alegere declarată; K1 28/6 contact următor. Un exemplar păstrează airflow-ul anterior pentru complexe; preferință de utilizare, nu A/B pe complexe. Excepție de la NiFe30/7 global. W neprecizat."},
  dvarwClSingle12:{wire:"k128",wraps:5,air:"single12",status:"alternativă personală reușită, nu A/B controlat față de 3×0,6/6"},
  dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
  evidence:"preferințe personale declarate direct 14.10.2026; fără identitate materială sau A/B universal"
@@ -227,7 +229,7 @@ const DEFAULTS={
  kprime:{wire:"nife52",wraps:6,air:"1.2"},
  gtone:{wire:"k129",wraps:5,air:"single12"},
  dvarwcl:{wire:"k128",wraps:6,air:"triple06"},
- muted:{wire:"nife30",wraps:6,air:"triple"},
+ muted:{wire:"nife30",wraps:6,air:"triple_simple"},
  gtr:{wire:"nife30",wraps:7,air:"both"},
  dvarwfl:{wire:"k128",wraps:6,air:"triple06"},
  diplomat:{wire:"k129",wraps:5,air:"pin18"},
@@ -253,6 +255,26 @@ function wireSetup(atom,wire,wraps){
 // generic numerical patches: the tested liquid and Aerokon 1 mm are not
 // encoded by the coarse Atlas air/liquid selectors. Keep historic OBS intact.
 const PERSONAL_AB_CASES=Object.freeze([
+ Object.freeze({
+  id:"muted-triple-air-20261104",date:"2026-11-04",atom:"muted",regime:"tc",wire:"nife30",wraps:6,spacing:"spaced",mod:"Arcana DNA60C",
+  a:{air:"triple_complex",bottomMm:1.2,sideMm:[.6,.6]},
+  b:{air:"triple_simple",bottomMm:.8,sideMm:[.8,.8]},overallWinner:"b_for_simple_tobacco_and_simple_net",
+  differences:Object.freeze([
+   {axis:"sweetness",winner:"a",approxPercent:20},
+   {axis:"palate_th",winner:"b",approxPercent:20},
+   {axis:"throat_th",winner:"equal",approxPercent:null},
+   {axis:"offense",winner:"equal",approxPercent:null},
+   {axis:"tobacco_prominence",winner:"b",approxPercent:null},
+   {axis:"individual_note_separation",winner:"b",approxPercent:null},
+   {axis:"draw_tightness",winner:"b",approxPercent:null},
+   {axis:"vapor_concentration",winner:"b",approxPercent:null}
+  ]),
+  observation:"Noua variantă: tutun mai evident, note mai delimitate, vapor compact și fin («parfum în sticluță mică»), mai apropiată de Prime, dar distinctă. Ușor mai strânsă; reducerea dulceții și TH pe palat sunt estimări personale de circa 20%.",
+  allocation:[{units:3,air:"triple_simple",use:"tutun simplu / NET simplu"},{units:1,air:"triple_complex",use:"lichide complexe"}],
+  status:"Test personal comparativ al airflow-ului; procente aproximative subiective, nu instrumentale. Alocarea pentru complexe nu este un A/B pe lichide complexe.",
+  unconfirmed:["lichidul exact și categoria acestuia","ordinea și numărul de repetări","debitul real de aer","identitatea completă a bumbacului și a parametrilor TC în ambele etape"],
+  source:"rta-lab/RTA_MUTED_AIR_AB_20261104.md"
+ }),
  Object.freeze({
   id:"klp-k1-20261031-80-20",date:"2026-10-31",atom:"klp",regime:"watt",powerW:13,
   airflow:"Aerokon 1 mm",liquid:"80% trabuc / 20% cireșe",liquidKind:"reper personal V10, nu produs comercial Atlas 700",
