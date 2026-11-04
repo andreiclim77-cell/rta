@@ -102,6 +102,15 @@ function storedBuild(raw){
 }
 function sameStored(a,b){const keys=[...new Set([...Object.keys(a||{}),...Object.keys(b||{})])].sort();return keys.every(k=>JSON.stringify(a?.[k])===JSON.stringify(b?.[k]));}
 function physicalUnits(id){
+ if(id==='muted'){
+  const assignment=core.personalPreferences.muted.allocation;
+  const rows=assignment.map((item,i)=>{
+   const air=core.platforms.muted.air.find(a=>a.id===item.air);
+   return '<div class="unit-row"><b>Muted+ · '+item.units+' '+(item.units===1?'exemplar':'exemplare')+'</b><span>'+esc(item.liquids)+'</span><small>'+esc(air?.label||item.air)+'</small></div>';
+  }).join('');
+  return '<div class="physical-units"><h3>Patru Muted+ · două configurații actuale</h3>'+rows+
+   '<p>Repartizare confirmată de utilizator la 04.11.2026. Testul A/B s-a făcut pe airflow; alegerea de a păstra profilul anterior pentru complexe nu dovedește un câștig măsurat pe acele lichide. Coilul nu este confirmat individual pe toate cele patru exemplare.</p></div>';
+ }
  if(id!=='dvarwcl')return '<div class="physical-units"><h3>'+inventory[id]+' '+(inventory[id]===1?'exemplar fizic':'exemplare fizice')+'</h3><p>Inventar confirmat. Configurațiile individuale nu sunt presupuse identice sau montate.</p></div>';
  const snapshot=clSnapshot();
  return '<div class="physical-units"><h3>Cele trei Dvarw CL</h3>'+(!snapshot.available?'<p role="status">'+esc(snapshot.error||'Stocare indisponibilă')+'</p>':snapshot.units.map((u,i)=>'<div class="unit-row"><b>CL '+(i+1)+'</b><span>'+esc(u.saved?'Înregistrat'+(u.draft&&!sameStored(u.draft,u.saved)?' · modificări nesalvate':''):u.draft?'Proiect nesalvat':'Neînregistrat')+'</span><small>'+esc(storedBuild(u.saved||u.draft))+'</small></div>').join(''))+'<p>Fișele sunt citite din același browser, fără rescriere. Montajele declarate sunt păstrate separat pentru fiecare exemplar; explorarea de aici nu le rescrie.</p></div>';
@@ -238,6 +247,10 @@ function wireSavedBuilds(wire){
 function wirePalette(){
  const selected=state.wireChosen?state.config.wire:null;
  const klpAB=core.personalABCases?.find(x=>x.id==="klp-k1-20261031-80-20");
+ const mutedAB=core.personalABCases?.find(x=>x.id==="muted-triple-air-20261104");
+ const mutedABNote=mutedAB?'<aside class="wire-ab-case" aria-label="Muted+ · A/B airflow 04.11"><h3>Muted+ · A/B Triple Air: 0,8 jos + 2×0,8 laterale</h3>'+
+  '<p class="module-note">Față de 1,2 jos + 2×0,6 laterale: <b>dulceață ≈−20%</b>, <b>TH pe palat ≈+20%</b>, TH în gât și ofensivă neschimbate; tutun și note individuale mai evidente, vapor mai compact și tragere ușor mai strânsă. Procente subiective.</p>'+
+  '<p class="module-note">Trei exemplare păstrează profilul nou pentru tutun / NET simplu; unul păstrează profilul vechi pentru complexe. Testul nu confirmă superioritatea profilului vechi pe complexe. Detalii și incertitudini în arhiva A/B.</p></aside>':'';
  const klpABNote=klpAB?'<aside class="wire-ab-case" aria-label="KLP · A/B practic 31.10"><h3>KLP · A/B practic 31.10: 29 GA / 6 preferat la 13 W, Aerokon 1 mm, trabuc 80% / cireșe 20%</h3>'+
   '<p class="module-note"><b>29/6:</b> TH direct ≈+10%, trabuc ≈+10%, separare și bogăție superioare, preferat per ansamblu. '+
   '<b>28/5:</b> ofensivă ≈+10%, prim vapor ≈+10% mai prompt perceput, densitate ≈+10%. '+
@@ -262,7 +275,7 @@ function wirePalette(){
   '<span class="eyebrow">RTA LAB / ULTIMELE PREFERINȚE</span>'+
   '<h2>Toate sârmele, coilurile și buildurile tale.</h2>'+
   '<p>Toate cele șase materiale sunt vizibile înainte de alegere. NiFe30 Dicodes folosește 7 spire; NiFe52 Zivipf, 6. Celelalte construcții păstrează alegerile specifice atomizoarelor. Schemele nu sunt fotografii ale montajelor reale.</p>'+
-  '</div><div class="wire-family-grid wire-library-grid">'+cards+'</div>'+klpABNote+
+  '</div><div class="wire-family-grid wire-library-grid">'+cards+'</div>'+mutedABNote+klpABNote+
   '<p class="module-note">„Preferat în Lab” nu înseamnă „montat pe fiecare exemplar”. Fișele CL salvate în acest browser apar separat, fără a fi sincronizate automat cu alte dispozitive.</p></section>';
  // Before any choice show ALL six real build cards. After picking a material,
  // collapse this reference catalog so the user can follow the one decision
@@ -613,6 +626,6 @@ function init(){
  },true);
  const route=window.location.hash.slice(1);if(['atomizer','wire'].includes(route))api.route(route,false);
 }
-window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,buildFacts,materialPaths,wireSavedBuilds,wirePalette,wireJourneyControls,wirePlatformMatches,wirePlatforms,setWireJourney};
+window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,physicalUnits,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,buildFacts,materialPaths,wireSavedBuilds,wirePalette,wireJourneyControls,wirePlatformMatches,wirePlatforms,setWireJourney};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();
