@@ -13,6 +13,16 @@ assert.equal(m.filteredAtoms('').length,15);
 assert.ok(!m.filteredAtoms('').some(a=>a.id==='asylum'),'Asylum must not appear in active inventory');
 assert.ok(!fs.readFileSync('rta-lab/atlas-preview/modules.js','utf8').includes('wireJourneyControls()+wirePlatforms()'),'Wire Lab must have one initial guided flow, without duplicate selectors');
 assert.equal(w.RTA_ATLAS_COLLECTION.activeUnits,40);assert.equal(m.filteredAtoms('Dvarw').length,2);assert.equal(m.filteredAtoms('nonexistent platform').length,0);
+const mutedDisplay=m.physicalUnits('muted');
+assert.ok(mutedDisplay.includes('Patru Muted+')&&mutedDisplay.includes('3 exemplare')&&mutedDisplay.includes('1 exemplar'));
+assert.ok(mutedDisplay.includes('0,8 mm')&&mutedDisplay.includes('1,2 mm')&&mutedDisplay.includes('complexe'));
+assert.ok(mutedDisplay.includes('nu dovedește un câștig măsurat'));
+assert.equal(m.selectAtom('muted'),true);
+assert.equal(m.state.config.air,'triple_simple');
+assert.equal(m.setConfig({air:'triple_complex'}),true);
+assert.ok(m.buildFacts(m.state.config).includes('1,2 mm'));
+assert.equal(m.setConfig({air:'triple_simple'}),true);
+assert.ok(m.buildFacts(m.state.config).includes('2×0,8 mm'));
 assert.equal(m.selectAtom('invalid'),false);assert.equal(m.contextual('invalid'),null);
 for(const id of Object.keys(m.inventory)){
  assert.equal(m.selectAtom(id),true);
