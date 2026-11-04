@@ -133,6 +133,26 @@ assert.equal(api.nife30Family.reported.includes("klp"),true);
 // Directly declared platform preferences must supersede generic compact-coil priors.
 assert.equal(api.defaultConfig("muted").wire,"nife30");
 assert.equal(api.defaultConfig("muted").wraps,6);
+assert.equal(api.defaultConfig("muted").air,"triple_simple","Three physical Muted+ use new airflow profile");
+const mutedPersonal=api.personalPreferences.muted;
+assert.equal(mutedPersonal.physicalUnits,4);
+assert.deepEqual(JSON.parse(JSON.stringify(mutedPersonal.allocation.map(x=>[x.units,x.air]))),[[3,"triple_simple"],[1,"triple_complex"]]);
+const mutedAirNew=api.platforms.muted.air.find(x=>x.id==="triple_simple");
+const mutedAirOld=api.platforms.muted.air.find(x=>x.id==="triple_complex");
+assert.deepEqual(JSON.parse(JSON.stringify(mutedAirNew.holes)),[.8,.8,.8]);
+assert.deepEqual(JSON.parse(JSON.stringify(mutedAirOld.holes)),[1.2,.6,.6]);
+assert.ok(api.platforms.muted.air.some(x=>x.id==="triple"),"Keep generic Triple Air for historical saved configurations");
+assert.equal(api.physical(api.config("muted",{air:"triple_simple"})).areaMm2,1.51,"Engine returns area rounded to two decimals");
+assert.equal(api.physical(api.config("muted",{air:"triple_complex"})).areaMm2,1.70,"Engine returns area rounded to two decimals");
+const mutedAB=api.personalABCases.find(x=>x.id==="muted-triple-air-20261104");
+assert.ok(mutedAB,"Persist the actual 04.11 Muted+ A/B separately from numeric score patches");
+assert.deepEqual(JSON.parse(JSON.stringify(mutedAB.differences.map(x=>[x.axis,x.winner,x.approxPercent]))),[
+ ["sweetness","a",20],["palate_th","b",20],["throat_th","equal",null],["offense","equal",null],
+ ["tobacco_prominence","b",null],["individual_note_separation","b",null],
+ ["draw_tightness","b",null],["vapor_concentration","b",null]
+]);
+assert.equal(mutedAB.allocation.reduce((n,x)=>n+x.units,0),4);
+assert.ok(mutedAB.status.includes("nu este un A/B pe lichide complexe"));
 assert.equal(api.personalPreference({atom:"muted",wire:"k128",wraps:6}).tier,2);
 assert.equal(api.personalPreference({atom:"muted",wire:"nife30",wraps:6}).tier,1);
 assert.equal(api.personalPreference({atom:"muted",wire:"nife52",wraps:6}).tier,1);
