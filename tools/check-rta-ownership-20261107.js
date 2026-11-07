@@ -49,6 +49,17 @@ for(const mood of w.RTA_MOOD_MATCH.moods){
  assert.equal(r.ranked.length,13);
  assert.ok(r.ranked.every(x=>c.isActive(x.id)),'Mood Match must use only owned classic RTAs');
 }
+for(const category of ['Tutun simplu','Tutun complex','NET simplu','NET complex']){
+ const liquid=w.RTA_LIQUIDS.find(x=>x.class===category);
+ for(const mood of w.RTA_MOOD_MATCH.moods){
+  for(const moment of w.RTA_MOOD_MATCH.moments){
+   const source=w.RTA_MOOD_MATCH.recommend(mood.id,moment.id,w.RTA_LIQUIDS.indexOf(liquid)).ranked;
+   const adapted=w.RTA_ATLAS_CONTEXT.rank(liquid,mood.id,moment.id,mood.goal);
+   assert.deepEqual(source.map(x=>[x.id,x.score]),adapted.map(x=>[x.id,x.score]),
+    'Mood Match and Atlas context must match exactly, not just exclude sold units');
+  }
+ }
+}
 for(const liquid of ['Tutun simplu','Tutun complex','NET simplu','NET complex']){
  const i=w.RTA_LIQUIDS.findIndex(x=>x.class===liquid);
  const answer=w.RTA_ATLAS_PREVIEW.compose(i,'power','coffee');
