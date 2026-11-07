@@ -1,4 +1,6 @@
-const ATOMS = window.RTA_CORE.atoms || [];
+// Current V10 recommendations exclude sold/retired physical units, while the
+// canonical 16-model RTA_CORE remains intact for historical technical studies.
+const ATOMS = (window.RTA_CORE.atoms || []).filter(atom=>!['415','kv3','asylum'].includes(atom.id));
 const ACTIVE_WIRE_IDS = ["k128", "k129", "k1clap", "ssclap", "nife30"];
 const WIRES = (window.RTA_CORE.wires || []).filter(wire => ACTIVE_WIRE_IDS.includes(wire.id));
 const LIQUIDS = window.RTA_LIQUIDS || [];

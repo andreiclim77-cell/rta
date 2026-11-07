@@ -1,11 +1,13 @@
 /* RTA MOOD MATCH · personal experience router.
- * Seven approved moods + five moments. All 16 platforms remain discoverable.
+ * Seven approved moods + five moments. 13 currently owned classic RTAs;
+ * canonical 16-model technical archive remains unchanged.
  * Heuristics are contextual suggestions, never absolute pleasure probabilities.
  */
 (function () {
   "use strict";
   const core = window.RTA_SENSORY_CORE;
-  const atoms = (window.RTA_CORE && window.RTA_CORE.atoms) || [];
+  const atoms = ((window.RTA_CORE && window.RTA_CORE.atoms) || [])
+    .filter(atom=>!['415','kv3','asylum'].includes(atom.id));
   const catalog = window.RTA_LIQUIDS || [];
   if (!core || !atoms.length) return;
 
@@ -176,7 +178,7 @@
     root.innerHTML =
       '<div class="mm-head"><span class="mm-eyebrow">RTA MOOD MATCH · PERSONAL</span>'+
       '<h3 id="moodTitle">Alege experiența, nu câștigătorul.</h3>'+
-      '<p>Toate cele 16 platforme din colecție au personalitate. Spune ce stare ai, alege momentul, apoi descoperă trei interpretări — fără verdicte definitive.</p></div>'+
+      '<p>Cele 13 RTA clasice active au profiluri senzoriale în motor. Taifun GAIA RBA Boro este deținut separat, dar încă netestat; 415 Cool și Mini V3 sunt vândute, iar Asylum V3 este retras. Alege starea și momentul pentru trei interpretări — fără verdicte definitive.</p></div>'+
       '<div class="mm-progress"><span>01 · MOOD</span><span>02 · MOMENT</span><span>03 · LICHID</span></div>'+
       '<section class="mm-stage"><h4>1. Ce stare ai acum?</h4><div id="mmMoods" class="mm-moods" role="group" aria-label="Alege starea"></div></section>'+
       '<section id="mmStageMoment" class="mm-stage" hidden><h4>2. Care este momentul?</h4>'+
@@ -193,7 +195,7 @@
       '<p class="mm-method">Potrivirile sunt <b>ipoteze senzoriale</b> bazate pe modelul RTA și observațiile tale validate. „Redescoperă” este o alternativă exploratorie, nu un loc 3 absolut.</p></section>'+
       '<div id="mmResults" class="mm-results" aria-live="polite"></div>'+
       '<details id="mmCollection" class="mm-collection" hidden>'+
-      '<summary>Toate cele 16 platforme · explorează liber colecția</summary>'+
+      '<summary>Cele 13 RTA clasice active · explorează liber colecția</summary>'+
       '<div id="mmCollectionGrid" class="mm-collection-grid"></div></details>';
   }
 

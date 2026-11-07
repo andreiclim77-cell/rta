@@ -1,4 +1,4 @@
-const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014-cl-pair-20261014-3cl-units-atlas-entry-20261015-gtr-nife30-7-415cool-20261015-prepaint-asylum-air-20261016-2-nife30-watt12-20261022-nife30-seven-global-20261029-builds-20261103-muted-20261103-v2";
+const CACHE = "rta-lab-v10-five-wire-clapton-620-16platforms-sensory-dna-20261013-mobile-clarity-mood-match-three-zone-home-klp-nife30-220c-16w-personal-20261014-cl-pair-20261014-3cl-units-atlas-entry-20261015-gtr-nife30-7-415cool-20261015-prepaint-asylum-air-20261016-2-nife30-watt12-20261022-nife30-seven-global-20261029-builds-20261103-muted-20261103-v2-ownership-20261107";
 const FALLBACK = "./index.html?v=10";
 const ASSETS = [
   "./index.html?v=10",
@@ -8,7 +8,7 @@ const ASSETS = [
   "./sensory-ui.css?v=10-cl-units-20261014",
   "./mood-match.css?v=11-mood-20261013",
   "./home-ui.css?v=10-home-20261013",
-  "./engine.js?v=builds-20261103-v1",
+  "./engine.js?v=ownership-20261107-v1",
   "./data/tuning-415.js?v=10-415cool-20261015",
   "./data/personal-5wrap.js?v=builds-20261103-muted-v2",
   "./data/tc-platform-map.js?v=builds-20261103-muted-v2",
@@ -18,7 +18,7 @@ const ASSETS = [
   "./bell-liquid-ui.js?v=10",
   "./data/sensory-core.js?v=builds-20261103-muted-v2",
   "./sensory-ui.js?v=nife30-watt12-20261022-v1",
-  "./mood-match.js?v=11-mood-20261013",
+  "./mood-match.js?v=ownership-20261107-v1",
   "./RTA_CONTINUITY_MASTER.md?v=10-cl-units-20261014",
   "./bootstrap.js?v=10-cl-units-20261014",
   "./home-ui.js?v=10-home-20261013",

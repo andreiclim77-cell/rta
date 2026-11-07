@@ -7,12 +7,19 @@ fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forE
 load('atlas-preview/catalog.js');
 for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/liquid-picker.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
 const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
-assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),42);
+assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),41);
+assert.equal(Object.values(m.historicalInventory).reduce((x,y)=>x+y,0),42,'Preserve original physical ownership snapshot');
+assert.equal(m.inventory['415'],0);assert.equal(m.inventory.kv3,0);assert.equal(m.inventory.kprime,3);
 const original=JSON.stringify([w.RTA_CORE.atoms,w.RTA_LIQUIDS,c.observations,c.personalPreferences]);
-assert.equal(m.filteredAtoms('').length,15);
-assert.ok(!m.filteredAtoms('').some(a=>a.id==='asylum'),'Asylum must not appear in active inventory');
+assert.equal(m.filteredAtoms('').length,13);
+assert.ok(!m.filteredAtoms('').some(a=>['asylum','415','kv3'].includes(a.id)),'Sold and retired models must not appear in active inventory');
 assert.ok(!fs.readFileSync('rta-lab/atlas-preview/modules.js','utf8').includes('wireJourneyControls()+wirePlatforms()'),'Wire Lab must have one initial guided flow, without duplicate selectors');
-assert.equal(w.RTA_ATLAS_COLLECTION.activeUnits,40);assert.equal(m.filteredAtoms('Dvarw').length,2);assert.equal(m.filteredAtoms('nonexistent platform').length,0);
+assert.equal(w.RTA_ATLAS_COLLECTION.activeUnits,40);assert.equal(m.activeUnits,39);
+assert.equal(w.RTA_ATLAS_COLLECTION.activePlatforms,14);assert.equal(w.RTA_ATLAS_COLLECTION.activeBoroUnits,1);
+assert.equal(m.filteredAtoms('Dvarw').length,2);assert.equal(m.filteredAtoms('nonexistent platform').length,0);
+assert.ok(m.catalogCards().includes('Taifun GAIA RBA')&&m.catalogCards().includes('Boro'));
+m.state.query='gaia';assert.ok(m.catalogCards().includes('data-boro-owned=')&&m.filteredAtoms().length===0,'GAIA searchable separately');
+m.state.query='';
 const mutedDisplay=m.physicalUnits('muted');
 assert.ok(mutedDisplay.includes('Patru Muted+')&&mutedDisplay.includes('3 exemplare')&&mutedDisplay.includes('1 exemplar'));
 assert.ok(mutedDisplay.includes('0,8 mm')&&mutedDisplay.includes('1,2 mm')&&mutedDisplay.includes('complexe'));
@@ -207,12 +214,12 @@ assert.ok(multi.changed.length>=3,'Changing platform and material cannot be adve
 assert.ok(multi.left.result.dimensions.pleasure===null&&multi.right.result.dimensions.pleasure===null);
 assert.equal(duel.compare({atom:'invalid'},duel.state.left),null);
 // Latest user UX requirement: show six complete coil/preference cards and all
-// 15 active atomizers before selection. Then refine progressively until liquid.
+// 13 active classic RTAs before selection. Then refine progressively until liquid.
 const wireStateBefore={...m.state,wireJourney:{...m.state.wireJourney},config:{...m.state.config}};
 m.state.wireChosen=false;m.state.wirePlatformChosen=false;
 m.state.wireJourney={wrapsConfirmed:false,objective:null,family:null,liquidIndex:null};
 const start=m.wirePlatformMatches();
-assert.equal(start.phase,0);assert.equal(start.primary.length,15);assert.equal(start.other.length,0);
+assert.equal(start.phase,0);assert.equal(start.primary.length,13);assert.equal(start.other.length,0);
 assert.equal((m.wirePalette().match(/data-wire-family="/g)||[]).length,6,'Show six material cards before selection');
 assert.ok(m.wirePalette().includes('KLP · A/B practic 31.10: 29 GA / 6 preferat'),
  'Expose the user\'s contextual KLP A/B without changing six-wire selection');
@@ -249,8 +256,10 @@ for(const [stage,phase,count] of countStages){
 }
 m.state.wireChosen=wireStateBefore.wireChosen;m.state.wirePlatformChosen=wireStateBefore.wirePlatformChosen;
 m.state.wireJourney=wireStateBefore.wireJourney;m.state.config=wireStateBefore.config;m.state.atom=wireStateBefore.atom;
-console.log('WIRE PROGRESSIVE MODEL PASS: all six preferred-coil cards, 15 unfiltered atomizers, 8/6/5/4/3 shortlist with accessible remainder.');
-console.log('ATLAS MODULES PASS: 15 active platforms / 40 active units, all permitted materials and objectives, 700-liquid stress, KLP alloy presets isolated, invalid builds rejected, CL saved/draft and legacy storage preserved.');
+assert.ok(m.wireSavedBuilds('k1clap').some(x=>x.origin==='historical'&&x.label.includes('VÂNDUT')),'Sold 415 coil remains as visibly historical evidence');
+assert.ok(m.wireSavedBuilds('k129').some(x=>x.config.atom==='kv3'&&x.origin==='historical'));
+console.log('WIRE PROGRESSIVE MODEL PASS: six wire cards, 13 unfiltered classic RTAs, 8/6/5/4/3 shortlist with accessible remainder.');
+console.log('ATLAS MODULES PASS: 13 active classic RTAs / 39 units + 1 unscored GAIA Boro / 1 unit, historic 16-model engine, 700-liquid stress, CL storage preserved.');
 
 const market=w.RTA_ATLAS_MARKET;
 assert.equal(market.data.rows.length,40);assert.equal(new Set(market.data.rows.map(e=>e.id)).size,40);

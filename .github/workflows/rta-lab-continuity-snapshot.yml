@@ -9,6 +9,7 @@ on:
       - "rta-lab/RTA_CONTINUITY_MASTER.md"
       - "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md"
       - "rta-lab/RTA_OPERATING_PROTOCOL.md"
+      - "rta-lab/RTA_COLLECTION_STATUS_20261019.md"
 permissions:
   contents: read
 jobs:
@@ -26,6 +27,7 @@ jobs:
            "rta-lab/RTA_CONTINUITY_MASTER.md",
            "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md",
            "rta-lab/RTA_OPERATING_PROTOCOL.md",
+           "rta-lab/RTA_COLLECTION_STATUS_20261019.md",
            "rta-lab/RTA_PERSONAL_BUILDS_20261103.md",
            "rta-lab/RTA_MUTED_AIR_AB_20261104.md",
            "rta-lab/RTA_KLP_AB_20261031.md",
@@ -36,6 +38,8 @@ jobs:
            "rta-lab/data/sensory-core.js",
            "rta-lab/sensory-ui.js",
            "rta-lab/engine.js",
+           "rta-lab/mood-match.js",
+           "rta-lab/sw.js",
            "rta-lab/index.html",
            "rta-lab/data/atoms-1.js",
            "rta-lab/data/atoms-2.js",
@@ -60,6 +64,8 @@ jobs:
            "tools/check-rta-sensory-core.js",
            "tools/check-rta-nife30-watt.js",
            "tools/check-rta-atlas-modules.js",
+           "tools/check-rta-ownership-20261107.js",
+           "tools/check-rta-mood-match.js",
            "tools/check-rta-lab-commands.js"
           ]
           required=files[:4]
