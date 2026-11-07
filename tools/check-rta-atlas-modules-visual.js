@@ -64,9 +64,13 @@ async function main(){
     check(await page.locator('#pageAtomizer').isVisible(),'Return to Atlas after handoff must work');
    }
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Atlas horizontal overflow');
+   // Photos load lazily. Bring the selected portrait into the viewport first,
+   // then insist on successfully decoded real pixels (not merely an img node).
+   await page.locator('.portrait-photo img').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>{const img=document.querySelector('.portrait-photo img');return img?.complete&&img.naturalWidth>0;});
    await shot(page,'atomizer-'+width+'.png');
    await page.locator('#atlasPlatform').selectOption('dvarwcl');
+   await page.locator('.portrait-photo img').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>{const img=document.querySelector('.portrait-photo img');return img?.complete&&img.naturalWidth>0;});
    await page.waitForTimeout(700);
    check(await page.locator('.unit-row').count()===3,'Three CL profiles must remain distinct');
