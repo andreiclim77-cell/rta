@@ -79,4 +79,6 @@ const html=fs.readFileSync('rta-lab/index.html','utf8');
 const engine=fs.readFileSync('rta-lab/engine.js','utf8');
 assert.match(html,/<b>14<\/b> platforme active/,'V10 ownership stat must match Atlas');
 assert.ok(/\['415','kv3','asylum'\]/.test(engine),'V10 rankAtoms must exclude old units');
+assert.ok(engine.includes('const ranking = ACTIVE_ATOMS')&&engine.includes('[...ACTIVE_ATOMS]'),
+ 'V10 rankings and live explorer must exclude sold models while historical build tests remain possible');
 console.log('OWNERSHIP CROSS-AUDIT PASS: 13 classic RTA models / 39 units + GAIA Boro / 1 = 14/40 active; 2 Asylum retained, 42 physically held; 415 and Mini V3 historical; V10/Atlas/Mood/Wire/Docs aligned.');
