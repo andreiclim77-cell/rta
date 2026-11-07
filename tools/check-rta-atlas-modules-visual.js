@@ -39,10 +39,11 @@ async function main(){
    await page.locator('#atlasLiquidSearch').press('Enter');
    await page.waitForTimeout(650);
    check(await page.locator('#pageAtomizer').isVisible(),'Hash deep link must open Atomizer Atlas');
-   check(await page.locator('.platform-tile').count()===15,'All 15 active platforms must be available');
+   check(await page.locator('.platform-tile').count()===13,'All 13 active classic RTAs must be available');
+   check(await page.locator('[data-boro-owned="taifun-gaia-boro"]').count()===1,'GAIA Boro is inventoried independently without fake build rankings');
    if(width===390){
     const ids=await page.locator('#atlasPlatform option').evaluateAll(els=>els.map(x=>x.value));
-    check(ids.length===15&&!ids.includes('asylum'),'All 15 active atomizers, no retired Asylum');
+    check(ids.length===13&&!['asylum','415','kv3'].some(id=>ids.includes(id)),'13 owned classic RTAs, no retired or sold models');
     for(const id of ids){
      await page.locator('#atlasPlatform').selectOption(id);
      check(await page.locator('#atlasBuilds .material-path').count()===3,id+' must have 3 complete builds');
@@ -63,9 +64,13 @@ async function main(){
     check(await page.locator('#pageAtomizer').isVisible(),'Return to Atlas after handoff must work');
    }
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Atlas horizontal overflow');
+   // Photos load lazily. Bring the selected portrait into the viewport first,
+   // then insist on successfully decoded real pixels (not merely an img node).
+   await page.locator('.portrait-photo img').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>{const img=document.querySelector('.portrait-photo img');return img?.complete&&img.naturalWidth>0;});
    await shot(page,'atomizer-'+width+'.png');
    await page.locator('#atlasPlatform').selectOption('dvarwcl');
+   await page.locator('.portrait-photo img').scrollIntoViewIfNeeded();
    await page.waitForFunction(()=>{const img=document.querySelector('.portrait-photo img');return img?.complete&&img.naturalWidth>0;});
    await page.waitForTimeout(700);
    check(await page.locator('.unit-row').count()===3,'Three CL profiles must remain distinct');

@@ -4,7 +4,9 @@
 const core=window.RTA_SENSORY_CORE,fit=window.RTA_BELL_LIQUID_FIT,api=window.RTA_ATLAS_PREVIEW;
 if(!core||!fit||!api)return;
 const atoms=window.RTA_ATLAS_COLLECTION.activeAtoms,catalog=window.RTA_LIQUIDS;
-const inventory={"415":1,kprime:2,gtone:4,dvarwcl:3,muted:4,gtr:5,dvarwfl:2,diplomat:3,kx:4,klp:5,asylum:2,pmfree:2,pmstd:2,byka:1,kv3:1,minister:1}; // full historical evidence
+// Technical evidence remains on all 16 historical models. Physical ownership is current.
+const historicalInventory=Object.freeze({"415":1,kprime:2,gtone:4,dvarwcl:3,muted:4,gtr:5,dvarwfl:2,diplomat:3,kx:4,klp:5,asylum:2,pmfree:2,pmstd:2,byka:1,kv3:1,minister:1});
+const inventory=Object.freeze({...historicalInventory,"415":0,kv3:0,kprime:3});
 const activeUnits=atoms.reduce((total,a)=>total+(inventory[a.id]||0),0);
 const objectives=[['complete','Armonie + palat'],['layers','Stratificare'],['th','Ofensivă + TH'],['tobacco','Tutun în prim-plan'],['body','Corp + densitate'],['smooth','Finețe']];
 const state={atom:'gtr',query:'',category:'all',config:core.defaultConfig('gtr'),objective:'layers',goalLocked:false,liquidsOpen:false,advanced:false,wirePlatformChosen:false,wireChosen:false,wireShowAll:false,wireJourney:{wrapsConfirmed:false,objective:null,family:null,liquidIndex:null}};
@@ -117,7 +119,11 @@ function physicalUnits(id){
 }
 function catalogCards(){
  const rows=filteredAtoms();
- return '<p class="module-note" role="status">'+rows.length+' din '+atoms.length+' platforme active · '+activeUnits+' exemplare în colecție</p><div class="atlas-catalog">'+rows.map(a=>'<button type="button" class="platform-tile'+(a.id===state.atom?' selected':'')+'" data-platform="'+a.id+'" aria-pressed="'+(a.id===state.atom)+'"><span class="platform-photo">'+api.renderProductPhoto(a)+'</span><strong>'+esc(a.short)+'</strong><small>'+inventory[a.id]+' '+(inventory[a.id]===1?'exemplar':'exemplare')+' · '+esc(patternLabel(a.id))+'</small></button>').join('')+'</div>'+(rows.length?'':'<p>Nu există platforme care corespund filtrului. Schimbă căutarea sau categoria.</p>');
+ const q=String(state.query).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
+ const boro=window.RTA_ATLAS_COLLECTION.ownedBoro[0];
+ const showBoro=state.category==='all'&&(!q||[boro.label,boro.type,boro.maker,'boro gaia taifun bridge'].join(' ').toLowerCase().includes(q));
+ const boroCard=showBoro?'<aside class="module-note" data-boro-owned="'+boro.id+'" role="note"><strong>'+esc(boro.label)+' · '+esc(boro.type)+'</strong> · '+boro.units+' exemplar deținut. '+esc(boro.evidence)+' Se afișează separat de RTA-urile clasice: fără scoruri, airflow, compatibilități ori recomandări inventate.</aside>':'';
+ return '<p class="module-note" role="status">'+rows.length+' din '+atoms.length+' RTA clasice analizate · '+activeUnits+' exemplare RTA · 1 Taifun GAIA Boro · 40 exemplare active total</p><div class="atlas-catalog">'+rows.map(a=>'<button type="button" class="platform-tile'+(a.id===state.atom?' selected':'')+'" data-platform="'+a.id+'" aria-pressed="'+(a.id===state.atom)+'"><span class="platform-photo">'+api.renderProductPhoto(a)+'</span><strong>'+esc(a.short)+'</strong><small>'+inventory[a.id]+' '+(inventory[a.id]===1?'exemplar':'exemplare')+' · '+esc(patternLabel(a.id))+'</small></button>').join('')+'</div>'+boroCard+((rows.length||showBoro)?'':'<p>Nu există platforme care corespund filtrului. Schimbă căutarea sau categoria.</p>');
 }
 function renderCatalog(){const host=el('atlasCatalog');if(host)host.innerHTML=catalogCards();}
 function topLiquids(prefix){
@@ -234,7 +240,8 @@ function wireSavedBuilds(wire){
   const settings=core.wireSetup(id,wire,wraps);
   const config=core.config(id,{wire,wraps,...settings,regime:core.wires[wire].type==="tc"?"tc":"watt",
    ...(wire==="ssclap"&&id==="dvarwfl"?{air:"single12"}:{})});
-  return {config,label,origin:wire==="ssclap"?"model":"reference"};
+  const sold=id==="415"||id==="kv3";
+  return {config,label:label+(sold?" · ISTORIC, VÂNDUT":""),origin:sold?"historical":wire==="ssclap"?"model":"reference"};
  }).filter(Boolean);
  const snap=clSnapshot();
  if(snap.available)snap.units.forEach((unit,i)=>{
@@ -242,7 +249,7 @@ function wireSavedBuilds(wire){
   if(!saved||saved.wire!==wire||!core.permitted("dvarwcl",wire,saved.wraps))return;
   rows.unshift({config:{...saved,atom:"dvarwcl"},label:"Dvarw CL "+(i+1)+" · setup local salvat",origin:"local"});
  });
- return rows;
+ return rows.sort((a,b)=>(a.origin==="historical")-(b.origin==="historical"));
 }
 function wirePalette(){
  const selected=state.wireChosen?state.config.wire:null;
@@ -266,7 +273,7 @@ function wirePalette(){
   '<span class="wire-card-coil"><span class="wire-card-coil-visual">'+api.renderCoil(config)+'</span>'+
   '<strong>'+config.wraps+' spire</strong><small>Ø'+String(config.coilMm).replace(".",",")+' mm · preset</small></span>'+
   '<span class="wire-card-note">'+esc(wireIdentity(id))+'</span>'+
-  '<span class="wire-card-preferences"><strong>'+(id==="ssclap"?"Pereche tehnică din Lab":"Ultimele builduri preferate")+'</strong>'+
+  '<span class="wire-card-preferences"><strong>'+(id==="ssclap"?"Pereche tehnică din Lab":"Builduri curente și repere istorice")+'</strong>'+
   examples.map(x=>'<span class="wire-saved-build'+(x.origin==="model"?' is-model':'')+'">'+
    esc(x.label)+' · '+x.config.wraps+' spire'+(x.origin==="local"?" · LOCAL":"")+'</span>').join('')+
   '</span><span class="wire-card-action">'+(selected===id?"SELECTAT · modifică mai jos":"Alege această sârmă ↗")+'</span></button>';
@@ -297,7 +304,7 @@ const WIRE_FAMILIES=["Tutun simplu","Tutun complex","NET simplu","NET complex"];
 function wireJourneyControls(){
  const active=state.wireChosen,current=state.config,step=state.wireJourney;
  if(!active)return '<div class="wire-progress" id="wireProgress">'+
-  '<h3>Construiește potrivirea, pas cu pas.</h3><p>Începi prin a vedea toate sârmele și toate cele 15 atomizoare active. Alege una dintre sârmele de mai sus, apoi construim recomandarea treptat până la lichidul concret.</p>'+
+  '<h3>Construiește potrivirea, pas cu pas.</h3><p>Începi prin a vedea toate sârmele și cele '+atoms.length+' RTA clasice analizate. Taifun GAIA Boro este inventariat separat, încă fără profil senzorial. Alege o sârmă, apoi construim recomandarea treptat până la lichidul concret.</p>'+
   '<span class="wire-progress-steps">01 Sârmă → 02 Spire → 03 Obiectiv → 04 Familie → 05 Lichid</span></div>';
  const variants=core.variants(state.atom).filter(x=>x.wire===current.wire);
  const wraps=[...new Set(variants.map(x=>x.wraps))].sort((a,b)=>a-b);
@@ -392,7 +399,7 @@ function wirePlatforms(){
   '<h2>'+esc(title)+'</h2><p>'+esc(why)+'</p></div>'+
   '<div class="wire-match-heading">'+(active?m.primary.length+' în prim-plan · etapa '+m.phase+' din 5'+
     (m.excluded?' · '+m.excluded+' incompatibile fizic':''):
-   'Toate cele 15 platforme active · fără filtre')+'</div>'+
+   'Toate cele '+atoms.length+' RTA clasice active · GAIA Boro separat')+'</div>'+
   '<div class="wire-platform-grid">'+m.primary.map(rowCard).join("")+'</div>'+
   (selectedOutside?
     '<div class="wire-selected-outside"><p>Atomizorul ales manual rămâne vizibil, dar nu este inclus artificial în TOP-ul calculat.</p>'+
@@ -408,7 +415,7 @@ function renderAtomizer(){
  el('pageAtomizer').classList.toggle('needs-liquid',!hasLiquid());
  const model=contextual();if(!model)return;
  const categories=fit.analyze(model.atom,state.config.bell,catalog).classes;
- el('pageAtomizer').innerHTML=heading('03 / COLLECTION DNA','Atomizer Atlas.',atoms.length+' identități active. '+activeUnits+' exemplare active. Un rezultat potrivit contextului tău.')+workflow(['Atomizor · sârmă · obiectiv','Top 5 · alege lichidul','Builduri · continuă în Wire'])+contextBar()+
+ el('pageAtomizer').innerHTML=heading('03 / COLLECTION DNA','Atomizer Atlas.',atoms.length+' RTA clasice / '+activeUnits+' exemplare analizate; +1 Taifun GAIA RBA Boro separat. Total '+window.RTA_ATLAS_COLLECTION.activePlatforms+' platforme și '+window.RTA_ATLAS_COLLECTION.activeUnits+' exemplare active.')+workflow(['Atomizor · sârmă · obiectiv','Top 5 · alege lichidul','Builduri · continuă în Wire'])+contextBar()+
  '<div class="module-filters platform-picker">'+select('Alege platforma','atlasPlatform',atoms.map(a=>[a.id,a.short]),state.atom)+select('Material / aliaj','atlasWire',Object.entries(core.wires).filter(([id])=>core.variants(state.atom).some(v=>v.wire===id)).map(([id,w])=>[id,w.name]),state.config.wire)+select('Obiectiv','atlasObjective',objectives,state.objective)+select('Insert / aer','atlasAir',core.platforms[state.atom].air.map(a=>[a.id,a.label]),state.config.air)+'</div>'+materialPaths()+ 
  '<div class="atlas-detail"><div class="atlas-portrait"><div class="portrait-photo">'+api.renderProductPhoto(model.atom)+'</div><span class="eyebrow">'+inventory[state.atom]+' EXEMPLARE / '+esc(patternLabel(state.atom))+'</span><h2>'+esc(model.atom.short)+'</h2><p>'+esc(core.platforms[state.atom].note)+'</p><button type="button" class="match-button" data-edit-wire>Reglează configurația în Wire Lab ↗</button></div><div><span class="eyebrow">SENSORY DNA / CONTEXTUAL</span>'+metricPanel(model.result)+method(model.result)+'</div></div>'+
  window.RTA_ATLAS_SEARCH_UI.render('atlas')+topLiquids('atlas')+'<section class="module-section" data-requires-liquid><div class="section-heading"><span class="eyebrow">BEST + ALTERNATIVE / '+esc(liquid().name)+'</span><h2>Trei builduri pentru acest context.</h2></div><div class="detail-grid">'+model.builds.map((b,i)=>api.renderBuild(b,i+1,liquid())).join('')+'</div>'+watchPanel(model.builds)+'</section>'+
@@ -626,6 +633,6 @@ function init(){
  },true);
  const route=window.location.hash.slice(1);if(['atomizer','wire'].includes(route))api.route(route,false);
 }
-window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,physicalUnits,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,buildFacts,materialPaths,wireSavedBuilds,wirePalette,wireJourneyControls,wirePlatformMatches,wirePlatforms,setWireJourney};
+window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,historicalInventory,activeUnits,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,physicalUnits,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,buildFacts,materialPaths,wireSavedBuilds,wirePalette,wireJourneyControls,wirePlatformMatches,wirePlatforms,setWireJourney,catalogCards};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();

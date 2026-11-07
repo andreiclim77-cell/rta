@@ -1,4 +1,4 @@
-/* RTA Mood Match regression: approved moods, 16 platforms, 620 liquids,
+/* RTA Mood Match regression: approved moods, 13 active classic RTAs, 620 liquids,
  * accessible mobile flow, complete configuration hand-off and cache wiring. */
 "use strict";
 const assert = require("node:assert/strict");
@@ -20,7 +20,7 @@ fs.readdirSync(path.join(ROOT,"data")).filter(name=>/^liquids-.*\.js$/.test(name
 
 const {RTA_CORE:collection,RTA_LIQUIDS:liquids,RTA_SENSORY_CORE:core,
  RTA_BELL_LIQUID_FIT:fit}=env.window;
-assert.equal(collection.atoms.length,16,"All owned platforms must be available");
+assert.equal(collection.atoms.length,16,"All historical classic models must remain available as technical evidence");
 assert.equal(liquids.length,620,"All liquids must be available");
 const moodIds=["power","pleasure","magic","oldschool","chill","allday","surprise"];
 const momentIds=["coffee","day","juice","evening","relax"];
@@ -65,7 +65,8 @@ const encountered=new Set();
 for(const mood of moodIds)for(const moment of momentIds){
   const answer=api.recommend(mood,moment);
   assert.ok(answer,mood+"/"+moment);
-  assert.equal(answer.ranked.length,16,mood+"/"+moment);
+  assert.equal(answer.ranked.length,13,mood+"/"+moment);
+  assert.ok(answer.ranked.every(row=>!['415','kv3','asylum'].includes(row.id)),"No sold or retired model in mood picks");
   assert.equal(answer.picks.length,3,mood+"/"+moment);
   assert.equal(new Set(answer.picks.map(p=>p.id)).size,3,mood+"/"+moment);
   for(const p of answer.picks){
@@ -75,7 +76,7 @@ for(const mood of moodIds)for(const moment of momentIds){
     assert.ok(p.best.config.bell && p.best.config.air,p.id);
   }
 }
-assert.equal(encountered.size,16,"Discovery must rotate through all 16 platforms across 35 contexts");
+assert.equal(encountered.size,13,"Discovery must rotate through all 13 active RTAs across 35 contexts");
 // Regression: different desired experiences must not all show the same generic winner.
 const coffeeLeaders=moodIds.filter(m=>m!=="surprise").map(m=>api.recommend(m,"coffee").picks[0].id);
 assert.ok(new Set(coffeeLeaders).size>=3,
@@ -103,7 +104,10 @@ assert.equal(ui.get("mmStageMoment").hidden,false);
 click({mmMoment:"coffee"});
 assert.equal(ui.get("mmStageLiquid").hidden,false);
 assert.equal(ui.get("mmResults").innerHTML.match(/class="mm-result"/g).length,3);
-for(const atom of collection.atoms)assert.ok(ui.get("mmCollectionGrid").innerHTML.includes(atom.short),atom.id);
+for(const atom of collection.atoms){
+ if(['415','kv3','asylum'].includes(atom.id))assert.ok(!ui.get("mmCollectionGrid").innerHTML.includes(atom.short),"Inactive model must be absent: "+atom.id);
+ else assert.ok(ui.get("mmCollectionGrid").innerHTML.includes(atom.short),atom.id);
+}
 click({mmUse:"0"});
 assert.ok(opened && liquids[opened.index] && core.platforms[opened.atom]);
 assert.ok(core.permitted(opened.atom,opened.config.wire,opened.config.wraps));
@@ -126,7 +130,7 @@ assert.equal(opened.index,idx,"Manual liquid must be sent unchanged to cockpit")
 
 const html=read("index.html"),sw=read("sw.js"),css=read("mood-match.css");
 const js=read("mood-match.js"),sensory=read("sensory-ui.js");
-for(const asset of ["mood-match.js?v=11-mood-20261013","mood-match.css?v=11-mood-20261013"])
+for(const asset of ["mood-match.js?v=ownership-20261107-v1","mood-match.css?v=11-mood-20261013"])
   assert.ok(html.includes(asset) && sw.includes(asset),"Asset not wired into HTML and PWA: "+asset);
 assert.ok(html.indexOf("sensory-ui.js?v=")<html.indexOf("mood-match.js?v="),"Script order broken");
 assert.ok(html.includes('id="moodMatch"'),"Mood Match mount missing");
@@ -158,4 +162,4 @@ assert.equal(real.get("atom").value,"gtr");
 assert.equal(real.get("labLiquidView").hidden,false);
 assert.equal(live.window.RTA_SENSORY_UI.applyConfiguration(-1,"gtr",desired),false);
 assert.equal(live.window.RTA_SENSORY_UI.applyConfiguration(0,"unknown",desired),false);
-console.log("RTA MOOD MATCH PASS: 7 moods × 5 moments, 16 platforms, 620 liquids, mobile UI, complete build hand-off and cache.");
+console.log("RTA MOOD MATCH PASS: 7 moods × 5 moments, 13 active classic RTAs, 620 liquids, 16 archived technical records retained, mobile UI and hand-off.");

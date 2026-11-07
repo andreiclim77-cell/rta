@@ -1,14 +1,22 @@
 /* RTA Sensory Atlas · standalone Home + Liquid Cinema prototype.
-   Verified commercial 700 catalog / 15 active platforms / 16 historical / Mood Match + Sensory DNA.
+   Verified commercial 700 catalog / 13 active classic RTAs + 1 Boro / 16 historical classic models.
    Concept preview: no edits to V10 engine, no invented reviews, percentages or product photos. */
 (function(){
 "use strict";
 const catalog=window.RTA_LIQUIDS||[];
 const sourceAtoms=window.RTA_CORE?.atoms||[];
-const atoms=sourceAtoms.filter(a=>a.id!=='asylum');
-// Personal roster is separated from the 16-platform technical archive.
+const soldIds=Object.freeze(['415','kv3']);
+const atoms=sourceAtoms.filter(a=>a.id!=='asylum'&&!soldIds.includes(a.id));
+// Keep the 16-platform technical archive intact. GAIA is a separate Boro bridge,
+// not a classic RTA with an invented Sensory DNA or a made-up personal A/B.
+const boro=Object.freeze([{id:'taifun-gaia-boro',label:'Taifun GAIA RBA',maker:'SmokerStore / Taifun',type:'Boro RBA',units:1,
+ evidence:'Achiziție confirmată 07.11.2026; build, airflow și performanță încă necomunicate.'}]);
 window.RTA_ATLAS_COLLECTION=Object.freeze({
- activeAtoms:atoms,activePlatforms:atoms.length,activeUnits:40,
+ activeAtoms:atoms,activeRtaPlatforms:atoms.length,activeRtaUnits:39,
+ ownedBoro:boro,activeBoroPlatforms:boro.length,activeBoroUnits:1,
+ activePlatforms:atoms.length+boro.length,activeUnits:40,
+ sold:Object.freeze([{id:'415',label:'415 RTA MTL Cool',unitsSold:1,decided:'2026-11-07'},
+  {id:'kv3',label:'Kayfun Mini V3',unitsSold:1,decided:'2026-11-07'}]),
  retired:Object.freeze([{id:'asylum',label:'Asylum V3',unitsRecorded:2,
   disposition:'de donat — predarea nu este confirmată',
   evaluation:'Aromă bună, la nivel Revorie; doar aromă, fără TH și ofensivă satisfăcătoare.',
@@ -17,7 +25,7 @@ window.RTA_ATLAS_COLLECTION=Object.freeze({
 });
 const core=window.RTA_SENSORY_CORE;
 const moodEngine=window.RTA_MOOD_MATCH;
-if(!core||!moodEngine||catalog.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1'||(sourceAtoms.length!==16||atoms.length!==15))return;
+if(!core||!moodEngine||catalog.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1'||(sourceAtoms.length!==16||atoms.length!==13))return;
 const moodList=moodEngine.moods, momentList=moodEngine.moments;
 const defaultLiquid=(()=>{
  const exact=catalog.findIndex(x=>x.brand==="La Tabaccheria"&&x.name==="Balkan Mixture");

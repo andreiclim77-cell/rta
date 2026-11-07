@@ -1,4 +1,7 @@
+// Preserve all 16 technical models: historical QA still checks sold/retired
+// atomizers. Only the live recommendation and selection paths are filtered.
 const ATOMS = window.RTA_CORE.atoms || [];
+const ACTIVE_ATOMS = ATOMS.filter(atom=>!['415','kv3','asylum'].includes(atom.id));
 const ACTIVE_WIRE_IDS = ["k128", "k129", "k1clap", "ssclap", "nife30"];
 const WIRES = (window.RTA_CORE.wires || []).filter(wire => ACTIVE_WIRE_IDS.includes(wire.id));
 const LIQUIDS = window.RTA_LIQUIDS || [];
@@ -145,7 +148,7 @@ function atomScore(atom, ax, objective, liquid) {
 
 function rankAtoms() {
   const ax = axes(state.liquid);
-  const ranking = ATOMS
+  const ranking = ACTIVE_ATOMS
     .map(atom => ({ atom, score: atomScore(atom, ax, state.objective, state.liquid) }))
     .sort((left, right) => right.score - left.score);
   const max = ranking[0].score;
@@ -631,7 +634,7 @@ function fillAtoms() {
 
 function chooseAtom() {
   const id = $("atom").value;
-  state.atom = ATOMS.find(atom => atom.id === id) || null;
+  state.atom = ACTIVE_ATOMS.find(atom => atom.id === id) || null;
   if (!state.atom) {
     $("air").classList.add("hidden");
     renderBuilds();
@@ -667,7 +670,7 @@ function setObjective(value) {
   fillAtoms();
   if (atomId) {
     $("atom").value = atomId;
-    state.atom = ATOMS.find(atom => atom.id === atomId) || null;
+    state.atom = ACTIVE_ATOMS.find(atom => atom.id === atomId) || null;
     chooseAtom();
   }
 }
@@ -707,7 +710,7 @@ function renderBuilds() {
 function fillAtomExplorer() {
   const select = $("atomExplorer");
   select.innerHTML = '<option value="">— selectează un atomizor —</option>';
-  [...ATOMS]
+  [...ACTIVE_ATOMS]
     .sort((left, right) => right.score - left.score || left.short.localeCompare(right.short, "ro"))
     .forEach(atom => {
       const option = document.createElement("option");

@@ -4,7 +4,7 @@
 (function(){
 'use strict';
 const core=window.RTA_SENSORY_CORE, catalog=window.RTA_LIQUIDS||[], atoms=window.RTA_ATLAS_COLLECTION?.activeAtoms||[];
-if(!core||catalog.length!==700||atoms.length!==15)return;
+if(!core||catalog.length!==700||atoms.length!==13)return;
 const CATS=['Tutun simplu','Tutun complex','NET simplu','NET complex'];
 const SIGNALS=['spectrum','separation','simultaneity','focus','palate','offense','th','harmony','texture','tobaccoCore'];
 const AXES=[

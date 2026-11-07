@@ -11,7 +11,8 @@ function signalFit(signals,weights){return Object.entries(weights).reduce((sum,[
 function contextScore(result,moodId,momentId){if(!moodSignals[moodId]||!momentSignals[momentId])return null;return Math.round((.24*result.rankScore+.63*signalFit(result.signals,moodSignals[moodId])+.13*signalFit(result.signals,momentSignals[momentId]))*10000)/10000;}
 function rank(liquid,moodId,momentId,goal){
  if(!liquid||!moodSignals[moodId]||!momentSignals[momentId]||!goals.some(g=>g[0]===goal))return [];
- return window.RTA_CORE.atoms.map(atom=>{const best=core.rankBuilds(atom.id,liquid,goal)[0];return best?{id:atom.id,atom,best,score:contextScore(best,moodId,momentId)}:null;}).filter(Boolean).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id));
+ // Mirror the owned-only Mood Match candidate pool; keep historical atom data intact.
+ return window.RTA_CORE.atoms.filter(atom=>!['415','kv3','asylum'].includes(atom.id)).map(atom=>{const best=core.rankBuilds(atom.id,liquid,goal)[0];return best?{id:atom.id,atom,best,score:contextScore(best,moodId,momentId)}:null;}).filter(Boolean).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id));
 }
 function profile(input){
  if(input?.reviewId){
