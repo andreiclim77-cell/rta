@@ -3,14 +3,15 @@
 const assert=require("node:assert/strict");
 const fs=require("node:fs"),path=require("node:path"),vm=require("node:vm");
 const root="rta-lab";
-// Physical ownership is distinct from the 16-platform sensory model.
+// The preserved October 16-platform ownership snapshot is distinct from today's
+// active inventory and from the 16-platform historical sensory model.
 const inventoryMaster=fs.readFileSync(path.join(root,"RTA_CONTINUITY_MASTER.md"),"utf8");
-const physicalSection=(inventoryMaster.split("## 2. Inventar activ")[1]||"").split("## 3. Sârme")[0];
+const physicalSection=(inventoryMaster.split(/^## 2\. Inventar (?:ISTORIC|activ)/m)[1]||"").split(/^## 3\. Sârme/m)[0];
 const physicalRows=[...physicalSection.matchAll(/^\| ([^|]+) \| (\d+) \|/gm)]
   .map(([,name,quantity])=>({name:name.trim(),quantity:Number(quantity)}));
-assert.equal(physicalRows.length,16,"Keep all 16 platforms in the canonical physical inventory");
+assert.equal(physicalRows.length,16,"Preserve all 16 platforms in the historical October inventory");
 assert.equal(physicalRows.reduce((sum,item)=>sum+item.quantity,0),42,
-  "Total must reflect three Dvarw CL, not the previous single unit");
+  "The October total must remain 42 with three Dvarw CL");
 for(const [name,expected] of [
  ["Dvarw MTL CL 22",3],["Dvarw MTL FL",2],
  ["KLP / Kayfun Lite Plus 2021",5],["Taifun GTR",5]
