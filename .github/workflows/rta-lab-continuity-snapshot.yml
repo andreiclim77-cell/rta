@@ -5,12 +5,9 @@ on:
     branches:
       - main
     paths:
-      - "rta-lab/RTA_CURRENT_HANDOFF.md"
-      - "rta-lab/RTA_CONTINUITY_MASTER.md"
-      - "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md"
-      - "rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md"
-      - "rta-lab/RTA_OPERATING_PROTOCOL.md"
-      - "rta-lab/RTA_COLLECTION_STATUS_20261019.md"
+      - "rta-lab/**"
+      - "tools/check-rta-*.js"
+      - ".github/workflows/rta-lab-continuity-snapshot.yml"
 permissions:
   contents: read
 jobs:
