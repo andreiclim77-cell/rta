@@ -61,7 +61,7 @@ function currentLiquid(){return state.freeProfile||catalog[state.liquidIndex]||c
 function effectiveGoal(moodId=state.mood){return state.objective||moodById(moodId)?.goal||"complete";}
 function buildString(result){
  const cfg=result.config,w=core.wires[cfg.wire],air=tech(cfg.atom)?.air.find(a=>a.id===cfg.air);
- return w.name+" · "+cfg.wraps+" spire · "+(air?air.label:"airflow configurabil");
+ return w.name+" · "+core.coilLabel(cfg)+" · "+(air?air.label:"airflow configurabil");
 }
 function buildEnergy(result){
  const c=result.config,w=core.wires[c.wire];
@@ -74,7 +74,7 @@ function setupSummary(result){
 function compactBuild(result){
  const c=result.config,w=core.wires[c.wire];
  const name=w.name.replace("Dicodes RESISTHERM ","Dicodes ").replace("Kanthal A1 ","K1 ");
- return name+" · "+c.wraps+" spire · Ø"+String(c.coilMm).replace(".",",")+" · "+buildEnergy(result);
+ return name+" · "+core.coilLabel(c)+" · Ø"+String(c.coilMm).replace(".",",")+" · "+buildEnergy(result);
 }
 function labelScore(v){
  if(v>=4.65)return "foarte pronunțat";
@@ -156,16 +156,17 @@ function renderCoil(config){
  const a=tech(config.atom)?.air.find(x=>x.id===config.air);
  const holes=Array.isArray(a?.holes)?a.holes.length:((a?.pattern==="multipoint")?3:1);
  const number=Math.min(7,Math.max(3,config.wraps));
- const coilWidth=number*20,offset=120-coilWidth/2;
+ const pitch=config.spacing==="spaced"?24:20;
+ const coilWidth=number*pitch,offset=120-coilWidth/2;
  const coilCy=config.position==="low"?47:config.position==="high"?31:39,coilRy=16*(config.coilMm/2.5);
- const rings=Array.from({length:number},(_,i)=>'<ellipse cx="'+(offset+10+i*20)+'" cy="'+coilCy+'" rx="11" ry="'+coilRy+'" fill="none" stroke="#d6b990" stroke-width="3.5"/>').join("");
+ const rings=Array.from({length:number},(_,i)=>'<ellipse cx="'+(offset+pitch/2+i*pitch)+'" cy="'+coilCy+'" rx="'+(config.spacing==="spaced"?9:11)+'" ry="'+coilRy+'" fill="none" stroke="#d6b990" stroke-width="3.5"/>').join("");
  const holeDots=Array.from({length:Math.min(5,holes)},(_,i)=>{
   const cx=120+(i-(Math.min(5,holes)-1)/2)*30;
   return '<circle cx="'+cx+'" cy="79" r="4" fill="#80c9bc"/>'+
    '<path d="M'+cx+' 75 L'+cx+' 54" fill="none" stroke="#90d7cb" stroke-width="2" stroke-linecap="round" class="air-beams"/>';
  }).join("");
  const ct=core.modeFor(config)==="tc";
- return '<svg viewBox="0 0 240 100" role="img" aria-label="Schemă animată: '+number+' spire și '+holes+(holes===1?' canal':' canale')+' de aer, nu simulare fizică">'+
+ return '<svg viewBox="0 0 240 100" role="img" aria-label="Schemă animată: '+esc(core.coilLabel(config))+' și '+holes+(holes===1?' canal':' canale')+' de aer, nu simulare fizică">'+
  '<path d="M15 43H48 M192 43H224" stroke="#819c9d" stroke-width="3"/>'+
  rings+holeDots+'<path d="M45 85H195" stroke="#5d8f84" opacity=".4"/>'+
  '<text x="6" y="15" font-size="9" letter-spacing="1.2" fill="'+(ct?"#d4c7a5":"#90c5b9")+'">'+(ct?"TC CONTROL":"WATT DRIVE")+'</text></svg>';
@@ -176,7 +177,7 @@ function renderBuild(result,rank,liquid){
  const line=vapeDescription(result,liquid);
  return '<article class="build-card'+(rank===1?' build-lead':'')+'">'+
   '<span class="build-badge">'+(rank===1?'01 · CEA MAI BUNĂ POTRIVIRE CALCULATĂ':'0'+rank+' · ALTERNATIVĂ CONTEXTUALĂ')+'</span>'+
-  '<strong>'+esc(w.name)+' / '+cfg.wraps+' spire</strong>'+
+  '<strong>'+esc(w.name)+' / '+esc(core.coilLabel(cfg))+'</strong>'+
   '<div class="build-visual">'+renderCoil(cfg)+'</div>'+
   '<div class="build-technical"><b>Insert:</b> '+esc(tech(cfg.atom).air.find(a=>a.id===cfg.air)?.label||"variabil")+'<br>'+
   '<b>Clopot:</b> '+esc(window.RTA_BELL_LIQUID_FIT.config(cfg.atom)?.bells?.find(b=>b.id===cfg.bell)?.name||"standard")+'<br>'+
@@ -211,7 +212,7 @@ function renderResult(item,liquid){
  '<div class="card-detail" id="detail-'+esc(item.id)+'"'+(selected?'':' hidden')+'>'+
  '<p class="detail-intro"><strong>'+esc(evidence.label)+'.</strong> Configurațiile sunt ordonate pentru '+esc(liquid.name)+' în contextul ales; experiența ta directă primează unde există un test relevant.</p>'+
  '<div class="detail-grid">'+item.builds.map((b,i)=>renderBuild(b,i+1,liquid)).join("")+'</div>'+
- comparisonGraphic(item.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+b.config.wraps+' spire',result:b})),'Cum diferă cele trei builduri')+
+ comparisonGraphic(item.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+core.coilLabel(b.config),result:b})),'Cum diferă cele trei builduri')+
  '<div class="watchlist"><div class="watch-item"><b>01 / De urmărit — din experiența ta</b><p>'+esc(watchInternal(item))+'</p></div>'+
  '<div class="watch-item market"><b>02 / De urmărit — din piață</b><p>'+(window.RTA_ATLAS_MARKET?.watch(liquid)||'Semnalul extern pentru acest setup este încă în cercetare. Nu inventăm consensul din review-uri; sursele vor fi legate numai după verificare.')+'</p></div></div>'+
  '<p class="detail-foot">Graficele și schemele sunt ilustrații tehnice. Nu sunt măsurători ale temperaturii, debitului, gustului sau procente ale plăcerii.</p></div></article>';

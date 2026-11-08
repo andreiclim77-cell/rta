@@ -41,7 +41,7 @@ function available(wire,id){
 function cfg(atom,wire,wraps){
  if(!core.permitted(atom,wire,wraps))return null;
  const base=core.defaultConfig(atom),settings=core.wireSetup(atom,wire,wraps);
- const result=core.config(atom,{...base,wire,wraps,...settings});
+ const result=core.config(atom,{...base,wire,wraps,spacing:core.coilStylePreference(atom,wire,wraps).defaultSpacing,...settings});
  return result.wire===wire&&result.wraps===wraps?result:null;
 }
 function candidates(wire,wraps){
@@ -133,10 +133,10 @@ function atlasWizard(){
  if(A.atom!==m.state.atom)Object.assign(A,{atom:m.state.atom,wire:null,wraps:null,family:null,liquidIndex:null});
  const id=A.atom,profile=api()?.state.fromDemo?neutral:api().currentLiquid();
  const rows=Object.keys(core.wires).filter(w=>available(w,id).length).map(w=>{
-  const n=favoriteWrap(id,w),r=analyzed(id,w,n,profile);return r?{label:core.wires[w].name+' / '+n+' sp.',wire:w,result:r}:null;
+  const n=favoriteWrap(id,w),r=analyzed(id,w,n,profile);return r?{label:core.wires[w].name+' / '+core.coilLabel(r.config),wire:w,result:r}:null;
  }).filter(Boolean);
  const wraps=A.wire?available(A.wire,id):[];
- const variants=wraps.map(n=>({wraps:n,label:n+' spire',result:analyzed(id,A.wire,n,profile)}));
+ const variants=wraps.map(n=>{const result=analyzed(id,A.wire,n,profile);return {wraps:n,label:core.coilLabel(result.config),result};});
  const configs=A.wire&&A.wraps?[cfg(id,A.wire,A.wraps)].filter(Boolean):[];
  return '<section class="exp-flow" id="expAtlasWizard"><span class="eyebrow">DECIZIE EXPLICATĂ / ATLAS</span><h2>Alege în cunoștință de cauză.</h2>'+
  '<p class="exp-hint">Atomizor selectat: <strong>'+esc(atoms.find(a=>a.id===id)?.short||id)+'</strong>. Comparăm fiecare material compatibil cu platforma aceasta, în același context. Nu atribuim valori configurațiilor interzise.</p>'+
@@ -146,9 +146,9 @@ function atlasWizard(){
  wirePickList(id,A.wire,'atlas')+
  (A.wire?'<div class="exp-stage"><h3>2. Aceeași sârmă. Compară numărul de spire.</h3>'+
  matrix(variants,'Comparație spire · '+core.wires[A.wire].name,'Pe același atomizor; numărul de spire modifică răspunsul modelat, nu reprezintă un A/B fizic.')+
- '<div class="exp-wrap-choices">'+variants.map(v=>'<button type="button" data-exp-wraps="atlas" data-exp-value="'+v.wraps+'" aria-pressed="'+(A.wraps===v.wraps)+'" class="'+(A.wraps===v.wraps?'is-selected':'')+'">Aleg '+v.wraps+' spire</button>').join('')+'</div></div>':'')+
+ '<div class="exp-wrap-choices">'+variants.map(v=>'<button type="button" data-exp-wraps="atlas" data-exp-value="'+v.wraps+'" aria-pressed="'+(A.wraps===v.wraps)+'" class="'+(A.wraps===v.wraps?'is-selected':'')+'">Aleg '+esc(v.label)+'</button>').join('')+'</div></div>':'')+
  (A.wraps?'<div class="exp-stage"><h3>3. Pentru ce categorie de lichide?</h3>'+
- matrix([{label:core.wires[A.wire].name+' · '+A.wraps+' spire',result:analyzed(id,A.wire,A.wraps,profile)}],
+ matrix([{label:core.wires[A.wire].name+' · '+core.coilLabel(cfg(id,A.wire,A.wraps)),result:analyzed(id,A.wire,A.wraps,profile)}],
   'Obiectivele configurației alese','Platformă + sârmă + spire; grafice orientative 1–10.')+
  catsGrid(configs,'atlas',A.family)+'</div>':'')+
  (A.family?'<div class="exp-stage"><h3>4. Alege lichidul din categoria selectată</h3>'+
@@ -261,7 +261,7 @@ function wireWizard(){
   '<div class="exp-top-atoms">'+top.map((r,i)=>
    '<article><span>0'+(i+1)+'</span><h4>'+esc(r.atom.short)+'</h4>'+
    '<p>'+esc(core.platforms[r.atom.id].air.find(a=>a.id===r.result.config.air)?.label||"Airflow implicit")+'</p>'+
-   '<p>Configurație estimată · '+W.finalWraps+' spire</p>'+
+   '<p>Configurație estimată · '+esc(core.coilLabel(r.result.config))+'</p>'+
    '<button type="button" data-exp-open-atom="'+esc(r.atom.id)+'">Deschide buildul în Wire Lab ↗</button></article>').join('')+'</div>'+
   '<details class="wire-full-axis-details"><summary>Compară în detaliu cele trei atomizoare · 14 obiective</summary>'+
   matrix(top.map(r=>({label:r.atom.short,result:r.result})), 'Obiectivele celor trei atomizoare',
@@ -329,7 +329,7 @@ function detailComparisons(){
      ['th','offense','layers','smooth'].map(key=>'<span>'+esc(AXES.find(x=>x[0]===key)[1])+': <b>'+String(score10(metric(r.signals,key))).replace('.',',')+'</b></span>').join('')+'</div>');
   }
   if(detail&&!detail.querySelector('.exp-build-compare')){
-   detail.insertAdjacentHTML('beforeend','<div class="exp-build-compare">'+matrix(item.builds.map(x=>({label:core.wires[x.config.wire].name+' / '+x.config.wraps+' spire',result:x})),
+   detail.insertAdjacentHTML('beforeend','<div class="exp-build-compare">'+matrix(item.builds.map(x=>({label:core.wires[x.config.wire].name+' / '+core.coilLabel(x.config),result:x})),
     'Toate obiectivele · sârmele acestui atomizor',
     'Același atomizor și lichid; se compară cele trei builduri recomandate, fără a pretinde că schimbarea sârmei este un A/B controlat.')+'</div>');
   }

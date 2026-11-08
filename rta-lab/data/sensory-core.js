@@ -130,6 +130,41 @@ const PERSONAL_PREFS=Object.freeze({
  dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
  evidence:"preferințe personale declarate direct 14.10.2026; fără identitate materială sau A/B universal"
 });
+/* Tipul spirelor este o variabilă distinctă de material și număr.
+ * "either" = ambele variante declarate, fără a pretinde un montaj fizic ales.
+ * "unknown" = utilizatorul nu a confirmat contact/spaced pentru această combinație.
+ * Nu atribui un câștig senzorial numeric formei în absența unui A/B izolat. */
+const COIL_STYLE=Object.freeze({
+ gtone:{k129:{5:["spaced","Montat, «perfect» la 03.11; 29/6 contact este istoric."],6:["contact","Reper A/B istoric, nu prima alegere curentă."]}},
+ gtr:{k129:{5:["spaced","Alternativă declarată."],6:["spaced","Alternativă declarată."]}},
+ klp:{k129:{6:["either","KLP 29/6 ușor spaced este montajul preferat în A/B-ul contextual din 01.11 (13 W, Aerokon ≈1 mm, coil–air 1,8 mm); contact rămâne alternativă, nu verdict universal.","spaced"]},k128:{5:["contact","Reper istoric A/B 12–13.10, nu prioritatea de azi."]}},
+ kx:{k129:{6:["either","Contact ori spaced: ambele variante declarate, fără A/B nou."]}},
+ kprime:{k129:{5:["either","Contact ori spaced: ambele variante declarate, fără ierarhie A/B."],6:["either","Contact ori spaced: ambele variante declarate, fără ierarhie A/B."]}},
+ muted:{nife30:{6:["spaced","Prima alegere TC; test personal pe Arcana DNA60C."]},nife52:{6:["spaced","Prima alegere TC declarată; montarea pe fiecare exemplar nu e confirmată."]},k128:{6:["contact","A doua alegere după NiFe TC."]}},
+ "415":{k129:{5:["contact","Reper istoric; atomizor vândut."],6:["contact","Reper istoric; atomizor vândut."]}}
+});
+function coilStylePreference(atom,wire,wraps){
+ const data=COIL_STYLE[atom]?.[wire]?.[Number(wraps)];
+ const mode=data?.[0]||"unknown";
+ return {mode,defaultSpacing:mode==="either"?(data?.[2]||"unspecified"):mode==="unknown"?"unspecified":mode,
+  declared:mode==="either"?"contact sau spaced":mode==="unknown"?"neconfirmat":mode,
+  note:data?.[1]||"Tipul contact/spaced nu a fost confirmat pentru această combinație. Nu presupunem că este montată."};
+}
+function coilStyleLabel(config){
+ const pref=coilStylePreference(config.atom,config.wire,config.wraps);
+ const selected=config.spacing;
+ if(selected==="contact"||selected==="spaced")return selected;
+ return pref.mode==="either"?"contact sau spaced (ambele declarate; tip neales)":"tip contact/spaced neconfirmat";
+}
+function coilLabel(config){return config.wraps+" spire · "+coilStyleLabel(config);}
+function coilStyleNote(config){
+ const pref=coilStylePreference(config.atom,config.wire,config.wraps);
+ if((config.spacing==="contact"||config.spacing==="spaced")&&pref.mode!=="unknown"&&pref.mode!=="either"&&config.spacing!==pref.mode)
+  return "Ai selectat "+config.spacing+" pentru simulare; preferința confirmată aici este "+pref.mode+". Nu transferăm automat observațiile personale.";
+ if((config.spacing==="contact"||config.spacing==="spaced")&&pref.mode==="unknown")
+  return "Tip selectat în simulator, dar fără validare personală pe această platformă. Nu este un montaj fizic confirmat.";
+ return pref.note;
+}
 /* Practical setup choices preserve physical configuration, not a universal
    atomizer ranking. 28/5 with single insert has no measured W/Ø/liquid. */
 const PERSONAL_SETUPS=Object.freeze({
@@ -152,6 +187,10 @@ function personalSetups(atomId){return (PERSONAL_SETUPS[atomId]||[]).map(x=>({..
 function personalPreference(config){
  // Do not extrapolate earlier NiFe TC preferences to the optional NiFe30 WATT mode.
  if(config.wire==="nife30"&&config.regime==="watt")return null;
+ // A spaced-only personal preference must never endorse a changed contact coil,
+ // nor vice versa. An unknown/dual preference remains descriptive, not a test.
+ const style=coilStylePreference(config.atom,config.wire,config.wraps);
+ if((style.mode==="spaced"||style.mode==="contact")&&(config.spacing??style.defaultSpacing)!==style.mode)return null;
  // 415 Cool, personal priority 15.10.2026; not universal chemical equivalence.
  if(config.atom==="415"){
   if((config.wire==="nife30"&&config.wraps===7)||(config.wire==="nife52"&&config.wraps===6))
@@ -161,10 +200,10 @@ function personalPreference(config){
    return {tier:2,label:"415 Cool · K1 28 GA / 6 spire · a doua alegere",
     note:"Preferință personală nouă; 28/5 istoric și K1 Clapton/5 specialist rămân disponibile."};
  }
- // 03.11.2026 — preferred K1 alternative by atom, no structured spaced/contact selector yet.
+ // Preferința K1 este contextuală: afișăm tipul ales, nu o etichetă generică.
  if(config.wire==="k129"&&PERSONAL_PREFS.currentK1[config.atom]?.includes(config.wraps)){
   const first=config.atom==="gtone";
-  const geometry=first||config.atom==="gtr"?"spaced":"contact sau spaced";
+  const geometry=coilStyleLabel(config);
   return {tier:first?1:2,label:(first?"GT One · prima alegere":"Alternativă K1 · după NiFe")+" · 29 GA / "+config.wraps+" spire · "+geometry,
    note:first?"Montaj K1 29/5 spaced declarat perfect la 03.11.2026; 29/6 rămâne istoric.":"Preferință declarată la 03.11.2026; fără presupunerea că toate variantele au fost testate A/B."};
  }
@@ -414,7 +453,7 @@ function defaults(id) {
  if(!model||!def)return null;
  const bellCfg=window.RTA_BELL_LIQUID_FIT&&window.RTA_BELL_LIQUID_FIT.config(id);
  return {atom:id,bell:bellCfg?bellCfg.defaultId:"standard",air:def.air,wire:def.wire,
-  wraps:def.wraps,coilMm:2.5,position:"standard",
+  wraps:def.wraps,spacing:coilStylePreference(id,def.wire,def.wraps).defaultSpacing,coilMm:2.5,position:"standard",
   power:wireSetup(id,def.wire,def.wraps).power,temp:wireSetup(id,def.wire,def.wraps).temp,
   regime:WIRES[def.wire].type==="tc"?"tc":"watt",chipset:""};
 }
@@ -441,6 +480,8 @@ function configuration(id,changes={}) {
  value.bell=bellFor(id,value.bell).id;
  if(!permitted(id,value.wire,Number(value.wraps))){value.wire=base.wire;value.wraps=base.wraps;}
  value.wraps=Number(value.wraps);
+ if(!Object.prototype.hasOwnProperty.call(changes,"spacing")||!["contact","spaced","unspecified"].includes(value.spacing))
+  value.spacing=coilStylePreference(id,value.wire,value.wraps).defaultSpacing;
  value.coilMm=[2,2.5,3].includes(Number(value.coilMm))?Number(value.coilMm):2.5;
  if(!["low","standard","high"].includes(value.position))value.position="standard";
  const w=WIRES[value.wire];
@@ -683,7 +724,7 @@ function priority(result,objective="complete"){
 function rankBuilds(atomId,liquid={},objective="complete",context={}){
  const base=configuration(atomId,context);if(!base)return [];
  return variants(atomId).map(v=>{
-  const c=configuration(atomId,{...base,...v,...wireSetup(atomId,v.wire,v.wraps)});
+  const c=configuration(atomId,{...base,...v,spacing:coilStylePreference(atomId,v.wire,v.wraps).defaultSpacing,...wireSetup(atomId,v.wire,v.wraps)});
   const result=analyze(c,liquid,objective);
   return {...result,rankScore:priority(result,objective)};
  }).sort((a,b)=>b.rankScore-a.rankScore);
@@ -711,6 +752,6 @@ function bestForLiquid(liquid,objective="complete",top=16){
 }
 window.RTA_SENSORY_CORE={version:V,axioms:AXIOMS,dimensions:DIMENSIONS,platforms:PLATFORMS,
  nife30Watt:NIFE30_WATT,allowedRegimes,modeFor,
- wires:WIRES,observations:OBS,personalABCases:PERSONAL_AB_CASES,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalSetups,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,
+ wires:WIRES,observations:OBS,personalABCases:PERSONAL_AB_CASES,nife30Family:NIFE30_FAMILY,personalPreferences:PERSONAL_PREFS,personalSetups,personalPreference,wireSetup,defaultConfig:defaults,config:configuration,variants,coilStylePreference,coilStyleLabel,coilStyleNote,coilLabel,
  physical,analyze,priority,rankBuilds,matchLiquids,bestForLiquid,liquidTags,permitted};
 })();
