@@ -8,7 +8,7 @@ const storeKey="rta-sensory-dna-choice-20261013";
 const viewKey="rta-sensory-dna-active-view";
 const physicalClKey="rta-cl-physical-units-v1-20261014";
 const physicalClCount=3;
-const configFields=["atom","bell","air","wire","wraps","coilMm","position","power","temp","regime","chipset"];
+const configFields=["atom","bell","air","wire","wraps","spacing","coilMm","position","power","temp","regime","chipset"];
 const blankClUnit=()=>({saved:null,draft:null,source:null});
 const states={explorer:{atom:"",category:"NET complex"},main:{atom:"",category:"NET complex"}};
 let configs={},active="explorer";
@@ -130,6 +130,8 @@ function configFor(atomId,view){
 }
 function setConfig(atomId,changes,view){
  const before=configFor(atomId,view);
+ if((changes.wire&&changes.wire!==before.wire)||(changes.wraps!=null&&Number(changes.wraps)!==before.wraps))
+  changes={...changes,spacing:core.coilStylePreference(atomId,changes.wire||before.wire,changes.wraps??before.wraps).defaultSpacing};
  const next=core.config(atomId,{...before,...changes});
  if(changes.wire && next.wire!==before.wire){
   // Never carry an unrelated fixed wattage into another wire.
@@ -175,7 +177,16 @@ function selected(list,current,labelFn,valueFn){
 }
 function buildSelect(config){
  const items=core.variants(config.atom).filter(x=>x.wire===config.wire);
- return choice("Spire","wraps",items.map(x=>({value:x.wraps,label:x.wraps+" contact",selected:config.wraps})),null,items.length===1);
+ return choice("Număr de spire","wraps",items.map(x=>({value:x.wraps,label:core.coilLabel(core.config(config.atom,{...config,wraps:x.wraps,spacing:core.coilStylePreference(config.atom,config.wire,x.wraps).defaultSpacing})),selected:config.wraps})),null,items.length===1);
+}
+function spacingSelect(config){
+ const pref=core.coilStylePreference(config.atom,config.wire,config.wraps);
+ const openLabel=pref.mode==="either"?"Neselectat · contact sau spaced, ambele declarate":"Neconfirmat · nu atribuim tipul spirelor";
+ return choice("Tipul spirelor","spacing",[
+  {value:"unspecified",label:openLabel,selected:config.spacing},
+  {value:"contact",label:"Contact · spire lipite",selected:config.spacing},
+  {value:"spaced",label:"Spaced · spire distanțate",selected:config.spacing}
+ ])+'<p class="sd-fine-note">'+esc(core.coilStyleNote(config))+'</p>';
 }
 function physicalClMarkup(config){
  if(config.atom!=="dvarwcl")return "";
@@ -184,7 +195,7 @@ function physicalClMarkup(config){
   const details=unit.draft||unit.saved;
   const air=details?core.platforms.dvarwcl.air.find(a=>a.id===details.air):null;
   const summary=details?(air?air.label:"Insertul selectat")+" · "+
-   core.wires[details.wire].name+" · "+details.wraps+" spire":
+   core.wires[details.wire].name+" · "+core.coilLabel(details):
    "Fără configurație fizică înregistrată";
   return '<button type="button" class="sd-cl-unit'+(current?' is-active':'')+
    '" data-sd-cl-unit="'+(i+1)+'" aria-pressed="'+(current?'true':'false')+'">'+
@@ -252,7 +263,7 @@ function topBuilds(config,liquid,objective){
   return '<button type="button" class="sd-build'+(sel?' selected':'')+'" data-sd-pick-wire="'+
    esc(b.wire)+'" data-sd-pick-wraps="'+b.wraps+'"><span class="sd-build-rank">'+
    (i+1)+'</span><span class="sd-build-title"><strong>'+esc(wire.name)+
-   ' · '+b.wraps+' spire</strong><small>'+t+' · '+esc(x.personalPreference?x.personalPreference.label:x.certainty)+
+   ' · '+esc(core.coilLabel(b))+'</strong><small>'+t+' · '+esc(x.personalPreference?x.personalPreference.label:x.certainty)+
    '</small></span><span class="sd-build-indicator">'+(sel?'SELECTAT':'ALEGE')+'</span></button>';
  }).join("");
 }
@@ -333,7 +344,7 @@ function content(view){
    choice("Clopot / cameră","bell",bellOptions,view,bellOptions.length===1)+
    choice("Airflow / insert","air",airOptions)+
    choice("Sârmă / material","wire",wireOptions)+
-   buildSelect(config)+
+   buildSelect(config)+spacingSelect(config)+
    (config.wire==="nife30"?
     choice("Regim NiFe30","regime",[
      {value:"tc",label:"TC · setările existente",selected:config.regime},

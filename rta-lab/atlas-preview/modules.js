@@ -10,6 +10,8 @@ const inventory=Object.freeze({...historicalInventory,"415":0,kv3:0,kprime:3});
 const activeUnits=atoms.reduce((total,a)=>total+(inventory[a.id]||0),0);
 const objectives=[['complete','Armonie + palat'],['layers','Stratificare'],['th','Ofensivă + TH'],['tobacco','Tutun în prim-plan'],['body','Corp + densitate'],['smooth','Finețe']];
 const state={atom:'gtr',query:'',category:'all',config:core.defaultConfig('gtr'),objective:'layers',goalLocked:false,liquidsOpen:false,advanced:false,wirePlatformChosen:false,wireChosen:false,wireShowAll:false,wireJourney:{wrapsConfirmed:false,objective:null,family:null,liquidIndex:null}};
+const coilText=cfg=>core.coilLabel(cfg);
+const stylePreset=(atom,wire,wraps)=>core.coilStylePreference(atom,wire,wraps).defaultSpacing;
 const esc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 const el=id=>document.getElementById(id);
 const liquid=()=>api.currentLiquid();
@@ -62,7 +64,7 @@ function setConfig(changes){
   const variant=core.variants(state.atom).find(v=>v.wire===changes.wire);
   if(!variant)return false;
   const preset=core.wireSetup(state.atom,changes.wire,variant.wraps);
-  changes={...changes,wraps:variant.wraps,power:preset.power,temp:preset.temp,
+  changes={...changes,wraps:variant.wraps,spacing:stylePreset(state.atom,changes.wire,variant.wraps),power:preset.power,temp:preset.temp,
    regime:core.wires[changes.wire].type==="tc"?"tc":"watt",chipset:""};
  }
  if(changes.regime&&state.config.wire==="nife30"&&changes.regime!==state.config.regime){
@@ -70,6 +72,8 @@ function setConfig(changes){
   changes={...changes,power:changes.regime==="watt"?core.nife30Watt.power:preset.power,temp:preset.temp,chipset:""};
  }
  if(changes.wraps&&!core.permitted(state.atom,changes.wire||state.config.wire,Number(changes.wraps)))return false;
+ if(changes.wraps!=null&&Number(changes.wraps)!==state.config.wraps&&!changes.wire)
+  changes={...changes,spacing:stylePreset(state.atom,state.config.wire,changes.wraps)};
  state.config=core.config(state.atom,{...state.config,...changes});state.liquidsOpen=false;return !!state.config;
 }
 function options(rows,value){return rows.map(([id,label])=>'<option value="'+esc(id)+'"'+(String(id)===String(value)?' selected':'')+'>'+esc(label)+'</option>').join('');}
@@ -99,7 +103,7 @@ function watchPanel(builds){
 }
 function storedBuild(raw){
  if(!raw)return 'Niciun montaj declarat';
- const wire=core.wires[raw.wire]?.name||'Material neprecizat',wraps=Number.isFinite(Number(raw.wraps))&&Number(raw.wraps)>0?raw.wraps+' spire':'Spire neprecizate',air=core.platforms.dvarwcl.air.find(a=>a.id===raw.air)?.label||'Airflow neprecizat';
+ const wire=core.wires[raw.wire]?.name||'Material neprecizat',wraps=Number.isFinite(Number(raw.wraps))&&Number(raw.wraps)>0?coilText(core.config('dvarwcl',raw)):'Spire neprecizate',air=core.platforms.dvarwcl.air.find(a=>a.id===raw.air)?.label||'Airflow neprecizat';
  return wire+' · '+wraps+' · '+air;
 }
 function sameStored(a,b){const keys=[...new Set([...Object.keys(a||{}),...Object.keys(b||{})])].sort();return keys.every(k=>JSON.stringify(a?.[k])===JSON.stringify(b?.[k]));}
@@ -150,7 +154,7 @@ function wireConfig(id,wire){
  const chipset=preserve&&wire==='nife30'&&regime==='watt'?state.config.chipset:'';
  const settings=core.wireSetup(id,wire,v.wraps);
  const power=wire==='nife30'&&regime==='watt'?core.nife30Watt.power:settings.power;
- return core.config(id,{...base,...v,...settings,regime,chipset,power});
+ return core.config(id,{...base,...v,spacing:stylePreset(id,wire,v.wraps),...settings,regime,chipset,power});
 }
 function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?(wire==='nife30'?'NiFe30 TCR320/7 · preferință globală, /6 alternativă istorică; TC sau alternativ WATT 12 W pe Dicodes, YiHi, ARC1, DNA.':'NiFe52 TCR310 · TC, preseturi proprii platformei.'):w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
 function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objective).map((r,i)=>'<button type="button" data-journey-liquid="'+r.index+'" data-journey-wire="'+cfg.wire+'" data-journey-atom="'+cfg.atom+'"><span>0'+(i+1)+'</span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('');}
@@ -177,7 +181,7 @@ function buildLeads(id=state.atom){
  if(!base)return [];
  function add(wire,wraps,air,source,bell){
   if(!core.wires[wire]||used.has(wire)||!core.permitted(id,wire,wraps))return;
-  const cfg=core.config(id,{...base,wire,wraps,air:air||base.air,bell:bell||base.bell,...core.wireSetup(id,wire,wraps)});
+  const cfg=core.config(id,{...base,wire,wraps,spacing:stylePreset(id,wire,wraps),air:air||base.air,bell:bell||base.bell,...core.wireSetup(id,wire,wraps)});
   if(cfg.wire!==wire||cfg.wraps!==wraps)return;
   used.add(wire);out.push({config:cfg,source});
  }
@@ -196,7 +200,7 @@ function buildFacts(config){
  const w=core.wires[config.wire],a=core.platforms[config.atom].air.find(x=>x.id===config.air);
  const bell=fit.config(config.atom)?.bells?.find(x=>x.id===config.bell);
  const energy=core.modeFor(config)==="tc"?"TC "+config.temp+"°C (setare) · plafon "+config.power+" W":"WATT "+config.power+" W"+(config.wire==="nife30"&&config.chipset?" · "+core.nife30Watt.chipsets[config.chipset]:"");
- const facts=[["Coil",config.wraps+" spire · Ø"+String(config.coilMm).replace(".",",")+" mm"],
+ const facts=[["Coil",coilText(config)+" · Ø"+String(config.coilMm).replace(".",",")+" mm"],
   ["Insert / aer",a?.label||"Necunoscut"],["Clopot",bell?.name||"Original"],
   ["Regim",energy],["Poziție",{low:"Jos",standard:"Standard",high:"Sus"}[config.position]||"Standard"]];
  return '<dl class="material-build-facts">'+facts.map(([key,val])=>
@@ -220,7 +224,7 @@ function materialPaths(){
   '<details class="wire-liquid-links"><summary>5 lichide potrivite cu acest build</summary><div class="journey-liquid-list">'+liquidButtons(config)+'</div><p class="module-note">Potriviri calculate dintre cele '+catalog.length+' de lichide; nu teste personale.</p></details></article>';
  }).join("")+'</div>'+
  (!isCurrent?'<div class="material-current"><strong>Configurația ta selectată, în afara primelor trei</strong>'+buildFacts(chosen)+'<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(chosen)))+'">Deschide configurația selectată ↗</button></div>':'')+
- (hasLiquid()?api.comparisonGraphic(leads.map(({config})=>({label:core.wires[config.wire].name+" / "+config.wraps+" spire",result:core.analyze(config,profile,state.objective)})),"Comparație pe același lichid"):"")+
+ (hasLiquid()?api.comparisonGraphic(leads.map(({config})=>({label:core.wires[config.wire].name+" / "+coilText(config),result:core.analyze(config,profile,state.objective)})),"Comparație pe același lichid"):"")+
  '<p class="module-note">Alte materiale, spire, inserturi și alternative validate sunt disponibile în Wire Lab, fără rescrierea fișelor unităților fizice.</p></section>';
 }
 
@@ -271,17 +275,18 @@ function wirePalette(){
   '<span class="eyebrow">'+esc(w.mode)+' · '+(id==="nife30"?"TCR 320":id==="nife52"?"TCR 310":"GEOMETRIE")+'</span>'+
   '<b>'+esc(w.name)+'</b>'+
   '<span class="wire-card-coil"><span class="wire-card-coil-visual">'+api.renderCoil(config)+'</span>'+
-  '<strong>'+config.wraps+' spire</strong><small>Ø'+String(config.coilMm).replace(".",",")+' mm · preset</small></span>'+
+  '<strong>'+esc(coilText(config))+'</strong><small>Ø'+String(config.coilMm).replace(".",",")+' mm · preset</small></span>'+
   '<span class="wire-card-note">'+esc(wireIdentity(id))+'</span>'+
   '<span class="wire-card-preferences"><strong>'+(id==="ssclap"?"Pereche tehnică din Lab":"Builduri curente și repere istorice")+'</strong>'+
   examples.map(x=>'<span class="wire-saved-build'+(x.origin==="model"?' is-model':'')+'">'+
-   esc(x.label)+' · '+x.config.wraps+' spire'+(x.origin==="local"?" · LOCAL":"")+'</span>').join('')+
+   esc(x.label)+' · '+esc(coilText(x.config))+(x.origin==="local"?" · LOCAL":"")+'</span>').join('')+
   '</span><span class="wire-card-action">'+(selected===id?"SELECTAT · modifică mai jos":"Alege această sârmă ↗")+'</span></button>';
  }).join("");
  const html='<section class="wire-library" id="wireLibrary"><div class="wire-library-head">'+
   '<span class="eyebrow">RTA LAB / ULTIMELE PREFERINȚE</span>'+
   '<h2>Toate sârmele, coilurile și buildurile tale.</h2>'+
-  '<p>Toate cele șase materiale sunt vizibile înainte de alegere. NiFe30 Dicodes folosește 7 spire; NiFe52 Zivipf, 6. Celelalte construcții păstrează alegerile specifice atomizoarelor. Schemele nu sunt fotografii ale montajelor reale.</p>'+
+  '<p>Toate cele șase materiale sunt vizibile înainte de alegere. NiFe30 Dicodes folosește 7 spire global, <b>excepție Muted+ 6 SPACED</b>; NiFe52 Zivipf folosește 6, iar tipul spirelor este cunoscut pe Muted+ ca <b>SPACED</b>. Pentru celelalte TC tipul contact/spaced rămâne neconfirmat. Schemele nu sunt fotografii ale montajelor reale.</p>'+
+  '<p class="module-note"><b>ULTIMELE PREFERINȚE:</b> GT One K1 29/5 <b>SPACED</b> (montat, perfect); GTR K1 29/5–6 <b>SPACED</b>; KLP/KX K1 29/6 <b>CONTACT SAU SPACED</b>; Kayfun Prime/Prime SE K1 29/5–6 <b>CONTACT SAU SPACED</b>; Muted+ NiFe30/6 sau NiFe52/6 <b>SPACED</b>, alternativ K1 28/6 <b>CONTACT</b>. Pe KLP/GTR/KX/Prime, TC NiFe are prioritate față de K1. „Ambele” nu înseamnă că s-a confirmat montarea unei variante pe fiecare exemplar.</p>'+
   '</div><div class="wire-family-grid wire-library-grid">'+cards+'</div>'+mutedABNote+klpABNote+
   '<p class="module-note">„Preferat în Lab” nu înseamnă „montat pe fiecare exemplar”. Fișele CL salvate în acest browser apar separat, fără a fi sincronizate automat cu alte dispozitive.</p></section>';
  // Before any choice show ALL six real build cards. After picking a material,
@@ -292,7 +297,7 @@ function wirePalette(){
   const isFinal=!!guided?.final&&!!guided?.finalWraps;
   const stepLabel=isFinal?"03 · CONFIGURAȚIA FINALĂ":"01 · SÂRMA DE PORNIRE";
   return '<details class="wire-gallery-disclosure"><summary><span class="eyebrow">'+stepLabel+'</span>'+
-   '<strong>'+esc(core.wires[state.config.wire]?.name||"Material selectat")+' · '+state.config.wraps+' spire</strong>'+
+  '<strong>'+esc(core.wires[state.config.wire]?.name||"Material selectat")+' · '+esc(coilText(state.config))+'</strong>'+
    '<span class="wire-gallery-mini">'+api.renderCoil(state.config)+'</span>'+
    '<small>Schimbă sârma · vezi toate cele 6 materiale și buildurile preferate</small></summary>'+
    html+'</details>';
@@ -317,14 +322,14 @@ function wireJourneyControls(){
   '<button type="button" class="wire-catalog-reset" data-wire-reset="1">Resetează selecțiile</button></div>'+
   '<div class="wire-progress-filters">'+
   '<label>02 · Număr de spire<select id="wireJourneyWraps">'+
-    options(wraps.map(n=>[n,n+' spire'+(!step.wrapsConfirmed&&n===current.wraps?' · preset actual':'')]),current.wraps)+'</select></label>'+
+    options(wraps.map(n=>[n,coilText(core.config(current.atom,{...current,wraps:n,spacing:stylePreset(current.atom,current.wire,n)}))+(!step.wrapsConfirmed&&n===current.wraps?' · preset actual':'')]),current.wraps)+'</select></label>'+
   '<label>03 · Ce vrei de la vapori?<select id="wireJourneyGoal"><option value="">Alege obiectivul...</option>'+
     options(objectives,step.objective)+'</select></label>'+
   '<label>04 · Familie de lichide<select id="wireJourneyFamily"><option value="">Alege familia...</option>'+
     options(WIRE_FAMILIES.map(n=>[n,n]),step.family)+'</select></label>'+
   '<label>05 · Lichid concret<select id="wireJourneyLiquid"'+(step.family?'':' disabled')+'><option value="">'+(step.family?'Alege un lichid...':'Mai întâi alege familia')+'</option>'+
     options(liquids.map(x=>[x.i,[x.l.brand,x.l.name].filter(Boolean).join(" · ")]),step.liquidIndex)+'</select></label></div>'+
-  '<p class="module-note">Geometrie curentă: <b>'+esc(core.wires[current.wire].name)+' · '+current.wraps+' spire</b>. '+
+  '<p class="module-note">Geometrie curentă: <b>'+esc(core.wires[current.wire].name)+' · '+esc(coilText(current))+'</b>. '+
   (step.liquidIndex!=null?'Lichidul ales determină TOP 3 contextual; celelalte rezultate compatibile rămân accesibile.':
     step.family?'Categoria restrânge potrivirile pe profil generic; mai alege lichidul pentru clasamentul final.':
     step.objective?'Obiectivul schimbă clasamentul; categoria și lichidul îl vor rafina în continuare.':
@@ -347,7 +352,7 @@ function wirePlatformMatches(){
   if(!base)return null;
   const thermal=core.wireSetup(atom.id,wire,wraps);
   const reuse=atom.id===state.atom?state.config:{};
-  const config=core.config(atom.id,{...base,...reuse,wire,wraps,
+  const config=core.config(atom.id,{...base,...reuse,wire,wraps,spacing:atom.id===state.atom?state.config.spacing:stylePreset(atom.id,wire,wraps),
    power:atom.id===state.atom?state.config.power:thermal.power,
    temp:atom.id===state.atom?state.config.temp:thermal.temp});
   if(config.wire!==wire||config.wraps!==wraps)return null;
@@ -364,7 +369,7 @@ function wirePlatformMatches(){
 function wirePlatforms(){
  const m=wirePlatformMatches(),active=state.wireChosen,st=state.wireJourney;
  const title=!active?'Toate cele '+atoms.length+' atomizoare active':
-  m.total+' atomizoare compatibile · '+core.wires[state.config.wire].name+' / '+state.config.wraps+' spire';
+  m.total+' atomizoare compatibile · '+core.wires[state.config.wire].name+' / '+coilText(state.config);
  const why=!active?'Încă nu ai ales o sârmă: afișăm întreaga colecție, fără clasament artificial.':
   m.mode==="liquid"?'TOP 3 este calculat pentru sârma, spirele, obiectivul, familia și lichidul ales.':
   m.mode==="family"?'Primele 4 sunt potrivirile estimative pentru familia aleasă; lichidul concret poate schimba ordinea.':
@@ -387,7 +392,7 @@ function wirePlatforms(){
       esc((row.result.advantages||[]).slice(0,2).join(' · ')||'Compatibilitate de verificat în context')+'</p>'+
      (row.result.personalPreference?'<p class="wire-personal-ref">'+esc(row.result.personalPreference.label)+'</p>':''):
      '<p>'+esc(core.platforms[atom.id].note)+'</p>')+
-   (active?'<p class="wire-matched-build"><strong>'+esc(core.wires[state.config.wire].name)+' · '+state.config.wraps+' spire</strong>'+
+   (active?'<p class="wire-matched-build"><strong>'+esc(core.wires[state.config.wire].name)+' · '+esc(coilText(row.config||state.config))+'</strong>'+
      '<small>Potrivire estimată · fără scor de plăcere inventat</small></p>':
      '<p class="module-note">Alege sârma pentru a calcula potrivirea.</p>')+
    '<button type="button" class="module-link" data-wire-platform="'+esc(atom.id)+'">'+
@@ -425,8 +430,12 @@ function renderAtomizer(){
 function controls(){
  const cfg=state.config,p=core.platforms[state.atom];
  const wires=Object.entries(core.wires).filter(([id])=>core.variants(state.atom).some(v=>v.wire===id));
- const wraps=core.variants(state.atom).filter(v=>v.wire===cfg.wire).map(v=>[v.wraps,v.wraps+' spire']);
- return '<div class="wire-controls">'+select('Spire','wireWraps',wraps,cfg.wraps)+
+ const wraps=core.variants(state.atom).filter(v=>v.wire===cfg.wire).map(v=>[v.wraps,coilText(core.config(state.atom,{...cfg,wraps:v.wraps,spacing:stylePreset(state.atom,cfg.wire,v.wraps)}))]);
+ const pref=core.coilStylePreference(cfg.atom,cfg.wire,cfg.wraps);
+ const openLabel=pref.mode==='either'?'Neselectat · contact sau spaced (ambele declarate)':'Neconfirmat · tipul nu a fost declarat';
+ return '<div class="wire-controls">'+select('Număr de spire','wireWraps',wraps,cfg.wraps)+
+ select('Tip spire · contact / spaced','wireSpacing',[["unspecified",openLabel],["contact","Contact · spire lipite"],["spaced","Spaced · spire distanțate"]],cfg.spacing)+
+ '<p class="module-note">'+esc(core.coilStyleNote(cfg))+' Trecerea de la contact la spaced nu primește automat alte scoruri fără A/B comparabil.</p>'+
  (cfg.wire==='nife30'?select('Regim NiFe30','wireRegime',[['tc','TC · setări păstrate'],['watt','WATT · 12 W personal']],cfg.regime):'')+
  (cfg.wire==='nife30'&&core.modeFor(cfg)==='watt'?select('Chipset electronic','wireChipset',[['','Nespecificat'],...Object.entries(core.nife30Watt.chipsets)],cfg.chipset):'')+
  select('Insert / aer','wireAir',p.air.map(a=>[a.id,a.label]),cfg.air)+select('Cameră / clopot','wireBell',fit.config(state.atom).bells.map(b=>[b.id,b.name]),cfg.bell)+
@@ -460,7 +469,7 @@ function setWireJourney(changes={}){
   const wraps=Number(changes.wraps);
   if(!state.wireChosen||!core.permitted(state.atom,state.config.wire,wraps))return false;
   const thermal=core.wireSetup(state.atom,state.config.wire,wraps);
-  const updated=core.config(state.atom,{...state.config,wraps,
+  const updated=core.config(state.atom,{...state.config,wraps,spacing:stylePreset(state.atom,state.config.wire,wraps),
    power:thermal.power,temp:thermal.temp});
   if(updated.wraps!==wraps)return false;
   state.config=updated;step.wrapsConfirmed=true;
@@ -491,7 +500,7 @@ function setWireJourney(changes={}){
 function renderWireExtrasContent(){
  const m=contextual();
  if(!m)return '';
- return topLiquids('wire')+compareWirePlatforms()+'<section class="module-section" data-requires-liquid><h2>Alte trei configurații pentru comparație.</h2><div class="detail-grid">'+m.builds.map((b,i)=>'<div>'+api.renderBuild(b,i+1,liquid())+'<button type="button" class="module-link" data-pick-build="'+i+'">Explorează acest build</button></div>').join('')+'</div>'+watchPanel(m.builds)+api.comparisonGraphic(m.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+b.config.wraps+' spire',result:b})),'Trei experiențe pe același atomizor')+'</section>';
+ return topLiquids('wire')+compareWirePlatforms()+'<section class="module-section" data-requires-liquid><h2>Alte trei configurații pentru comparație.</h2><div class="detail-grid">'+m.builds.map((b,i)=>'<div>'+api.renderBuild(b,i+1,liquid())+'<button type="button" class="module-link" data-pick-build="'+i+'">Explorează acest build</button></div>').join('')+'</div>'+watchPanel(m.builds)+api.comparisonGraphic(m.builds.map(b=>({label:core.wires[b.config.wire].name+' / '+coilText(b.config),result:b})),'Trei experiențe pe același atomizor')+'</section>';
 }
 
 function renderWire(){
@@ -507,7 +516,7 @@ function renderWire(){
  wirePalette()+
  '<div class="wire-guided-slot" id="wireGuidedSlot" aria-label="Configurare ghidată pas cu pas"></div>'+
  (chosen?'<div class="wire-selected-experience">'+contextBar()+(hasLiquid()?'<div class="module-next-actions"><button type="button" class="module-link" data-route="liquid">Vezi și celelalte atomizoare pentru acest lichid ↗</button><button type="button" class="module-link" data-route="atomizer">Explorează acest atomizor în Atlas ↗</button></div>':'')+
- '<div class="wire-workspace"><div class="wire-stage"><span class="eyebrow">'+esc(core.modeFor(state.config).toUpperCase())+' / '+esc(name(state.atom))+'</span><h2>'+esc(w.name)+'</h2><div class="coil-stage">'+api.renderCoil(state.config)+'</div><div class="geometry-readout"><span><b>'+phys.widthMm+' mm</b>lățime estimată coil</span><span><b>'+esc(phys.areaMm2==null?'nefixată':phys.areaMm2+' mm²')+'</b>arie nominală aer</span></div><p class="module-note">Schemă explicativă. Aria orificiilor nu este debit; lățimea coilului este o aproximație geometrică.</p><p class="wire-identity">'+esc(state.config.wire==='nife30'&&core.modeFor(state.config)==='watt'?'NiFe30 în WATT '+state.config.power+' W · '+(core.nife30Watt.chipsets[state.config.chipset]||'chipset nespecificat')+'. La 7 spire / 12 W ai raportat temperatură mai echilibrată a vaporilor decât la 13 W. NiFe52/6 în TC este o observație distinctă.':state.atom==='gtr'&&w.type==='tc'?'GTR: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt la egalitate ca preferință. NiFe30/7 este geometria preferată Dicodes; NiFe30/6 rămâne selectabil ca reper istoric; coerența TC este observație personală, nu efect izolat demonstrat.':state.atom==='415'&&w.type==='tc'?'415 Cool: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt primele alegeri personale, apoi K1 28 GA / 6 spire. Reglajele TC observate pe GTR nu se transferă pe 415.':state.atom==='klp'&&w.type==='tc'?'KLP: Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt preferințe personale; raportul istoric NiFe30/6 DNA 220°C/16 W este separat și nu se transferă la /7.':w.type==='tc'?'TC: Dicodes NiFe30 TCR320/7 este geometria Dicodes preferată; NiFe30/6 rămâne alternativă istorică funcțională; Zivipf NiFe52 TCR310/6 rămâne separat.':'Buildurile urmează permisiunile și observațiile canonice ale platformei.')+'</p>'+(!window.RTA_ATLAS_DUEL?.state.editing?'<button type="button" class="match-button" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(state.config)))+'">Compară această configurație în Duel ↗</button>':'')+'</div><section class="wire-panel">'+controls()+'</section></div>'+
+ '<div class="wire-workspace"><div class="wire-stage"><span class="eyebrow">'+esc(core.modeFor(state.config).toUpperCase())+' / '+esc(name(state.atom))+'</span><h2>'+esc(w.name)+'</h2><div class="coil-stage">'+api.renderCoil(state.config)+'</div><div class="geometry-readout"><span><b>'+phys.widthMm+' mm</b>lățime minimă (contact)</span><span><b>'+esc(phys.areaMm2==null?'nefixată':phys.areaMm2+' mm²')+'</b>arie nominală aer</span></div><p class="module-note">Schemă explicativă. Aria orificiilor nu este debit; lățimea pentru SPACED este necunoscută fără distanța dintre spire; cifra de mai sus este minimul CONTACT.</p><p class="wire-identity">'+esc(state.config.wire==='nife30'&&core.modeFor(state.config)==='watt'?'NiFe30 în WATT '+state.config.power+' W · '+(core.nife30Watt.chipsets[state.config.chipset]||'chipset nespecificat')+'. La 7 spire / 12 W ai raportat temperatură mai echilibrată a vaporilor decât la 13 W. NiFe52/6 în TC este o observație distinctă.':state.atom==='gtr'&&w.type==='tc'?'GTR: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt la egalitate ca preferință. NiFe30/7 este geometria preferată Dicodes; NiFe30/6 rămâne selectabil ca reper istoric; coerența TC este observație personală, nu efect izolat demonstrat.':state.atom==='415'&&w.type==='tc'?'415 Cool: Dicodes NiFe30 TCR320 / 7 spire și Zivipf NiFe52 TCR310 / 6 spire sunt primele alegeri personale, apoi K1 28 GA / 6 spire. Reglajele TC observate pe GTR nu se transferă pe 415.':state.atom==='klp'&&w.type==='tc'?'KLP: Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt preferințe personale; raportul istoric NiFe30/6 DNA 220°C/16 W este separat și nu se transferă la /7.':w.type==='tc'?'TC: Dicodes NiFe30 TCR320/7 este geometria Dicodes preferată; NiFe30/6 rămâne alternativă istorică funcțională; Zivipf NiFe52 TCR310/6 rămâne separat.':'Buildurile urmează permisiunile și observațiile canonice ale platformei.')+'</p>'+(!window.RTA_ATLAS_DUEL?.state.editing?'<button type="button" class="match-button" data-duel-pick="'+esc(encodeURIComponent(JSON.stringify(state.config)))+'">Compară această configurație în Duel ↗</button>':'')+'</div><section class="wire-panel">'+controls()+'</section></div>'+
  (state.config.wire==='nife30'?'<figure class="wire-product-photo"><img src="./media/dicodes-resistherm-nife30.jpg" alt="Dicodes RESISTHERM NiFe30: rolă cu eticheta 320 și 5,5 Ω/m, lângă ambalajul metalic de referință" loading="lazy" decoding="async" width="500" height="333"><figcaption><span class="eyebrow">MATERIAL ÎN PRIM-PLAN / FOTO REALĂ</span><h2>Dicodes RESISTHERM NiFe30.</h2><p>Fotografie de produs, nu a rolei personale. Ambalaj de referință; sursa menționează că lotul actual este livrat fără cutia metalică.</p><a href="https://www.vapesbyenushi.com/dicodes-resistherm-nife30-temperature-control-resistance-wire/" target="_blank" rel="noopener noreferrer">Foto: Vapes by Enushi / Dicodes ↗</a></figcaption></figure>':'')+
  '<section class="module-section" data-requires-liquid><h2>Ce oferă această configurație.</h2>'+metricPanel(m.result)+'<div class="gain-trade"><div><h3>Avantaje orientative</h3><ul>'+m.result.advantages.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div><div><h3>Compromisuri</h3><ul>'+m.result.tradeoffs.map(x=>'<li>'+esc(x)+'</li>').join('')+'</ul></div></div>'+method(m.result)+'</section>'+
  '<details class="wire-extras-optional"><summary>Analize opționale · alte lichide, atomizoare și builduri</summary>'+
@@ -611,7 +620,7 @@ function init(){
     if(setWireJourney({liquidIndex:index})&&index!==null){api.selectLiquid(index);renderWire();}
     return;
   }
-  const field={wireMaterial:'wire',wireWraps:'wraps',wireAir:'air',wireBell:'bell',wireDiameter:'coilMm',wirePosition:'position',wirePower:'power',wireTemp:'temp',wireRegime:'regime',wireChipset:'chipset'}[id];
+  const field={wireMaterial:'wire',wireWraps:'wraps',wireSpacing:'spacing',wireAir:'air',wireBell:'bell',wireDiameter:'coilMm',wirePosition:'position',wirePower:'power',wireTemp:'temp',wireRegime:'regime',wireChipset:'chipset'}[id];
   if(field){
    if(['power','temp'].includes(field)&&!e.target.checkValidity()){el('wireValidation').textContent='Introdu o valoare în intervalul afișat. Configurația curentă este păstrată.';return;}
    const changed=['wraps','coilMm','power','temp'].includes(field)?Number(value):value;

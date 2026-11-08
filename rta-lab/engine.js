@@ -373,6 +373,12 @@ function buildOutput(atom, wire, liquid) {
   return output;
 }
 
+function coilGeometryText(atom,wire,wraps){
+  const c=window.RTA_SENSORY_CORE;
+  if(!c?.coilStylePreference)return `${wraps} spire · tip contact/spaced neconfirmat`;
+  const spacing=c.coilStylePreference(atom.id,wire.id,wraps).defaultSpacing;
+  return c.coilLabel({atom:atom.id,wire:wire.id,wraps:Number(wraps),spacing});
+}
 function footprintText(atom, wire, output) {
   if (wire.id === "nife30") {
     return "Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt reperele actuale pe Ø2,5 mm preset; calibrare la rece și TCR distinct.";
@@ -382,7 +388,7 @@ function footprintText(atom, wire, output) {
   }
   const wraps = Number(output.wraps);
   const width = CONTACT_WIDTH_MM[wire.id] && CONTACT_WIDTH_MM[wire.id][wraps];
-  return `${wraps} spire contact ≈ ${width || "—"} mm lățime axială. ${buildRule(atom, wire).reason}`;
+  return `${coilGeometryText(atom,wire,wraps)}. ${width || "—"} mm = doar amprenta MINIMĂ pentru spire lipite; la spaced lățimea reală depinde de distanța dintre spire și nu este dedusă aici. ${buildRule(atom, wire).reason}`;
 }
 
 function whyForLiquid(wire, ax, objective, liquid) {
@@ -459,8 +465,8 @@ function geometrySummary(atom) {
   return `<div class="geometry-rule">
     <h5>Builduri stabilite după airflow și masă termică</h5>
     <div class="geometry-grid geometry-grid-five">
-      <span><b>K1 28 GA</b>${rule.k128} spire · ≈ ${CONTACT_WIDTH_MM.k128[rule.k128]} mm</span>
-      <span><b>K1 29 GA</b>${rule.k129} spire · ≈ ${CONTACT_WIDTH_MM.k129[rule.k129]} mm</span>
+      <span><b>K1 28 GA</b>${escapeHtml(coilGeometryText(atom,{id:"k128"},rule.k128))} · min. contact ≈ ${CONTACT_WIDTH_MM.k128[rule.k128]} mm</span>
+      <span><b>K1 29 GA</b>${escapeHtml(coilGeometryText(atom,{id:"k129"},rule.k129))} · min. contact ≈ ${CONTACT_WIDTH_MM.k129[rule.k129]} mm</span>
       <span><b>K1 Clapton</b>2×30+38 · 5 spire</span>
       <span><b>SS Clapton</b>2×30+38 · 5 spire</span>
       <span><b>NiFe TC</b>Dicodes NiFe30/7 · Zivipf NiFe52/6 · Ø2,5</span>
@@ -698,7 +704,7 @@ function renderBuilds() {
     const output = buildOutput(atom, wire, liquid);
     return `<article class="build ${index === 0 ? "best" : ""}">
       <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span>${index === 0 ? '<span class="besttxt">RECOMANDAREA 1</span>' : ""}</div>
-      <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
+      <div class="spec">${escapeHtml(wire.diam)} · ${escapeHtml(coilGeometryText(atom,wire,output.wraps))} · ${escapeHtml(output.power)}</div>
       <div class="why"><b>De ce pentru lichid:</b> ${escapeHtml(whyForLiquid(wire, ax, state.objective, liquid))}.</div>
       <div class="note"><b>Diferență de vape:</b> ${escapeHtml(comparisonText(atom, wire, output))}</div>
       <div class="note"><b>Potrivire airflow:</b> ${escapeHtml(footprintText(atom, wire, output))}</div>
@@ -765,7 +771,7 @@ function renderAtomExplorer() {
     const output = buildOutput(atom, wire, neutralLiquid);
     return `<article class="build explorer-build ${wire.id === "k128" ? "baseline-build" : ""}">
       <div class="brow"><span class="rank ${index ? "alt" : ""}">${index + 1}</span><span class="wname">${escapeHtml(wire.name)}</span></div>
-      <div class="spec">${escapeHtml(wire.diam)} · ${output.wraps} spire · ${escapeHtml(output.power)}</div>
+      <div class="spec">${escapeHtml(wire.diam)} · ${escapeHtml(coilGeometryText(atom,wire,output.wraps))} · ${escapeHtml(output.power)}</div>
       <div class="why"><b>Vape pe această platformă:</b> ${escapeHtml(explorerVapeText(atom, wire, output))}</div>
       <div class="note"><b>Airflow:</b> ${escapeHtml(footprintText(atom, wire, output))}</div>
       <div class="note ${output.noteClass}"><b>${escapeHtml(output.status)}:</b> ${escapeHtml(output.note)}</div>

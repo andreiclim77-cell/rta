@@ -35,6 +35,29 @@ fs.readdirSync(path.join(root,"data")).filter(x=>/^liquids-.*\.js$/.test(x)).sor
 load("data/bell-liquid-fit.js");
 load("data/sensory-core.js");
 const api=env.window.RTA_SENSORY_CORE,catalog=env.window.RTA_LIQUIDS,atoms=env.window.RTA_CORE.atoms;
+// 08.11.2026: spacing is explicit, tied to the exact build, and never inferred
+// from wraps alone. Keep the context-bound KLP preference without an invented A/B.
+for(const [atom,wire,wraps,mode,selection] of [
+ ["gtone","k129",5,"spaced","spaced"],
+ ["gtr","k129",5,"spaced","spaced"],
+ ["gtr","k129",6,"spaced","spaced"],
+ ["klp","k129",6,"either","spaced"],
+ ["kx","k129",6,"either","unspecified"],
+ ["kprime","k129",5,"either","unspecified"],
+ ["kprime","k129",6,"either","unspecified"],
+ ["muted","nife30",6,"spaced","spaced"],
+ ["muted","nife52",6,"spaced","spaced"],
+ ["muted","k128",6,"contact","contact"],
+ ["dvarwcl","k128",6,"unknown","unspecified"]
+]){
+ assert.equal(api.coilStylePreference(atom,wire,wraps).mode,mode,`style mode ${atom} ${wire}/${wraps}`);
+ assert.equal(api.config(atom,{wire,wraps}).spacing,selection,`style preset ${atom} ${wire}/${wraps}`);
+ assert.ok(api.coilLabel(api.config(atom,{wire,wraps})).includes(selection==="unspecified"?"contact sau spaced":selection==="contact"?"contact":"spaced")||mode==="unknown",`style label ${atom}`);
+}
+assert.equal(api.config("gtr",{wire:"k129",wraps:5,spacing:"contact"}).spacing,"contact","explicit manual choice survives the config round trip");
+assert.equal(api.personalPreference(api.config("gtone",{wire:"k129",wraps:5,spacing:"contact"})),null,"personal spaced observation must not endorse contact");
+assert.equal(api.personalPreference(api.config("gtone",{wire:"k129",wraps:5,spacing:"spaced"}))?.tier,1,"personal spaced observation remains prioritized");
+assert.ok(fs.readFileSync(path.join(root,"RTA_COIL_STYLE_CURRENT_20261108.md"),"utf8").includes("SPACED preferat"),"new canonical registry must be in repository");
 assert.equal(atoms.length,16);
 assert.equal(catalog.length,620);
 assert.equal(Object.keys(api.platforms).length,16);

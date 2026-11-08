@@ -36,7 +36,7 @@ for(const file of ["home-ui.css","home-ui.js"]){
  assert.ok(html.includes(asset),"HTML must load "+asset);
  assert.ok(worker.includes(asset),"Service worker must precache "+asset);
 }
-assert.ok(worker.includes("three-zone-home"),"Cache must update with home assets");
+assert.ok(worker.includes("rta-lab-v10-coil-style-20261108"),"Cache must include the latest verified Lab version");
 assert.ok(css.includes("@media(max-width:620px)"));
 assert.ok(css.includes(".rt-tool-grid{grid-template-columns:minmax(0,1fr)"));
 assert.ok(css.includes(".rt-hero-layout{grid-template-columns:minmax(0,1fr)"));
