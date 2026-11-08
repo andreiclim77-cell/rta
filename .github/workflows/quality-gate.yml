@@ -235,7 +235,7 @@ jobs:
             if (!index.includes(`./data/${file}?v=10`)) throw new Error(`Index does not load ${file}`);
             if (!serviceWorker.includes(`./data/${file}?v=10`)) throw new Error(`Service worker does not cache ${file}`);
           }
-          if (!serviceWorker.includes('rta-lab-v10-five-wire-clapton-620')) throw new Error('V10 service-worker cache name is missing');
+          if (!serviceWorker.includes('rta-lab-v10-coil-style-20261108')) throw new Error('V10 service-worker cache must match current Lab revision');
           if (!bootstrap.includes('const VERSION = "10"')) throw new Error('Bootstrap is not on V10');
           if (manifest.start_url !== './atlas/') throw new Error(`Manifest start_url invalid: ${manifest.start_url}`);
           if (!refresh.includes('motorul V10 cu 620 de lichide și 5 sârme active')) throw new Error('Refresh page is not on V10');
