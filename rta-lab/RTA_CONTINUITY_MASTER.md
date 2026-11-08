@@ -349,7 +349,9 @@ Urmează fără alt „continuă”: commit pe ramura PR #46, toate gates la SHA
 12. Asylum V3: Flat = claritate/separare; Dome = corp/integrare; **K1 Clapton/5 numai contextual**, fără prior de platformă.
 13. **Mood Match (aprobat 13.10.2026):** 7 stări × 5 momente × lichid automat/manual; toate cele 16 platforme rămân accesibile; trei interpretări, niciun câștigător universal.
 
-## 2. Inventar activ — 16 platforme / 42 RTA
+## 2. Inventar ISTORIC (12–14.10.2026) — 16 platforme / 42 RTA
+
+> **NU ESTE INVENTARUL SAU PRESETUL ACTUAL (08.11.2026).** Acest tabel conservă observațiile și alegerile din octombrie. Pentru exemplarele deținute acum vezi `RTA_COLLECTION_STATUS_20261019.md` și rezumatul datat 07.11 de la începutul prezentului document; pentru **CONTACT / SPACED** și prioritățile actuale vezi exclusiv `RTA_COIL_STYLE_CURRENT_20261108.md`. În special, GT One **29/5 SPACED** înlocuiește vechea etichetă „29/6 contact curent”, KLP **29/6 SPACED preferat contextual** înlocuiește vechile defaulturi, iar Muted+ are acum NiFe /6 SPACED prioritar. 415 Cool și Kayfun Mini V3 sunt vândute; GAIA Boro este adăugat separat.
 
 | Platformă | Buc. | ADN / rol curent |
 | --- | ---: | --- |
@@ -370,7 +372,9 @@ Urmează fără alt „continuă”: commit pe ramura PR #46, toate gates la SHA
 | Kayfun Mini V3 | 1 | Micro-MTL sec/concentrat; **validat practic: K1 28 GA / Ø2,5 / 6 și K1 29 GA / Ø2,5 / 6**. |
 | Minister MTL | 1 | Compact/warm/low-watt; 29/5 contact prior personal. |
 
-## 3. Sârme active și baseline-uri
+## 3. Sârme și baseline-uri ISTORICE (04–14.10.2026)
+
+> Orice mențiune veche de tipul „K1 29/5 numai contact” sau „NiFe30/7 depășit” descrie un **checkpoint vechi**, nu o restricție în Lab-ul actual. Regulile explicite datate 08.11 și selecția `CONTACT / SPACED / NECONFIRMAT` au prioritate.
 
 | Sârmă / familie | Baseline | Rol |
 | --- | --- | --- |
@@ -550,6 +554,8 @@ Reguli runtime:
 
 ## 10. Reguli depășite / corecții
 
+> **TABEL ISTORIC (septembrie–octombrie), NU CANON ACTUAL.** Mențiunile „varianta spaced 29/5 ștearsă”, „29/5 contact principal”, „NiFe30/7 depășit” și vechile combinații KLP/GT One se citesc ca decizii de la acel moment. Nu se reintroduc automat în UI, modele ori preseturi. Pentru ce este preferat *astăzi*, inclusiv când sunt admise **ambele** moduri, consultați registrul din 08.11.
+
 | Regulă veche | Status | Înlocuire |
 | --- | --- | --- |
 | TOP global la pairing | DEPĂȘIT | lichid + obiectiv + platform DNA |
@@ -567,7 +573,7 @@ Reguli runtime:
 
 ## 11. Checkpoint 12.10.2026 — colecție activă + validări round-wire + Clapton
 
-**SALVAT CANONIC**
+**SALVAT CANONIC LA 12.10.2026 — ISTORIC, DEPĂȘIT UNDE EXISTĂ ACTUALIZĂRI ULTERIOARE.** Punctele 5–9 de mai jos nu stabilesc configurațiile CONTACT/SPACED actuale. Vezi registrul prioritar din 08.11.
 
 1. UI-ul afișează **2 perechi Clapton active**: 415+K1 și Dvarw FL+SS.
 2. La selectarea directă a 415 în Explorer, **K1 Clapton este varianta #1 afișată**.
