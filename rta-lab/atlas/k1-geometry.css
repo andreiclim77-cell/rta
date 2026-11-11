@@ -8,10 +8,11 @@
 .k1-table-legend>span{display:inline-flex;padding:6px 10px;border-radius:30px;background:#223b39;border:1px solid #4b6358;font-size:10px;line-height:1.6}
 .k1-table-legend>span:first-child{background:#3c3628;border-color:#97835b;color:#edd3a6}
 .k1-table-wrap{max-width:100%;overflow-x:auto;border:1px solid #405753;border-radius:13px;background:#0a1b20;scrollbar-color:#8c8b77 #10262c}
-.k1-reference-table{width:100%;min-width:910px;border-collapse:collapse;table-layout:fixed;font-size:11px}
+.k1-reference-table{width:100%;min-width:660px;border-collapse:collapse;table-layout:fixed;font-size:11px}
 .k1-reference-table th,.k1-reference-table td{text-align:left;vertical-align:top;border-bottom:1px solid #304b47;padding:13px 12px;overflow-wrap:anywhere}
 .k1-reference-table thead th{position:sticky;top:0;z-index:1;color:#ecd5a8;background:#243935;font-size:10px;letter-spacing:.04em}
-.k1-reference-table thead th:first-child{width:20%}
+.k1-reference-table thead th:first-child{width:27%}
+.k1-reference-table thead th:nth-child(2){width:30%}
 .k1-reference-table tbody tr:nth-child(even){background:rgba(146,172,150,.035)}
 .k1-reference-table tbody tr:hover{background:rgba(217,192,142,.06)}
 .k1-reference-table tbody th{color:#e5eadf;font-weight:650;line-height:1.6}
@@ -21,6 +22,10 @@
 .k1-table-pair{display:grid;gap:6px}
 .k1-table-pair>strong{display:block;padding:5px 7px;border-radius:7px;background:rgba(221,185,118,.09);border:1px solid rgba(221,185,118,.18);font-variant-numeric:tabular-nums}
 .k1-table-pair>strong:nth-child(2){background:rgba(112,181,175,.08);border-color:rgba(112,181,175,.23);color:#bde1d7}
+.k1-table-remaining{display:grid;gap:7px}
+.k1-remaining-item{display:grid;grid-template-columns:27px minmax(0,1fr);gap:9px;align-items:start;border:1px solid rgba(132,165,153,.19);background:rgba(139,181,166,.045);border-radius:9px;padding:7px 9px}
+.k1-position-num{display:inline-flex;justify-content:center;align-items:center;min-height:23px;border-radius:6px;background:#2f4b44;color:#e1d1a9;font-size:10px;font-weight:800;font-variant-numeric:tabular-nums}
+.k1-remaining-item small{margin-top:2px}
 .k1-reference-table small{display:block;margin-top:5px;color:#a0b8ae;font-weight:400;line-height:1.5;font-size:10px}
 .k1-row-open{padding:0;border:0;background:transparent;text-align:left;cursor:pointer;color:#e9dcc0;font-weight:750;font-size:12px;line-height:1.6}
 .k1-row-open span{color:#dcb878}
@@ -64,6 +69,7 @@
  .k1-reference-table td:first-of-type{border-left:3px solid #d1b17d}
  .k1-reference-table td strong{font-size:11px}
  .k1-reference-table td small{font-size:10px}
+ .k1-remaining-item{padding:6px;gap:6px;grid-template-columns:23px minmax(0,1fr)}
  .material-path-grid:has(> .material-path:nth-child(4)){grid-template-columns:minmax(0,1fr)}
  .material-path-grid>.k1-dual-card{grid-column:auto}
  .k1-dual-variants{grid-template-columns:minmax(0,1fr);gap:12px}

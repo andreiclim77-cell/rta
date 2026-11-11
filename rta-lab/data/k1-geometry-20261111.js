@@ -2,7 +2,8 @@
  * This is an independent engineering hypothesis, NOT an installed coil,
  * controlled A/B, personal taste ranking or override of the sensory engine.
  * Position 01 contains BOTH K1 round-wire gauges (28 and 29 GA), each with
- * its own technical wraps; the three older Atlas cards remain positions 02–04.
+ * its own wraps. Display after 01 only surviving historical non-K1 variants
+ * (NiFe or SS Clapton), in order. Preserve all original history separately.
  */
 (function () {
 "use strict";

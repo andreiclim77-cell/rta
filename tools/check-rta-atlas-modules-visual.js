@@ -8,7 +8,9 @@ async function shot(page,name){
  await page.screenshot({path:path.join(folder,name),fullPage:false});
 }
 async function main(){
- const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-sandbox']});
+ const browser=await chromium.launch({...(
+  process.env.RTA_CHROMIUM_EXECUTABLE?{executablePath:process.env.RTA_CHROMIUM_EXECUTABLE}:{channel:'chrome'}
+ ),headless:true,args:['--no-sandbox']});
  try{
   for(const [width,height] of [[360,800],[390,844],[1440,1000]]){
    const context=await browser.newContext({viewport:{width,height},isMobile:width<760,hasTouch:width<760});
@@ -33,8 +35,8 @@ async function main(){
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Wire first selection fits viewport');
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
-   check(await page.locator('#atlasBuilds .material-path').count()===4,'Atlas must show the new K1 plus the same three prior builds without selecting any liquid');
-   check(await page.locator('#atlasBuilds .material-build-facts').count()===5,'Five full coil/air/chamber/power fact sets in four positions are required before liquid selection');
+   check(await page.locator('#atlasBuilds .material-path').count()===3,'Default GTR must show dual K1 then its two non-K1 historical builds without selecting a liquid');
+   check(await page.locator('#atlasBuilds .material-path .material-build-facts').count()===4,'Default GTR must show four complete coil/air/chamber/power fact sets in three positions');
    check(await page.locator('#atlasBuilds .k1-dual-variant').count()===2,'Both 28 GA and 29 GA are visible inside position 01');
    await page.locator('#atlasLiquidSearch').fill('Milestone Balcan Centenary Mods');
    await page.locator('#atlasLiquidSearch').press('Enter');
@@ -47,14 +49,15 @@ async function main(){
     check(ids.length===13&&!['asylum','415','kv3'].some(id=>ids.includes(id)),'13 owned classic RTAs, no retired or sold models');
     for(const id of ids){
      await page.locator('#atlasPlatform').selectOption(id);
-     check(await page.locator('#atlasBuilds .material-path').count()===4,id+' must have four positions');
-     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===25,id+' must display all 5 technical facts for each of 5 configs');
+     const remaining=await page.evaluate(()=>window.RTA_ATLAS_MODULES.remainingBuildLeads().map(x=>x.config.wire));
+     check(await page.locator('#atlasBuilds .material-path').count()===1+remaining.length,id+' must have only the first dual K1 position plus surviving non-K1 positions');
+     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===(2+remaining.length)*5,id+' must display all 5 technical facts for each surviving configuration');
      check(await page.locator('#atlasBuilds .k1-dual-variant').count()===2,id+' must expose separate 28 GA and 29 GA configs in slot 01');
      check(await page.locator('#atlasBuilds .k1-dual-variant[data-geometry-ga="28"]').count()===1,id+' must expose 28 GA');
      check(await page.locator('#atlasBuilds .k1-dual-variant[data-geometry-ga="29"]').count()===1,id+' must expose 29 GA');
-     check(await page.locator('#atlasBuilds [data-atlas-build]').count()>=5,id+' must expose both K1 handoffs plus historical ones');
+     check(await page.locator('#atlasBuilds [data-atlas-build]').count()>=2+remaining.length,id+' must expose both K1 handoffs plus the remaining non-K1 ones');
      const materials=await page.locator('#atlasBuilds .material-path').evaluateAll(els=>els.map(x=>x.dataset.buildWire));
-     check(new Set(materials.slice(1)).size===3,id+' must preserve 3 distinct original wire materials');
+     check(JSON.stringify(materials.slice(1))===JSON.stringify(remaining),id+' must preserve only non-K1 materials in original order');
      check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id+' cards overflow phone width');
     }
     // The retired model remains as a technical historical record only.
