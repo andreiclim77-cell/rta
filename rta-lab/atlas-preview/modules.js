@@ -199,17 +199,29 @@ function buildLeads(id=state.atom){
 /* The 2026-11-11 physical reference is deliberately an ADDITIONAL first card.
  * buildLeads() above remains the unchanged historical three-slot authority:
  * do not replace the owner's TC or specialist choices with K1 guesses. */
-function geometryFirst(id=state.atom){
+function geometryVariant(id=state.atom,gauge){
  const hint=window.RTA_K1_GEOMETRY?.byId?.[id];
  if(!hint||hint.unmodeled||!core.platforms[id])return null;
- const wire=hint.gauge===28?'k128':'k129';
- if(!core.permitted(id,wire,hint.wraps))return null;
+ const variant=hint.variants?.find(row=>row.gauge===gauge);
+ if(!variant)return null;
+ const wire=gauge===28?'k128':'k129';
+ if(!core.permitted(id,wire,variant.wraps))return null;
  const base=id===state.atom?state.config:core.defaultConfig(id);
  const air=core.platforms[id].air.some(row=>row.id===hint.air)?hint.air:base.air;
- const config=core.config(id,{...base,wire,wraps:hint.wraps,air,coilMm:hint.diameterMm,
-  spacing:stylePreset(id,wire,hint.wraps),...core.wireSetup(id,wire,hint.wraps),regime:'watt',chipset:''});
- if(config.wire!==wire||config.wraps!==hint.wraps||config.coilMm!==2.5||config.air!==air)return null;
- return {config,source:'geometry',hint};
+ const config=core.config(id,{...base,wire,wraps:variant.wraps,air,coilMm:hint.diameterMm,
+  spacing:stylePreset(id,wire,variant.wraps),...core.wireSetup(id,wire,variant.wraps),regime:'watt',chipset:''});
+ if(config.wire!==wire||config.wraps!==variant.wraps||config.coilMm!==2.5||config.air!==air)return null;
+ return {config,source:'geometry',hint,gauge};
+}
+function geometryFirst(id=state.atom){
+ const hint=window.RTA_K1_GEOMETRY?.byId?.[id];
+ return hint?geometryVariant(id,hint.gauge):null;
+}
+function geometryPair(id=state.atom){
+ const hint=window.RTA_K1_GEOMETRY?.byId?.[id];
+ if(!hint||hint.unmodeled)return [];
+ const pair=[28,29].map(gauge=>geometryVariant(id,gauge));
+ return pair.every(Boolean)?pair:[];
 }
 function fourBuildLeads(id=state.atom){
  const historic=buildLeads(id);
@@ -226,24 +238,23 @@ function geometryOverview(){
  const rows=window.RTA_K1_GEOMETRY?.rows||[];
  if(!rows.length)return '<p class="module-note">Registrul K1 nu este încărcat; buildurile anterioare rămân disponibile.</p>';
  const td=(value,pos)=>'<td data-label="'+pos+'">'+value+'</td>';
- return '<div class="k1-table-legend"><span>01 · K1 nou: ipoteză geometrică</span><span>02–04 · builduri anterioare, nemodificate</span><span>Ø2,5 mm pe toate cele 14 repere K1</span></div>'+
+ return '<div class="k1-table-legend"><span>01 · DOUĂ K1: 28 GA + 29 GA</span><span>02–04 · builduri anterioare, nemodificate</span><span>Ø2,5 mm pe ambele variante, toate cele 14 platforme</span></div>'+
  '<div class="k1-table-wrap" tabindex="0" role="region" aria-label="Patru poziții de build pentru fiecare platformă; tabel adaptat pentru mobil">'+
  '<table class="k1-reference-table"><thead><tr><th scope="col">Platforma</th><th scope="col">01 · Nou K1</th><th scope="col">02 · Existent</th><th scope="col">03 · Existent</th><th scope="col">04 · Existent</th></tr></thead><tbody>'+rows.map(row=>{
   const old=row.unmodeled?[]:buildLeads(row.id);
-  const first=geometryFirst(row.id);
-  const variant='K1 '+row.gauge+' GA / '+row.wraps+' sp. · Ø2,5';
+  const pair=geometryPair(row.id);
   const name=row.unmodeled?esc(row.name):'<button type="button" class="k1-row-open" data-k1-open="'+esc(row.id)+'">'+esc(row.name)+' <span aria-hidden="true">↗</span></button>';
-  const details='<small>'+esc(row.unmodeled?'BORO · fără model senzorial':'Airflow: '+(core.platforms[row.id].air.find(a=>a.id===first?.config.air)?.label||'neprecizat'))+'</small>';
-  const firstText='<strong>'+esc(variant)+'</strong><small>'+esc(row.unmodeled?'Ipoteză separată; nu e build montat':'Ipoteză tehnică / nu test personal')+'</small>';
+  const details='<small>'+esc(row.unmodeled?'BORO · fără model senzorial':'Airflow: '+(core.platforms[row.id].air.find(a=>a.id===pair[0]?.config.air)?.label||'neprecizat'))+'</small>';
+  const firstText='<div class="k1-table-pair">'+row.variants.map(v=>'<strong>K1 '+v.gauge+' GA / '+v.wraps+' sp. · Ø2,5</strong>').join('')+'</div><small>'+esc(row.unmodeled?'Două ipoteze Boro; niciuna nu este build montat':'Două configurații tehnice separate, fără A/B personal dedus')+'</small>';
   const cells=Array.from({length:3},(_,i)=>{
    const lead=old[i];
    if(!lead)return td('<span class="k1-empty">Neînregistrat în Lab</span>',String(i+2).padStart(2,'0')+' · Existent');
-   const duplicate=first&&['wire','wraps','air','coilMm'].every(key=>first.config[key]===lead.config[key]);
-   return td('<strong>'+esc(shortBuild(lead.config))+'</strong><small>'+(lead.source==='personal'?'Preferință personală':'Propunere anterioară')+(duplicate?' · Aceeași geometrie ca 01':'')+'</small>',String(i+2).padStart(2,'0')+' · Existent');
+   const duplicate=pair.find(({config})=>['wire','wraps','air','coilMm'].every(key=>config[key]===lead.config[key]));
+   return td('<strong>'+esc(shortBuild(lead.config))+'</strong><small>'+(lead.source==='personal'?'Preferință personală':'Propunere anterioară')+(duplicate?' · Aceeași geometrie ca 01 / '+(duplicate.gauge)+' GA':'')+'</small>',String(i+2).padStart(2,'0')+' · Existent');
   });
   return '<tr class="'+(row.unmodeled?'k1-unmodeled':'')+'"><th scope="row">'+name+details+'</th>'+td(firstText,'01 · Nou K1')+cells.join('')+'</tr>';
  }).join('')+'</tbody></table></div>'+
- '<details class="k1-triangulation"><summary>Cum interpretăm triangularea tehnică, personală și senzorială?</summary><p><b>1. Geometrie:</b> #01 este dedus din cameră, direcția jeturilor și masa sârmei la Ø2,5 mm. <b>2. Practică:</b> #02–#04 sunt cele trei builduri deja existente, cu proveniența lor păstrată; „propunere” nu înseamnă test personal. <b>3. Context:</b> motorul din Atlas poate compara cele patru configurații pe același lichid și obiectiv; scorurile sunt modelate, nu procente de gust. În caz de conflict, experiența practică explicită rămâne distinctă de ipoteză, până la un A/B controlat.</p><p>Pentru GAIA Boro, registrul vechi nu conținea trei builduri și nu există încă o fișă senzorială validată. Nu inventăm pozițiile 02–04 și nu transferăm predicții de la RTA-urile clasice.</p></details>';
+ '<details class="k1-triangulation"><summary>Cum interpretăm triangularea tehnică, personală și senzorială?</summary><p><b>1. Geometrie:</b> #01 cuprinde două variante independente, K1 28 GA și K1 29 GA, cu spire adecvate camerei și jeturilor la Ø2,5 mm. <b>2. Practică:</b> #02–#04 sunt cele trei builduri deja existente, cu proveniența lor păstrată; „propunere” nu înseamnă test personal. <b>3. Context:</b> Atlasul poate compara toate cinci configurațiile din cele patru poziții pe același lichid și obiectiv; scorurile sunt modelate, nu procente măsurate de gust. În caz de conflict, experiența practică explicită rămâne distinctă de ipoteză, până la un A/B controlat.</p><p>Pentru GAIA Boro, registrul vechi nu conținea trei builduri și nu există încă o fișă senzorială validată. Nu inventăm pozițiile 02–04 și nu transferăm predicții de la RTA-urile clasice.</p></details>';
 }
 function buildFacts(config){
  const w=core.wires[config.wire],a=core.platforms[config.atom].air.find(x=>x.id===config.air);
@@ -255,13 +266,31 @@ function buildFacts(config){
  return '<dl class="material-build-facts">'+facts.map(([key,val])=>
   '<div><dt>'+esc(key)+'</dt><dd>'+esc(val)+'</dd></div>').join("")+"</dl>";
 }
+function geometryPairCard(pair,profile){
+ if(pair.length!==2)return '';
+ const variants=pair.map(({config,gauge})=>{
+  const w=core.wires[config.wire],r=hasLiquid()?core.analyze(config,profile,state.objective):null;
+  return '<section class="k1-dual-variant" data-geometry-ga="'+gauge+'" data-build-wire="'+esc(config.wire)+'" data-build-wraps="'+config.wraps+'">'+
+   '<span class="eyebrow">01'+(gauge===28?'A':'B')+' · IPOTEZĂ · '+gauge+' GA</span><h4>'+esc(w.name)+' · '+config.wraps+' spire</h4>'+
+   '<div class="material-schematic">'+api.renderCoil(config)+'</div>'+buildFacts(config)+
+   (r?'<p>'+esc(api.vapeDescription(r,profile))+'</p><p class="module-note"><b>Accent:</b> '+esc(r.advantages.slice(0,2).join(' · '))+' · <b>Compromis:</b> '+esc(r.tradeoffs[0]||'Verifică practic')+'</p>':'<p class="module-note">Propunere tehnică; alege un lichid pentru comparație contextuală. Nu este montaj sau test personal confirmat.</p>')+
+   '<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(config)))+'">Deschide K1 '+gauge+' GA exact în Wire Lab ↗</button>'+
+   '<details class="wire-liquid-links"><summary>5 lichide potrivite cu K1 '+gauge+' GA</summary><div class="journey-liquid-list">'+liquidButtons(config)+'</div><p class="module-note">Potriviri calculate din cele '+catalog.length+' lichide, nu A/B personal.</p></details></section>';
+ }).join('');
+ return '<article class="material-path k1-dual-card" data-build-wire="k128+k129" data-build-air="'+esc(pair[0].config.air)+'">'+
+  '<span class="eyebrow">01 · NOU · DOUĂ IPOTEZE K1 · WATT</span><h3>Kanthal A1 — 28 GA și 29 GA</h3>'+
+  '<p class="module-note">Aceeași poziție 01, două configurații complete pe Ø2,5 mm; '+esc(pair[0].hint.why)+' Nu afirmăm că una câștigă fără A/B izolat.</p>'+
+  '<div class="k1-dual-variants">'+variants+'</div></article>';
+}
 function materialPaths(){
- const leads=fourBuildLeads(),chosen=state.config,profile=liquid();
- const isCurrent=leads.some(({config})=>["wire","wraps","air","bell","coilMm","position","power","temp","regime","chipset"].every(k=>config[k]===chosen[k]));
+ const leads=fourBuildLeads(),pair=geometryPair(),chosen=state.config,profile=liquid();
+ const compared=pair.length===2?[...pair,...leads.slice(1)]:leads;
+ const isCurrent=compared.some(({config})=>["wire","wraps","air","bell","coilMm","position","power","temp","regime","chipset"].every(k=>config[k]===chosen[k]));
  return '<section class="module-section material-paths" id="atlasBuilds">'+
- '<span class="eyebrow">GEOMETRIE + PREFERINȚE / CONSTRUCȚII COMPLETE</span><h2>'+(leads.length===4?'Patru builduri: noul K1, apoi cele trei existente.':'Cele trei builduri istorice ale platformei.')+'</h2>'+
- '<p class="module-note">01 = noua ipoteză K1 după cameră și airflow, Ø2,5 mm. Pozițiile 02–04 sunt păstrate exact din Lab, în ordinea existentă: preferințe personale unde sunt confirmate și propuneri anterioare în rest. Unele coincid fizic cu 01; le afișăm separat pentru trasabilitate, nu drept două teste. Puterile W/TC sunt preseturi orientative în lipsa măsurătorilor.</p>'+
+ '<span class="eyebrow">GEOMETRIE + PREFERINȚE / CONSTRUCȚII COMPLETE</span><h2>'+(leads.length===4?'Patru poziții: 01 cu K1 28 și 29 GA, apoi cele trei existente.':'Cele trei builduri istorice ale platformei.')+'</h2>'+
+ '<p class="module-note">'+(pair.length===2?'01 = DOUĂ ipoteze K1 (28 GA + 29 GA) după cameră și airflow, ambele Ø2,5 mm. Pozițiile 02–04 sunt păstrate exact din Lab, în ordinea existentă.':'Această platformă istorică păstrează doar cele trei builduri existente; nu are o ipoteză K1 nouă.')+' Preferințele personale și propunerile anterioare sunt etichetate distinct. Coincidențele geometrice nu sunt teste independente. Puterile W/TC rămân preseturi orientative în lipsa măsurătorilor.</p>'+
  '<div class="material-path-grid">'+leads.map(({config,source},i)=>{
+  if(source==='geometry'&&pair.length===2)return geometryPairCard(pair,profile);
   const r=core.analyze(config,profile,state.objective),w=core.wires[config.wire];
   return '<article class="material-path" data-build-wire="'+esc(config.wire)+'" data-build-wraps="'+config.wraps+'" data-build-air="'+esc(config.air)+'">'+
   '<span class="eyebrow">0'+(i+1)+' · '+(source==='geometry'?'NOU · IPOTEZĂ GEOMETRICĂ':source==="personal"&&state.atom==='asylum'?"PREFERINȚĂ PERSONALĂ DE COIL/CLOPOT · PIN NECONFIRMAT":source==="personal"?"PREFERINȚĂ PERSONALĂ":"PROPUNERE TEHNICĂ ANTERIOARĂ")+' · '+esc(w.mode)+'</span>'+
@@ -272,8 +301,8 @@ function materialPaths(){
   '<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(config)))+'">Deschide buildul exact în Wire Lab ↗</button>'+
   '<details class="wire-liquid-links"><summary>5 lichide potrivite cu acest build</summary><div class="journey-liquid-list">'+liquidButtons(config)+'</div><p class="module-note">Potriviri calculate dintre cele '+catalog.length+' de lichide; nu teste personale.</p></details></article>';
  }).join("")+'</div>'+
- (!isCurrent?'<div class="material-current"><strong>Configurația ta selectată, în afara celor '+leads.length+' builduri</strong>'+buildFacts(chosen)+'<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(chosen)))+'">Deschide configurația selectată ↗</button></div>':'')+
- (hasLiquid()?api.comparisonGraphic(leads.map(({config},i)=>({label:'0'+(i+1)+' · '+core.wires[config.wire].name+" / "+coilText(config),result:core.analyze(config,profile,state.objective)})),"Triangulare contextuală · același lichid, patru ipoteze / experiențe"):"")+
+ (!isCurrent?'<div class="material-current"><strong>Configurația ta selectată, în afara celor '+compared.length+' variante</strong>'+buildFacts(chosen)+'<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(chosen)))+'">Deschide configurația selectată ↗</button></div>':'')+
+ (hasLiquid()?api.comparisonGraphic(compared.map(({config},i)=>({label:(pair.length===2&&i<2?'01'+(i===0?'A':'B'):'0'+(i+1-(pair.length===2?1:0)))+' · '+core.wires[config.wire].name+" / "+coilText(config),result:core.analyze(config,profile,state.objective)})),"Triangulare contextuală · același lichid, cinci configurații în patru poziții"):"")+
  '<p class="module-note">Alte materiale, spire, inserturi și alternative validate sunt disponibile în Wire Lab, fără rescrierea fișelor unităților fizice.</p></section>';
 }
 
@@ -693,6 +722,6 @@ function init(){
  },true);
  const route=window.location.hash.slice(1);if(['atomizer','wire'].includes(route))api.route(route,false);
 }
-window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,historicalInventory,activeUnits,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,physicalUnits,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,fourBuildLeads,geometryFirst,geometryOverview,buildFacts,materialPaths,wireSavedBuilds,wirePalette,wireJourneyControls,wirePlatformMatches,wirePlatforms,setWireJourney,catalogCards};
+window.RTA_ATLAS_MODULES={routes:['atomizer','wire'],show,init,state,inventory,historicalInventory,activeUnits,contextual,filteredAtoms,selectAtom,setConfig,clSnapshot,objectiveLabel,storedBuild,sameStored,physicalUnits,topLiquids,contextBar,workflow,hasLiquid,compatibleWireAtoms,wireConfig,buildLeads,fourBuildLeads,geometryFirst,geometryPair,geometryOverview,buildFacts,materialPaths,wireSavedBuilds,wirePalette,wireJourneyControls,wirePlatformMatches,wirePlatforms,setWireJourney,catalogCards};
 if(typeof document!=='undefined')document.addEventListener('DOMContentLoaded',init);
 })();

@@ -18,6 +18,9 @@
 .k1-reference-table td:first-of-type{background:rgba(206,174,112,.075);border-left:2px solid #b99f6d}
 .k1-reference-table td strong{display:block;color:#f1eee1;font-size:11px;line-height:1.65}
 .k1-reference-table td:first-of-type strong{color:#f4d9a1}
+.k1-table-pair{display:grid;gap:6px}
+.k1-table-pair>strong{display:block;padding:5px 7px;border-radius:7px;background:rgba(221,185,118,.09);border:1px solid rgba(221,185,118,.18);font-variant-numeric:tabular-nums}
+.k1-table-pair>strong:nth-child(2){background:rgba(112,181,175,.08);border-color:rgba(112,181,175,.23);color:#bde1d7}
 .k1-reference-table small{display:block;margin-top:5px;color:#a0b8ae;font-weight:400;line-height:1.5;font-size:10px}
 .k1-row-open{padding:0;border:0;background:transparent;text-align:left;cursor:pointer;color:#e9dcc0;font-weight:750;font-size:12px;line-height:1.6}
 .k1-row-open span{color:#dcb878}
@@ -32,7 +35,21 @@
 .material-path:has(.eyebrow:first-child){min-width:0}
 .material-path-grid>.material-path:first-child{border-color:#b99d69;background:linear-gradient(140deg,#302c24,#122729 60%,#0a181e)}
 .material-path-grid>.material-path:first-child .eyebrow{color:#f0d09b}
+.material-path-grid>.k1-dual-card{grid-column:1/-1}
+.k1-dual-card>h3{margin:12px 0 7px;font-size:clamp(22px,2.5vw,29px);color:#f6e2bc}
+.k1-dual-card>.module-note{max-width:900px}
+.k1-dual-variants{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:17px}
+.k1-dual-variant{min-width:0;padding:18px;border:1px solid #675e45;border-radius:14px;background:linear-gradient(150deg,#182d2c,#0c1c21)}
+.k1-dual-variant:nth-child(2){border-color:#386c68;background:linear-gradient(150deg,#183334,#0b2026)}
+.k1-dual-variant h4{font-size:17px;margin:10px 0;color:#f2dec1;line-height:1.5}
+.k1-dual-variant:nth-child(2) h4{color:#bfe5df}
+.k1-dual-variant>p{font-size:11px;line-height:1.75;color:#bfd0c5}
+.k1-dual-variant .material-build-facts{margin:10px 0 14px}
+.k1-dual-variant .module-link{width:100%;min-height:45px;text-align:center}
+.k1-dual-variant .wire-liquid-links{margin-top:10px}
 .sensory-comparison .series-3{--series:#d497af}
+.sensory-comparison .series-4{--series:#81b3de}
+@media(max-width:960px){.k1-dual-variants{grid-template-columns:1fr}}
 @media(max-width:760px){
  .k1-overview{padding:14px 12px;margin:13px auto 17px}
  .k1-overview h2{font-size:25px}
@@ -48,4 +65,7 @@
  .k1-reference-table td strong{font-size:11px}
  .k1-reference-table td small{font-size:10px}
  .material-path-grid:has(> .material-path:nth-child(4)){grid-template-columns:minmax(0,1fr)}
+ .material-path-grid>.k1-dual-card{grid-column:auto}
+ .k1-dual-variants{grid-template-columns:minmax(0,1fr);gap:12px}
+ .k1-dual-variant{padding:14px 12px}
 }

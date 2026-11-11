@@ -34,7 +34,8 @@ async function main(){
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
    check(await page.locator('#atlasBuilds .material-path').count()===4,'Atlas must show the new K1 plus the same three prior builds without selecting any liquid');
-   check(await page.locator('#atlasBuilds .material-build-facts').count()===4,'Four coil/air/chamber/power fact cards are required before liquid selection');
+   check(await page.locator('#atlasBuilds .material-build-facts').count()===5,'Five full coil/air/chamber/power fact sets in four positions are required before liquid selection');
+   check(await page.locator('#atlasBuilds .k1-dual-variant').count()===2,'Both 28 GA and 29 GA are visible inside position 01');
    await page.locator('#atlasLiquidSearch').fill('Milestone Balcan Centenary Mods');
    await page.locator('#atlasLiquidSearch').press('Enter');
    await page.waitForTimeout(650);
@@ -46,8 +47,12 @@ async function main(){
     check(ids.length===13&&!['asylum','415','kv3'].some(id=>ids.includes(id)),'13 owned classic RTAs, no retired or sold models');
     for(const id of ids){
      await page.locator('#atlasPlatform').selectOption(id);
-     check(await page.locator('#atlasBuilds .material-path').count()===4,id+' must have four complete builds');
-     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===20,id+' must display all 5 technical facts for each of 4 builds');
+     check(await page.locator('#atlasBuilds .material-path').count()===4,id+' must have four positions');
+     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===25,id+' must display all 5 technical facts for each of 5 configs');
+     check(await page.locator('#atlasBuilds .k1-dual-variant').count()===2,id+' must expose separate 28 GA and 29 GA configs in slot 01');
+     check(await page.locator('#atlasBuilds .k1-dual-variant[data-geometry-ga="28"]').count()===1,id+' must expose 28 GA');
+     check(await page.locator('#atlasBuilds .k1-dual-variant[data-geometry-ga="29"]').count()===1,id+' must expose 29 GA');
+     check(await page.locator('#atlasBuilds [data-atlas-build]').count()>=5,id+' must expose both K1 handoffs plus historical ones');
      const materials=await page.locator('#atlasBuilds .material-path').evaluateAll(els=>els.map(x=>x.dataset.buildWire));
      check(new Set(materials.slice(1)).size===3,id+' must preserve 3 distinct original wire materials');
      check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id+' cards overflow phone width');

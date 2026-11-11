@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-release-0ca0b12501e1f44d",PREFIX="rta-atlas-release-";
+const CACHE="rta-atlas-release-6dfd89cb8491c874",PREFIX="rta-atlas-release-";
 const ASSETS=[
   "../../assets/facebook-profile-ghid-rta-smokee.jpg",
   "../../assets/fonts/manrope-latin-ext.woff2",
@@ -10,7 +10,7 @@ const ASSETS=[
   "../data/atoms-3.js?v=atlas-catalog-700-20261015-1",
   "../data/bell-liquid-fit.js?v=atlas-catalog-700-20261015-1",
   "../data/core.js?v=atlas-catalog-700-20261015-1",
-  "../data/k1-geometry-20261111.js?v=k1-four-builds-20261111-v1",
+  "../data/k1-geometry-20261111.js?v=k1-dual-first-20261111-v2",
   "../data/sensory-core.js?v=coil-style-20261108-v1",
   "../data/wires.js?v=nife30-watt12-20261022-v1-nife30-seven-20261029",
   "../icon-192.png",
@@ -22,13 +22,13 @@ const ASSETS=[
   "./context-ui.js?v=atlas-catalog-700-20261015-1",
   "./context.js?v=atlas-catalog-700-20261015-1",
   "./decision-explorer.css?v=wire-clarity-20261031-v1",
-  "./decision-explorer.js?v=k1-four-builds-20261111-v1",
+  "./decision-explorer.js?v=k1-dual-first-20261111-v2",
   "./duel.js?v=coil-style-20261108-v1",
   "./gateway-photos.css?v=atlas-gallery-photos-20261019-1",
   "./ghid-rta-link.css?v=ghid-rta-link-20261019-1",
   "./icon.svg",
   "./index.html",
-  "./k1-geometry.css?v=k1-four-builds-20261111-v1",
+  "./k1-geometry.css?v=k1-dual-first-20261111-v2",
   "./lab-commands.css?v=atlas-lab-commands-20261016-1",
   "./lab-commands.js?v=atlas-lab-commands-20261016-1",
   "./layout.css?v=atlas-catalog-700-20261015-1",
@@ -73,7 +73,7 @@ const ASSETS=[
   "./media/taifun-gt-one.jpg",
   "./mobile-fit.css?v=atlas-mobile-fit-20261016-1",
   "./modules.css?v=wire-clarity-20261031-v1",
-  "./modules.js?v=k1-four-builds-20261111-v1",
+  "./modules.js?v=k1-dual-first-20261111-v2",
   "./photo-sources.js?v=atlas-catalog-700-20261015-1",
   "./styles.css?v=atlas-catalog-700-20261015-1",
   "./v02.css?v=atlas-catalog-700-20261015-1",

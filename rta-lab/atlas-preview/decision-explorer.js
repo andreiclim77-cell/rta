@@ -152,7 +152,7 @@ function atlasWizard(){
   'Obiectivele configurației alese','Platformă + sârmă + spire; grafice orientative 1–10.')+
  catsGrid(configs,'atlas',A.family)+'</div>':'')+
  (A.family?'<div class="exp-stage"><h3>4. Alege lichidul din categoria selectată</h3>'+
- liquidSelect(A.family,'expAtlasLiquid',A.liquidIndex)+(A.liquidIndex!=null?'<p class="exp-success">Lichid ales. Mai jos rămân cele patru builduri de platformă (K1 tehnic + cele trei anterioare). Motorul contextual TOP 3 este păstrat separat, cu propria logică de lichid.</p>':'')+'</div>':'')+
+ liquidSelect(A.family,'expAtlasLiquid',A.liquidIndex)+(A.liquidIndex!=null?'<p class="exp-success">Lichid ales. Mai jos sunt patru poziții: 01 cu ambele variante tehnice K1 28 GA + 29 GA, urmate de cele trei builduri anterioare. Motorul contextual TOP 3 este păstrat separat, cu propria logică de lichid.</p>':'')+'</div>':'')+
  '</section>';
 }
 /* One owner for the Wire journey, without parallel atomizer or objective
