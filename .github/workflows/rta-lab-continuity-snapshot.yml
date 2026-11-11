@@ -21,6 +21,7 @@ jobs:
           python3 - <<'PY'
           import hashlib, json, os, pathlib, zipfile
           files=[
+           "rta-lab/CONTINUITY_START_HERE.md",
            "rta-lab/RTA_CURRENT_HANDOFF.md",
            "rta-lab/RTA_CONTINUITY_MASTER.md",
            "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md",
@@ -75,7 +76,7 @@ jobs:
            "tools/check-rta-mood-match.js",
            "tools/check-rta-lab-commands.js"
           ]
-          required=files[:4]+["rta-lab/RTA_K1_FOUR_BUILDS_20261111.md","rta-lab/data/k1-geometry-20261111.js"]
+          required=files[:5]+["rta-lab/RTA_K1_FOUR_BUILDS_20261111.md","rta-lab/data/k1-geometry-20261111.js"]
           for f in required:
            if not pathlib.Path(f).is_file(): raise SystemExit("Missing critical continuity document: "+f)
           sha=os.environ.get("GITHUB_SHA","unresolved")
@@ -87,17 +88,19 @@ jobs:
           Snapshot GitHub SHA: {sha}
           Sursă canonică: https://github.com/andreiclim77-cell/rta
           Versiunea publicată: https://ghid-rta.ro/rta-lab/atlas/
+          Arhiva permanentă ÎN LAB: rta-lab/continuity/RTA_CONTINUITATE_CURENTA.zip
           
           Într-un chat nou scrie: „Du-te în Lab și fă-ți update”.
           Citește ÎN ORDINE:
-          1. rta-lab/RTA_CURRENT_HANDOFF.md
-          2. rta-lab/RTA_CONTINUITY_MASTER.md
-          3. rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md
-          4. rta-lab/RTA_OPERATING_PROTOCOL.md
-          5. rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md — CONTACT/SPACED/NECONFIRMAT
-          6. rta-lab/RTA_K1_FOUR_BUILDS_20261111.md — poziția 01A cu K1 28 GA și 01B cu K1 29 GA, ambele Ø2,5 mm; pozițiile 02+ păstrează NUMAI NiFe și SS Clapton, fără K1/K1 Clapton, renumerotate consecutiv
+          1. rta-lab/CONTINUITY_START_HERE.md
+          2. rta-lab/RTA_CURRENT_HANDOFF.md
+          3. rta-lab/RTA_CONTINUITY_MASTER.md
+          4. rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md
+          5. rta-lab/RTA_OPERATING_PROTOCOL.md
+          6. rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md — CONTACT/SPACED/NECONFIRMAT
+          7. rta-lab/RTA_K1_FOUR_BUILDS_20261111.md — 01A K1 28 GA și 01B K1 29 GA, ambele Ø2,5 mm; 02+ NUMAI NiFe/SS Clapton, fără K1/K1 Clapton
           
-          La „Salvează” actualizează aplicația plus arhiva (inclusiv Biblioteca ChatGPT).
+          La „Salvează” actualizează aplicația și arhiva ÎN LAB (Biblioteca este doar o oglindă opțională).
           La „Dă-mi arhiva de continuitate la zi” generează snapshotul actual și oferă linkul.
           
           Acest pachet conține documentele integrale și extrasele esențiale de cod
