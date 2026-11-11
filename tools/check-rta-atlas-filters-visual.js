@@ -50,7 +50,7 @@ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--no-
   assert.equal(await page.evaluate(()=>window.RTA_ATLAS_MODULES.state.wirePlatformChosen),true);
   await page.locator('#atlasBack').click();await page.waitForFunction(()=>window.RTA_ATLAS_PREVIEW.state.route==='home');
   await page.locator(nav+' [data-route="atomizer"]').click();await page.locator('#atlasPlatform').selectOption('klp');
-  assert.equal(await page.locator('.material-path').count(),3);
+  assert.equal(await page.locator('.material-path').count(),4);
   for(const card of await page.locator('.material-path').all()){
    // Personal-first build cards can intentionally differ from generic wireConfig().
    // Verify the exact encoded build used by this card and its one-click Wire handoff.

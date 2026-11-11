@@ -33,8 +33,8 @@ async function main(){
    check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Wire first selection fits viewport');
    await page.goto('file://'+path.resolve('rta-lab/atlas-preview/index.html')+'#atomizer',{waitUntil:'domcontentloaded'});
    await page.waitForSelector('#atlasPlatform');
-   check(await page.locator('#atlasBuilds .material-path').count()===3,'Atlas must show three full builds without selecting any liquid');
-   check(await page.locator('#atlasBuilds .material-build-facts').count()===3,'Three coil/air/chamber/power fact cards are required before liquid selection');
+   check(await page.locator('#atlasBuilds .material-path').count()===4,'Atlas must show the new K1 plus the same three prior builds without selecting any liquid');
+   check(await page.locator('#atlasBuilds .material-build-facts').count()===4,'Four coil/air/chamber/power fact cards are required before liquid selection');
    await page.locator('#atlasLiquidSearch').fill('Milestone Balcan Centenary Mods');
    await page.locator('#atlasLiquidSearch').press('Enter');
    await page.waitForTimeout(650);
@@ -46,10 +46,10 @@ async function main(){
     check(ids.length===13&&!['asylum','415','kv3'].some(id=>ids.includes(id)),'13 owned classic RTAs, no retired or sold models');
     for(const id of ids){
      await page.locator('#atlasPlatform').selectOption(id);
-     check(await page.locator('#atlasBuilds .material-path').count()===3,id+' must have 3 complete builds');
-     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===15,id+' must display all 5 technical facts for each of 3 builds');
+     check(await page.locator('#atlasBuilds .material-path').count()===4,id+' must have four complete builds');
+     check(await page.locator('#atlasBuilds .material-path .material-build-facts>div').count()===20,id+' must display all 5 technical facts for each of 4 builds');
      const materials=await page.locator('#atlasBuilds .material-path').evaluateAll(els=>els.map(x=>x.dataset.buildWire));
-     check(new Set(materials).size===3,id+' must show 3 distinct owned wire materials');
+     check(new Set(materials.slice(1)).size===3,id+' must preserve 3 distinct original wire materials');
      check(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),id+' cards overflow phone width');
     }
     // The retired model remains as a technical historical record only.

@@ -25,6 +25,7 @@ jobs:
            "rta-lab/RTA_CONTINUITY_MASTER.md",
            "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md",
            "rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md",
+           "rta-lab/RTA_K1_FOUR_BUILDS_20261111.md",
            "rta-lab/RTA_OPERATING_PROTOCOL.md",
            "rta-lab/RTA_COLLECTION_STATUS_20261019.md",
            "rta-lab/RTA_PERSONAL_BUILDS_20261103.md",
@@ -35,6 +36,7 @@ jobs:
            "rta-lab/ATLAS_GUIDED_FLOWS_VERIFICATION_20261015.md",
            "rta-lab/ATLAS_FILTERS_VERIFICATION_20261015.md",
            "rta-lab/data/sensory-core.js",
+           "rta-lab/data/k1-geometry-20261111.js",
            "rta-lab/sensory-ui.js",
            "rta-lab/engine.js",
            "rta-lab/mood-match.js",
@@ -55,6 +57,7 @@ jobs:
            "rta-lab/atlas-preview/sw.js",
            "rta-lab/atlas-preview/duel.js",
            "rta-lab/atlas-preview/modules.js",
+           "rta-lab/atlas-preview/k1-geometry.css",
            "rta-lab/atlas-preview/lab-commands.js",
            "rta-lab/atlas-preview/lab-commands.css",
            "rta-lab/atlas-preview/decision-explorer.js",
@@ -66,11 +69,12 @@ jobs:
            "tools/check-rta-sensory-core.js",
            "tools/check-rta-nife30-watt.js",
            "tools/check-rta-atlas-modules.js",
+           "tools/check-rta-atlas-preview.js",
            "tools/check-rta-ownership-20261107.js",
            "tools/check-rta-mood-match.js",
            "tools/check-rta-lab-commands.js"
           ]
-          required=files[:4]
+          required=files[:4]+["rta-lab/RTA_K1_FOUR_BUILDS_20261111.md","rta-lab/data/k1-geometry-20261111.js"]
           for f in required:
            if not pathlib.Path(f).is_file(): raise SystemExit("Missing critical continuity document: "+f)
           sha=os.environ.get("GITHUB_SHA","unresolved")
@@ -90,6 +94,7 @@ jobs:
           3. rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md
           4. rta-lab/RTA_OPERATING_PROTOCOL.md
           5. rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md — CONTACT/SPACED/NECONFIRMAT
+          6. rta-lab/RTA_K1_FOUR_BUILDS_20261111.md — 01 nou K1, 02–04 vechile trei
           
           La „Salvează” actualizează aplicația plus arhiva (inclusiv Biblioteca ChatGPT).
           La „Dă-mi arhiva de continuitate la zi” generează snapshotul actual și oferă linkul.

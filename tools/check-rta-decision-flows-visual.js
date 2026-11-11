@@ -110,8 +110,8 @@ async function main(){
    assert.equal(await page.locator('#expAtlasLiquid option').count(),108,'All 107 simple tobaccos');
    const id2=await page.locator('#expAtlasLiquid option').nth(1).getAttribute('value');
    await page.locator('#expAtlasLiquid').selectOption(id2);
-   assert.equal(await page.locator('#atlasBuilds .material-path').count(),3,'Existing 3 complete builds remain');
-   assert.equal(await page.locator('#atlasBuilds .material-build-facts').count(),3);
+   assert.equal(await page.locator('#atlasBuilds .material-path').count(),4,'New K1 reference precedes the 3 existing complete builds');
+   assert.equal(await page.locator('#atlasBuilds .material-build-facts').count(),4);
    await noOverflow('Atomizer flow');
    await page.locator('#expAtlasWizard').scrollIntoViewIfNeeded();
    await page.screenshot({path:path.join(shots,'atomizer-'+width+'.png'),fullPage:true});

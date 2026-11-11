@@ -5,7 +5,7 @@ const load=p=>vm.runInContext(fs.readFileSync(path.join('rta-lab',p),'utf8'),env
 for(const n of ['atoms-1.js','atoms-2.js','atoms-3.js','wires.js','core.js'])load('data/'+n);
 fs.readdirSync('rta-lab/data').filter(n=>/^liquids-.*\.js$/.test(n)).sort().forEach(n=>load('data/'+n));
 load('atlas-preview/catalog.js');
-for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','mood-match.js','atlas-preview/context.js','atlas-preview/liquid-picker.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
+for(const p of ['data/bell-liquid-fit.js','data/sensory-core.js','data/k1-geometry-20261111.js','mood-match.js','atlas-preview/context.js','atlas-preview/liquid-picker.js','atlas-preview/photo-sources.js','atlas-preview/app.js','atlas-preview/modules.js','atlas-preview/duel.js','atlas-preview/market-evidence.js','atlas-preview/market.js'])load(p);
 const w=env.window,m=w.RTA_ATLAS_MODULES,c=w.RTA_SENSORY_CORE,a=w.RTA_ATLAS_PREVIEW;
 assert.equal(Object.keys(m.inventory).length,16);assert.equal(Object.values(m.inventory).reduce((x,y)=>x+y,0),41);
 assert.equal(Object.values(m.historicalInventory).reduce((x,y)=>x+y,0),42,'Preserve original physical ownership snapshot');
@@ -109,16 +109,44 @@ assert.equal(m.setConfig({bell:'dome'}),true);
 assert.equal(m.state.config.bell,'dome','Keep the currently selected editable Dome setup');
 assert.equal(m.buildLeads('asylum')[0].config.bell,'flat',
  'The personal Asylum Flat/K1 28/6 card must not silently turn into a claimed personal Dome setup');
-assert.ok(m.materialPaths().includes('Configurația ta selectată, în afara primelor trei'),
+assert.ok(m.materialPaths().includes('Configurația ta selectată, în afara celor 3 builduri'),
  'A separately selected Dome coil must remain available, not overwritten by the personal Flat card');
 m.selectAtom('asylum');
 
 for(const id of ['asylum','gtr','415','klp','gtone']){
  m.selectAtom(id);const markup=m.materialPaths();
- assert.equal((markup.match(/class="material-path"/g)||[]).length,3,'Three visible build cards on '+id);
- assert.equal((markup.match(/class="material-build-facts"/g)||[]).length,3,'Facts in all three cards on '+id);
- assert.equal((markup.match(/data-atlas-build=/g)||[]).length,3,'Each card transfers exact config on '+id);
+ const expected=['asylum','415'].includes(id)?3:4;
+ assert.equal((markup.match(/class="material-path"/g)||[]).length,expected,'Historical three or four visible build cards on '+id);
+ assert.equal((markup.match(/class="material-build-facts"/g)||[]).length,expected,'Facts in each card on '+id);
+ assert.equal((markup.match(/data-atlas-build=/g)||[]).length,expected,'Each card transfers exact config on '+id);
 }
+const geometry=w.RTA_K1_GEOMETRY;
+assert.equal(geometry.rows.length,14,'Every active model, including separate Boro, must appear in the technical register');
+assert.equal(geometry.rows.filter(row=>row.unmodeled).length,1,'GAIA has no historical three-build record');
+assert.equal(geometry.byId.gaia.id,'gaia');
+for(const platform of w.RTA_ATLAS_COLLECTION.activeAtoms){
+ m.selectAtom(platform.id);
+ const before=m.buildLeads(),four=m.fourBuildLeads(),reference=geometry.byId[platform.id];
+ assert.equal(four.length,4,platform.id+' requires exactly one new K1 and the same three original cards');
+ assert.equal(four[0].source,'geometry');
+ assert.equal(four[0].config.wire,'k1'+reference.gauge);
+ assert.equal(four[0].config.wraps,reference.wraps);
+ assert.equal(four[0].config.coilMm,2.5);
+ assert.equal(four[0].config.air,reference.air,'Airflow must match the engineering condition for '+platform.id);
+ assert.equal(JSON.stringify(four.slice(1)),JSON.stringify(before),'No reorder or mutation of previous three on '+platform.id);
+ assert.equal(new Set(four.slice(1).map(x=>x.config.wire)).size,3,'Three historical distinct materials preserved on '+platform.id);
+ assert.ok(c.permitted(platform.id,four[0].config.wire,four[0].config.wraps));
+ const markup=m.materialPaths();
+ assert.equal((markup.match(/class="material-path"/g)||[]).length,4,'Four visible cards on '+platform.id);
+ assert.ok((markup.match(/data-atlas-build=/g)||[]).length>=4,'All four full builds must transfer to Wire Lab; manually selected fifth is allowed outside shortlist');
+ assert.ok(markup.includes('NOU · IPOTEZĂ GEOMETRICĂ'),'Do not claim an engineering guess is personal proof');
+ assert.ok(markup.includes('Ø2,5 mm'),'Fixed 2.5mm diameter must be visible');
+}
+const overview=m.geometryOverview();
+assert.equal((overview.match(/<tr class=/g)||[]).length,14,'Global build table must include 14 model rows');
+assert.equal((overview.match(/data-k1-open=/g)||[]).length,13,'Only 13 active classic RTAs may open the scoring simulator');
+assert.equal((overview.match(/Neînregistrat în Lab/g)||[]).length,3,'GAIA empty historical slots must be explicit, not fabricated');
+assert.ok(overview.includes('Triangularea')||overview.includes('triangularea'));
 // NiFe30 WATT must never leak through material selection into another TC preset.
 m.selectAtom('415');
 assert.equal(m.setConfig({wire:'k128'}),true);

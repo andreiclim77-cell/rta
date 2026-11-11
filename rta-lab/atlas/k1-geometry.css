@@ -1,0 +1,51 @@
+/* K1 geometry register · 11.11.2026 · scoped to Atlas, no V10 overrides */
+.k1-overview{margin:25px auto 12px;padding:23px clamp(14px,2.5vw,29px);border:1px solid rgba(210,183,132,.3);border-radius:20px;background:linear-gradient(145deg,rgba(32,48,46,.88),rgba(9,21,27,.95))}
+.k1-overview h2{font-size:clamp(24px,3.5vw,36px);line-height:1.18}
+.k1-overview .section-heading p{max-width:970px;line-height:1.7;color:#b8ccc2}
+.k1-overview-disclosure>summary{cursor:pointer;min-height:48px;padding:13px 15px;color:#e8d3a7;font-size:13px;font-weight:700;line-height:1.6;border:1px solid #516057;border-radius:10px;background:#132529}
+.k1-overview-disclosure[open]>summary{border-radius:10px 10px 0 0}
+.k1-table-legend{display:flex;flex-wrap:wrap;gap:10px;margin:17px 0;color:#c3d4c4}
+.k1-table-legend>span{display:inline-flex;padding:6px 10px;border-radius:30px;background:#223b39;border:1px solid #4b6358;font-size:10px;line-height:1.6}
+.k1-table-legend>span:first-child{background:#3c3628;border-color:#97835b;color:#edd3a6}
+.k1-table-wrap{max-width:100%;overflow-x:auto;border:1px solid #405753;border-radius:13px;background:#0a1b20;scrollbar-color:#8c8b77 #10262c}
+.k1-reference-table{width:100%;min-width:910px;border-collapse:collapse;table-layout:fixed;font-size:11px}
+.k1-reference-table th,.k1-reference-table td{text-align:left;vertical-align:top;border-bottom:1px solid #304b47;padding:13px 12px;overflow-wrap:anywhere}
+.k1-reference-table thead th{position:sticky;top:0;z-index:1;color:#ecd5a8;background:#243935;font-size:10px;letter-spacing:.04em}
+.k1-reference-table thead th:first-child{width:20%}
+.k1-reference-table tbody tr:nth-child(even){background:rgba(146,172,150,.035)}
+.k1-reference-table tbody tr:hover{background:rgba(217,192,142,.06)}
+.k1-reference-table tbody th{color:#e5eadf;font-weight:650;line-height:1.6}
+.k1-reference-table td:first-of-type{background:rgba(206,174,112,.075);border-left:2px solid #b99f6d}
+.k1-reference-table td strong{display:block;color:#f1eee1;font-size:11px;line-height:1.65}
+.k1-reference-table td:first-of-type strong{color:#f4d9a1}
+.k1-reference-table small{display:block;margin-top:5px;color:#a0b8ae;font-weight:400;line-height:1.5;font-size:10px}
+.k1-row-open{padding:0;border:0;background:transparent;text-align:left;cursor:pointer;color:#e9dcc0;font-weight:750;font-size:12px;line-height:1.6}
+.k1-row-open span{color:#dcb878}
+.k1-row-open:hover{text-decoration:underline}
+.k1-row-open:focus-visible,.k1-table-wrap:focus-visible,.k1-overview-disclosure summary:focus-visible{outline:2px solid #edce8e;outline-offset:3px}
+.k1-empty{color:#8ca5a0;font-style:italic}
+.k1-unmodeled td{opacity:.9}
+.k1-triangulation{margin-top:14px;padding:13px 17px;border:1px solid #415a53;border-radius:12px;background:rgba(20,40,41,.7)}
+.k1-triangulation summary{cursor:pointer;font-size:12px;font-weight:750;line-height:1.7;color:#e3cc9b}
+.k1-triangulation p{color:#bed0c4;font-size:12px;line-height:1.75}
+.material-path-grid:has(> .material-path:nth-child(4)){grid-template-columns:repeat(2,minmax(0,1fr))}
+.material-path:has(.eyebrow:first-child){min-width:0}
+.material-path-grid>.material-path:first-child{border-color:#b99d69;background:linear-gradient(140deg,#302c24,#122729 60%,#0a181e)}
+.material-path-grid>.material-path:first-child .eyebrow{color:#f0d09b}
+.sensory-comparison .series-3{--series:#d497af}
+@media(max-width:760px){
+ .k1-overview{padding:14px 12px;margin:13px auto 17px}
+ .k1-overview h2{font-size:25px}
+ .k1-table-legend{margin:12px 0}
+ .k1-table-wrap{overflow-x:hidden;border:0;background:transparent}
+ .k1-reference-table,.k1-reference-table tbody{display:block;width:100%;min-width:0}
+ .k1-reference-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ .k1-reference-table tbody tr{display:block;margin:0 0 12px;border:1px solid #48645a;border-radius:13px;background:#10262a;overflow:hidden}
+ .k1-reference-table tbody th{display:block;padding:13px 12px 11px;background:#213734;border-bottom:1px solid #53695a}
+ .k1-reference-table tbody td{display:grid;grid-template-columns:minmax(85px,35%) minmax(0,1fr);gap:8px;padding:10px 12px;border-bottom:1px solid #344d47;min-height:57px}
+ .k1-reference-table td::before{content:attr(data-label);color:#d8c192;font-size:10px;line-height:1.6;align-self:start;font-weight:750}
+ .k1-reference-table td:first-of-type{border-left:3px solid #d1b17d}
+ .k1-reference-table td strong{font-size:11px}
+ .k1-reference-table td small{font-size:10px}
+ .material-path-grid:has(> .material-path:nth-child(4)){grid-template-columns:minmax(0,1fr)}
+}

@@ -70,7 +70,7 @@ async function caseRun(browser,width,height,largeType=false){
   await page.locator('[data-exp-wraps="atlas"][data-exp-value="7"]').click();
   check=await checkViewport(page,width,'Atlas');
   assert.ok(check.count>=2&&!check.bad.length,JSON.stringify(check));
-  assert.equal(await page.locator('#atlasBuilds .material-path').count(),3);
+  assert.equal(await page.locator('#atlasBuilds .material-path').count(),4);
   await page.locator('#expAtlasWizard .exp-mobile-metric').first().scrollIntoViewIfNeeded();
   await page.screenshot({path:path.join(shotDir,'atlas-'+width+(largeType?'-font24':'')+'.png')});
   await page.locator('[data-route="liquid"]:visible').first().click();
@@ -96,6 +96,6 @@ async function main(){
    console.log('MOBILE FIT',JSON.stringify(await caseRun(browser,width,height,large)));
   }
  }finally{await browser.close();}
- console.log('ATLAS MOBILE FIT VISUAL PASS: all objectives and labels visible at 320/390/412 and real minimum font 24px, navigation, old 3-build cards intact.');
+ console.log('ATLAS MOBILE FIT VISUAL PASS: all objectives and labels visible at 320/390/412 and real minimum font 24px, navigation, new K1 plus prior three cards.');
 }
 main().catch(e=>{console.error(e);process.exitCode=1;});

@@ -2,7 +2,7 @@
 'use strict';
 if(typeof document==='undefined')return;
 document.addEventListener('DOMContentLoaded',()=>{
- const incomplete=!window.RTA_ATLAS_PREVIEW||!window.RTA_ATLAS_MODULES||!window.RTA_ATLAS_DUEL||!window.RTA_ATLAS_MARKET||!window.RTA_ATLAS_SEARCH_UI||window.RTA_LIQUIDS?.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1';
+ const incomplete=!window.RTA_ATLAS_PREVIEW||!window.RTA_ATLAS_MODULES||!window.RTA_ATLAS_DUEL||!window.RTA_ATLAS_MARKET||!window.RTA_ATLAS_SEARCH_UI||window.RTA_LIQUIDS?.length!==700||window.RTA_ATLAS_CATALOG?.edition!=='20261015-700-v1'||window.RTA_K1_GEOMETRY?.rows?.length!==14;
  if(incomplete){
   if(window.RTA_ATLAS_PREVIEW)window.RTA_ATLAS_PREVIEW.state.incomplete=true;
   const error=document.createElement('section');error.className='atlas-unavailable frame';error.setAttribute('role','alert');error.innerHTML='<h1>Atlas nu s-a încărcat complet.</h1><p>Catalogul sau unul dintre module lipsește. Nu afișăm rezultate din date incomplete.</p><button type="button">Reîncearcă încărcarea</button>';error.querySelector('button').addEventListener('click',()=>location.reload());

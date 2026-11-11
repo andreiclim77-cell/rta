@@ -160,7 +160,7 @@ assert.ok(v02css.includes('::-webkit-search-cancel-button'),"Avoid native and cu
 assert.ok(v02.includes('results.insertAdjacentElement("afterend",box)'),"Results must precede the airflow explainer");
 
 const refs=[...html.matchAll(/<script src="([^"]+)"/g)].map(m=>m[1]);
-assert.equal(refs.length,24,"Expected canonical scripts, photography, Atlas adapters, Duel, guided comparison, responsive fitting, and continuity card");
+assert.equal(refs.length,25,"Expected canonical scripts plus the K1 geometry register, Atlas adapters, Duel, guided comparison, responsive fitting, and continuity card");
 assert.ok(refs.at(-2).startsWith("./decision-explorer.js?"),"Guided comparison must load after Atlas layout and before continuity card");
 assert.ok(refs.at(-1).startsWith("./lab-commands.js?"),"Continuity card script must load after Atlas modules/layout");
 assert.ok(html.includes('./layout.css?')&&refs.some(ref=>ref.startsWith('./layout.js?')),'Responsive text fitting must ship with the application');
@@ -171,6 +171,9 @@ for(const ref of refs){
 }
 assert.ok(refs.findIndex(x=>x.includes("bell-liquid-fit.js"))<refs.findIndex(x=>x.includes("sensory-core.js")));
 assert.ok(refs.findIndex(x=>x.includes("sensory-core.js"))<refs.findIndex(x=>x.includes("mood-match.js")));
+assert.ok(refs.some(x=>x.includes('k1-geometry-20261111.js')),'Technical K1 reference must load in preview and published Atlas');
+assert.ok(refs.findIndex(x=>x.includes('k1-geometry-20261111.js'))<refs.findIndex(x=>x.includes('modules.js')),'Four-slot reference must load before the Atomizer Atlas renderer');
+assert.ok(html.includes('./k1-geometry.css?')&&html.includes('id="k1Overview"'),'Responsive global build table must be present');
 assert.ok(refs.findIndex(x=>x.includes("mood-match.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("photo-sources.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("./app.js"))<refs.findIndex(x=>x.includes("./v02.js")));
