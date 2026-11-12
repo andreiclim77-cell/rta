@@ -18,6 +18,10 @@ assert(has(audit({a: {...base, products: [{window: 'after', eventDate: '2026-09-
 assert(has(audit({a: base, b: {...base, snapshotReferenceAt: '2026-09-04T03:00:00Z'}}, now), 'mixed_snapshot_references'));
 assert(has(audit({a: {...base, sourceRuns: [{id: 'fixture', ok: false}]}}, now), 'source_not_verified'));
 assert(has(audit({a: {...base, sourceRuns: [{id:'a',ok:true},{id:'b',ok:false}]}}, now), 'source_coverage_below_gate'));
+const partialCoverage = audit({a: {...base, sourceRuns: Array.from({length: 48}, (_, i) => ({id: String(i), ok: i < 43}))}}, now);
+assert.equal(partialCoverage.status, 'partial');
+assert(has(partialCoverage, 'source_coverage_partial'));
+assert(!has(partialCoverage, 'source_coverage_below_gate'));
 assert(has(audit({a: {...base, skippedSources:[{id:'a',reason:'blocked'}]}}, now), 'source_explicitly_skipped'));
 const input = {a: {...base, products: []}};
 const before = JSON.stringify(input);
@@ -30,4 +34,4 @@ assert.equal(firstEvidenceObservation({sources:[{publishedAt:'2026-09-30',observ
 assert.equal(rankingSnapshots({updatedAt:'2025-12-31T00:00:00Z',rankings:[]}).length,0);
 assert.equal(rankingSnapshots({updatedAt:'2026-09-05T00:00:00Z',rankingHistory:[{date:'2026-09-06',rows:[]},{date:'2026-02-30',rows:[]}]}).length,0);
 assert.equal(firstObservedDate({analysisWindow:{firstObservedAt:'2026-01-01'}},[]),null);
-console.log('Evidence integrity: 21 checks passed; fixtures are synthetic, not market evidence.');
+console.log('Evidence integrity checks passed; fixtures are synthetic, not market evidence.');

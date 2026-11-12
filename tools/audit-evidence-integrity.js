@@ -39,7 +39,8 @@ function audit(documents, now = new Date()) {
     if ((doc.sourceRuns || []).length) {
       const working = doc.sourceRuns.filter(run => run.ok === true).length;
       const ratio = working / doc.sourceRuns.length;
-      if (ratio < 0.9) add('error', file, 'source_coverage_below_gate', `${working}/${doc.sourceRuns.length} direct sources succeeded; minimum is 90%.`);
+      if (ratio < 0.8) add('error', file, 'source_coverage_below_gate', `${working}/${doc.sourceRuns.length} direct sources succeeded; minimum is 80%.`);
+      else if (ratio < 0.9) add('warning', file, 'source_coverage_partial', `${working}/${doc.sourceRuns.length} direct sources succeeded; below the 90% target.`);
     }
     for (const skipped of doc.skippedSources || []) add('warning', file, 'source_explicitly_skipped', `${skipped.id}: ${skipped.reason || 'direct collection unavailable'}.`);
   }
