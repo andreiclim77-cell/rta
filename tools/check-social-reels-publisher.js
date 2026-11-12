@@ -6,6 +6,7 @@ const {
   displayTitle,
   emptyReelsState,
   failedReelNeedsRecheck,
+  facebookReelLookupPending,
   facebookReelStatus,
   finishQueueItemIfComplete,
   markSourceBlocked,
@@ -100,6 +101,16 @@ assert.strictEqual(
   facebookReelStatus({ status: { publishing_phase: { status: 'error' } } }).error,
   true,
   'A terminal Facebook publishing error must be detected'
+);
+assert.strictEqual(
+  facebookReelLookupPending(new Error("Meta Graph API cod 100: Unsupported get request. Object with ID '123' does not exist")),
+  true,
+  'A newly published Reel that is not yet readable must remain pending'
+);
+assert.strictEqual(
+  facebookReelLookupPending(new Error('Meta Graph API cod 190: Access token expired')),
+  false,
+  'Authorization failures must not be hidden as processing delays'
 );
 assert.strictEqual(
   pendingReelIsStale({ startedAt: '2026-08-20T06:00:00Z' }, '2026-08-23T06:00:00Z'),

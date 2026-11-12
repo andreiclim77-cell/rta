@@ -57,8 +57,12 @@ need(Number(products.summary.total)===events.length,'RTA/MOD dated-event summary
 need(Number(products.summary.publicSignals)===signals.length,'RTA/MOD public-signal summary mismatch');
 need(Number(products.summary.before)===events.filter(row=>row.window==='before').length,'RTA/MOD before summary mismatch');
 need(Number(products.summary.after)===events.filter(row=>row.window==='after').length,'RTA/MOD after summary mismatch');
-const prime=(products.products||[]).find(row=>/prime minister/i.test(row.productName));
-if(prime)need(!dated(prime)&&prime.signalKind==='dated-retail-promotion','Prime Minister promotion is incorrectly presented as a release');
+for(const row of products.products||[]){
+  const eligible=(row.sources||[]).filter(source=>source.decisionEligible!==false);
+  if(eligible.length&&eligible.every(source=>source.dateConfidence==='dated-retail-campaign')){
+    need(!dated(row)&&row.confidenceTier==='public-signal'&&row.signalKind==='dated-retail-promotion',`Retail promotion is incorrectly presented as a release: ${row.productName}`);
+  }
+}
 
 for(const row of heartbeat.releasedLast30Days||[]){const age=windowAgeHours(row.publishedAt||row.eventDate,ref);if(age!=null)need(age>=0&&age<=720,'Heartbeat contains an event outside the daily 30-day window')}
 console.log(`Hype publish gate OK: ${events.length} dated RTA/MOD events; ${signals.length} public signals; ${products.summary.before} before; ${products.summary.after} after; ref ${refIso}.`);

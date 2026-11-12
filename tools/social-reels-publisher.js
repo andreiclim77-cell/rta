@@ -458,6 +458,10 @@ function facebookReelStatus(video) {
   return { uploading, processing, publishing, videoStatus, ready, error };
 }
 
+function facebookReelLookupPending(error) {
+  return /Meta Graph API cod 100: Unsupported get request\./i.test(String(error && error.message || error || ''));
+}
+
 async function uploadFacebookReel(item, options = {}) {
   let videoId = String(options.pendingVideoId || '').trim();
   if (!videoId) {
@@ -485,7 +489,14 @@ async function uploadFacebookReel(item, options = {}) {
   }
   let lastVideo = { id: videoId };
   for (let attempt = 0; attempt < 30; attempt += 1) {
-    const video = await graphRequest(videoId, { query: { fields: 'id,status,permalink_url,title,description' } });
+    let video;
+    try {
+      video = await graphRequest(videoId, { query: { fields: 'id,status,permalink_url,title,description' } });
+    } catch (error) {
+      if (!facebookReelLookupPending(error)) throw error;
+      if (attempt < 29) await new Promise(resolve => setTimeout(resolve, 10000));
+      continue;
+    }
     lastVideo = video;
     const reelStatus = facebookReelStatus(video);
     if (reelStatus.ready) return { ...video, publishPending: false };
@@ -625,7 +636,24 @@ async function reconcileFacebookPending(state) {
     const queuedItem = state.queue.find(item => item.sourcePostId === sourcePostId);
     const item = pending.item || queuedItem || null;
     if (!videoId) continue;
-    const video = await graphRequest(videoId, { query: { fields: 'id,status,permalink_url,title,description' } });
+    let video;
+    try {
+      video = await graphRequest(videoId, { query: { fields: 'id,status,permalink_url,title,description' } });
+    } catch (error) {
+      if (!facebookReelLookupPending(error)) throw error;
+      const timestamp = nowIso();
+      state.facebookPendingReels[sourcePostId] = { ...pending, checkedAt: timestamp, lookupPending: true };
+      state.updatedAt = timestamp;
+      if (pendingReelIsStale(pending, timestamp)) {
+        state.facebookFailedReels[sourcePostId] = {
+          id: videoId, item: pendingReelItem(item), failedAt: timestamp,
+          failureReason: 'processing-timeout', lastCheckedAt: timestamp
+        };
+        delete state.facebookPendingReels[sourcePostId];
+        state.queue = state.queue.filter(entry => entry.sourcePostId !== sourcePostId);
+      }
+      continue;
+    }
     const status = facebookReelStatus(video);
     const timestamp = nowIso();
     state.facebookPendingReels[sourcePostId] = {
@@ -840,6 +868,7 @@ module.exports = {
   completedOnBothPlatforms,
   displayTitle,
   emptyReelsState,
+  facebookReelLookupPending,
   facebookReelStatus,
   finishQueueItemIfComplete,
   isSourceMediaUnavailable,
