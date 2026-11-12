@@ -89,7 +89,7 @@ jobs:
           NODE
             then run_analysis=false; fi
           fi
-          if [ "${{ github.event_name }}" = "push" ]; then
+          if [ "$run_analysis" = "true" ]; then
             if ! node - <<'NODE'
           const fs=require('fs');
           const today=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Bucharest',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
@@ -100,7 +100,7 @@ jobs:
           process.exit(1);
           NODE
             then
-              echo "Technical push detected before today's 06:00 Market snapshot; Analysis will refresh from the daily chain instead."
+              echo "Today's Market base is not ready; Analysis will refresh from the successful daily chain instead."
               run_analysis=false
             fi
           fi
