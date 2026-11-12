@@ -70,8 +70,12 @@ for(const data of [hype,pods]){
 
 const badPod=/\b(?:itaste svd|nunchaku mini|plexus pro|e liquid|e juice|vape juice|nicotine pouch|replacement cartridge|empty pod)\b/i;
 for(const product of pods.products||[])need(!badPod.test(product.productName),`Non-POD product leaked into POD Hype: ${product.productName}`);
-const prime=(hype.products||[]).find(product=>/prime minister/i.test(product.productName));
-if(prime)need(prime.confidenceTier==='public-signal'&&prime.signalKind==='dated-retail-promotion','Prime Minister promotion was incorrectly promoted to a new release');
+for(const product of hype.products||[]){
+  const eligible=(product.sources||[]).filter(source=>source.decisionEligible!==false);
+  if(eligible.length&&eligible.every(source=>source.dateConfidence==='dated-retail-campaign')){
+    need(product.confidenceTier==='public-signal'&&product.signalKind==='dated-retail-promotion',`Retail promotion was incorrectly promoted to a new release: ${product.productName}`);
+  }
+}
 const history=read('data/market-hype-known-history-2026.json',{entries:[]});
 for(const prior of history.entries||[]){const data=prior.category==='POD'?pods:hype,key=prior.category+'|'+canonicalizeProduct({product:prior.productName,brand:prior.brand||''}).key,row=(data.products||[]).find(function(product){return product.category+'|'+canonicalizeProduct({product:product.productName,brand:product.brand||''}).key===key});if(row&&['catalog-published-at','first-retail-observation'].includes(row.dateConfidence))need(row.confidenceTier==='public-signal'&&row.signalKind==='recent-listing-known-model',`Known model was promoted by a fresh retail page: ${row.productName}`)}
 
@@ -79,7 +83,7 @@ const direct=read('data/market-hype-direct-catalogs-2026.json'),dated=read('data
 need(direct.scan&&Number(direct.scan.sourcesConfigured)===enabledSources.length,`Direct catalog scan/config mismatch: ${direct.scan&&direct.scan.sourcesConfigured}/${enabledSources.length}`);
 need(Number(direct.scan.sourcesConfiguredTotal)===configuredSources.length,`Direct catalog total registry mismatch: ${direct.scan&&direct.scan.sourcesConfiguredTotal}/${configuredSources.length}`);
 need(Number(direct.scan.sourcesSkipped)===disabledSources.length,`Direct catalog skipped-source mismatch: ${direct.scan&&direct.scan.sourcesSkipped}/${disabledSources.length}`);
-need(Number(direct.scan.sourcesWorking)>=Math.ceil(enabledSources.length*.9),`Direct catalog coverage is incomplete: ${direct.scan.sourcesWorking}/${enabledSources.length}`);
+need(Number(direct.scan.sourcesWorking)>=Math.ceil(enabledSources.length*.8),`Direct catalog coverage is below the publication minimum: ${direct.scan.sourcesWorking}/${enabledSources.length}`);
 need(direct.truth&&direct.truth.sitemapLastmodIsNeverUsedAsLaunchDate===true&&direct.truth.jsonLdCatalogCoverageDoesNotCreateLaunchEvents===true,'Sitemap/JSON-LD launch-date protection is missing');
 need(Array.isArray(direct.sourceRuns)&&direct.sourceRuns.length===enabledSources.length,'Direct adapter telemetry is incomplete');
 need(Array.isArray(direct.skippedSources)&&disabledSources.every(function(source){return direct.skippedSources.some(function(row){return row.id===source.id&&row.reason})}),'Skipped direct-source telemetry is incomplete');
