@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-preview-08e943457a655899",PREFIX="rta-atlas-preview-";
+const CACHE="rta-atlas-preview-85b42302ba6d054f",PREFIX="rta-atlas-preview-";
 const ASSETS=[
   "../../assets/facebook-profile-ghid-rta-smokee.jpg",
   "../../assets/fonts/manrope-latin-ext.woff2",
@@ -17,18 +17,18 @@ const ASSETS=[
   "../mood-match.js?v=atlas-catalog-700-20261015-1",
   "./",
   "./app.js?v=coil-style-20261108-v1",
-  "./bootstrap.js?v=k1-four-builds-20261111-v1",
+  "./bootstrap.js?v=k1-no-legacy-20261111-v4",
   "./catalog.js?v=atlas-catalog-700-20261015-1",
   "./context-ui.js?v=atlas-catalog-700-20261015-1",
   "./context.js?v=atlas-catalog-700-20261015-1",
   "./decision-explorer.css?v=wire-clarity-20261031-v1",
-  "./decision-explorer.js?v=k1-no-legacy-20261111-v3",
+  "./decision-explorer.js?v=k1-no-legacy-20261111-v4",
   "./duel.js?v=coil-style-20261108-v1",
   "./gateway-photos.css?v=atlas-gallery-photos-20261019-1",
   "./ghid-rta-link.css?v=ghid-rta-link-20261019-1",
   "./icon.svg",
   "./index.html",
-  "./k1-geometry.css?v=k1-no-legacy-20261111-v3",
+  "./k1-geometry.css?v=k1-no-legacy-20261111-v4",
   "./lab-commands.css?v=atlas-lab-commands-20261016-1",
   "./lab-commands.js?v=atlas-lab-commands-20261016-1",
   "./layout.css?v=atlas-catalog-700-20261015-1",
@@ -73,7 +73,7 @@ const ASSETS=[
   "./media/taifun-gt-one.jpg",
   "./mobile-fit.css?v=atlas-mobile-fit-20261016-1",
   "./modules.css?v=wire-clarity-20261031-v1",
-  "./modules.js?v=k1-no-legacy-20261111-v3",
+  "./modules.js?v=k1-no-legacy-20261111-v4",
   "./photo-sources.js?v=atlas-catalog-700-20261015-1",
   "./styles.css?v=atlas-catalog-700-20261015-1",
   "./v02.css?v=atlas-catalog-700-20261015-1",
