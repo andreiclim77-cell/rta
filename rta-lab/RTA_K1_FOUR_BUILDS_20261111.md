@@ -21,6 +21,29 @@
 | Minister MTL | 28 GA × 5 | 29 GA × 6 | 02 NiFe52 × 6; 03 SS Clapton × 5 |
 | **Taifun GAIA · Boro** | **28 GA × 5, ipoteză Boro** | **29 GA × 5, ipoteză Boro** | **Fără alte configurații înregistrate; nu se simulează Boro** |
 
+## Actualizare 13.11.2026 — CONTACT/SPACED individual la K1 poziția 01
+
+**Tipul spirelor apare explicit** în tabelul HOME, în ambele subcarduri 01A/01B, în descrierea coilului și în transferul în Wire Lab. Noile 01 sunt ipoteze tehnice după cameră și airflow; nu sunt automat construite/testate. Când nu există probă personală pe combinația exactă, SPACED este **propunere inginerească de pornire**, nu o preferință personală inventată.
+
+| Atomizor (ID Lab) | 01A 28 GA | 01B 29 GA |
+|---|---|---|
+| kprime | **SPACED** | **SPACED** |
+| klp | **CONTACT** | **SPACED** |
+| kx | **SPACED** | **SPACED** |
+| gtone | **SPACED** | **SPACED** |
+| gtr | **SPACED** | **SPACED** |
+| gaia | **SPACED** | **SPACED** |
+| dvarwcl | **SPACED** | **SPACED** |
+| dvarwfl | **SPACED** | **SPACED** |
+| muted | **CONTACT** | **SPACED** |
+| diplomat | **SPACED** | **SPACED** |
+| pmfree | **SPACED** | **SPACED** |
+| pmstd | **SPACED** | **SPACED** |
+| byka | **SPACED** | **SPACED** |
+| minister | **SPACED** | **SPACED** |
+
+**Dovezi păstrate:** KLP 28/5 CONTACT (istoric A/B); GT One 29/5 SPACED (montat și apreciat); Muted+ 28/6 CONTACT (alternativă personală declarată); GTR 29/6 SPACED (variantă declarată). Pe Prime și Kayfun X 29 GA, CONTACT rămâne o alternativă declarată în registrul vechi; în cardul nou 01B am ales SPACED **doar ca ipoteză tehnică**. KLP 29/5 SPACED nu trebuie confundat cu 29/6 SPACED testat. Dvarw și GAIA nu primesc fals statut de montaj confirmat. Date canonice: `data/k1-geometry-20261111.js`, câmpuri `variants[].spacing` și `styleEvidence`. Istoricul nemodificat: `data/sensory-core.js` / `RTA_COIL_STYLE_CURRENT_20261108.md`.
+
 ## Triangulare și limite de probă
 
 1. **Fizică:** prima poziție include 28 și 29 GA în pereche, fiecare cu un footprint de 5/6 spire dedus din cameră, direcția jeturilor și masa/suprafața sârmei. Condițiile sunt în `data/k1-geometry-20261111.js`: **Prime 28/6 + 29/6**, **GTR 28/6 + 29/6 cu ambele canale**, **Dvarw CL/FL 3×0,6 mm**, **Muted+ 0,8 jos + 2×0,8 laterale**, **Minister diverter 20×1 mm**. Pentru altă inserție reanalizează. 28/29 nu sunt considerate echivalente energetic la același wattaj.

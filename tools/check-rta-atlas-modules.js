@@ -155,6 +155,8 @@ for(const platform of w.RTA_ATLAS_COLLECTION.activeAtoms){
   assert.equal(config.coilMm,2.5);
   assert.equal(config.air,reference.air);
   assert.equal(config.regime,'watt');
+  assert.equal(config.spacing,reference.variants[i].spacing,'Both K1 positions must preserve exact CONTACT/SPACED across handoff');
+  assert.ok(['contact','spaced'].includes(config.spacing));
   assert.ok(c.permitted(platform.id,config.wire,config.wraps));
  }
  const markup=m.materialPaths();
@@ -164,6 +166,7 @@ for(const platform of w.RTA_ATLAS_COLLECTION.activeAtoms){
  assert.ok((markup.match(/data-atlas-build=/g)||[]).length>=2+survivors.length,'Both K1s and every surviving exact Wire Lab handoff on '+platform.id);
  assert.ok(markup.includes('NOU · DOUĂ IPOTEZE K1'),'Do not claim an engineering guess is personal proof');
  assert.ok(markup.includes('Ø2,5 mm'),'Fixed 2.5mm diameter must be visible');
+ assert.equal((markup.match(/Tipul spirelor:<\/b>/g)||[]).length,2,'Both 01A and 01B need a prominent style and evidence');
 }
 const overview=m.geometryOverview();
 assert.equal((overview.match(/<tr class=/g)||[]).length,14,'Global build table must include 14 model rows');
@@ -173,6 +176,8 @@ assert.equal((overview.match(/class="k1-table-pair"/g)||[]).length,14,'Both K1 g
 for(const block of overview.split('<div class="k1-table-pair">').slice(1)){
  const cell=block.split('</div>')[0];
  assert.ok(cell.includes('<strong>K1 28 GA / ')&&cell.includes('<strong>K1 29 GA / '),'Both GA must appear INSIDE first-position cell of each row');
+ assert.ok(/<strong>K1 28 GA \/ \d+ sp\. · (?:CONTACT|SPACED)/.test(cell),'28 GA style absent from global table');
+ assert.ok(/<strong>K1 29 GA \/ \d+ sp\. · (?:CONTACT|SPACED)/.test(cell),'29 GA style absent from global table');
 }
 const tableRows=[...overview.matchAll(/<tr class="[^"]*">([\s\S]*?)<\/tr>/g)].map(x=>x[1]);
 for(let i=0;i<geometry.rows.length;i++){

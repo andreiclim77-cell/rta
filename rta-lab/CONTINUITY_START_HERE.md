@@ -17,6 +17,10 @@
 4. Verifică independent pagina live, testele, release-ul și starea publicării. **Commit pe `main` nu înseamnă automat că publicul vede noua versiune.**
 5. La „salvează”, actualizează codul/documentele, reconstruiește și testează release-ul, apoi **regenerează și înlocuiește fișierul ZIP exact în calea de mai sus** într-un commit nou, verifică manifestul și posibilitatea recuperării de pe GitHub. Biblioteca ChatGPT este o copie suplimentară, niciodată singurul loc pentru arhivă. Nu declara salvare reușită dacă un pas e blocat.
 
+## Completare 13.11.2026 — tipul spirelor în 01A și 01B
+
+Codul din `data/k1-geometry-20261111.js` și secțiunea „Actualizare 13.11.2026” din `RTA_K1_FOUR_BUILDS_20261111.md` au prioritate pentru **CONTACT/SPACED explicit pentru ambele K1** de pe prima poziție. Tipul indicat ca propunere inginerească nu dovedește montaj; preferințele contact/spaced istorice Prime/KX se păstrează. Verifică separat dacă Pages a publicat codul nou.
+
 ## Ultima regulă de build (11.11.2026)
 
 În comparația HOME + Atomizer Atlas, **poziția 01 conține ambele variante Kanthal A1 K1 28 GA și 29 GA, fiecare Ø2,5 mm**, cu spirele și airflow-ul specifice platformei. Din fostele poziții **02–04** se elimină din afișaj **toate variantele cu fir K1 (`k128`, `k129`, `k1clap`)**. Rămân exclusiv buildurile istorice **NiFe30 / NiFe52 / SS Clapton**, fără modificarea conținutului și în aceeași ordine, renumerotate 02, 03, fără poziții goale. Este **numai un filtru de prezentare**; Wire Lab, `buildLeads()` și istoricul personal rămân intacte. GAIA Boro are numai 01 cu două ipoteze, fără scor validat.
