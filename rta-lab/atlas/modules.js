@@ -214,9 +214,9 @@ function geometryVariant(id=state.atom,gauge){
  const base=id===state.atom?state.config:core.defaultConfig(id);
  const air=core.platforms[id].air.some(row=>row.id===hint.air)?hint.air:base.air;
  const config=core.config(id,{...base,wire,wraps:variant.wraps,air,coilMm:hint.diameterMm,
-  spacing:stylePreset(id,wire,variant.wraps),...core.wireSetup(id,wire,variant.wraps),regime:'watt',chipset:''});
- if(config.wire!==wire||config.wraps!==variant.wraps||config.coilMm!==2.5||config.air!==air)return null;
- return {config,source:'geometry',hint,gauge};
+  ...core.wireSetup(id,wire,variant.wraps),spacing:variant.spacing,regime:'watt',chipset:''});
+ if(config.wire!==wire||config.wraps!==variant.wraps||config.coilMm!==2.5||config.air!==air||config.spacing!==variant.spacing)return null;
+ return {config,source:'geometry',hint,gauge,styleEvidence:variant.styleEvidence};
 }
 function geometryFirst(id=state.atom){
  const hint=window.RTA_K1_GEOMETRY?.byId?.[id];
@@ -249,7 +249,7 @@ function geometryOverview(){
   const pair=geometryPair(row.id);
   const name=row.unmodeled?esc(row.name):'<button type="button" class="k1-row-open" data-k1-open="'+esc(row.id)+'">'+esc(row.name)+' <span aria-hidden="true">↗</span></button>';
   const details='<small>'+esc(row.unmodeled?'BORO · fără model senzorial':'Airflow: '+(core.platforms[row.id].air.find(a=>a.id===pair[0]?.config.air)?.label||'neprecizat'))+'</small>';
-  const firstText='<div class="k1-table-pair">'+row.variants.map(v=>'<strong>K1 '+v.gauge+' GA / '+v.wraps+' sp. · Ø2,5</strong>').join('')+'</div><small>'+esc(row.unmodeled?'Două ipoteze Boro; niciuna nu este build montat':'Două configurații tehnice separate, fără A/B personal dedus')+'</small>';
+  const firstText='<div class="k1-table-pair">'+row.variants.map(v=>'<strong>K1 '+v.gauge+' GA / '+v.wraps+' sp. · '+v.spacing.toUpperCase()+' · Ø2,5</strong><small>'+esc(v.styleEvidence)+'</small>').join('')+'</div><small>'+esc(row.unmodeled?'Două ipoteze Boro; niciuna nu este build montat':'Două configurații tehnice separate, fără A/B personal dedus')+'</small>';
   const remaining=old.map((lead,i)=>'<div class="k1-remaining-item"><span class="k1-position-num">'+String(i+2).padStart(2,'0')+'</span><div><strong>'+esc(shortBuild(lead.config))+'</strong><small>'+(lead.source==='personal'?'Preferință personală':'Propunere anterioară')+'</small></div></div>').join('');
   const after=remaining?'<div class="k1-table-remaining">'+remaining+'</div>':'<span class="k1-empty">Fără alte configurații non-K1 înregistrate</span>';
   return '<tr class="'+(row.unmodeled?'k1-unmodeled':'')+'"><th scope="row">'+name+details+'</th>'+td(firstText,'01 · K1 dublu')+td(after,'02+ · Fără K1')+'</tr>';
@@ -268,11 +268,12 @@ function buildFacts(config){
 }
 function geometryPairCard(pair,profile){
  if(pair.length!==2)return '';
- const variants=pair.map(({config,gauge})=>{
+ const variants=pair.map(({config,gauge,styleEvidence})=>{
   const w=core.wires[config.wire],r=hasLiquid()?core.analyze(config,profile,state.objective):null;
   return '<section class="k1-dual-variant" data-geometry-ga="'+gauge+'" data-build-wire="'+esc(config.wire)+'" data-build-wraps="'+config.wraps+'">'+
-   '<span class="eyebrow">01'+(gauge===28?'A':'B')+' · IPOTEZĂ · '+gauge+' GA</span><h4>'+esc(w.name)+' · '+config.wraps+' spire</h4>'+
+   '<span class="eyebrow">01'+(gauge===28?'A':'B')+' · '+gauge+' GA · '+config.spacing.toUpperCase()+'</span><h4>'+esc(w.name)+' · '+config.wraps+' spire · '+config.spacing.toUpperCase()+'</h4>'+
    '<div class="material-schematic">'+api.renderCoil(config)+'</div>'+buildFacts(config)+
+    '<p class="module-note"><b>Tipul spirelor:</b> '+esc(config.spacing.toUpperCase())+' · '+esc(styleEvidence)+'</p>'+
    (r?'<p>'+esc(api.vapeDescription(r,profile))+'</p><p class="module-note"><b>Accent:</b> '+esc(r.advantages.slice(0,2).join(' · '))+' · <b>Compromis:</b> '+esc(r.tradeoffs[0]||'Verifică practic')+'</p>':'<p class="module-note">Propunere tehnică; alege un lichid pentru comparație contextuală. Nu este montaj sau test personal confirmat.</p>')+
    '<button type="button" class="module-link" data-atlas-build="'+esc(encodeURIComponent(JSON.stringify(config)))+'">Deschide K1 '+gauge+' GA exact în Wire Lab ↗</button>'+
    '<details class="wire-liquid-links"><summary>5 lichide potrivite cu K1 '+gauge+' GA</summary><div class="journey-liquid-list">'+liquidButtons(config)+'</div><p class="module-note">Potriviri calculate din cele '+catalog.length+' lichide, nu A/B personal.</p></details></section>';

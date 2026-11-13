@@ -24,9 +24,16 @@ const rows=[
  {id:"byka",name:"By-Ka V11",gauge:28,wraps:5,alternateWraps:5,air:"pin12",why:"Jet unic 1,2 mm și traseu MTL strâns: 28/5 și 29/5 au aceeași numărătoare, nu aceeași masă sau rezistență."},
  {id:"minister",name:"Minister MTL",gauge:29,wraps:6,alternateWraps:5,air:"d20",why:"Diverter 20×1 mm: 28/5 limitează lungimea activă în camera mică, 29/6 extinde acoperirea; cu 12 orificii cere revalidare."}
 ];
+// CONTACT/SPACED is explicit for each NEW 01A/01B coil, independently of historical records.
+const coilStyleById=Object.freeze({"kprime":["spaced","spaced"],"klp":["contact","spaced"],"kx":["spaced","spaced"],"gtone":["spaced","spaced"],"gtr":["spaced","spaced"],"gaia":["spaced","spaced"],"dvarwcl":["spaced","spaced"],"dvarwfl":["spaced","spaced"],"muted":["contact","spaced"],"diplomat":["spaced","spaced"],"pmfree":["spaced","spaced"],"pmstd":["spaced","spaced"],"byka":["spaced","spaced"],"minister":["spaced","spaced"]});
+const coilStyleEvidenceById=Object.freeze({"kprime":["SPACED este propunere tehnică pentru 28/6","SPACED propus; CONTACT rămâne alternativă personală acceptată"],"klp":["CONTACT documentat pentru KLP 28/5 în A/B istoric","SPACED propus pentru 29/5; nu confunda cu KLP 29/6 SPACED testat"],"kx":["SPACED propus tehnic pentru 28/5","SPACED propus; CONTACT rămâne alternativă personală acceptată"],"gtone":["SPACED propus tehnic pentru 28/5","SPACED montat/testat, descris «perfect» la 03.11.2026"],"gtr":["SPACED propus tehnic pentru 28/6","SPACED declarat pentru 29/6, fără A/B izolat"],"muted":["CONTACT declarat ca alternativă personală K1 28/6","SPACED propus tehnic pentru 29/6, fără montaj confirmat"]});
 const byId=Object.freeze(Object.fromEntries(rows.map(row=>{
  if(![28,29].includes(row.gauge)||![5,6].includes(row.wraps)||![5,6].includes(row.alternateWraps))throw Error('K1 geometry pair incomplete: '+row.id);
- const variants=Object.freeze([28,29].map(gauge=>Object.freeze({gauge,wraps:gauge===row.gauge?row.wraps:row.alternateWraps})));
+ const chosenStyles=coilStyleById[row.id];
+ if(!chosenStyles||chosenStyles.length!==2||!chosenStyles.every(s=>s==="contact"||s==="spaced"))throw Error("No CONTACT/SPACED for "+row.id);
+ const variants=Object.freeze([28,29].map((gauge,i)=>Object.freeze({gauge,wraps:gauge===row.gauge?row.wraps:row.alternateWraps,
+  spacing:chosenStyles[i],styleEvidence:coilStyleEvidenceById[row.id]?.[i]||"SPACED — propunere tehnică; nu montaj personal confirmat"
+ })));
  return [row.id,Object.freeze({...row,diameterMm,variants,status:"două ipoteze tehnice · neverificate prin A/B izolat"})];
 })));
 window.RTA_K1_GEOMETRY=Object.freeze({date:"2026-11-11",diameterMm,rows:Object.freeze(rows.map(row=>byId[row.id])),byId});
