@@ -3,7 +3,7 @@
   "scopeYear": 2026,
   "scope": "GLOBAL RTA + clone RTA",
   "windowDays": 30,
-  "generatedAt": "2026-11-17T12:58:50.863Z",
+  "generatedAt": "2026-11-18T12:51:16.644Z",
   "pendingRefresh": false,
   "truth": {
     "productLevelOnly": true,
@@ -110,20 +110,12 @@
   "scan": {
     "queries": 90,
     "working": 90,
-    "rawDocs": 909,
-    "preCandidates": 18,
-    "resolvedVendorPages": 8,
-    "pagesFetched": 18,
+    "rawDocs": 826,
+    "preCandidates": 22,
+    "resolvedVendorPages": 12,
+    "pagesFetched": 20,
     "events": 0,
     "samplePre": [
-      {
-        "url": "https://riversidetransit.com/",
-        "title": "Riverside Transit Agency - Home"
-      },
-      {
-        "url": "https://www.riversidetransit.com/index.php/riding-the-bus/maps-schedules",
-        "title": "Riverside Transit Agency - Maps & Schedules"
-      },
       {
         "url": "https://app.rtafleet.com/",
         "title": "RTA Fleet - fmis-web"
@@ -135,6 +127,14 @@
       {
         "url": "https://rtafleet.com/",
         "title": "RTA Fleet Management Software | RTA Fleet"
+      },
+      {
+        "url": "https://www.rta.org/",
+        "title": "RTA - Home - RAILWAY TIE ASSOCIATION"
+      },
+      {
+        "url": "https://app.rtafleet.com/login",
+        "title": "fmis-web"
       }
     ],
     "explicitQueries": 48,
@@ -153,14 +153,14 @@
       "2fdeal.com"
     ],
     "searchIndexEtaCandidates": 1,
-    "searchIndexEtaPages": 1,
+    "searchIndexEtaPages": 0,
     "searchIndexEtaPhraseHits": 0,
     "searchIndexEtaSnippetFallbacks": 0,
     "searchIndexEtaEvents": 0,
     "searchIndexEtaSample": [],
     "newArrivalCatalogPages": 16,
-    "newArrivalRtaLinks": 76,
-    "newArrivalProductPages": 75,
+    "newArrivalRtaLinks": 75,
+    "newArrivalProductPages": 72,
     "newArrivalPhraseHits": 0,
     "newArrivalEvents": 0,
     "profiles": [
@@ -187,7 +187,7 @@
         "catalogPages": 2,
         "catalogFetched": 2,
         "productLinks": 72,
-        "productPages": 70,
+        "productPages": 72,
         "events": 0,
         "samples": []
       },
@@ -212,7 +212,7 @@
     ],
     "catalogPagesFetched": 52,
     "productLinks": 480,
-    "productPagesFetched": 477,
+    "productPagesFetched": 479,
     "profilesV2": [
       {
         "id": "3fvape",
@@ -236,7 +236,7 @@
         "id": "shareavape",
         "catalogFetched": 2,
         "productLinks": 73,
-        "productPages": 66,
+        "productPages": 73,
         "events": 0,
         "titleFallbacks": 8,
         "samples": []
@@ -261,7 +261,7 @@
       }
     ],
     "productLinksV2": 487,
-    "productPagesV2": 478,
+    "productPagesV2": 485,
     "eventsV2": 0,
     "activeMakerRegistry": 100,
     "activeMakerOfficialRegistry": 44,
@@ -269,36 +269,55 @@
     "activeMakerCloneRegistry": 14,
     "activeMakerQueries": 778,
     "activeMakerQueriesWorking": 778,
-    "activeMakerSearchDocuments": 4273,
-    "activeMakerCandidatePages": 79,
-    "activeMakerConcreteProducts": 1,
+    "activeMakerSearchDocuments": 4608,
+    "activeMakerCandidatePages": 76,
+    "activeMakerConcreteProducts": 2,
     "activeMakerAcceptedSignals": 0,
     "activeMakerOfficialSignals": 0,
     "activeMakerEligibleSignals": 0,
     "activeMakerRejections": {
-      "fetchFailed": 19,
+      "fetchFailed": 22,
       "makerMismatch": 0,
-      "nonProductTitle": 78,
-      "noEventOrDate": 1,
+      "nonProductTitle": 74,
+      "noEventOrDate": 2,
       "ineligibleAfterSource": 0
     },
     "activeMakerRejectedSample": [
       {
-        "maker": "Wotofo",
-        "product": "Vape Mods, Tanks, Kits, RDA, RTA & RDTAs",
+        "maker": "Yachtvape",
+        "product": "Yachtvape Best Rebuildable RDA & RTA Brand – YachtVape(Yacht Vape ...",
         "category": "RTA",
         "typology": "RDL single",
         "reason": "undatedPublicAnnouncement",
         "channel": "dated-discovery",
-        "url": "https://www.wotofo.com/",
-        "publishedAt": "2026-11-16T07:13:00.000Z",
-        "observedAt": "2026-11-17T12:53:22.819Z",
-        "productName": "Vape Mods, Tanks, Kits, RDA, RTA & RDTAs",
-        "familyKey": "RTA|AUTHENTIC|wotofo|mods tanks kits rdtas",
-        "firstObservedAt": "2026-11-17T12:53:22.819Z",
-        "lastObservedAt": "2026-11-17T12:53:22.819Z",
+        "url": "https://www.yachtvape.com/",
+        "publishedAt": "2026-10-30T04:06:00.000Z",
+        "observedAt": "2026-11-18T12:45:38.502Z",
+        "productName": "Yachtvape Best Rebuildable RDA & RTA Brand – YachtVape(Yacht Vape ...",
+        "familyKey": "RTA|AUTHENTIC|yachtvape|best brand yacht",
+        "firstObservedAt": "2026-11-18T12:45:38.502Z",
+        "lastObservedAt": "2026-11-18T12:45:38.502Z",
         "sources": [
-          "https://www.wotofo.com/"
+          "https://www.yachtvape.com/"
+        ],
+        "status": "NEEDS_DATE_OR_ETA"
+      },
+      {
+        "maker": "dotMod",
+        "product": "dotmod Vaping - Box Mod, Atomizer, Vape Mod",
+        "category": "MODURI",
+        "typology": "single battery",
+        "reason": "undatedPublicAnnouncement",
+        "channel": "dated-discovery",
+        "url": "https://dotmod.com/",
+        "publishedAt": "2026-11-18T02:53:00.000Z",
+        "observedAt": "2026-11-18T12:45:38.502Z",
+        "productName": "dotmod Vaping - Box Mod, Atomizer, Vape Mod",
+        "familyKey": "MODURI|AUTHENTIC|dotmod|vaping",
+        "firstObservedAt": "2026-11-18T12:45:38.502Z",
+        "lastObservedAt": "2026-11-18T12:45:38.502Z",
+        "sources": [
+          "https://dotmod.com/"
         ],
         "status": "NEEDS_DATE_OR_ETA"
       }
@@ -311,9 +330,9 @@
         "cap": 32,
         "pagesProbed": 32,
         "pagesFetched": 25,
-        "pagesWithLinks": 18,
-        "pagesWithNewLinks": 18,
-        "highestPageWithNewLinks": 30,
+        "pagesWithLinks": 16,
+        "pagesWithNewLinks": 16,
+        "highestPageWithNewLinks": 29,
         "uniqueLinks": 62,
         "detail": [
           {
@@ -347,29 +366,29 @@
           {
             "page": 12,
             "fetched": true,
-            "links": 0,
-            "newLinks": 0,
+            "links": 6,
+            "newLinks": 3,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=12"
           },
           {
             "page": 13,
             "fetched": true,
-            "links": 18,
-            "newLinks": 9,
+            "links": 12,
+            "newLinks": 6,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=13"
           },
           {
             "page": 14,
             "fetched": true,
-            "links": 28,
-            "newLinks": 14,
+            "links": 30,
+            "newLinks": 15,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=14"
           },
           {
             "page": 15,
             "fetched": true,
-            "links": 2,
-            "newLinks": 1,
+            "links": 0,
+            "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=15"
           },
           {
@@ -382,8 +401,8 @@
           {
             "page": 17,
             "fetched": true,
-            "links": 2,
-            "newLinks": 1,
+            "links": 6,
+            "newLinks": 3,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=17"
           },
           {
@@ -403,8 +422,8 @@
           {
             "page": 20,
             "fetched": true,
-            "links": 6,
-            "newLinks": 3,
+            "links": 4,
+            "newLinks": 2,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=20"
           },
           {
@@ -424,57 +443,57 @@
           {
             "page": 23,
             "fetched": true,
-            "links": 2,
-            "newLinks": 1,
+            "links": 6,
+            "newLinks": 3,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=23"
           },
           {
             "page": 24,
             "fetched": true,
-            "links": 8,
-            "newLinks": 4,
+            "links": 6,
+            "newLinks": 3,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=24"
           },
           {
             "page": 25,
             "fetched": true,
-            "links": 4,
-            "newLinks": 2,
+            "links": 2,
+            "newLinks": 1,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=25"
           },
           {
             "page": 26,
             "fetched": true,
-            "links": 2,
-            "newLinks": 1,
+            "links": 0,
+            "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=26"
           },
           {
             "page": 27,
             "fetched": true,
-            "links": 4,
-            "newLinks": 2,
+            "links": 8,
+            "newLinks": 4,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=27"
           },
           {
             "page": 28,
             "fetched": true,
-            "links": 14,
-            "newLinks": 7,
+            "links": 10,
+            "newLinks": 5,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=28"
           },
           {
             "page": 29,
             "fetched": true,
-            "links": 12,
-            "newLinks": 6,
+            "links": 14,
+            "newLinks": 7,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=29"
           },
           {
             "page": 30,
             "fetched": true,
-            "links": 2,
-            "newLinks": 1,
+            "links": 0,
+            "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/39-new-arrivals?p=30"
           },
           {
@@ -564,13 +583,13 @@
         "pagesWithLinks": 18,
         "pagesWithNewLinks": 8,
         "highestPageWithNewLinks": 11,
-        "uniqueLinks": 40,
+        "uniqueLinks": 39,
         "detail": [
           {
             "page": 1,
             "fetched": true,
-            "links": 16,
-            "newLinks": 8,
+            "links": 14,
+            "newLinks": 7,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
@@ -667,70 +686,70 @@
           {
             "page": 15,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 16,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 17,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 18,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 19,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 20,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 21,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 22,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 23,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           },
           {
             "page": 24,
             "fetched": true,
-            "links": 16,
+            "links": 14,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/148-rekavape"
           }
@@ -745,13 +764,13 @@
         "pagesWithLinks": 24,
         "pagesWithNewLinks": 7,
         "highestPageWithNewLinks": 7,
-        "uniqueLinks": 157,
+        "uniqueLinks": 156,
         "detail": [
           {
             "page": 1,
             "fetched": true,
-            "links": 44,
-            "newLinks": 22,
+            "links": 42,
+            "newLinks": 21,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
@@ -799,119 +818,119 @@
           {
             "page": 8,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 9,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 10,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 11,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 12,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 13,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 14,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 15,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 16,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 17,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 18,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 19,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 20,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 21,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 22,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 23,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           },
           {
             "page": 24,
             "fetched": true,
-            "links": 44,
+            "links": 42,
             "newLinks": 0,
             "resolvedUrl": "https://www.3fvape.com/115-rta"
           }
@@ -919,28 +938,26 @@
       }
     ],
     "currentVendorCatalogPages": 80,
-    "currentVendorRtaLinks": 162,
-    "currentVendorProductPages": 162,
+    "currentVendorRtaLinks": 161,
+    "currentVendorProductPages": 161,
     "currentVendorPhraseHits": 0,
     "currentVendorPhraseSample": [],
     "currentVendorEvents": 0,
-    "upstreamEvidenceEvents": 61,
-    "upstreamEventsAccepted": 7,
-    "upstreamRejectedTitle": 61,
+    "upstreamEvidenceEvents": 50,
+    "upstreamEventsAccepted": 5,
+    "upstreamRejectedTitle": 51,
     "upstreamRejectedOld": 0,
     "upstreamRejectedAfterSource": 0,
     "upstreamRejectedAfterCorroboration": 0,
-    "finalCategoryRejected": 6,
+    "finalCategoryRejected": 4,
     "finalCategoryRejectedSample": [
-      "VOOPOO VAPE - World's First 3-in-1 Pod & Innovative Vape Devices",
       "vaporesso| By YIGUO SEO Perf.Opt v1.0",
+      "VOOPOO VAPE - World's First 3-in-1 Pod & Innovative Vape Devices",
       "VAPORESSO » Premium Vape Brand Manufacture",
-      "Geekvape Vape Kits",
-      "All Product To Get The Best Vape Kits",
-      "Best Selling Vape 2026-GeekVape – GeekVape Store"
+      "All Product To Get The Best Vape Kits"
     ],
     "recentReleaseObserver": {
-      "reference": "2026-11-17T04:00:00.000Z",
+      "reference": "2026-11-18T04:00:00.000Z",
       "profiles": 4,
       "indexWorking": 1,
       "links": 0,
@@ -951,7 +968,7 @@
       "rejectedReleaseTerm": 0,
       "rejectedTitle": 0
     },
-    "retailObserverCatalogProducts": 295,
+    "retailObserverCatalogProducts": 294,
     "retailObserverNewCandidates": 0,
     "retailObserverFirstSaleEvents": 0,
     "directCatalogs": {
@@ -964,14 +981,14 @@
       "productsClassified": 2142,
       "preservedItemsFromFailedSources": 50,
       "preservedEventsFromFailedSources": 0,
-      "recentEvents": 32,
+      "recentEvents": 31,
       "relistedExcluded": 8,
-      "rtaModAdded": 22,
+      "rtaModAdded": 21,
       "podsAdded": 10,
       "sourceMix": {
         "official": 1045,
-        "original-retailer": 725,
-        "clone": 395
+        "original-retailer": 726,
+        "clone": 394
       },
       "adapterMix": {
         "html-listings": 2,
@@ -982,26 +999,26 @@
       },
       "categoryEvents": {
         "RTA": 6,
-        "MODURI": 12,
+        "MODURI": 11,
         "ACCESORII": 4,
         "POD": 10
       }
     },
     "datedNews": {
       "newsQueries": 48,
-      "newsQueriesWorking": 44,
+      "newsQueriesWorking": 48,
       "wordpressSources": 23,
-      "wordpressSourcesWorking": 20,
-      "wordpressRequestsWorking": 77,
+      "wordpressSourcesWorking": 21,
+      "wordpressRequestsWorking": 81,
       "datedItems": 94,
-      "concreteSignals": 50,
-      "rejected": 17,
+      "concreteSignals": 49,
+      "rejected": 19,
       "rtaModAdded": 2,
-      "podsAdded": 42
+      "podsAdded": 41
     },
     "preorderCatalogsRequested": 52,
-    "preorderPagesFetched": 32,
-    "preorderRtaLinks": 144,
+    "preorderPagesFetched": 43,
+    "preorderRtaLinks": 160,
     "preorderContextEvents": 0,
     "preorderPageFallbackEvents": 0,
     "preorderRecoveredSample": [],
@@ -1022,17 +1039,17 @@
       "podsAdded": 0
     },
     "productBackfill": {
-      "candidates": 214,
-      "queries": 428,
-      "queriesWorking": 428,
-      "indexedMatches": 105,
-      "pagesFetched": 83,
-      "pagesMatched": 83,
+      "candidates": 212,
+      "queries": 424,
+      "queriesWorking": 424,
+      "indexedMatches": 117,
+      "pagesFetched": 78,
+      "pagesMatched": 78,
       "datedEvents": 0,
       "groupedEvents": 0,
       "rtaModAdded": 0,
       "podsAdded": 0,
-      "undated": 83
+      "undated": 78
     },
     "categoryCoverage": {
       "RTA": {
@@ -1042,8 +1059,8 @@
         "queued": 0
       },
       "MODURI": {
-        "monitored": 14,
-        "events": 5,
+        "monitored": 13,
+        "events": 4,
         "signals": 9,
         "queued": 0
       },
@@ -1069,11 +1086,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-16T13:15:55.000Z",
       "stageEvidenceAt": "2026-11-16T13:15:55.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:57:30.610Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:49:47.986Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-17T12:57:30.610Z",
-      "lastSeenAt": "2026-11-17T12:57:31.317Z",
-      "ageHours": 14.7,
+      "firstSeenAt": "2026-11-18T12:49:47.986Z",
+      "lastSeenAt": "2026-11-18T12:49:48.782Z",
+      "ageHours": 38.7,
       "sourceCount": 2,
       "eligibleSources": 2,
       "sources": [
@@ -1092,7 +1109,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-17T12:57:30.610Z"
+          "observedAt": "2026-11-18T12:49:47.986Z"
         },
         {
           "host": "igeekphone.com",
@@ -1109,7 +1126,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-17T12:57:31.317Z"
+          "observedAt": "2026-11-18T12:49:48.782Z"
         }
       ],
       "id": "f821a2b8fe011fb002da",
@@ -1142,11 +1159,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-16T12:26:19.000Z",
       "stageEvidenceAt": "2026-11-16T12:26:19.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 15.6,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 39.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1163,7 +1180,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/mod-dotbox-v2-220w-engraved-akuma-silver-800x800.webp?v=1794831932",
           "price": 64.99,
           "currency": null,
@@ -1195,11 +1212,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-16T10:16:45.000Z",
       "stageEvidenceAt": "2026-11-16T10:16:45.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 17.7,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 41.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1216,11 +1233,11 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0043/9189/5140/files/pro-tool-kit-thunder-cloud-x-vaperz-cloud.webp?v=1794497407",
           "price": 56.9,
           "currency": null,
-          "available": true
+          "available": false
         }
       ],
       "id": "e555a806d5f0307f850e",
@@ -1247,7 +1264,7 @@
       "dateConfidence": "release-observed",
       "firstSeenAt": "2026-11-14T15:37:00.000Z",
       "lastSeenAt": "2026-11-14T15:37:00.000Z",
-      "ageHours": 60.4,
+      "ageHours": 84.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1292,11 +1309,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-11T18:18:10.000Z",
       "stageEvidenceAt": "2026-11-11T18:18:10.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 129.7,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 153.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1313,7 +1330,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0043/9189/5140/files/IMG-20261111-WA0008.jpg?v=1794419365",
           "price": 32.9,
           "currency": null,
@@ -1345,11 +1362,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-11T18:16:56.000Z",
       "stageEvidenceAt": "2026-11-11T18:16:56.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 129.7,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 153.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1366,7 +1383,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0043/9189/5140/files/ModinottoneconconfezioniSkill.png?v=1794420624",
           "price": 150,
           "currency": null,
@@ -1398,11 +1415,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-10T14:23:11.000Z",
       "stageEvidenceAt": "2026-11-10T14:23:11.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 157.6,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 181.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1419,7 +1436,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/s101-kraken-gunmetal-800x800.webp?v=1794320135",
           "price": 44.99,
           "currency": null,
@@ -1451,11 +1468,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-11-08T02:37:21.000Z",
       "stageEvidenceAt": "2026-11-08T02:37:21.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 217.4,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 241.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1472,7 +1489,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/IMG_7326.jpg?v=1794105413",
           "price": 250,
           "currency": null,
@@ -1504,11 +1521,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-11-07T17:46:49.000Z",
       "stageEvidenceAt": "2026-11-07T17:46:49.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 226.2,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 250.2,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1525,7 +1542,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/IMG_1861.jpg?v=1794073584",
           "price": 880,
           "currency": null,
@@ -1557,11 +1574,11 @@
       "confidenceTier": "confirmed",
       "eventDate": "2026-11-06T10:27:48.000Z",
       "stageEvidenceAt": "2026-11-06T10:27:48.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "official-product-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:57:32.957Z",
-      "ageHours": 257.5,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:49:50.312Z",
+      "ageHours": 281.5,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -1580,7 +1597,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-17T12:57:32.941Z"
+          "observedAt": "2026-11-18T12:49:50.297Z"
         },
         {
           "host": "centenarymods.com",
@@ -1597,7 +1614,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-17T12:57:32.957Z"
+          "observedAt": "2026-11-18T12:49:50.312Z"
         }
       ],
       "id": "557700a2228260c22c10",
@@ -1625,11 +1642,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-05T17:16:01.000Z",
       "stageEvidenceAt": "2026-11-05T17:16:01.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 274.7,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 298.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1646,7 +1663,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0043/9189/5140/files/IMG-20261105-WA0017.jpg?v=1793898865",
           "price": 34.9,
           "currency": null,
@@ -1678,11 +1695,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-03T14:40:22.000Z",
       "stageEvidenceAt": "2026-11-03T14:40:22.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 325.3,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 349.3,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1699,7 +1716,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/vaperz-cloud-clip-mechanical-mod.webp?v=1793711578",
           "price": 49.99,
           "currency": null,
@@ -1731,11 +1748,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-28T14:10:09.000Z",
       "stageEvidenceAt": "2026-10-28T14:10:09.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 469.8,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 493.8,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1752,7 +1769,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/cloud-9-premium-vape-cotton.webp?v=1793003232",
           "price": 7.99,
           "currency": null,
@@ -1784,11 +1801,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-28T13:33:25.000Z",
       "stageEvidenceAt": "2026-10-28T13:33:25.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 470.4,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 494.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1805,7 +1822,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Ennequadro-Mods-Kuma-Moka-Vico-Replacement-Glass-Tank-XXL.webp?v=1792658456",
           "price": 7.99,
           "currency": null,
@@ -1837,11 +1854,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-28T13:33:21.000Z",
       "stageEvidenceAt": "2026-10-28T13:33:21.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 470.4,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 494.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1858,7 +1875,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Ennequadro-Mods-Kuma-1.2-RTA-Revision-Kit.webp?v=1792658152",
           "price": 4.99,
           "currency": null,
@@ -1890,11 +1907,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-28T13:33:20.000Z",
       "stageEvidenceAt": "2026-10-28T13:33:20.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 470.4,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 494.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1911,7 +1928,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Ennequadro-Mods-Kuma-1.2-RTA-3.webp?v=1792658152",
           "price": 99.99,
           "currency": null,
@@ -1943,11 +1960,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-28T13:33:19.000Z",
       "stageEvidenceAt": "2026-10-28T13:33:19.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 470.4,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 494.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1964,7 +1981,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Ennequadro-Mods-Vico-RTA-XXL-Kit.webp?v=1792658066",
           "price": 5.99,
           "currency": null,
@@ -1996,11 +2013,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-28T13:33:18.000Z",
       "stageEvidenceAt": "2026-10-28T13:33:18.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 470.4,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 494.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2017,7 +2034,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Ennequadro-Mods-Vico-RTA-2.webp?v=1792658066",
           "price": 99.99,
           "currency": null,
@@ -2049,11 +2066,11 @@
       "confidenceTier": "confirmed",
       "eventDate": "2026-10-22T10:00:09.000Z",
       "stageEvidenceAt": "2026-10-22T10:00:09.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "official-product-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:57:33.155Z",
-      "ageHours": 618,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:49:50.508Z",
+      "ageHours": 642,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -2072,7 +2089,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-17T12:57:33.056Z"
+          "observedAt": "2026-11-18T12:49:50.410Z"
         },
         {
           "host": "centenarymods.com",
@@ -2089,7 +2106,7 @@
           "dateConfidence": "official-product-published-at",
           "dateQuality": "wordpress-product-date-gmt",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-17T12:57:33.155Z"
+          "observedAt": "2026-11-18T12:49:50.508Z"
         }
       ],
       "id": "6326fff4e47b5bbd38a5",
@@ -2117,11 +2134,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-10-20T09:51:05.000Z",
       "stageEvidenceAt": "2026-10-20T09:51:05.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 666.1,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 690.1,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2138,7 +2155,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0251/8764/7570/products/rebel-mod-dna-100c2.jpg?v=1629339422",
           "price": 169.99,
           "currency": null,
@@ -2170,11 +2187,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-10-20T09:50:05.000Z",
       "stageEvidenceAt": "2026-10-20T09:50:05.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 666.2,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 690.2,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2191,7 +2208,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/0251/8764/7570/products/100csq2.jpg?v=1655594356",
           "price": 189.99,
           "currency": null,
@@ -2223,11 +2240,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-19T11:17:18.000Z",
       "stageEvidenceAt": "2026-10-19T11:17:18.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 688.7,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 712.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2244,7 +2261,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/dotmod-dotbox-220-v2-skull-silver-800x800.webp?v=1792400488",
           "price": 64.99,
           "currency": null,
@@ -2276,11 +2293,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-19T11:17:06.000Z",
       "stageEvidenceAt": "2026-10-19T11:17:06.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
+      "firstPublicEvidenceAt": "2026-11-18T12:47:05.828Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 688.7,
+      "firstSeenAt": "2026-11-18T12:47:05.828Z",
+      "lastSeenAt": "2026-11-18T12:47:05.828Z",
+      "ageHours": 712.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2297,7 +2314,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
+          "observedAt": "2026-11-18T12:47:05.828Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/Geekvape-Aegis-Solo-5-Mod-black-800x800.webp?v=1792398103",
           "price": 36.99,
           "currency": null,
@@ -2315,79 +2332,26 @@
         }
       ],
       "variantCount": 1
-    },
-    {
-      "productName": "L.P MODS Guarded DNA60C 60W Box Mod - Ti 1~60W, 18650, Evolv DNA60C",
-      "brand": "BEAST",
-      "category": "MODURI",
-      "segment": null,
-      "typology": "single battery",
-      "window": "after",
-      "stage": "FIRST_RETAIL",
-      "stageLabel": "prima listare comerciala datata",
-      "signalKind": "dated-retail-listing",
-      "confidenceTier": "reported",
-      "eventDate": "2026-10-18T15:03:19.000Z",
-      "stageEvidenceAt": "2026-10-18T15:03:19.000Z",
-      "firstPublicEvidenceAt": "2026-11-17T12:54:46.154Z",
-      "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-17T12:54:46.154Z",
-      "lastSeenAt": "2026-11-17T12:54:46.154Z",
-      "ageHours": 708.9,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "beast-8888.myshopify.com",
-          "url": "https://beast-8888.myshopify.com/products/authentic-l-p-mods-guarded-dna60c-60w-box-mod-ti-1-60w-18650-evolv-dna60c",
-          "title": "L.P MODS Guarded DNA60C 60W Box Mod - Ti 1~60W, 18650, Evolv DNA60C",
-          "sourceType": "clone-retailer-direct",
-          "collector": "direct-catalog",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "catalog-publication-date",
-          "eventDate": "2026-10-18T15:03:19.000Z",
-          "dateConfidence": "catalog-published-at",
-          "dateQuality": "shopify-published-at",
-          "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-17T12:54:46.154Z",
-          "image": "https://cdn.shopify.com/s/files/1/0730/2719/1103/files/07384418-59E1-4726-845E-49C0099D0564.jpg?v=1792335814",
-          "price": 11200,
-          "currency": null,
-          "available": true
-        }
-      ],
-      "id": "3b2aadd491da0bd7c67a",
-      "familyKey": "MODURI|CLONE|l p mods guarded dna60c ti 1 evolv dna60c",
-      "authenticityState": "CLONE",
-      "variants": [
-        {
-          "productName": "BEAST L.P MODS Guarded DNA60C - Ti 1~,, Evolv DNA60C",
-          "brand": "BEAST",
-          "url": "https://beast-8888.myshopify.com/products/authentic-l-p-mods-guarded-dna60c-60w-box-mod-ti-1-60w-18650-evolv-dna60c"
-        }
-      ],
-      "variantCount": 1
     }
   ],
   "summary": {
-    "total": 8,
-    "allConcrete": 24,
+    "total": 7,
+    "allConcrete": 23,
     "before": 0,
-    "after": 8,
-    "explicitDatedAfter": 8,
+    "after": 7,
+    "explicitDatedAfter": 7,
     "confirmed": 2,
-    "reported": 6,
+    "reported": 5,
     "publicSignals": 16,
     "candidatesUnderVerification": 0,
     "categoryEvents": {
-      "MODURI": 5,
+      "MODURI": 4,
       "ACCESORII": 1,
       "RTA": 2
     }
   },
   "discoveryContextDays": 180,
   "verificationQueue": [],
-  "snapshotReferenceAt": "2026-11-17T04:00:00.000Z",
+  "snapshotReferenceAt": "2026-11-18T04:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest"
 }
