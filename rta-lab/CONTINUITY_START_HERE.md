@@ -1,5 +1,8 @@
 # RTA Lab — punct de intrare pentru orice conversație nouă
 
+> **21.11.2026 — ACTUALIZARE PRIORITARĂ A COLECȚIEI:** înainte de inventar/configurații personale, citiți `rta-lab/RTA_UPDATE_20261121.md` și `rta-lab/RTA_INVENTAR_20261121.json`. În prezent sunt 40 exemplare active (39 RTA + GAIA Boro); KLP 9, Prime 4, GTR 4, GT One 3, KX 3, Muted+ 2. Nu se știe care două dintre cele patru Muted+ au fost vândute. Probele istorice și algoritmul de build din 11–13.11 rămân neschimbate. Această notă NU dovedește publicare Pages.
+
+
 **Comanda lui Andrei:** „Du-te în Lab și actualizează-te”.
 
 ## Unde se află sursa de adevăr
