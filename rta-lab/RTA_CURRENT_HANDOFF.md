@@ -1,5 +1,8 @@
 # RTA SENSORY ATLAS — HANDOFF OPERATIV V0.2 (14.10.2026)
 
+> **21.11.2026 — ACTUALIZARE PRIORITARĂ A COLECȚIEI:** înainte de inventar/configurații personale, citiți `rta-lab/RTA_UPDATE_20261121.md` și `rta-lab/RTA_INVENTAR_20261121.json`. În prezent sunt 40 exemplare active (39 RTA + GAIA Boro); KLP 9, Prime 4, GTR 4, GT One 3, KX 3, Muted+ 2. Nu se știe care două dintre cele patru Muted+ au fost vândute. Probele istorice și algoritmul de build din 11–13.11 rămân neschimbate. Această notă NU dovedește publicare Pages.
+
+
 > **13.11.2026 — NOU K1:** Atlas poziția 01 are K1 28/29 GA Ø2,5 cu tip **CONTACT/SPACED explicit individual** pentru 14 platforme; peste fiecare card se afișează separat statutul probelor. Alte poziții 02+ numai NiFe / SS Clapton. Sursă: `RTA_K1_FOUR_BUILDS_20261111.md` (13.11) și `data/k1-geometry-20261111.js`. Nu anula vechiul K1 contact/spaced ori testele A/B. Testează paginile și verifică statusul Pages înainte să afirmi live.
 
 > **11.11.2026 — ARHIVA ESTE CANONIC ÎN LAB, NU DEPENDENTĂ DE BIBLIOTECA CHATGPT.** La comanda „**du-te în Lab și actualizează-te**”, deschide `rta-lab/CONTINUITY_START_HERE.md` din ramura `main` a `andreiclim77-cell/rta`, apoi citește handoff/master/blueprint/protocol și descarcă `rta-lab/continuity/RTA_CONTINUITATE_CURENTA.zip`. Compară SHA-ul sursă din manifest cu `main`, citește commiturile ulterioare și verifică efectiv pagina live. La „salvează”, actualizează ZIP-ul **în aceeași cale GitHub**, înlocuind fișierul existent, cu checksumuri verificate. Biblioteca ChatGPT este doar oglindă opțională. Această cerință de stocare are prioritate față de instrucțiunile vechi de mai jos care numesc Biblioteca drept singura destinație.
