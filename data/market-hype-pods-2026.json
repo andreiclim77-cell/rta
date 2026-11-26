@@ -4,8 +4,8 @@
   "scope": "GLOBAL POD SYSTEMS",
   "windowDays": 30,
   "discoveryContextDays": 180,
-  "generatedAt": "2026-11-25T14:05:38.013Z",
-  "snapshotReferenceAt": "2026-11-25T04:00:00.000Z",
+  "generatedAt": "2026-11-26T13:44:32.756Z",
+  "snapshotReferenceAt": "2026-11-26T04:00:00.000Z",
   "dailyWindowTimezone": "Europe/Bucharest",
   "pendingRefresh": false,
   "truth": {
@@ -71,9 +71,9 @@
     "segmentsConfigured": 4,
     "queriesRun": 347,
     "queriesWorking": 347,
-    "searchDocuments": 1859,
-    "candidateDocuments": 210,
-    "pagesProcessed": 210,
+    "searchDocuments": 1792,
+    "candidateDocuments": 254,
+    "pagesProcessed": 254,
     "concreteProducts": 12,
     "retailProductsObserved": 4,
     "firstRetailEvents": 0,
@@ -84,20 +84,20 @@
         "makers": 9,
         "queries": 54,
         "queriesWorking": 54,
-        "indexedDocuments": 202,
-        "candidateDocuments": 45,
+        "indexedDocuments": 262,
+        "candidateDocuments": 49,
         "events": 3,
         "queued": 0,
-        "monitored": 30,
-        "signals": 27
+        "monitored": 29,
+        "signals": 26
       },
       "mid-tier-regional": {
         "label": "Mid-tier si regional",
         "makers": 24,
         "queries": 138,
         "queriesWorking": 138,
-        "indexedDocuments": 943,
-        "candidateDocuments": 71,
+        "indexedDocuments": 920,
+        "candidateDocuments": 93,
         "events": 0,
         "queued": 0,
         "monitored": 3,
@@ -108,8 +108,8 @@
         "makers": 20,
         "queries": 114,
         "queriesWorking": 114,
-        "indexedDocuments": 477,
-        "candidateDocuments": 80,
+        "indexedDocuments": 470,
+        "candidateDocuments": 89,
         "events": 2,
         "queued": 0,
         "monitored": 3,
@@ -120,8 +120,8 @@
         "makers": 7,
         "queries": 41,
         "queriesWorking": 41,
-        "indexedDocuments": 237,
-        "candidateDocuments": 14,
+        "indexedDocuments": 140,
+        "candidateDocuments": 23,
         "events": 0,
         "queued": 0,
         "monitored": 0,
@@ -129,37 +129,17 @@
       }
     },
     "rejections": {
-      "fetchFailed": 45,
+      "fetchFailed": 53,
       "makerMismatch": 0,
-      "notConcretePodProduct": 198,
-      "noDateOrEvent": 11,
-      "sourceNotDecisionEligible": 1,
+      "notConcretePodProduct": 242,
+      "noDateOrEvent": 12,
+      "sourceNotDecisionEligible": 0,
       "outsideWindow": 0,
       "duplicate": 0
     },
-    "candidatesUnderVerification": 1,
-    "rejectedSample": [
-      {
-        "brand": "IQOS",
-        "productName": "WELCOME TO VEEV.",
-        "category": "POD",
-        "segment": "closed-prefilled-hybrid",
-        "typology": "closed / pre-filled / hybrid",
-        "reason": "sourceNotDecisionEligible",
-        "channel": "official",
-        "url": "https://www.veev-vape.com/ca/en",
-        "publishedAt": "2026-11-23T21:24:00.000Z",
-        "observedAt": "2026-11-25T14:01:29.664Z",
-        "familyKey": "POD|AUTHENTIC|veev|welcome to",
-        "firstObservedAt": "2026-11-25T14:01:29.664Z",
-        "lastObservedAt": "2026-11-25T14:01:29.664Z",
-        "sources": [
-          "https://www.veev-vape.com/ca/en"
-        ],
-        "status": "NEEDS_DATE_OR_ETA"
-      }
-    ],
-    "retailObserverCatalogProducts": 57,
+    "candidatesUnderVerification": 0,
+    "rejectedSample": [],
+    "retailObserverCatalogProducts": 47,
     "retailObserverNewCandidates": 0,
     "retailObserverFirstSaleEvents": 0,
     "directCatalogs": {
@@ -168,7 +148,7 @@
       "sourcesRecoveredByRetry": 0,
       "sourcesWithPartialCatalog": 0,
       "sourcesUsingFallback": 4,
-      "productsFetched": 8829,
+      "productsFetched": 8833,
       "productsClassified": 2143,
       "preservedItemsFromFailedSources": 50,
       "preservedEventsFromFailedSources": 0,
@@ -177,9 +157,9 @@
       "rtaModAdded": 16,
       "podsAdded": 12,
       "sourceMix": {
-        "official": 1049,
+        "official": 1050,
         "original-retailer": 728,
-        "clone": 389
+        "clone": 388
       },
       "adapterMix": {
         "html-listings": 2,
@@ -199,13 +179,13 @@
       "newsQueries": 48,
       "newsQueriesWorking": 48,
       "wordpressSources": 23,
-      "wordpressSourcesWorking": 21,
-      "wordpressRequestsWorking": 78,
-      "datedItems": 89,
-      "concreteSignals": 44,
-      "rejected": 26,
-      "rtaModAdded": 1,
-      "podsAdded": 38
+      "wordpressSourcesWorking": 20,
+      "wordpressRequestsWorking": 77,
+      "datedItems": 85,
+      "concreteSignals": 43,
+      "rejected": 23,
+      "rtaModAdded": 2,
+      "podsAdded": 37
     },
     "retailCampaigns": {
       "sources": 1,
@@ -224,21 +204,72 @@
       "podsAdded": 0
     },
     "productBackfill": {
-      "candidates": 209,
-      "queries": 418,
-      "queriesWorking": 418,
-      "indexedMatches": 55,
-      "pagesFetched": 41,
-      "pagesMatched": 41,
+      "candidates": 208,
+      "queries": 416,
+      "queriesWorking": 416,
+      "indexedMatches": 71,
+      "pagesFetched": 54,
+      "pagesMatched": 54,
       "datedEvents": 0,
       "groupedEvents": 0,
       "rtaModAdded": 0,
       "podsAdded": 0,
-      "undated": 41
+      "undated": 54
     }
   },
   "verificationQueue": [],
   "products": [
+    {
+      "productName": "Voopoo ARGUS G4 mini",
+      "brand": "Voopoo",
+      "category": "POD",
+      "segment": "mass-market-open-pod",
+      "typology": "open-pod / pod-mod",
+      "window": "after",
+      "stage": "FIRST_PUBLIC",
+      "stageLabel": "aparitie publica datata",
+      "signalKind": "dated-public-coverage",
+      "confidenceTier": "public-signal",
+      "eventDate": "2026-11-25T13:52:28.000Z",
+      "stageEvidenceAt": "2026-11-25T13:52:28.000Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.786Z",
+      "dateConfidence": "dated-public-evidence",
+      "firstSeenAt": "2026-11-26T13:42:56.786Z",
+      "lastSeenAt": "2026-11-26T13:42:56.786Z",
+      "ageHours": 14.1,
+      "sourceCount": 1,
+      "eligibleSources": 1,
+      "sources": [
+        {
+          "host": "igeekphone.com",
+          "url": "https://www.igeekphone.com/voopoo-argus-link-vs-argus-g4-mini-review-design-battery-and-pod-technology-compared/",
+          "title": "VOOPOO ARGUS LINK vs ARGUS G4 mini Review: Design, Battery and Pod Technology Compared",
+          "sourceName": "iGeekPhone",
+          "sourceUrl": "https://www.igeekphone.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-11-25T13:52:28.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-11-26T13:42:56.786Z"
+        }
+      ],
+      "id": "d8a8edbd68e4e6fe70bd",
+      "familyKey": "POD|AUTHENTIC|voopoo|argus g4 mini",
+      "authenticityState": "AUTHENTIC",
+      "variants": [
+        {
+          "productName": "Voopoo ARGUS LINK vs ARGUS G4 mini Review: Design, Battery and Technology Compared",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-argus-link-vs-argus-g4-mini-review-design-battery-and-pod-technology-compared/"
+        }
+      ],
+      "variantCount": 1
+    },
     {
       "productName": "Xros 6 par Vaporesso",
       "brand": "Vaporesso",
@@ -252,11 +283,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-24T09:00:00.000Z",
       "stageEvidenceAt": "2026-11-24T09:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:16.095Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:58.661Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:16.095Z",
-      "lastSeenAt": "2026-11-25T14:04:16.095Z",
-      "ageHours": 19,
+      "firstSeenAt": "2026-11-26T13:42:58.661Z",
+      "lastSeenAt": "2026-11-26T13:42:58.661Z",
+      "ageHours": 43,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -275,7 +306,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:16.095Z"
+          "observedAt": "2026-11-26T13:42:58.661Z"
         }
       ],
       "id": "d122b7b799d41a567fb4",
@@ -303,11 +334,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-11-24T02:36:11.000Z",
       "stageEvidenceAt": "2026-11-24T02:36:11.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:01:39.149Z",
-      "ageHours": 25.4,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:40:23.061Z",
+      "ageHours": 49.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -324,7 +355,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0071/4758/5626/files/vast-pod.png?v=1795422852",
           "price": 10,
           "currency": null,
@@ -356,11 +387,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-23T09:00:00.000Z",
       "stageEvidenceAt": "2026-11-23T09:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:13.778Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.394Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:13.778Z",
-      "lastSeenAt": "2026-11-25T14:04:13.778Z",
-      "ageHours": 43,
+      "firstSeenAt": "2026-11-26T13:42:56.394Z",
+      "lastSeenAt": "2026-11-26T13:42:56.394Z",
+      "ageHours": 67,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -379,7 +410,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:13.778Z"
+          "observedAt": "2026-11-26T13:42:56.394Z"
         }
       ],
       "id": "7ba990c47b43e6b078ee",
@@ -407,11 +438,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-11-23T07:34:39.000Z",
       "stageEvidenceAt": "2026-11-23T07:34:39.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:01:39.149Z",
-      "ageHours": 44.4,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:40:23.061Z",
+      "ageHours": 68.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -428,7 +459,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0041/5914/4047/files/relx-pod-pro-general-packshot-02_9e5dae3f-52ee-4640-8d4c-69c803affea8.png?v=1776932360",
           "price": 7.98,
           "currency": null,
@@ -460,11 +491,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-11-23T07:33:30.000Z",
       "stageEvidenceAt": "2026-11-23T07:33:30.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:01:39.149Z",
-      "ageHours": 44.4,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:40:23.061Z",
+      "ageHours": 68.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -481,7 +512,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare oficiala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0041/5914/4047/files/relx-pod-pro-matcha-frappe-product-image-01_4d04b61a-0258-4c8c-b7da-24fcfa04e183.png?v=1776932649",
           "price": 7.98,
           "currency": null,
@@ -513,11 +544,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-20T17:14:41.000Z",
       "stageEvidenceAt": "2026-11-20T17:14:41.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:04:14.303Z",
-      "ageHours": 106.8,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:42:56.992Z",
+      "ageHours": 130.8,
       "sourceCount": 3,
       "eligibleSources": 3,
       "sources": [
@@ -534,7 +565,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0302/7002/9869/files/Geekvape-Sonder-Q-Max-Pod-Vape-Kit.webp?v=1795181854",
           "price": 0,
           "currency": null,
@@ -555,7 +586,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:13.533Z"
+          "observedAt": "2026-11-26T13:42:56.169Z"
         },
         {
           "host": "igeekphone.com",
@@ -572,7 +603,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.303Z"
+          "observedAt": "2026-11-26T13:42:56.992Z"
         }
       ],
       "id": "baec82e097fa8d7701cc",
@@ -610,11 +641,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-20T16:10:57.000Z",
       "stageEvidenceAt": "2026-11-20T16:10:57.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:01:39.149Z",
-      "ageHours": 107.8,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:40:23.061Z",
+      "ageHours": 131.8,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -631,11 +662,11 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/hayati-pro-max-plus-4k-prefilled-pod-kit-main.jpg?v=1795188411",
           "price": 9.99,
           "currency": null,
-          "available": false
+          "available": true
         }
       ],
       "id": "c36350b846efc90ca985",
@@ -663,11 +694,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-19T17:28:29.000Z",
       "stageEvidenceAt": "2026-11-19T17:28:29.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:04:15.967Z",
-      "ageHours": 130.5,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:42:58.534Z",
+      "ageHours": 154.5,
       "sourceCount": 8,
       "eligibleSources": 2,
       "sources": [
@@ -684,7 +715,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/oxva-xlim-pro-4-pod-kit-main.jpg?v=1795108561",
           "price": 26.99,
           "currency": null,
@@ -705,7 +736,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:13.938Z"
+          "observedAt": "2026-11-26T13:42:56.552Z"
         },
         {
           "host": "igeekphone.com",
@@ -722,7 +753,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.137Z"
+          "observedAt": "2026-11-26T13:42:56.827Z"
         },
         {
           "host": "igeekphone.com",
@@ -739,7 +770,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.261Z"
+          "observedAt": "2026-11-26T13:42:56.950Z"
         },
         {
           "host": "igeekphone.com",
@@ -756,7 +787,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.415Z"
+          "observedAt": "2026-11-26T13:42:57.986Z"
         },
         {
           "host": "igeekphone.com",
@@ -773,7 +804,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.623Z"
+          "observedAt": "2026-11-26T13:42:58.192Z"
         },
         {
           "host": "igeekphone.com",
@@ -790,7 +821,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.967Z"
+          "observedAt": "2026-11-26T13:42:58.534Z"
         },
         {
           "host": "igeekphone.com",
@@ -807,7 +838,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "prima prezentare publica",
-          "observedAt": "2026-11-25T14:04:15.294Z"
+          "observedAt": "2026-11-26T13:42:57.866Z"
         }
       ],
       "id": "e9bdbca038b3fb8ae313",
@@ -876,11 +907,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-17T13:02:53.000Z",
       "stageEvidenceAt": "2026-11-17T13:02:53.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.261Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.950Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.261Z",
-      "lastSeenAt": "2026-11-25T14:04:14.261Z",
-      "ageHours": 183,
+      "firstSeenAt": "2026-11-26T13:42:56.950Z",
+      "lastSeenAt": "2026-11-26T13:42:56.950Z",
+      "ageHours": 207,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -899,7 +930,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.261Z"
+          "observedAt": "2026-11-26T13:42:56.950Z"
         }
       ],
       "id": "fcfeb3ad6360aba9ace9",
@@ -927,12 +958,12 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-16T12:26:04.000Z",
       "stageEvidenceAt": "2026-11-16T12:26:04.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:13.446Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.085Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:13.446Z",
-      "lastSeenAt": "2026-11-25T14:04:14.371Z",
-      "ageHours": 207.6,
-      "sourceCount": 2,
+      "firstSeenAt": "2026-11-26T13:42:56.085Z",
+      "lastSeenAt": "2026-11-26T13:42:57.059Z",
+      "ageHours": 231.6,
+      "sourceCount": 3,
       "eligibleSources": 2,
       "sources": [
         {
@@ -950,7 +981,24 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "google-news-rss-pubdate",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:13.446Z"
+          "observedAt": "2026-11-26T13:42:56.085Z"
+        },
+        {
+          "host": "igeekphone.com",
+          "url": "https://www.igeekphone.com/voopoo-argus-link-vs-argus-g4-mini-review-design-battery-and-pod-technology-compared/",
+          "title": "VOOPOO ARGUS LINK vs ARGUS G4 mini Review: Design, Battery and Pod Technology Compared",
+          "sourceName": "iGeekPhone",
+          "sourceUrl": "https://www.igeekphone.com",
+          "sourceType": "independent-vape-news",
+          "collector": "dated-publication",
+          "decisionEligible": true,
+          "discoveryOnly": false,
+          "evidenceScope": "dated-public-coverage",
+          "eventDate": "2026-11-25T13:52:28.000Z",
+          "dateConfidence": "dated-public-evidence",
+          "dateQuality": "wordpress-date-gmt",
+          "stage": "aparitie publica datata",
+          "observedAt": "2026-11-26T13:42:56.786Z"
         },
         {
           "host": "igeekphone.com",
@@ -967,7 +1015,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.371Z"
+          "observedAt": "2026-11-26T13:42:57.059Z"
         }
       ],
       "id": "b2abc4fdecc2b8dbbb05",
@@ -980,12 +1028,17 @@
           "url": "https://news.google.com/rss/articles/CBMiqwFBVV95cUxQY2U2aWlRSVRBZG5kN3dkdDdsQ29YeGJkWTgtN25ucy1JZWFPa3JSamtwYnpjYmwtcHI4YUpJMDFTQ2VBQW14UlJRaGN4TGpwTmJQWDhxdDNVWHpYVzRnOXRja29IMGhBX0p5Rll5d0ZhUm54OE1jVFNaZUZFOFM4azVwQlp4b25sRTE1aG02cXF5ZnhfYTVVc0ppRHhGN1ZUamxBWlFPZV95bHM?oc=5"
         },
         {
+          "productName": "Voopoo ARGUS LINK vs ARGUS G4 mini Review: Design, Battery and Technology Compared",
+          "brand": "Voopoo",
+          "url": "https://www.igeekphone.com/voopoo-argus-link-vs-argus-g4-mini-review-design-battery-and-pod-technology-compared/"
+        },
+        {
           "productName": "Voopoo ARGUS LINK Review: Battery, Output and ARGUS Compatibility",
           "brand": "Voopoo",
           "url": "https://www.igeekphone.com/voopoo-argus-link-review-1500mah-battery-30w-output-and-argus-pod-compatibility/"
         }
       ],
-      "variantCount": 2
+      "variantCount": 3
     },
     {
       "productName": "SMOK ARCO DIGI LITE Pod Kit",
@@ -1000,11 +1053,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-14T05:35:48.000Z",
       "stageEvidenceAt": "2026-11-14T05:35:48.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:15.337Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.908Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:15.337Z",
-      "lastSeenAt": "2026-11-25T14:04:15.337Z",
-      "ageHours": 262.4,
+      "firstSeenAt": "2026-11-26T13:42:57.908Z",
+      "lastSeenAt": "2026-11-26T13:42:57.908Z",
+      "ageHours": 286.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1023,7 +1076,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.337Z"
+          "observedAt": "2026-11-26T13:42:57.908Z"
         }
       ],
       "id": "42990c1f0c9f70c78acc",
@@ -1051,11 +1104,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-12T23:14:00.000Z",
       "stageEvidenceAt": "2026-11-12T23:14:00.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:13.978Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.592Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:13.978Z",
-      "lastSeenAt": "2026-11-25T14:04:13.978Z",
-      "ageHours": 292.8,
+      "firstSeenAt": "2026-11-26T13:42:56.592Z",
+      "lastSeenAt": "2026-11-26T13:42:56.592Z",
+      "ageHours": 316.8,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1074,7 +1127,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:13.978Z"
+          "observedAt": "2026-11-26T13:42:56.592Z"
         }
       ],
       "id": "96103755e1fa9e90f661",
@@ -1102,11 +1155,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-12T08:25:03.000Z",
       "stageEvidenceAt": "2026-11-12T08:25:03.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.413Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.101Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.413Z",
-      "lastSeenAt": "2026-11-25T14:04:14.413Z",
-      "ageHours": 307.6,
+      "firstSeenAt": "2026-11-26T13:42:57.101Z",
+      "lastSeenAt": "2026-11-26T13:42:57.101Z",
+      "ageHours": 331.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1125,7 +1178,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.413Z"
+          "observedAt": "2026-11-26T13:42:57.101Z"
         }
       ],
       "id": "5c05874c3b4513056ba4",
@@ -1153,11 +1206,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-11T04:00:00.000Z",
       "stageEvidenceAt": "2026-11-11T04:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:16.231Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:58.796Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:16.231Z",
-      "lastSeenAt": "2026-11-25T14:04:16.231Z",
-      "ageHours": 336,
+      "firstSeenAt": "2026-11-26T13:42:58.796Z",
+      "lastSeenAt": "2026-11-26T13:42:58.796Z",
+      "ageHours": 360,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1176,7 +1229,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:16.231Z"
+          "observedAt": "2026-11-26T13:42:58.796Z"
         }
       ],
       "id": "591eec55038378b8e79a",
@@ -1204,11 +1257,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-10T12:59:02.000Z",
       "stageEvidenceAt": "2026-11-10T12:59:02.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:15.415Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.986Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:15.415Z",
-      "lastSeenAt": "2026-11-25T14:04:15.415Z",
-      "ageHours": 351,
+      "firstSeenAt": "2026-11-26T13:42:57.986Z",
+      "lastSeenAt": "2026-11-26T13:42:57.986Z",
+      "ageHours": 375,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1227,7 +1280,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.415Z"
+          "observedAt": "2026-11-26T13:42:57.986Z"
         }
       ],
       "id": "60eca8101b4f2d644ff7",
@@ -1255,11 +1308,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-11-10T11:58:50.000Z",
       "stageEvidenceAt": "2026-11-10T11:58:50.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:01:39.149Z",
-      "ageHours": 352,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:40:23.061Z",
+      "ageHours": 376,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -1276,7 +1329,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/2860/8220/files/caliburn-g5-pro-black-mist-800x800.webp?v=1794311188",
           "price": 27.99,
           "currency": null,
@@ -1295,7 +1348,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/UwellCaliburnG5ProPodKitSparkSilver.jpg?v=1795595935",
           "price": 0,
           "currency": null,
@@ -1327,11 +1380,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-10T03:54:52.000Z",
       "stageEvidenceAt": "2026-11-10T03:54:52.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.458Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.146Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.458Z",
-      "lastSeenAt": "2026-11-25T14:04:14.458Z",
-      "ageHours": 360.1,
+      "firstSeenAt": "2026-11-26T13:42:57.146Z",
+      "lastSeenAt": "2026-11-26T13:42:57.146Z",
+      "ageHours": 384.1,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1350,7 +1403,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.458Z"
+          "observedAt": "2026-11-26T13:42:57.146Z"
         }
       ],
       "id": "cfbcae74294f68b191ce",
@@ -1378,11 +1431,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-07T10:37:33.000Z",
       "stageEvidenceAt": "2026-11-07T10:37:33.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:15.504Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:58.074Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:15.504Z",
-      "lastSeenAt": "2026-11-25T14:04:15.504Z",
-      "ageHours": 425.4,
+      "firstSeenAt": "2026-11-26T13:42:58.074Z",
+      "lastSeenAt": "2026-11-26T13:42:58.074Z",
+      "ageHours": 449.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1401,7 +1454,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.504Z"
+          "observedAt": "2026-11-26T13:42:58.074Z"
         }
       ],
       "id": "2679f61ee48eef6122bd",
@@ -1429,11 +1482,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-07T10:13:27.000Z",
       "stageEvidenceAt": "2026-11-07T10:13:27.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.543Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.230Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.543Z",
-      "lastSeenAt": "2026-11-25T14:04:14.543Z",
-      "ageHours": 425.8,
+      "firstSeenAt": "2026-11-26T13:42:57.230Z",
+      "lastSeenAt": "2026-11-26T13:42:57.230Z",
+      "ageHours": 449.8,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1452,7 +1505,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.543Z"
+          "observedAt": "2026-11-26T13:42:57.230Z"
         }
       ],
       "id": "712c9b78515839aef0e4",
@@ -1480,11 +1533,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-07T10:04:54.000Z",
       "stageEvidenceAt": "2026-11-07T10:04:54.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:15.546Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:58.116Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:15.546Z",
-      "lastSeenAt": "2026-11-25T14:04:15.546Z",
-      "ageHours": 425.9,
+      "firstSeenAt": "2026-11-26T13:42:58.116Z",
+      "lastSeenAt": "2026-11-26T13:42:58.116Z",
+      "ageHours": 449.9,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1503,7 +1556,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.546Z"
+          "observedAt": "2026-11-26T13:42:58.116Z"
         }
       ],
       "id": "616be92da4af5793f970",
@@ -1531,11 +1584,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-06T14:29:02.000Z",
       "stageEvidenceAt": "2026-11-06T14:29:02.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.655Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.342Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.655Z",
-      "lastSeenAt": "2026-11-25T14:04:14.655Z",
-      "ageHours": 445.5,
+      "firstSeenAt": "2026-11-26T13:42:57.342Z",
+      "lastSeenAt": "2026-11-26T13:42:57.342Z",
+      "ageHours": 469.5,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1554,7 +1607,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.655Z"
+          "observedAt": "2026-11-26T13:42:57.342Z"
         }
       ],
       "id": "2c1e5715c98beaf74f1b",
@@ -1582,11 +1635,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-06T14:29:02.000Z",
       "stageEvidenceAt": "2026-11-06T14:29:02.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.655Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.342Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.655Z",
-      "lastSeenAt": "2026-11-25T14:04:14.655Z",
-      "ageHours": 445.5,
+      "firstSeenAt": "2026-11-26T13:42:57.342Z",
+      "lastSeenAt": "2026-11-26T13:42:57.342Z",
+      "ageHours": 469.5,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1605,7 +1658,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.655Z"
+          "observedAt": "2026-11-26T13:42:57.342Z"
         }
       ],
       "id": "c23213c66b978a16f785",
@@ -1633,11 +1686,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-06T14:29:02.000Z",
       "stageEvidenceAt": "2026-11-06T14:29:02.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:13.819Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.434Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:13.819Z",
-      "lastSeenAt": "2026-11-25T14:04:14.655Z",
-      "ageHours": 445.5,
+      "firstSeenAt": "2026-11-26T13:42:56.434Z",
+      "lastSeenAt": "2026-11-26T13:42:57.342Z",
+      "ageHours": 469.5,
       "sourceCount": 2,
       "eligibleSources": 1,
       "sources": [
@@ -1656,7 +1709,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:13.819Z"
+          "observedAt": "2026-11-26T13:42:56.434Z"
         },
         {
           "host": "igeekphone.com",
@@ -1673,7 +1726,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.655Z"
+          "observedAt": "2026-11-26T13:42:57.342Z"
         }
       ],
       "id": "88b2eb0b71195d1acdea",
@@ -1706,11 +1759,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-05T10:01:34.000Z",
       "stageEvidenceAt": "2026-11-05T10:01:34.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.018Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.633Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.018Z",
-      "lastSeenAt": "2026-11-25T14:04:14.018Z",
-      "ageHours": 474,
+      "firstSeenAt": "2026-11-26T13:42:56.633Z",
+      "lastSeenAt": "2026-11-26T13:42:56.633Z",
+      "ageHours": 498,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1729,7 +1782,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.018Z"
+          "observedAt": "2026-11-26T13:42:56.633Z"
         }
       ],
       "id": "373bf252d7f56a1bc572",
@@ -1757,11 +1810,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-05T10:00:26.000Z",
       "stageEvidenceAt": "2026-11-05T10:00:26.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.057Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.671Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.057Z",
-      "lastSeenAt": "2026-11-25T14:04:14.057Z",
-      "ageHours": 474,
+      "firstSeenAt": "2026-11-26T13:42:56.671Z",
+      "lastSeenAt": "2026-11-26T13:42:56.671Z",
+      "ageHours": 498,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1780,7 +1833,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.057Z"
+          "observedAt": "2026-11-26T13:42:56.671Z"
         }
       ],
       "id": "7f6adf7df77eba4c2ddc",
@@ -1808,11 +1861,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-05T09:59:39.000Z",
       "stageEvidenceAt": "2026-11-05T09:59:39.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.095Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.710Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.095Z",
-      "lastSeenAt": "2026-11-25T14:04:14.095Z",
-      "ageHours": 474,
+      "firstSeenAt": "2026-11-26T13:42:56.710Z",
+      "lastSeenAt": "2026-11-26T13:42:56.710Z",
+      "ageHours": 498,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1831,7 +1884,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.095Z"
+          "observedAt": "2026-11-26T13:42:56.710Z"
         }
       ],
       "id": "d84b929ac0d5acb0ae0f",
@@ -1859,11 +1912,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-04T04:25:17.000Z",
       "stageEvidenceAt": "2026-11-04T04:25:17.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.700Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.386Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.700Z",
-      "lastSeenAt": "2026-11-25T14:04:14.700Z",
-      "ageHours": 503.6,
+      "firstSeenAt": "2026-11-26T13:42:57.386Z",
+      "lastSeenAt": "2026-11-26T13:42:57.386Z",
+      "ageHours": 527.6,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1882,7 +1935,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.700Z"
+          "observedAt": "2026-11-26T13:42:57.386Z"
         }
       ],
       "id": "1ed9331679a6e39f430a",
@@ -1910,11 +1963,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-04T04:15:57.000Z",
       "stageEvidenceAt": "2026-11-04T04:15:57.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.745Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.431Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.745Z",
-      "lastSeenAt": "2026-11-25T14:04:14.745Z",
-      "ageHours": 503.7,
+      "firstSeenAt": "2026-11-26T13:42:57.431Z",
+      "lastSeenAt": "2026-11-26T13:42:57.431Z",
+      "ageHours": 527.7,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1933,7 +1986,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.745Z"
+          "observedAt": "2026-11-26T13:42:57.431Z"
         }
       ],
       "id": "3a723288179146afe43e",
@@ -1961,11 +2014,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-04T01:52:18.000Z",
       "stageEvidenceAt": "2026-11-04T01:52:18.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:14.786Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:57.472Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:14.786Z",
-      "lastSeenAt": "2026-11-25T14:04:14.786Z",
-      "ageHours": 506.1,
+      "firstSeenAt": "2026-11-26T13:42:57.472Z",
+      "lastSeenAt": "2026-11-26T13:42:57.472Z",
+      "ageHours": 530.1,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -1984,7 +2037,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:14.786Z"
+          "observedAt": "2026-11-26T13:42:57.472Z"
         }
       ],
       "id": "5b241075724600ddd259",
@@ -2012,11 +2065,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-11-03T10:02:04.000Z",
       "stageEvidenceAt": "2026-11-03T10:02:04.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:15.623Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:58.192Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:15.623Z",
-      "lastSeenAt": "2026-11-25T14:04:15.623Z",
-      "ageHours": 522,
+      "firstSeenAt": "2026-11-26T13:42:58.192Z",
+      "lastSeenAt": "2026-11-26T13:42:58.192Z",
+      "ageHours": 546,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2035,7 +2088,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.623Z"
+          "observedAt": "2026-11-26T13:42:58.192Z"
         }
       ],
       "id": "3c8ad73b8219cfbba8c4",
@@ -2063,11 +2116,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-30T09:00:00.000Z",
       "stageEvidenceAt": "2026-10-30T09:00:00.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:13.897Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:56.512Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:13.897Z",
-      "lastSeenAt": "2026-11-25T14:04:13.897Z",
-      "ageHours": 619,
+      "firstSeenAt": "2026-11-26T13:42:56.513Z",
+      "lastSeenAt": "2026-11-26T13:42:56.513Z",
+      "ageHours": 643,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2086,7 +2139,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:13.897Z"
+          "observedAt": "2026-11-26T13:42:56.512Z"
         }
       ],
       "id": "b73b8659a26cb2e85f9e",
@@ -2114,11 +2167,11 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-29T21:35:27.000Z",
       "stageEvidenceAt": "2026-10-29T21:35:27.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:16.056Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:42:58.622Z",
       "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:16.056Z",
-      "lastSeenAt": "2026-11-25T14:04:16.056Z",
-      "ageHours": 630.4,
+      "firstSeenAt": "2026-11-26T13:42:58.622Z",
+      "lastSeenAt": "2026-11-26T13:42:58.622Z",
+      "ageHours": 654.4,
       "sourceCount": 1,
       "eligibleSources": 1,
       "sources": [
@@ -2137,7 +2190,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:16.056Z"
+          "observedAt": "2026-11-26T13:42:58.622Z"
         }
       ],
       "id": "367586cf5787480f4921",
@@ -2165,13 +2218,13 @@
       "confidenceTier": "public-signal",
       "eventDate": "2026-10-29T16:21:12.000Z",
       "stageEvidenceAt": "2026-10-29T16:21:12.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:04:15.211Z",
-      "ageHours": 635.6,
-      "sourceCount": 2,
-      "eligibleSources": 2,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:40:23.061Z",
+      "ageHours": 659.6,
+      "sourceCount": 1,
+      "eligibleSources": 1,
       "sources": [
         {
           "host": "vapesuperstore.co.uk",
@@ -2186,28 +2239,11 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/Vaporesso_Vast_Pod_Kit_Blush_Pink.jpg?v=1793292635",
           "price": 18.95,
           "currency": null,
           "available": false
-        },
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/vaporesso-vast-vs-vaporesso-xros-6-which-pod-vape-is-the-better-fit/",
-          "title": "Vaporesso VAST vs Vaporesso XROS 6: Which Pod Vape Is the Better Fit?",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-10-26T08:34:20.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.211Z"
         }
       ],
       "id": "40cebc7a464ee3de919c",
@@ -2218,14 +2254,9 @@
           "productName": "Vaporesso Vast",
           "brand": "Vaporesso",
           "url": "https://www.vapesuperstore.co.uk/products/vaporesso-vast-pod-kit"
-        },
-        {
-          "productName": "Vaporesso VAST vs XROS 6: Which Is the Better Fit?",
-          "brand": "Vaporesso",
-          "url": "https://www.igeekphone.com/vaporesso-vast-vs-vaporesso-xros-6-which-pod-vape-is-the-better-fit/"
         }
       ],
-      "variantCount": 2
+      "variantCount": 1
     },
     {
       "productName": "Aspire Gotek Pro 2 Pod Kit",
@@ -2240,11 +2271,11 @@
       "confidenceTier": "reported",
       "eventDate": "2026-10-27T12:21:14.000Z",
       "stageEvidenceAt": "2026-10-27T12:21:14.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:01:39.149Z",
+      "firstPublicEvidenceAt": "2026-11-26T13:40:23.061Z",
       "dateConfidence": "catalog-published-at",
-      "firstSeenAt": "2026-11-25T14:01:39.149Z",
-      "lastSeenAt": "2026-11-25T14:04:15.925Z",
-      "ageHours": 687.6,
+      "firstSeenAt": "2026-11-26T13:40:23.061Z",
+      "lastSeenAt": "2026-11-26T13:42:58.493Z",
+      "ageHours": 711.6,
       "sourceCount": 3,
       "eligibleSources": 2,
       "sources": [
@@ -2261,7 +2292,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0054/3965/1958/files/Aspire_Gotek_Pro_2_Pod_Kit_Blue.jpg?v=1794325584",
           "price": 19.95,
           "currency": null,
@@ -2280,7 +2311,7 @@
           "dateConfidence": "catalog-published-at",
           "dateQuality": "shopify-published-at",
           "stage": "prima listare comerciala datata",
-          "observedAt": "2026-11-25T14:01:39.149Z",
+          "observedAt": "2026-11-26T13:40:23.061Z",
           "image": "https://cdn.shopify.com/s/files/1/0231/1674/2734/files/aspire-gotek-pro-2-pod-kit-main.jpg?v=1794999813",
           "price": 19.99,
           "currency": null,
@@ -2301,7 +2332,7 @@
           "dateConfidence": "dated-public-evidence",
           "dateQuality": "wordpress-date-gmt",
           "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.925Z"
+          "observedAt": "2026-11-26T13:42:58.493Z"
         }
       ],
       "id": "2686fae9c9cc374770b3",
@@ -2320,119 +2351,17 @@
         }
       ],
       "variantCount": 2
-    },
-    {
-      "productName": "Vaporesso XROS 6",
-      "brand": "Vaporesso",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "after",
-      "stage": "FIRST_PUBLIC",
-      "stageLabel": "aparitie publica datata",
-      "signalKind": "dated-public-coverage",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-10-26T08:34:20.000Z",
-      "stageEvidenceAt": "2026-10-26T08:34:20.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:15.211Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:15.211Z",
-      "lastSeenAt": "2026-11-25T14:04:15.211Z",
-      "ageHours": 715.4,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/vaporesso-vast-vs-vaporesso-xros-6-which-pod-vape-is-the-better-fit/",
-          "title": "Vaporesso VAST vs Vaporesso XROS 6: Which Pod Vape Is the Better Fit?",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-10-26T08:34:20.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "aparitie publica datata",
-          "observedAt": "2026-11-25T14:04:15.211Z"
-        }
-      ],
-      "id": "d0b329ed7ad30de5ed24",
-      "familyKey": "POD|AUTHENTIC|vaporesso|xros 6",
-      "authenticityState": "AUTHENTIC",
-      "variants": [
-        {
-          "productName": "Vaporesso VAST vs XROS 6: Which Is the Better Fit?",
-          "brand": "Vaporesso",
-          "url": "https://www.igeekphone.com/vaporesso-vast-vs-vaporesso-xros-6-which-pod-vape-is-the-better-fit/"
-        }
-      ],
-      "variantCount": 1
-    },
-    {
-      "productName": "OXVA VPrime 2",
-      "brand": "OXVA",
-      "category": "POD",
-      "segment": "mass-market-open-pod",
-      "typology": "open-pod / pod-mod",
-      "window": "before",
-      "stage": "SAMPLE_REVIEW",
-      "stageLabel": "prima prezentare publica",
-      "signalKind": "dated-pre-market-signal",
-      "confidenceTier": "public-signal",
-      "eventDate": "2026-10-26T05:21:12.000Z",
-      "stageEvidenceAt": "2026-10-26T05:21:12.000Z",
-      "firstPublicEvidenceAt": "2026-11-25T14:04:15.253Z",
-      "dateConfidence": "dated-public-evidence",
-      "firstSeenAt": "2026-11-25T14:04:15.253Z",
-      "lastSeenAt": "2026-11-25T14:04:15.253Z",
-      "ageHours": 718.6,
-      "sourceCount": 1,
-      "eligibleSources": 1,
-      "sources": [
-        {
-          "host": "igeekphone.com",
-          "url": "https://www.igeekphone.com/oxva-vprime-2-unboxing-review-design-hands-on-first-look/",
-          "title": "OXVA VPrime 2 Unboxing Review: Design & Hands-On First Look",
-          "sourceName": "iGeekPhone",
-          "sourceUrl": "https://www.igeekphone.com",
-          "sourceType": "independent-vape-news",
-          "collector": "dated-publication",
-          "decisionEligible": true,
-          "discoveryOnly": false,
-          "evidenceScope": "dated-public-coverage",
-          "eventDate": "2026-10-26T05:21:12.000Z",
-          "dateConfidence": "dated-public-evidence",
-          "dateQuality": "wordpress-date-gmt",
-          "stage": "prima prezentare publica",
-          "observedAt": "2026-11-25T14:04:15.253Z"
-        }
-      ],
-      "id": "194bf7e1a28d38a46a0f",
-      "familyKey": "POD|AUTHENTIC|oxva|vprime 2",
-      "authenticityState": "AUTHENTIC",
-      "variants": [
-        {
-          "productName": "OXVA VPrime 2 Unboxing Review: Design & Hands-On First Look",
-          "brand": "OXVA",
-          "url": "https://www.igeekphone.com/oxva-vprime-2-unboxing-review-design-hands-on-first-look/"
-        }
-      ],
-      "variantCount": 1
     }
   ],
   "summary": {
     "total": 5,
-    "allConcrete": 36,
+    "allConcrete": 35,
     "before": 0,
     "after": 5,
     "explicitDatedAfter": 5,
     "confirmed": 0,
     "reported": 5,
-    "publicSignals": 31,
+    "publicSignals": 30,
     "candidatesUnderVerification": 0,
     "categoryEvents": {
       "POD": 5
