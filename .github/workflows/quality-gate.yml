@@ -152,7 +152,7 @@ jobs:
           }
           const mutedAtomLine = atomLine('muted');
           if (!/NiFe30/.test(mutedAtomLine) || !/NiFe52/.test(mutedAtomLine) || !/K1 28 GA \/ 6 spire CONTACT/.test(mutedAtomLine)) {
-            throw new Error('Muted+ DNA must have NiFe30/6 or NiFe52/6 spaced first, followed by K1 28/6 contact');
+            throw new Error('Muted+ DNA must have NiFe30/7 SPACED or NiFe52/6 SPACED first, followed by K1 28/6 contact');
           }
           const dvarwFlAtomLine = atomLine('dvarwfl');
           if (!/insert 3×0,6/.test(dvarwFlAtomLine) || !/K1 28 GA\/6/.test(dvarwFlAtomLine) ||
