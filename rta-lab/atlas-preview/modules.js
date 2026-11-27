@@ -156,7 +156,7 @@ function wireConfig(id,wire){
  const power=wire==='nife30'&&regime==='watt'?core.nife30Watt.power:settings.power;
  return core.config(id,{...base,...v,spacing:stylePreset(id,wire,v.wraps),...settings,regime,chipset,power});
 }
-function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?(wire==='nife30'?'NiFe30 TCR320/7 · preferință globală, /6 alternativă istorică; TC sau alternativ WATT 12 W pe Dicodes, YiHi, ARC1, DNA.':'NiFe52 TCR310 · TC, preseturi proprii platformei.'):w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
+function wireIdentity(wire){const w=core.wires[wire];return w.type==='tc'?(wire==='nife30'?'NiFe30 TCR320/7 SPACED · preset global, /6 SPACED doar istoric; TC sau alternativ WATT 12 W pe Dicodes, YiHi, ARC1, DNA.':'NiFe52 TCR310/6 SPACED · TC, preset global.'):w.type==='clapton'?'Clapton 2×30+38 · regim WATT în configurațiile Lab.':'Fir rotund · Ø '+String(w.diameter).replace('.',',')+' mm · regim WATT.';}
 function liquidButtons(cfg){return window.RTA_ATLAS_SEARCH.top(cfg,state.objective).map((r,i)=>'<button type="button" data-journey-liquid="'+r.index+'" data-journey-wire="'+cfg.wire+'" data-journey-atom="'+cfg.atom+'"><span>0'+(i+1)+'</span><b>'+esc(window.RTA_ATLAS_SEARCH.label(r.liquid))+'</b><small>'+esc(r.liquid.class)+'</small></button>').join('');}
 
 /* The platform's own confirmed personal choices come first; remaining materials
@@ -168,7 +168,7 @@ const PERSONAL_LEADS=Object.freeze({
  klp:[["nife30",7],["nife52",6],["k129",6]],
  kprime:[["nife30",7],["nife52",6],["k129",5]],
  kx:[["nife30",7],["nife52",6],["k129",6]],
- gtone:[["k129",5]],muted:[["nife30",6],["nife52",6],["k128",6]],
+ gtone:[["k129",5]],muted:[["nife30",7],["nife52",6],["k128",6]],
  dvarwcl:[["k128",6,"triple06"]],
  dvarwfl:[["k128",6,"triple06"]],
  asylum:[["k128",6,undefined,"flat"]],kv3:[["k128",6],["k129",6]]
@@ -310,7 +310,7 @@ function materialPaths(){
 /* Canonical personal wire references are descriptive preferences, NOT a claim
  * that the same coil is installed in all physical atomizer units. */
 const WIRE_REFERENCE=Object.freeze({
- nife30:[["gtr",7,"GTR · prima alegere TC"],["muted",6,"Muted+ · 6 spaced · Arcana DNA60C"],["415",7,"415 Cool · prima alegere"],["klp",7,"KLP · coerență TC"],["kx",7,"Kayfun X"],["kprime",7,"Kayfun Prime"]],
+ nife30:[["gtr",7,"GTR · prima alegere TC"],["muted",7,"Muted+ · 7 SPACED · preset actual; 6 SPACED Arcana DNA60C istoric"],["415",7,"415 Cool · prima alegere"],["klp",7,"KLP · coerență TC"],["kx",7,"Kayfun X"],["kprime",7,"Kayfun Prime"]],
  nife52:[["muted",6,"Muted+ · 6 spaced · TC prioritar"],["gtr",6,"GTR · prima alegere TC"],["415",6,"415 Cool · prima alegere"],["klp",6,"KLP"],["kprime",6,"Kayfun Prime"],["kx",6,"Kayfun X"]],
  k128:[["415",6,"415 Cool · a doua alegere"],["dvarwcl",6,"Dvarw CL · 3×0,6"],["dvarwfl",6,"Dvarw FL · 3×0,6"],["muted",6,"Muted+ · K1 28/6 CONTACT după NiFe"],["kv3",6,"Kayfun Mini V3"],["klp",5,"KLP · 28/5"]],
  k129:[["gtone",5,"GT One · 29/5 SPACED · perfect"],["gtr",5,"GTR · 29/5 SPACED"],["gtr",6,"GTR · 29/6 SPACED"],["klp",6,"KLP · 29/6 SPACED preferat contextual; CONTACT alternativ"],["kx",6,"KX · 29/6 CONTACT sau SPACED · neales"],["kprime",5,"K Prime · 29/5 CONTACT sau SPACED · neales"],["kprime",6,"K Prime · 29/6 CONTACT sau SPACED · neales"],["kv3",6,"Kayfun Mini V3 · istoric"],["gtone",6,"GT One · 29/6 istoric"]],
