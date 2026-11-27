@@ -125,7 +125,7 @@ const PERSONAL_PREFS=Object.freeze({
  tcEqualWires:["nife30","nife52"],
  gtone:{first:{wire:"k129",wraps:5,spacing:"spaced"},historical:[{wire:"k129",wraps:6},{wire:"k128",wraps:5}]},
  currentK1:{gtone:[5],gtr:[5,6],klp:[6],kx:[6],kprime:[5,6]},
- muted:{first:[{wire:"nife30",wraps:6,spacing:"spaced"},{wire:"nife52",wraps:6,spacing:"spaced"}],second:{wire:"k128",wraps:6,spacing:"contact"},air:"triple_simple",bottomMm:.8,sideMm:.8,physicalUnits:4,allocation:[{units:3,air:"triple_simple",liquids:"tutun simplu și NET simplu"},{units:1,air:"triple_complex",liquids:"complexe"}],mod:"Arcana DNA60C",temperatureReportedC:210,note:"NiFe30/6 spaced testat A/B pentru airflow; NiFe52/6 spaced alegere declarată; K1 28/6 contact următor. Un exemplar păstrează airflow-ul anterior pentru complexe; preferință de utilizare, nu A/B pe complexe. Excepție de la NiFe30/7 global. W neprecizat."},
+ muted:{first:[{wire:"nife30",wraps:7,spacing:"spaced"},{wire:"nife52",wraps:6,spacing:"spaced"}],second:{wire:"k128",wraps:6,spacing:"contact"},air:"triple_simple",bottomMm:.8,sideMm:.8,physicalUnits:4,allocation:[{units:3,air:"triple_simple",liquids:"tutun simplu și NET simplu"},{units:1,air:"triple_complex",liquids:"complexe"}],mod:"Arcana DNA60C",temperatureReportedC:210,note:"NiFe30/6 spaced testat A/B pentru airflow; NiFe52/6 spaced alegere declarată; K1 28/6 contact următor. Un exemplar păstrează airflow-ul anterior pentru complexe; preferință de utilizare, nu A/B pe complexe. NiFe30/7 SPACED este noua regulă 27.11; NiFe30/6 SPACED rămâne test istoric."},
  dvarwClSingle12:{wire:"k128",wraps:5,air:"single12",status:"alternativă personală reușită, nu A/B controlat față de 3×0,6/6"},
  dvarw:{atoms:["dvarwcl","dvarwfl"],firstAir:"triple06",alternativeAir:"single12"},
  evidence:"preferințe personale declarate direct 14.10.2026; fără identitate materială sau A/B universal"
@@ -140,10 +140,13 @@ const COIL_STYLE=Object.freeze({
  klp:{k129:{6:["either","KLP 29/6 ușor spaced este montajul preferat în A/B-ul contextual din 01.11 (13 W, Aerokon ≈1 mm, coil–air 1,8 mm); contact rămâne alternativă, nu verdict universal.","spaced"]},k128:{5:["contact","Reper istoric A/B 12–13.10, nu prioritatea de azi."]}},
  kx:{k129:{6:["either","Contact ori spaced: ambele variante declarate, fără A/B nou."]}},
  kprime:{k129:{5:["either","Contact ori spaced: ambele variante declarate, fără ierarhie A/B."],6:["either","Contact ori spaced: ambele variante declarate, fără ierarhie A/B."]}},
- muted:{nife30:{6:["spaced","Prima alegere TC; test personal pe Arcana DNA60C."]},nife52:{6:["spaced","Prima alegere TC declarată; montarea pe fiecare exemplar nu e confirmată."]},k128:{6:["contact","A doua alegere după NiFe TC."]}},
+ muted:{nife30:{7:["spaced","Preset curent 27.11; nu test pe fiecare Muted+."],6:["spaced","Test istoric pe Arcana DNA60C."]},nife52:{6:["spaced","Prima alegere TC declarată; montarea pe fiecare exemplar nu e confirmată."]},k128:{6:["contact","A doua alegere după NiFe TC."]}},
  "415":{k129:{5:["contact","Reper istoric; atomizor vândut."],6:["contact","Reper istoric; atomizor vândut."]}}
 });
 function coilStylePreference(atom,wire,wraps){
+ if((wire==="nife30"&&Number(wraps)===7)||(wire==="nife52"&&Number(wraps)===6))
+  return {mode:"spaced",defaultSpacing:"spaced",declared:"spaced",
+   note:"Preset personal 27.11: Dicodes NiFe30 TCR320/7 SPACED sau Zivipf NiFe52 TCR310/6 SPACED. Confirmarea directă a remedierii TC privește GTR + NiFe30; restul nu sunt A/B pe fiecare atomizor."};
  const data=COIL_STYLE[atom]?.[wire]?.[Number(wraps)];
  const mode=data?.[0]||"unknown";
  return {mode,defaultSpacing:mode==="either"?(data?.[2]||"unspecified"):mode==="unknown"?"unspecified":mode,
@@ -211,10 +214,12 @@ function personalPreference(config){
   return {tier:2,label:"GT One · 29/6 · istoric",note:"A/B anterior; alegerea curentă 29/5 spaced."};
  if(config.atom==="gtone"&&config.wire==="k128"&&config.wraps===5)
   return {tier:3,label:"GT One · 28/5 · istoric",note:"A/B anterior; nu anulează 29/5 spaced."};
- // Muted+ 03.11.2026: NiFe30/6 spaced is an explicit exception to global NiFe30/7.
+ // Muted+ NiFe30/6 spaced este istoric; noua regulă 27.11 este NiFe30/7 spaced.
  if(config.atom==="muted"){
-  if((config.wire==="nife30"||config.wire==="nife52")&&config.wraps===6)
-   return {tier:1,label:"Muted+ · NiFe30/6 sau NiFe52/6 spaced · prima alegere TC",note:"NiFe30/6 testat pe Arcana DNA60C Triple Air; NiFe52/6 este preferință declarată. TC distinct."};
+  if((config.wire==="nife30"&&config.wraps===7)||(config.wire==="nife52"&&config.wraps===6))
+   return {tier:1,label:"Muted+ · NiFe30/7 SPACED sau NiFe52/6 SPACED · TC",note:"Regulă 27.11; NiFe30/6 spaced pe Arcana DNA60C rămâne test istoric."};
+  if(config.wire==="nife30"&&config.wraps===6)
+   return {tier:2,label:"Muted+ · NiFe30/6 SPACED · istoric",note:"Test personal Arcana DNA60C din noiembrie, păstrat pentru comparație."};
   if(config.wire==="k128"&&config.wraps===6)
    return {tier:2,label:"Muted+ · K1 28 GA / 6 contact · după NiFe TC",note:"Alternativa secundară declarată; fără A/B nou."};
  }
@@ -268,7 +273,7 @@ const DEFAULTS={
  kprime:{wire:"nife52",wraps:6,air:"1.2"},
  gtone:{wire:"k129",wraps:5,air:"single12"},
  dvarwcl:{wire:"k128",wraps:6,air:"triple06"},
- muted:{wire:"nife30",wraps:6,air:"triple_simple"},
+ muted:{wire:"nife30",wraps:7,air:"triple_simple"},
  gtr:{wire:"nife30",wraps:7,air:"both"},
  dvarwfl:{wire:"k128",wraps:6,air:"triple06"},
  diplomat:{wire:"k129",wraps:5,air:"pin18"},
@@ -442,7 +447,7 @@ function variants(id){
  if(!PLATFORMS[id])return [];
  const opts=[];
  for(const w of Object.keys(WIRES)){
-  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):(w==="nife30")?(id==="muted"?[6,7]:[7,6]):[WIRES[w].type==="tc"?6:5])){
+  for(const wraps of ((w==="k128"||w==="k129")?(id==="415"&&w==="k128"?[6,5]:[5,6]):(w==="nife30")?[7,6]:[WIRES[w].type==="tc"?6:5])){
    if(permitted(id,w,wraps))opts.push({wire:w,wraps});
   }
  }
@@ -463,7 +468,7 @@ function configuration(id,changes={}) {
  const value={...base,...changes,atom:id};
  if(changes.wire&&changes.wire!==base.wire&&!Object.prototype.hasOwnProperty.call(changes,"wraps")){
   // A material change must not inherit another alloy's number of wraps.
-  if(changes.wire==="nife30")value.wraps=id==="muted"?6:7;
+  if(changes.wire==="nife30")value.wraps=7;
   else if(changes.wire==="nife52")value.wraps=6;
   else if(WIRES[changes.wire]?.type==="clapton")value.wraps=5;
   else if(WIRES[changes.wire]?.type==="round")value.wraps=5;
