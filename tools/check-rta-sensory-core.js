@@ -59,6 +59,15 @@ assert.equal(api.config("gtr",{wire:"k129",wraps:5,spacing:"contact"}).spacing,"
 assert.equal(api.personalPreference(api.config("gtone",{wire:"k129",wraps:5,spacing:"contact"})),null,"personal spaced observation must not endorse contact");
 assert.equal(api.personalPreference(api.config("gtone",{wire:"k129",wraps:5,spacing:"spaced"}))?.tier,1,"personal spaced observation remains prioritized");
 assert.ok(fs.readFileSync(path.join(root,"RTA_COIL_STYLE_CURRENT_20261108.md"),"utf8").includes("SPACED preferat"),"new canonical registry must be in repository");
+// New 27.11.2026 global NiFe TC geometry; historical /6 can still be selected explicitly.
+for(const atom of atoms){
+ for(const [wire,wraps] of [["nife30",7],["nife52",6]]){
+  assert.equal(api.coilStylePreference(atom.id,wire,wraps).mode,"spaced",atom.id+" "+wire);
+  assert.equal(api.config(atom.id,{wire,wraps}).spacing,"spaced",atom.id+" "+wire);
+  assert.equal(api.config(atom.id,{wire,wraps}).wraps,wraps,atom.id+" "+wire);
+ }
+}
+assert.equal(api.config("muted",{wire:"nife30",wraps:6}).spacing,"spaced","NiFe30/6 historical remains spaced");
 assert.equal(atoms.length,16);
 assert.equal(catalog.length,620);
 assert.equal(Object.keys(api.platforms).length,16);
@@ -156,7 +165,7 @@ assert.ok(api.nife30Family.untested.includes("kv3"));
 assert.equal(api.nife30Family.reported.includes("klp"),true);
 // Directly declared platform preferences must supersede generic compact-coil priors.
 assert.equal(api.defaultConfig("muted").wire,"nife30");
-assert.equal(api.defaultConfig("muted").wraps,6);
+assert.equal(api.defaultConfig("muted").wraps,7,"Muted+ new NiFe30/7 SPACED preset");
 assert.equal(api.defaultConfig("muted").air,"triple_simple","Three physical Muted+ use new airflow profile");
 const mutedPersonal=api.personalPreferences.muted;
 assert.equal(mutedPersonal.physicalUnits,4);
@@ -178,10 +187,11 @@ assert.deepEqual(JSON.parse(JSON.stringify(mutedAB.differences.map(x=>[x.axis,x.
 assert.equal(mutedAB.allocation.reduce((n,x)=>n+x.units,0),4);
 assert.ok(mutedAB.status.includes("nu este un A/B pe lichide complexe"));
 assert.equal(api.personalPreference({atom:"muted",wire:"k128",wraps:6}).tier,2);
-assert.equal(api.personalPreference({atom:"muted",wire:"nife30",wraps:6}).tier,1);
+assert.equal(api.personalPreference({atom:"muted",wire:"nife30",wraps:6}).tier,2,"Historical NiFe30/6 SPACED preserved");
+assert.equal(api.personalPreference({atom:"muted",wire:"nife30",wraps:7}).tier,1,"Current NiFe30/7 SPACED first");
 assert.equal(api.personalPreference({atom:"muted",wire:"nife52",wraps:6}).tier,1);
-assert.equal(api.config("muted",{wire:"nife30"}).wraps,6);
-assert.equal(api.config("muted",{wire:"nife30"}).temp,210);
+assert.equal(api.config("muted",{wire:"nife30"}).wraps,7);
+assert.equal(api.config("muted",{wire:"nife30"}).temp,230,"Historical /6 210°C does not automatically transfer to /7");
 assert.equal(api.defaultConfig("gtone").wire,"k129");
 assert.equal(api.defaultConfig("gtone").wraps,5);
 assert.equal(api.personalPreference({atom:"gtone",wire:"k129",wraps:5}).tier,1);
