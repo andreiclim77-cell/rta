@@ -71,7 +71,7 @@ const expectedPersonal={
  klp:[['nife30',7],['nife52',6],['k129',6]],
  kprime:[['nife30',7],['nife52',6],['k129',5]],
  kx:[['nife30',7],['nife52',6],['k129',6]],
- gtone:[['k129',5]],muted:[['nife30',6],['nife52',6],['k128',6]],
+ gtone:[['k129',5]],muted:[['nife30',7],['nife52',6],['k128',6]],
  dvarwcl:[['k128',6]],dvarwfl:[['k128',6]],
  asylum:[['k128',6]],kv3:[['k128',6],['k129',6]]
 };
@@ -304,7 +304,8 @@ for(const wire of Object.keys(c.wires)){
    'No card should show a forbidden build for '+wire);
 }
 assert.equal(m.wireSavedBuilds('nife30')[0].config.wraps,7);
-assert.ok(m.wireSavedBuilds('nife30').some(x=>x.config.atom==='muted'&&x.config.wraps===6),'Muted+ six-spaced exception must remain listed');
+assert.ok(m.wireSavedBuilds('nife30').some(x=>x.config.atom==='muted'&&x.config.wraps===7&&x.config.spacing==='spaced'),'Muted+ current seven-SPACED preset must appear');
+assert.ok(c.variants('muted').some(x=>x.wire==='nife30'&&x.wraps===6),'Muted+ historical NiFe30/6 must remain selectable');
 assert.equal(m.wireSavedBuilds('nife52')[0].config.wraps,6);
 m.state.wireChosen=true;m.state.atom='gtr';m.state.config=c.defaultConfig('gtr');
 const countStages=[
