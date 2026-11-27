@@ -180,3 +180,9 @@ assert.ok(refs.findIndex(x=>x.includes("photo-sources.js"))<refs.findIndex(x=>x.
 assert.ok(refs.findIndex(x=>x.includes("./app.js"))<refs.findIndex(x=>x.includes("./v02.js")));
 console.log("RTA ATLAS PREVIEW PASS: 13 classic RTAs / 39 units + one unscored Boro / 1 unit, 700 actual liquids, 4×7×5="+scenarios+
  " contexts, nine compatible builds each; visual motion, source honesty and no production modifications.");
+
+// 27.11.2026: internal continuity notes are not part of the Home interface.
+assert.ok(!html.includes('coilStylePreferences')&&!html.includes('montat și preferat'),'Internal checkpoint must remain outside HOME');
+assert.ok(html.includes('./mobile-fit.css?v=atlas-mobile-fit-20261127-v2'),'Mobile readability revision must load');
+const phoneFit=fs.readFileSync(path.join(preview,'mobile-fit.css'),'utf8');
+assert.ok(phoneFit.includes('.page .k1-reference-table tbody td{grid-template-columns:minmax(0,1fr)')&&phoneFit.includes('.page .wire-gallery-disclosure>summary{grid-template-columns:minmax(0,1fr)}'),'Mobile text must reflow, not be clipped');

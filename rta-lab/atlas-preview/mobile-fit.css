@@ -85,3 +85,52 @@
  #pageLiquid .flow-steps li span{font-size:10px;line-height:1.4;overflow-wrap:anywhere}
  .is-large-type #pageLiquid .flow-steps{grid-template-columns:minmax(0,1fr)!important}
 }
+
+
+/* 27.11.2026: readable reflow on narrow phones and enlarged system fonts.
+   Keep data and controls intact; do not conceal overflow by cropping text. */
+@media(max-width:760px){
+ .page,.page .frame,.page .frame>*{min-width:0;max-width:100%}
+ .page :is(h1,h2,h3,h4,h5,p,small,summary,figcaption,label,dt,dd,li,a,button){
+  overflow-wrap:anywhere;word-break:normal;white-space:normal
+ }
+ .page :is(h1,h2,h3,h4,h5){line-height:1.3;max-width:100%}
+ .page :is(p,li,small,summary,figcaption,label,dt,dd){line-height:1.55}
+ .page :is(.hero-copy,.section-heading,.card-body,.card-side,.material-path,.wire-build-entry,.wire-family-card,.market-copy,.gateway-card,.context-settings,.selection-full-label){min-width:0;max-width:100%}
+ .page :is(.hero-lead,.section-heading p,.card-body>p,.gateway-card small,.scene-match-copy strong,.scene-match-copy small,.wire-card-note,.selection-full-label){
+  height:auto;max-height:none;overflow:visible;text-overflow:clip;white-space:normal;-webkit-line-clamp:unset
+ }
+ .page .primary-action{min-width:0;width:100%;max-width:100%;height:auto;gap:10px}
+ .page .primary-action>span:not(.button-orb):not(.arrow){min-width:0;overflow-wrap:anywhere}
+ .page .hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+ .page .hero-stats .stat-rule{display:none}
+ .page .hero-stats>span{min-width:0}
+ .page .hero-stats small{letter-spacing:.05em;overflow-wrap:anywhere}
+ .page .card-side{flex-wrap:wrap;align-items:flex-start}
+ .page .wire-card-coil{grid-template-columns:minmax(0,1fr);gap:6px}
+ .page .wire-card-coil strong{white-space:normal;overflow-wrap:anywhere}
+ .page .wire-gallery-disclosure>summary{grid-template-columns:minmax(0,1fr)}
+ .page .result-counter{white-space:normal;max-width:100%;overflow-wrap:anywhere}
+ .page .k1-reference-table tbody td{grid-template-columns:minmax(0,1fr);gap:6px;height:auto;min-height:0}
+ .page .k1-reference-table td>*{min-width:0;max-width:100%;overflow-wrap:anywhere}
+ .page .k1-reference-table td::before{white-space:normal;overflow-wrap:anywhere}
+ .page .k1-table-wrap{overflow-x:visible}
+ .page .k1-table-legend>span{min-width:0;max-width:100%;overflow-wrap:anywhere}
+ .page .material-build-facts>div{grid-template-columns:minmax(0,1fr);gap:4px}
+ .page .market-card.has-market-photo{grid-template-columns:minmax(0,1fr)}
+ .page .market-photo{max-width:100%;min-width:0}
+ .page .atlas-ghid-promo-action{min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere}
+ .page .flow-steps li span{min-width:0;overflow-wrap:anywhere}
+ .page :is(input,select,textarea){min-width:0;max-width:100%;box-sizing:border-box}
+}
+@media(max-width:430px){
+ .page .gateway-card{grid-template-columns:minmax(0,1fr);gap:8px}
+ .page .gateway-card>*{grid-column:1;min-width:0;max-width:100%}
+ .page .gateway-visual{margin:0;height:110px}
+ .page .atlas-ghid-promo-link{grid-template-columns:minmax(0,1fr)}
+ .page .atlas-ghid-promo-art{width:min(100%,78px)}
+ .page .atlas-ghid-promo-copy{min-width:0}
+ .page #pageLiquid .flow-steps{grid-template-columns:minmax(0,1fr)!important}
+ #pageLiquid .flow-steps{grid-template-columns:minmax(0,1fr)!important}
+ .page .wire-controls,.page .module-filters,.page .market-filters,.page .free-tags,.page .gain-trade,.page .geometry-readout,.page .duel-sketches{grid-template-columns:minmax(0,1fr)}
+}

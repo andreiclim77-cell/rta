@@ -1,5 +1,7 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+> **27.11.2026 — INTERFAȚĂ MOBILĂ / HOME:** utilizatorul a cerut scoaterea blocului editorial intern «PREFERINȚE PERSONALE ACTUALE · 08.11.2026» din HOME. Se păstrează arhiva tehnică, regulile existente și datele; textul nu se mai afișează pe pagina de intrare. Reflow mobil: tabele/carduri pe o coloană când spațiul este mic, etichete multiline și fără decupare intenționată a textului. Se păstrează navigarea și modulele. Preview și Atlas release trebuie sincronizate, inclusiv cache și receipt; verificarea CI/Pages rămâne distinctă de commit.
+
 > **PRIORITATE NOUĂ 27.11.2026 — NiFe în TC:** consultă întâi `rta-lab/RTA_TC_SPACED_STANDARD_20261127.md`. Dicodes NiFe30 TCR320 = **7 spire SPACED**, Zivipf NiFe52 TCR310 = **6 spire SPACED**, pe toate atomizoarele compatibile, inclusiv Muted+. Rezolvare practică CONFIRMATĂ de utilizator: GTR + DNA60 a început să funcționeze bine după trecerea CONTACT → SPACED. NiFe30/6 SPACED de pe Muted+ este reper ISTORIC, nu configurația globală curentă; nu inventa teste pe alte RTA. Această regulă prevalează asupra intrărilor anterioare.
 
 
