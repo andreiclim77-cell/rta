@@ -33,7 +33,7 @@ const BUILD_RULES = {
   "kprime":   { k128: 5, k129: 5, reason: "03.11.2026: după NiFe30/7 sau NiFe52/6, K1 29 GA / 5 ori 6 spire, contact sau spaced. 29/5 este defaultul V10; 29/6 rămâne alternativă, fără superioritate A/B universală." },
   "gtone":    { k128: 5, k129: 5, reason: "03.11.2026: K1 29 GA / 5 spire spaced montat pe GT One și descris ca perfect, noul default. A/B istoric 12.10.2026: 29/6 contact > 28/5; nu îl șterge și nu îl transforma în regula actuală." },
   "dvarwcl":  { k128: 6, k129: 5, reason: "Preferință principală: insert 3×0,6 mm + K1 28 GA / Ø2,5 / 6 spire pentru airflow multipunct și layering; alternativă bună validată personal: 1×1,2 mm + K1 28 GA / 5 spire. Se schimbă simultan și insertul, și numărul de spire; nu declara 1×1,2 inferior universal. 29 GA rămâne contextual." },
-  "muted":    { k128: 6, k129: 6, reason: "03.11.2026: Muted+ Triple Air (1,2 mm jos, laterale minimum): prima familie NiFe30/6 spaced sau NiFe52/6 spaced, apoi K1 28 GA / 6 spire CONTACT. NiFe30/6 funcționează bine pe Arcana DNA60C la 210°C; wattajul neprecizat. Excepție de la regula globală NiFe30/7; 29/6 numai alternativă tehnică." },
+  "muted":    { k128: 6, k129: 6, reason: "03.11.2026: Muted+ Triple Air (1,2 mm jos, laterale minimum): prima familie NiFe30/7 spaced sau NiFe52/6 spaced, apoi K1 28 GA / 6 spire CONTACT. NiFe30/6 este montajul ISTORIC validat pe Arcana DNA60C; NiFe30/7 SPACED este presetul actual la 210°C; wattajul neprecizat. Excepție de la regula globală NiFe30/7; 29/6 numai alternativă tehnică." },
   "gtr":      { k128: 5, k129: 6, reason: "03.11.2026: primele NiFe30/7 și NiFe52/6 în TC; alternative K1 29/5 sau 29/6 spaced pe canalele oblice duale. V10 alege 29/6 ca reper, fără a invalida 29/5." },
   "dvarwfl":  { k128: 6, k129: 5, reason: "Dvarw FL: insertul 3×0,6 mm este airflow-ul preferat personal. K1 28/6 a fost testat pe Balkan Milestone cu orizont mai larg, palat ≈25% mai bogat perceput și simultaneitate superioară față de FL 1×1,2/K1/6, cu TH doar puțin mai mic. Pe single 1×1,2, 28/5 rămâne alternativă." },
   "diplomat": { k128: 5, k129: 6, reason: "Diverterul multipunct este lat: 29/6 favorizează acoperirea, iar 28/5 este alternativa round-wire mai densă." },
@@ -381,7 +381,7 @@ function coilGeometryText(atom,wire,wraps){
 }
 function footprintText(atom, wire, output) {
   if (wire.id === "nife30") {
-    return "Dicodes NiFe30/7 și Zivipf NiFe52/6 sunt reperele actuale pe Ø2,5 mm preset; calibrare la rece și TCR distinct.";
+    return "Dicodes NiFe30/7 SPACED și Zivipf NiFe52/6 SPACED sunt reperele actuale pe Ø2,5 mm preset; calibrare la rece și TCR distinct.";
   }
   if (["k1clap", "ssclap"].includes(wire.id)) {
     return `5 spire pe Ø2,5 mm. Claptonul are suprafață și masă mai mari decât round-wire, deci nu se compară axial 1:1 cu 28/5 sau 29/5. ${buildRule(atom, wire).reason}`;
@@ -469,7 +469,7 @@ function geometrySummary(atom) {
       <span><b>K1 29 GA</b>${escapeHtml(coilGeometryText(atom,{id:"k129"},rule.k129))} · min. contact ≈ ${CONTACT_WIDTH_MM.k129[rule.k129]} mm</span>
       <span><b>K1 Clapton</b>2×30+38 · 5 spire</span>
       <span><b>SS Clapton</b>2×30+38 · 5 spire</span>
-      <span><b>NiFe TC</b>Dicodes NiFe30/7 · Zivipf NiFe52/6 · Ø2,5</span>
+      <span><b>NiFe TC</b>Dicodes NiFe30/7 SPACED · Zivipf NiFe52/6 SPACED · Ø2,5</span>
     </div>
     <p>${escapeHtml(rule.reason)} Claptonurile intră în TOP 3 numai când profilul lichidului și platforma justifică suprafața și masa suplimentare.</p>
   </div>`;
