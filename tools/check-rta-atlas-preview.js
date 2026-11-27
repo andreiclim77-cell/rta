@@ -174,7 +174,8 @@ assert.ok(refs.findIndex(x=>x.includes("sensory-core.js"))<refs.findIndex(x=>x.i
 assert.ok(refs.some(x=>x.includes('k1-geometry-20261111.js')),'Technical K1 reference must load in preview and published Atlas');
 assert.ok(refs.findIndex(x=>x.includes('k1-geometry-20261111.js'))<refs.findIndex(x=>x.includes('modules.js')),'Dual-first technical reference must load before the Atomizer Atlas renderer');
 assert.ok(html.includes('./k1-geometry.css?')&&html.includes('id="k1Overview"'),'Responsive global build table must be present');
-assert.ok(html.includes('28 GA și 29 GA')&&html.includes('numărul lor diferă după atomizor'),'First position must describe BOTH gauges while remaining non-K1 positions vary');
+assert.ok(html.includes('id="k1OverviewTitle">Configurații atomizoare</h2>')&&html.includes('id="k1Overview"'),'Keep the technical table with a concise heading');
+assert.ok(!html.includes('ENGINEERING / PERSONAL / CONTEXT')&&!html.includes('Poziția 01 dublă')&&!html.includes('Pentru fiecare atomizor:'),'Do not expose the internal table instructions on HOME');
 assert.ok(refs.findIndex(x=>x.includes("mood-match.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("photo-sources.js"))<refs.findIndex(x=>x.includes("./app.js")));
 assert.ok(refs.findIndex(x=>x.includes("./app.js"))<refs.findIndex(x=>x.includes("./v02.js")));
