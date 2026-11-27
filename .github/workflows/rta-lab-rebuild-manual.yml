@@ -1,0 +1,70 @@
+name: RTA Lab manual release and canonical backup
+on:
+  push:
+    branches: [main]
+    paths: [".github/workflows/rta-lab-rebuild-manual.yml"]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Rebuild preview cache and production Atlas
+        run: |
+          set -euo pipefail
+          node tools/build-rta-atlas-cache.js
+          node tools/build-rta-atlas-release.js
+          node tools/check-rta-sensory-core.js
+          node tools/check-rta-nife30-watt.js
+          node tools/check-rta-atlas-modules.js
+          node tools/check-rta-decision-flows.js
+          node tools/build-rta-atlas-cache.js --check
+          node tools/build-rta-atlas-release.js --check
+      - name: Generate canonical continuity ZIP and verify SHA256
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib, textwrap, hashlib, json, zipfile, shutil
+          workflow=pathlib.Path(".github/workflows/rta-lab-continuity-snapshot.yml").read_text(encoding="utf-8")
+          head="          python3 - <<'PY'\n"
+          end="\n          PY"
+          if head not in workflow:
+              raise SystemExit("Canonical snapshot generation script missing")
+          script=textwrap.dedent(workflow.split(head,1)[1].split(end,1)[0])
+          exec(compile(script,"<official RTA continuity generation>","exec"),{"__name__":"__main__"})
+          p=pathlib.Path("artifacts/continuity/RTA_CONTINUITATE_CURENTA.zip")
+          with zipfile.ZipFile(p) as z:
+              if z.testzip():raise SystemExit("Corrupt canonical ZIP")
+              m=json.loads(z.read("MANIFEST_SHA256.json"))
+              for name,item in m["files"].items():
+                  if hashlib.sha256(z.read(name)).hexdigest()!=item["sha256"]:
+                      raise SystemExit("SHA mismatch in "+name)
+              for required in ("rta-lab/RTA_TC_SPACED_STANDARD_20261127.md","rta-lab/data/sensory-core.js","rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md"):
+                  if required not in m["files"]:raise SystemExit("Missing "+required)
+              print("CANONICAL ZIP VERIFIED",len(m["files"]),"files",p.stat().st_size,"bytes")
+          target=pathlib.Path("rta-lab/continuity/RTA_CONTINUITATE_CURENTA.zip")
+          target.parent.mkdir(parents=True,exist_ok=True)
+          shutil.copyfile(p,target)
+          PY
+      - name: Commit generated production release and canonical ZIP
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add rta-lab/atlas-preview/sw.js rta-lab/atlas/ rta-lab/continuity/RTA_CONTINUITATE_CURENTA.zip
+          if git diff --cached --quiet; then
+            echo "Generated files are already current."
+          else
+            git commit -m "LAB RTA: verify and publish 27 Nov NiFe 7/6 SPACED release and canonical ZIP"
+            git push origin HEAD:main
+          fi
