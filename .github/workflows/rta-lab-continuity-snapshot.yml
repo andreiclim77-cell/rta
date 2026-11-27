@@ -26,6 +26,7 @@ jobs:
            "rta-lab/RTA_CONTINUITY_MASTER.md",
            "rta-lab/RTA_ATLAS_DESIGN_BLUEPRINT.md",
            "rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md",
+           "rta-lab/RTA_TC_SPACED_STANDARD_20261127.md",
            "rta-lab/RTA_K1_FOUR_BUILDS_20261111.md",
            "rta-lab/RTA_UPDATE_20261121.md",
            "rta-lab/RTA_INVENTAR_20261121.json",
@@ -78,7 +79,7 @@ jobs:
            "tools/check-rta-mood-match.js",
            "tools/check-rta-lab-commands.js"
           ]
-          required=files[:5]+["rta-lab/RTA_K1_FOUR_BUILDS_20261111.md","rta-lab/data/k1-geometry-20261111.js","rta-lab/RTA_UPDATE_20261121.md","rta-lab/RTA_INVENTAR_20261121.json"]
+          required=files[:5]+["rta-lab/RTA_K1_FOUR_BUILDS_20261111.md","rta-lab/data/k1-geometry-20261111.js","rta-lab/RTA_UPDATE_20261121.md","rta-lab/RTA_INVENTAR_20261121.json","rta-lab/RTA_TC_SPACED_STANDARD_20261127.md"]
           for f in required:
            if not pathlib.Path(f).is_file(): raise SystemExit("Missing critical continuity document: "+f)
           sha=os.environ.get("GITHUB_SHA","unresolved")
@@ -102,7 +103,8 @@ jobs:
           6. rta-lab/RTA_COIL_STYLE_CURRENT_20261108.md — CONTACT/SPACED/NECONFIRMAT
           7. rta-lab/RTA_K1_FOUR_BUILDS_20261111.md — 01A K1 28 GA și 01B K1 29 GA, ambele Ø2,5 mm; 02+ NUMAI NiFe/SS Clapton, fără K1/K1 Clapton
           
-          8. rta-lab/RTA_UPDATE_20261121.md și RTA_INVENTAR_20261121.json — colecția, preferințele și probele curente din 21.11.2026
+          8. rta-lab/RTA_TC_SPACED_STANDARD_20261127.md — NiFe30/7 SPACED și NiFe52/6 SPACED (6 NiFe30 doar istoric)
+          9. rta-lab/RTA_UPDATE_20261121.md și RTA_INVENTAR_20261121.json — colecția, preferințele și probele curente din 21.11.2026
 
           La „Salvează” actualizează aplicația și arhiva ÎN LAB (Biblioteca este doar o oglindă opțională).
           La „Dă-mi arhiva de continuitate la zi” generează snapshotul actual și oferă linkul.

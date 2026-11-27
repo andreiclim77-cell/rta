@@ -1,5 +1,8 @@
 # RTA Lab — registru canonic CONTACT / SPACED (08.11.2026)
 
+> **REGULĂ PRIORITARĂ 27.11.2026:** pe TOATE atomizoarele compatibile, sârma Dicodes RESISTHERM NiFe30 TCR 320 se configurează cu **7 spire SPACED**; Zivipf NiFe52 TCR 310 cu **6 spire SPACED**. Pentru GTR + DNA60, utilizatorul confirmă că schimbarea din CONTACT în SPACED a rezolvat problema TC. Vechiul NiFe30/6 SPACED pe Muted+ este numai istoric, cu A/B păstrat, nu un preset actual. Restul acestui registru din 08.11 rămâne istoric și trebuie citit prin prisma fișei `RTA_TC_SPACED_STANDARD_20261127.md`.
+
+
 **Sursă:** declarațiile personale până la 07.11.2026; istoricul A/B KLP din 01.11, preferințele 03.11, Muted+ 04.11. **Este un registru de preferințe și dovezi, nu o pretinsă verificare fizică a fiecărui exemplar.** Nu rescrie istoricul, nu calculează diferențe senzoriale doar din cuvântul „spaced”.
 
 | Platformă | Prioritate / material / spire | Contact sau spaced? | Certitudine / limită |

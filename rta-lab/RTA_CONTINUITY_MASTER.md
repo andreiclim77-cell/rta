@@ -1,5 +1,8 @@
 # RTA / MTL — ARHIVĂ DE CONTINUITATE MASTER
 
+> **PRIORITATE NOUĂ 27.11.2026 — NiFe în TC:** consultă întâi `rta-lab/RTA_TC_SPACED_STANDARD_20261127.md`. Dicodes NiFe30 TCR320 = **7 spire SPACED**, Zivipf NiFe52 TCR310 = **6 spire SPACED**, pe toate atomizoarele compatibile, inclusiv Muted+. Rezolvare practică CONFIRMATĂ de utilizator: GTR + DNA60 a început să funcționeze bine după trecerea CONTACT → SPACED. NiFe30/6 SPACED de pe Muted+ este reper ISTORIC, nu configurația globală curentă; nu inventa teste pe alte RTA. Această regulă prevalează asupra intrărilor anterioare.
+
+
 > **21.11.2026 — ACTUALIZARE PRIORITARĂ A COLECȚIEI:** înainte de inventar/configurații personale, citiți `rta-lab/RTA_UPDATE_20261121.md` și `rta-lab/RTA_INVENTAR_20261121.json`. În prezent sunt 40 exemplare active (39 RTA + GAIA Boro); KLP 9, Prime 4, GTR 4, GT One 3, KX 3, Muted+ 2. Nu se știe care două dintre cele patru Muted+ au fost vândute. Probele istorice și algoritmul de build din 11–13.11 rămân neschimbate. Această notă NU dovedește publicare Pages.
 
 
