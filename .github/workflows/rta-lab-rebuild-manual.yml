@@ -68,3 +68,10 @@ jobs:
             git commit -m "LAB RTA: verify and publish 27 Nov NiFe 7/6 SPACED release and canonical ZIP"
             git push origin HEAD:main
           fi
+      - name: Upload exact canonical ZIP for verified mirrors
+        uses: actions/upload-artifact@v4
+        with:
+          name: RTA_LAB_CANONICAL_ZIP_20261127
+          path: rta-lab/continuity/RTA_CONTINUITATE_CURENTA.zip
+          if-no-files-found: error
+          retention-days: 30
