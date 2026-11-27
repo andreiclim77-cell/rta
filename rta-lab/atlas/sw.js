@@ -1,5 +1,5 @@
 /* Atlas-only scope/cache. V10 data, local storage and other cache owners are preserved. */
-const CACHE="rta-atlas-release-b9f29306e26081f7",PREFIX="rta-atlas-release-";
+const CACHE="rta-atlas-release-f6b6f3fd8b6db288",PREFIX="rta-atlas-release-";
 const ASSETS=[
   "../../assets/facebook-profile-ghid-rta-smokee.jpg",
   "../../assets/fonts/manrope-latin-ext.woff2",
@@ -11,8 +11,8 @@ const ASSETS=[
   "../data/bell-liquid-fit.js?v=atlas-catalog-700-20261015-1",
   "../data/core.js?v=atlas-catalog-700-20261015-1",
   "../data/k1-geometry-20261111.js?v=k1-contact-spaced-20261113-v1",
-  "../data/sensory-core.js?v=coil-style-20261108-v1",
-  "../data/wires.js?v=nife30-watt12-20261022-v1-nife30-seven-20261029",
+  "../data/sensory-core.js?v=coil-style-20261108-v1-nife-spaced-20261127",
+  "../data/wires.js?v=nife30-watt12-20261022-v1-nife30-seven-20261029-nife-spaced-20261127",
   "../icon-192.png",
   "../mood-match.js?v=atlas-catalog-700-20261015-1",
   "./",
@@ -73,7 +73,7 @@ const ASSETS=[
   "./media/taifun-gt-one.jpg",
   "./mobile-fit.css?v=atlas-mobile-fit-20261016-1",
   "./modules.css?v=wire-clarity-20261031-v1",
-  "./modules.js?v=k1-contact-spaced-20261113-v1",
+  "./modules.js?v=k1-contact-spaced-20261113-v1-nife-spaced-20261127",
   "./photo-sources.js?v=atlas-catalog-700-20261015-1",
   "./styles.css?v=atlas-catalog-700-20261015-1",
   "./v02.css?v=atlas-catalog-700-20261015-1",
